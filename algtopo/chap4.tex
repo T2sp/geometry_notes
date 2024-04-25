@@ -1,0 +1,3353 @@
+\documentclass[algtopo_main]{subfiles}
+\mathchardef\mhyphen="2D
+\begin{document}
+
+\setcounter{chapter}{3}
+
+\chapter{ホモロジー代数}
+
+この章の主目標は\hyperref[thm:u-coeff]{普遍係数定理}を証明することである．
+\textbf{単項イデアル整域} (principal ideal domain; PID) が重要となる．
+なお，この章の内容はほとんどが~\cite[第1, 3章]{Shiho}に依存している．
+
+まず，環 $R$ の部分集合 $I \subset R$ が
+\begin{enumerate}
+    \item $0 \in I$ \label{def:ideal}
+    \item $x,\, y \in I \IMP x + y \in I$
+    \item $a \in R,\; x \in I \IMP ax \in I\; (\mathrm{resp.}\; xa \in I)$
+\end{enumerate}
+を充たすとき，$I$ は\textbf{左 (resp. 右) イデアル}であると言う\footnote{$R$ が可換環のときは左右の区別はないので単に\textbf{イデアル}と呼ぶ．}．
+部分集合 $ S = \Familyset[\big]{x_\lambda}{\lambda \in \Lambda} \subset R$ を含む最小の左 (resp. 右) イデアル
+\begin{align}
+    \biggl\{\, \sum_{\lambda \in \Lambda} a_\lambda x_\lambda  \biggm| a_\lambda \in R,\; \substack{\text{有限個を除く}\; \lambda \in \Lambda\; \text{に対して}\; a_\lambda = 0} \,\biggr\} 
+\end{align}
+のことを $S$ の生成する $R$ の左 (resp. 右) イデアルと呼び，
+一つの元で生成される\textbf{可換環} $R$ のイデアルを\textbf{単項イデアル} (principal ideal) と呼ぶ．
+
+\begin{mydef}[label=def:PID]{単項イデアル整域}
+    \begin{itemize}
+        \item 零環でない環 $R$ が\textbf{整域} (integral domain) であるとは，
+        \begin{align}
+            a,\, b \in R,\; ab = 0 \IMP a = 0 \OR b = 0
+        \end{align}
+        が成り立つことを言う．
+        \item 任意のイデアルが単項イデアルである（可換）整域を\textbf{単項イデアル整域}と呼ぶ．
+    \end{itemize}
+\end{mydef}
+
+\begin{myprop}[label=prop:freemod-PID]{単項イデアル整域上の自由加群}
+    $R$ を単項イデアル整域とするとき，$R$ 上の自由加群の任意の部分加群は自由加群である．
+\end{myprop}
+
+\begin{proof}
+    $R^{\oplus\Lambda}$ の部分加群 $M$ を任意にとる．
+
+    まず，$\Lambda$ の任意の部分集合 $I \subset I' \subset \Lambda$ に対して自然な単射準同型
+    \begin{align}
+        &i_{II'} \colon R^{\oplus I} \lto R^{\oplus I'},\; \Dpmember[\big]{x_i}{i \in I} \lmto \Dpmember[\big]{y_{i'}}{i' \in I'}, \\
+        &\WHERE y_{i'} \coloneqq 
+        \begin{cases}
+            x_{i'}, & i' \in I \\
+            0, &i' \notin I
+        \end{cases}
+    \end{align}
+    が存在する．以降では $i_{I\Lambda} \colon R^{\oplus I} \lto R^{\oplus \Lambda}$ によって $R^{\oplus I}$ を $R^{\oplus \Lambda}$ の部分加群と見做す．
+
+    次に，集合 $\mathcal{S} \subset 2^\Lambda \times 2^M$ を次のように定義する：
+    $\forall (I,\, J) \in \mathcal{S}$ は
+    \begin{enumerate}
+        % \item $\forall (I,\, J) \in \mathcal{S}$ に対して $I$ は $\Lambda$ の部分集合，$J$ は $M$ の部分集合
+        \item 
+        \begin{align}
+            J \subset M \cap \Freemod{R}{I}
+        \end{align}
+        \item 準同型写像
+        \begin{align}
+            \label{eq:iso-PID}
+            f_J \colon \Freemod{R}{J} \lto M \cap R^{\oplus I},\; \Dpmember[\big]{x_j}{j \in J} \lmto \sum_{j \in J} x_j j
+        \end{align}
+        は同型写像となる
+    \end{enumerate}
+    を充たすとする．
+    そして $\mathcal{S}$ の上の順序関係 $\le$ を
+    \begin{align}
+        (I,\, J) \le (I',\, J') \stackrel{\text{def}}{\Longleftrightarrow} I \subset I' \AND J \subset J'
+    \end{align}
+    で定義する．このとき $(\mathcal{S},\, \le)$ は順序集合で，かつ $(\emptyset,\, \emptyset) \in \mathcal{S}$ なので $\mathcal{S}$ は空でない．
+
+    \hrulefill
+    \begin{mylem}[]{}
+        順序集合 $(\mathcal{S},\, \le)$ は帰納的順序集合である，
+        i.e. $\mathcal{S}$ の任意の全順序部分集合 $\mathcal{S}' \coloneqq \Familyset[\big]{(I_\sigma,\, J_\sigma)}{\sigma \in \Sigma}$ が上限を持つ．
+    \end{mylem}
+    \begin{proof}
+        $I \coloneqq \bigcup_{\sigma \in \Sigma} I_\sigma,\; J \coloneqq \bigcup_{\sigma \in \Sigma} J_\sigma$ とおくと，明らかに $I \in 2^{\Lambda},\; J \in 2^M$ である．条件 (1) より $J_\sigma \subset M \cap \Freemod{R}{I_\sigma}$ で，かつ
+        \begin{align}
+            f_{J_\sigma} \colon \Freemod{R}{J_\sigma} \lto M \cap \Freemod{R}{I_\sigma},\; \Dpmember[\big]{x_j}{j \in J_\sigma} \lmto \sum_{j \in J_\sigma} x_j j
+        \end{align}
+        は同型写像となる．これらの $\sigma \in \Sigma$ に関する和集合をとると
+        $J = \bigcup_{\sigma \in \Sigma} \subset M \cap \Freemod{R}{I}$ かつ
+        \begin{align}
+            f_J \colon \Freemod{R}{J} \lto M \cap \Familyset[\big]{R}{I},\; \Dpmember[\big]{x_j}{j \in J} \lmto \sum_{j \in J} x_j j
+        \end{align}
+        は同型写像となる．故に $(I,\, J) \in \mathcal{S}$ であり，これが $\mathcal{S}'$ の上界を与える．
+    \end{proof}
+
+    \hrulefill
+
+    この補題から $(\mathcal{S},\, \le)$ に対してZornの補題を適用でき，極大元 $(I_0,\, J_0) \in \mathcal{S}$ の存在が言える．$I_0 = \Lambda$ ならば性質 (2) から $M \cong \Freemod{R}{J_0}$ が言えるので題意が示されたことになる．
+
+    $I_0 \subsetneq \Lambda$ を仮定する．仮定より $\mu \in \Lambda \setminus I_0$ をとることができる．
+    $I_1 \coloneqq I_0 \cup \{\mu\}$ とおくと，$\mu$ 成分への標準的射影 $p_\mu \colon \Freemod{R}{I_1} \lto R$ を用いた完全列
+    \begin{align}
+        0 \lto \Freemod{R}{I_0} \xrightarrow{i_{I_0 I_1}} \Freemod{R}{I_1} \xrightarrow{p_\mu} R \lto 0
+    \end{align}
+    が成り立つ．ここからさらに完全列
+    \begin{align}
+        \label{SES:PID}
+        0 \lto M \cap \Freemod{R}{I_0} \xrightarrow{i_{I_0 I_1}} M \cap \Freemod{R}{I_1} \xrightarrow{p_\mu}(M \cap \Freemod{R}{I_1}) \lto 0
+    \end{align}
+    が誘導されるが，$p_\mu (M \cap \Freemod{R}{I_1})$ は $R$ の部分加群，i.e. イデアルなので，\textbf{$\bm{R}$ が\hyperref[def:PID]{単項イデアル整域}}であることから，ある $a \in R$ を用いて $Ra$ という形にかける．
+
+    \begin{description}
+        \item[\textbf{$\bm{a=0}$ の場合}] $p_\mu (M \cap \Freemod{R}{I_1}) = 0$ なので，\eqref{SES:PID}の完全性から $M\cap \Freemod{R}{I_0} \cong M \cap \Freemod{R}{I_1}$ となる．このとき $I_0 \subsetneq I_1$ かつ $(I_1,\, J_0) \subset \mathcal{S}$ となり $(I_0,\, J_0)$ の極大性に矛盾．
+        \item[\textbf{$\bm{a\neq 0}$ の場合}] $p_\mu(M \cap \Freemod{R}{I_1}) = Ra$ の勝手な元は $x \in R$ を用いて $xa$ と一意的に書ける．
+        従って $p_\mu(b) = a$ を充たす $b \in M \cap \Freemod{R}{I_1}$ を一つ固定すると，
+        \begin{align}
+            i \colon Ra \lto M \cap \Freemod{R}{I_1},\; xa \lmto xb
+        \end{align}
+        と定義した写像 $i$ はwell-defined．このとき $p_\mu \bigl( i(xa) \bigr) = p_\mu (xb) = xa$ が成立するので完全列\eqref{SES:PID}は\hyperref[def:split]{分裂}する．従って系\ref{col:split}から同型写像
+        \begin{align}
+            g \colon (M \cap \Freemod{R}{I_0}) \oplus Ra \lto M \cap \Freemod{R}{I_1},\; (m,\, xa) \lmto i_{I_0I_1} (m) + i(xa) = i_{I_0I_1} (m) + xb
+        \end{align}
+        を得る．
+        
+        ここで $J_1 \coloneqq J_0 \cup \{b\}$ とおき，同型写像 $h' \colon R \lto Ra,\; x \lmto xa$ を定める．このとき
+        \begin{align}
+            h \coloneqq f_{J_0} \oplus h' \colon \Freemod{R}{J_1} = \Freemod{R}{J_0} \oplus R^{\oplus \{b\}} \lto (M \cap \Freemod{R}{I_0}) \oplus Ra
+        \end{align}
+        は同型写像で，定義\eqref{eq:iso-PID}から
+        \begin{align}
+            g \Bigl( h \bigl( \Dpmember{x_j}{j \in J_0},\, x_b \bigr)  \Bigr) &= g \Bigl( f_{J_0}\bigl( \Dpmember{x_j}{j \in J_0} \bigr),\, x_b a   \Bigr) \\
+            &= f_{J_0} \bigl( \Dpmember{x_j}{j \in J_0} \bigr)  + x_b b \\
+            &= f_{J_1} \Bigl( \bigl( \Dpmember{x_j}{j \in J_0},\, x_b \bigr)  \Bigr) 
+        \end{align}
+        となる．よって $f_{J_1} \colon \Freemod{R}{J_1} \lto M \cap \Freemod{R}{I_1}$ が同型写像となって (2) が充たされ，$I_0 \subsetneq I_1,\, J_0 \subsetneq J_1$ かつ $(I_1,\, J_1) \in \mathcal{S}$ となって $(I_0,\, J_0)$ の極大性に矛盾する．
+    \end{description}
+    
+    以上より，背理法から $I_0 = \Lambda$ が言えて証明が完了する．
+\end{proof}
+
+
+自由加群に関する次の命題は単純だが，後で使う：
+
+\begin{myprop}[label=prop:free-mod-surjection]{}
+    任意の左 $R$ 加群 $M$ に対して，ある自由加群から $M$ への全射準同型写像が存在する
+    % \footnote{後にのべるように自由加群は\hyperref[def:proj-mod]{射影的加群}なので，特にある射影的加群から $M$ への全射準同型写像が存在する．さらに射影的加群は\hyperref[def:flat-mod]{平坦加群}なので，ある平坦加群から $M$ への全射準同型写像が存在する．}．
+\end{myprop}
+
+\begin{proof}
+    $R^{\oplus M}$ は自由加群であり，
+    \begin{align}
+        f \colon R^{\oplus M} \lto M,\; \Dpmember[\big]{a_m}{m \in M} \lmto \sum_{m \in M} a_m m
+    \end{align}
+    は全射準同型写像である．
+\end{proof}
+
+
+\section{諸定義}
+
+\subsection{射影的加群}
+
+\begin{mydef}[label=def:proj-mod]{射影的加群}
+    左 $R$ 加群 $P$ が\textbf{射影的加群} (projective module) であるとは，
+    任意の左 $R$ 加群の\textbf{全射準同型} $f\colon M \lto N$ および任意の準同型写像 $g \colon P \lto N$ に対し，左 $R$ 加群の準同型写像 $ h \colon P \lto M$ であって $f \circ h = g$ を充たすものが存在することを言う（図式\ref{fig:proj-mod}）．
+\end{mydef}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzcd}[row sep=large, column sep=large]
+        &P \ar[d, "g"]\ar[dl, red, dashed, "\exists h"] \\
+        M \ar[r, two heads, "f"] &N
+    \end{tikzcd}
+    \caption{射影的加群}
+    \label{fig:proj-mod}
+\end{figure}%
+
+\begin{myprop}[label=prop:proj-mod-split]{}
+    左 $R$ 加群の完全列
+    \begin{align}
+        0 \lto L \xrightarrow{f} M \xrightarrow{g} \textcolor{red}{N} \lto 0
+    \end{align}
+    は，$\textcolor{red}{N}$ が\hyperref[def:proj-mod]{射影的加群}ならば\hyperref[def:split]{分裂}する．
+\end{myprop}
+
+\begin{proof}
+    射影的加群の定義において $P = N$ とすることで，左 $R$ 加群の準同型写像 $s \colon N \lto M$ であって $g \circ s = 1_N$ を充たすものが存在する．
+\end{proof}
+
+\begin{myprop}[label=prop:proj-mod-dp]{射影的加群の直和}
+    左 $R$ 加群の族 $\Familyset[\big]{P_\lambda}{\lambda \in \Lambda}$ に対して以下の2つは同値：
+    \begin{enumerate}
+        \item $\forall \lambda \in \Lambda$ に対して $P_\lambda$ が射影的加群
+        \item $\displaystyle\bigoplus_{\lambda \in \Lambda} P_\lambda$ が射影的加群
+    \end{enumerate}
+\end{myprop}
+
+\begin{proof}
+    \hyperref[def:inj-proj]{標準的包含}を $\iota_\lambda \colon P_\lambda \hookrightarrow \bigoplus_{\lambda \in  \Lambda}P_\lambda$と書く．
+    \begin{description}
+        \item[\textbf{(1)$\bm{\Longrightarrow}$(2)}] 仮定より，$\forall \lambda \in \lambda$ に対して，任意の全射準同型写像
+        $f \colon M \lto N$ および任意の準同型写像 $g \colon \bigoplus_{\lambda \in \Lambda}P_\lambda \lto N$ に対して，準同型写像 $h_\lambda \colon P_\lambda \lto M$ であって $f \circ h_\lambda = g \circ \iota_\lambda$ を充たすものが存在する．
+        従って\hyperref[prop:univ-dp]{直和の普遍性}より
+        準同型写像
+        \begin{align}
+            h \colon \bigoplus_{\lambda \in \Lambda} P_\lambda \lto M
+        \end{align}
+        であって $f \circ h_\lambda = h \circ \iota_\lambda$ を充たすものが一意的に存在する．
+        このとき 
+        \begin{align}
+            (f \circ h) \circ \iota_\lambda = f \circ h_\lambda = g \circ \iota_\lambda
+        \end{align}
+        であるから，$h$ の一意性から $f \circ h = g$．
+        \item[\textbf{(1)$\bm{\Longleftarrow}$(2)}] $\lambda \in \Lambda$ を一つ固定し，任意の全射準同型写像
+        $f \colon M \lto N$ および任意の準同型写像 $g \colon P_\lambda \lto M$ を与える． 
+        \hyperref[prop:univ-dp]{直和の普遍性}より
+        準同型写像
+        \begin{align}
+            h \colon \bigoplus_{\lambda \in \Lambda} P_\lambda \lto N
+        \end{align}
+        であって $h \circ \iota_\lambda = g$（$\forall \mu \in \Lambda \setminus \{\lambda\},\; h \circ \iota_\lambda = 0$）を充たすものが一意的に存在する．
+        さらに仮定より，準同型写像
+        \begin{align}
+            \alpha \colon \bigoplus_{\lambda \in \Lambda} \lto M
+        \end{align}
+        であって $f \circ \alpha = h$ を充たすものが存在する．このとき
+        \begin{align}
+            f \circ (\alpha \circ \iota_\lambda) = h \circ \iota_\lambda = g
+        \end{align}
+        なので $\beta \coloneqq h \circ \iota_\lambda$ とおけば良い．
+    \end{description}
+\end{proof}
+
+\begin{mycol}[label=col:free-proj]{自由加群は射影的加群}
+    環 $R$ 上の自由加群は射影的加群である
+\end{mycol}
+
+\begin{proof}
+    $R$ が射影的加群であることを示せば命題\ref{prop:proj-mod:dp}より従う．
+
+    左 $R$ 加群の全射準同型写像と準同型写像 $f \colon M \lto N,\; g\colon R \lto N$ を任意に与える．このとき
+    ある $x \in M$ が存在して $f(x) = g(1)$ となる．この $x$ に対して準同型写像 $h \colon R \lto M,\; a \lmto ax$ を定めると，$\forall a \in R$ に対して
+    \begin{align}
+        f \bigl( h(a) \bigr)  = f(ax) = af(x) = ag(1) = g(a)
+    \end{align}
+    が成り立つので $f \circ h = g$ となる．
+\end{proof}
+
+\begin{myprop}[label=prop:proj-mod-basic]{}
+    左 $R$ 加群 $P$ について，次の3条件は同値である：
+    \begin{enumerate}
+        \item $P$ は\hyperref[def:proj-mod]{射影的加群}
+        \item 左 $R$ 加群 $Q$ であって $P \oplus Q$ が自由加群になるものが存在する
+        \item 任意の左 $R$ 加群の短完全列
+        \begin{align}
+            0 \lto M_1 \xrightarrow{f} M_2 \xrightarrow{g} M_3 \lto 0
+        \end{align}
+        に対して，図式
+        \begin{align}
+            \label{eq:prop-proj-hom}
+            0 \lto \Hom{R} (P,\, M_1) \xrightarrow{f_*} \Hom{R}(P,\, M_2) \xrightarrow{g_*} \Hom{R}(P,\, M_3) \lto 0
+        \end{align}
+        は完全列である．
+    \end{enumerate}
+\end{myprop}
+
+\begin{proof}
+    \begin{description}
+        \item[\textbf{(1)$\IMP$(2)}] 全射準同型
+        \begin{align}
+            f \colon R^{\oplus P} \lto P,\; \Dpmember[\big]{a_p}{p \in P} \lmto \sum_{p \in P} a_p p
+        \end{align}
+        を考える．$Q \coloneqq \Ker f$ とおくと，図式
+        \begin{align}
+            0 \lto Q \lto R^{\oplus P} \xrightarrow{f} P \lto 0
+        \end{align}
+        は完全列になるが，命題\ref{prop:proj-mod-split}よりこれは分裂する．従って命題\ref{col:split}より
+        \begin{align}
+            P \oplus Q \cong R^{\oplus P}
+        \end{align}
+        \item[\textbf{(2)$\IMP$(1)}] 命題\ref{prop:proj-mod-dp}, \ref{col:free-proj}より明らか．
+        \item[\textbf{(1)$\IFF$(3)}] 命題\ref{prop:Hom-split}より図式\eqref{eq:prop-proj-hom}の $g_*$ の全射性のみ確認すれば良い．i.e. (3) は任意の全射準同型写像 $g \colon M_2 \lto M_3$ と任意の準同型写像 $\varphi \colon P \lto M_3$ に対してある準同型写像 $\psi\colon P \lto M_2$ であって
+        $g_*(\psi) = g \circ \psi = \varphi$ を充たすものが存在することと同値．このことは $P$ が射影的加群であることに他ならない．
+    \end{description}
+\end{proof}
+
+$R$ が\hyperref[def:PID]{PID}のときは嬉しいことが起こる：
+
+\begin{mycol}[label=col:proj-PID]{}
+    $R$ が単項イデアル整域ならば，
+    
+    $R$ 加群 $P$ が射影的加群 $\IFF$ $R$ が自由加群
+\end{mycol}
+
+\begin{proof}
+    \begin{description}
+        \item[\textbf{$\bm{\Longrightarrow}$}] 命題\ref{col:free-proj}より明らか．
+        \item[\textbf{$\bm{\Longleftarrow}$}] 命題\ref{prop:proj-mod-basic}より，ある $R$ 加群 $Q$ が存在して $P \bigoplus Q$ が自由加群になるので $P$ は自由加群の部分加群と同型である．$R$ がPIDなので命題\ref{prop:freemod-PID}より $P$ は自由加群．
+    \end{description}
+\end{proof}
+
+\subsection{単射的加群}
+
+次に，\textbf{単射的加群}の定義をする：
+\begin{mydef}[label=def:inj-mod]{単射的加群}
+    左 $R$ 加群 $I$ が\textbf{単射的加群} (injective module) であるとは，
+    任意の左 $R$ 加群の\textbf{単射準同型} $f\colon M \lto N$ および任意の準同型写像 $g \colon M \lto I$ に対し，左 $R$ 加群の準同型写像 $ h \colon N \lto I$ であって $ h \circ f = g$ を充たすものが存在することを言う（図式\ref{fig:inj-mod}）．
+\end{mydef}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzcd}[row sep=large, column sep=large]
+        M \ar[d, "g"']\ar[r, hook, "f"] &N \ar[dl, red, dashed, "\exists h"] \\
+        I &
+    \end{tikzcd}
+    \caption{単射的加群}
+    \label{fig:inj-mod}
+\end{figure}%
+
+\begin{myprop}[label=prop:inj-mod-split]{}
+    左 $R$ 加群の完全列
+    \begin{align}
+        0 \lto \textcolor{red}{L}\xrightarrow{f} M \xrightarrow{g} N \lto 0
+    \end{align}
+    は，$\textcolor{red}{L}$ が\hyperref[def:inj-mod]{単射的加群}ならば\hyperref[def:split]{分裂}する．
+\end{myprop}
+
+\begin{proof}
+    \hyperref[def:inj-mod]{単射的加群}の定義において $I = L$ とすれば良い．
+\end{proof}
+
+
+\begin{myprop}[label=prop:inj-mod-basic]{}
+    左 $R$ 加群 $P$ について，次の2条件は同値である：
+    \begin{enumerate}
+        \item $I$ は\hyperref[def:inj-mod]{単射的加群}
+        \item 任意の左 $R$ 加群の短完全列
+        \begin{align}
+            0 \lto M_1 \xrightarrow{f} M_2 \xrightarrow{g} M_3 \lto 0
+        \end{align}
+        に対して，図式
+        \begin{align}
+            \label{eq:prop-proj-hom}
+            0 \lto \Hom{R} (M_3,\, I) \xrightarrow{g^*} \Hom{R}(M_2,\, I) \xrightarrow{f^*} \Hom{R}(M_1,\, I) \lto 0
+        \end{align}
+        は完全列である．
+    \end{enumerate}
+\end{myprop}
+
+\begin{proof}
+    命題\ref{prop:Hom-split}より，$f^*$ の全射性のみ確認すれば良い．
+    (2) は任意の単射準同型写像 $f \colon M_1 \lto M_2$ および任意の準同型写像 $\varphi \in \Hom{R}(M_1,\, I)$ に対して，ある $\psi \in \Hom{R}{M_2,\, I}$ が存在して $\psi \circ f = \varphi$ を充たすことと同値であるが，これは\hyperref[def:inj-mod]{単射的加群}の定義そのものである．
+\end{proof}
+
+\begin{mydef}[label=def:non-zero-diviser]{非零因子}
+    環 $R$ の元 $a \in R$ が\textbf{非零因子} (non zero-diviser) であるとは，$\forall x \in R \setminus \{0\}$ に対して $ax \neq \AND xa \neq 0$ であることを言う．
+\end{mydef}
+
+
+\begin{mydef}[label=def:divisable-mod]{可除加群}
+    左 $R$ 加群 $M$ が\textbf{可除加群} (divisable module) であるとは，$\forall x \in M$ と任意の $R$ の非零因子 $a$ に対して
+    \begin{align}
+        \exists y \in M,\; ay = x
+    \end{align}
+    が成立することを言う．
+\end{mydef}
+
+\begin{myprop}[label=prop:inj-mod-divisable]{}
+    環 $R$ 上の\hyperref[def:inj-mod]{単射的加群}は\hyperref[def:divisable-mod]{可除加群}である．
+\end{myprop}
+
+\begin{proof}
+    環 $R$ 上の単射的加群 $I$ を任意にとり，
+    $\forall x \in I$ および任意の $R$ の\hyperref[def:non-zero-diviser]{非零因子} $a$ を一つ固定する．
+    このとき写像
+    \begin{align}
+        f \colon R \lto R,\; b \lmto ba
+    \end{align}
+    は左 $R$ 加群 $R$ の単射準同型写像である．ここで左 $R$ 加群の準同型写像 $g \colon R \lto I,\; b \lmto bx$ 
+    を考えると，$I$ が単射的加群であることからある準同型写像 $h \colon R \lto I$ であって $h \circ f = g$ を充たすものが存在する．故に
+    \begin{align}
+        x = g(1) = h \bigl( f(1) \bigr) = h(a) = a h(1)
+    \end{align}
+    となり，$I$ は\hyperref[def:divisable-mod]{可除加群}である．
+\end{proof}
+
+$R$ が\hyperref[def:PID]{PID}のときは同値になる：
+
+\begin{myprop}[label=prop:PID-inj-divisable]{}
+    $R$ が単項イデアル整域ならば，
+    $R$ 上の\hyperref[def:divisable-mod]{可除加群}は\hyperref[def:inj-mod]{単射的加群}である．
+\end{myprop}
+
+\begin{proof}
+    Zornの補題を使って証明する．~\cite[命題1.98]{Shiho}を参照．
+\end{proof}
+
+\begin{myprop}[label=prop:inj-mod-injection]{}
+    $R$ を環とする．任意の左 $R$ 加群 $M$ に対して，$M$ からある\hyperref[def:inj-mod]{単射的加群}への単射準同型写像が存在する．
+\end{myprop}
+
+この命題の証明において，単射的 $\mathbb{Z}$ 加群 $\mathbb{Q} / \mathbb{Z}$ が主要な役割を果たす．
+
+\begin{proof}
+    \hrulefill
+
+    \begin{mylem}[label=lem:prop4-10-1]{}
+        右 $R$ 加群 $P$ が\hyperref[def:proj-mod]{射影的加群}であるとき，左 $R$ 加群 $\Hom{\mathbb{Z}} (P,\, \mathbb{Q}/\mathbb{Z})$ は\hyperref[def:inj-mod]{単射的加群}である．
+    \end{mylem}
+
+    \begin{proof}
+        $f \colon M \lto N$ を左 $R$ 加群の単射準同型写像，$g \colon M \lto \Hom{\mathbb{Z}} (P,\, \mathbb{Q}/\mathbb{Z})$ を左 $R$ 加群の準同型写像とする．$f$ を $\mathbb{Z}$ 加群の単射準同型写像と見做せば，$\mathbb{Q}/\mathbb{Z}$ が\hyperref[def:inj-mod]{単射的加群}であることから
+        \begin{align}
+            f^* \colon \Hom{\mathbb{Z}} (N,\, \mathbb{Q}/\mathbb{Z}) \lto \Hom{\mathbb{Z}} (M,\, \mathbb{Q}/\mathbb{Z}),\; h \lmto h \circ f
+        \end{align}
+        は右 $R$ 加群の全射準同型写像となる．
+        ここで右 $R$ 加群の準同型写像
+        \begin{align}
+            g' \colon P \lto \Hom{\mathbb{Z}} (M,\, \mathbb{Q}/\mathbb{Z}),\; x \lmto \bigl( m \mapsto g(m)(x) \bigr) 
+        \end{align}
+        を定める．このとき $P$ が\hyperref[def:proj-mod]{射影的加群}であることから，ある右 $R$ 加群の準同型写像 $h' \colon P \lto \Hom{\mathbb{Z}} (N,\, \mathbb{Q}/\mathbb{Z})$ であって $f^*(h') = g'$ を充たすものが存在する．
+        さらにここで
+        \begin{align}
+            h \colon N \lto \Hom{\mathbb{Z}}(P,\, \mathbb{Q}/\mathbb{Z}),\; n \lmto \bigl( x \mapsto h'(x)(n)   \bigr) 
+        \end{align}
+        と定義するとこれは左 $R$ 加群の準同型写像となり，かつ
+        \begin{align}
+            h \bigl( f(m) \bigr) (x) = h'(x) \bigl( f(m) \bigr) = (f^*(h'))(x)(m) = g'(x)(m) = g(m)(x)
+        \end{align}
+        だから $h \circ f = g$ となる．i.e. $\Hom{\mathbb{Z}} (P,\, \mathbb{Q}/\mathbb{Z})$ は\hyperref[def:inj-mod]{単射的加群}である．
+    \end{proof}
+
+    \begin{mylem}[label=lem:prop4-10-2]{}
+        左 $R$ 加群 $M$ に対して
+        \begin{align}
+            \Phi \colon M \lto \Hom{\mathbb{Z}} \bigl( \Hom{\mathbb{Z}}(M,\, \mathbb{Q}/\mathbb{Z}),\, \mathbb{Q}/\mathbb{Z} \bigr) ,\; m \lmto \bigl( \varphi \mapsto \varphi(m) \bigr) 
+        \end{align}
+        と定義した写像 $\Phi$ は左 $R$ 加群の単射準同型である．
+    \end{mylem}
+    
+    \begin{proof}
+        $\forall a \in R,\; \forall \varphi \in \Hom{\mathbb{Z}}(M,\, \mathbb{Q}/\mathbb{Z})$ に対して 
+        \begin{align}
+            \bigl( a \Phi (m) \bigr) (\varepsilon) = \Phi(m)(\varphi a) = (\varphi a)(m) = \varphi (am) = \Phi(am) (\varphi)
+        \end{align}
+        より $a\Phi(m) = \Phi (am)$ となる．i.e. $\Phi$ は左 $R$ 加群の準同型写像である．
+
+        次に $\Ker\Phi = \{0\}$ を示す．  
+        $\forall m \in M \setminus \{0\}$ に対して $\mathbb{Z}$ 加群の準同型写像
+        \begin{align}
+            f \colon \mathbb{Z} \lto M,\; a \lmto am
+        \end{align}
+        を考える．$\mathbb{Z}$ が\hyperref[def:PID]{PID}であることから，部分 $\mathbb{Z}$ 加群（i.e. $\mathbb{Z}$ のイデアル） $\Ker f$ はある非負整数 $b$ を用いて $b \mathbb{Z}$ の形に書ける．特に $f(1) = m \neq 0$ なので $b = 0$ または $b \ge 2$ である．
+        
+        $g \colon \Im f \lto \mathbb{Q}/\mathbb{Z}$ を
+        \begin{align}
+            \Im f \xrightarrow{\cong} \mathbb{Z}/\Ker f = \mathbb{Z}/ b\mathbb{Z} \xrightarrow{i} \mathbb{Q}/\mathbb{Z}
+        \end{align}
+        で定める．ただし
+        \begin{align}
+            i \colon \mathbb{Z}/ b \mathbb{Z} \lto \mathbb{Q}/\mathbb{Z},\; n + b \mathbb{Z} \lmto
+            \begin{cases}
+                \frac{n}{2} + \mathbb{Z}, & b = 0 \\
+                \frac{n}{b} + \mathbb{Z}, & b \ge 2
+            \end{cases}
+        \end{align}
+        とする．$\mathbb{Q}/\mathbb{Z}$ が\hyperref[def:inj-mod]{単射的加群}なので，$\mathbb{Z}$ 加群の準同型写像 $h \colon M \lto \mathbb{Q}/\mathbb{Z}$ であって $h \bigm|_{\Im f} = g$ を充たすものが存在する．
+        このとき
+        \begin{align}
+            h(m) = g(m) = i(1 + b \mathbb{Z}) \neq 0
+        \end{align}
+        なので $\Phi(m)(h) = h(m) \neq 0$ となり，$\Phi(m)$ は零写像でないことが言えた．i.e. $\Ker \Phi = \{0\}$ 
+    \end{proof}
+    
+    \hrulefill
+
+    $M$ を任意の左 $R$ 加群とする．すると $\Hom{\mathbb{Z}}(M,\, \mathbb{Q}/\mathbb{Z})$ は右 $R$ 加群だから，命題\ref{prop:free-mod-surjection}よりある\hyperref[def:proj-mod]{射影的右 $R$ 加群} $P$ からの全射準同型写像 $f \colon P \lto \Hom{\mathbb{Z}}(M,\, \mathbb{Q}/\mathbb{Z})$ が存在する．
+    このとき $\Hom{\mathbb{Z}}$ の左完全性から 
+    \begin{align}
+        f^* \colon \Hom{\mathbb{Z}} \bigl( \Hom{\mathbb{Z}}(M, \mathbb{Q}/\mathbb{Z}),\, \mathbb{Q}/\mathbb{Z} \bigr) \lto \Hom{\mathbb{Z}} (P,\, \mathbb{Q}/\mathbb{Z})
+    \end{align}
+    は左 $R$ 加群の単射準同型なので，
+    補題\ref{lem:prop4-10-2}の $\Phi$ との合成 $f^* \circ \Phi \colon M \lto \Hom{\mathbb{Z}}(P,\, \mathbb{Q}/\mathbb{Z})$ は左 $R$ 加群の単射準同型写像である．
+    さらに補題\ref{lem:prop4-10-1}から $\Hom{\mathbb{Z}}(P,\, \mathbb{Q}/\mathbb{Z})$ は\hyperref[def:inj-mod]{単射的加群}なので証明が終わる．
+\end{proof}
+
+
+\subsection{平坦加群・無捻加群}
+
+\begin{mydef}[label=def:flat-mod]{平坦加群}
+    左 $R$ 加群 $N$ が\textbf{平坦加群} (flat module) であるとは，任意の右 $R$ 加群の単射準同型写像 $f\colon M \lto M'$ に対して $f \otimes 1_N \colon M \otimes_R N \lto M' \otimes_R N$ が単射であることを言う．
+\end{mydef}
+
+\begin{mylem}[label=lem:flat-mod-basic]{}
+    左 $R$ 加群 $N$ に対して以下の二つは同値．
+    \begin{enumerate}
+        \item $N$ は\hyperref[def:flat-mod]{平坦加群}
+        \item 任意の右 $R$ 加群の短完全列
+        \begin{align}
+            0 \lto M_1 \xrightarrow{f} M_2 \xrightarrow{g} M_3 \lto 0
+        \end{align}
+        に対して，図式
+        \begin{align}
+            0 \lto M_1 \otimes_R N \xrightarrow{f \otimes 1_N} M_2\otimes_R N \xrightarrow{g \otimes 1_N} M_3 \otimes_R N\lto 0
+        \end{align}
+        は完全列である
+    \end{enumerate}
+\end{mylem}
+
+\begin{proof}
+    テンソル積の右完全性より明らか．
+\end{proof}
+
+
+\begin{myprop}[label=prop:flat-mod-ds]{平坦加群の直和}
+    集合 $\Lambda$ によって添字付けられた左 $R$ 加群の族 $\Familyset[\big]{P_\lambda}{\lambda \in \Lambda}$ をとる．このとき
+    
+    $\forall \lambda \in \Lambda$ に対して $P_\lambda$ が\hyperref[def:flat-mod]{平坦加群} $\IFF\displaystyle \bigoplus_{\lambda \in \Lambda} P_\lambda$ が\hyperref[def:flat-mod]{平坦加群}
+\end{myprop}
+
+\begin{proof}
+    \begin{description}
+        \item[\textbf{$\bm{(\Longrightarrow)}$}] $\forall \lambda \in \Lambda$ に対して $P_\lambda$ が\hyperref[def:flat-mod]{平坦加群}ならば，任意の右 $R$ 加群の単射準同型写像 $f \colon M \lto M'$ に対して $f \otimes 1_{P_\lambda} \colon M \otimes_R P_\lambda \lto M' \otimes_R P_\lambda$ は単射である．故に
+        \begin{align}
+            \bigoplus_{\lambda \in \Lambda} (f \otimes 1_{P_\lambda}) \colon \bigoplus_{\lambda \in \Lambda} (M \otimes_R P_\lambda) \lto \bigoplus_{\lambda \in \Lambda} (M' \otimes_R P_\lambda)
+        \end{align}
+        は単射である．ここで加群の直和が帰納極限であること，および命題\ref{prop:comm-lim2tensor}を用いると
+        \begin{align}
+            \bigoplus_{\lambda \in \Lambda} (M \otimes_R P_\lambda) \cong M \otimes_R \left( \bigoplus_{\lambda \in \Lambda} P_\lambda \right)
+        \end{align}
+        がわかる．この同一視を通じて
+        \begin{align}
+            \bigoplus_{\lambda \in \Lambda} (f \otimes 1_{P_\lambda}) = f \otimes 1_{\bigoplus_{\lambda \in \Lambda} P_\lambda}
+        \end{align}
+        とすると右辺も単射であり，$\bigoplus_{\lambda \in \Lambda} P_\lambda$ は平坦加群である．
+        \item[\textbf{$\bm{(\Longleftarrow)}$}] $\bigoplus_{\lambda \in \Lambda} P_\lambda$ が平坦加群ならば任意の右 $R$ 加群の単射準同型写像 $f \colon M \lto M'$ に対して $f \otimes 1_{\bigoplus_{\lambda \in \Lambda} P_\lambda} = \bigoplus_{\lambda \in \Lambda} P_\lambda$ は単射となる．従って $\forall \lambda \in \Lambda$ に対して $ f \otimes 1_{P_\lambda}$ も単射である．
+    \end{description}
+    
+\end{proof}
+
+
+\begin{mycol}[label=col:proj-flat]{}
+    \hyperref[def:proj-mod]{射影的加群} $\IMP$ \hyperref[def:flat-mod]{平坦加群}
+\end{mycol}
+
+\begin{proof}
+    任意の右 $R$ 加群 $M$ に対して $M \otimes_R R \cong M$ が成り立つことに注意する．従って任意の右 $R$ 加群の単射準同型写像 $f \colon M \lto M'$ に対して $ f \otimes 1_R \colon M \otimes_R R \lto M' \otimes_R R$ は $f$ と同一視できるので単射である，i.e. $R$ は\hyperref[def:flat-mod]{平坦加群}である．
+    自由加群は $R$ の直和と同型だから，命題\ref{prop:flat-mod-ds}より自由加群は\hyperref[def:flat-mod]{平坦加群}である．
+
+    さて，$N$ が\hyperref[def:proj-mod]{射影的加群}ならば命題\ref{prop:proj-mod-basic}からある左 $R$ 加群 $N'$ であって $N \oplus N'$ が自由加群となるものが存在する．故に $N \oplus N'$ は\hyperref[def:flat-mod]{平坦加群}であり，命題\ref{prop:flat-mod-ds}から $N$ は平坦加群である．
+\end{proof}
+
+
+\begin{mycol}[label=col:flat-mod-surjection]{}
+    任意の左 $R$ 加群 $M$ に対して，ある\hyperref[def:flat-mod]{平坦加群}から $M$ への全射準同型写像が存在する．
+\end{mycol}
+
+\begin{proof}
+    命題\ref{prop:free-mod-surjection}より，ある射影的加群から $M$ への全射準同型写像が存在する．さらに系\ref{col:proj-flat}から題意が示された．
+\end{proof}
+
+
+無捻加群を定義し，\hyperref[def:flat-mod]{平坦加群}との関係を述べる：
+
+\begin{mydef}[label=def:torsion]{捩れ元}
+    左 $R$ 加群 $M$ の元 $x \in M$ が\textbf{捻れ元} (torsion element) であるとは，ある $R$ の\hyperref[def:non-zero-diviser]{非零因子} $a$ が存在して $ax = 0$ となることを言う．
+\end{mydef}
+
+
+\begin{mydef}[label=def:torsion-free-mod]{無捻加群}
+    左 $R$ 加群 $M$ が\textbf{無捻加群} (torsion-free module) であるとは，$M$ が $0$ 以外の捻れ元を持たないことを言う．
+\end{mydef}
+
+\begin{myprop}[]{}
+    環 $R$ 上の\hyperref[def:flat-mod]{平坦加群}は\hyperref[def:torsion-free-mod]{無捻加群}である．
+\end{myprop}
+
+\begin{proof}
+    $M$ を\hyperref[def:flat-mod]{平坦加群}とし，$a \in R$ を任意の\hyperref[def:non-zero-diviser]{非零因子}とする．このとき写像
+    $f \colon R \lto R,\; x \lmto ax$ は右 $R$ 加群の単射準同型写像なので $f \otimes 1_M \colon R \otimes_R M \lto R \otimes_R M$ は単射．
+    
+    ここで $R \otimes_R M \cong M$ であることから $f \otimes 1_M$ は $M$ 上の $a$ 倍写像 $M \lto M,\; x \lmto ax$ と同一視できる．
+    これが任意の\hyperref[def:non-zero-diviser]{非零因子} $a$ に対して単射なので $M$ は\hyperref[def:torsion-free-mod]{無捻加群}である．
+\end{proof}
+
+
+$R$ が\hyperref[def:PID]{PID}のときは嬉しいことが起こる：
+
+\begin{myprop}[]{}
+    $R$ が単項イデアル整域ならば，左 $R$ 加群 $M$ について
+
+    $M$ が\hyperref[def:torsion-free-mod]{無捻加群} $\IFF$ $M$ が\hyperref[def:flat-mod]{平坦加群}
+\end{myprop}
+
+\begin{proof}
+    ~\cite[命題1.109]{Shiho}を参照．
+\end{proof}
+
+
+\section{射影的分解と単射的分解}
+
+% \subsection{アーベル圏における複体}
+
+% $R$ 加群の圏 $\MOD{R}$ を一般化したものがアーベル圏である．
+
+% \begin{mydef}[label=def:Abelian-category]{アーベル圏}
+%     圏 $\Cat{A}$ が\textbf{アーベル圏} (Abelian category) であるとは，以下を充たすこと：
+%     \begin{enumerate}
+%         \item 零対象 $O \in \Obj{\Cat{A}}$．
+%         \item $\forall A_1,\, A_2 \in \Obj{\Cat{A}}$ に対して積 $A_1 \times A_2$ と和 $A_1 \amalg A_2$ が存在する．
+%         \item $\Cat{A}$ における任意の射は核と余核を持つ．
+%         \item $\mathcal{A}$ における任意の単射はある射の核であり，かつ任意の全射はある射の余核である．
+%     \end{enumerate}
+    
+% \end{mydef}
+
+\subsection{射影的分解}
+
+\begin{mydef}[label=def:projective-resolution]{射影的分解}
+    左（右） $R$ 加群のチェイン複体
+    \begin{align}
+        \cdots \xrightarrow{\partial_{n+1}} P_n \xrightarrow{\partial_n} P_{n-1} \xrightarrow{\partial_{n-1}} \cdots \xrightarrow{\partial_1} P_0 \xrightarrow{\varepsilon} M \lto 0
+    \end{align}
+    が完全列で，$\forall n \ge 0$ に対して $P_n$ が\hyperref[def:proj-mod]{射影的加群}であるとき，組 $(P_\bullet,\, \partial_\bullet,\, \varepsilon)$ を $M$ の\textbf{射影的分解} (projective resolution) と呼ぶ\footnote{$(P_\bullet,\, \partial_\bullet) \xrightarrow{\varepsilon} M$ とか $P_\bullet \xrightarrow{\varepsilon} M$ などと略記することがある．}．
+    特に $\forall n \ge 0$ に対して $P_n$ が自由加群ならば\textbf{自由分解} (free resolution) と呼ぶ．
+\end{mydef}
+
+\begin{myprop}[label=prop:proj-resol-basic]{}
+    任意の左（右） $R$ 加群 $M$ は射影的分解を持つ．
+\end{myprop}
+
+\begin{proof}
+    $n$ に関する数学的帰納法より示す．
+    まず $n=0$ のとき，命題\ref{prop:free-mod-surjection}から，ある射影的加群 $P_0$ と全射準同型写像 $\varepsilon \colon P_0 \lto M$ が存在するので良い．
+
+    次に，射影的加群 $P_0,\, P_1,\,\dots ,\, P_{n-1}$ の図式
+    \begin{align}
+        P_{n-1} \xrightarrow{\partial_{n-1}} \cdots \xrightarrow{\partial_{1}} P_0 \xrightarrow{\varepsilon} M \lto 0
+    \end{align}
+    が完全列であると仮定する．$K_{n-1} \coloneqq \Ker \partial_{n-1}$ とおき，命題\ref{prop:free-mod-surjection}を使って射影的加群 $P_n$ と全射準同型写像 $p_n \colon P_n \lto K_n$ をとると，2つの図式
+    \begin{align}
+        P_n \xrightarrow{p_n} K_{n-1} \lto 0,\quad 0 \lto K_{n-1} \xrightarrow{\iota_{n-1}} P_{n-1} \xrightarrow{\partial_{n-1}} \cdots \xrightarrow{\partial_1} P_0 \xrightarrow{\varepsilon} M \lto 0
+    \end{align}
+    はどちらも完全列である．ただし $\iota_{n-1} \colon K_{n-1} \hookrightarrow P_{n-1}$ は標準的包含とした．
+    このとき $\partial_n \coloneqq \iota_{n-1} \circ p_{n}$ とおくと，$\Im \iota_{n-1} = \Ker \partial_{n-1}$ かつ $\Im p_n = K_{n-1}$ であることから $\Im \partial_n = \Im \iota_{n-1} = \Ker \partial_{n-1}$ が成り立つので
+    \begin{align}
+        P_{n} \xrightarrow{\partial_n} P_{n-1} \xrightarrow{\partial_{n-1}} \cdots \xrightarrow{\partial_{1}} P_0 \xrightarrow{\varepsilon} M \lto 0
+    \end{align}
+    は完全列である．
+\end{proof}
+
+命題\ref{prop:proj-resol-basic}の構成において，$K_{n} = \Ker \partial_n$ 自身が\hyperref[def:proj-mod]{射影的加群}ならば図式
+\begin{align}
+    \cdots \lto 0 \lto 0 \lto K_n \lto P_{n-1} \lto \cdots \lto P_0 \lto M \lto 0
+\end{align}
+が $M$ の\hyperref[def:projective-resolution]{射影的分解}を与える．このような場合は $K_n$ で完全列を打ち切ることができる．
+
+\begin{mytheo}[label=thm:proj-resol-PID]{}
+    任意の $R$ 加群 $M$ を与える．
+    \begin{enumerate}
+        \item $R$ が体ならば，$M$ は図式
+        \begin{align}
+            0 \lto M \xrightarrow{1} M \lto 0
+        \end{align}
+        を\hyperref[def:projective-resolution]{射影的分解}にもつ．
+        \item $R$ が\hyperref[def:PID]{PID}ならば，$M$ は
+        \begin{align}
+            0 \lto P_1 \lto P_0 \xrightarrow{\varepsilon} M \lto 0
+        \end{align}
+        の形の図式を\hyperref[def:projective-resolution]{射影的分解}にもつ．
+    \end{enumerate}
+\end{mytheo}
+
+\begin{proof}
+    \begin{enumerate}
+        \item $R$ が体ならば $M$ はベクトル空間であり，基底を持つ．i.e. 自由 $R$ 加群なので命題\ref{col:free-proj}より射影的加群である．
+        \item $R$ が単項イデアル整域ならば，系\ref{col:proj-PID}より射影的加群 $P_0$ は自由加群でもある．さらに命題\ref{prop:freemod-PID}から，自由加群 $P_0$ の任意の部分加群は自由加群となる．従って $P_1 \coloneqq \Ker \varepsilon$ とすればこれは自由加群であり，命題\ref{col:free-proj}より射影的加群でもある．
+    \end{enumerate}
+\end{proof}
+
+
+\subsection{単射的分解}
+
+
+\begin{mydef}[label=def:injective-resolution]{単射的分解}
+    左（右） $R$ 加群のコチェイン複体
+    \begin{align}
+        0 \lto M \xrightarrow{i} I^0 \xrightarrow{d^0} \cdots \xrightarrow{d^{n-1}} I^n \xrightarrow{d^n} I^{n+1} \xrightarrow{d^{n+1}} \cdots
+    \end{align}
+    が完全列で，$\forall n \ge 0$ に対して $I^n$ が\hyperref[def:inj-mod]{単射的加群}であるとき，組 $(I^\bullet,\, d^\bullet,\, i)$ を $M$ の\textbf{単射的分解} (injective resolution) と呼ぶ\footnote{$M \xrightarrow{i}(I^\bullet,\, d^\bullet)$ とか $M \xrightarrow{i} I^\bullet$ などと略記することがある．}．
+\end{mydef}
+
+\begin{myprop}[label=prop:inj-resol-basic]{}
+    任意の左（右）$R$ 加群 $M$ は単射的分解を持つ．
+\end{myprop}
+
+\begin{proof}
+    命題\ref{prop:inj-mod-injection}より，命題\ref{prop:proj-mod-basic}の証明において矢印の向きを逆にすればよい．
+\end{proof}
+
+\begin{mytheo}[]{}
+    $R$ が\hyperref[def:PID]{PID}ならば，$M$ は
+    \begin{align}
+        0 \lto M \xrightarrow{i} I^0 \lto I^1 \lto 0
+    \end{align}
+    の形の図式を\hyperref[def:injective-resolution]{単射的分解}にもつ．
+\end{mytheo}
+
+\begin{proof}
+    命題\ref{prop:inj-mod-divisable}より\hyperref[def:inj-mod]{単射的加群} $I^0$ は\hyperref[def:divisable-mod]{可除加群}である．従って $I^1 \coloneqq \Coker i$ とおくとこれは可除加群だが\footnote{可除加群の剰余加群は可除加群になる：可除 $R$ 加群 $M$ と部分加群 $N \subset M$ をとる．$x + N \in M/N$ と $R$ の非零因子 $a$ を任意にとる．このとき $M$ が可除加群であることから $\exists y \in M,\; ay = x$ が成立するが，剰余加群のスカラー乗法の定義から $a(y+N) = (ay) + N = x+ N$ が言える．}，
+    $R$ がPIDであることから命題\ref{prop:PID-inj-divisable}が使えて $I^1$ は単射的加群でもある．
+    故に，標準的射影 $p \colon I^0 \lto I^1$ を用いた完全列
+    \begin{align}
+        0 \lto M \xrightarrow{i} I^0 \xrightarrow{p} \Coker i \lto 0
+    \end{align}
+    は $M$ の\hyperref[def:injective-resolution]{単射的分解}になる．
+\end{proof}
+
+
+\section{$\Tor$ と $\Ext$}
+
+
+\subsection{複体の圏}
+
+本題に入る前に，複体に関して記号を整理する．
+まず，チェイン複体 $(M_\bullet,\, \partial_\bullet)$ は $M^n \coloneqq M_{-n},\; d^n \coloneqq \partial_{-n}$ とおけばコチェイン複体 $(M^\bullet,\, d^\bullet)$ になる．
+このことを踏まえる場合は，今まではチェイン複体，コチェイン複体の圏を $\CHAIN$ と書いていたところを $\Chain{\MOD{R}}$ に書き換えることにする（添字を非負整数ではなく $\mathbb{Z}$ 全体にとれるようになったため）．
+また，便宜上ただ \textbf{複体} (complex) と呼んだ時はコチェイン複体を指すことにする．
+
+チェイン写像・コチェイン写像もまとめて\textbf{複体の射}と呼ぶことがある：
+
+\begin{mydef}[label=def:chain-morphism]{複体の射}
+    加群の圏 $\MOD{R}$ における複体 $M \coloneqq (M^\bullet,\, d^\bullet)$ から複体 $M' \coloneqq (M'{}^\bullet,\, d'{}^\bullet)$ への\textbf{射}とは，$\MOD{R}$ における\hyperref[def:diagram]{図式}としての $M$ から $M'$ への射のことを言う．
+
+    i.e. $\MOD{R}$ における射の族 $f^\bullet \coloneqq (f^q \colon M^q \lto M'{}^q)_{q \in \mathbb{Z}}$ であって
+    \begin{align}
+        \forall q \in \mathbb{Z},\; d'{}^q \circ f^q = f^{q+1} \circ d^q
+    \end{align}
+    を充たすもののこと．
+\end{mydef}
+
+$\MOD{R}$ の対象 $M$ は $M^0 = M,\, M^{n \neq 0} = 0$ とおくことで自然に複体 $M^\bullet$ と見做すことができるので，$\MOD{R}$ は $\Chain{\MOD{R}}$ の充満部分圏とみなせる．
+
+次の命題はひとまず証明なしに認めることにする．
+
+\begin{myprop}[label=prop:CHAIN-Abelian]{}
+    $\Chain{\MOD{R}}$ はアーベル圏である．
+\end{myprop}
+
+複体の図式
+\begin{align}
+    M_1^\bullet \xrightarrow{f^\bullet} M_2^\bullet \xrightarrow{g^\bullet} M_3^\bullet
+\end{align}
+が\textbf{完全列}であるとは，$\forall q \in \mathbb{Z}$ に対して
+\begin{align}
+    M_1^q \xrightarrow{f^q} M_2^q \xrightarrow{g^q} M_3^q
+\end{align}
+が $\MOD{R}$ における\hyperref[def:ES]{完全列}であることと同値である．
+以下では $\MOD{R}$ における短完全列の圏を $\SES{\Chain{\MOD{R}}}$ と書き，完全列の圏を $\ES{\Chain{\MOD{R}}}$ と書くことにする．文脈上 $\MOD{R}$ が明らかな時は $\CSES$ や $\CES$ と書くこともある．
+
+\begin{myprop}[label=prop:cohomology-morphism]{コホモロジーの関手性}
+    $f^\bullet \colon (M^\bullet,\, d^\bullet) \lto (M'{}^\bullet,\, d'{}^\bullet)$ を複体の射とする時，$f^\bullet$ は自然にコホモロジーの射
+    \begin{align}
+        H^q(f^\bullet) \colon H^q (M^\bullet) \lto H^q (M'{}^\bullet)
+    \end{align}
+    を誘導し，これにより $H^q$ は共変関手 $\Chain{\MOD{R}} \lto \MOD{R}$ を定める．
+\end{myprop}
+
+\begin{proof}
+    \hyperref[def:chain-morphism]{複体の射の定義}より，$\forall q \in \mathbb{Z}$ に対して $\MOD{R}$ における次の可換図式がある：
+    \begin{center}
+        \begin{tikzcd}[row sep=large, column sep=large]
+            &M^{q-1} \ar[d, "f^{q-1}"]\ar[r, "d^{q-1}"] &M^q \ar[d, "f^q"] \\
+            &M'{}^{q-1} \ar[r, "d'{}^{q-1}"] &M'{}^q
+        \end{tikzcd}
+    \end{center}
+    これに命題\ref{prop:ES-basic2}を適用することで可換図式
+    \begin{center}
+        \begin{tikzcd}[row sep=large, column sep=large]
+            &M^{q-1} \ar[d, "f^{q-1}"]\ar[r, "d^{q-1}"] &\textcolor{red}{M^q} \ar[d, red, "f^q"]\ar[r, red, "\coker d^{q-1}"] &\textcolor{red}{\Coker d^{q-1}} \ar[d, red, "\overline{f^q}"] \\
+            &M'{}^{q-1} \ar[r, "d'{}^{q-1}"] &\textcolor{red}{M'{}^q} \ar[r, red, "\coker d'{}^{q-1}"] &\textcolor{red}{\Coker d'{}^{q-1}}
+        \end{tikzcd}
+    \end{center}
+    を得，さらに赤色をつけた部分の可換図式に命題\ref{prop:ES-basic2}を適用することで，可換図式
+    \begin{center}
+        \begin{tikzcd}[row sep=large, column sep=large]
+            &\Im d^{q-1} \ar[d,blue, "\overline{\varphi^{q-1}}"]\ar[r, "\im d^{q-1}"] &\textcolor{red}{M^q} \ar[d, red, "f^q"]\ar[r, red, "\coker d^{q-1}"] &\textcolor{red}{\Coker d^{q-1}} \ar[d, red, "\overline{f^q}"] \\
+            &\Im d'{}^{q-1} \ar[r, "\im d'{}^{q-1}"] &\textcolor{red}{M'{}^q} \ar[r, red, "\coker d'{}^{q-1}"] &\textcolor{red}{\Coker d'{}^{q-1}}
+        \end{tikzcd}
+    \end{center}
+    が得られる．ただし $\Ker (\coker d^{q-1}) = \Im d^{q-1},\; \ker (\coker d^{q-1}) = \im d^{q-1}$ を用いた．
+
+    一方，可換図式
+    \begin{center}
+        \begin{tikzcd}[row sep=large, column sep=large]
+            &M^{q} \ar[d, "f^{q}"]\ar[r, "d^{q}"] &M^{q+1} \ar[d, "f^{q+1}"] \\
+            &M'{}^{q} \ar[r, "d'{}^{q}"] &M'{}^{q+1}
+        \end{tikzcd}
+    \end{center}
+    に命題\ref{prop:ES-basic2}を適用することで可換図式
+    \begin{center}
+        \begin{tikzcd}[row sep=large, column sep=large]
+            &\Ker d^q \ar[r, "\ker d^{q}"] \ar[d, blue, "\overline{\psi^q}"] &M^{q} \ar[d, "f^{q}"]\ar[r, "d^{q}"] &M^{q+1} \ar[d, "f^{q+1}"] \\
+            &\Ker d'{}^q \ar[r, "\ker d'{}^{q}"] &M'{}^{q} \ar[r, "d'{}^{q}"] &M'{}^{q+1}
+        \end{tikzcd}
+    \end{center}
+    を得る．その上複体の定義から $d^q \circ d^{q-1} = 0$ なので，一意的に存在する全射 $q \colon M^{q} \lto \Im d^q\quad \text{s.t.} \quad d^q = \im d^q \circ q$ を使って $0 = (d^q \circ \im d^{q-1}) \circ q$，i.e. $d^q \circ \im d^{q-1} = 0$ がいえて，単射 $\iota^q \colon \Im d^{q-1} \lto \Ker d^q$ であって $\ker d^q \circ \iota^q = \im d^{q-1}$ となるものが一意的に存在することがわかる．
+    $d'{}^\bullet$ に関しても同様の構成が可能なので，以上の議論をまとめると可換図式
+    \begin{center}
+        \begin{tikzcd}[row sep=large, column sep=large]
+            &\textcolor{red}{\Ker d^q} \ar[ddd, red, "\overline{\psi^{q}}"]\ar[dr, "\ker d^q"] & &\textcolor{red}{\Im d^{q-1}} \ar[ll, red, "\iota^{q}"] \ar[dl, "\im d^{q-1}"] \ar[ddd, red, "\overline{\varphi^{q-1}}"] \\
+            & &M^q \ar[d, "f^q"] & \\
+            & &M'{}^q& \\
+            &\textcolor{red}{\Ker d'{}^q} \ar[ur, "\ker d'{}^q"] & &\textcolor{red}{\Im d'{}^{q-1}} \ar[ll, red, "\iota'{}^{q}"] \ar[ul, "\im d'{}^{q-1}"] \\
+        \end{tikzcd}
+    \end{center}
+    が得られた．
+    さらに，赤色をつけた部分の可換図式に命題\ref{prop:ES-basic2}を適用することで可換図式
+    % $\forall q \in \mathbb{Z}$ に対して $d'{}^q \circ f^q = f^{q+1} \circ d^q$ が成り立つから，準同型写像
+    % \begin{align}
+    %     \overline{f^{q-1}} &\colon \Im d^{q-1} \lto \Im d'{}^{q-1},\; d^{q-1}(x) \lmto d'{}^{q-1} \bigl( f^{q-1}(x) \bigr), \\
+    %     \overline{f^{q}} &\colon \Ker d^{q-1} \lto \Ker d'{}^{q-1},\; x \lmto f^q(x)
+    % \end{align}
+    % はwell-definedで，かつ自然な単射準同型\footnote{つまり包含写像} $\iota^q \colon \Im d^{q-1} \hookrightarrow \Ker d^q,\; \iota'{}^q \colon \Im d'{}^{q-1} \hookrightarrow \Ker d'{}^q$ に対して図式
+    % \begin{center}
+    %     \begin{tikzcd}[row sep=large, column sep=large]
+    %         &\Im d^{q-1} \ar[r, hookrightarrow, "\iota^q"]\ar[d, "\overline{f^{q-1}}"] &\Ker d^{q} \ar[d, "\overline{f^{q}}"] \\
+    %         &\Im d'{}^{q-1} \ar[r, hookrightarrow, "\iota'{}^q"] &\Ker d^{q}
+    %     \end{tikzcd}
+    % \end{center}
+    % は可換図式になる．従って命題\ref{prop:ES-basic2}より，ある準同型写像
+    % \begin{align}
+    %     H^q(f^\bullet) \colon \Coker \iota^q = H^q(M^\bullet) \lto \Coker \iota'{}^q = H^q(M'{}^\bullet)
+    % \end{align}
+    % が存在して可換図式
+    \begin{center}
+        \begin{tikzcd}[row sep=large, column sep=large]
+			&\textcolor{red}{\Im d^{q-1}} \ar[r, red, "\iota^q"]\ar[d,red, "\overline{\varphi^{q-1}}"] &\textcolor{red}{\Ker d^{q}} \ar[d, red, "\overline{\psi^{q}}"]\ar[r, "\coker  \iota^q"] &H^q(M{}^\bullet)\ar[r]\ar[d, blue, "H^q(f^\bullet)"] &0 &(\text{exact}) \\
+			&\textcolor{red}{\Im d'{}^{q-1}} \ar[r, red, "\iota'{}^q"] &\textcolor{red}{\Ker d^{q}} \ar[r, "\coker  \iota'{}^q"] &H^q(M'{}^\bullet)\ar[r] &0 &(\text{exact})
+		\end{tikzcd}
+    \end{center}
+    が成り立つ．この構成は自然である．
+\end{proof}
+
+\begin{myprop}[label=prop:LES-cohomology]{コホモロジー長完全列}
+    $\SES{\MOD{R}}$ の対象
+    \begin{align}
+        \label{eq:LES}
+        0 \lto (M_1^\bullet,\, d_1^\bullet) \xrightarrow{f^\bullet} (M_2^\bullet,\, d_2^\bullet) \xrightarrow{g^\bullet} (M_3^\bullet,\, d_3^\bullet) \lto 0
+    \end{align}
+    が与えられたとき，自然に完全列
+    \begin{align}
+        \cdots &\xrightarrow{\delta^{q-1}} H^q(M_1^\bullet) \xrightarrow{H^q(f^\bullet)} H^q(M_2^\bullet) \xrightarrow{H^q(g^\bullet)} H^q(M_3^\bullet) \\
+        &\xrightarrow{\delta^{q}} H^{q+1}(M_1^\bullet) \xrightarrow{H^{q+1}(f^\bullet)} H^{q+1}(M_2^\bullet) \xrightarrow{H^{q+1}(g^\bullet)} H^{q+1}(M_3^\bullet) \\
+        &\xrightarrow{\delta^{q+1}} \cdots
+    \end{align}
+    が誘導される．これを短完全列\eqref{eq:LES}に伴う \textbf{コホモロジー長完全列} (long exact sequence of cohomologies) と呼ぶ．$\delta^q\; (\forall q \in \mathbb{Z})$ を\textbf{連結射} (connecting morphism) と呼ぶ．
+\end{myprop}
+
+\begin{proof}
+    $\forall q \in \mathbb{Z}$ に対して可換図式
+    \begin{center}
+        \centering
+        \begin{tikzcd}[row sep=large, column sep=large]
+            &0\ar[r] &M_1^q\ar[d, "d_1^q"]\ar[r, "f^q"] &M_2^q\ar[d, "d_2^q"]\ar[r, "g^q"] &M_3^q\ar[d, "d_3^q"]\ar[r] &0 &(\text{exact}) \\
+            &0\ar[r] &M_1^{q+1}\ar[r, "f^{q+1}"] &M_2^{q+1}\ar[r, "g^{q+1}"] &M_3^{q+1}\ar[r] &0 &(\text{exact})
+        \end{tikzcd}
+    \end{center}
+    が成り立つ．これに\hyperref[thm:snake]{蛇の補題}を用いて完全列
+    \begin{align}
+        0 \lto &\Ker d_1^q \lto \Ker d_2^q \lto \Ker d_3^q, \\
+        &\Coker d_1^q \lto \Coker d_2^q \lto \Coker d_3^q \lto 0
+    \end{align}
+    を得る．
+    
+    $d_i^q \circ d_i^{q-1} = d_i^{q+1} \circ d_i^q = 0$，i.e. $\Im d_i^{q-1} \subset \Ker d_i^q,\; \Im d_i^q \subset \Ker d_i^{q+1}$ より射
+    \begin{align}
+        d_i^q \colon M_i^q \lto M_i^{q+1}
+    \end{align}
+    から自然にwell-definedな射
+    \begin{align}
+        \overline{d_i^q} \colon \Coker d_i^{q-1} \lto \Ker d_i^{q+1},\; x + \Im d_i^{q-1} \lmto d_i^q(x)
+    \end{align}
+    が誘導され，
+    \begin{align}
+        \Ker \overline{d_i^q} &= \Ker d_i^{q} / \Im d_i^{q-1} = H^q(M_i^\bullet), \\
+        \Coker \overline{d_i^q} &= \Ker d_i^{q+1} / \Im d_i^{q} = H^{q+1}(M_i^\bullet)
+    \end{align}
+    が成り立つ．i.e. 可換図式
+    \begin{center}
+        \begin{tikzcd}[row sep=large, column sep=large]
+            & &\Coker d_1^{q-1}\ar[d, "\overline{d_1^q}"]\ar[r, "\overline{f^q}"] &\Coker d_2^{q-1}\ar[d, "\overline{d_2^q}"]\ar[r, "\overline{g^q}"] &\Coker d_3^{q-1}\ar[d, "\overline{d_3^q}"]\ar[r] &0 &(\text{exact}) \\
+            &0\ar[r] &\Ker d_1^{q+1}\ar[r, "\overline{f^{q+1}}"] &\Ker d_2^{q+1}\ar[r, "\overline{g^{q+1}}"] &\Ker d_3^{q+1} & &(\text{exact})
+        \end{tikzcd}
+    \end{center}
+    があるが，これに\hyperref[thm:snake]{蛇の補題}を用いると完全列
+    \begin{align}
+        &H^q(M_1^\bullet) \xrightarrow{H^q(f^\bullet)} H^q(M_2^\bullet) \xrightarrow{H^q(g^\bullet)} H^q(M_3^\bullet) \\
+        &\xrightarrow{\delta^{q}} H^{q+1}(M_1^\bullet) \xrightarrow{H^{q+1}(f^\bullet)} H^{q+1}(M_2^\bullet) \xrightarrow{H^{q+1}(g^\bullet)} H^{q+1}(M_3^\bullet)
+    \end{align}
+    が得られる．
+\end{proof}
+
+\textbf{チェイン・ホモトピー}も再掲する：
+
+\begin{mydef}[label=def:chain-homotopy]{複体の射の間のホモトピー}
+    $(M^\bullet,\, d^\bullet),\; (M'{}^\bullet,\, d'{}^\bullet) \in \Obj{\Chain{\MOD{R}}}$ とし，$f^\bullet,\, g^\bullet \colon (M^\bullet,\, d^\bullet) \lto (M'{}^\bullet,\, d'{}^\bullet)$ を2つの複体の射とする．この時，$f^\bullet,\, g^\bullet$ の間の\textbf{ホモトピー} (homotopy) とは射の族 $(h^q \colon M^q \lto M'{}^{q-1})_{q \in \mathbb{Z}}$ であって
+    \begin{align}
+        \forall q \in \mathbb{Z},\; f^q - g^q = d'{}^{q-1} \circ h^q + h^{q+1} \circ d^q
+    \end{align}
+    が成り立つもののこと．$f^\bullet,\, g^\bullet$ の間にホモトピーが存在する時，$f^\bullet$ と $g^\bullet$ は\textbf{ホモトピック} (homotopic) であるといい，$\bm{f^\bullet \simeq g^\bullet}$ と書く．
+\end{mydef}
+
+\begin{myprop}[label=prop:homotopic-basic]{コホモロジーのホモトピー不変性}
+    $(M^\bullet,\, d^\bullet),\; (M'{}^\bullet,\, d'{}^\bullet) \in \Obj{\Chain{\MOD{R}}}$ とし，$f^\bullet,\, g^\bullet \colon (M^\bullet,\, d^\bullet) \lto (M'{}^\bullet,\, d'{}^\bullet)$ を2つの複体の射であって互いに\hyperref[def:chain-homotopy]{ホモトピック}なものとする．
+    このとき $\forall q \in \mathbb{Z}$ に対して
+    \begin{align}
+        H^q(f^\bullet) = H^q(g^\bullet) \colon H^q(M^\bullet) \lto H^q(M'{}^\bullet)
+    \end{align}
+    が成り立つ．
+\end{myprop}
+
+\begin{proof}
+    命題\ref{prop:cohomology-morphism}および命題\ref{prop:ES-basic2}より，コホモロジーの射は
+    \begin{align}
+        H^q(f^\bullet) &\colon x + \Im d^{q-1} \lmto f^q(x) + \Im d'{}^{q-1}, \\
+        H^q(g^\bullet) &\colon x + \Im d^{q-1} \lmto g^q(x) + \Im d'{}^{q-1}
+    \end{align}
+    と定義される．$\Dpmember[\big]{h^q \colon M^q \lto M'{}^{q-1}}{q \in \mathbb{Z}}$ を\hyperref[def:chain-homotopy]{ホモトピー}とすると，$\forall x \in \Ker d^q$ に対して
+    \begin{align}
+        &H^q(f^\bullet) (x + \Im d^{q-1}) - H^q(g^\bullet)(x + \Im d^{q-1}) \\
+        &= \bigl(f^q(x) + \Im d'{}^{q-1}\bigr) - \bigl( g^q(x) + \Im d'{}^{q-1} \bigr) \\
+        &= \bigl( f^q(x) - g^q(x) \bigr) + \Im d'{}^{q-1} \\
+        &= \Bigl( d'{}^{q-1} \bigl( h^q(x) \bigr) + h^{q+1} \bigl( d^q(x) \bigr)   \Bigr)  + \Im d'{}^{q-1} \\
+        &= h^{q+1} \bigl( 0 \bigr) + \Im d'{}^{q-1} = \Im d'{}^{q-1}
+    \end{align}
+    が成り立つので証明が完了する．
+\end{proof}
+
+
+次に，\textbf{二重複体}を定義しておく：
+
+\begin{mydef}[label=def:double-complex]{二重複体}
+    $\MOD{R}$ における図式\ref{fig:double-complex}が\textbf{二重複体} (double complex) であるとは，$\forall p,\, q \in \mathbb{Z}$ に対して
+    \begin{align}
+        d_1^{p+1,\, q} \circ d_1^{p,\, q} &= 0, \\
+        d_2^{p,\, q+1} \circ d_2^{p,\, q} &= 0, \\
+        d_2^{p+1,\, q} \circ d_1^{p,\, q} + d_1^{p,\, q+1} \circ d_2^{p,\, q} &= 0
+    \end{align}
+    が成り立つことを言う．これを $(M^{\bullet,\, *},\, d_1^{\bullet,\, *},\, d_2^{\bullet,\, *})$ または $M^{\bullet,\, *}$ と書く．
+\end{mydef}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzcd}[row sep=large, column sep=large]
+        &\ar[d, "d_2^{p-1,\, q-2}"] &\ar[d, "d_2^{p,\, q-2}"] &\ar[d, "d_2^{p+1,\, q-2}"] & \\
+        \cdots \ar[r, "d_1^{p-2,\, q-1}"] &M^{p-1,\, q-1} \ar[r, "d_1^{p-1,\, q-1}"]\ar[d, "d_2^{p-1,\, q-1}"] &M^{p,\, q-1} \ar[r, "d_1^{p,\, q-1}"]\ar[d, "d_2^{p,\, q-1}"] &M^{p+1,\, q-1} \ar[r, "d_1^{p+1,\, q-1}"]\ar[d, "d_2^{p+1,\, q-1}"] &\cdots \\
+        \cdots \ar[r, "d_1^{p-2,\, q}"] &M^{p-1,\, q} \ar[r, "d_1^{p-1,\, q}"]\ar[d, "d_2^{p-1,\, q}"] &M^{p,\, q} \ar[r, "d_1^{p,\, q}"]\ar[d, "d_2^{p,\, q}"] &M^{p+1,\, q} \ar[r, "d_1^{p+1,\, q}"]\ar[d, "d_2^{p+1,\, q}"] &\cdots \\
+        \cdots \ar[r, "d_1^{p-2,\, q+1}"] &M^{p-1,\, q+1} \ar[r, "d_1^{p-1,\, q+1}"]\ar[d, "d_2^{p-1,\, q+1}"] &M^{p,\, q+1} \ar[r, "d_1^{p,\, q+1}"]\ar[d, "d_2^{p,\, q+1}"] &M^{p+1,\, q+1} \ar[r, "d_1^{p+1,\, q+1}"]\ar[d, "d_2^{p+1,\, q+1}"] &\cdots \\
+        &\vdots &\vdots &\vdots &
+    \end{tikzcd}
+    \caption{二重複体}
+    \label{fig:double-complex}
+\end{figure}%
+
+二重複体の射は図式の射として定義する．この射によって $\MOD{R}$ 上の二重複体全体は圏を成すので，これを $\mathrm{C}_2 (\MOD{R})$ と書く．$\mathrm{C}_2 (\MOD{R})$ はアーベル圏をなす．
+
+\begin{marker}
+    \hyperref[def:double-complex]{二重複体の定義}を少し変形して，図式\ref{fig:double-complex}が
+    \begin{align}
+        d_1^{p+1,\, q} \circ d_1^{p,\, q} &= 0, \\
+        d_2^{p,\, q+1} \circ d_2^{p,\, q} &= 0, \\
+        d_2^{p+1,\, q} \circ d_1^{p,\, q} &= d_1^{p,\, q+1} \circ d_2^{p,\, q}
+    \end{align}
+    を充たすものを考えることができる．これは複体 $(M^{\bullet,\, q},\, d_1^{\bullet,\, q})$ の複体をなす，i.e. $\Chain{\Chain{\MOD{R}}}$ の対象である．
+
+    さらに $\bigl( M^{\bullet,\, *},\, d_1^{\bullet,\, *},\, (-1)^\bullet d_2^{\bullet,\, *} \bigr)$ を考えると二重複体になる．この対応により $\mathrm{C}_2(\MOD{R}) \cong \Chain{\Chain{\MOD{R}}}$ である．
+\end{marker}
+
+複体 $(M^\bullet,\, d^\bullet)$ は縦に見るか横に見るかの2通りの方法で\hyperref[def:double-complex]{二重複体}になる
+
+\begin{enumerate}
+    \item 横に見る：
+    \begin{align}
+        M^{p,\, q} &= 
+        \begin{cases}
+            M^p, &q = 0 \\
+            0, &q \neq 0 
+        \end{cases}, & & \\
+        d_1^{p,\, q} &=
+        \begin{cases}
+            d^p, &q=0 \\
+            0, &q \neq 0
+        \end{cases}, &
+        d_2^{p,\, q} &= 0
+    \end{align}
+    この二重複体 $(M^{\bullet,\, *},\, d_1^{\bullet,\, *},\, d_2^{\bullet,\, *})$ を $M^\bullet$ と書く．
+    \item 横に見る：
+    \begin{align}
+        M^{p,\, q} &= 
+        \begin{cases}
+            M^q, &p = 0 \\
+            0, &p \neq 0 
+        \end{cases}, & & \\
+        d_1^{p,\, q} &= 0, &
+        d_2^{p,\, q} &=
+        \begin{cases}
+            d^q, &p=0 \\
+            0, &p \neq 0
+        \end{cases}
+    \end{align}
+    この二重複体 $(M^{\bullet,\, *},\, d_1^{\bullet,\, *},\, d_2^{\bullet,\, *})$ を $M^*$ と書く．
+\end{enumerate}
+すなわち，射
+\begin{align}
+    f &\colon (M^\bullet,\, d_M^\bullet) \lto (N^{\bullet,\, *},\, d_{N,\, 1}^{\bullet,\, *},\, d_{N,\,2}^{\bullet,\, *}), \\
+    g &\colon (M^*,\, d_M^*) \lto (N^{\bullet,\, *},\, d_{N,\, 1}^{\bullet,\, *},\, d_{N,\,2}^{\bullet,\, *})
+\end{align}
+とはそれぞれ\hyperref[def:chain-morphism]{複体の射}
+\begin{align}
+    f^\bullet &\colon (M^\bullet,\, d_M^\bullet) \lto (N^{\bullet,\, 0},\, d_{N,\, 1}^{\bullet,\, 0}), \\
+    g^\bullet &\colon (M^\bullet,\, d_M^\bullet) \lto (N^{0,\, \bullet},\, d_{N,\,2}^{0,\, \bullet})
+\end{align}
+であって
+\begin{align}
+    d_{N,\, 2}^{\bullet,\, 0} \circ f^\bullet &= 0, \\
+    d_{N,\, 1}^{0,\, \bullet} \circ g^\bullet &= 0
+\end{align}
+を充たすものを表す．
+
+\begin{mydef}[label=def:Tot]{全複体}
+    $\MOD{R}$ の\hyperref[def:double-complex]{二重複体} $M \coloneqq \DoubleComplex{M}{d_1}{d_2}$ が与えられ，$\forall n \in \mathbb{Z}$ に対して
+    \begin{align}
+        n = p+q \AND M^{p,\, q} \neq 0
+    \end{align}
+    を充たす整数の組 $(p,\, q)$ が有限個であると仮定する
+    \footnote{実のところ $\MOD{R}$ の直和は添字集合が有限でなくとも定義されるので，$\MOD{R}$ のみを考えるならこの仮定は無くても良い．
+        しかし，一般のアーベル圏においては可算個の和が定義されているとは限らないので，この仮定が必要になる場合がある．
+    }．
+
+    \tcblower
+
+    \begin{align}
+        \Tot(M)^n \coloneqq \bigoplus_{p+q = n} M^{p,\, q}
+    \end{align}
+    とおき，射
+    \begin{align}
+        d^n \colon \Tot(M)^n \lto \Tot(M)^{n+1}
+    \end{align}
+    を，標準的包含 $\iota_{p,\, q} \colon M^{p,\, q} \hookrightarrow \Tot^{p+q}\; \WHERE p+q = n$ と書いたときに
+    \begin{align}
+        d^n \circ \iota_{p,\, q} = \iota_{p+1,\, q} \circ d_1^{p,\, q} + \iota_{p,\, q+1} \circ d_2^{p,\, q}
+    \end{align}
+    を充たす唯一の射とする．このとき組 $\Tot(M) \coloneqq (\Tot(M)^\bullet,\, d^\bullet)$ がなす複体を二重複体 $M$ の\textbf{全複体} (total complex) と呼ぶ．
+\end{mydef}
+
+\subsection{$\Tor$ と $\Ext$ の定義}
+
+任意の右 $R$ 加群 $L$ および左 $R$ 加群 $M$ を与える．命題\ref{prop:proj-resol-basic}より，$L,\, M$ の\hyperref[def:projective-resolution]{射影的分解}
+\begin{align}
+    P^\bullet \lto L \lto 0,\quad Q^\bullet \lto M \lto 0
+\end{align}
+をとることができる．このとき複体 $P^\bullet \otimes_R M,\; L \otimes_R Q^\bullet$，\hyperref[def:double-complex]{二重複体} $P^\bullet \otimes_R Q^*$ および射
+\begin{align}
+    &P^\bullet \otimes_R Q^* \lto P^\bullet \otimes_R M,\label{morphism-1} \\
+    &P^\bullet \otimes_R Q^* \lto L \otimes_R Q^* \label{morphism-2}
+\end{align}
+を構成することができる．
+
+\hyperref[def:proj-mod]{射影的加群}は\hyperref[def:flat-mod]{平坦加群}だったので $\forall p,\, q \le 0$ に対して $P^p,\; Q^q$ は平坦加群．従って補題\ref{lem:flat-mod-basic}より射\eqref{morphism-1}, \eqref{morphism-2}はそれぞれ完全列
+\begin{align}
+    \cdots &\lto P^p \otimes_R Q^{-1} \lto P^p \otimes_R Q^0 \lto P^p \otimes_R M \lto 0,\\
+    \cdots &\lto P^{-1} \otimes_R Q^{q} \lto P^0 \otimes_R Q^q \lto L \otimes_R Q^q \lto 0
+\end{align}
+を誘導する．このような状況において，後述する\hyperref[def:double-complex]{二重複体}がつくるスペクトル系列を考えることで， 
+$\forall n \in \mathbb{Z}$ に対する自然な同型
+\begin{align}
+    \label{eq:spectral-isom-Tor}
+    H^{-n}(P^\bullet \otimes_R M) \cong H^{-n} \bigl( \Tot(P^\bullet \otimes_R Q^*) \bigr) \cong H^{-n} (L \otimes_R Q^\bullet)
+\end{align}
+が存在することがわかる．
+
+\begin{mydef}[label=def:Tor]{$\Tor$}
+    $\forall n \ge 0$ に対して
+    \begin{align}
+        \Tor^R_n (L,\, M) \coloneqq H^{-n}(P^\bullet \otimes_R M) \cong H^{-n} \bigl( \Tot(P^\bullet \otimes_R Q^*) \bigr) \cong H^{-n} (L \otimes_R Q^\bullet)
+    \end{align}
+    と定義する．
+\end{mydef}
+
+
+$\Tor^R_n(L,\, M)$ は\hyperref[def:Ab-func]{右完全関手}（系\ref{col:RES-tensor}参照）
+\begin{align}
+    \mhyphen \otimes_R M \colon \MODR{R} \lto \MOD{\mathbb{Z}},\; L \lmto L \otimes_R M
+\end{align}
+の $n$ 番目の左導来関手を $L$ に作用させて得られる $\mathbb{Z}$ 加群であり，かつ\hyperref[def:Ab-func]{右完全関手}
+\begin{align}
+    L \otimes_R \mhyphen \colon \MOD{R} \lto \MOD{\mathbb{Z}},\; M \lmto L \otimes_R M
+\end{align}
+の $n$ 番目の左導来関手を $M$ に作用させて得られる $\mathbb{Z}$ 加群である．
+従って左導来関手の一般論から以下が従う：
+
+\begin{myprop}[label=prop:Tor-basic, breakable]{$\Tor$ の基本性質}
+    \begin{enumerate}
+        \item $\Tor^R_n(L,\, M)$ は\hyperref[def:projective-resolution]{射影的分解}の取り方によらない．
+        また，$M \lmto \Tor^R_n(L,\, M),\; L \lmto \Tor^R_n(L,\, M)$ はそれぞれ関手
+        \begin{align}
+            &\Tor^R_n(L,\, \text{-}) \colon \MOD{R} \lto \MOD{\mathbb{Z}}, \\
+            &\Tor^R_n(\text{-},\, M) \colon \MODR{R} \lto \MOD{\mathbb{Z}}
+        \end{align}
+        を定める．
+        \item $0 \lto M_1 \xrightarrow{f} M_2 \xrightarrow{g} M_3 \lto 0$ を\textbf{左} $R$ 加群の短完全列とすると，自然に長完全列
+        \begin{align}
+            \cdots &\xrightarrow{\delta_{n+1}} \Tor^R_n(L,\, M_1) \lto \Tor^R_n(L,\, M_2) \lto \Tor^R_n(L,\, M_3) \\
+            \cdots &\xrightarrow{\delta_{n}} \Tor^R_{n-1}(L,\, M_1) \lto \Tor^R_{n-1}(L,\, M_2) \lto \Tor^R_{n-1}(L,\, M_3) \\
+            \cdots &\xrightarrow{\delta_{n-1}} \cdots
+        \end{align}
+        が誘導され，この対応により族 $\bigl( \Tor^R_n(L,\, \text{-}) \bigr)_{n \in \mathbb{Z}}$ は関手
+        \begin{align}
+            \SES{\MOD{R}} \lto \ES{\MOD{\mathbb{Z}}}
+        \end{align}
+        を定める．
+        \item $0 \lto L_1 \xrightarrow{f} L_2 \xrightarrow{g} L_3 \lto 0$ を\textbf{右} $R$ 加群の短完全列とすると，自然に長完全列
+        \begin{align}
+            \cdots &\xrightarrow{\delta_{n+1}} \Tor^R_n(L_1,\, M) \lto \Tor^R_n(L_2,\, M) \lto \Tor^R_n(L_3,\, M) \\
+            \cdots &\xrightarrow{\delta_{n}} \Tor^R_{n-1}(L_1,\, M) \lto \Tor^R_{n-1}(L_2,\, M) \lto \Tor^R_{n-1}(L_3,\, M) \\
+            \cdots &\xrightarrow{\delta_{n-1}} \cdots
+        \end{align}
+        が誘導され，この対応により族 $\bigl( \Tor^R_n(\text{-},\, M) \bigr)_{n \in \mathbb{Z}}$ は関手
+        \begin{align}
+            \SES{\MODR{R}} \lto \ES{\MOD{\mathbb{Z}}}
+        \end{align}
+        を定める．
+        \item $\Tor^R_0 (L,\, M) \cong L \otimes_R M$
+    \end{enumerate}
+\end{myprop}
+
+同様にして $\Ext$ が定義される．
+
+$\forall L,\, M \in \MOD{R}$ または $\forall L,\, M \in \MODR{R}$ を考える．命題\ref{prop:inj-resol-basic}より，$L$ の\hyperref[def:projective-resolution]{射影的分解}
+\begin{align}
+    P^\bullet \lto L \lto 0
+\end{align}
+および $M$ の\hyperref[def:injective-resolution]{単射的分解}
+\begin{align}
+    0\lto M \lto I^\bullet
+\end{align}
+をとることができる．このとき複体
+\begin{align}
+    0 &\lto \Hom{R} (P^0,\, M) \lto \Hom{R} (P^{-1},\, M) \lto \cdots \\
+    0 &\lto \Hom{R} (L,\, I^0) \lto \Hom{R} (L,\, I^1) \lto \cdots
+\end{align}
+ができるのでそれぞれ $\Hom{R}(P^\bullet,\, M),\; \Hom{R}(L,\, I^\bullet)$ と書く．
+さらに\hyperref[def:double-complex]{二重複体} $\Hom{R} (P^\bullet,\, I^*)$ および射
+\begin{align}
+    &\Hom{R} (P^\bullet,\, M) \lto \Hom{R}(P^\bullet,\, I^*), \\
+    &\Hom{R} (L,\, I^*) \lto \Hom{R}(P^\bullet,\, I^*)
+\end{align}
+を構成できる．$\forall p \ge 0$ に対して $P^{-p}$ は\hyperref[def:proj-mod]{射影的加群}なので命題\ref{prop:proj-mod-basic}から
+\begin{align}
+    0 \lto \Hom{R} (P^{-p},\, M) \lto \Hom{R} (P^{-p},\, I^0) \lto \Hom{R} (P^{-p},\, I^1) \lto \cdots
+\end{align}
+は完全列になる．一方，$\forall p \ge 0$ に対して $I^{p}$ は\hyperref[def:inj-mod]{単射的加群}なので命題\ref{prop:inj-mod-basic}から
+\begin{align}
+    0 \lto \Hom{R} (L,\, I^p) \lto \Hom{R} (P^0,\, I^p) \lto \Hom{R} (P^{-1},\, I^p) \lto \cdots
+\end{align}
+もまた完全列になる．このような状況において，\hyperref[def:double-complex]{二重複体}がつくるスペクトル系列を考えれば $\forall n \in \mathbb{Z}$ に対する自然な同型
+\begin{align}
+    \label{eq:spectral-isom-Ext}
+    H^n \bigl(\Hom{R}(P^\bullet,\, M)\bigr) \cong H^n \bigl(\Tot (\Hom{R}(P^\bullet,\, I^*))\bigr) \cong H^n \bigl( \Hom{R} (L,\, I^\bullet) \bigr) 
+\end{align}
+が存在することがわかる．
+
+\begin{mydef}[label=def:Ext]{$\Ext$}
+    $\forall n \ge 0$ に対して
+    \begin{align}
+        \Ext^n_R (L,\, M) \coloneqq H^n \bigl(\Hom{R}(P^\bullet,\, M)\bigr) \cong H^n \bigl(\Tot (\Hom{R}(P^\bullet,\, I^*))\bigr) \cong H^n \bigl( \Hom{R} (L,\, I^\bullet) \bigr) 
+    \end{align}
+    と定義する．
+\end{mydef}
+
+$\Ext_R^n(L,\, M)$ は\hyperref[def:Ab-func]{左完全関手}（命題\ref{prop:Hom-split}参照）
+\begin{align}
+    \Hom{R} (\mhyphen,\, M) \colon \OP{\MOD{R}} \lto \MOD{\mathbb{Z}},\; L \lmto \Hom{R}(L,\, M)
+\end{align}
+の $n$ 番目の右導来関手を $L$ に作用させて得られる $\mathbb{Z}$ 加群であり，かつ\hyperref[def:Ab-func]{左完全関手}（命題\ref{prop:Hom-split}参照）
+\begin{align}
+    \Hom{R} (L,\, \mhyphen) \colon \MOD{R} \lto \MOD{\mathbb{Z}},\; M \lmto \Hom{R}(L,\, M)
+\end{align}
+の $n$ 番目の右導来関手を $M$ に作用させて得られる $\mathbb{Z}$ 加群である．
+従って右導来関手の一般論から以下が従う：
+
+\begin{myprop}[label=prop:Ext-basic, breakable]{$\Ext$ の基本性質}
+    \begin{enumerate}
+        \item $\Ext_R^n(L,\, M)$ は $L$ の\hyperref[def:injective-resolution]{射影的分解}および $M$ の\hyperref[def:injective-resolution]{単射的分解}の取り方によらない．
+        また，$M \lmto \Ext^n_R(L,\, M),\; L \lmto \Ext^n_R(L,\, M)$ はそれぞれ関手
+        \begin{align}
+            &\Ext^n_R(L,\, \text{-}) \colon \MOD{R} \lto \MOD{\mathbb{Z}}, \\
+            &\Ext^n_R(\text{-},\, M) \colon \OP{\MOD{R}} \lto \MOD{\mathbb{Z}}
+        \end{align}
+        を定める．
+        \item $0 \lto M_1 \xrightarrow{f} M_2 \xrightarrow{g} M_3 \lto 0$ を\textbf{左} $R$ 加群の短完全列とすると，自然に長完全列
+        \begin{align}
+            \cdots &\xrightarrow{\delta^{n-1}} \Ext^n_R(L,\, M_1) \lto \Ext^n_R(L,\, M_2) \lto \Ext^n_R(L,\, M_3) \\
+            \cdots &\xrightarrow{\delta^{n}} \Ext^{n+1}_R(L,\, M_1) \lto \Ext^{n+1}_R(L,\, M_2) \lto \Ext^{n+1}_R(L,\, M_3) \\
+            \cdots &\xrightarrow{\delta^{n+1}} \cdots
+        \end{align}
+        が誘導され，この対応により族 $\bigl( \Ext^n_R(L,\, \text{-}) \bigr)_{n \in \mathbb{Z}}$ は関手
+        \begin{align}
+            \SES{\MOD{R}} \lto \ES{\MOD{\mathbb{Z}}}
+        \end{align}
+        を定める．
+        \item $0 \lto L_1 \xrightarrow{f} L_2 \xrightarrow{g} L_3 \lto 0$ を\textbf{右} $R$ 加群の短完全列とすると，自然に長完全列
+        \begin{align}
+            \cdots &\xrightarrow{\delta^{n-1}} \Ext^n_R(L_3,\, M) \lto \Ext^n_R(L_2,\, M) \lto \Ext^n_R(L_1,\, M) \\
+            \cdots &\xrightarrow{\delta^{n}} \Ext^{n+1}_R(L_3,\, M) \lto \Ext^{n+1}_R(L_2,\, M) \lto \Ext^{n+1}_R(L_1,\, M) \\
+            \cdots &\xrightarrow{\delta^{n+1}} \cdots
+        \end{align}
+        が誘導され，この対応により族 $\bigl( \Ext^n_R(\text{-},\, M) \bigr)_{n \in \mathbb{Z}}$ は関手
+        \begin{align}
+            \OP{\SES{\MOD{R}}} \lto \ES{\MOD{\mathbb{Z}}}
+        \end{align}
+        を定める．
+        \item $\Ext_R^0 (L,\, M) \cong \Hom{R}(L ,\, M)$
+    \end{enumerate}
+\end{myprop}
+
+次の節ではまず導来関手の一般論を導入して命題\ref{prop:Tor-basic}, \ref{prop:Ext-basic}を証明し，
+その後でスペクトル系列を導入して同型\eqref{eq:spectral-isom-Tor}, \eqref{eq:spectral-isom-Ext}を示す（後者の方が準備が大変）．
+
+しかしその前に，定義\ref{def:Tor}, \ref{def:Ext}から従ういくつかの事実を確認しておく．
+
+\subsection{$\Tor$ に関する小定理集}
+
+\begin{myprop}[]{$\Tor$ と直和の交換}
+    \begin{itemize}
+        \item 右 $R$ 加群の族 $\Familyset[\big]{L_i}{i \in I}$ および左 $R$ 加群 $M$ を与える．
+        このとき以下の同型が成り立つ：
+        \begin{align}
+            \label{isom:Tor2ds-L}
+            \bigoplus_{i \in I} \Tor^R_n (L_i,\, M) \cong \Tor^R_n \left( \bigoplus_{i \in I}L_i,\, M \right)  
+        \end{align}
+        \item 右 $R$ 加群 $L$ および左 $R$ 加群の族 $\Familyset[\big]{M_i}{i \in I}$ を与える．
+        このとき以下の同型が成り立つ：
+        \begin{align}
+            \label{isom:Tor2ds-R}
+            \bigoplus_{i \in I} \Tor^R_n (L,\, M_i) \cong \Tor^R_n \left(L,\, \bigoplus_{i \in I}M_i \right)  
+        \end{align}
+        
+    \end{itemize}
+    
+\end{myprop}
+
+\begin{proof}
+    $Q^\bullet \lto M$ を $M$ の\hyperref[def:projective-resolution]{射影的分解}とする．\hyperref[prop:comm-lim2tensor]{テンソル積と直和は可換}なので，$\forall p > 0$ に対して
+    \begin{align}
+        \bigoplus_{i \in I} (L_i \otimes_R Q^{-p}) \cong \left( \bigoplus_{i \in I} L_i \right)  \otimes_R Q^{-p}
+    \end{align}
+    が成り立つ．
+    \hyperref[def:filtered]{フィルタードな圏} $\Cat{I}$ 上の $\MOD{R}$ の図式において，コホモロジーをとる関手 $H^{-n}$ と帰納極限は交換するので
+    \begin{align}
+        \bigoplus_{i \in I} H^{-n} (L_i \otimes_R Q^{\bullet}) \cong H^{-n}\left( \biggl( \bigoplus_{i \in I} L_i \biggr)  \otimes_R Q^{\bullet} \right)
+    \end{align}
+    がわかり，同型\eqref{isom:Tor2ds-L}が言えた．同型\eqref{isom:Tor2ds-R}に関しても同様である．
+\end{proof}
+
+\begin{myprop}[label=prop:Tor-flat-1]{平坦性による $\Tor$ の特徴付け}
+    任意の左 $R$ 加群 $M$ を与える．このとき以下は互いに同値である：
+    \begin{enumerate}
+        \item $M$ は\hyperref[def:flat-mod]{平坦加群}
+        \item 任意の\textbf{右} $R$ 加群 $L$ と $\forall n \ge 1$ に対して $\Tor^R_n(L,\, M) = 0$
+        \item 任意の\textbf{右} $R$ 加群 $L$ に対して $\Tor^R_{\textcolor{red}{1}}(L,\, M) = 0$
+        \item 任意の $R$ の\hyperref[def:ideal]{右イデアル} $I$ に対して $\Tor^R_1(R/I,\, M) = 0$
+    \end{enumerate}
+\end{myprop}
+
+\begin{proof}
+    \begin{description}
+        \item[\textbf{(1)$\bm{\IMP}$(2)}] 
+        $M$ が\hyperref[def:flat-mod]{平坦加群}であるとする．
+
+        任意の右 $R$ 加群 $L$ と，その\hyperref[def:projective-resolution]{射影的分解} $(P^\bullet,\, d^\bullet) \lto L$ をとる．
+        定義より，次数が $0$ 以下の部分のみをとった複体 $(P^\bullet,\, d^\bullet)$ は完全列だから，\hyperref[def:flat-mod]{平坦加群の定義}より
+        $(P^\bullet \otimes_R M,\, d^\bullet \otimes_R 1_M)$ も完全列である．従って $\forall n \ge 1$ に対して
+        \begin{align}
+            \Tor^R_n (L,\, M) = H^{-n} (P^\bullet \otimes_R M) = \frac{\Ker (d^{-n} \otimes_R 1_M)}{\Im (d^{-n+1} \otimes_R 1_M)} = 0
+        \end{align}
+        である．
+        \item[\textbf{(2)$\bm{\IMP}$(3)$\bm{\IMP}$(4)}] $R/I$ は右 $R$ 加群になるのでよい．
+        \item[\textbf{(4)$\bm{\IMP}$(1)}] 左 $R$ 加群 $M$ が条件 (4) を充たしているとする．また，任意の右 $R$ 加群の単射準同型写像 $f \colon L \lto L'$ を与える．示すべきは
+        $f \otimes_R 1_M \colon L \otimes_R M \lto L' \otimes_R M$ が単射になることである．
+
+        　単射 $f$ を通して $L$ を $L'$ の部分加群と見做す．そして集合 $\mathcal{S}$ を
+        \begin{align}
+            \mathcal{S} \coloneqq \bigl\{\, N \in \MODR{R} \bigm| L \subset N \subset L',\, N/L \; \text{は有限生成} \,\bigr\} 
+        \end{align}
+        とおき，$\mathcal{S}$ 上の順序 $\le$ を
+        \begin{align}
+            \le\mathrel{} \coloneqq \bigl\{\, (N,\, N') \in \mathcal{S} \times \mathcal{S}  \bigm| N \subset N' \,\bigr\} 
+        \end{align}
+        と定義する．さらに $\forall N,\, N' \in \mathcal{S}$ に対して集合
+        \begin{align}
+            J(N,\, N') \coloneqq 
+            \begin{cases}
+                \{*_{N,\, N'}\}, &N \le N' \\
+                \emptyset, &N \not\le N'
+            \end{cases}
+        \end{align}
+        を定義し，合成を
+        \begin{align}
+            \circ &\colon J(N',\, N'') \times J(N,\, N') \lto J(N,\, N''),\\
+            &\begin{cases}
+                (*_{N',\, N''},\, *_{N,\, N'}) \lmto *_{N,\, N''}, &N \le N' \le N'' \\
+                \text{empty map}, &\text{otherwise}
+            \end{cases}
+        \end{align}
+        と定義すると $\bigl(\mathcal{S},\, \{\, J(N,\, N')\, \}_{N,\, N' \in \mathcal{S}} \bigr)$ は\hyperref[def:filtered]{フィルタードな圏}になる．
+        $N \le N'$ のときの包含写像を $i_{N,\, N'} \colon N \hookrightarrow N'$ とかくと $\bigl( \Familyset[\big]{N}{N \in \mathcal{S}},\, \Familyset[\big]{i_{N,\, N'}}{N \le N'} \bigr)$ はフィルタードな圏 $\mathcal{S}$ 上の図式となり，命題\ref{prop:indlim-f}の形をした帰納極限 $\varinjlim_{N \in \mathcal{S}} N$ が定義される．
+        このとき $\mathcal{S}$ の定義より $\forall x \in L'$ に対して $x \in xR + L$ だが $xR + L \in \mathcal{S}$ なので $\varinjlim_{N \in \mathcal{S}} N \cong \bigcup_{N \in \mathcal{S}} N = L'$ となる．
+        ここで，帰納極限とテンソル積は可換だから $L' \otimes_R M \cong \varinjlim_{N \in \Cat{S}} (N \otimes_R M)$ であり，命題\ref{prop:indllim-f}の記号を用いて
+        \begin{align}
+            f \otimes 1_M \colon L \otimes_R M \lto L' \otimes_R M,\; x \lmto [x]
+        \end{align}
+        とかける．従って 
+        \begin{align}
+            x \in \Ker (f \otimes_R 1_M) \IFF [x] = [0] \IFF \exists N \in \mathcal{S},\; (i_{L,\, N} \otimes 1_M)(x) = 0
+        \end{align}
+        が言える．
+        
+        　以上の考察から，$\forall N \in \mathcal{S}$ に対して $\Ker (i_{L,\, N} \otimes 1_M) = \{0\}$ であること，i.e. $i_{L,\, N} \otimes 1_M$ が単射であることを示せば良いとわかった．
+        さらに話を簡単にすると，$L'/L$ が有限生成であるような任意の単射準同型写像 $f \colon L \lto L'$ に対して $f \otimes_R 1_M$ が単射になることを示せば良いということになる．
+        このようなとき $L' = L + x_1 R + \cdots + x_n R$ と書けるが，$0 \le i \le n$ に対して $L'_i \coloneqq L + x_1 R + \cdots + x_i R$ とおき，標準的包含を $f_{i} \colon L'_{i-1} \hookrightarrow L'_{i}$ と書くと，$f \otimes_R 1_M$ の単射性は各 $i$ についての $f_i \otimes_R 1_M$ の単射性に帰着される．その上 $L'_i / L'_{i-1} = (x_i + L'_{i-1}) R$ なので，
+        結局 $L'/L = xR$ と書けるような場合に，任意の単射準同型 $f \colon L \lto L'$ に対して $f \otimes 1_M$ も単射となることを示しさえすれば良い．
+
+        　さて，$L' = L + xR$ と仮定しよう．すると右 $R$ 加群の準同型 $g \colon R \lto L'/L,\, a \lmto xa + L$ は全射であるから，準同型定理により同型 $\overline{g} \colon R/\Ker g \xrightarrow{\cong} L'/L$ が誘導される．このとき $I \coloneqq \Ker g$ は右イデアルである．
+        よって短完全列
+        \begin{align}
+            0 \lto L \xrightarrow{f} L' \lto R/I \lto 0
+        \end{align}
+        があるが，これを元に\hyperref[prop:Tor-basic]{$\Tor$ の基本性質}-(3) の長完全列を構成して $1$ 次から $0$ 次にかけた部分を取ることで完全列
+        \begin{align}
+            \Tor_1^R(R/I,\, M) \lto L \otimes_R M \xrightarrow{f \otimes 1_M} L'\otimes_R M
+        \end{align}
+        が得られる（基本性質-(4) も使った）．ここに仮定 $\Tor_1^R(R/I,\, M) = 0$ を使って $f \otimes 1_M$ が単射であることが示された．
+    \end{description}
+    
+\end{proof}
+
+\begin{mydef}[label=def:flat-resolution]{平坦分解}
+    左 $R$ 加群 $M$ の\textbf{平坦分解} (flat resolution) とは，左 $R$ 加群の\textbf{完全列}
+    \begin{align}
+        \cdots \lto Q^{-1} \lto Q^0 \lto M \lto 0 
+    \end{align}
+    であって，$\forall n \ge 0$ に対して $Q^{-n}$ が\hyperref[def:flat-mod]{平坦加群}であるようなもののこと．
+\end{mydef}
+
+\begin{myprop}[label=prop:Tor-flat-2,breakable]{平坦分解と $\Tor$}
+    \begin{enumerate}
+        \item 任意の左 $R$ 加群 $M$ およびその\hyperref[def:flat-resolution]{平坦分解} $Q^\bullet \lto M$ を与える．
+        このとき，任意の右 $R$ 加群 $L$ に対して
+        \begin{align}
+            \Tor^R_n(L,\, M) \cong H^{-n} (L \otimes_R Q^\bullet)
+        \end{align}
+        が成り立つ\footnote{\hyperref[def:flat-mod]{平坦加群}は\hyperref[def:proj-mod]{射影的加群}とは限らない！}．
+        \item 左 $R$ 加群の短完全列
+        \begin{align}
+            0 \lto M_1 \lto M_2 \lto \textcolor{red}{M_3} \lto 0
+        \end{align}
+        であって，$M_3$ が\hyperref[def:flat-mod]{平坦加群}であるようなものを与える．このとき，任意の右 $R$ 加群 $L$ に対して
+        \begin{align}
+            0 \lto L \otimes_R M_1 \lto L \otimes_R M_2 \lto L \otimes_R M_3 \lto 0
+        \end{align}
+        は $\mathbb{Z}$ 加群の短完全列となる．
+        \item 左 $R$ 加群の短完全列
+        \begin{align}
+            0 \lto M_1 \lto M_2 \lto \textcolor{red}{M_3} \lto 0
+        \end{align}
+        であって，$M_2,\, M_3$ （$M_1,\, M_3$）が\hyperref[def:flat-mod]{平坦加群}であるようなものを与える．
+        このとき，$M_1$（$M_2$）もまた\hyperref[def:flat-mod]{平坦加群}である．
+    \end{enumerate}
+    
+\end{myprop}
+
+\begin{proof}
+    \begin{enumerate}
+        \item 命題\ref{prop:Tor-flat-1}より，\hyperref[def:flat-mod]{平坦加群}は $\MOD{R}$ の $L \otimes_R \mhyphen$ 非輪状対象である．従って $Q^\bullet \lto M$ は $M$ の $L \otimes_R \mhyphen$ 非輪状分解であり，左導来関手の一般論から
+        \begin{align}
+            \Tor^R_n(L,\, M) \cong H^{-n} (L \otimes_R Q^\bullet)
+        \end{align}
+        が成り立つ．
+        \item \hyperref[prop:Tor-basic]{$\Tor$ の基本性質}-(2) の長完全列の一部をとってくると，完全列
+        \begin{align}
+            \Tor_1^R(L,\, M_3) \lto L \otimes_R M_1 \lto L \otimes_R M_2 \lto L \otimes_R M_3 \lto 0
+        \end{align}
+        を得る．命題\ref{prop:Tor-flat-1}-(3)より $\Tor_1^R(L,\, M_3) = 0$ だから示された．
+        \item $M_2,\, M_3$ が平坦加群とする．
+        \hyperref[prop:Tor-basic]{$\Tor$ の基本性質}より完全列
+        \begin{align}
+            \Tor_{n+1}^R(L,\, M_3) \lto \Tor_{n}^R(L,\, M_1) \lto \Tor_{n}^R(L,\, M_2)
+        \end{align}
+        があるが，仮定と命題\ref{prop:Tor-flat-1}より $\Tor_{n+1}^R(L,\, M_3) = \Tor_{n}^R(L,\, M_2) = 0$ となる．よって $\Tor_{n}^R(L,\, M_1) = 0$ であり，命題\ref{prop:Tor-flat-1}から $M_1$ が平坦加群であるとわかる．
+    \end{enumerate}
+\end{proof}
+
+
+\subsection{$\Ext$ に関する小定理集}
+
+\begin{myprop}[]{$\Ext$ と直積}
+    \begin{itemize}
+        \item 左 $R$ 加群の族 $\Familyset[\big]{L_i}{i\in I}$ および左 $R$ 加群 $M$ を与える．このとき以下の同型が成り立つ：
+        \begin{align}
+            \prod_{i \in I} \Ext_R^n (L_i,\, M) \cong \Ext_R^n \left( \bigoplus_{i\in I} L_i,\, M \right) 
+        \end{align}
+        \item 左 $R$ 加群 $L$ および左 $R$ 加群の族 $\Familyset[\big]{M_i}{i\in I}$ を与える．このとき以下の同型が成り立つ：
+        \begin{align}
+            \prod_{i \in I} \Ext_R^n (L,\, M_i) \cong \Ext_R^n \left( L,\, \prod_{i\in I} M_i \right) 
+        \end{align}
+    \end{itemize}
+    
+\end{myprop}
+
+\begin{myprop}[label=prop:Ext-inj-1]{単射的加群による $\Ext$ の特徴付け}
+    任意の左 $R$ 加群 $M$ を与える．このとき以下は互いに同値である：
+    \begin{enumerate}
+        \item $M$ は\hyperref[def:inj-mod]{単射的加群}
+        \item 任意の左 $R$ 加群 $L$ と $\forall n \ge 1$ に対して $\Ext^n_R(L,\, M) = 0$
+        \item 任意の左 $R$ 加群 $L$ に対して $\Ext_R^{\textcolor{red}{1}}(L,\, M) = 0$
+        \item 任意の $R$ の\hyperref[def:ideal]{左イデアル} $I$ に対して $\Ext_R^1(R/I,\, M) = 0$
+    \end{enumerate}
+\end{myprop}
+
+
+\begin{myprop}[label=prop:Ext-proj-1]{射影的加群による $\Ext$ の特徴付け}
+    任意の左 $R$ 加群 $L$ を与える．このとき以下は互いに同値である：
+    \begin{enumerate}
+        \item $L$ は\hyperref[def:proj-mod]{射影的加群}
+        \item 任意の左 $R$ 加群 $M$ と $\forall n \ge 1$ に対して $\Ext^n_R(L,\, M) = 0$
+        \item 任意の左 $R$ 加群 $M$ に対して $\Ext_R^{\textcolor{red}{1}}(L,\, M) = 0$
+    \end{enumerate}
+\end{myprop}
+
+
+\section{導来関手}
+
+この節では $\Cat{A},\, \Cat{B}$ を充分射影的対象を持つ\hyperref[def:Abel]{アーベル圏}とし，アーベル圏でも通用する証明を目指す．
+
+\subsection{左導来関手}
+
+\begin{mydef}[label=def:LDF]{}
+    $F \colon \Cat{A} \lto \Cat{B}$ を\hyperref[def:Ab-func]{加法的関手}とする．
+    このとき $\forall A \in \Obj{\Cat{A}}$ に対して $L_n F(A) \in \Obj{\Cat{A}}$ を次のように対応づける：
+
+    $A$ の\hyperref[def:projective-resolution]{射影的分解} $(P^\bullet,\, d^\bullet) \lto A$ をとり，
+    \begin{align}
+        L_n F(A) \coloneqq H^{-n} \bigl( F(P^\bullet) \bigr) 
+    \end{align}
+    とする．
+\end{mydef}
+
+\begin{myprop}[label=def:LDF-basic, breakable]{左導来関手の定義と基本性質}
+    \begin{enumerate}
+        \item 定義\ref{def:LDF}の $L_nF(A)$ は\hyperref[def:projective-resolution]{射影的分解}の取り方によらない．
+        また，射 $f \in \Hom{\Cat{A}}(A,\, A')$ に対して自然に $L_n F(f) \in \Hom{\Cat{A}}\bigl(L_nF(A) \lto L_nF(A') \bigr)$ が定まり，この対応によって $L_n F$ は関手 $L_n F \colon \Cat{A} \lto \Cat{B}$ を定める．
+        この関手を\textbf{左導来関手} (left derived functor) と呼ぶ．
+        \item $\Cat{A}$ における短完全列 $0\lto A_1 \xrightarrow{f} A_2 \xrightarrow{g} A_3 \lto 0$ に対して，自然に長完全列
+        \begin{align}
+            \cdots &\xrightarrow{\delta_{n+1}} L_nF(A_1) \xrightarrow{L_nF(f)} L_nF(A_2) \xrightarrow{L_nF(g)} L_nF(A_3) \\
+                &\xrightarrow{\delta_{n}} L_{n-1}F(A_1) \xrightarrow{L_{n-1}F(f)} L_{n-1}F(A_2) \xrightarrow{L_{n-1}F(g)} L_{n-1}F(A_3) \\
+                &\xrightarrow{\delta_{n-1}} \cdots 
+        \end{align}
+        が誘導される．この対応により関手の族 $\Familyset[\big]{L_nF}{n \in \mathbb{Z}_{\ge 0}}$ は関手
+        \begin{align}
+            \SES{\Cat{A}} \lto \ES{\Cat{B}}
+        \end{align}
+        を定める．
+        \item $A \in \Obj{\Cat{A}}$ が\hyperref[def:proj-mod]{射影的}ならば $L_{n \textcolor{red}{\ge 1}}F(A) = 0$
+        \item \hyperref[def:nat]{自然変換} $\tau\colon L_0 F \lto F$ があり，$F$ が\hyperref[def:Ab-func]{右完全}ならばこれは\hyperref[def:naturallyeq]{自然同値}である．
+        \item $F$ が\hyperref[def:Ab-func]{完全}ならば $L_{n \textcolor{red}{\ge 1}}F(A) = 0,\; \forall A \in \Obj{\Cat{A}}$
+    \end{enumerate}
+\end{myprop}
+
+命題\ref{prop:def:LDF-basic}を示すために，いくつかの補題を用意する．
+
+\begin{mylem}[label=lem:LDF-1]{}
+    \begin{itemize}
+        \item  射 $f \in \Hom{\Cat{A}}(M,\, N)$
+        \item \hyperref[def:proj-mod]{射影的対象}の族 $(P^{-n})_{n \in \mathbb{Z}}$ によって構成された複体
+        \begin{align}
+            \cdots \xrightarrow{d^{-(n+1)}} P^{-n} \xrightarrow{d^{-n}} P^{-(n-1)} \xrightarrow{d^{-(n-1)}} \cdots \xrightarrow{d^{-1}} P^{0} \xrightarrow{d} M \lto 0
+        \end{align}
+        \item $\Cat{A}$ における完全列
+        \begin{align}
+            \cdots \xrightarrow{e^{-(n+1)}} Q^{-n} \xrightarrow{e^{-n}} Q^{-(n-1)} \xrightarrow{e^{-(n-1)}} \cdots \xrightarrow{e^{-1}} Q^{0} \xrightarrow{e} N \lto 0
+        \end{align}
+    \end{itemize}
+    を与える．このとき，図式\ref{cmtd:LDF-1}を可換にする\hyperref[def:chain-morphism]{複体の射} $f^\bullet \colon P^\bullet \lto Q^\bullet$ が\hyperref[def:chain-homotopy]{ホモトピー}\textbf{を除いて一意に存在}する．
+\end{mylem}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzcd}[row sep=large, column sep=large]
+        P^\bullet \ar[d, "f^\bullet"']\ar[r, "d"] &M\ar[d, "f"] \\
+        Q^\bullet \ar[r, "e"]&N
+    \end{tikzcd}
+    \caption{}
+    \label{cmtd:LDF-1}
+\end{figure}%
+
+\begin{proof}
+\begin{description}
+    \item[\textbf{$\bm{f^\bullet}$ の構成}]　
+    
+    　まず $P^0$ が\hyperref[def:proj-mod]{射影的}かつ $e \colon Q^0 \lto N$ が全射なので次の図式を可換にする $f^0$ が存在する：
+    \begin{figure}[H]
+        \centering
+        \begin{tikzcd}[row sep=large, column sep=large]
+            &           &P^0\ar[dl, dashed, "\exists f^0"']\ar[d, "f \circ d"] \\
+            &Q^0\ar[r, "e"] &N
+        \end{tikzcd}
+    \end{figure}%
+    このとき命題\ref{prop:ES-basic2}より次の図式を可換にする $\overline{f^0}$ が存在する：
+    \begin{figure}[H]
+        \centering
+        \begin{tikzcd}[row sep=large, column sep=large]
+            P^{-1} \ar[r, "\coim d^{-1}"] &\Ker d\ar[r, "\ker d"]\ar[d, dashed, "\exists \overline{f^0}"] &P^0\ar[r, "d"]\ar[d, "f^0"] &M\ar[d, "f"] \\
+            Q^{-1} \ar[r, "\coim e^{-1}"] &\Ker e\ar[r, "\ker e"] &Q^0\ar[r, "e"] &N
+        \end{tikzcd}
+    \end{figure}%
+    $Q^\bullet$ の完全性より $\coim e^{-1} \colon Q^{-1} \lto \Ker e = \Im e^{-1}$ は全射である．これと $P^{-1}$ が射影的であることを使うと次の図式を可換にする $f^{-1}$ が存在する：
+    \begin{figure}[H]
+        \centering
+        \begin{tikzcd}[row sep=large, column sep=large]
+            &                        &P^{-1}\ar[dl, dashed, "\exists f^1"']\ar[d, "\overline{f^0} \circ \coim^{-1} d^{-1}"] \\
+            &Q\ar[r, "\coim e^{-1}"] &N
+        \end{tikzcd}
+    \end{figure}%
+    この $f^{-1}$ は，$d^{-1} = \ker d \circ \coim d^{-1},\, e^{-1} = \ker e \circ \coim e^{-1}$ および上2つの図式の可換性から
+    \begin{align}
+        e^{-1} \circ f^{-1} = \ker e \circ (\coim e^{-1} \circ f^{-1}) = (\ker e \circ \overline{f^0}) \circ \coim d^{-1} = f^0 \circ \ker d \circ \coim d^{-1} = f^0 \circ d^{-1}
+    \end{align}
+    を充し，図式\ref{cmtd:LDF-1}の該当する部分を可換にする．以上の議論を繰り返せばよい．
+
+    \item[\textbf{ホモトピーを除いて一意}]　
+    
+    もう一つの複体の射 $g^\bullet \colon P^\bullet \lto Q^\bullet$ が図式\ref{cmtd:LDF-1}を可換にするとする．
+    
+    $\varphi^{-n} \coloneqq f^{-n} - g^{-n}$ とおく．$e \circ \varphi^0 = e \circ f^0 - e \circ g^0 = f\circ d - f\circ d = 0$ なので，ある射 $\overline{h^0} \colon P^0 \lto \Ker e$ で $\ker e \circ \overline{h^0} = \varphi^0$ を充たすものがある：
+    \begin{figure}[H]
+        \centering
+        \begin{tikzcd}[row sep=large, column sep=large]
+            &                              &                       &P^0\ar[dl, dashed, "\exists \overline{h^0}"']\ar[d, "\varphi^0"] & \\
+            &Q^{-1} \ar[r, "\coim e^{-1}"] &\Ker e\ar[r, "\ker e"] &Q^0\ar[r, "e"]                                                  &N
+        \end{tikzcd}
+    \end{figure}%
+    さらに $\coim e^{-1}$ は全射かつ $P^0$ が射影的なので次の図式を可換にする射 $h^0$ が存在する：
+    \begin{figure}[H]
+        \centering
+        \begin{tikzcd}[row sep=large, column sep=large]
+            &                               &                                        &P^0\ar[dll, dashed, "\exists h^0"']\ar[dl, "\overline{h^0}"]\ar[d, "\varphi^0"] \\
+            &Q^{-1} \ar[r, "\coim e^{-1}"]  &\Ker e\ar[r, "\ker e"] &Q^0\ar[r, "e"]  &N
+        \end{tikzcd}
+    \end{figure}%
+    このとき
+    \begin{align}
+        e^{-1} \circ h^0 = \ker e \circ \coim e^{-1} \circ h^0 = \ker e \circ \overline{h^0} = \varphi^0
+    \end{align}
+    なので $h^0$ は $0$ 次の\hyperref[def:chain-homotopy]{ホモトピー}である．
+
+
+    次に $\psi^{-1} \coloneqq \varphi^{-1} - h^0 \circ d^{-1}$ とおく．すると
+    \begin{align}
+        e^{-1} \circ \psi^{-1} = e^{-1} \circ \varphi^{-1} - e^{-1} \circ h^0 \circ d^{-1} = \varphi^0 \circ d^{-1} - \varphi^0 \circ d^{-1} = 0
+    \end{align}
+    なので，ある射 $\overline{h^{-1}} \colon P^{-1} \lto \Ker e^{-1}$ で $\ker e^{-1} \circ \overline{h^{-1}} = \psi^{-1}$ を充たすものがある：
+    \begin{figure}[H]
+        \centering
+        \begin{tikzcd}[row sep=large, column sep=large]
+            &                              &                                 &P^{-1}\ar[dl, dashed, "\exists \overline{h^{-1}}"']\ar[d, "\psi^{-1}"] &    \\
+            &Q^{-2} \ar[r, "\coim e^{-2}"] &\Ker e^{-1}\ar[r, "\ker e^{-1}"] &Q^{-1}\ar[r, "e^{-1}"]                                                &Q^0
+        \end{tikzcd}
+    \end{figure}%
+    さらに $\coim e^{-2}$ は全射かつ $P^{-1}$ が射影的なので次の図式を可換にする射 $h^{-1}$ が存在する：
+    \begin{figure}[H]
+        \centering
+        \begin{tikzcd}[row sep=large, column sep=large]
+            &                              &                                 &P^{-1}\ar[dl, "\overline{h^{-1}}"]\arrow[dll, dashed, "\exists h^{-1}"']\ar[d, "\psi^{-1}"]   & \\
+            &Q^{-2} \ar[r, "\coim e^{-2}"] &\Ker e^{-1}\ar[r, "\ker e^{-1}"] &Q^{-1}\ar[r, "e^{-1}"]                                                                       &Q^0
+        \end{tikzcd}
+    \end{figure}%
+    このとき
+    \begin{align}
+        e^{-2} \circ h^{-1} = \ker e^{-1} \circ \coim e^{-2} \circ h^{-1} = \ker e^{-1} \circ \overline{h^{-1}} = \psi^{-1}
+    \end{align}
+    が成り立つ．i.e. 
+    \begin{align}
+        \varphi^{-1} = \psi^{-1} + h^0 \circ d^{-1} = e^{-2} \circ h^{-1} + h^0 \circ d^{-1}
+    \end{align}
+    であり，$h^{-1}$ が $1$ 次のホモトピーであることがわかった．あとは同様の議論を繰り返せばよい．
+\end{description}
+\end{proof}
+
+\begin{mylem}[label=lem:LDF-2]{Horseshoe lemma}
+    \begin{itemize}
+        \item $\Cat{A}$ における完全列 $0 \lto L \xrightarrow{f} M \xrightarrow{g} N \lto 0$
+        \item \hyperref[def:projective-resolution]{射影的分解}
+        $(P^\bullet,\, d^\bullet_P) \xrightarrow{d_P} L \lto 0,\quad (R^\bullet,\, d^\bullet_R) \xrightarrow{d_R} N \lto 0$
+        \item $Q^{-n} \coloneqq P^{-n} \oplus R^{-n}$
+    \end{itemize}
+    を与える．このとき以下の条件を充たす可換図式\ref{cmtd:LDF-2}が存在する：
+    \begin{enumerate}
+        \item $(Q^\bullet,\, d_Q^\bullet) \xrightarrow{d_Q} M \lto 0$ は $M$ の \hyperref[def:projective-resolution]{射影的分解}
+        \item 1行目は複体の完全列である．特に $\forall n \in \mathbb{Z}_{\ge 0}$ に対して
+        \begin{align}
+            0 \lto P^{-n} \xrightarrow{f^{-n}} Q^{-n} \xrightarrow{g^{-n}} R^{-n} \lto 0 \quad (\text{exact})
+        \end{align}
+        は，$f^{-n}$ が $Q^{-n} = P^{-n} \oplus Q^{-n}$ の第1成分への標準的包含，$g^{-n}$ が第2成分への標準的射影となる．
+    \end{enumerate}
+\end{mylem}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzcd}[row sep=large, column sep=large]
+        0 \ar[r] &(P^\bullet,\, d_P^\bullet) \ar[r, "f^\bullet"]\ar[d, "d_P"] &(Q^\bullet,\, d^\bullet_Q) \ar[r, "g^\bullet"]\ar[d, "d_Q"] &(R^\bullet,\, d_R^\bullet)\ar[d, "d_R"]\ar[r] &0 &(\text{exact}) \\
+        0 \ar[r] &L \ar[r, "f"] &M \ar[r, "g"] &N\ar[r] &0 &(\text{exact})
+    \end{tikzcd}
+    \caption{}
+    \label{cmtd:LDF-2}
+\end{figure}%
+
+\begin{proof}
+    $\mathrm{pr}^{-n} \colon Q^{-n} \lto P^{-n},\; (x,\, y) \lmto x$ とおく．$g$ は全射かつ $R^0$ は\hyperref[def:proj-mod]{射影的}なので次の図式を可換にする射 $h^0 \colon R^0 \lto M$ が存在する：
+    \begin{figure}[H]
+        \centering
+        \begin{tikzcd}[row sep=large, column sep=large]
+            0\ar[r] &P^0\ar[r, "f^0"]\ar[d, "d_P"] &Q^0\ar[r, "g^0"] &R^0\ar[dl, dashed, "\exists h^0"']\ar[d, "d_R"]\ar[r] &0 &(\text{exact}) \\ 
+            0\ar[r] &L\ar[r, "f"]\ar[d] &M\ar[r, "g"] &N\ar[r]\ar[d] &0 &(\text{exact}) \\ 
+                &0              & &0              & &  \\
+                &(\text{exact}) & &(\text{exact}) & &
+        \end{tikzcd}
+    \end{figure}%
+    ここで $d_Q \colon Q^0 \lto M$ を $d_Q \coloneqq f \circ d_P \circ \mathrm{pr}^0 + h^0 \circ g^0$ とおく．このとき直上の図式の可換性と行の完全性から
+    \begin{align}
+        d_Q \circ f^0 &= f \circ d_P \circ (\mathrm{pr}^0 \circ f^0) + h^0 \circ (g^0 \circ f^0) = f \circ d_P, \\
+        g \circ d_Q &= (g \circ f) \circ d_P \circ \mathrm{pr}^0 + (g \circ h^0) \circ g^0 = d_R \circ g^0
+    \end{align}
+    が成立するので $d_Q$ は可換性を崩さない．
+    
+    また，上の図式に\hyperref[thm:snake]{蛇の補題}を適用すると2つの完全列
+    \begin{align}
+        &\Ker d_P \lto \Ker d_Q \xrightarrow{\overline{g^0}} \Ker d_R \label{eq:Horseshoe-1}\\
+        &\xrightarrow{\delta}\Coker d_P \lto \Coker d_Q \Coker d_R \label{eq:Horseshoe-2}
+    \end{align}
+    が得られるが，列の完全性から $d_P,\, d_R$ が全射で $\Coker d_P = \Coker d_R = 0$ となるから，\eqref{eq:Horseshoe-2}から
+    $\Coker d_Q = 0. \IFF d_Q$ が全射であるとわかる．また，このとき $\overline{g^0}$ が全射になる．
+
+    一方，\eqref{Horseshoe-1}と\hyperref[def:projective-resolution]{射影的分解}の完全性より，
+    次の図式を可換にする射 $h^{-1} \colon R^{-1} \lto \Ker d_Q$ が存在する\footnote{$P^{-1}$ が射影的かつ $\overline{g^0}$ が全射なので．}：
+
+    \begin{figure}[H]
+        \centering
+        \begin{tikzcd}[row sep=large, column sep=large]
+            0\ar[r] &P^{-1}\ar[r, "f^{-1}"]\ar[d, "d_P"] &Q^{-1}\ar[r, "g^{-1}"] &R^{-1}\ar[dl, dashed, "\exists h^{-1}"']\ar[d, "d_R"]\ar[r] &0 &(\text{exact}) \\ 
+            0\ar[r] &\Ker d_P\ar[r, "\overline{f^0}"]\ar[d] &\Ker d_Q\ar[r, "\overline{g^0}"] &\Ker d_R\ar[r]\ar[d] &0 &(\text{exact}) \\ 
+                &0              & &0              & &  \\
+                &(\text{exact}) & &(\text{exact}) & &
+        \end{tikzcd}
+    \end{figure}%
+
+    ここで $d'{}^{-1}_Q \colon Q^{-1} \lto \Ker d_Q$ を $d'{}^{-1}_Q \coloneqq \overline{f^0} \circ \coim d_P^{-1} \circ \mathrm{pr}^{-1} + h^{-1} \circ g^{-1}$ とおくと，$\overline{g^0} \circ \overline{f^0} = 0$ より
+    \begin{align}
+        d'{}^{-1}_Q \circ f^{-1} = \overline{f^0} \circ \coim d_P^{-1} \circ (\mathrm{pr}^{-1} \circ f^{-1}) + h^{-1} \circ (g^{-1} \circ f^{-1}) = \overline{f^0} \circ \coim d_P^{-1}, \\
+        \overline{g^0} \circ d'{}^{-1}_Q = (\overline{g^0} \circ \overline{f^0}) \circ \coim d_P^{-1} \circ \mathrm{pr}^{-1} + (\overline{g^0} \circ h^{-1}) \circ g^{-1} = \coim d_R^{-1} \circ g^{-1}
+    \end{align}
+    なので上の図式の可換性を崩さない．再び\hyperref[thm:snake]{蛇の補題}を適用すると $d'{}^{-1}_Q$ が全射であることが言える．すると $d_Q^{-1} \coloneqq \ker d_Q \circ d'{}^{-1}_Q$ とおくことで図式
+    \begin{align}
+        Q^{-1} \xrightarrow{d_Q^{-1}} Q^0 \xrightarrow{d_Q} M \lto 0
+    \end{align}
+    は完全列になる．以上の議論を繰り返すことで，性質 (1), (2) を充たす可換図式\ref{cmtd:LDF-2}が構成される．
+\end{proof}
+
+\begin{mycol}[label=col:LDF-3-3]{}
+    \begin{itemize}
+        \item $\Cat{A}$ における図式\ref{cmtd:LDF-3-1}
+        \item \hyperref[def:projective-resolution]{射影的分解}
+        \begin{align}
+            (P^\bullet,\, d_P^\bullet)&\xrightarrow{d_P} L \lto 0,\\
+            (R^\bullet,\, d_R^\bullet)&\xrightarrow{d_R} N \lto 0
+        \end{align}
+        \item $Q^{-n} \coloneqq P^{-n} \oplus R^{-n},\quad Q'{}^{-n} \coloneqq P'{}^{-n} \oplus R'{}^{-n}$
+    \end{itemize}
+    を与える．このとき可換図式\ref{cmtd:LDF-3-2}が存在し，上2行と下2行はそれぞれ図式\ref{cmtd:LDF-3-1}の上の行と下の行から補題\ref{lem:LDF-2}の方法で構成したものになっている．
+\end{mycol}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzcd}[row sep=large, column sep=large]
+        0 \ar[r] &L\ar[r, "f"]\ar[d, "\alpha"] &M\ar[r, "g"]\ar[d, "\beta"] &N\ar[r]\ar[d, "\gamma"] &0 &(\text{exact}) \\
+        0 \ar[r] &L\ar[r, "f'"] &M\ar[r, "g'"] &N\ar[r] &0 &(\text{exact})
+    \end{tikzcd}
+    \caption{}
+    \label{cmtd:LDF-3-1}
+\end{figure}%
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzcd}[row sep=large, column sep=large]
+        0 \ar[r] &(P^\bullet,\, d_P^\bullet) \ar[ddr, red, dashed, "\alpha^\bullet"] \ar[r, "f^\bullet"]\ar[d, "d_P"] &(Q^\bullet,\, d^\bullet_Q) \ar[ddr, red, dashed, "\beta^\bullet"] \ar[r, "g^\bullet"]\ar[d, "d_Q"] &(R^\bullet,\, d_R^\bullet)\ar[ddr, red, dashed, "\gamma^\bullet"]\ar[d, "d_R"]\ar[r] &0 &(\text{exact}) \\
+        0 \ar[r] &L \ar[ddr, blue, dashed, "\alpha"]\ar[r, "f"] &M \ar[ddr, blue, dashed, "\beta"]\ar[r, "g"] &N \ar[ddr, blue, dashed, "\gamma"] \ar[r] &0 &(\text{exact}) \\
+        &0 \ar[r] &(P'{}^\bullet,\, d_{P'}^\bullet) \ar[r, "f'{}^\bullet"]\ar[d, "d_P"] &(Q'{}^\bullet,\, d^\bullet_{Q'}) \ar[r, "g'{}^\bullet"]\ar[d, "d'{}_Q"] &(R'{}^\bullet,\, d_{R'}^\bullet)\ar[d, "d_{R'}"]\ar[r] &0 &(\text{exact}) \\
+        &0 \ar[r] &L' \ar[r, "f'"] &M' \ar[r, "g'"] &N'\ar[r] &0 &(\text{exact})
+    \end{tikzcd}
+    \caption{}
+    \label{cmtd:LDF-3-2}
+\end{figure}%
+
+\begin{proof}
+    ~\cite[命題3.21]{Shiho}を参照
+\end{proof}
+
+
+ここまでの準備の下，命題\ref{def:LDF-basic}を示す．
+
+\begin{proof}
+    \begin{enumerate}
+        \item $A \in \Obj{\Cat{A}}$ の二つの\hyperref[def:projective-resolution]{射影的分解} $(P^\bullet,\, d^\bullet) \xrightarrow{d} A,\; (Q^\bullet,\, e^\bullet) \xrightarrow{e} A$ をとると，補題\ref{lem:LDF-1}より複体の射
+        $\varphi^\bullet \colon P^\bullet \lto Q^\bullet,\; \psi^\bullet \colon Q^\bullet \lto P^\bullet$ であって $e \circ \varphi = d,\; d \circ \psi = e$ を充たすものが存在して
+        \begin{align}
+            \psi \circ \varphi \simeq 1_{P^\bullet},\quad \varphi \circ \psi \simeq 1_{Q^\bullet}
+        \end{align}
+        となる．\hyperref[def:Ab-func]{加法的関手}によってホモトピーは保存されるから
+        \begin{align}
+            F(\psi) \circ F(\varphi) \simeq 1_{F(P^\bullet)},\quad F(\varphi) \circ F(\psi) \simeq 1_{F(Q^\bullet)}
+        \end{align}
+        となり，
+        \begin{align}
+            H^{-n} \bigl( F(\psi) \bigr) \circ H^{-n}\bigl(F(\varphi)\bigr) = 1_{H^{-n}(F(P^\bullet))},\quad H^{-n}(F(\varphi)) \circ H^{-n}(F(\psi)) = 1_{H^{-n}(F(Q^\bullet))}
+        \end{align}
+        がわかる．i.e. $H^{-n} \bigl( F(P^\bullet) \bigr),\, H^{-n} \bigl( F(Q^\bullet) \bigr)$ は同型である．
+
+        $e \circ \varphi' = d$ を充たす別の複体の射 $\varphi'\colon P^\bullet \lto Q^\bullet$ があるとしても命題\ref{lem:LDF-1}より $\varphi \simeq \varphi'$ なので，$H^{-n} \bigl( F(P^\bullet) \bigr),\, H^{-n} \bigl( F(Q^\bullet) \bigr)$ の同型は $\varphi$ の取り方に依らない．
+        従って定義\ref{def:LDF}の $L_nF(A) \coloneqq H^{-n} \bigl( F(P^\bullet) \bigr)$ の右辺は $A$ の\hyperref[def:projective-resolution]{射影的分解}の取り方に依らない．
+
+        次に射 $f \in \Hom{\Cat{A}}(A,\, A')$ がある場合を考える．$A,\, A'$ の射影的分解 $(P^\bullet,\, d^\bullet) \xrightarrow{d}A,\;(P'{}^\bullet,\, d'{}^\bullet) \xrightarrow{d'}A'$ をとると命題\ref{lem:LDF-1}より複体の射 $\varphi\coloneqq P^\bullet \lto P'{}^\bullet$ で $d' \circ \varphi = f \circ d$ を充たすものがホモトピーを除いて一意に定まる．このとき
+        \begin{align}
+            H^{-n} \bigl( F(\varphi) \bigr) \colon L_nF(A) \lto L_nF(A')
+        \end{align}
+        が射 $\varphi$ の取り方に依らずに定まる．
+        \begin{align}
+            L_nF(1_A) &= 1_{L_nF(A)}, \\
+            L_nF(g \circ f) &= L_nF(g) \circ L_nF(f)
+        \end{align}
+        も言えるので $L_nF$ は関手である．
+        \item 補題\ref{lem:LDF-2}より可換図式
+        \begin{figure}[H]
+            \centering
+            \begin{tikzcd}[row sep=large, column sep=large]
+                0 \ar[r] &(P^\bullet,\, d_P^\bullet) \ar[r, "f^\bullet"]\ar[d, "d_P"] &(Q^\bullet,\, d^\bullet_Q) \ar[r, "g^\bullet"]\ar[d, "d_Q"] &(R^\bullet,\, d_R^\bullet)\ar[d, "d_R"]\ar[r] &0 &(\text{exact}) \\
+                0 \ar[r] &A_1 \ar[r, "f"] &A_2 \ar[r, "g"] &A_3\ar[r] &0 &(\text{exact})
+            \end{tikzcd}
+        \end{figure}%
+        で，$\forall n \ge 0$ に対して
+        \begin{align}
+            0 \lto P^{-n} \xrightarrow{f^{-n}} Q^{-n} \xrightarrow{g^{-n}} R^{-n} \lto 0
+        \end{align}
+        が\hyperref[def:split]{分裂完全列}であり，全ての列が\hyperref[def:projective-resolution]{射影的分解}となるようなものが存在する．\hyperref[def:Ab-func]{加法的関手}によって複体は保存されるので
+        \begin{align}
+            0 \lto \bigl( F(P^\bullet),\, F(d_P^\bullet) \bigr) \lto \bigl( F(Q^\bullet),\, F(d_Q^\bullet) \bigr) \lto \bigl( F(R^\bullet),\, F(d_R^\bullet) \bigr) \lto 0 
+        \end{align}
+        も完全列となるので，これのコホモロジー長完全列をとることで題意の長完全列を得る．
+
+        系\ref{col:LDF-3-3}を使うと $\Familyset[\big]{L_nF}{n\in \mathbb{Z}}$ が関手 $\SES{\Cat{A}} \lto \ES{\Cat{A}}$ を定めることもわかる．
+
+        \item $A \in \Obj{\Cat{A}}$ が射影的ならば $A \xrightarrow{1_A} A$ が $A$ の射影的分解になるので $n\ge 1$ に対して $L_nF(A) = H^{-n}(A) = 0$．
+        \item $A$ の射影的分解 $(P^\bullet,\, d^\bullet) \xrightarrow{d} A \lto 0$ をとると
+        \begin{align}
+            F(d) \circ F(d^{-1}) = F(d \circ d^{-1}) = F(0) = 0
+        \end{align}
+        となる\footnote{逆射ではない！}ので $F(d)$ は射
+        \begin{align}
+            \Coker F(d^{-1}) \lto F(A) 
+        \end{align}
+        を誘導するが，$L_0F(A) = \Coker F(d^{-1})$ であり，これが\hyperref[def:nat]{自然変換} $\tau \colon L_0F \lto F$ を定める．
+
+        $F$ が\hyperref[def:Ab-func]{右完全関手}ならば
+        \begin{align}
+            F(P^{-1}) \xrightarrow{F(d^{-1})} F(P^0) \xrightarrow{F(d)} F(A) \lto 0
+        \end{align}
+        が完全なので命題\ref{prop:ES-basic}-(2)より上述の射 $L_0 F(A) \lto F(A)$ は同型となる．
+        \item $A$ の射影的分解 $(P^\bullet,\, d^\bullet) \xrightarrow{d} A \lto 0$ をとると $F$ が\hyperref[def:Ab-func]{完全関手}ならば複体 $\Familyset[\big]{F(P^{-p}),\, F(d^{-p})}{p\ge 1 }$ は完全になる．従って $n \ge 1$ に対して $L_nF(A) = H^{-n} (F(P^\bullet)) = 0$ となる．
+    \end{enumerate}
+\end{proof}
+
+
+\subsection{左Cartan-Eilenberg分解}
+
+次の命題はK\"unnethスペクトル系列を示す際に使う：
+
+\begin{myprop}[label=prop:Cartan-Eilenberg-L, breakable]{左Cartan-Eilenberg分解}
+    $\Cat{A}$ における複体 $(C^\bullet,\, d^\bullet)$ を任意に与える．このとき，ある\hyperref[def:double-complex]{二重複体}からの射
+    \begin{align}
+        (P^{\bullet,\, *},\, d_1^{\bullet,\, *},\, d_2^{\bullet,\, *}) \lto (C^\bullet,\, d^\bullet) \label{eq:CEresol-L}
+    \end{align}
+    が存在して，
+    \begin{align}
+        Z^{-n,\, -m} &\coloneqq \Ker d_1^{-n,\, -m}, \\
+        B^{-n,\, -m} &\coloneqq \Im d_1^{-n-1,\, -m}, \\
+        H^{-n,\, -m} &\coloneqq  Z^{-n,\, -m} /  B^{-n,\, -m}
+    \end{align}
+    とおいたとき以下の条件を充たす：
+    \begin{enumerate}
+        \item $\forall n \in \mathbb{Z}$ に対して $(P^{-n,\,\bullet},\, d_2^{-n,\, \bullet})$ は\hyperref[def:projective-resolution]{射影的分解}．
+        \item $\forall n \in \mathbb{Z}$ に対して，$d_2^{-n,\, -m}$ が引き起こす射による複体
+        \begin{align}
+            &(Z^{-n,\, -\bullet},\; d_{2,\,Z}^{-n,\, \bullet}),\\
+            &(B^{-n,\, -\bullet},\; d_{2,\,B}^{-n,\, \bullet}),\\ 
+            &(H^{-n,\, -\bullet},\; d_{2,\,H}^{-n,\, \bullet})
+        \end{align}
+        から定まる図式
+        \begin{align}
+            &(Z^{-n,\, -\bullet},\; d_{2,\,Z}^{-n,\, \bullet}) \lto \Ker d^{-n},\\
+            &(B^{-n,\, -\bullet},\; d_{2,\,B}^{-n,\, \bullet}) \lto \Im d^{-n-1},\\ 
+            &(H^{-n,\, -\bullet},\; d_{2,\,H}^{-n,\, \bullet}) \lto H^{-n} (C^\bullet)
+        \end{align}
+        が全て\hyperref[def:projective-resolution]{射影的分解}．
+        \item $\forall n \in \mathbb{Z}$ に対して
+        \begin{align}
+            C^{-n} = 0 &\IMP P^{-n,\, \bullet} = 0, \\
+            H^{-n}(C^\bullet) = 0 &\IMP H^{-n,\, \bullet} = 0.
+        \end{align}
+    \end{enumerate}
+\end{myprop}
+
+\begin{proof}
+    命題\ref{prop:proj-mod-basic}より，$\forall n \in \mathbb{Z}$ に対して\hyperref[def:projective-resolution]{射影的分解}
+    \begin{align}
+        &(B^{-n,\, \bullet},\, d_{2,\, B}^{-n,\,\bullet}) \lto \Im d^{-n\textcolor{red}{-1}},\label{eq:CE-resol-1}\\
+        &(H^{-n,\, \bullet},\, d_{2,\, H}^{-n,\,\bullet}) \lto H^{-n} (C^\bullet)\label{eq:CE-resol-2}
+    \end{align}
+    をとることができる\footnote{この時点ではこのような記号でおいただけである．}．
+    これらと完全列
+    \begin{align}
+        0 \lto \Im d^{-n-1} \xrightarrow{i^{-n}} \Ker d^{-n} \xrightarrow{\coker i^{-n}} H^{-n}(C^\bullet) \lto 0
+    \end{align}
+    に対して補題\ref{lem:LDF-2}を適用すると，$Z^{-n,\, \bullet} \coloneqq B^{-n,\, \bullet} \oplus H^{-n,\, \bullet}$ とした可換図式
+    \begin{center}
+        \begin{tikzcd}[row sep=large, column sep=large]
+            0 \ar[r] &(B^{-n,\, \bullet},\, d_{2,\, B}^{-n,\, \bullet}) \ar[r, "i^{-n,\, \bullet}"]\ar[d] &(Z^{-n,\, \bullet},\, d_{2,\, Z}^{-n,\, \bullet}) \ar[r, "p^{-n,\, \bullet}"]\ar[d] &(H^{-n,\, \bullet},\, d_{2,\, H}^{-n,\, \bullet})\ar[d]\ar[r] &0 &(\text{exact}) \\
+            0 \ar[r] &\Im d^{-n-1} \ar[r, "i^{-n}"] &\Ker d^{-n} \ar[r, "\coker i^{-n}"] &H^{-n}(C^\bullet) \ar[r] &0 &(\text{exact})
+        \end{tikzcd}
+    \end{center}
+    で，真ん中の列が\hyperref[def:projective-resolution]{射影的分解}となるようなものが存在する．
+
+    一方，命題\ref{prop:ES-basic}-(3) より完全列
+    \begin{align}
+        0 \lto \Ker d^{-n} \xrightarrow{\ker d^{-n}} C^{-n} \xrightarrow{\coim d^{-n}} \Im d^{-n} \lto 0
+    \end{align}
+    があるので，これと\eqref{eq:CE-resol-1}, \eqref{eq:CE-resol-2}に補題\ref{lem:LDF-2}を適用すると，$Q^{-n,\, \bullet} \coloneqq Z^{-n,\, \bullet} \oplus B^{-n \textcolor{red}{+1},\, \bullet}$ とした可換図式
+    \begin{center}
+        \begin{tikzcd}[row sep=large, column sep=large]
+            0 \ar[r] &(Z^{-n,\, \bullet},\, d_{2,\, Z}^{-n,\, \bullet}) \ar[r, "\iota^{-n,\, \bullet}"]\ar[d] &(Q^{-n,\, \bullet},\, d_{2,\, Q}^{-n,\, \bullet}) \ar[r, "\pi^{-n,\, \bullet}"]\ar[d] &(B^{-n\textcolor{red}{+1},\, \bullet},\, d_{2,\, B}^{-n\textcolor{red}{+1},\, \bullet})\ar[d]\ar[r] &0 &(\text{exact}) \\
+            0 \ar[r] &\Ker d^{-n} \ar[r, "\ker d^{-n}"] &C^{-n} \ar[r, "\coim d^{-n}"] &\Im d^{-n} \ar[r] &0 &(\text{exact})
+        \end{tikzcd}
+    \end{center}
+    で真ん中の列が\hyperref[def:projective-resolution]{射影的分解}となるようなものが存在する．ここで
+    \begin{align}
+        d_{1,\, Q}^{-n,\, -m} \coloneqq \iota^{-n+1,\, -m} \circ i^{-n+1,\, -m} \circ \pi^{-n,\, -m}
+    \end{align}
+    とおくと，上の図式の行の完全性より
+    \begin{align}
+        d^{-n+1,\,-m}_{1,\,Q} \circ d^{-n,\, -m}_{1,\, Q} &= (\iota^{-n+2,\, -m} \circ i^{-n+2,\, -m} \circ \pi^{-n+1,\, -m}) \circ (\iota^{-n+1,\, -m} \circ i^{-n+1,\, -m} \circ \pi^{-n,\, -m}) \\
+        &= \iota^{-n+2,\, -m} \circ i^{-n+2,\, -m} \circ (\pi^{-n+1,\, -m} \circ \iota^{-n+1,\, -m}) \circ i^{-n+1,\, -m} \circ \pi^{-n,\, -m} \\
+        &= 0 \label{eq:CEresol-L-DC-1}
+    \end{align}
+    が，\hyperref[def:projective-resolution]{射影的分解}の完全性から
+    \begin{align}
+        d^{-n,\,-m+1}_{2,\,Q} \circ d^{-n,\, -m+1}_{2,\, Q} = 0 \label{eq:CEresol-L-DC-2}
+    \end{align}
+    が，上の2つの図式の可換性から
+    \begin{align}
+        d^{-n+1,\, -m}_{2,\, Q} \circ d^{-n,\, -m}_{1,\, Q} &= (d^{-n+1,\, -m}_{2,\, Q} \circ \iota^{-n+1,\, -m}) \circ i^{-n+1,\, -m} \circ \pi^{-n,\, -m} \\
+        &= \iota^{-n+1,\, -m+1} \circ (d^{-n+1,\, -m}_{2,\, Z} \circ i^{-n+1,\, -m}) \circ \pi^{-n,\, -m} \\
+        &= \iota^{-n+1,\, -m+1} \circ i^{-n+1,\, -m+1} \circ (d^{-n+1,\, -m}_{2,\, B} \circ \pi^{-n,\, -m}) \\
+        &= (\iota^{-n+1,\, -m+1} \circ i^{-n+1,\, -m+1} \circ \pi^{-n,\, -m+1}) \circ d^{-n,\, -m}_{2,\, Q} \\
+        &= d^{-n,\, -m+1}_{1,\, Q} \circ d^{-n,\, -m}_{2,\, Q} \label{eq:CEresol-L-DC-3}
+    \end{align}
+    が従う．i.e. \eqref{eq:CEresol-L-DC-1}, \eqref{eq:CEresol-L-DC-2}, \eqref{eq:CEresol-L-DC-3}より
+    \begin{align}
+        (P^{\bullet,\, *},\, d_1^{\bullet,\, *},\, d_2^{\bullet,\, *}) \coloneqq (Q^{\bullet,\, *},\, d_{1,\, Q}^{\bullet,\, *},\, (-1)^\bullet d_{2,\, Q}^{\bullet,\, *})
+    \end{align}
+    は $m > 0$ を見ると\hyperref[def:double-complex]{二重複体}になり\footnote{符号については\hyperref[def:double-complex]{二重複体の定義}の直下の注を参照．}，$m=0$ の部分から
+    射\eqref{eq:CEresol-L}が得られる．構成よりこの射は条件 (1), (2), (3) を充たす．
+\end{proof}
+
+\subsection{右導来関手}
+
+$\OP{\mathcal{A}}$ に対して同様の議論をすれば右導来関手が得られる．ここでは結果だけ述べよう．
+
+$\mathcal{A}$ を十分単射的対象を持つアーベル圏，$\mathcal{B}$ をアーベル圏とする．
+
+\begin{mydef}[label=def:RDF]{}
+    $F \colon \mathcal{A} \lto \mathcal{B}$ をとする．このとき $\forall A \in \Obj{\Cat{A}}$ に対して $R^n F(A) \in \Obj{\Cat{A}}$ を次のように対応づける：
+
+    $A$ の\hyperref[def:injective-resolution]{単射的分解} $A \lto (I^\bullet,\, d^\bullet)$ をとり，
+    \begin{align}
+        R^n F(A) \coloneqq H^n \bigl( F(I^\bullet) \bigr) 
+    \end{align}
+    とする．
+\end{mydef}
+
+
+\begin{myprop}[label=def:RDF-basic, breakable]{右導来関手の定義と基本性質}
+    \begin{enumerate}
+        \item 定義\ref{def:RDF}の $R_nF(A)$ は\hyperref[def:injective-resolution]{射影的分解}の取り方によらない．
+        また，射 $f \in \Hom{\Cat{A}}(A,\, A')$ に対して自然に $R^n F(f) \in \Hom{\Cat{A}}\bigl(R^nF(A),\, R^nF(A') \bigr)$ が定まり，
+        この対応によって $L_n F$ は関手 $L_n F \colon \Cat{A} \lto \Cat{B}$ になる．
+        これを\textbf{右導来関手} (right derived functor) と呼ぶ．
+        \item $\Cat{A}$ における短完全列 $0\lto A_1 \xrightarrow{f} A_2 \xrightarrow{g} A_3 \lto 0$ に対して，自然に長完全列
+        \begin{align}
+            \cdots &\xrightarrow{\delta^{n-1}} R^nF(A_1) \xrightarrow{R^n F(f)} R^nF(A_2) \xrightarrow{R^nF(g)} R^nF(A_3) \\
+                &\xrightarrow{\delta^{n}} R^{n+1}F(A_1) \xrightarrow{R^{n+1}F(f)} R^{n+1}F(A_2) \xrightarrow{R^{n+1}F(g)} R^{n+1}F(A_3) \\
+                &\xrightarrow{\delta^{n+1}} \cdots 
+        \end{align}
+        が誘導される．この対応により関手の族 $\Familyset[\big]{R^nF}{n \in \mathbb{Z}_{\ge 0}}$ は関手
+        \begin{align}
+            \SES{\Cat{A}} \lto \ES{\Cat{B}}
+        \end{align}
+        を定める．
+        \item $A \in \Obj{\Cat{A}}$ が\hyperref[def:inj-mod]{単射的}ならば $R^{n \textcolor{red}{\ge 1}}F(A) = 0$
+        \item \hyperref[def:nat]{自然変換} $\tau\colon F \lto R^0 F$ があり，$F$ が\hyperref[def:Ab-func]{右完全}ならばこれは\hyperref[def:naturallyeq]{自然同値}である．
+        \item $F$ が\hyperref[def:Ab-func]{完全}ならば $R^{n \textcolor{red}{\ge 1}}F(A) = 0,\; \forall A \in \Obj{\Cat{A}}$
+    \end{enumerate}
+\end{myprop}
+
+
+
+\section{スペクトル系列}
+
+同型\eqref{eq:spectral-isom-Tor}, \eqref{eq:spectral-isom-Ext}を示すためにスペクトル系列を考察する．また，K\"unnethスペクトル系列を構成することで普遍係数定理を証明する．
+
+\textcolor{red}{(2023/5/11) この節は未完である}．
+
+\subsection{filtrationとスペクトル系列の定義}
+
+この節では $\Cat{A}$ をアーベル圏とするが，\hyperref[thm:embedding]{Mitchellの埋め込み定理}を用いて $\Cat{A} = \MOD{R}$ の場合のみを考えることも多い．
+まずアーベル圏におけるfiltrationの概念を導入する．
+
+\begin{mydef}[label=def:filtration, breakable]{フィルター付け}
+    \begin{enumerate}
+        \item $\forall E \in \Obj{\Cat{A}}$ を1つとる．$E$ の\textbf{フィルター付け} (filtration) とは，
+        \begin{itemize}
+            \item $\Cat{A}$ の対象の族 $\Dpmember[\big]{F^pE}{p \in \mathbb{Z}}$
+            \item 単射の族 $\Dpmember[\big]{i^p \colon F^{\textcolor{red}{p+1}}E \lto F^{\textcolor{red}{p}}E}{p \in \mathbb{Z}}$
+            \item 単射の族 $\Dpmember[\big]{\iota^p \colon F^{p}E \lto E}{p \in \mathbb{Z}}$
+        \end{itemize}
+        の3つ組であって，
+        \begin{align}
+            \iota^p \circ i^{p} = \iota^{p+1}
+        \end{align}
+        を充たすもののことを言う．
+        \item 4つ組み
+        \begin{align}
+            \Bigl( E,\, \Dpmember[\big]{F^pE}{p \in \mathbb{Z}},\, \Dpmember[\big]{i^p \colon F^{\textcolor{red}{p+1}}E \lto F^{\textcolor{red}{p}}E}{p \in \mathbb{Z}},\, \Dpmember[\big]{\iota^p \colon F^{p}E \lto E}{p \in \mathbb{Z}} \Bigr)
+        \end{align}
+        のことをアーベル圏 $\Cat{A}$ における\textbf{フィルター付けされた対象} (filtered object) と呼ぶ．
+        \item filtrationが\textbf{有限} (finite) であるとは，ある $p_0,\, p_1 \in \mathbb{Z}$ が存在して
+        $\iota^{p_0}$ が同型，$\iota^{p_1}$ が零写像となること．
+        このとき
+        \begin{align}
+            F^pE =
+            \begin{cases}
+                E, &p \le p_0 \\
+                0, &p \ge p_1
+            \end{cases}
+        \end{align}
+        となる．
+    \end{enumerate}
+\end{mydef}
+
+\begin{marker}
+    filtrationやfiltered objectのことをそれぞれ
+    \begin{align}
+        \Dpmember[\big]{F^pE}{p \in \mathbb{Z}},\quad \Bigl( E,\, \Dpmember[\big]{F^pE}{p \in \mathbb{Z}} \Bigr) 
+    \end{align}
+    と略記する．
+\end{marker}
+
+定義\ref{def:filtration}の単射 $\iota^p$ により $F^pE$ は $E$ の\hyperref[def:sub]{部分対象}となる．特に
+$\Cat{A} = \MOD{R}$ のとき，左 $R$ 加群 $E$ のfiltration $\Dpmember[\big]{F^pE}{p \in \mathbb{Z}}$ とは，$E$ の部分加群の列
+\begin{align}
+    \cdots \subset F^{p+1}E \subset F^p E \subset F^{p-1} E \subset \cdots
+\end{align}
+のことである．
+
+複体の圏 $\Chain{\Cat{A}}$ も\hyperref[def:Abel]{アーベル圏}なので，複体 $(E^\bullet,\, d^\bullet)$ のfiltration$\Dpmember[\big]{F^pE^\bullet}{p \in \mathbb{Z}}$ を考えることができる．$\Cat{A} = \MOD{R}$ のとき，それは
+\begin{itemize}
+    \item $\forall n \in \mathbb{Z}$ に対する $E^n$ のfiltration
+    \begin{align}
+        \cdots \subset F^{p+1}E^n \subset F^p E^n \subset F^{p-1} E^n \subset \cdots
+    \end{align}
+    であって，
+    \item $\forall n,\, p \in \mathbb{Z}$ に対して
+    \begin{align}
+        d^n (F^p E^n) \subset F^p E^{n+1}
+    \end{align}
+    が成り立つ
+\end{itemize}
+もののこと．
+
+次に，スペクトル系列を定義する．この定義は~\cite[定義3.49]{Shiho}によるものであり，収束を比較的簡単に扱うことができる．
+
+\begin{mydef}[label=def:SSQ, breakable]{スペクトル系列}
+    アーベル圏 $\Cat{A}$ における\textbf{スペクトル系列} (spectral sequence) とは，次の5つ組みのことを言う：
+    \begin{enumerate}
+        \item $\Cat{A}$ の対象の族 $\Dpmember[\big]{E_r^{p,\, q}}{p,\, q,\, r \in \mathbb{Z},\, \textcolor{red}{r \ge 1}}$
+        \item $\Cat{A}$ の\textbf{有限に}\hyperref[def:filtration]{フィルター付けされた対象}の族 $\Bigl(E^n,\, \Dpmember[\big]{F^{p}E^n}{p\in \mathbb{Z}} \Bigr)_{n \in \mathbb{Z}}$
+        \item 射の族 $\Dpmember[\big]{d_{\textcolor{red}{r}}^{p,\, q} \colon E^{p,\, q}_{\textcolor{red}{r}} \lto E^{p + \textcolor{red}{r},\, q-\textcolor{red}{r}+1}_{\textcolor{red}{r}}}{p,\, q,\, r \in \mathbb{Z},\, \textcolor{red}{r \ge 1}}$
+        \item 同型
+        \begin{align}
+            \Ker d_r^{p,\, q} / \Im d_r^{p-r,\, q+r-1} \xrightarrow{\cong} E_{r+1}^{p,\, q}
+        \end{align}
+        \item 同型
+        \begin{align}
+            E_\infty^{p,\, q} \xrightarrow{\cong} F^p E^{p+q} / F^{p+1} E^{p+q}
+        \end{align}
+    \end{enumerate}
+    ただし，(3) の射は以下の条件を充たす：
+    \begin{description}
+        \item[\textbf{(SS1)}] $\forall p,\, q,\, r \in \mathbb{Z},\; r \ge 1$ に対して
+        \begin{align}
+            d_r^{p,\, q} \circ d^{p-r,\, q+r-1}_r = 0.
+        \end{align}
+        \item[\textbf{(SS2)}] $\forall p,\, q \in \mathbb{Z}$ に対してある $r_0 \ge 1$ が存在し，
+        \begin{align}
+            r \ge r_0 \IMP d_r^{p,\, q} = d_r^{p-r,\, q+r-1} = 0.
+        \end{align}
+    \end{description}
+    また，$E_\infty^{p,\, q}$ は次のように決める：
+    \tcblower
+    \begin{itemize}
+        \item 
+        条件\textbf{(SS1)}により射 $\im d_r^{p-r,\, q+r-1}$ は自然に単射
+        \begin{align}
+            \Im d_r^{p-r,\, q+r-1} \lto \Ker d_r^{p,\, q}
+        \end{align}
+        を誘導する．条件\textbf{(SS2)}を充たす $\forall r \ge r_0$ において，この単射は零写像
+        \begin{align}
+            0 \lto E_r^{p,\, q}\quad (\forall p,\, q\in \mathbb{Z})
+        \end{align}
+        となる．
+        \item (4) の同型は，条件\textbf{(SS2)}を充たす $\forall r \ge r_0$ に対しては
+        \begin{align}
+            \Ker d_r^{p,\, q} = E_{r}^{p,\, q} \cong E_{r+1}^{p,\, q}
+        \end{align}
+        になる．このとき
+        \begin{align}
+            E_\infty^{p,\, q} \coloneqq E_{r_0}^{p,\, q} = E_{r_0 + 1}^{p,\, q} = \cdots 
+        \end{align}
+        と定義する．
+    \end{itemize}
+\end{mydef}
+
+\begin{marker}
+    定義\ref{def:SSQ}を，ある $r \ge 1$ を固定して
+    \begin{align}
+        \bm{E_{r}^{p,\, q} \Longrightarrow E^{p+q}}
+    \end{align}
+    と略記することがある．
+\end{marker}
+
+\begin{itemize}
+    \item $E_r^{p,\, q}$ をスペクトル系列の $\bm{E_r}$ \textbf{項}
+    \item $E_\infty^{p,\, q}$ をスペクトル系列の $\bm{E_\infty}$ \textbf{項}
+    \item $E^n$ のことをスペクトル系列の \textbf{極限}
+\end{itemize}
+と言う．また，$r \ge 1$ が条件
+\begin{align}
+    \forall p,\,q \in \mathbb{Z},\; \forall s \ge r,\; d_{s}^{p,\, q} = 0
+\end{align}
+を充たすとき，スペクトル系列は $\bm{E_r}$\textbf{退化}すると言う．
+
+\subsection{完全対によるスペクトル系列の構成}
+
+\hyperref[def:double-complex]{2重複体}は\hyperref[def:filtration]{filtration}を持つので，スペクトル系列が定まる．
+このような状況を一般化すると有界な次数 $1$ の二重次数付き完全対の概念に到達する．
+
+まず，完全対と導来対を定義する：
+
+\begin{mydef}[label=def:exact-couple]{完全対}
+    アーベル圏 $\Cat{A}$ を考える． 
+    \begin{itemize}
+        \item $D,\, E \in \Obj{\Cat{A}}$
+        \item $i \in \Hom{\Cat{A}}(D,\, D)$
+        \item $j \in \Hom{\Cat{A}}(D,\, E)$
+        \item $k \in \Hom{\Cat{A}}(E,\, D)$
+    \end{itemize}
+    の5つ組み $(D,\, E,\, i,\, j,\, k)$ が \textbf{完全対} (exact couple) であるとは，
+    \begin{align}
+        \Im i = \Ker j,\quad \Im j = \Ker k,\quad \Im k = \Ker i
+    \end{align}
+    を充たすことを言う（可換図式\ref{cmtd:exact-couple}）．
+\end{mydef}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzcd}[row sep=large, column sep=large]
+        &D \ar[rr, "i"] & &D \ar[dl, "j"] \\
+        & &E \ar[ul, "k"]
+    \end{tikzcd}
+    \caption{完全対}
+    \label{cmtd:exact-couple}
+\end{figure}%
+
+\hyperref[thm:embedding]{Mitchellの埋め込み定理}によりアーベル圏 $\Cat{A} = \MOD{R}$ として考える．
+
+\begin{myprop}[label=prop:derived-couple]{導来対}
+    $(D,\, E,\, i,\, j,\, k)$ を $\Cat{A}$ における\hyperref[def:exact-couple]{完全対}とする．
+    このとき
+    \begin{align}
+        D' &\coloneqq \Im i, \\
+        E' &\coloneqq \Coker \bigl( \Im (j \circ k) \lto \Ker (j \circ k) \bigr) , \\
+        i' &\coloneqq i|_{D'} \in \Hom{\Cat{A}}(D',\, D')
+    \end{align}
+    とおく\footnote{$k \circ j = 0$ なので，自然に単射 $\Im (j \circ k) \lto \Ker (j \circ k)$ が誘導される．}．すると射
+    \begin{align}
+        j' &\colon D' \lto E',\;  a \lmto j(b) + \Im (j \circ k) \quad \WHERE b \in i^{-1}(\{a\}) \\
+        k' &\colon E' \lto D',\;  a + \Im (j \circ k) \lmto k(a)
+    \end{align}
+    はwell-definedで，5つ組み $(D',\, E',\, i',\, j',\, k')$ は\hyperref[def:exact-couple]{完全対}である．
+\end{myprop}
+
+\begin{proof}
+    $\Cat{A} = \MOD{R}$ として示せばよい．$\Im i' = \Im i^2$ に注意する．
+    \begin{description}
+        \item[\textbf{well-definedness}] 　
+        
+        　別の $b' \in i^{-1}(\{a\})$ を任意にとると
+        \begin{align}
+            i(b' - b) = i(b') - i(b) = a - a = 0 \IFF b' - b \in \Ker i = \Im k
+        \end{align}
+        が成り立つので $j(b') \in j(b) + \Im (j\circ k)$，i.e. $j'$ はwell-defined．
+
+        　一方，別の $a' \in a + \Im (j \circ k)$ はある $c \in E$ を用いて $a' = a + j \bigl( k(c) \bigr) $ と書けるので，$\Im j = \Ker k$ より
+        \begin{align}
+            k(a') = k(a) + k \bigl( j (k(c)) \bigr) = k(a)
+        \end{align}
+        がいえる．i.e. $k'$ はwell-defined．
+        \item[\textbf{完全対であること}]　
+        \begin{description}
+            \item[$\bm{\mathrm{Im}\, i' = \Ker j'}$]　
+            
+            　$\forall x \in \Im i'$ は，ある $y \in D$ を用いて $x = i\bigl( i(y) \bigr)$ と書けるので
+            \begin{align}
+                j' \bigl( x \bigr) = j \bigl( i (i(y)) \bigr)  + \Im (j \circ k) = \Im (j \circ k) \IFF x \in \Ker j'
+            \end{align}
+            i.e. $\Im i' \subset \Ker j'$ が言えた．
+
+            　$\forall x \in \Ker j'$ をとると $y \in D$ を用いて $x = i(y)$ と書ける．このとき $j'(x) = \Im (j \circ k)$．i.e. $j(y) \in \Im (j\circ k)$ が成り立つ．
+            故にある $z \in E$ が存在して $j(y) = j \bigl( k(z) \bigr)$ と書ける．このとき
+            $y - k(z) \in \Ker j = \Im i$ なので 
+            \begin{align}
+                x = i(y) - i \bigl( k(z) \bigr) = i\bigl(y - k(z)\bigr) \in \Im i^2 = \Im i'
+            \end{align}
+            i.e. $\Ker j' \subset \Im i'$ もわかった．
+            \item[$\bm{\mathrm{Im}\, j' = \Ker k'}$]　
+            
+            　$\forall j'(x) \in \Im j'$ は，$y \in i^{-1}(\{x\})$ を用いて $j'(x) = j(y) + \Im (j \circ k)$ と書かれる．このとき
+            \begin{align}
+                k' \bigl( j'(x) \bigr) = k \bigl( j(y) \bigr) = 0
+            \end{align}
+            なので $j'(x) \in \Ker k'$．i.e. $\Im j' \subset \Ker k'$ が示された．
+
+            　一方，$\forall x + \Im(j\circ k) \in \Ker k' \WHERE x \in \Ker (j \circ k)$ に対して $k(x) = 0 \IFF x \in \Ker k = \Im j$ が成り立つ．故にある $y \in D$ を用いて $x = j(y)$ と書かれるので
+            \begin{align}
+                x + \Im (j\circ k) = j(y) + \Im (j \circ k) = j' \bigl( i(y) \bigr).
+            \end{align}
+            i.e. $\Ker k' \subset \Im j'$ が言えた．
+            \item[$\bm{\mathrm{Im}\, k' = \Ker i'}$]　
+            
+            　$\forall x \in \Im k'$ はある $y \in \Ker (j\circ k)$ を用いて $x = k'(y + \Im (j \circ k)) = k(y)$ と書ける．従って $i'(x) = i \bigl( k(y) \bigr) = 0$．i.e. $\Im k' \subset \Ker i'$．
+            
+            　一方，$\forall x \in \Ker i'$ はある $y \in D$ を用いて $x = i(y)$ と書けて，さらに $i(y) \in \Ker i = \Im k$ なのである $z \in E$ を用いて $x = i(y) = k(z)$ と書ける．
+            このとき $j \bigl( k(z) \bigr) =j \bigl( i(y) \bigr) = 0 \IFF z \in \Ker (j \circ k)$ なので $x = k' (z + \Im (j \circ k)) \in \Im k'$．i.e. $\Ker i' \subset \Im k'$ が言えた．
+        \end{description}
+    \end{description}
+\end{proof}
+
+\begin{mydef}[label=def:DC]{導来対}
+    \begin{itemize}
+        \item 命題\ref{prop:derived-couple}の5つ組み  $(D',\, E',\, i',\, j',\, k')$ は\hyperref[def:exact-couple]{完全対} $(D,\, E,\, i,\, j,\, k)$ の\textbf{導来対} (derived couple) と呼ばれる．
+        \item $r \ge 1$ に対して，\hyperref[def:exact-couple]{完全対} $(D,\, E,\, i,\, j,\, k)$ から導来対を作る操作を $r - 1$ 回繰り返してできる完全対を $(D,\, E,\, i,\, j,\, k)$ の\textbf{第 $\bm{r}$ 導来対}と呼ぶ．
+    \end{itemize}
+\end{mydef}
+
+完全対 $(D,\, E,\, i,\, j,\, k)$ の第 $r$ 導来対を直接定めることもできる．
+$r \ge 1$ を1つとって固定する．
+\begin{align}
+    D_r \coloneqq \Im i^{r-1}
+\end{align}
+とおき，ファイバー積を使って
+\begin{align}
+    Z_r &\coloneqq \prod_{\textcolor{red}{D},\, A \in \{\textcolor{red}{\Im i^{r-1}},\, \textcolor{red}{E}\}} A, \\
+    B_r &\coloneqq \Im \bigl( \Ker i^{r-1} \xrightarrow{\ker i^{r-1}} D \xrightarrow{j} E\bigr) 
+\end{align}
+と定める．
+\begin{figure}[H]
+    \centering
+    \begin{tikzcd}[row sep=large, column sep=large]
+        &\forall \textcolor{blue}{X} \ar[r,blue, "\textcolor{blue}{g_1}"]\ar[dd,dashed,"\exists ! g"]\ar[ddr,blue, "\textcolor{blue}{g_2}"] &\Im i^{r-1} \ar[dr, "\im i^{r-1}"] & \\
+        &                                                                   &                                   &D \\
+        &Z_r \ar[uur,crossing over, "p_1"]\ar[r, "p_2"]                                   &E\ar[ur, "k"]                      &
+    \end{tikzcd}
+    \caption{ファイバー積による $Z_r$ の定義}
+    \label{cmtd:DC-fiber}
+\end{figure}%
+
+\begin{mylem}[label=lem:DC-rth-RMod]{}
+    $\Cat{A} = \MOD{R}$ のとき，
+    \begin{align}
+        Z_r = k^{-1}(\Im i^{r-1}),\quad B_r = j (\Ker i^{r-1})
+    \end{align}
+\end{mylem}
+
+\begin{proof}
+    $B_r = j (\Ker i^{r-1})$ は $\ker i^{r-1}$ が包含写像であることから明らか．
+
+    図式\ref{cmtd:DC-fiber}において $Z_r = k^{-1}(\Im i^{r-1}),\; p_1 = k$ とし，$p_2$ は包含写像 $\iota \colon k^{-1}(\Im i^{r-1}) \hookrightarrow E$ とする．
+    すると $\forall x \in k^{-1}(\Im i^{r-1})$ に対して $k(x) \in \Im i^{r-1}$ だから $k(x) = \im i^{r-1} \bigl( k(x) \bigr)$ であり
+    \begin{align}
+        k \bigl( p_2(x) \bigr) = k(x) = \im i^{r-1}\bigl( p_1(x) \bigr) 
+    \end{align}
+    が成り立つ．
+
+    次に，$\forall X \in \MOD{R}$ および集合
+    \begin{align}
+        \bigl\{\, (g_1,\, g_2) \in \Hom{R}(X,\, \Im i^{r-1}) \times  \Hom{R}(X,\, E)  \bigm| \im i^{r-1} \circ g_1 = k \circ g_2 \,\bigr\} 
+    \end{align}
+    の任意の元 $(g_1,\, g_2)$ をとる．このとき $\im i^{r-1}$ は包含写像なので $g_1 = k \circ g_2$ であり，$\Im g_2 \subset k^{-1}(\Im i^{r-1})$ とわかる．故に $g_2 = \iota \circ g_2$．
+    ここで $p_i \circ g_2 = p_i \circ g' \quad (i = 1,\, 2)$ を充たす別の $g' \in \Hom{R}\bigl(X,\, k^{-1}(\Im i^{r-1})\bigr)$ をとると，
+    $p_2 = \iota$ が単射であることから $g_2 = g'$．以上の考察から写像
+    \begin{align}
+        \Hom{R}\bigl(X,\, k^{-1}(\Im i^{r-1})\bigr) &\lto \bigl\{\, (g_1,\, g_2) \in \Hom{R}(X,\, \Im i^{r-1}) \times  \Hom{R}(X,\, E)  \bigm| \im i^{r-1} \circ g_1 = k \circ g_2 \,\bigr\} \\
+        g &\lmto \bigl( p_i \circ g \bigr)_{i = 1,\, 2} = \bigl( k \circ g,\; \iota \circ g \bigr) 
+    \end{align}
+    が全単射であることがわかった．i.e. $k^{-1}(\Im i^{r-1}) = \prod_{D,\, A \in \{\Im i^{r-1},\, E\}} A$ である．
+
+\end{proof}
+
+
+このとき合成射
+\begin{align}
+    B_r \xrightarrow{\im (j \circ \ker i^{r-1})} E \xrightarrow{k} D
+\end{align}
+は零写像となる\footnote{ まず\hyperref[def:exact-couple]{完全対の定義}から $k \circ j = 0$なので
+$k \circ j \circ \ker i^{r-1} = 0$
+が成り立つ．\hyperref[def:Abel]{Abel圏}における任意の射は $\coim$ と $\im$ の合成で書けるので
+$k \circ \im(j \circ \ker i^{r-1}) \circ \coim (j \circ \ker i^{r-1}) = 0$
+だが，$\coim$ は全射なので結局 
+$k \circ \im(j \circ \ker i^{r-1}) = 0$ 
+が言えた．}
+ので，$B_r$ が自然に $Z_r$ の\hyperref[def:sub]{部分対象}になる．
+\begin{proof}
+    \hyperref[thm:embedding]{Mitchellの埋め込み定理}によって $\mathcal{A} = \MOD{R}$ の場合に確認すればよい．このとき
+    \begin{align}
+        Z_r = k^{-1}(\Im i^{r-1}),\quad B_r = j(\Ker i^{r-1})
+    \end{align}
+    であるから，$\forall x \in B_r$ をとってくると，ある $y \in \Ker i^{r-1}$ が存在して $x = j(y)$ と書ける．
+    よって $k(x) = k \bigl( j(y) \bigr) = 0 \in \Im i^{r-1}$ なので $x \in Z_r$ でもある．i.e. $B_r \subset Z_r$．
+\end{proof}
+自然な単射 $B_r \lto Z_r$ に対して
+\begin{align}
+    E_r \coloneqq \Coker (B_r \lto Z_r)
+\end{align}
+と定める．
+
+\begin{myprop}[label=prop:DC-rth]{第 $r$ 導来対の同型}
+    記号を上述の通りとし，さらに
+    \begin{align}
+        i_r \coloneqq i|_{D_r} \in \Hom{\Cat{A}} (D_r,\, D_r)
+    \end{align}
+    とおく．すると射
+    \begin{align}
+        j_r &\colon D_r \lto E_r,\; a \lmto j(b) + B_r\quad \WHERE b \in (i^{r-1})^{-1} (\{a\}) \\
+        k_r &\colon E_r \lto D_r,\; a + B_r \lmto k(a)
+    \end{align}
+    はwell-definedであり，5つ組み $(D_r,\, E_r,\, i_r,\, j_r,\, k_r)$ は\hyperref[def:exact-couple]{完全対} $(D,\, E,\, i,\, j,\, k)$ の\hyperref[def:DC]{第 $\bm{r}$ 導来対}と同型である．
+\end{myprop}  
+
+\begin{proof}
+    \begin{description}
+        \item[\textbf{well-definedness}]　 
+        
+        　別の $b' \in (i^{r-1})^{-1}(\{a\})$ を任意にとると
+        \begin{align}
+            i^{r-1}(b' - b) = i^{r-1}(b') - i^{r-1}(b) = a-a = 0 \IFF b' - b \in \Ker i^{r-1}
+        \end{align}
+        なので，$j(b') - j(b) \in j(\Ker i^{r-1}) = B_r$ が言える．i.e. $j_r$ はwell-defined．
+
+        　一方，別の $a' \in Z_r$ であって $a' \in a + B_r$ を充たすものをとると $a' - a \in B_r$ より
+        \begin{align}
+            k(a') - k(a) \in k(B_r) \subset \Im (k\circ j) = 0
+        \end{align}
+        なので $k'$ もwell-defined．
+        \item[\textbf{同型であること}]　
+        
+        　$r \ge 2$ とし，$(D_{r-1},\, E_{r-1},\, i_{r-1},\, j_{r-1},\, k_{r-1})$ の\hyperref[prop:derived-couple]{導来対} $(D'_{r-1},\, E'_{r-1},\, i'_{r-1},\, j'_{r-1},\, k'_{r-1})$ が $(D_r,\, E_r,\, i_r,\, j_r,\, k_r)$ と同型であることを示す．
+        また，\hyperref[thm:embedding]{Mitchellの埋め込み定理}によって $\mathcal{A} = \MOD{R}$ の場合に示せばよい．
+        まず定義から即座に
+        \begin{align}
+            D_r &= D'_r =\Im i^{r-1}, \\
+            i_r &= i'_r = i|_{\Im i^{r-1}}
+        \end{align}
+        が従う．
+        
+        \begin{description}
+            \item[\textbf{$\bm{E_r \cong E'_{r-1}}$}] 　
+            
+            　示すべきは
+            \begin{align}
+                \label{eq:DC-rth-isom}
+                E_r = Z_r/B_r \cong \Ker (j_{r-1} \circ k_{r-1}) / \Im (j_{r-1} \circ k_{r-1}) = E'_{r-1}
+            \end{align}
+            である．そのために全射
+            \begin{align}
+                g\colon Z_r &\lto \Ker (j_{r-1} \circ k_{r-1}) / \Im (j_{r-1} \circ k_{r-1})
+            \end{align}
+            であって，$\Ker g = B_r$ を充たすものを構成する．
+
+            \begin{align}
+                f \colon Z_r \lto E_{r-1},\; a \lmto a + B_{r-1}
+            \end{align}
+            と定める．$a \in Z_r = k^{-1}(\Im i^{r-1})$ なので，ある $b \in D$ があって $k(a) = i^{r-1}(b)$ を充たす．すると
+            \begin{align}
+                (j_{r-1} \circ k_{r-1}) \bigl( f(a) \bigr) = j_{r-1} \bigl( k(a) \bigr) = j \bigl( i(b) \bigr) + B_{r-1} = B_{r-1}.
+            \end{align}
+            i.e. $\Im f \subset \Ker (j_{r-1} \circ k_{r-1})$ である．よって次のような射を定義できる：
+            \begin{align}
+                g\colon Z_r &\lto \Ker (j_{r-1} \circ k_{r-1}) / \Im (j_{r-1} \circ k_{r-1}), \\
+                a &\lmto f(a) + \Im (j_{r-1} \circ k_{r-1}) = (a + B_{r-1}) + \Im (j_{r-1} \circ k_{r-1})
+            \end{align}
+            \begin{description}
+                \item[\textbf{$g$ は全射}] 　
+                
+                　$\forall a + B_{r-1} \in \Ker (j_{r-1} \circ k_{r-1})$ を一つとる．$\Ker (j_{r-1} \circ k_{r-1}) \subset E_{r-1} = Z_{r-1} / B_{r-1}$ なので $a \in Z_{r-1}$ であるから，ある $b \in D$ が存在して $k(a) = i^{r-2}(b)$ と書ける．また，
+                $(j_{r-1} \circ k_{r-1})(a + B_{r-1}) = j \bigl( b \bigr) + B_{r-1} = B_{r-1}$ なので $j(b) \in B_{r-1} = j(\Ker i^{r-2})$ である．故にある $c \in \Ker i^{r-2}$ が存在して $j(b) = j(c)$ と書ける．すると
+                \begin{align}
+                    j(b - c) = j(b) - j(c) = 0 \IFF b-c \in \Ker j = \Im i
+                \end{align}
+                となるのである $d \in D$ が存在して $b-c = i(d)$ と書ける．すると
+                \begin{align}
+                    k(a) = i^{r-2}(b) = i^{r-2}(b) - i^{r-2}(c) = i^{r-2}(b-c) = i^{r-1}(d) \in \Im i^{r-1}
+                \end{align}
+                なので $a \in Z_r$ が言えた．i.e. $g$ は全射である．
+                \item[\textbf{$\bm{\Ker g \subset B_r}$}]　 
+                
+                　$\forall a \in \Ker g$ を一つとる．すると $a + B_{r-1} \in \Im (j_{r-1} \circ k_{r-1})$ だから，ある $b \in Z_{r-1}$ と $c \in D$ が存在して $k(b) = i^{r-2}(c) \AND a - j(c) \in B_{r-1}$ を充たす．i.e. ある $d \in \Ker i^{r-2}$ が存在して $j(d) = a - j(c)$ を充たす．よって $a = j(c+d)$ と書けるが，
+                \begin{align}
+                    i^{r-1}(c+d) = i \bigl( i^{r-2}(c) \bigr) + i \bigl( i^{r-2}(d) \bigr) = i \bigl( k(b) \bigr) = 0 \IMP a \in j(\Ker i^{r-1}) = B_r
+                \end{align}
+                とわかる．i.e. $\Ker g \subset B_r$ が言えた．
+                \item[\textbf{$\bm{\Ker g \supset B_r}$}]　
+                
+                　$\forall a \in B_r$ を一つとると，ある $b \in \Ker i^{r-1}$ を用いて $a = j(b)$ と書ける．
+                $i^{r-2}(b) \in \Ker i = \Im k$ だからある $c \in E$ があって $i^{r-2}(b) = k(c)$ と書けるが，このとき $c \in k^{-1}(\Im i^{r-2}) = Z_{r-1}$ である．
+                よって
+                \begin{align}
+                    (j_{r-1} \circ k_{r-1})(c + B_{r-1}) = j_{r-1} \bigl( k(c) \bigr) = j_{r-1} \bigl( i^{r-2}(b) \bigr) = j(b) + B_{r-1} = a + B_{r-1}
+                \end{align}
+                i.e. $a + B_{r-1} \in \Im(j_{r-1} \circ k_{r-1})$ であり，$\Ker g \supset B_r$ が言えた． 
+            \end{description}
+            このようにして構成された $g$ に準同型定理を使うことで目的の同型\eqref{eq:DC-rth-isom}が示された．
+
+            \item[\textbf{$\bm{j_r = j'_{r-1}}$}] 　
+            
+            　$g$ によって誘導される同型を
+            \begin{align}
+                \psi \colon E_r &\xrightarrow{\cong} E'_{r-1},\\ 
+                a + B_r &\lmto (a + B_{r-1}) + \Im (j_{r-1} \circ k_{r-1})
+            \end{align}
+            とおくと $j'_{r-1} = \psi \circ j_{r}$ である．
+            \item[\textbf{$\bm{k_r = k'_{r-1}}$}] 　
+            
+            　同様に $k'_{r-1} \circ \psi = k_r$ がわかる．
+        \end{description}
+
+    \end{description}
+    
+\end{proof}
+
+
+二重次数付き完全対を定義する：
+
+\begin{mydef}[label=def:BEC, breakable]{二重次数付き完全対}
+    $r_0 \ge 1$ とする．
+    \begin{itemize}
+        \item $\Cat{A}$ の対象の族 $\Dpmember[\big]{D^{p,\, q}}{p,\, q \in \mathbb{Z}},\; \Dpmember[\big]{E^{p,\, q}}{p,\, q \in \mathbb{Z}}$
+        \item $\Cat{A}$ の射の族
+        \begin{align}
+            &\Dpmember[\big]{i^{p,\, q} \colon D^{p,\, q} \lto D^{p-1,\, q+1}}{p,\, q \in \mathbb{Z}},\\ 
+            &\Dpmember[\big]{j^{p,\, q} \colon D^{p,\, q} \lto E^{p \textcolor{red}{+r_0} -1,\, q \textcolor{red}{-r_0}+1}}{p,\, q \in \mathbb{Z}}, \\
+            &\Dpmember[\big]{k^{p,\, q} \colon E^{p,\, q} \lto D^{p+1,\, q}}{p,\, q \in \mathbb{Z}}
+        \end{align}
+    \end{itemize}
+    を与える．このとき，5つ組み $\Bigl( (D^{p,\, q}),\, (E^{p,\, q}),\, (i^{p,\, q}),\, (j^{p,\, q}),\, (k^{p,\, q}) \Bigr)$ が次数 $r_0$ の \textbf{二重次数付き完全対} (bigraded exact couple) であるとは，$\forall p,\,q  \in \mathbb{Z}$ に対して
+    \begin{align}
+        \Im i^{p,\, q} &= \Ker j^{p-1,\, q+1}, \\
+        \Im j^{p,\, q} &= \Ker k^{p+r_0-1,\, q-r_0+1}, \\
+        \Im k^{p,\, q} &= \Ker i^{p+1,\, q}
+    \end{align}
+    が成り立つこと．
+    \tcblower
+    二重次数付き完全対が\textbf{有界}であるとは，
+    \begin{align}
+        \forall &n \in \mathbb{Z},\, \exists p_0,\, p_1 \in \mathbb{Z}\quad \text{s.t.}\quad p_0 \ge p_1, \\
+        &p \ge p_0 \IMP D^{p,\, n-p} = 0, \\
+        &p \le p_1 \IMP i^{p,\, n-p}\; \text{が同型}
+    \end{align}
+    
+    が成り立つこと．
+\end{mydef}
+
+\begin{mylem}[label=lem:BEC-basic, breakable]{}
+    $\Cat{A}$ 上の\hyperref[def:BEC]{二重次数付き完全対} $\Bigl( (D^{p,\, q}),\, (E^{p,\, q}),\, (i^{p,\, q}),\, (j^{p,\, q}),\, (k^{p,\, q}) \Bigr)$ を与える．
+    \begin{enumerate}
+        \item $\Cat{A} = \MOD{R}$ とすると
+        \begin{align}
+            \Bigl( \bigoplus_{p,\, q} D^{p,\, q},\, \bigoplus_{p,\, q} E^{p,\, q},\, \bigoplus_{p,\, q} i^{p,\, q},\, \bigoplus_{p,\, q} j^{p,\, q},\, \bigoplus_{p,\, q} k^{p,\, q} \Bigr)
+        \end{align}
+        は\hyperref[def:exact-couple]{完全対}である．
+        \item $\Cat{A}$ における\hyperref[def:DG]{有向グラフ} $(\mathbb{Z},\, \le)$ 上の図式
+        \begin{align}
+            \biggl( \Dpmember[\big]{D^{-p,\, n+p}}{p \in \mathbb{Z}},\, \Dpmember[\big]{\iota_{p,\, p'} \colon D^{-p,\, n+p} \lto D^{-p',\, n+p'}}{(p,\, p') \in \mathbb{Z}^2,\, p \le p'} \biggr) 
+        \end{align}
+        を次のように定める：
+        \begin{align}
+            \iota_{p,\, p'} \coloneqq i^{-(p'-1),\, n+(p'-1)} \circ \cdots \circ i^{-p,\, n+p}.
+        \end{align}
+        このとき，与えられた二重次数付き完全対が\hyperref[def:filtration]{有界}ならば，充分大きな $p_\infty \in \mathbb{Z}$ をとると
+        \begin{align}
+            \varinjlim_{p \in \mathbb{Z}} D^{-p,\, n+p} = D^{-p_\infty,\, n+p_\infty} 
+        \end{align}
+        が成り立つ．
+    \end{enumerate}
+    \tcblower
+    (2) において $E^n \coloneqq \varinjlim_{p \in \mathbb{Z}} D^{-p,\, n+p}$ とおき，標準的包含を
+    $\iota^{p,\, q} \colon D^{p,\, q} \lto E^{p+q}$
+    と書いて
+    \begin{align}
+        F^p E \coloneqq \Im \bigl( \iota^{p,\, n-p} \colon D^{p,\, n-p} \lto E^n \bigr) 
+    \end{align}
+    と定義すると，$\Dpmember[\big]{E^n,\, (F^pE^n)_{p \in \mathbb{Z}}}{n \in \mathbb{Z}}$ は\hyperref[def:filtration]{filtrered object}になる．
+\end{mylem}
+
+\begin{proof}
+    \begin{enumerate}
+        \item 明らか
+        \item 　二重次数付き完全対$\Bigl( (D^{p,\, q}),\, (E^{p,\, q}),\, (i^{p,\, q}),\, (j^{p,\, q}),\, (k^{p,\, q}) \Bigr)$ の有界性から，ある $p_\infty \in \mathbb{Z}$ が存在して $\forall p \ge p_\infty$ に対して $\iota_{p_\infty,\, p}$ は同型となる．
+        ここで $\forall X \in \Obj{\Cat{A}}$ および集合
+            \begin{align}
+                \Bigl\{\, \Dpmember[\big]{f_p}{p \in \mathbb{Z}} \in \prod_{\pi \in \mathbb{Z}} \Hom{\Cat{A}}(D^{-p,\, n+p},\, X)\Bigm| \forall p,\, p' \in \mathbb{Z}\; \text{s.t.} \; p \le p', \quad f_{p'} \circ \iota_{p,\, p'} = f_p \,\Bigr\} 
+            \end{align}
+        の勝手な元 $\Dpmember[\big]{f_p}{p \in \mathbb{Z}}$ をとる．すると$\forall p \in \mathbb{Z}$ に対して
+        \begin{align}
+            f_p = f_{p_\infty} \circ \iota_{p,\, p_\infty}
+        \end{align}
+        が成り立つ．
+
+        　$g \in \Hom{\Cat{A}}(D^{-p_\infty,\, n+p_\infty},\, X)$ であって，$\forall p \in \mathbb{Z}$ に対して $g \circ \iota_{p,\, p_\infty} = f_p$ を充たすものをもう一つとる．
+        ここで $g \neq f_{p_\infty}$ と仮定すると，$\forall p \ge p_\infty$ に対して
+        \begin{align}
+            f_{p_\infty} \neq g = f_p \circ (\iota_{p,\, p_\infty})^{-1} = f_{p_\infty}
+        \end{align}
+        となり矛盾．従って $g = f_{p_\infty}$ がわかった．これは写像
+        \begin{align}
+            \Hom{\Cat{A}}(D^{-p_\infty,\, n+p_\infty},\, X) &\lto \Bigl\{\, \Dpmember[\big]{f_p}{p \in \mathbb{Z}} \in \prod_{\pi \in \mathbb{Z}} \Hom{\Cat{A}}(D^{-p,\, n+p},\, X)\Bigm| \forall p,\, p' \in \mathbb{Z}\; \text{s.t.} \; p \le p', \quad f_{p'} \circ \iota_{p,\, p'} = f_p \,\Bigr\}, \\
+            g &\lmto (g \circ \iota_{p,\, p_{\infty}})_{p \in \mathbb{Z}}
+        \end{align}
+        が全単射であることを意味する．i.e. $\varinjlim_{p \in \mathbb{Z}} D^{-p,\, n+p} = D^{-p_\infty,\, n+p_\infty}$ である．
+    \end{enumerate}
+\end{proof}
+
+
+\hyperref[def:BEC]{二重次数付き完全対}の導来対を考えることもできる：
+
+\begin{myprop}[label=def:DC-BEC, breakable]{二重次数付き完全対の導来対}
+    次数 $r_0$ の\hyperref[def:BEC]{二重次数付き完全対} $\Bigl( (D^{p,\, q}),\, (E^{p,\, q}),\, (i^{p,\, q}),\, (j^{p,\, q}),\, (k^{p,\, q}) \Bigr)$ を与える．
+    \begin{align}
+        D'{}^{p,\, q} &\coloneqq \Im i^{p+1,\, q-1}, \\
+        Z'{}^{p,\, q} &\coloneqq \Ker (j^{p+1,\, q} \circ k^{p,\, q}), \\
+        B'{}^{p,\, q} &\coloneqq \Im (j^{p-r_0+1,\, q+r_0-1} \circ k^{p-r_0,\, q+r_0-1})
+    \end{align}
+    とおくと自然な単射 $B'{}^{p,\, q} \lto Z'{}^{p,\, q}$ がある．この単射を使って
+    \begin{align}
+        E'{}^{p,\, q} \coloneqq \Coker (B'{}^{p,\, q} \lto Z'{}^{p,\, q})
+    \end{align}
+    とおく．さらに
+    \begin{align}
+        (D,\, E,\, i,\, j,\, k) \coloneqq \Bigl( \bigoplus_{p,\, q} D^{p,\, q},\, \bigoplus_{p,\, q} E^{p,\, q},\, \bigoplus_{p,\, q} i^{p,\, q},\, \bigoplus_{p,\, q} j^{p,\, q},\, \bigoplus_{p,\, q} k^{p,\, q} \Bigr)
+    \end{align}
+    の\hyperref[def:DC]{導来対}を$(D',\, E',\, i',\, j',\, k')$とおいて
+    \begin{align}
+        i'{}^{p,\, q} &\coloneqq i'|_{D'{}^{p,\, q}}, \\
+        j'{}^{p,\, q} &\coloneqq j'|_{D'{}^{p,\, q}}, \\
+        k'{}^{p,\, q} &\coloneqq k'|_{E'{}^{p,\, q}}
+    \end{align}
+    と定めるとwell-definedである．このとき5つ組み
+    \begin{align}
+        \Bigl( (D'{}^{p,\, q}),\, (E'{}^{p,\, q}),\, (i'{}^{p,\, q}),\, (j'{}^{p,\, q}),\, (k'{}^{p,\, q}) \Bigr)
+    \end{align}
+    は次数 $r_0 + 1$ の\hyperref[def:BEC]{二重次数付き完全対}である（\textbf{導来対}）．
+
+    \tcblower
+
+    次数 $r_0$ の\hyperref[def:BEC]{二重次数付き完全対} $\Bigl( (D^{p,\, q}),\, (E^{p,\, q}),\, (i^{p,\, q}),\, (j^{p,\, q}),\, (k^{p,\, q}) \Bigr)$ から導来対を得る操作を $r-1$ 回繰り返してできる次数 $r_0 + r - 1$ の\hyperref[def:BEC]{二重次数付き完全対}を\textbf{第 $r$ 導来対}と呼ぶ．
+\end{myprop}
+
+\begin{proof}
+    まず\hyperref[def:BEC]{二重次数付き完全対の定義}から $k^{p,\, q} \circ j^{p-r_0+1,\, q+r_0-1} = 0$ が成り立つので $B'{}^{p,\, q}$ は $Z'{}^{p,\, q}$ の部分対象であり，自然な単射 $B'{}^{p,\, q} \lto Z'{}^{p,\, q}$ がある．
+
+    以下では\hyperref[thm:embedding]{Mitchellの埋め込み定理}より $\Cat{A} =\MOD{R}$ として考える．補題\ref{lem:BEC-basic}-(1) より
+    $ (D,\, E,\, i,\, j,\, k)$
+    は\hyperref[def:exact-couple]{完全対}である．$(D',\, E',\, i',\, j',\, k')$ をその\hyperref[prop:derived-couple]{導来対}とすると，帰納極限同士が交換することから
+    \begin{align}
+        D' &= \Im \left( \bigoplus_{p,\, q} i^{p,\, q} \right)  = \bigoplus_{p,\, q} \Im i^{p,\, q} = \bigoplus_{p,\, q} D'{}^{p,\, q}, \\
+        E' &= \bigoplus_{p,\, q} E'{}^{p,\, q}
+    \end{align}
+    となる．また，
+    \begin{align}
+        i'(D'{}^{p,\, q})&\subset D'{}^{p-1,\, q+1}, \\
+        j'(D'{}^{p,\, q})&\subset E'{}^{p+r_0,\, q-r_0}, \\
+        k'(E'{}^{p,\, q})&\subset D'{}^{p+1,\, q}
+    \end{align}
+    が成り立つので
+    \begin{align}
+        (D',\, E',\, i',\, j',\, k') = \Bigl( \bigoplus_{p,\, q} D'{}^{p,\, q},\, \bigoplus_{p,\, q} E'{}^{p,\, q},\, \bigoplus_{p,\, q} i'{}^{p,\, q},\, \bigoplus_{p,\, q} j'{}^{p,\, q},\, \bigoplus_{p,\, q} k'{}^{p,\, q} \Bigr)
+    \end{align}
+    である．
+\end{proof}
+
+\hyperref[prop:DC-rth]{完全対の第 $r$ 導来対}の場合と同様にして，\hyperref[def:BEC]{二重次数付き完全対}  $\Bigl( (D^{p,\, q}),\, (E^{p,\, q}),\, (i^{p,\, q}),\, (j^{p,\, q}),\, (k^{p,\, q}) \Bigr)$ の\hyperref[def:DC-BEC]{第 $r$ 導来対}を直接定めることもできる．
+簡単のため，\underline{二重次数付き完全対の次数は $1$ とする}．
+
+まず記号として，射
+\begin{align}
+    i^{p,\, q} \colon D^{p,\, q} \lto D^{p-1,\, q+1}
+\end{align}
+を上手く $r-1$ 回合成した写像
+\begin{align}
+    i^{p+1,\, q-1} \circ i^{p+2,\, q-2} \circ \cdots \circ i^{p+(r-1),\, q-(r-1)} \colon D^{p+(r-1),\, q-(r-1)} \lto D^{\textcolor{red}{p,\, q}}
+\end{align}
+のことを $(i^{\textcolor{red}{p,\, q}})^{r-1}$ と略記する．そして
+\begin{align}
+    D_r^{\textcolor{red}{p,\, q}} \coloneqq \Im \Bigl((i^{\textcolor{red}{p,\, q}})^{r-1} \colon D^{p+(r-1),\, q-(r-1)} \lto D^{\textcolor{red}{p,\, q}} \Bigr)
+\end{align}
+とおく．
+
+次に $E_r^{p,\, q}$ であるが，\hyperref[prop:DC-rth]{完全対の第 $r$ 導来対}の場合と同様にファイバー積を使って
+\begin{align}
+    Z_r &\coloneqq \prod_{D^{\textcolor{red}{p+1},\, q},\, A \in \{\Im (i^{\textcolor{red}{p+1},\, q})^{r-1},\, E^{p,\, q}\}} A, \\
+    B_r &\coloneqq \Im \bigl( \Ker (i^{p-(r-1),\, q+(r-1)})^{r-1} \xrightarrow{\ker (i^{p-(r-1),\, q+(r-1)})^{r-1}} D^{p,\, q} \xrightarrow{j^{p,\, q}} E^{p,\, q}\bigr) 
+\end{align}
+と定める．
+\begin{figure}[H]
+    \centering
+    \begin{tikzcd}[row sep=large, column sep=large]
+        &\forall \textcolor{blue}{X} \ar[r,blue, "\textcolor{blue}{g_1}"]\ar[dd,dashed,"\exists ! g"]\ar[ddr,blue, "\textcolor{blue}{g_2}"] &\Im (i^{\textcolor{red}{p+1},\, q})^{r-1} \ar[dr, "\im (i^{\textcolor{red}{p+1},\, q})^{r-1}"] & \\
+        &                                                                   &                                   &D^{\textcolor{red}{p+1},\, q} \\
+        &Z_r^{p,\, q} \ar[uur,crossing over, "p_1"]\ar[r, "p_2"]                                   &E^{p,\, q}\ar[ur, "k^{p,\, q}"]                      &
+    \end{tikzcd}
+    \caption{ファイバー積による $Z_r^{p,\, q}$ の定義}
+    \label{cmtd:DC-fiber}
+\end{figure}%
+
+次の補題は補題\ref{lem:DC-rth-RMod}と同様に示される．
+\begin{mylem}[label=lem:DC-rth-RMod]{}
+    $\Cat{A} = \MOD{R}$ のとき，
+    \begin{align}
+        Z_r^{p,\, q} = (k^{p,\, q})^{-1}\bigl(\Im (i^{p+1,\, q})^{r-1}\bigr),\quad B_r^{p,\, q} = j^{p,\, q} \bigl(\Ker (i^{p-(r-1),\, q+(r-1)})^{r-1}\bigr)
+    \end{align}
+\end{mylem}
+
+もとの\hyperref[def:BEC]{二重次数付き完全対}の次数が $1$ なので $\Im j^{p,\, q} = \Ker k^{p,\, q}$ が成り立つことから，合成射
+\begin{align}
+    B_r \xrightarrow{\im \bigl(j^{p,\, q} \circ \ker (i^{p-(r-1),\, q+(r-1)})^{r-1}\bigr)} E^{p,\, q} \xrightarrow{k^{p,\, q}} D^{p+1,\, q}
+\end{align}
+は零写像となり，$B_r$ が自然に $Z_r$ の\hyperref[def:sub]{部分対象}になる．
+ここで，自然な単射 $B^{p,\, q}_r \lto Z^{p,\, q}_r$ に対して
+\begin{align}
+    E^{p,\, q}_r \coloneqq \Coker (B^{p,\, q}_r \lto Z^{p,\, q}_r)
+\end{align}
+と定める．
+
+射 $i_r^{p,\, q},\, j_r^{p,\, q},\, k_r^{p,\, q}$ は次のように定義する\footnote{以降では $\Cat{A} = \MOD{R}$ とする．}．まず
+\begin{align}
+    (D,\,E,\, i,\, j,\, k) \coloneqq \left( \bigoplus_{p,\, q} D^{p,\, q},\, \bigoplus_{p,\, q} E^{p,\, q},\, \bigoplus_{p,\, q} i^{p,\, q},\, \bigoplus_{p,\, q} j^{p,\, q},\, \bigoplus_{p,\, q} k^{p,\, q} \right) 
+\end{align}
+とおくと，補題\ref{lem:BEC-basic}-(1)よりこれは\hyperref[def:exact-couple]{完全対}である．命題\ref{prop:DC-rth}を使うと，その\hyperref[def:DC]{第 $r$ 導来対}を直接構成できる\footnote{フィルタードな帰納極限（i.e. 直和）と有限な射影極限（i.e. $\Ker$）が可換であることを暗に使っている}：
+\begin{align}
+    D_r &\coloneqq \bigoplus_{p,\, q} \Im (i^{p,\, q})^{r-1},\label{eq:DC-BEC-Dr} \\
+    B_r &\coloneqq \bigoplus_{p,\, q} \Im \biggl( \Ker \bigl(i^{p-(r-1),\, q+(r-1)}\bigr)^{r-1} \xrightarrow{\ker \bigl(i^{p-(r-1),\, q+(r-1)}\bigr)^{r-1} } D^{p,\, q} \xrightarrow{j^{p,\, q}} E^{p,\, q} \biggr), \\
+    Z_r &\coloneqq \bigoplus_{p,\, q} (k^{p,\, q})^{-1} \bigl( \Im (i^{p+1,\, q})^{r-1} \bigr), \\
+    E_r &\coloneqq \Coker (B_r \hookrightarrow Z_r) = Z_r / B_r, \label{eq:DC-BEC-Er}\\
+    i_r &\coloneqq i|_{D_r} \colon D_r \lto D_r, \label{eq:DC-BEC-ir}\\
+    j_r &\colon D_r \lto E_r,\; \lmto j(b) + B_r \quad \WHERE b \in (i^{r-1})^{-1} (\{a\}), \label{eq:DC-BEC-jr} \\
+    k_r &\colon E_r \lto D_r,\; a + B_r \lmto k(a) \quad \WHERE a \in Z_r \label{eq:DC-BEC-kr}
+\end{align}
+射 $i_r,\, j_r,\, k_r$ は直和 $\bigoplus_{p,\, q}$ の形をしているので，第 $p,\, q$ 成分を取り出して
+\begin{align}
+    i_r^{p,\, q} &\coloneqq i_r|_{D_r^{p,\, q}}, \\
+    j_r^{p,\, q} &\coloneqq j_r|_{D_r^{p,\, q}}, \\
+    k_r^{p,\, q} &\coloneqq k_r|_{E_r^{p,\, q}},
+\end{align}
+とおく\footnote{より厳密には，$i_r$ の定義域の制限は第 $(p,\, q)$ 成分への標準的包含 $\iota_{p,\, q} \coloneqq D_r^{p,\, q} \hookrightarrow D_r$ を用いて $\iota_{p,\, q}(D_r^{,\, q})$ とする．$j_r,\, k_r$ の制限も同様．}．このとき\footnote{$E_r$ に関しては，射影極限（i.e. 直和）と射影極限（i.e. $\Coker$）が交換することを用いている．}
+\begin{align}
+    (D_r,\,E_r,\, i_r,\, j_r,\, k_r) \coloneqq \left( \bigoplus_{p,\, q} D_r^{p,\, q},\, \bigoplus_{p,\, q} E_r^{p,\, q},\, \bigoplus_{p,\, q} i_r^{p,\, q},\, \bigoplus_{p,\, q} j_r^{p,\, q},\, \bigoplus_{p,\, q} k_r^{p,\, q} \right) 
+\end{align}
+なので，$\Bigl( (D_r^{p,\, q}),\, (E_r^{p,\, q}),\, (i_r^{p,\, q}),\, (j_r^{p,\, q}),\, (k_r^{p,\, q}) \Bigr)$ が次数 $r$ の\footnote{素材となる $\Bigl( (D^{p,\, q}),\, (E^{p,\, q}),\, (i^{p,\, q}),\, (j^{p,\, q}),\, (k^{p,\, q}) \Bigr)$ の次数は $1$ としていたのだった．}\hyperref[def:BEC]{二重次数付き完全対}だとわかる．
+さらに命題\ref{prop:DC-rth}の同型を使うことで次の命題が成り立つことが言える：
+
+\begin{myprop}[label=prop:DC-BEC-rth]{二重次数付き完全対の第 $r$ 導来対の表示}
+    記号を上述の通りとする．このとき，$\Bigl( (D_r^{p,\, q}),\, (E_r^{p,\, q}),\, (i_r^{p,\, q}),\, (j_r^{p,\, q}),\, (k_r^{p,\, q}) \Bigr)$ は  $\Bigl( (D^{p,\, q}),\, (E^{p,\, q}),\, (i^{p,\, q}),\, (j^{p,\, q}),\, (k^{p,\, q}) \Bigr)$ の\hyperref[def:DC-BEC]{第 $r$ 導来対}と同型である．
+\end{myprop}
+
+
+次の定理は，有界な次数 $1$ の\hyperref[def:BEC]{二重次数付き完全対}が与えられると自然に\hyperref[def:SSQ]{スペクトル系列}が構成されることを主張する：
+
+\begin{mytheo}[label=thm:SSQ-basic]{スペクトル系列の構成}
+    \textbf{次数 $\bm{1}$}の \textbf{有界な} \hyperref[def:BEC]{二重次数付き完全対} $\Bigl( (D^{p,\, q}),\, (E^{p,\, q}),\, (i^{p,\, q}),\, (j^{p,\, q}),\, (k^{p,\, q}) \Bigr)$ を与え，これの第 $r$ 導来対を $\Bigl( (D_r^{p,\, q}),\, (E_r^{p,\, q}),\, (i_r^{p,\, q}),\, (j_r^{p,\, q}),\, (k_r^{p,\, q}) \Bigr)$ とおく．
+    \begin{align}
+        d_r^{p,\, q} \coloneqq j_r^{p+1,\, q} \circ k_r^{p,\, q} \in \Hom{\Cat{A}} (E_r^{p,\, q} ,\, E_{r}^{p+r,\, q-r+1})
+    \end{align}
+    と定め，\hyperref[def:filtration]{filtered object}を補題\ref{lem:BEC-basic}-(2) の通りに定める．このとき，
+    \begin{enumerate}
+        \item 対象の族 $(E_r^{p,\, q})$
+        \item \textbf{有限に}\hyperref[def:filtration]{フィルター付けされた対象}の族 $\Bigl(E^n,\, \Dpmember[\big]{F^{p}E}{p\in \mathbb{Z}} \Bigr)_{n \in \mathbb{Z}}$
+        \item 射の族 $\Dpmember[\big]{d_{\textcolor{red}{r}}^{p,\, q} \colon E^{p,\, q}_{\textcolor{red}{r}} \lto E^{p + \textcolor{red}{r},\, q-\textcolor{red}{r}+1}_{\textcolor{red}{r}}}{p,\, q,\, r \in \mathbb{Z},\, \textcolor{red}{r \ge 1}}$
+    \end{enumerate}
+    は\hyperref[def:SSQ]{スペクトル系列}
+    \begin{align}
+        E_1^{p,\, q} \IMP E^{p+q}
+    \end{align}
+    を自然に定める．
+\end{mytheo}
+
+\begin{proof}
+    \hyperref[def:SSQ]{スペクトル系列の定義}の条件と同型 (4), (5) を確認すればよい．$\Cat{A} = \MOD{R}$ として考える．
+    \begin{description}
+        \item[\textbf{(SS1)}] 　
+        
+        　定義\eqref{eq:DC-BEC-kr}より，$\forall a + B_r^{p,\, q} \in E_r^{p,\, q}$ に対して
+        \begin{align}
+            k_r^{p,\, q} (a + B_r^{p,\, q}) = k^{p,\, q}(a) \in \Im (i^{p+1,\, q})^{r-1}
+        \end{align}
+        が成り立つ．故に定義\eqref{eq:DC-BEC-jr}より，$b \in (i^{p+1,\, q})^{-1} (\{k^{p,\, q}(a)\}) \subset D^{p+r,\, q-r+1}$ を任意にとると
+        \begin{align}
+            d_r^{p,\, q} (a + B_r^{p,\, q}) &= (j^{p+1,\, q}_r \circ k^{p,\, q}_r)(a + B_r^{p,\, q}) = j_r \bigl(  k^{p,\, q}(a)  \bigr) \\
+            &= j^{p+r,\, q-r+1}(b) + B_r^{p+r,\, q-r+1} \in E^{p+r,\, q-r+1}
+        \end{align}
+        となる．これと $\Im j^{p+r,\, q-r+1} = \Ker k^{p+r,\, q-r+1}$ より，
+        \begin{align}
+            (d_r^{p+r,\, q-r+1} \circ d_r^{p,\, q})(a + B_r^{p,\, q}) &= (j_r^{p+r+1,\, q-r+1} \circ (k_r^{p+r,\, q-r+1} \circ j_r^{p+1,\, q}) \circ k_r^{p,\, q})(a + B_r^{p,\, q}) \\
+            &= j_r^{p+r+1,\, q-r+1} \Bigl( k_r^{p+r,\, q-r+1} \bigl( j^{p+r,\, q-r+1}(b) \bigr)  \Bigr) = 0
+        \end{align}
+        i.e. $d_r^{p+r,\, q-r+1} \circ d_r^{p,\, q} = 0$ が示された．
+        \item[\textbf{(SS2)}] 　
+        
+        　与えられた\hyperref[def:BEC]{二重次数付き完全対} $\Bigl( (D^{p,\, q}),\, (E^{p,\, q}),\, (i^{p,\, q}),\, (j^{p,\, q}),\, (k^{p,\, q}) \Bigr)$ が有界であるという仮定より，
+        $p \gg 0$ および $\forall n \in \mathbb{Z}$ に対して
+        \begin{align}
+            D^{p,\, n-p} = D^{p+1,\, n-p} =0
+        \end{align}
+        が成り立つ．従って
+        \begin{align}
+            E^{p,\, n-p} &= \Ker (k^{p,\, n-p} \colon E^{p,\, n-p} \lto 0) = \Im (j^{p,\, n-p} \colon 0 \lto E^{p,\, n-p}) = 0.
+        \end{align}
+        である．
+        また，$p \ll 0$ に対して $i^{p+1,\, n-p},\, i^{p+1,\, n-p-1}$ が同型，i.e. 単射かつ全射であるから
+        \begin{align}
+            \Im k^{p,\, n-p} &= \Ker i^{p+1,\, n-p} = 0, \\
+            \Ker j^{p,\, n-p} &= \Im i^{p+1,\, n-p-1} = D^{p,\, n-p}
+        \end{align}
+        が成り立つ．故に
+        \begin{align}
+            E^{p,\, n-p} &= \Ker k^{p,\, n-p} = \Im (j^{p,\, n-p \colon D^{p,\, n-p} \lto E^{p,\, n-p}}) = 0
+        \end{align}
+        が言えた．
+
+        以上の考察から，$r \gg 0$ および $\forall (p,\, q) \in \mathbb{Z}^2$ に対して $E^{p+r,\, q-r+1} = E^{p-r,\, q+r-1} = 0$ がわかり，従って $d_r^{p,\, q} = d_r^{p-r,\, q+r-1} = 0$ である．
+
+        \item[\textbf{同型(4)}] 　
+        
+        　\hyperref[def:DC-BEC]{二重次数付き完全対の第 $r$ 導来対}（これは次数 $r$ の\hyperref[def:BEC]{二重次数付き完全対}である）から第 $r+1$ 導来対を構成する操作の定義より
+        \begin{align}
+            E_{r+1}^{p,\, q} = \frac{\Ker (j_r^{p+1} \circ k_r^{p,\, q})}{\Im (j_r^{p-r+1,\, q+r-1} \circ k^{p-r,\, q+r-1})} = \frac{\Ker d_r^{p,\, q}}{\Im d_r^{p-r,\, q+r-1}}
+        \end{align}
+        が言えるが，これがまさに所望の同型である．
+
+        \item[\textbf{同型(5)}] 　
+        
+        　与えられた\hyperref[def:BEC]{二重次数付き完全対} $\Bigl( (D^{p,\, q}),\, (E^{p,\, q}),\, (i^{p,\, q}),\, (j^{p,\, q}),\, (k^{p,\, q}) \Bigr)$ が有界であるという仮定より，
+        $r \gg 0$ および $\forall n \in \mathbb{Z}$ に対して $D^{p+r,\, q-r+1} = 0$ なので
+        \begin{align}
+            &\Im \bigl( (i^{p+1,\, q})^{r-1} \colon 0 \lto D^{p+1,\, q} \bigr) = 0. \\ 
+            \therefore \quad &Z_r^{p,\, q} = (k^{p,\, q})^{-1}(\{0\}) = \Ker k^{p,\, q}. \label{eq:Zrpq}
+        \end{align}
+        また，補題\ref{lem:BEC-basic}より $E^{p+q} = D^{p-r+1,\, q+r-1}$ なので
+        \begin{align}
+            &\Ker \bigl( (i^{p-r+1,\, q+r-1})^{r-1} \colon D^{p,\, q} \lto E^{p+q} \bigr) = \Ker (\iota^{p,\, q} \colon D^{p,\, q} \lto E^{p+q}). \\
+            \therefore\quad &B_r^{p,\, q}  = j^{p,\, q} (  \Ker \iota^{p,\, q} ).  \label{eq:Brpq}
+        \end{align}
+        \eqref{eq:Brpq}, \eqref{eq:Zrpq}より，十分大きな $r$ および $\forall p,\, n \in \mathbb{Z}$ に対して
+        \begin{align}
+            E_r^{p,\, n-p} = \frac{Z_r^{p,\, n-p}}{B_r^{p,\, n-p}} = \frac{\Ker k^{p,\, n-p}}{j^{p,\, n-p}(\Ker \iota^{p,\, n-p})}
+        \end{align}
+        となることがわかった．従って示すべきは
+        \begin{align}
+            E_r^{p,\, n-p} \cong \frac{F^p E^n}{F^{p+1} E^n} \IFF \frac{\Ker k^{p,\, n-p}}{j^{p,\, n-p}(\Ker \iota^{p,\, n-p})} \cong \frac{\Im \iota^{p,\, n-p}}{\Im \iota^{p+1,\, n-p-1}}
+        \end{align}
+        である．
+        
+        　ここで合成射
+        \begin{align}
+            f_1 &\colon D^{p,\, n-p} \xrightarrow{\iota^{p,\, n-p}} \Im \iota^{p,\, n-p} \twoheadrightarrow\frac{ \Im \iota^{p,\, n-p}}{\Im \iota^{p+1,\, n-(p+1)}}, \\
+            f_2 &\colon D^{p,\, n-p} \xrightarrow{j^{p,\, n-p}} \Im j^{p,\, n-p} = \Ker k^{p,\, n-p} \twoheadrightarrow\frac{ \Ker k^{p,\, n-p}}{j^{p,\, n-p}(\Ker \iota^{p,\, n-p})}
+        \end{align}
+        を考えると，$f_1,\, f_2$ はどちらも全射で
+        \begin{align}
+            \Ker f_1 = \Ker f_2 = \Ker \iota^{p,\, n-p} + \Im i^{p+1,\, n-p-1}
+        \end{align}
+        が成り立つ．故に準同型定理から $f_1,\, f_2$ はそれぞれ同型
+        \begin{align}
+            \overline{f_1} &\colon \frac{D^{p,\, n-p}}{\Ker \iota^{p,\, n-p} + \Im i^{p+1,\, n-p-1}} \xrightarrow{\cong} \frac{ \Im \iota^{p,\, n-p}}{\Im \iota^{p+1,\, n-(p+1)}}, \\
+            \overline{f_2} &\colon \frac{D^{p,\, n-p}}{\Ker \iota^{p,\, n-p} + \Im i^{p+1,\, n-p-1}} \xrightarrow{\cong} \frac{ \Ker k^{p,\, n-p}}{j^{p,\, n-p}(\Ker \iota^{p,\, n-p})}
+        \end{align}
+        を誘導する．このとき $\overline{f_1} \circ \overline{f_2}^{-1}$ が欲しかった同型となる．
+    \end{description}
+\end{proof}
+
+さらに，\hyperref[def:filtration]{filtered}な複体から自然にスペクトル系列が構成されることもわかる：
+
+\begin{mytheo}[label=thm:SSQ-FC-basic]{フィルター付けされた複体によるスペクトル系列}
+    $(K^\bullet,\, \Dpmember[\big]{F^p K^\bullet}{p \in \mathbb{Z}})$ を，$\Cat{A}$ における\hyperref[def:filtration]{filtered}な複体であって，
+    $\forall n\in \mathbb{Z}$ に対して $K^n$ の\textbf{有限な}\hyperref[def:filtration]{filtration} が $(F^p K^n)_{p \in \mathbb{Z}}$ であるようなものとする．
+    このとき，自然にスペクトル系列
+    \begin{align}
+        E_1^{p,\, q} = H^{p+q} (F^p K^\bullet/ F^{p+1} K^\bullet) \IMP E^{p+q} = H^{p+q}(K^\bullet)
+    \end{align}
+    が構成される．
+\end{mytheo}
+
+\begin{proof}
+    \begin{align}
+        D^{p,\, q} &\coloneqq H^{p+q}(F^p K^\bullet), \\
+        E^{p,\, q} &\coloneqq H^{p+q}(F^p K^\bullet/ F^{p+1} K^\bullet)
+    \end{align}
+    とおくと，複体の完全列
+    \begin{align}
+        0 \lto F^{p+1} K^\bullet \lto F^p K^\bullet \lto F^p K^\bullet / F^{p+1} K^\bullet \lto 0
+    \end{align}
+    がある．これの\hyperref[prop:LES-cohomology]{コホモロジー長完全列}
+    \begin{align}
+        \cdots &\xrightarrow{k^{p,\, q-1}} D^{p+1,\, q-1} \xrightarrow{i^{p+1,\, q-1}} D^{p,\, q} \xrightarrow{j^{p,\, q}} E^{p,\, q} \\
+        &\xrightarrow{k^{p,\, q}} D^{p+1,\, q} \xrightarrow{i^{p+1,\, q}} D^{p,\, q+1} \xrightarrow{j^{p,\, q+1}} E^{p,\, q+1} \\
+        &\xrightarrow{k^{p,\, q+1}} \cdots \label{eq:SSQ-FC-basic-1}
+    \end{align}
+    によって射の族
+    \begin{align}
+        &\Dpmember[\big]{i^{p,\, q} \colon D^{p,\, q} \lto D^{p-1,\, q+1}}{p,\, q \in \mathbb{Z}},\\ 
+        &\Dpmember[\big]{j^{p,\, q} \colon D^{p,\, q} \lto E^{p,\, q}}{p,\, q \in \mathbb{Z}}, \\
+        &\Dpmember[\big]{k^{p,\, q} \colon E^{p,\, q} \lto D^{p+1,\, q}}{p,\, q \in \mathbb{Z}}
+    \end{align}
+    が定まる．図式\eqref{eq:SSQ-FC-basic-1}の完全性から $\Bigl( (D^{p,\, q}),\, (E^{p,\, q}),\, (i^{p,\, q}),\, (j^{p,\, q}),\, (k^{p,\, q}) \Bigr)$ が次数 $1$ の \hyperref[def:BEC]{二重次数付き完全対}であることがわかる．
+    有界性は，filtrationが有限であることから従う．よって定理\ref{thm:SSQ-basic}が使えて題意の\hyperref[def:SSQ]{スペクトル系列}が構成される．
+\end{proof}
+
+\section{スペクトル系列の計算例}
+
+\subsection{$E_r$ 項が疎な場合}
+
+\subsection{二重複体によるスペクトル系列}
+
+アーベル圏 $\Cat{A}$ における\hyperref[def:double-complex]{二重複体} $(K^{\bullet,\, *},\, \delta_1^{\bullet,\, *},\, \delta_2^{\bullet,\, *})$ は，$\forall n \in \mathbb{Z}$ に対して
+\begin{align}
+    K^{a,\, b} \neq 0 \AND a+b = n
+\end{align}
+を充たす $(a,\, b) \in \mathbb{Z}^2$ が有限個であると仮定する．
+
+\begin{mytheo}[label=SS:double-complex, breakable]{二重複体によるスペクトル系列}
+    $\forall p \in \mathbb{Z}$ に対して $K^{\bullet,\, *}$ の部分対象 $F^p K^{\bullet,\, *}$ を
+    \begin{align}
+        F^p K^{a,\, b} \coloneqq
+        \begin{cases}
+            K^{a,\, b}, & a \ge p \\
+            0, & a < p
+        \end{cases}
+    \end{align}
+    と定義し，
+    \begin{align}
+        K^\bullet &\coloneqq \Tot (K^{\bullet,\, *}), \\
+        F^p K^\bullet &\coloneqq \Tot (F^p K^{\bullet,\, *})
+    \end{align}
+    とおく．このとき組 $\Bigl( K^\bullet,\, \Dpmember[\big]{F^pK^\bullet}{p \in \mathbb{Z}} \Bigr)$ は\hyperref[def:filtration]{filtered}な複体で，
+    $\forall n \in \mathbb{Z}$ に対して $ \Dpmember[\big]{F^pK^n}{p \in \mathbb{Z}}$ は $K^n$ の\textbf{有限な}\hyperref[def:filtration]{filtration}になる．
+    また，自然に\hyperref[def:SSQ]{スペクトル系列}
+    \begin{align}
+        E_1^{p,\, q} = H^q(K^{p,\, \bullet}) \IMP E^{p+q} = H^{p+q} (K^\bullet)
+    \end{align}
+    が構成される．
+\end{mytheo}
+
+\begin{proof}
+    $\Cat{A} = \MOD{R}$ とする．$\forall n \in \mathbb{Z}$ に対して，構成より明らかに
+    \begin{align}
+        \cdots \subset F^{p+1} K^{n} \subset F^p K^n \subset F^{p-1} K^n \subset \cdots \subset K^n
+    \end{align}
+    が成り立つ．さらに二重複体$(K^{\bullet,\, *},\, \delta_1^{\bullet,\, *},\, \delta_2^{\bullet,\, *})$ の\hyperref[def:double-complex]{全複体}の射 $d^n \colon K^n = \Tot(K^{\bullet,\, *})^n \lto K^{n+1} = \Tot(K^{\bullet,\, *})^{n+1}$ の定義より，$\forall p \in \mathbb{Z}$ を一つ固定したときに
+    \begin{align}
+        \forall n \in \mathbb{Z},\; d^n (F^p K^n) \subset F^p K^{n+1}
+    \end{align}
+    が成り立つ．i.e. $\Bigl( K^\bullet,\, \Dpmember[\big]{F^pK^\bullet}{p \in \mathbb{Z}} \Bigr)$ は\hyperref[def:filtration]{filtered}な複体で，
+    $\forall n \in \mathbb{Z}$ に対して $ \Dpmember[\big]{F^pK^\bullet}{p \in \mathbb{Z}}$ は $K^n$ の\textbf{有限な}\hyperref[def:filtration]{filtration}になっている．
+
+    また，$\forall p \in \mathbb{Z}$ を一つ固定すると
+    $\forall n \in \mathbb{Z},\;
+        F^p K^n = \bigoplus_{a+b = n,\, \textcolor{red}{a \ge p}} K^{a,\, b}, \quad
+        F^{p+1} K^n = \bigoplus_{a+b = n,\, \textcolor{red}{a \ge p+1}} K^{a,\, b}
+    $
+    だから $F^p K^n / F^{p+1} K^n = K^{p,\, n-p}$ である．従って $F^p K^\bullet / F^{p+1} K^\bullet = \bigl( K^{p,\, \bullet - p},\, \delta_2^{p,\, \bullet-p} \bigr)$ であることがわかるが，$H^{p+q}(K^{p,\, \bullet - p}) = H^q(K^{p,\, \bullet})$ なので，
+    定理\ref{thm:SSQ-FC-basic}より題意が従う．
+\end{proof}
+
+\begin{mycol}[label=SS:double-complex2, breakable]{}
+    $\forall p \in \mathbb{Z}$ に対して $K^{\bullet,\, *}$ の部分対象 $F^p K^{\bullet,\, *}$ を
+    \begin{align}
+        F^p K^{a,\, b} \coloneqq
+        \begin{cases}
+            K^{a,\, b}, & \textcolor{red}{b} \ge p \\
+            0, & \textcolor{red}{b} < p
+        \end{cases}
+    \end{align}
+    と定義し，
+    \begin{align}
+        K^\bullet &\coloneqq \Tot (K^{\bullet,\, *}), \\
+        F^p K^\bullet &\coloneqq \Tot (F^p K^{\bullet,\, *})
+    \end{align}
+    とおく．このとき組 $\Bigl( K^\bullet,\, \Dpmember[\big]{F^pK^\bullet}{p \in \mathbb{Z}} \Bigr)$ は\hyperref[def:filtration]{filtered}な複体で，
+    $\forall n \in \mathbb{Z}$ に対して $ \Dpmember[\big]{F^pK^n}{p \in \mathbb{Z}}$ は $K^n$ の\textbf{有限な}\hyperref[def:filtration]{filtration}になる．
+    また，自然に\hyperref[def:SSQ]{スペクトル系列}
+    \begin{align}
+        E_1^{p,\, q} = H^q(K^{\bullet,\, p}) \IMP E^{p+q} = H^{p+q} (K^\bullet)
+    \end{align}
+    が構成される．
+\end{mycol}
+
+\begin{proof}
+    定理\ref{SS:double-complex}と全く同様にして示せる．
+\end{proof}
+
+定理\ref{SS:double-complex}のスペクトル系列の\hyperref[def:SSQ]{$E_2$ 項}を計算しよう．
+$E_1$ 項がわかっているので\hyperref[def:SSQ]{スペクトル系列の定義}の \textbf{同型 (4)} を使えば良い．
+\hyperref[def:SSQ]{スペクトル系列の定義}の \textbf{(3) の射}は
+\begin{align}
+    d_1^{p,\, q} \colon E_1^{p,\, q} = H^q (K^{p,\, \bullet}) \lto E_1^{p+1,\, q} = H^q(K^{p+1,\, \bullet})
+\end{align}
+となるが，系\ref{SS:double-complex2}の構成より
+\begin{align}
+    d_1^{p,\, q} = H^q(\delta_1^{p,\, \bullet})
+\end{align}
+がわかる．よって
+\begin{align}
+    E_2^{p,\, q} = \frac{\Ker d_1^{p,\, q}}{\Im d_1^{p-1,\, q}} = \frac{\Ker H^q(\delta_1^{p,\, \bullet})}{\Im H^q(\delta_1^{p-1,\, \bullet})}
+\end{align}
+と求まった．これは，複体
+\begin{align}
+    \irm{H^q}{II} (K^{\bullet,\, *}) \coloneqq \cdots \xrightarrow{H^q(\delta_1^{p-1,\, \bullet})} H^q(K^{p,\, \bullet}) \xrightarrow{H^q(\delta_1^{p,\, \bullet})} H^q(K^{p+1,\, \bullet}) \xrightarrow{H^q(\delta_1^{p+1,\, \bullet})} \cdots
+\end{align}
+の $p$ 次コホモロジーを $\irm{H^p}{I}\bigl(\irm{H^q}{II} (K^{\bullet,\, *})\bigr)$ と書いたときに
+\begin{align}
+    \label{eq:SS-double-complex-E2-1}
+    E_2^{p,\, q} = \irm{H^p}{I}\bigl(\irm{H^q}{II} (K^{\bullet,\, *})\bigr)
+\end{align}
+が成り立つことを意味する．
+
+添字の役割を逆にすることで
+\begin{align}
+    \label{eq:SS-double-complex-E2-2}
+    E_2^{p,\, q} = \irm{H^p}{II}\bigl(\irm{H^q}{I} (K^{\bullet,\, *})\bigr)
+\end{align}
+もわかる．
+
+\begin{mycol}[label=col:SS-double-complex, breakable]{}
+    $A^\bullet$ をアーベル圏 $\Cat{A}$ における複体，$K^{\bullet,\, *}$ を\hyperref[def:double-complex]{二重複体}とする\footnote{$\forall n \in \mathbb{Z}$ に対して，$K^{a,\, b} \neq 0,\; a+b =n$ を充たす $(a,\, b) \in \mathbb{Z}^2$ が有限個であると仮定する．}．
+    \begin{enumerate}
+        \item 次のどちらか一方を仮定する：
+        \begin{enumerate}
+            \item 射 $f^{\bullet} \colon A^\bullet \lto K^{\bullet,\, *}$ であって，$\forall p \in \mathbb{Z}$ に対して $f^p \colon A^p \lto K^{p,\, \bullet}$ がコホモロジーの同型
+            \begin{align}
+                \begin{rcases}
+                    A^p, & n=0 \\
+                    0, & n\neq 0
+                \end{rcases}
+                \xrightarrow{\cong} H^n(K^{p,\, \bullet})
+            \end{align}
+            を誘導するようなものが存在する．
+            \item 二重複体の射 $f^{\bullet,\, *} \colon K^{\bullet,\, *} \lto A^\bullet$ であって，$\forall p \in \mathbb{Z}$ に対して $f^{p,\, \bullet} \colon K^{p,\, \bullet} \lto A^p$ がコホモロジーの同型
+            \begin{align}
+                H^n(K^{p,\, \bullet}) \xrightarrow{\cong}
+                \begin{cases}
+                    A^p, & n=0 \\
+                    0, & n\neq 0
+                \end{cases}
+            \end{align}
+            を誘導するようなものが存在する．
+        \end{enumerate}
+        このとき，$\forall n \in \mathbb{Z}$ に対して自然な同型
+        \begin{align}
+            H^n(A^\bullet) \cong H^n (\Tot K^{\bullet,\, *})
+        \end{align}
+        がある．
+        \item 次のどちらか一方を仮定する：
+        \begin{enumerate}
+            \item 射 $f^{*} \colon A^\bullet \lto K^{\bullet,\, *}$ であって，$\forall q \in \mathbb{Z}$ に対して $f^q \colon A^q \lto K^{\bullet,\, q}$ がコホモロジーの同型
+            \begin{align}
+                \begin{rcases}
+                    A^q, & n=0 \\
+                    0, & n\neq 0
+                \end{rcases}
+                \xrightarrow{\cong} H^n(K^{\bullet,\, q})
+            \end{align}
+            を誘導するようなものが存在する．
+            \item 二重複体の射 $f^{\bullet,\, *} \colon K^{\bullet,\, *} \lto A^\bullet$ であって，$\forall q \in \mathbb{Z}$ に対して $f^{\bullet,\, q} \colon K^{\bullet,\, q} \lto A^q$ がコホモロジーの同型
+            \begin{align}
+                H^n(K^{\bullet,\, q}) \xrightarrow{\cong}
+                \begin{cases}
+                    A^q, & n=0 \\
+                    0, & n\neq 0
+                \end{cases}
+            \end{align}
+            を誘導するようなものが存在する．
+        \end{enumerate}
+        このとき，$\forall n \in \mathbb{Z}$ に対して自然な同型
+        \begin{align}
+            H^n(A^\bullet) \cong H^n (\Tot K^{\bullet,\, *})
+        \end{align}
+        がある．
+    \end{enumerate}
+    
+\end{mycol}
+
+\begin{marker}
+    系\ref{col:SS-double-complex}の条件を少し強めて，より見やすい形に直してみる．
+    \begin{enumerate}
+        \item 
+        \begin{enumerate}
+            \item (1)-(a) の条件に，さらに条件
+            \begin{align}
+                b < 0 \IMP K^{a,\, b} = 0
+            \end{align}
+            をつけると，これは $\forall p \in \mathbb{Z}$ に対して定まる図式
+            \begin{align}
+                0 \lto A^p \xrightarrow{f^p} K^{p,\, 0} \lto K^{p,\, 1} \lto K^{p,\, 2} \lto \cdots
+            \end{align}
+            が完全であることと同値である．
+            \item (1)-(b) の条件に，さらに条件
+            \begin{align}
+                b > 0 \IMP K^{a,\, b} = 0
+            \end{align}
+            をつけると，これは $\forall p \in \mathbb{Z}$ に対して定まる図式
+            \begin{align}
+                \cdots \lto K^{p,\, -2} \lto K^{p,\, -1} \lto K^{p,\, 0} \xrightarrow{f^{p,\, 0}} A^p \lto 0
+            \end{align}
+            が完全であることと同値である．
+        \end{enumerate}
+        \item 
+        \begin{enumerate}
+            \item (2)-(a) の条件に，さらに条件
+            \begin{align}
+                a < 0 \IMP K^{a,\, b} = 0
+            \end{align}
+            をつけると，これは $\forall q \in \mathbb{Z}$ に対して定まる図式
+            \begin{align}
+                0 \lto A^q \xrightarrow{f^q} K^{0,\, q} \lto K^{1,\, q} \lto K^{2,\, q} \lto \cdots
+            \end{align}
+            が完全であることと同値である．
+            \item (2)-(b) の条件に，さらに条件
+            \begin{align}
+                a > 0 \IMP K^{a,\, b} = 0
+            \end{align}
+            をつけると，これは $\forall q \in \mathbb{Z}$ に対して定まる図式
+            \begin{align}
+                \cdots \lto K^{-2,\, q} \lto K^{-1,\, q} \lto K^{0,\, q} \xrightarrow{f^{0,\, q}} A^q \lto 0
+            \end{align}
+            が完全であることと同値である．
+        \end{enumerate}
+    \end{enumerate}
+\end{marker}
+
+
+\begin{proof}
+    \begin{enumerate}
+        \item 仮定より複体の同型
+        \begin{align}
+            \irm{H^q}{II} (K^{\bullet,\, *}) \cong
+            \begin{cases}
+                \cdots \lto  A^{p-1} \lto A^p \lto A^{p+1} \lto \cdots, & q=0 \\
+                \cdots \lto  0 \lto 0 \lto 0 \lto \cdots, & q\neq 0
+            \end{cases}
+        \end{align}
+        が成り立つ．よって\eqref{eq:SS-double-complex-E2-1}から従うスペクトル系列
+        \begin{align}
+            E_2^{p,\, q} = \irm{H^p}{I}\bigl(\irm{H^q}{II} (K^{\bullet,\, *})\bigr) \IMP H^{p+q}( \Tot K^{\bullet,\, *} )
+        \end{align}
+        において
+        \begin{align}
+            E_2^{p,\, q} =
+            \begin{cases}
+                H^q(A^\bullet), & q=0 \\
+                0, & q\neq 0
+            \end{cases}
+        \end{align}
+        となるので $H^n(A^\bullet) = E_2^{p,\, 0} \cong E^n = H^n(\Tot K^{\bullet,\, *})$ となる．
+        \item \eqref{eq:SS-double-complex-E2-2}から従うスペクトル系列
+        \begin{align}
+            E_2^{p,\, q} = \irm{H^p}{II}\bigl(\irm{H^q}{I} (K^{\bullet,\, *})\bigr) \IMP H^{p+q}( \Tot K^{\bullet,\, *} )
+        \end{align}
+        を用いて (1) と同様の議論をすれば証明できる．
+    \end{enumerate}
+\end{proof}
+
+\eqref{eq:spectral-isom-Tor}はまさに系\ref{col:SS-double-complex}の条件を充たしており，同型\eqref{eq:spectral-isom-Tor}が示されたことになる．
+
+\subsection{K\"unnethスペクトル系列と普遍係数定理}
+
+\begin{mylem}[label=lem:Kunneth]{}
+    右 $R$ 加群の複体 $(L^\bullet,\, d_L^\bullet)$ と左 $R$ 加群の複体 $(M^\bullet,\, d_M^\bullet)$ を与える．
+    $\forall n \in \mathbb{Z}$ に対して $\Im d_M^n,\, H^n(M^\bullet)$ が\hyperref[def:flat-mod]{平坦加群}であると仮定する．
+
+    このとき，$\forall n \in \mathbb{Z}$ に対して自然な同型
+    \begin{align}
+        \bigoplus_{i+j = n} H^i(L^\bullet) \otimes_R H^j(M^\bullet) \xrightarrow{\cong} H^n \bigl( \Tot(L^\bullet \otimes_R M^*) \bigr) 
+    \end{align}
+    が成り立つ．
+\end{mylem}
+
+\begin{proof}
+    $Z^n \coloneqq \Ker d_M^n,\; B^n \coloneqq \Im d_M^{n-1}$ とおく．
+    するとコホモロジーの定義により，$\forall j \in \mathbb{Z}$ に対して短完全列
+    \begin{align}
+        \label{eq:SES-lem4-10-1}
+        0 \lto B^j \lto Z^j \lto H^j(M^\bullet) \lto 0
+    \end{align}
+    がある．仮定より $H^j(M^\bullet)$ は\hyperref[def:flat-mod]{平坦加群}なので，\eqref{eq:SES-lem4-10-1}に命題\ref{prop:Tor-flat-2}-(2) を使うことができて，
+    $\forall i,\, j \in \mathbb{Z}$ に対して短完全列
+    \begin{align}
+        0 \lto H^i(L^\bullet) \otimes_R B^j \xrightarrow{\alpha_{i,\, j}} H^i(L^\bullet) \otimes_R Z^j \lto H^i(L^\bullet) \otimes_R H^j(M^\bullet) \lto 0
+    \end{align}
+    を得る．さらに，直和は完全列を保存するので $\forall n \in \mathbb{Z}$ に対して短完全列
+    \begin{align}
+        \label{eq:SES-lem4-10-2}
+        0 \lto \bigoplus_{i+j=n} H^i(L^\bullet) \otimes_R B^j \xrightarrow{\bigoplus_{i+j=n}\alpha_{i,\, j}} \bigoplus_{i+j=n} H^i(L^\bullet) \otimes_R Z^j \lto \bigoplus_{i+j=n} H^i(L^\bullet) \otimes_R H^j(M^\bullet) \lto 0
+    \end{align}
+    を得る．
+
+    次に，$(B^\bullet,\, 0),\; (Z^\bullet,\, 0)$ を複体と見做すことで，標準的包含 $Z^n \hookrightarrow M^n$ および $d^n = d_M^n \colon M^n \lto B^{n+1}$ は自然に複体の射 $Z^\bullet \to M^\bullet,\; d^\bullet \colon M^\bullet,\, B^{\bullet +1}$ を定める．
+    また，複体の短完全列
+    \begin{align}
+        \label{eq:SES-lem4-10-3}
+        0 \lto Z^\bullet \lto M^\bullet \xrightarrow{d^\bullet} B^{\bullet +1} \lto 0
+    \end{align}
+    がある．仮定より $B^n$ は\hyperref[def:flat-mod]{平坦加群}なので，\eqref{eq:SES-lem4-10-3}に命題\ref{prop:Tor-flat-2}-(2) を使うことができて，
+    \hyperref[def:double-complex]{二重複体}の短完全列
+    \begin{align}
+        0 \lto L^\bullet \otimes_R Z^* \lto L^\bullet \otimes_R M^* \xrightarrow{1_{L^\bullet} \otimes d^*} L^\bullet \otimes_R B^{*+1} \lto 0
+    \end{align}
+    を得る．\hyperref[def:Tot]{全複体}をとる操作は完全関手なので\footnote{$\MOD{R}$ においては単に直和である．}短完全列
+    \begin{align}
+        0 \lto \Tot (L^\bullet \otimes_R Z^*) \lto \Tot(L^\bullet \otimes_R M^*) \lto \Tot(L^\bullet \otimes_R B^{*+1}) \lto 0
+    \end{align}
+    があるが，これの\hyperref[prop:LES-cohomology]{コホモロジー長完全列}を取ることで
+    \begin{align}
+        \cdot &\lto H^{n-1}\bigl(\Tot (L^\bullet \otimes_R Z^*)\bigr) \lto H^{n-1}\bigl( \Tot(L^\bullet \otimes_R M^*)\bigr) \lto H^{n-1}\bigl(\Tot(L^\bullet \otimes_R B^{*+1})\bigr) \\
+        &\xrightarrow{\beta} H^n\bigl(\Tot (L^\bullet \otimes_R Z^*)\bigr) \lto H^n\bigl( \Tot(L^\bullet \otimes_R M^*)\bigr) \lto H^n\bigl(\Tot(L^\bullet \otimes_R B^{*+1})\bigr) \\
+        &\lto \cdots
+    \end{align}
+    を得る．然るに複体 $B^\bullet,\, Z^\bullet$ を構成する準同型写像は零写像だから
+    \begin{align}
+        H^{n-1}\bigl(\Tot(L^\bullet \otimes_R B^{*+1})\bigr) &= \bigoplus_{i+j = n-1} H^i(L^\bullet) \otimes_R B^{j+1} \\
+        &= \bigoplus_{i+j = n} H^i(L^\bullet) \otimes_R B^{j}, \\
+        H^n\bigl(\Tot (L^\bullet \otimes_R Z^*)\bigr) &= \bigoplus_{i+j = n} H^i(L^\bullet) \otimes_R Z^{j}
+    \end{align}
+    が成り立つ．このとき
+    \begin{align}
+        \beta = \bigoplus_{i+j = n} (-1)^i \alpha_{ij} \colon \bigoplus_{i+j = n} H^i(L^\bullet) \otimes_R B^{j} \lto \bigoplus_{i+j = n} H^i(L^\bullet) \otimes_R Z^{j}
+    \end{align}
+    とかけ，かつ $\beta$ は $\forall n$ に対して単射である．よって，横の2つの写像が同型であるような次の可換図式がある：
+    \begin{center}
+        \begin{tikzcd}[row sep=large, column sep=large]
+            &0\ar[d]                                                                                                                           &0\ar[d] \\                                           
+            &\bigoplus_{i+j = n} H^i(L^\bullet) \otimes_R B^{j} \ar[d, "\bigoplus_{i+j = n} \alpha_{ij}"]\ar[r, "\bigoplus_{i+j = n} (-1)^i"]  &\bigoplus_{i+j = n} H^i(L^\bullet) \otimes_R B^{j}\ar[d, "\beta"] \\
+            &\bigoplus_{i+j = n} H^i(L^\bullet) \otimes_R Z^{j} \ar[r, "1"] \ar[d]                                                             &\bigoplus_{i+j = n} H^i(L^\bullet) \otimes_R Z^{j}\ar[d] \\
+            &\bigoplus_{i+j = n} H^i(L^\bullet) \otimes_R H^{j}(M^\bullet) \ar[d]                                                              &H^n \bigl( \Tot(L^\bullet \otimes_R M^*) \bigr) \ar[d] \\
+            &0 &0 \\
+            &(\text{exact}) &(\text{exact})
+        \end{tikzcd}
+    \end{center}
+    この可換図式から同型
+    \begin{align}
+        \bigoplus_{i+j = n} H^i(L^\bullet) \otimes_R H^j(M^\bullet) \xrightarrow{\cong} H^n \bigl( \Tot(L^\bullet \otimes_R M^*) \bigr) 
+    \end{align}
+    が誘導される（\hyperref[prop:HES]{ホモロジー長完全列}と\hyperref[prop:five-lemma]{5項補題}による）．
+\end{proof}
+
+\begin{mytheo}[label=SS:Kunneth]{K\"unnethスペクトル系列}
+    右 $R$ 加群の複体 $(L^\bullet,\, d_L^\bullet)$ と左 $R$ 加群の複体 $(M^\bullet,\, d_M^\bullet)$ を与える．
+    次の条件のいずれかが満たされているとする：
+    \begin{enumerate}
+        \item $L^\bullet$ または $M^\bullet$ が\hyperref[def:flat-mod]{平坦加群}からなる複体であり，かつ $L^\bullet,\, M^\bullet$ の両方が上に有界である．
+        \item $L^\bullet$ が\hyperref[def:flat-mod]{平坦加群}からなる複体であり，
+        かつある $N \in \mathbb{Z}_{\ge 0}$ が存在して，$\forall M \in \MOD{R}$ が $\forall n < -N,\; P^n = 0$ を充たすような\hyperref[def:projective-resolution]{射影的分解} $P^\bullet \lto M$ を持つ．
+        \item $M^\bullet$ が\hyperref[def:flat-mod]{平坦加群}からなる複体であり，
+        かつある $N \in \mathbb{Z}_{\ge 0}$ が存在して，$\forall M \in \MODR{R}$ が $\forall n < -N,\; P^n = 0$ を充たすような\hyperref[def:projective-resolution]{射影的分解} $P^\bullet \lto M$ を持つ．
+    \end{enumerate}
+    
+    このとき，\hyperref[def:SSQ]{スペクトル系列}
+    \begin{align}
+        E_2^{p,\, q} = \bigoplus_{i+j = n} \Tor^R_{-p} \bigl( H^i(L^\bullet),\, H^j(M^\bullet) \bigr) \IMP H^{p+q} \bigl( \Tot(L^\bullet \otimes_R M^*) \bigr) 
+    \end{align}
+    が構成される．
+\end{mytheo}
+
+\begin{marker}
+    $R$ が\hyperref[def:PID]{単項イデアル整域}のとき，$N=1$ として条件 (2), (3) の後半が充たされる（定理\ref{thm:proj-resol-PID}）．
+\end{marker}
+
+\begin{proof}
+    条件 (1), (2) において $L^\bullet$ が\hyperref[def:flat-mod]{平坦加群}からなる複体であるとして証明する．
+
+    複体 $M^\bullet$ の\hyperref[prop:Cartan-Eilenberg-L]{左Cartan-Eilenberg分解} $Q^{\bullet,\, *} \lto M^\bullet$ をとる．ただし条件 (2) の場合は $\forall n \in \mathbb{Z},\, \forall m < -N,\; Q^{n,\, m} = 0$ を充たすようにとる．
+    三重複体 $L^\bullet \otimes_R Q^{*,\, \blacktriangle}$ の3つ目の添字 $n$ を固定したときにできる\hyperref[def:double-complex]{二重複体}たちの\hyperref[def:Tot]{全複体} $\Tot (L^\bullet \otimes_R Q^{*,\, n})$ は，$n$ を動かすことで二重複体
+    \begin{align}
+        \cdots \lto \Tot (L^\bullet \otimes_R Q^{*,\, n-1}) \lto \Tot (L^\bullet \otimes_R Q^{*,\, n}) \lto \cdots
+    \end{align}
+    になる\footnote{$\Tot \bigl(\Tot_2(L^\bullet \otimes_R Q^{*,\, \blacktriangle})\bigr) = \Tot (L^\bullet \otimes_R Q^{*,\, \blacktriangle})$ となるような二重複体．}．これを $\Tot_2(L^\bullet \otimes_R Q^{*,\, \blacktriangle})$ と書き，その次数 $(a,\, b)$ の項を $\Tot_2(L^\bullet \otimes_R Q^{*,\, \blacktriangle})^{a,\, b} \coloneqq \bigoplus_{i+j = a} L^i \otimes_R Q^{j,\,b}$ とおく．
+    \begin{description}
+        \item[\textbf{仮定 (1) のとき}] $\Tot_2(L^\bullet \otimes_R Q^{*,\, \blacktriangle})^{a,\, b}$ は $a \gg 0 \OR b > 0$ のとき $0$
+        \item[\textbf{仮定 (2) のとき}] $\Tot_2(L^\bullet \otimes_R Q^{*,\, \blacktriangle})^{a,\, b}$ は $b < -N \OR b > 0$ のとき $0$
+    \end{description}
+    だから，$\forall n \in \mathbb{Z}$ に対して $\Tot_2(L^\bullet \otimes_R Q^{*,\, \blacktriangle})^{a,\, b} \neq 0,\; a+b = n$ を充たす $(a,\, b) \in \mathbb{Z}^2$ は有限個である．
+
+    \hyperref[prop:Cartan-Eilenberg-L]{左Cartan-Eilenberg分解}の定義より，$\forall n \in \mathbb{Z}$ に対して $Q^{n,\, \bullet} \lto M^n \lto 0$ は完全列で，かつ仮定より $\forall m \in \mathbb{Z},\; L^m$ は\hyperref[def:flat-mod]{平坦加群}なので，$\forall m,\, n \in \mathbb{Z}$ に対して命題\ref{prop:Tor-flat-2}-(2) より完全列
+    \begin{align}
+        \cdots \lto L^m \otimes_R Q^{n,\, -1} \lto L^m \otimes_R Q^{n,\, 0} \lto L^m \otimes_R M^n \lto 0
+    \end{align}
+    を得る．これの直和を取る事で，$\forall n \in \mathbb{Z}$ に対して完全列
+    \begin{align}
+        \cdots \Tot_2(L^\bullet \otimes_R Q^{*,\, \blacktriangle})^{n,\, -1} \lto \Tot_2(L^\bullet \otimes_R Q^{*,\, \blacktriangle})^{n,\, 0} \lto \Tot(L^\bullet \otimes_R M^{*})^n \lto 0
+    \end{align}
+    が得られる．
+
+    以上の考察より，複体 $\Tot(L^\bullet \otimes_R M^{*})$ と二重複体 $\Tot_2(L^\bullet \otimes_R Q^{*,\, \blacktriangle})$ の組に対して系\ref{col:SS-double-complex}を使うことができて，自然な同型
+    \begin{align}
+        H^n \bigl( \Tot(L^\bullet \otimes_R M^{*}) \bigr) \cong H^n \Bigl( \Tot \bigl( \Tot_2(L^\bullet \otimes_R Q^{*,\, \blacktriangle})\bigr) \Bigr) = H^n \bigl( \Tot(L^\bullet \otimes_R Q^{*,\, \blacktriangle}) \bigr) 
+    \end{align}
+    があるとわかった．
+
+    一方，$Q^{\bullet,\, *} \lto M^\bullet$ が\hyperref[prop:Cartan-Eilenberg-L]{左Cartan-Eilenberg分解}なので補題\ref{lem:Kunneth}を使うことができて\footnote{\hyperref[def:projective-resolution]{射影的加群}は\hyperref[def:flat-mod]{平坦加群}（系\ref{col:proj-flat}）}
+    同型
+    \begin{align}
+        H^q \bigl(\Tot(L^\bullet \otimes_R Q^{*,\, p})  \bigr) \cong \bigoplus_{i+j=n} H^i(L^\bullet) \otimes_R H^j(Q^{\bullet,\, p})
+    \end{align}
+    がわかる．従って
+    $\Tot_2(L^\bullet \otimes_R Q^{*,\, \blacktriangle})$ の1つ目の添字について第 $q$ 次コホモロジーをとると複体
+    \begin{align}
+        \cdots \lto H^q \bigl( \Tot(L^\bullet \otimes_R Q^{*,\, p-1}) \bigr) \lto H^q \bigl( \Tot(L^\bullet \otimes_R Q^{*,\, p}) \bigr) \lto H^q \bigl( \Tot(L^\bullet \otimes_R Q^{*,\, p+1}) \bigr)  \lto \cdots
+    \end{align}
+    が得られるが，これは複体
+    \begin{align}
+        \cdots \lto \bigoplus_{i+j=n} H^i(L^\bullet) \otimes_R H^j(Q^{\bullet,\, p-1}) \lto \bigoplus_{i+j=n} H^i(L^\bullet) \otimes_R H^j(Q^{\bullet,\, p}) \lto \bigoplus_{i+j=n} H^i(L^\bullet) \otimes_R H^j(Q^{\bullet,\, p+1})  \lto \cdots
+    \end{align}
+    に等しい．さらにこの複体の $p$ 次コホモロジーをとると，$H^j(Q^{\bullet,\, *}) \lto H^j(M^\bullet)$ が\hyperref[def:projective-resolution]{射影的分解}であることと $H^p$ と直和が交換することから，\hyperref[def:Tor]{$\Tor$ の定義より}
+    \begin{align}
+        \irm{H^p}{II} \Bigl( \irm{H^q}{I} \bigl(\Tot_2(L^\bullet \otimes_R Q^{*,\, \blacktriangle})\bigr)\Bigr) = \bigoplus_{i+j=n} \Tor^R_{-p} \bigl( H^i(L^\bullet) \otimes_R H^j(M^{\bullet}) \bigr) 
+    \end{align}
+    が言える．左辺は $\Tot_2(L^\bullet \otimes_R Q^{*,\, \blacktriangle})$ により構成される\hyperref[SS:double-complex]{二重複体によるスペクトル系列}の $E_2$ 項だから，スペクトル系列
+    \begin{align}
+        \bigoplus_{i+j=n} \Tor^R_{-p} \bigl( H^i(L^\bullet) \otimes_R H^j(M^{\bullet}) \bigr) \IMP H^{p+q} \bigl( \Tot (L^\bullet \otimes_R M^*) \bigr) 
+    \end{align}
+    がある．
+\end{proof}
+
+\begin{mycol}[label=col:Kunneth]{K\"unneth公式}
+    $R$ を\hyperref[def:PID]{単項イデアル整域}とし，
+    2つの $R$ 加群の複体 $(L^\bullet,\, d_L^\bullet),\, (M^\bullet,\, d_M^\bullet)$ であって，いずれかが\hyperref[def:torsion-free-mod]{無捻加群}からなるようなものを与える．
+    \begin{itemize}
+        \item このとき，$\forall n \in \mathbb{Z}$ に対して次の完全列が存在する：
+        \begin{align}
+            0 &\lto \bigoplus_{i+j=n} H^i(L^\bullet) \otimes_R H^j(M^\bullet) \xrightarrow{f} H^n \bigl( \Tot (L^\bullet \otimes_R M^*) \bigr) \\
+            &\lto \bigoplus_{i+j=n+1} \Tor_1^R \bigl(H^i(L^\bullet),\, H^j(M^\bullet) \bigr) \lto 0 \label{SES:Kunneth}
+        \end{align}
+        \item さらに $L^\bullet,\, M^\bullet$ が\textbf{共に}自由加群からなる複体ならば完全列\eqref{SES:Kunneth}は\hyperref[def:split]{分裂}し，同型
+        \begin{align}
+            \label{isom:Kunneth}
+            H^n \bigl( \Tot (L^\bullet \otimes_R M^*) \bigr) \cong \left( \bigoplus_{i+j=n} H^i(L^\bullet) \otimes_R H^j(M^\bullet)  \right) \oplus \left( \bigoplus_{i+j=n+1} \Tor_1^R \bigl(H^i(L^\bullet),\, H^j(M^\bullet) \bigr) \right) 
+        \end{align}
+        が成り立つ．
+    \end{itemize}
+\end{mycol}
+
+\begin{proof}
+    $R$ がP.I.D.なので，定理\ref{SS:Kunneth}の条件 (2) または (3) が充たされて\hyperref[SS:Kunneth]{K\"unnethスペクトル系列}が存在する．さらに定理\ref{thm:proj-resol-PID}より $\forall n \ge 2,\; \Tor_n^R (\mhyphen,\, \mhyphen) = 0$ が言える．よって $p \neq -1,\, 0$ のとき $E_2^{p,\, q} = 0$ となり，完全列\eqref{SES:Kunneth}を得る．
+
+    後半を示す．仮定より自由加群の部分加群 $\Im d_L^i \subset L^{i+1}$ もまた自由加群になる（命題\ref{prop:freemod-PID}）．故に命題\ref{prop:prop:proj-mod-split}から完全列
+    \begin{align}
+        0 \lto \Ker d_L^i \xrightarrow{\ker d_L^i} L^i \xrightarrow{\coim d_L^i} \Im d_L^i \lto 0
+    \end{align}
+    は\hyperref[def:split]{分裂}する．i.e. 準同型写像 $s_i \colon L^i \lto \Ker d_L^i$ が存在して $s_i \circ \ker d_L^i = 1_{\Ker d_L^i}$ を充たす．
+    $d_M^j$ についても同様に，準同型写像 $s'_j \colon M^j \lto \Ker d_M^j$ が存在して $s'_j \circ \ker d_M^j = 1_{\Ker d_M^j}$ を充たす．
+
+    写像 $t_i,\, t'_j$ をそれぞれ
+    \begin{align}
+        t_i &\colon L^i \xrightarrow{s_i} \Ker d_L^i \hookrightarrow H^i(L^\bullet), \\
+        t'_j &\colon M^j \xrightarrow{s'_j} \Ker d_M^j \hookrightarrow H^j(M^\bullet)
+    \end{align}
+    で定義し，
+    \begin{align}
+        g_n \coloneqq \bigoplus_{i+j=n} t_i \otimes t'_j
+    \end{align}
+    とおく．$\Tot(L^\bullet \otimes_R M^*)^n = \bigoplus_{i+j=n} L^i \otimes_R M^j$ だから
+    \begin{align}
+        g_n \colon \Tot(L^\bullet \otimes_R M^*)^n \lto  \bigoplus_{i+j=n} H^i(L^\bullet) \otimes_R H^j(M^\bullet)
+    \end{align}
+    である．
+    このとき $\forall x \in L^i$ に対して $d_L^i(x) \in \Im d_L^i \subset \Ker d_L^{i+1}$ だから $s_{i+1} \bigl( d_L^i(x) \bigr) = d_L^i (x) \in \Im d_L^i$ であり，$t_{i+1} \bigl( d_L^i(x) \bigr) = 0+\Im d_L^i (=0)$ が言える．同様にして $\forall y \in M^j$ に対して $t'_{j+1} \bigl( d_M^j(y) \bigr) = 0$ が言えるので，結局
+    \begin{align}
+        (t_{i+1} \otimes t'_j) \circ (d_L^i \otimes 1) = (t_{i} \otimes t'_{j+1}) \circ (1 \otimes d_M^j)  = 0
+    \end{align}
+    がわかった．故に\hyperref[def:Tot]{全複体}の射 $d^{n-1} \colon \Tot(L^\bullet \otimes_R M^*)^{n-1} \lto \Tot(L^\bullet \otimes_R M^*)^n$ に対して $g_n \circ d^{n-1} = 0$ であるから，準同型定理（第3同型定理）により $g_n$ は準同型
+    \begin{align}
+        \overline{g_n} \colon H^n \bigl( \Tot(L^\bullet \otimes_R M^*) \bigr) \lto  \bigoplus_{i+j=n} H^i(L^\bullet) \otimes_R H^j(M^\bullet)
+    \end{align}
+    を自然に誘導する．
+
+    $\forall x \in \Ker d_L^i$ に対して $s_i(x) = x$ だから $t_i (x) = x + \Im d_L^{i-1}$ であり，同様に $\forall y \in \Ker d_M^j$ に対して $t'_j(y) = y + \Im d_M^{j-1}$ である．よって $i+j=n$ ならば，$\forall x \otimes y \in L^i \otimes_R M^j \subset \Tot (L^\bullet \otimes_R M^*)^n$ に対して
+    \begin{align}
+        g_n(x \otimes y) = (x+\Im d_L^{i-1}) \otimes (y+\Im d_M^{j-1})
+    \end{align}
+    が成り立つ．従って $\forall x \otimes y \in \Ker \bigl(d^n\colon \Tot(L^\bullet \otimes_R M^*)^n \lto \Tot(L^\bullet \otimes_R M^*)^{n+1} \bigr)$ に対して
+    \begin{align}
+        \overline{g_n} \bigl( x \otimes y + \Im d^{n-1} \bigr) = (x+\Im d_L^{i-1}) \otimes (y+\Im d_M^{j-1})
+    \end{align}
+    が成り立つので $\overline{g_n} \circ f = 1$ が言えた．i.e. 完全列\eqref{SES:Kunneth}は分裂する．
+\end{proof}
+
+\begin{mycol}[label=thm:u-coeff]{普遍係数定理}
+    $R$ を\hyperref[def:PID]{単項イデアル整域}とし，
+    $R$ 加群 $M$ および $R$ 加群の複体 $(L^\bullet,\, d_L^\bullet)$ であって，$\forall n \in \mathbb{Z}$ に対して $L^n$ が\hyperref[def:torsion-free-mod]{無捻加群}であるようなものを与える．
+    \begin{itemize}
+        \item このとき，$\forall n \in \mathbb{Z}$ に対して次の完全列が存在する：
+        \begin{align}
+            \label{SES:u-coeff}
+            0 \lto H^n(L^\bullet) \otimes_R M \xrightarrow{f} H^n(L^\bullet \otimes_R M) \lto \Tor_1^R \bigl( H^{n+1}(L^\bullet),\, M \bigr)  \lto 0
+        \end{align}
+        \item さらに $L^\bullet$ が自由加群からなる複体ならば完全列\eqref{SES:u-coeff}は\hyperref[def:split]{分裂}し，同型
+        \begin{align}
+            \label{isom:Kunneth}
+            H^n \bigl( L^\bullet \otimes_R M\bigr) \cong \bigl( H^n(L^\bullet) \otimes_R M  \bigr) \oplus \Tor_1^R \bigl( H^{n+1} (L^\bullet),\, M \bigr) 
+        \end{align}
+        が成り立つ．
+    \end{itemize}
+\end{mycol}
+
+\begin{proof}
+    \hyperref[col:Kunneth]{K\"unneth公式}において，複体 $M^\bullet = M$ とおけば完全列\eqref{SES:u-coeff}が得られる．
+
+    後半を示す．系\ref{col:Kunneth}と同様に準同型 $s_n \colon L^n \lto \Ker d_L^n$ であって $s_n \circ \ker d_L^n = 1$ となるものが存在する．ここで写像 $g_n$ を
+    \begin{align}
+        g_n \colon L^n \otimes_R M \xrightarrow{s_n \otimes 1_M} \Ker d_L^n \otimes M \hookrightarrow H^n(L^\bullet) \otimes_R M
+    \end{align}
+    と定義すると，$\forall x \in L^n$ に対して $d_L^n(x) \in \Ker d_L^{n+1}$ より $s_{n+1} \bigl( d_L^n(x) \bigr) = d_L^n(x)$ であり，$g_{n} \circ (d_L^{n-1} \otimes 1_M) = 0$ が従う．よって $g_n$ は自然に準同型写像
+    \begin{align}
+        \overline{g_n} \colon H^n (L^\bullet \otimes M) \lto H^n(L^\bullet) \otimes_R M
+    \end{align}
+    を引き起こす．これは $\forall x \otimes y \in \Ker (d_L^n \otimes 1_M)$ に対して
+    \begin{align}
+        \overline{g_n} \bigl(x \otimes y + \Im (d_L^{n-1} \otimes 1_M)\bigr) = (x + \Im d_L^{n-1}) \otimes y
+    \end{align}
+    と作用するので $\overline{g_n} \circ f = 1$ が言えた．
+\end{proof}
+
+$\Ext$ に関してもほとんど同様である：
+
+\begin{mylem}[label=lem:Kunneth-Ext]{}
+    左 $R$ 加群の複体 $(L^\bullet,\, d_L^\bullet),\; (M^\bullet,\, d_M^\bullet)$ を与える．
+    次の2条件のいずれかを仮定する：
+    \begin{enumerate}
+        \item $\forall n \in \mathbb{Z}$ に対して $\Im d_L^n,\, H^n(L^\bullet)$ が\hyperref[def:proj-mod]{射影的加群}
+        \item $\forall n \in \mathbb{Z}$ に対して $\Im d_M^n,\, H^n(M^\bullet)$ が\hyperref[def:inj-mod]{単射的加群}
+    \end{enumerate}
+    
+
+    このとき，$\forall n \in \mathbb{Z}$ に対して自然な同型
+    \begin{align}
+        H^n \Bigl( \Tot \bigl( \Hom{R}(L^\bullet,\, M^*) \bigr)  \Bigr)  \xrightarrow{\cong} \bigoplus_{j-i = n} \Hom{R} \bigl(H^i(L^\bullet),\, H^j(M^\bullet)\bigr)
+    \end{align}
+    が成り立つ．
+\end{mylem}
+
+
+\begin{mytheo}[label=SS:Kunneth-Ext]{K\"unnethスペクトル系列}
+    右 $R$ 加群の複体 $(L^\bullet,\, d_L^\bullet),\;(M^\bullet,\, d_M^\bullet)$ を与える．
+    次の条件のいずれかが満たされているとする：
+    \begin{enumerate}
+        \item $L^\bullet$ が\hyperref[def:proj-mod]{射影的加群}からなる複体であるか，または $M^\bullet$ が\hyperref[def:inj-mod]{単射的加群}からなる複体であり，$L^\bullet$ が上に有界かつ $M^\bullet$ が下に有界である．
+        \item $L^\bullet$ が\hyperref[def:proj-mod]{射影的加群}からなる複体であり，
+        かつある $N \in \mathbb{Z}_{\ge 0}$ が存在して，$\forall M \in \MOD{R}$ が $\forall n > N,\; I^n = 0$ を充たすような\hyperref[def:injective-resolution]{単射的分解} $M \lto I^\bullet$ を持つ．
+        \item $M^\bullet$ が\hyperref[def:inj-mod]{単射的加群}からなる複体であり，
+        かつある $N \in \mathbb{Z}_{\ge 0}$ が存在して，$\forall M \in \MODR{R}$ が $\forall n < -N,\; P^n = 0$ を充たすような\hyperref[def:projective-resolution]{射影的分解} $P^\bullet \lto M$ を持つ．
+    \end{enumerate}
+    
+    このとき，\hyperref[def:SSQ]{スペクトル系列}
+    \begin{align}
+        E_2^{p,\, q} = \bigoplus_{-i+j = n} \Ext_R^{p} \bigl( H^i(L^\bullet),\, H^j(M^\bullet) \bigr) \IMP H^{p+q} \Bigl( \Tot\bigl( \Hom{R}(L^\bullet,\, M^*)\bigr) \Bigr) 
+    \end{align}
+    が構成される．
+\end{mytheo}
+
+
+\begin{mycol}[label=col:Kunneth-Ext]{K\"unneth公式}
+    $R$ を\hyperref[def:PID]{単項イデアル整域}とし，
+    2つの $R$ 加群の複体 $(L^\bullet,\, d_L^\bullet),\, (M^\bullet,\, d_M^\bullet)$ であって，
+    \begin{enumerate}
+        \item $L^\bullet$ は自由加群からなる複体であるか，
+        \item $M^\bullet$ は\hyperref[def:divisable-mod]{可除加群}からなる複体であるか
+    \end{enumerate}
+    のどちらかであるとする．
+    
+    このとき，$\forall n \in \mathbb{Z}$ に対して次の\hyperref[def:split]{分裂}する完全列が存在する：
+        \begin{align}
+            0 &\lto \bigoplus_{-i+j=n-1} \Ext_R^1\bigl( H^i(L^\bullet) \otimes_R H^j(M^\bullet)\bigr) \lto H^n \Bigl( \Tot\bigl( \Hom{R}(L^\bullet,\, M^*)\bigr) \Bigr)  \\
+            &\lto \bigoplus_{-i+j=n} \Hom{R} \bigl(H^i(L^\bullet),\, H^j(M^\bullet) \bigr) \lto 0 \label{SES:Kunneth-Ext}
+        \end{align}
+\end{mycol}
+
+
+\begin{mycol}[label=thm:u-coeff-Ext]{普遍係数定理}
+    $R$ を\hyperref[def:PID]{単項イデアル整域}とし，
+    $R$ 加群 $M$ および $R$ 加群の複体 $(L^\bullet,\, d_L^\bullet)$ であって，$\forall n \in \mathbb{Z}$ に対して $L^n$ が自由加群であるようなものを与える．
+    このとき，$\forall n \in \mathbb{Z}$ に対して次の\hyperref[def:split]{分裂}する短完全列が存在する：
+        \begin{align}
+            \label{SES:u-coeff-Ext}
+            0 \lto \Ext_R^1\bigl(H^{-n+1}(L^\bullet),\, M\bigr) \lto H^n\bigl(\Hom{R} (L^\bullet,\, M)\bigr) \lto \Hom{R} \bigl( H^{-n}(L^\bullet),\, M \bigr)  \lto 0
+        \end{align}
+\end{mycol}
+
+\end{document}

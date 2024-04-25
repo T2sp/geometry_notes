@@ -1,0 +1,4 @@
+\begin{mydef}[label=def.complexmani]{複素多様体（再掲）}
+\begin{mydef}[label=complex_structure]{複素構造}
+	\mqty(0 & I_m \\ -I_m & 0)\label{eq.rep1}
+\begin{mydef}[label=Kahler]{K\"ahker多様体}

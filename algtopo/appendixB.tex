@@ -1,0 +1,190 @@
+\documentclass[algtopo_main]{subfiles}
+
+\begin{document}
+
+\setcounter{chapter}{1}
+
+\chapter{アーベル圏}
+
+アーベル圏は，ホモロジー代数を適用できるという意味で $\MOD{R}$ の一般化と言える．
+
+\begin{mydef}[label=def:init-final-zero]{始対象・終対象・零対象}
+    圏 $\Cat{C}$ を与える．
+    \begin{itemize}
+        \item $I \in \Obj{\Cat{C}}$ が\textbf{始対象} (initial object) であるとは，$\forall X \in \Obj{\Cat{C}}$ に対して $\Hom{\Cat{C}}(I,\, A)$ が一元集合となること．
+        \item $I \in \Obj{\Cat{C}}$ が\textbf{終対象} (final object) であるとは，$\forall X \in \Obj{\Cat{C}}$ に対して $\Hom{\Cat{C}}(A,\, I)$ が一元集合となること．
+        \item 始対象かつ終対象であるような対象が存在するとき，それを\textbf{零対象} (zero object) と呼んで $0$ と書く．
+        \item 零対象が存在するとき，$\forall A,\, B \in \Obj{\Cat{C}}$ に対して $\exists ! p \in \Hom{\Cat{C}} (A,\, 0) \AND \exists ! i \in \Hom{\Cat{C}}(0,\, B)$ である．このとき，一意に定まる射 $i \circ p \in \Hom{\Cat{C}} (A,\, B)$ のことを\textbf{零射} (zero morphimsm) と呼んで $0$ と書く．
+    \end{itemize}
+\end{mydef}
+
+\section{イコライザ}
+
+\begin{mydef}[label=def:equalizer]{イコライザ}
+    圏 $\Cat{C}$ と2つの射 $f_i \in \Hom{\Cat{C}}(A,\, B)\; (i=1,\, 2)$ を与える．
+
+    射 $g \in \Hom{\Cat{C}}(C,\, A)$ が $f_1,\, f_2$ の\textbf{イコライザ} (equalizer) であるとは，$\forall \textcolor{blue}{X} \in \Obj{C}$ に対して\underline{集合の写像}
+    \begin{align}
+        \Hom{\Cat{C}}(\textcolor{blue}{X},\, C) &\lto \bigl\{\, \varphi \in \Hom{\Cat{C}}(\textcolor{blue}{X},\, A) \bigm| f_1 \circ \varphi = f_2 \circ \varphi \,\bigr\}, \\
+        \psi &\lmto g \circ \psi
+    \end{align}
+    がwell-definedな全単射となること（可換図式\ref{cmtd:equalizer}）．
+\end{mydef}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzcd}[row sep=large, column sep=large]
+        &C \ar[r, "g"] &A \ar[r, shift left, "f_1"]\ar[r, "f_2"', shift right] &B \\
+        &\forall \textcolor{blue}{X} \ar[ur, "\varphi"', blue] \ar[u, dashed, red, "\exists ! \psi"] & &
+    \end{tikzcd}
+    \caption{イコライザ}
+    \label{cmtd:equalizer}
+\end{figure}%
+
+
+\begin{mydef}[label=def:coequalizer]{コイコライザ}
+    圏 $\Cat{C}$ と2つの射 $f_i \in \Hom{\Cat{C}}(A,\, B)\; (i=1,\, 2)$ を与える．
+
+    射 $g \in \Hom{\Cat{C}}(B,\, C)$ が $f_1,\, f_2$ の\textbf{コイコライザ} (coequalizer) であるとは，$\forall \textcolor{blue}{X} \in \Obj{C}$ に対して\underline{集合の写像}
+    \begin{align}
+        \Hom{\Cat{C}}(C,\, \textcolor{blue}{X}) &\lto \bigl\{\, \varphi \in \Hom{\Cat{C}}(B,\, \textcolor{blue}{X}) \bigm| \varphi \circ f_1 = \varphi \circ f_2 \,\bigr\}, \\
+        \psi &\lmto \psi \circ g
+    \end{align}
+    がwell-definedな全単射となること（可換図式\ref{cmtd:coequalizer}）．
+\end{mydef}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzcd}[row sep=large, column sep=large]
+        &A \ar[r, shift left, "f_1"]\ar[r, "f_2"', shift right] &B \ar[r, "g"] \ar[dr, blue, "\varphi"'] &C \ar[d, dashed, "\exists ! \psi", red] \\
+        & & &\forall \textcolor{blue}{X}
+    \end{tikzcd}
+    \caption{コイコライザ}
+    \label{cmtd:coequalizer}
+\end{figure}%
+
+
+\begin{myprop}[label=prop:equalizer]{}
+    \begin{itemize}
+        \item \hyperref[def:equalizer]{イコライザ}は存在すれば単射\footnote{故に\hyperref[def:sub]{部分対象}}．
+        \item \hyperref[def:coequalizer]{コイコライザ}は存在すれば全射\footnote{故に\hyperref[def:quo]{商対象}}．
+    \end{itemize}
+\end{myprop}
+
+\begin{proof}
+    イコライザ $g \in \Hom{\Cat{C}}(C,\, A)$  の定義から
+    集合の写像
+    \begin{align}
+        g_* \colon \Hom{\Cat{C}} (X,\, C) \lto \Hom{\Cat{C}} (X,\, A),\; \psi \lmto g \circ \psi
+    \end{align}
+    は単射．よって $g$ は\hyperref[def:mono-epi]{単射 (mono射)}である．
+
+    コイコライザ $h \in \Hom{\Cat{C}}(B,\, C)$  の定義から，集合の写像
+    \begin{align}
+        h^* \colon \Hom{\Cat{C}} (C,\, X) \lto \Hom{\Cat{C}} (B,\, X),\; \psi \lmto \psi \circ h
+    \end{align}
+    は単射．よって $g$ は\hyperref[def:mono-epi]{全射 (epi射)}である．
+\end{proof}
+
+$\MOD{R}$ における核・余核，像・余像は，次のように一般化される：
+
+\begin{mydef}[label=def:ker-coker]{核・余核}
+    \hyperref[def:init-final-zero]{零対象}を持つ圏 $\Cat{C}$ を与え，$\forall f \in \Hom{\Cat{C}} (A,\, B)$ をとる．
+    \begin{itemize}
+        \item $f$ と\hyperref[def:init-final-zero]{零射}との\hyperref[def:equalizer]{イコライザ}を $f$ の\textbf{核} (kernel) と呼び，$\ker f \colon \Ker f \lto A$ と書く．
+        \item $f$ と\hyperref[def:init-final-zero]{零射}との\hyperref[def:coequalizer]{コイコライザ}を $f$ の\textbf{余核} (cokernel) と呼び，$\coker f \colon B \to \Coker f$ と書く．
+    \end{itemize}
+\end{mydef}
+
+\begin{mydef}[label=def:im-coim]{像・余像}
+    \hyperref[def:init-final-zero]{零対象}を持ち，任意の射の\hyperref[def:ker-coker]{核・余核}が存在する圏 $\Cat{C}$ を与え，$\forall f \in \Hom{\Cat{C}}(A,\, B)$ をとる．
+    \begin{itemize}
+        \item $A$ の\hyperref[def:sub]{部分対象} $(\Im f,\, \im f) \coloneqq \bigl( \Ker (\coker f),\, \ker (\coker f) \bigr)$ のことを $f$ の\textbf{像} (image) と呼ぶ．
+        \item $B$ の\hyperref[def:quo]{商対象} $(\Coim f,\, \coim f) \coloneqq \bigl( \Coker (\ker f),\, \coker (\ker f) \bigr)$ のことを $f$ の\textbf{余像} (coimage) と呼ぶ．
+    \end{itemize}
+\end{mydef}
+
+\begin{marker}
+    \begin{itemize}
+        \item 命題\ref{prop:equalizer}から，$\im f$ は\hyperref[def:mono-epi]{単射}．
+        また，\hyperref[def:coequalizer]{コイコライザの定義}から $\coker f \circ f = 0$ が成り立つ\footnote{$X = C$ とおいて $\mathrm{id}_C \in \Hom{\Cat{C}} (C,\, C)$ の行き先を考えると $\coker f$ になるが，\hyperref[def:ker-coker]{余核}は零射とのコイコライザである．}から，\hyperref[def:equalizer]{イコライザの定義}により $\ker (\coker f) \circ q = \im f \circ q = f$ を充たす射 $q \in \Hom{\Cat{C}} (A,\, \Im f)$ が一意的に存在する．
+        \item 命題\ref{prop:equalizer}から，$\coim f$ は\hyperref[def:mono-epi]{全射}．
+        また，\hyperref[def:equalizer]{イコライザの定義}から $f \circ \ker f = 0$ が成り立つ\footnote{$X = C$ とおいて $\mathrm{id}_C \in \Hom{\Cat{C}} (C,\, C)$ の行き先を考えると $\ker f$ になる．}から，\hyperref[def:coequalizer]{コイコライザの定義}により $i \circ \coker (\ker f) = i \circ \coim f = f$ を充たす射 $i \in \Hom{\Cat{C}} (\Coim f,\, B)$ が一意的に存在する．
+    \end{itemize}
+\end{marker}
+
+
+
+\section{アーベル圏に関わる諸定義}
+
+\begin{mydef}[label=def:Abel]{アーベル圏}
+    圏 $\Cat{A}$ が\textbf{アーベル圏} (Abelian category) であるとは，以下を充たすことをいう：
+    \begin{description}
+        \item[\textbf{(Ab1)}] 零対象 $0 \in \Obj{\Cat{A}}$．
+        \item[\textbf{(Ab2)}] $\forall A_1,\, A_2 \in \Obj{\Cat{A}}$ に対して積 $A_1 \times A_2$ と和 $A_1 \amalg A_2$ が存在する．
+        \item[\textbf{(Ab3)}] $\Cat{A}$ における任意の射は核，余核を持つ．
+        \item[\textbf{(Ab4)}] $\Cat{A}$ における任意の単射 $f \in\Hom{\Cat{A}}(A,\, B)$ に対して $(A,\, f) \simeq \bigl(\Ker (\coker f),\, \ker (\coker f)\bigr)$ が\footnote{\hyperref[def:sub]{部分対象}として同値}，任意の全射 $f \in \Hom{\Cat{A,\, B}}$ に対して $(B,\, f) \simeq \bigl(\Coker (\ker f),\, \coker (\ker f)\bigr)$ が成り立つ\footnote{\hyperref[def:quo]{商対象}として同値}．
+    \end{description}
+\end{mydef}
+
+\begin{mydef}[label=def:Ab-ES]{アーベル圏における完全列}
+    \begin{itemize}
+        \item \hyperref[def:Abel]{アーベル圏} $\Cat{A}$ における図式
+        \begin{align}
+            A \xrightarrow{f} B \xrightarrow{g} C
+        \end{align}
+        が\textbf{完全} (exact) であるとは，$B$ の\hyperref[def:sub]{部分対象}として $(\Ker g,\, \ker g) \simeq (\Im f,\, \im f)$ であることを言う．
+        \item $\Cat{A}$ における図式
+        \begin{align}
+            \cdots \xrightarrow{f_{n-1}} A_{n} \xrightarrow{f_{n}} A_{n+1} \xrightarrow{f_{n+1}} \cdots
+        \end{align}
+        が\textbf{完全}であるとは，$\forall i$ に対して図式 $A_i \xrightarrow{f_i} M_{i+1} \xrightarrow{f_{i+1}} M_{i+2}$ が完全であること．
+    \end{itemize}
+\end{mydef}
+
+\begin{mydef}[label=def:Ab-func]{アーベル圏の間の関手}
+    $\Cat{A},\, \Cat{B}$ を\hyperref[def:Abel]{アーベル圏}，$F$ を $\Cat{A}$ から $\Cat{B}$ への関手とする．
+    \begin{itemize}
+        \item $F$ が\textbf{加法的} (additive) であるとは，$\forall A,\, B \in \Obj{\Cat{A}}$ に対して
+        $F_{A,\, B} \colon \Hom{\Cat{A}}(A,\, B) \lto \Hom{\Cat{A}} (F(A),\, F(B))$ が可換群の準同型写像となることを言う．
+        \item $F$ が\textbf{左完全} (left exact) であるとは，$\Cat{A}$ における
+        \begin{align}
+            0 \lto A \lto B \lto C
+        \end{align}
+        の形をした任意の完全列に対して
+        \begin{align}
+            0 \lto F(A) \lto F(B) \lto F(C)
+        \end{align}
+        が $\Cat{B}$ における完全列となることを言う．
+        \item $F$ が\textbf{右完全} (right exact) であるとは，$\Cat{A}$ における
+        \begin{align}
+            A \lto B \lto C \lto 0
+        \end{align}
+        の形をした任意の完全列に対して
+        \begin{align}
+            F(A) \lto F(B) \lto F(C) \lto 0
+        \end{align}
+        が $\Cat{B}$ における完全列となることを言う．
+        \item $F$ が\textbf{完全} (exact) であるとは，任意の $\Cat{A}$ における完全列
+        \begin{align}
+            A \lto B \lto C
+        \end{align}
+        に対して
+        \begin{align}
+            F(A) \lto F(B) \lto F(C)
+        \end{align}
+        が $\Cat{B}$ における完全列となることを言う．
+    \end{itemize}
+\end{mydef}
+
+
+\section{埋め込み定理}
+
+証明を省いてMitchellの埋め込み定理を紹介する．
+
+\begin{mytheo}[label=thm:embedding]{Mitchellの埋め込み定理}
+    $\Cat{A}$ を小さな\hyperref[def:Abel]{アーベル圏}とするとき，ある環 $R$ とある\hyperref[def:Ab-func]{完全}\hyperref[def:faithful]{忠実充満関手} $\Cat{A} \lto \MOD{R}$ が存在する．
+\end{mytheo}
+
+
+\end{document}

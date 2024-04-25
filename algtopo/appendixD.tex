@@ -1,0 +1,1077 @@
+\documentclass[algtopo_main]{subfiles}
+
+\begin{document}
+
+\setcounter{chapter}{3}
+
+\chapter{コンパクト生成空間の圏}
+
+位相空間，特にコンパクト空間について基本的な事柄をまとめるところから始めよう．
+
+\begin{itemize}
+    \item 位相空間 $(X,\, \mathscr{O})$ の位相の部分集合 $\mathcal{B} \subset \mathscr{O}$ が\textbf{開基} (open base) であるとは，$\forall U \in \mathscr{O}$ に対してある部分集合族 $\mathcal{S} \subset \mathcal{B}$ が存在して
+    \begin{align}
+        U = \bigcup_{S \in \mathcal{S}} S
+    \end{align}
+    が成り立つこと．
+    \item 位相空間 $(X,\, \mathscr{O})$ の位相の部分集合 $\mathcal{SB} \subset \mathscr{O}$ が\textbf{準基} (subbase) であるとは，
+    \begin{align}
+        \Bigl\{\, S_1 \cap \cdots \cap S_n \Bigm| \Familyset[\big]{S_i}{i = 1,\, \cdots,\, n} \subset \mathcal{SB},\; n=0,\, 1,\, \dots \,\Bigr\}
+    \end{align}
+    が開基になることをいう\footnote{$n=0$ のときは $X$ である．}．
+    \item 位相空間 $X$ の\underline{部分集合} $V \subset X$ が点 $x \in X$ の\textbf{近傍} (neighborhood) であるとは，
+    $X$ の開集合 $U$ が存在して $x \in U \subset V$ を充たすことを言う．
+    \item 位相空間 $X$ の点 $x \in X$ の近傍全体の集合を $\mathcal{N}(x)$ と書く．部分集合 $\mathcal{B} \subset \mathcal{N}(x)$ が $x$ の\textbf{基本近傍系} (neighborhood basis) であるとは，$\forall V \in \mathcal{N}(x)$ に対してある $B \in \mathcal{B}$ が存在して $B\subset V$ を充たすことを言う．
+\end{itemize}
+
+\begin{mylem}[label=lem:continuous, breakable]{写像の連続性}
+    $(X,\, \mathscr{O}_X),\, (Y,\, \mathscr{O}_Y),\, (Z,\, \mathscr{O}_Z)$ を位相空間，$\mathcal{SB}_Y \subset \mathscr{O}_Y$ を $Y$ の準基，$\mathcal{B}_Y \subset \mathscr{O}_Y$ を $Y$ の開基とする．直積集合 $X \times Y$ には積位相を入れる．i.e. 部分集合族
+    \begin{align}
+        \mathcal{B}_{X \times Y} \coloneqq \bigl\{\, U \times V \subset X \times Y \bigm| U \in \mathscr{O}_X,\; V \in \mathscr{O}_Y \,\bigr\} 
+    \end{align}
+    が $X \times Y$ の開基である．
+    \begin{enumerate}
+        \item 写像 $f \colon X \lto Y$ が連続 $\iff$ $\forall S \in \mathcal{SB}_Y$ に対して $f^{-1}(S) \in \mathscr{O}_X$
+        \item 写像 $f \colon X \lto Y$ が連続 $\iff$ $\forall B \in \mathcal{B}_Y$ に対して $f^{-1}(B) \in \mathscr{O}_X$
+        \item $\forall x_0 \in X,\; \forall y_0 \in Y$ について，標準的包含
+        \begin{align}
+            i_1{}_{y_0} &\colon X \lto X \times Y,\; x \lmto (x,\, y_0) \\
+            i_2{}_{x_0} &\colon Y \lto X \times Y,\; y \lmto (x_0,\, y)
+        \end{align}
+        は連続である．
+        \item 標準的射影
+        \begin{align}
+            p_1 &\colon X \times Y \lto X,\; (x,\, y) \lmto x \\
+            p_2 &\colon X \times Y \lto Y,\; (x,\, y) \lmto y \\
+        \end{align}
+        は連続である．
+        \item 写像 $f \colon X \times Y \lto Z$ が連続ならば，$\forall x_0 \in X,\; \forall y_0 \in Y$ に対して制限 $f|_{\{x_0\} \times Y},\; f|_{X \times \{y_0\}}$ も連続である．
+        \item 写像 $f \colon Z \lto X \times Y,\; z \lmto \bigl( f_1(z),\, f_2(z) \bigr)$ が連続ならば写像 $f_1 \colon Z \lto X,\; f_2 \colon Z \lto Y$ も連続である．
+    \end{enumerate}
+\end{mylem}
+
+\begin{proof}
+    \begin{enumerate}
+        \item 
+        \begin{description}
+            \item[\textbf{$\bm{(\Longrightarrow)}$}] $\forall S \in \mathcal{SB}_Y$ は $Y$ の開集合なので明らか．
+            \item[\textbf{$\bm{(\Longleftarrow)}$}] $\forall U \in \mathscr{O}_Y$ を1つとって固定する．準基の定義より集合
+            \begin{align}
+                \mathcal{B} \coloneqq \Bigl\{\, S_1 \cap \cdots \cap S_n \Bigm| \Familyset[\big]{S_i}{i = 1,\, \cdots,\, n} \subset \mathcal{SB},\; n=0,\, 1,\, \dots \,\Bigr\}
+            \end{align}
+            は $Y$ の開基だから，ある部分集合族 $\Familyset[\big]{B_\lambda}{\lambda \in \Lambda} \subset \mathcal{B}$ が存在して $U = \bigcup_{\lambda \in \Lambda} B_\lambda$ が成り立つ．
+            示すべきは $f^{-1}(U) \in \mathscr{O}_X$ だが，
+            \begin{align}
+                f^{-1}(U) = \bigcup_{\lambda \in \Lambda} f^{-1}(B_\lambda)
+            \end{align}
+            なので $\forall \lambda \in \Lambda$ について $f^{-1} (B_\lambda) \in \mathscr{O}_X$ を示せば十分．
+            ところで $B_\lambda \in \mathscr{B}$ なので，ある $S_1,\, \dots ,\, S_n \in \mathcal{SB}_Y$ が存在して $B_\lambda = \bigcap_{i=1}^n S_i$ と書ける．このとき仮定より
+            \begin{align}
+                f^{-1}(B_\lambda) = f^{-1}\left( \bigcap_{i=1}^n S_i \right)  = \bigcap_{i=1}^n f^{-1}(S_i) \in \mathscr{O}_X
+            \end{align}
+            が言える．
+        \end{description}
+        \item 開基は準基でもあるので (1) より従う．
+        \item 議論は全く同様なので $i_1{}_{y_0}$ についてのみ示す．$X \times Y$ の開基 $\mathcal{B}_{X \times Y}$ の任意の元はある $U \in \mathscr{O}_X,\; V \in \mathscr{O}_Y$ を用いて $U \times V$ と書ける．
+        このとき $(i_1{}_{y_0})^{-1}(U \times V) = U \in \mathscr{O}_X$ が成り立つから，(2) より $i_1{}_{y_0}$ は連続である．
+        \item 議論は全く同様なので $p_1$ についてのみ示す．$\forall U \in \mathscr{O}_X$ を1つとる．$p_1^{-1}(U) = U \times Y$ だが，$Y \in \mathscr{O}_Y$ なので右辺は $\mathcal{B}_{X \times Y}$ に属する．i.e. $X \times Y$ の開集合である．
+        \item $f|_{\{x_0\} \times Y} = f \circ i_1{}_{x_0},\; f|_{X \times \{y_0\}} = f \circ i_2{}_{x_0}$ である．(3) と仮定よりこれは連続写像の合成なので連続である．
+        \item $f_1 = p_1 \circ f,\; f_2 = p_2 \circ f$ である．(4) と仮定よりこれは連続写像の合成なので連続である．
+    \end{enumerate}
+\end{proof}
+
+
+\begin{mydef}[label=def:cover, breakable]{被覆}
+    \begin{itemize}
+        \item 集合族 $\mathcal{U} \coloneqq \Familyset[\big]{U_\lambda}{\lambda \in \Lambda}$ が\underline{集合} $X$ の\textbf{被覆} (cover) であるとは，
+        \begin{align}
+            X \subset \bigcup_{\lambda \in \Lambda} U_\lambda
+        \end{align}
+        が成り立つこと．
+        \item \underline{位相空間} $X$ の被覆 $\mathcal{U} \coloneqq \Familyset[\big]{U_\lambda}{\lambda \in \Lambda}$ が\textbf{開} (open) であるとは，$\forall \lambda \in \Lambda$ に対して $U_\lambda$ が $X$ の開集合であること．
+        \item 位相空間 $X$ の被覆 $\mathcal{V} \coloneqq \Familyset[\big]{V_\alpha}{\alpha \in A}$ が，別の $X$ の被覆 $\mathcal{U} \coloneqq \Familyset[\big]{U_\lambda}{\lambda \in \Lambda}$ の\textbf{細分} (refinement) であるとは，
+        $\forall V_\alpha \in \mathcal{V}$ に対してある $U_\lambda \in \mathcal{U}$ が存在して $V_\alpha \subset U_\lambda$ が成り立つこと．
+        \item 位相空間 $X$ の\underline{開}被覆 $\mathcal{U} \coloneqq \Familyset[\big]{U_\lambda}{\lambda \in \Lambda}$ が\textbf{局所有限} (locally finite) であるとは，$\forall x \in X$ に対して以下の条件が成り立つこと：
+        \begin{description}
+            \item[\textbf{(locally finiteness)}] $x$ のある近傍 $V \subset X$ が存在して集合
+            \begin{align}
+                \bigl\{\, \lambda \in \Lambda \bigm| U_\lambda \cap V \neq \emptyset \,\bigr\} 
+            \end{align}
+            が有限集合になる．
+        \end{description}
+    \end{itemize}
+\end{mydef}
+
+\begin{mydef}[label=def:paracompact]{パラコンパクト}
+    位相空間 $X$ が\textbf{パラコンパクト} (paracompact) であるとは，任意の\hyperref[def:cover]{開被覆}が\hyperref[def:cover]{局所有限}かつ開な細分を持つこと．
+\end{mydef}
+
+\begin{mydef}[label=def:compact]{コンパクト}
+    位相空間 $X$ の部分集合 $A \subset X$ は，以下の条件を充たすとき\textbf{コンパクト} (compact) であると言われる：
+    \begin{description}
+        \item[\textbf{(Heine-Boralの性質)}] $A$ の任意の\hyperref[def:cover]{開被覆} $\mathcal{U} \coloneqq \Familyset[\big]{U_\lambda}{\lambda \in \Lambda}$ に対して，
+        ある\underline{有限}部分集合 $I \subset \Lambda$ が存在して $\Familyset[\big]{U_i}{i \in I} \subset \mathcal{U}$ が $A$ の開被覆となる\footnote{このことを「任意の開被覆は有限部分被覆を持つ」と表現する．}．
+    \end{description}
+\end{mydef}
+
+\begin{mydef}[label=def:loc-compact]{局所コンパクト}
+    位相空間 $X$ が\textbf{局所コンパクト} (locally compact) であるとは，$\forall x \in X$ が少なくとも1つの\hyperref[def:compact]{コンパクト}な近傍を持つこと．
+\end{mydef}
+
+\begin{mylem}[label=lem:Compact-close]{コンパクト空間の閉集合}
+    位相空間 $X$ が\hyperref[def:compact]{コンパクト}ならば，$X$ の任意の閉集合はコンパクトである．
+\end{mylem}
+
+\begin{proof}
+    $X$ の任意の閉集合 $F \subset X$ と，$F$ の $X$ における任意の開被覆 $\Familyset[\big]{U_\lambda}{\lambda \in \Lambda}$ をとる． 
+    このとき
+    \begin{align}
+        X = F \cup F^c = \Bigl(\bigcup_{\lambda \in \Lambda} U_\lambda \Bigr) \cup F^c
+    \end{align}
+    が成り立つが， $F^c$ は $X$ の開集合なので部分集合族 $\Familyset[\big]{U_\lambda}{\lambda \in \Lambda} \cup \{F^c\}$ は $X$ の開被覆である．
+    仮定より $X$ はコンパクトだから，$\exists \lambda_1,\, \dots ,\, \lambda_n \in \Lambda$ が存在して $X = \Bigl( \bigcup_{i=1}^n U_{\lambda_i} \Bigr) \cup F^c$ を充たす．
+    このとき集合族 $\Familyset[\big]{U_{\lambda_i}}{1 \le i \le n}$ が $F$ の有限開被覆となる．
+\end{proof}
+
+
+\begin{mylem}[label=lem:Hausdorff-sub-compact]{Hausdorff空間のコンパクト部分空間}
+    $X$ をHausdorff空間とする．
+    \begin{enumerate}
+        \item $X$ の\hyperref[def:compact]{コンパクト}部分集合は閉集合である．
+        \item $X$ が\hyperref[def:compact]{コンパクト}ならば $X$ の閉部分集合は\hyperref[def:compact]{コンパクト}である．
+        \item 位相空間 $Y$ が\hyperref[def:compact]{コンパクト}ならば，任意の連続写像 $f \colon Y \lto X$ は閉写像である．
+        \item (3) において $f$ が全単射ならば同相である．
+    \end{enumerate}
+\end{mylem}
+
+\begin{proof}
+    \begin{enumerate}
+        \item $X$ のコンパクト部分集合 $K \subset X$ をとる．補集合 $K^c$ が開集合であることを示す．
+        
+        $\forall x \in K^c$ を1つとって固定する．$X$ はHausdorff空間だから，$\forall k \in K$ に対してある $x$ の開近傍 $U_k$ と $k$ の開近傍 $V_k$ が存在して $U_k \cap V_k = \emptyset$ を充たす．
+        このとき集合族 $\Familyset[\big]{V_k}{k \in K}$ は $K$ の開被覆だから，\underline{$K$ のコンパクト性より} $\exists k_1,\, \dots,\, k_n \in K,\; K \subset \bigcup_{i = 1}^n V_{k_i}$ が成り立つ．
+        ここで $\bigcap_{i=1}^n U_{k_i} \subset \left( \bigcup_{i = 1}^n V_{k_i} \right)^c \subset K^c$ が成り立つが，位相空間の公理により $\bigcap_{i=1}^n U_{k_i}$ は開集合であり，点 $x$ の開近傍となる．
+        以上の議論から $K^c$ の任意の点は $K^c$ に含まれる近傍を少なくとも1つ持つので $K^c$ は開集合である．
+
+        \item $X$ の閉部分集合 $A$ をとり，$A$ の任意の開被覆 $\Familyset[\big]{U_\lambda}{\lambda \in \Lambda}$ をとる．
+        $A$ は閉集合なので $A^c$ は開集合であり，$\forall \lambda \in \Lambda$ に対して $U_\lambda \cup A^c$ は開集合．
+        従って集合族 $\Familyset[\big]{U_\lambda \cup A^c}{\lambda \in \Lambda}$ は $X$ の開被覆である．
+        故に $X$ のコンパクト性から $\exists \lambda_1,\, \dots ,\, \lambda_n \in \Lambda,\; \bigcup_{i=1}^n (U_\lambda \cup A^c) = \left(\bigcup_{i=1}^n U_{\lambda_i}\right) \cup A^c = X$ が成り立つ．
+        このとき $\Familyset[\big]{U_\lambda}{\lambda \in \Lambda}$ の有限部分集合 $\Familyset[\big]{U_{\lambda_i}}{1 \le i \le n}$ は $A$ の開被覆である．i.e. $A$ はコンパクトである．
+
+        \item 補題\ref{lem:Compact-close}より $Y$ の任意の閉集合 $F$ はコンパクトであるから， $f(F)$ は $X$ のコンパクト集合である．従って (1) より $f(F)$ は $X$ の閉集合である．
+        \item (3) より従う．
+    \end{enumerate}
+\end{proof}
+
+次の補題は，Hausdorff空間の\hyperref[def:compact]{コンパクト集合}が分離性の意味で点と同じように扱えることを示唆する：
+
+\begin{mylem}[label=lem:Hausdorff-compact-separation]{Hausdorff空間のコンパクト集合の分離性}
+    $X$ をHausdorff空間とする．
+    \begin{enumerate}
+        \item $X$ の\hyperref[def:compact]{コンパクト}部分集合 $C,\, D \subset X$ が $C \cap D = \emptyset$ を充しているとする．
+        
+        このとき，$X$ の開集合 $U,\, V \subset X$ であって
+        \begin{align}
+            C \subset U \AND D \subset V \AND U \cap V = \emptyset
+        \end{align}
+        を充たすものが存在する．
+        \item $X$ が\hyperref[def:compact]{コンパクト}であるとする．
+        
+        このとき，$X$ の任意の閉集合 $F \subset X$ と開集合 $U \subset X$ であって $F \subset U$ を充たすものに対して，$X$ の開集合 $V \subset X$ であって $F \subset V \AND \overline{V} \subset U$ を充たすものが存在する\footnote{実は，この主張は $X$ が正規空間であることと同値である．}．
+        \item $X$ が\hyperref[def:compact]{コンパクト}であるとする．
+        
+        このとき，$X$ の任意の\underline{有限}\hyperref[def:cover]{開被覆} $\{U_1,\, \cdots ,\, U_n\}$ に対してある $X$ の有限開被覆 $\{V_1,\, \dots ,\, V_n\}$ が存在して $\overline{V_i} \subset U_i\; (1 \le \forall i \le n)$ を充たす\footnote{一般に，この主張は $X$ が正規空間のときに成り立つ．}．
+    \end{enumerate}
+\end{mylem}
+
+\begin{proof}
+    \begin{enumerate}
+        \item まず $C = \{x\}$（1点集合）の場合に示す．$X$ はHausdorff空間だから，$\forall y \in D$ に対して $X$ の開集合 $U_y,\, V_y \subset X$ が存在して $x \in U_y \AND y \in V_y \AND U_x \cap V_y = \emptyset$ を充たす．
+        このとき $D \subset \bigcup_{y \in D} V_y$ だが，仮定より $D$ は\hyperref[def:compact]{コンパクト}なので $\exists y_1,\, \dots ,\, y_n \in D,\; D \subset \bigcup_{i=1}^n V_{y_i}$ が成り立つ．
+        ここで $U \coloneqq \bigcap_{i=1}^n U_{y_i},\; V \coloneqq \bigcup_{i=1}^n V_{y_i}$ とおけば $U,\, V \subset X$ は $X$ の開集合で，$C \subset U \AND D \subset V \AND U \cap V = \emptyset$ を充たす．
+
+        　次に $C$ が任意のコンパクト集合の場合に示す．前半の議論より $\forall x \in C$ に対して $X$ の開集合 $U_x,\, V_x \subset X$ が存在して $\{x\} \subset U_x \AND D \subset V_x \AND U_x \cap V_x = \emptyset$ を充たす．
+        このとき $C \subset \bigcup_{x \in C} U_x$ だが，仮定より $C$ はコンパクトなので $\exists x_1,\, \dots ,\, x_m \in C,\; C \subset \bigcup_{i=1}^m U_{x_i}$ が成り立つ．
+        ここで $U \coloneqq \bigcup_{i=1}^m U_{x_i},\; V \coloneqq \bigcap_{i=1}^m V_{x_i}$ とおけば $U,\, V \subset X$ は $X$ の開集合で，$C \subset U \AND D \subset V \AND U \cap V = \emptyset$ を充たす．
+        \item $U^c$ は $X$ の閉集合であり $F \cap U^c = \emptyset$ を充たす．
+        かつ補題\ref{lem:Hausdorff-sub-compact}-(2) より $F,\, U^c$ はコンパクトである．
+        従って (1) から，$X$ の開集合 $V,\, W \subset X$ であって $F \subset V \AND U^c \subset W \AND V \cap W = \emptyset$ を充たすものが存在する．
+        このとき $V  \subset W^c \subset U$ が成り立つが，$W^c$ は $X$ の閉集合なので $\overline{V} \subset W^c \subset U$ が言える\footnote{$V$ の閉包 $\overline{V}$ とは，$V$ を含む最小の閉集合のことであった．}．
+
+        \item 勝手な $X$ の有限開被覆 $\{U_1,\, \cdots ,\, U_n\}$ を1つとる． 
+        $F_1 \coloneqq X \setminus (U_2 \cup \cdots \cup U_n)$ とおくと $F_1 \subset X$ は $X$ の閉集合であり，$F_1 \subset U_1$ を充たす．従って (2) から $X$ の開集合 $V_1 \subset X$ であって $F_1 \subset V_1 \AND \overline{V_1} \subset U_1$ を充たすものが存在する．
+        このとき $X = F_1 \cup \left( \bigcup_{i=2}^n U_i \right) \subset V_1 \cup\left( \bigcup_{i=2}^n U_i \right)$ なので $\{V_1,\, U_2,\, \dots ,\, U_n\}$ は $X$ の開被覆である．
+        以上の操作を $n$ 回繰り返すことにより $X$ の開被覆 $\{V_1,\, \dots ,\, V_n\}$ であって $\overline{V_i} \subset U_i\; (1 \le \forall i \le n)$ を充たすものが構成される．
+    \end{enumerate}
+    
+\end{proof}
+
+
+\begin{mylem}[label=lem:prod-compact]{tube lemma}
+    $X,\, Y$ を位相空間，$C,\, D$ をそれぞれ $X,\, Y$ の\hyperref[def:compact]{コンパクト集合}とする．
+
+    積空間 $X \times Y$ の開集合 $W$ であって $C \times D \subset W$ を充たすものが存在するならば，
+    $X$ の開集合 $U$ および $Y$ の開集合 $V$ であって
+    \begin{align}
+        C \subset U \AND D \subset V \AND U \times V \subset W
+    \end{align}
+    を充たすものが存在する．
+\end{mylem}
+
+\begin{proof}
+    
+\end{proof}
+
+
+\section{コンパクト生成空間}
+
+この節の内容は，~\cite{Steenrod67}による．
+
+\begin{mydef}[label=def:CG, breakable]{コンパクト生成空間}
+    位相空間 $X$ は以下の2条件を満たすとき，\textbf{コンパクト生成空間} (compactly generated space) と呼ばれる：
+    \begin{description}
+        \item[\textbf{(CG-1)}] $X$ はHausdorff空間\footnote{この要請は補題\ref{lem:Hausdorff-sub-compact}に由来する}
+        \item[\textbf{(CG-2)}] 部分集合 $A \subset X$ が閉集合 $\iff$ 任意の\hyperref[def:compact]{コンパクト集合} $C \subset X$ に対して $A \cap C$ が閉集合
+    \end{description}
+\end{mydef}
+
+\textbf{コンパクト生成空間の圏} $\CG$ を次のように定義する：
+\begin{itemize}
+    \item $\Obj{\CG}$ を全ての\hyperref[def:CG]{コンパクト生成空間}の集まりとする．
+    \item $\Hom{\CG}(X,\, Y)$ を\hyperref[def:CG]{コンパクト生成空間} $X$ と $Y$ の間の連続写像全体とする．
+    \item 射の合成を通常の写像の合成とする．
+\end{itemize}
+$\CG$ は $\TOP$ の\hyperref[def:fullsub]{充満部分圏}である．特に
+$\CG$ は
+\begin{enumerate}
+    \item 全ての\hyperref[def:loc-compact]{局所コンパクト}なHausdorff空間
+    \item 全ての第一可算公理を充たすHausdorff空間．特に全ての距離空間．
+    \item CW-複体であって，各次元において有限個のセルを持つもの全体
+\end{enumerate}
+などを含む便利な圏になっている．
+
+\subsection{等化写像}
+
+商位相は次の等化写像によって定義されるのだった：
+\begin{mydef}[label=def:quotient-map]{等化写像}
+    位相空間 $(X,\, \mathscr{O}_X),\, (Y,\, \mathscr{O}_Y)$  の間の連続写像 $q \colon X \lto Y$ が\textbf{等化写像} (identification map)\footnote{\textbf{商写像} (quotient map) とか\textbf{proclusion} と呼ぶ場合もある．} であるとは，以下の条件を充たすこと：
+    \begin{description}
+        \item[\textbf{(Quo-1)}] $q$ は全射．
+        \item[\textbf{(Quo-2)}] $U \in \mathscr{O}_Y \IFF q^{-1}(U) \in \mathscr{O}_X$
+    \end{description}
+\end{mydef}
+
+\begin{marker}
+    同値関係 $\sim$ による商空間 $X/{\sim}$ を作る際の標準的射影 $\pi \colon X \lto X/{\sim},\; x \lto [x]$ は等化写像である．しかし，積における第 $i$ 成分のことも標準的射影と呼ぶので，
+    この章では等化写像かつ標準的射影であるような $\pi$ のことを\textbf{商写像} (quotient map) と呼ぶことにする．
+\end{marker}
+
+
+\begin{myprop}[label=prop:quotient-basic, breakable]{等化写像の普遍性}
+    全射連続写像 $q \colon X \lto Y$ に対して，以下は同値：
+    \begin{enumerate}
+        \item $q$ が\hyperref[def:quotient-map]{等化写像}．
+        \item $\forall\textcolor{blue}{Z} \in \Obj{\TOP}$ および任意の写像 $\textcolor{blue}{f} \colon Y \lto \textcolor{blue}{Z}$ を与える．
+        このとき
+        $\textcolor{blue}{f}$ が連続であることと $\textcolor{blue}{f}\circ q$ が連続であることは同値である．
+        i.e. $\TOP$ の図式\ref{cmtd:univ-quotient-2}は可換である．
+        \item $X$ の同値関係を
+        \begin{align}
+            {\sim} \coloneqq \bigl\{\, (x,\, y) \in X \times X \bigm| q(x) = q(y) \,\bigr\} 
+        \end{align}
+        と定義する．このとき $q$ の誘導する写像 $\overline{q} \colon X / {\sim} \lto Y,\; [x] \lmto q(x)$ はwell-definedな同相写像である（可換図式\ref{cmtd:univ-quotient-3}）．
+    \end{enumerate}
+\end{myprop}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.4\columnwidth}
+        \centering
+        \begin{tikzcd}[row sep=large, column sep=large]
+            &X \ar[d, "q"']\ar[dr, "\textcolor{blue}{f} \circ q"] & \\
+            &Y \arrow[r, blue, "f"] &\forall \textcolor{blue}{Z}
+        \end{tikzcd}
+        \caption{}
+        \label{cmtd:univ-quotient-2}
+    \end{subfigure}
+    \hspace{5mm}
+    \begin{subfigure}{0.4\columnwidth}
+        \centering
+        \begin{tikzcd}[row sep=large, column sep=large]
+            &X \ar[d, "\pi"']\ar[r, "q"] &Y \\
+            &X/{\sim} \ar[ur, "\overline{q}"'] &
+        \end{tikzcd}
+        \caption{}
+        \label{cmtd:univ-quotient-3}
+    \end{subfigure}
+    \caption{等化写像の普遍性}
+    \label{cmtd:univ-quotient}
+\end{figure}%
+
+
+\begin{proof}
+    商位相の定義より商写像 $\pi \colon X \lto X / {\sim},\; x \lto [x]$ は\hyperref[def:quotient-map]{等化写像}である．
+    \begin{description}
+        \item[\textbf{(1) $\bm{\Longrightarrow}$ (2)}] $Z$ の任意の開集合 $U \subset X$ をとる．
+        
+        $f \circ q$ が連続ならば $(f \circ q)^{-1}(U) = q^{-1} \bigl( f^{-1}(U) \bigr)$ が $X$ の開集合であり，\hyperref[def:quotient-map]{等化写像}の条件 \textbf{\textsf{(Quo-2)}} より $f^{-1}(U)$ は $Y$ の開集合である．i.e. $f$ は連続写像である．
+        逆に $f$ が連続ならば $f \circ q$ は連続写像の合成なので連続である．
+        \item[\textbf{(2) $\bm{\Longrightarrow}$ (3)}] 
+        $\forall y \in [x]$ に対して $q(y) = q(x)$ なので写像 $\overline{q}$ はwell-definedである．
+        逆写像は 
+        \begin{align}
+            \overline{q}^{-1} \colon Y \lto X/{\sim},\; y \lmto [x]\; \WHERE x \in q^{-1}(\{y\})
+        \end{align}
+        で与えられる．
+        
+        　まず $\overline{q}$ が連続であることを示す．$Y$ の任意の開集合 $U \subset Y$ をとる．$q$ は連続なので $\pi^{-1} \bigl( \overline{q}^{-1}(U) \bigr) = (\overline{q} \circ \pi)^{-1}(U) = q^{-1}(U)$ は $X$ の開集合だが，$\pi$ は等化写像だから等化写像の条件 \textbf{\textsf{(Quo-2)}} より $\overline{q}^{-1}(U)$ は $X/{\sim}$ の開集合である．
+        
+        　次に $\overline{q}^{-1}$ が連続であることを示す．$\forall x \in X$ に対して $\overline{q}^{-1} \circ q(x) = [x]$ が成り立つ，i.e. $\overline{q}^{-1} \circ q = \pi$ だから (2) より $\overline{q}^{-1}$ は連続である．
+
+        　以上の議論より $\overline{q}$ は同相写像である．
+        \item[\textbf{(3) $\bm{\Longrightarrow}$ (1)}] 任意の部分集合 $U \subset Y$ をとる．
+        $U$ が $Y$ の開集合だとすると，$q$ は連続だから $q^{-1}(U)$ は $X$ の開集合である．
+
+        　逆に　$q^{-1}(U)$ が $X$ の開集合だとする．このとき $\pi^{-1} \bigl( \overline{q}^{-1}(U) \bigr) = q^{-1}(U)$ は $X$ の開集合で，かつ $\pi$ は等化写像だから $\overline{q}^{-1}(U)$ は $X/{\sim}$ の開集合である．
+        仮定より $\overline{q}$ は同相写像だから $U = \overline{q} \bigl( \overline{q}^{-1}(U) \bigr)$ は $Y$ の開集合である．
+    \end{description}
+    
+\end{proof}
+
+\begin{mycol}[label=col:univ-quotient]{商空間の普遍性}
+    $X \in \Obj{\TOP}$ の上の同値関係 ${\sim}\subset X \times X$ および商写像 $\pi \colon X \lto X/{\sim},\; x \lmto [x]$ を与える．
+    このとき以下が成り立つ：
+    \begin{description}
+        \item[\textbf{(商空間の普遍性)}] 
+        $\forall\textcolor{blue}{Y} \in \Obj{\TOP}$ および連続写像 $\textcolor{blue}{f} \colon X \lto \textcolor{blue}{Y}$ であって $\forall x,\, y \in X,\quad x \sim y\; \Longrightarrow\; g(x) = g(y)$ を充たすものを任意に与える．
+        このとき連続写像 $\overline{f} \colon X/{\sim} \lto Y$ が一意的に存在して
+        $\TOP$ の可換図式\ref{cmtd:univ-quotientSp}が成り立つ．
+    \end{description}
+\end{mycol}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzcd}[row sep=large, column sep=large]
+        &X \ar[d, "\pi"']\ar[r, blue, "f"] &\forall \textcolor{blue}{Y} \\
+        &X/{\sim} \ar[ur,dashed, red, "\exists ! \overline{f}"'] &
+    \end{tikzcd}
+    \caption{商空間の普遍性}
+    \label{cmtd:univ-quotientSp}
+\end{figure}%
+
+\begin{proof}
+    $f$ に関する仮定より写像 $\overline{f} \colon X/{\sim} \lto Y,\; [x] \lmto f(x)$ はwell-definedであり，$f = \overline{f} \circ \pi$ が成り立つ．
+    商位相の定義から $\pi$ は\hyperref[def:quotient-map]{等化写像}なので，命題\ref{prop:quotient-basic}-(2) より $\overline{f}$ は連続である．
+
+    連続写像 $g \colon X/{\sim} \lto Y$ が可換図式\ref{cmtd:univ-quotientSp}を充たすとする．このとき $\forall [x] \in X/{\sim}$ に対して $g([x]) = g \circ \pi(x) = f(x)$ が成り立つので $g = \overline{f}$ である．i.e. $\overline{f}$ は一意．
+\end{proof}
+
+
+
+\begin{myprop}[label=prop:CG-quotient]{等化写像によるコンパクト生成空間の構成}
+    $X \in \Obj{\CG},\; Y \in \Obj{\Cat{T}_2}$ とする．
+    このとき，\hyperref[def:quotient-map]{等化写像} $q \colon X \lto Y$ が存在すれば $Y \in \Obj{\CG}$ である．
+\end{myprop}
+
+\begin{proof}
+    部分集合 $B \subset Y$ であって，$Y$ の任意の\hyperref[def:compact]{コンパクト集合} $C \subset Y$ に対して $B \cap C$ が $Y$ の閉集合となるようなものをとる．このとき $B$ が $Y$ の閉集合であることを示せば良い．
+
+    $X$ のコンパクト集合 $K \subset X$ を任意にとる．$q$ は連続だから $q(K)$ もコンパクトであり，$B$ の選び方から $B \cap q(K)$ は $Y$ の閉集合である．
+    すると $q$ は連続なので $q^{-1} \bigl( B \cap q(K) \bigr)$ は $X$ の閉集合で，従って $q^{-1} \bigl( B \cap q(K) \bigr) \cap K = q^{-1}(B) \cap K$ は\footnote{$K \subset q^{-1} \bigl( q(K) \bigr)$ である．} $X$ の閉集合である．
+    
+    仮定より $X$ は\hyperref[def:CG]{コンパクト生成空間}であり，コンパクト集合 $K \subset X$ は任意だったので，以上の議論から $q^{-1}(B)$ が $X$ の閉集合であるとわかった．
+    従って\hyperref[def:quotient-map]{等化写像}の条件 \textsf{\textbf{(Quo-2)}} より $B$ は $Y$ の閉集合である．
+\end{proof}
+
+\subsection{Hausdorff空間の圏からの関手}
+
+Hausdorff空間（$\mathrm{T}_2$-空間）の圏 $\Cat{T}_2$ とは，
+\begin{itemize}
+    \item 対象はHausdorff空間
+    \item 射はHausdorff空間の間の連続写像
+    \item 合成は連続写像の合成
+\end{itemize}
+として定義される $\TOP$ の\hyperref[def:fullsub]{充満部分圏}である．
+$\Cat{T}_2$ の任意の対象は次の方法で\hyperref[def:CG]{コンパクト生成空間}にすることができる．混乱を避けるために，しばらくの間は位相空間の位相を明示する．すなわち，位相空間 $(X,\, \mathscr{O})$ と言ったとき $X$ は集合で，$\mathscr{O}$ は $X$ の上の位相を表す．
+
+\begin{mydef}[label=def:k-functor]{}
+    $(X,\, \mathscr{O}) \in \Obj{\Cat{T}_2}$ とする．
+    このとき\underline{集合} $X$ の上に以下のようにして定まる新しい位相 $\mathscr{K}$ を入れてできる位相空間 $(X,\, \mathscr{K})$ を $\bm{k(X)}$ と書く：
+
+    部分集合 $A \subset X$ が $k(X)$ の閉集合 $\iff$ $(X,\, \mathscr{O})$ の任意の\hyperref[def:compact]{コンパクト集合} $C \subset X$ に対して，集合 $A \cap C$ が \underline{$(X,\, \mathscr{O})$ の}閉集合
+\end{mydef}
+
+\begin{myprop}[label=prop:k-functor-basic, breakable]{$k(X)$ の基本性質}
+    定義\ref{def:k-functor}の $k(X)$ に対して以下が成り立つ：
+    \begin{enumerate}
+        \item 恒等写像 $\mathrm{id}_X \colon k(X) \lto X$ は連続
+        \item $k(X)$ はHausdorff空間
+        \item $k(X)$ と $(X,\, \mathscr{O})$ は同じ\hyperref[def:compact]{コンパクト集合}を持つ
+        \item $k(X)$ は\hyperref[def:CG]{コンパクト生成空間}
+        \item $(X,\, \mathscr{O}) \in \Obj{\CG} \IMP k(X) = (X,\, \mathscr{O})$
+    \end{enumerate}
+\end{myprop}
+
+
+\begin{proof}
+    \begin{enumerate}
+        \item $A \subset X$ が $(X,\, \mathscr{O})$ において閉集合かつ $C \subset X$ が $(X,\, \mathscr{O})$ において\hyperref[def:compact]{コンパクト}であるとする．
+        補題\ref{lem:Hausdorff-sub-compact}-(1) より $C$ は $(X,\, \mathscr{O})$ の閉集合であり，従って $A \cap C$ も $(X,\, \mathscr{O})$ の閉集合である．
+        故に $A$ は $k(X)$ の閉集合でもある．
+        \item (1) より従う．
+        \item $A \subset X$ が $k(X)$ において\hyperref[def:compact]{コンパクト}ならば，(1) より $A$ は $(X,\, \mathscr{O})$ においてもコンパクトである．
+        
+        逆に $A \subset X$ が $(X,\, \mathscr{O})$ においてコンパクトであるとする．$A$ に $(X,\, \mathscr{O})$ からの相対位相を入れてできる位相空間を $(A,\, \mathscr{O}_A)$ と書き，$k(X)$ からの相対位相を入れてできる位相空間を $k(A)$ と書く．すると (1) より恒等写像 $\mathrm{id}_A \colon k(A) \lto A$ は連続である．逆写像（恒等写像）の連続性を示す．
+        $k(A)$ の任意の閉集合 $B \subset A$ をとる．\hyperref[def:CG]{コンパクト生成空間}の定義から $B \cap A = B$ は $(A,\, \mathscr{O}_A)$ の閉集合であるから，恒等写像 $\mathrm{id}_A \colon A \lto k(A)$ は連続写像である．
+        以上の議論から $(A,\, \mathscr{O}_A) \approx k(A)$ であり，$A$ は $k(X)$ においてもコンパクトである．
+        \item \hyperref[def:CG]{コンパクト生成空間の定義}の\textbf{\textsf{(CG1)}} は (2) から, \textbf{\textsf{(CG2)}} は (3) から従う．
+        \item (4) より従う．
+    \end{enumerate}
+\end{proof}
+
+$\forall X,\, Y \in \Obj{\Cat{T}_2}$ の間の任意の写像 $f \colon X \lto Y$ に対して，集合の写像としては同一な $\CG$ の写像
+$k(f) \colon k(X) \lto k(Y),\; x \lmto f(x)$ を対応づける．
+
+\begin{mylem}[label=lem:CG-cont]{}
+    $X \in \Obj{\CG},\; Y \in \Obj{\Cat{T}_2}$ とする．
+    
+    写像 $f \colon X \lto Y$ は，$X$ の任意の\hyperref[def:compact]{コンパクト集合} $C \subset X$ に対して $C$ への制限 $f|_C \colon C \lto Y$ が連続ならば， 
+    連続である．
+\end{mylem}
+
+\begin{proof}
+    $A \subset Y$ を任意の閉集合，$C \subset X$ を任意のコンパクト集合とする．$f|_C$ が連続なので $f(C) \subset Y$ もコンパクト．さらに仮定より $Y$ がHausdorff空間なので補題\ref{lem:Hausdorff-sub-compact}より $f(C)$ は閉集合である．
+    従って $A \cap f(C)$ も閉集合であり，故に $f|_C$ の連続性から
+    \begin{align}
+        (f|_C)^{-1} \bigl( A \cap f(C) \bigr) = (f|_C)^{-1}(A) \cap (f|_C)^{-1} \bigl( f(C) \bigr) = f^{-1}(A) \cap C
+    \end{align}
+    も閉集合である．
+    仮定より $X$ は\hyperref[def:CG]{コンパクト生成空間}だから $f^{-1}(A)$ は閉集合であることがわかった．i.e. $f$ は連続である．
+\end{proof}
+
+\begin{myprop}[label=prop:k-functor-basic2]{$k(f)$ の基本性質}
+    $X,\, Y \in \Obj{\Cat{T}_2}$ を与える．
+    \begin{enumerate}
+        \item 写像 $f \colon X \lto Y$ が $X$ の任意のコンパクト集合の上で連続ならば $k(f)$ は連続である．
+        \item 恒等写像 $k(X) \lto X$ はホモトピー群，特異ホモロジー・コホモロジーの同型を誘導する．
+    \end{enumerate}
+\end{myprop}
+
+\begin{proof}
+    \begin{enumerate}
+        \item 補題\ref{lem:CG-cont}より $k(f)$ が $k(X)$ の任意のコンパクト集合の上で連続であることを示せば良い．
+        $C' \subset k(X)$ を $k(X)$ のコンパクト集合とする．命題\ref{prop:k-functor-basic}-(3), (1) より $C'$ は $X$ のコンパクト集合でもあり，恒等写像 $C' \lto C$ が同相写像となる．
+        $f|_C$ が連続であるという仮定から $f(C) \subset Y$ は $Y$ のコンパクト集合であり，故に $f(C') \subset k(Y)$ は $k(Y)$ のコンパクト集合である．故に $k(f)|_{C'} \colon C' \lto f(C')$ は連続写像の合成
+        \begin{align}
+            C' \xrightarrow{\mathrm{id}} C \xrightarrow{f} f(C) \xrightarrow{\mathrm{id}} f(C')
+        \end{align}
+        と等しく，連続である．
+        \item (1) より従う．
+    \end{enumerate}
+\end{proof}
+
+
+命題\ref{prop:k-functor-basic}, \ref{prop:k-functor-basic2}により，対応
+\begin{align}
+    k \colon \Cat{T}_2 \lto \CG
+\end{align}
+は関手になる．
+
+
+
+\subsection{圏 \textbf{CG} の積}
+
+$\forall X,\, Y \in \Obj{\CG}$ に対して，通常の積空間（これは圏 $\TOP$ の積である）$X \times Y$ は必ずしも $\CG$ の対象ではない．
+しかし，次のように定義したものは圏 $\CG$ の積になる．
+
+\begin{mydef}[label=def:CG-product]{圏 $\CG$ の積}
+    $\forall X,\, Y \in \Obj{\CG}$ に対して\textbf{積}を次のように定義する：
+    \begin{align}
+        X \times_{\CG} Y \coloneqq k(X \times Y)
+    \end{align}
+    ただし右辺の $\times$ は通常の積空間をとることを意味する．
+\end{mydef}
+
+\begin{myprop}[label=prop:CG-product-univ]{}
+    定義\ref{def:CG-product}の $\times_{\CG}$ は圏 $\CG$ における積の普遍性を充たす．i.e. 圏 $\CG$ は常に積を持つ．
+\end{myprop}
+
+\begin{proof}
+    $\forall X,\, Y \in \Obj{\CG}$ をとる．
+    命題\ref{prop:k-functor-basic}-(1) より恒等写像 $\mathrm{id} \colon X \times_{\CG} Y \lto X \times Y$ は連続である．
+    補題\ref{lem:continuous}-(4) より射影 $p_1 \colon X \times Y \lto X,\; p_2 \colon X \times Y \lto Y$ はどちらも連続だから，合成 $p_i  \circ \mathrm{id}$ は連続である．
+    i.e. $p_i  \circ \mathrm{id}$ は $\CG$ の射である．
+    
+    ここで $\forall W \in \Obj{\CG}$ および任意の $\CG$ の射 $f_1 \colon W \lto X,\; f_2 \colon W \lto Y$ を与える．積空間 $\times$ は $\TOP$ における積だから，積の普遍性により射 $g \colon W \lto X \times Y$ が一意的に存在して $f_i = p_i \circ g$ を充たす．
+    関手 $k$ を作用させて命題\ref{prop:k-functor-basic}-(5) を使うことで，所望の可換図式
+    \begin{center}
+        \begin{tikzcd}[row sep=large, column sep=large]
+            &W \ar[dr, "f_i"]\ar[r, dashed, red, "\exists! k(g)"] &X \times_{\CG} Y \ar[d, "p_i \circ \mathrm{id}"]\\
+            & &X_i
+        \end{tikzcd}
+    \end{center}
+    を得る．ただし $X_1 \coloneqq X,\; X_2 \coloneqq Y$ とおいた．
+\end{proof}
+
+\begin{mylem}[label=lem:CG-prod]{}
+    $\forall X,\, Y \in \Obj{\Cat{T}_2}$ に対して
+    \begin{align}
+        k(X \times Y) = k(X) \times_{\CG} k(Y)
+    \end{align}
+    が成り立つ．
+\end{mylem}
+
+\begin{proof}
+    集合としての等式が成り立つことは明らかなので，両辺の位相が等しいことを示す．
+
+    命題\ref{prop:k-functor-basic}-(1) より恒等写像 $k(X) \lto X,\; k(Y) \lto Y$ は連続だから，
+    恒等写像 $g \colon k(X) \times k(Y) \lto X \times Y$ も連続である．従って，$k(X) \times k(Y)$ の\hyperref[def:compact]{コンパクト集合}は $X \times Y$ のコンパクト集合でもある．
+
+    逆に任意のコンパクト集合 $A \subset X \times Y$ をとる．補題\ref{lem:continuous}-(4) より第 $i$ 成分への射影 $p_i \colon X \times Y \lto X_i\; (i=1,\, 2)$ は連続なので $p_i(A) \subset X_i$ はどちらも $X_i$ のコンパクト集合であり，故に命題\ref{prop:k-functor-basic}-(3) より $k(X_i)$ のコンパクト集合でもある．
+    従って $p_1(A) \times p_2(A)$ は $k(X) \times k(Y)$ のコンパクト集合であり，制限 $g|_{p_1(A) \times p_2(A)} \colon p_1(A) \times p_2(A) \lto p_1(A) \times p_2(A)$ はコンパクト集合からHausdorff空間への連続な全単射なので同相写像である（補題\ref{lem:Hausdorff-sub-compact}-(4)）．
+    $A \subset p_1(A) \times p_2(A)$ であるから $A$ は $k(X) \times k(Y)$ のコンパクト集合でもある．
+
+    以上の議論より $k(X) \times k(Y)$ と $X \times Y$ が同じコンパクト集合を持つことがわかった．従って\hyperref[def:k-functor]{$k$ の定義}より，$k(X) \times_{\CG} k(Y) = k \bigl( k(X) \times k(Y) \bigr)$ と $k(X \times Y)$ の位相は等しい．
+\end{proof}
+
+\begin{myprop}[label=prop:CG-prod-quotient]{圏 $\CG$ における等化写像の直積}
+    $X_i,\, Y_i \in \Obj{\CG}\; (i=1,\, 2)$ および $\CG$ の射としての\hyperref[def:quotient-map]{等化写像} $q_i \colon X_i \lto Y_i$ を与える．このとき
+    \begin{align}
+        q_1 \times q_2 \colon X_1 \times_{\CG} X_2 \lto Y_1 \times_{\CG} Y_2
+    \end{align}
+    は $\CG$ の射として等化写像である．
+\end{myprop}
+
+
+\subsection{圏 \textbf{CG} の関数空間}
+
+圏 $\TOP$ において集合 $\Hom{\TOP}(X,\, Y)$ を位相空間にしたい場合，よく\textbf{コンパクト開位相}を入れる．
+
+\begin{mydef}[label=def:compact-open]{コンパクト開位相}
+    $(X,\, \mathscr{O}_X),\, (Y,\, \mathscr{O}_Y)$ を位相空間とし，$X$ の\hyperref[def:compact]{コンパクト集合}全体の集合を $\mathscr{C}_X \subset 2^X$ とおく\footnote{$2^X$ は $X$ の冪集合（部分集合全体の集合）}．
+    $C \in \mathscr{C}_X,\; U \in \mathscr{O}_Y$ に対して
+    \begin{align}
+        W(C,\, U) \coloneqq \bigl\{\, \varphi \in \Hom{\TOP}(X,\, Y) \bigm| \varphi(C) \subset U \,\bigr\} \subset \Hom{\TOP}(X,\, Y)
+    \end{align}
+    とおく．
+    
+    集合 $\Hom{\TOP}(X,\, Y)$ の\textbf{コンパクト開位相} (compact-open topology) とは，部分集合の族
+    \begin{align}
+        \bigl\{W(C,\, U)\bigr\}_{C \in \mathscr{C}_X,\; U \in \mathscr{O}_Y}
+    \end{align}
+    を準基とする\footnote{開基であるとは限らない．}位相のこと．
+\end{mydef}
+
+集合 $\Hom{\TOP}(X,\, Y)$ に\hyperref[def:compact-open]{コンパクト開位相}を入れてできる位相空間のことを $\bm{C(X,\, Y)}$ と書くことにする．
+
+\begin{mylem}[]{}
+    位相空間 $X,\, Y$ を与える．
+    $Y$ がHausdorff空間ならば，位相空間 $C(X,\, Y)$ もHausdorff空間である．
+\end{mylem}
+
+\begin{proof}
+    互いに異なる任意の2点 $f,\, g \in C(X,\, Y)$ をとる．このときある $x_0 \in X$ に関して $f(x_0) \neq g(x_0)$ が成り立つ．
+    仮定より $Y$ はHausdorff空間なので，ある $Y$ の開集合 $U,\, V \subset Y$ が存在して $f(x_0) \in U \AND g(x_0) \in V \AND U \cap V = \emptyset$ を充たす．
+    
+    ここで一点集合 $\{x_0\}$ は\hyperref[def:compact]{コンパクト}なので，\hyperref[def:compact-open]{コンパクト開位相の定義}より
+    $C(X,\, Y)$ の部分集合
+    $W(\{x_0\},\, U),\; W(\{x_0\},\, V)$
+    は開集合．さらに $U,\, V$ の選び方から $f \in W(\{x_0\},\, U) \AND g \in W(\{x_0\},\, V) \AND W(\{x_0\},\, U) \cap W(\{x_0\},\, V) = \emptyset$ が成り立つ．
+\end{proof}
+
+つまり，対応 $C \colon (X,\, Y) \lto C(X,\, Y)$ は圏 $\Cat{T}_2$ において閉じている．
+しかし，$X,\, Y \in \Obj{\CG}$ であっても $C(X,\, Y)$ が\hyperref[def:CG]{コンパクト生成空間}になるとは限らない．
+
+\begin{mydef}[label=def:CG-Map]{}
+    $X,\, Y \in \Obj{\Cat{T}_2}$ とする．
+    このとき $C(X,\, Y) \in \Obj{\Cat{T}_2}$ に\hyperref[def:k-functor]{関手 $k$} を作用させて得られる\hyperref[def:CG]{コンパクト生成空間}を
+    \begin{align}
+        \bm{\Map{X}{Y}} \coloneqq k \bigl( C(X,\, Y) \bigr) 
+    \end{align}
+    と書く．
+\end{mydef}
+
+\begin{mylem}[label=lem:CG-eval]{evaluationの連続性}
+    \begin{itemize}
+        \item $\forall X,\, Y \in \Obj{\Cat{T}_2}$ に対して，写像
+        \begin{align}
+            \varepsilon \colon C(X,\, Y) \times X \lto Y,\; (f,\, x) \lmto f(x)
+        \end{align}
+        は，$X$ の任意の\hyperref[def:compact]{コンパクト集合}の上で連続である．
+        \item $\forall X,\, Y \in \Obj{\CG}$ に対して写像
+        \begin{align}
+            k(\varepsilon) \colon \Map{X}{Y} \times_{\CG} X \lto Y,\; (f,\, x) \lmto f(x)
+        \end{align}
+        は連続である．i.e. $\varepsilon$ は $\CG$ の射である．
+    \end{itemize}
+    
+\end{mylem}
+
+\begin{proof}
+    \begin{itemize}
+        \item 任意のコンパクト集合 $C \subset X$ および任意の開集合 $U \subset Y$ をとる．
+        そして点 $\forall (f,\, x) \in (\varepsilon|_{C(X,\, Y) \times C})^{-1}(U)$ を一つ固定する．i.e. $x \in C \AND f(x) \in U$ が成り立つ．
+        
+        　$f|_C$ は連続だから $(f|_C)^{-1}(U) \subset C$ は $C$ の開集合，i.e. 点 $x$ の開近傍である．
+        そして $C$ はコンパクトHausdorff空間だから\footnote{コンパクトHausdorff空間は\hyperref[def:loc-compact]{局所コンパクト}である．そして局所コンパクトHausdorff空間の各点において，コンパクト閉近傍全体の集合は基本近傍系を成す．}
+        $x$ のコンパクトな近傍 $M$ が存在して $x \in M \subset (f|_C)^{-1}(U) \subset C$ を充たす．
+        このとき\hyperref[def:compact-open]{コンパクト開位相の定義}より部分集合 $W(M,\, U) \subset C(X,\, Y)$ は開集合であり，従って $W(M,\, U) \times M \subset (\varepsilon|_{C(X,\, Y) \times C})^{-1}(U)$ は点 $(f,\, x) \in (\varepsilon|_{C(X,\, Y) \times C})^{-1}(U)$ の近傍である．
+        $(f,\, x)$ は任意だったので $(\varepsilon|_{C(X,\, Y) \times C})^{-1}(U)$ が開集合であることが示された．i.e. $\varepsilon$ の制限 $\varepsilon|_{C(X,\, Y) \times C}$ は連続である．
+        \item 命題\ref{prop:k-functor-basic2}-(1) より，前半の $\varepsilon$ に $k$ を使った写像 $k(\varepsilon) \colon k \bigl( C(X,\, Y) \times Y \bigr) \lto k(Y)$ は連続である．
+        $k(\varepsilon)$ の定義域および値域に関しては，命題\ref{prop:k-functor-basic}-(5) と補題\ref{lem:CG-prod}より $k \bigl( C(X,\, Y) \times Y \bigr) = k \bigl( C(X,\, Y) \bigr) \times_{\CG} k(Y) = \Map{X}{Y} \times_{\CG} Y,\; k(Y) = Y$ がわかるので証明が完了する．
+    \end{itemize}
+    
+\end{proof}
+
+\begin{mylem}[label=lem:Hausdorff-functionspace]{}
+    $X \in \Obj{\CG},\; Y \in \Cat{T}_2$ ならば
+    \begin{align}
+        \Map{X}{k(Y)} = \Map{X}{Y} \in \Obj{\CG}
+    \end{align}
+\end{mylem}
+
+
+\begin{mytheo}[label=thm:CG-Map-prod]{}
+    $X,\, Y,\, Z \in \Obj{\CG}$ ならば
+    \begin{align}
+        \Map{X}{Y \times_{\CG} Z} = \Map{X}{Y} \times_{\CG} \Map{X}{Z}
+    \end{align}
+    が成り立つ．
+\end{mytheo}
+
+\begin{proof}
+    圏 $\CG$ における\hyperref[prop:CG-product-univ]{積の普遍性}より，写像
+    \begin{align}
+        \varphi \colon \Hom{\CG}(X,\, Y \times_{\CG} Z) &\lto \Hom{\CG}(X,\, Y) \times \Hom{\CG}(X,\, Z) \\
+        f &\lmto (p_1 \circ f,\, p_2 \circ f)
+    \end{align}
+    はwell-definedな全単射である\footnote{補題\ref{lem:continuous}-(4) より $p_i \circ f$ は連続写像なので $\varphi$ はwell-defined．なお，$\varphi$ の定義域と値域は\textbf{ただの集合}であって，この時点ではまだコンパクト開位相を入れていない．}．
+    
+    次に，左辺と右辺の位相が等しいことを示す．そのためにまず
+    \begin{align}
+        \label{eq:topo-4-1-1}
+        C(X,\, Y \times Z) = C(X,\, Y) \times C(X,\, Z)
+    \end{align}
+    を示そう．
+    積空間 $C(X,\, Y) \times C(X,\, Z)$ の準基の任意の元は，定義\ref{def:compact-open}の記号を使って $W(C,\, U) \times W(D,\, V)$ と書かれる．
+    ただし $C,\, D$ は $X$ の\hyperref[def:compact]{コンパクト集合}で，$U,\, V$ はそれぞれ $Y,\, Z$ の開集合である．
+    このとき写像 $\varphi$ による逆像は 
+    \begin{align}
+        \varphi^{-1} \bigl( W(C,\, D) \times W(D,\, V) \bigr) = W(C,\, U \times Z) \cap W(D,\, Y \times V)
+    \end{align}
+    なので $C(X,\, Y \times Z)$ の開集合である．従って補題\ref{lem:continuous}-(1) より $\varphi$ が連続である．
+
+    逆に $C(X,\, Y \times Z)$ の準基の任意の元は $W(C,\, U \times V)$ の形をしている．このとき写像 $\varphi^{-1}$ による逆像は
+    \begin{align}
+        (\varphi^{-1})^{-1} \bigl( W(C,\, U \times V) \bigr) = W(C,\, U) \times W(C,\, V)
+    \end{align}
+    なので $C(X,\, Y) \times C(X,\, Z)$ の開集合である．従って補題\ref{lem:continuous}-(1) より $\varphi^{-1}$ も連続であり，$\varphi$ が同相写像であることが示された．
+
+    式\eqref{eq:topo-4-1-1}に $k$ を使うと，補題\ref{lem:CG-prod}, \ref{lem:Hausdorff-functionspace}より
+    \begin{align}
+        k \bigl( C(X,\, Y \times Z) \bigr) &= \Map{X}{k(Y \times Z)} = \Map{X}{Y \times_{\CG} Z} \\
+        &= k \bigl( C(X,\, Y) \times C(X,\, Z) \bigr) = \Map{X}{Y} \times_{\CG} \Map{X}{Z}
+    \end{align}
+    が従う．
+\end{proof}
+
+
+
+\begin{mytheo}[label=thm:CG-adjoint]{随伴定理}
+    $X,\, Y,\, Z \in \Obj{\CG}$ ならば
+    \begin{align}
+        \Map{X \times_{\CG} Y}{Z} = \Map{X}{\Map{Y}{Z}}
+    \end{align}
+    が成り立つ．
+\end{mytheo}
+
+\begin{proof}
+
+    まず，$\Cat{T}_2$ における写像%全単射\footnote{$f \neq g \in C(X \times Y,\, Z) \IFF \exists (x_0,\, y_0) \in X \times Y,\; f(x_0,\, y_0) \neq g(x_0,\, y_0) \IMP \mu(f)(x_0)(y_0) = f(x_0,\, y_0) \neq g(x_0,\, y_0) = \mu(g)(x_0)(y_0) \IMP \mu(f) \neq \mu(g)$ より単射．$\forall \varphi \in C(X,\, C(Y,\, Z))$ に対して $f \in C(X \times Y,\, Z)$ を $f(x,\, y) = \varphi(x)(y)$ で定義すれば $\varphi = \mu(f)$ となるから全射．}
+    \begin{align}
+        \label{isom:CG-adjoint}
+        \mu \colon C(X \times_{\CG} Y,\, Z) \lto C \bigl( X,\, C(Y,\, Z) \bigr),\; f \lmto \bigl( x \lmto (y \lmto f(x,\, y)) \bigr) 
+    \end{align}
+    がwell-definedであることを示す．
+    $\forall f \in C(X \times_{\CG} Y,\, Z)$ を1つ固定する．補題\ref{lem:continuous}-(5) より $\forall x \in X$ に対して写像 $\mu(f)(x) = f|_{\{x\} \times Y}$ は連続なので $\mu(f)(x) \in C(Y,\, Z)$ がわかる．
+    よって示すべきは $\mu(f) \in  C \bigl( X,\, C(Y,\, Z) \bigr)$ である．
+    \hrulefill
+    \begin{mylem}[label=lem:thm:adjoint]{}
+        写像 $\mu(f) \colon X \lto C(Y,\, Z)$ は連続である．
+    \end{mylem}
+
+    \begin{proof}
+        位相空間 $C(Y,\, Z)$ の準基に属する開集合 $W(C,\, U)$ を任意にとる．\hyperref[def:compact-open]{コンパクト開位相の定義}より $C$ は $Y$ の\hyperref[def:compact]{コンパクト集合}で $U$ は $Z$ の開集合である．
+        補題\ref{lem:continuous}-(1) より $V \coloneqq \mu(f)^{-1} \bigl( W(C,\, U) \bigr)$ が $X$ の開集合であることを示せば良い．
+
+        $\forall x_0 \in V$ を1つとる．このとき $\mu(f)(x_0) = f|_{\{x_0\} \times Y} \in W(C,\, U)$ だから $\mu(f)(x_0)(C) = f(\{x_0\} \times C) \subset U$ である．i.e. $\{x_0\} \times C \subset f^{-1}(U)$ が成り立つ．$f$ は連続だから $f^{-1}(U)$ は $X \times Y$ の開集合である．
+        すると補題\ref{lem:prod-compact}が使えて，
+        $x_0 \in U' \AND C \subset V' \AND U' \times V' \subset f^{-1}(U)$ を充たす $X$ の開集合 $U'$ と $Y$ の開集合 $V'$ の存在が言える．
+        このとき $\mu(f)(U')(C) = f(U' \times C) \subset f(U' \times V') \subset U$ が成り立つので $U' \subset V$ である．i.e. $U'$ は $x_0$ の開近傍でかつ $U' \subset V$ を充たす．$x_0$ は任意だったので $V$ は開集合である．
+    \end{proof}
+    
+    \hrulefill
+
+    次に $\mu$ が連続であることを示す．補題\ref{lem:CG-eval}よりevaluation
+    \begin{align}
+        \varepsilon \colon C(X \times_{\CG} Y,\, Z) \times_{\CG} X \times_{\CG} Y \lto Z 
+    \end{align}
+    は連続である\footnote{$X \times_{\CG}Y \in \Obj{\CG}$ なので．}．よって補題\ref{lem:thm:adjoint}を使うと
+    \begin{align}
+        \mu \circ \varepsilon \colon C(X \times_{\CG} Y,\, Z) \times_{\CG} X \lto C(Y,\, Z)
+    \end{align}
+    も連続．再度補題\ref{lem:thm:adjoint}を使うことで
+    \begin{align}
+        \mu\circ \mu \circ \varepsilon \colon C(X \times_{\CG} Y,\, Z) \lto C \bigl( X,\, C(Y,\, Z) \bigr) 
+    \end{align}
+    が連続であるとわかる．その上 $\mu \circ \mu \circ \varepsilon = \mu$ であるから $\mu$ が連続であることが示された．
+
+    次に $\mu$ が連続な逆写像を持つことを示す．
+    \begin{align}
+        \varepsilon' &\colon C \bigl( X,\, C(Y,\, Z) \bigr) \times_{\CG} X \lto Z, \\
+        \varepsilon'' &\colon C(Y,\, Z) \times_{\CG} Y \lto Z
+    \end{align}
+    をどちらもevaluationとすると，補題\ref{lem:CG-eval}よりこれらは連続である．よって合成
+    \begin{align}
+        \varepsilon'' \circ (\varepsilon' \times \mathrm{id}_Y) \colon C \bigl( X,\, C(Y,\, Z) \bigr) \times_{\CG} X \times_{\CG} Y \lto Z
+    \end{align}
+    は連続である．補題\ref{lem:thm:adjoint}を使うことで
+    \begin{align}
+        \mu \circ \bigl( \varepsilon'' \circ (\varepsilon' \times \mathrm{id}_Y) \bigr) \colon C \bigl( X,\, C(Y,\, Z) \bigr) \lto C(X \times_{\CG} Y,\, Z)
+    \end{align}
+    も連続であるとわかる．その上 $\mu \circ \bigl( \varepsilon'' \circ (\varepsilon' \times \mathrm{id}_Y) \bigr) = \mu^{-1}$ である．
+    以上で式\eqref{isom:CG-adjoint}の $\mu$ が $\Cat{T}_2$ の同相写像であることが示された．
+
+    最後に式\eqref{isom:CG-adjoint}に $k$ を作用させて右辺に補題\ref{lem:Hausdorff-functionspace}を使うことで
+    \begin{align}
+        \Map{X \times_{\CG} Y}{Z} &= k \bigl( C \bigl( X,\, C(Y,\, Z) \bigr)  \bigr) \\
+        &= k \bigl( C \bigl( X,\, k(C (Y,\, Z)) \bigr)  \bigr) \\
+        &= \Map{X}{\Map{Y}{Z}}
+    \end{align}
+    がわかり，証明が完了する．
+    % \begin{description}
+    %     \item[\textbf{$\bm{\mu}$ は連続}] 　
+        
+    %     　$\forall f \in C(X \times Y,\, Z)$ および $\forall x \in X$ を一つ固定する．このとき $\mu(f)(x)$ が一点 $y_0 \in Y$ を $Z$ の開集合 $U \subset Z$ の中に移すとする．
+    %     i.e. $f(x,\, y_0) \in U \subset Z$ であるとする．$f$ の連続性より，$y_0$ の開近傍 $y_0 \in V \subset Y$ が存在して $f(\{x\} \times V) \subset U$ を充たす．従って $\mu(f)(x)(V) \subset U$ である．
+        
+    %     　次に $\mu (f)$ が連続であることを示す．$W(K,\, U)$ を $C(Y,\, Z)$ の\hyperref[def:compact-open]{コンパクト開位相}の開基の元とし，$\mu(f)(x_0) \in W(K,\, U)$ とする．\hyperref[def:compact-open]{コンパクト開位相の定義}より $f(\{x_0\} \times K) \subset U$ が成り立つ．
+    %     $U$ は開集合かつ $K$ は\hyperref[def:compact]{コンパクト}なので，$x_0$ の近傍 $x_0 \in N \subset X$ が存在して $f(N \times K) \subset U$ を充たす．i.e. $\mu(f)(N) \subset W(K,\, U)$ であるから示された．
+        
+    %     　最後に $\mu$ が連続であることを示す．
+    % \end{description}
+\end{proof}
+
+\section{基点付きコンパクト生成空間}
+
+\subsection{基点付き空間}
+
+\textbf{空間対} (topological pair) とは，位相空間 $X$ とその部分空間 $A \subset X$ の組 $(X,\, A)$ のことを言う．
+空間対の圏 $\PAIR$ を\footnote{この記号は一般的でないかもしれない．}次のように定義する：
+\begin{itemize}
+    \item 対象を空間対とする．
+    \item $\Hom{\PAIR}\bigl((X,\, A),\, (Y,\, B)\bigr)$ を，連続写像 $f \colon X \lto Y$ であって $f(A) \subset B$ を充たすもの全体の集合とする．
+    \item 合成を写像の合成とする．
+\end{itemize}
+
+\textbf{空間の3対} (topological triad) とは，位相空間 $X$ とその部分空間 $A_1,\, A_2 \subset X$ の3つ組 $(X,\, A_1,\, A_2)$ のことを言う．
+空間の3対の圏 $\TRI$ を\footnote{この記号は一般的でないかもしれない．}次のように定義する：
+\begin{itemize}
+    \item 対象を空間の3対とする．
+    \item $\Hom{\TRI}\bigl((X,\, A_1,\, A_2),\, (Y,\, B_1,\, B_2)\bigr)$ を，連続写像 $f \colon X \lto Y$ であって $f(A_1) \subset B_1 \AND f(A_2) \subset B_2$ を充たすもの全体の集合とする．
+    \item 合成を写像の合成とする．
+\end{itemize}
+3対 $(X,\, A_1,\, A_2) \in \Obj{\TRI}$ に対して $A_2 = \emptyset$ とすれば空間対になる．
+
+\begin{mydef}[label=def:bases-space]{基点付き空間}
+    \textbf{基点付き空間} (based space) とは，空間対 $(X,\, \{x_0\}) \in \Obj{\PAIR}$ のことを言い，$\bm{(X,\, x_0)}$ と略記される．
+\end{mydef}
+
+\textbf{基点付きコンパクト生成空間の圏} $\CG_0$ を次のように定義する：
+\begin{itemize}
+    \item $\Obj{\CG_0}$ を\hyperref[def:bases-space]{基点付き空間} $(X,\, x_0)$ であって，かつ $X$ が\hyperref[def:CG]{コンパクト生成空間}であるもの集まりとする．
+    \item $\Hom{\CG_0} \bigl( (X,\, x_0),\, (Y,\, y_0) \bigr)$ は基点を保つ連続写像全体の集合とする．
+    \item 合成を写像の合成とする．
+\end{itemize}
+
+$\forall X \in \Obj{\CG}$ に対して $X^+ \coloneqq X \amalg \{\mathrm{pt}\}$ とおいて基点を付け，
+$\forall f \in \Hom{\CG}(X,\, Y)$ に対して $f^+ \colon X^+ \lto Y^+$ を $f^+(x,\, 1) \coloneqq \bigl(f(x),\, 1\bigr),\; f^+(\mathrm{pt}, 2) \coloneqq (\mathrm{pt},\, 2)$ で定義すると
+$X^+ \in \Obj{\CG_0},\; f^+ \in \Hom{\CG_0} (X^+,\, Y^+)$ が成り立つ．この対応 ${}^+ \colon \CG \lto \CG_0$ は\hyperref[def:faithful]{忠実}な関手だから $\CG$ を $\CG_0$ の部分圏と見做すことができる．
+
+\subsection{圏 $\mathrm{CG}_0$ の積と和}
+
+\begin{myprop}[label=prop:CG0-product]{圏 $\CG_0$ の積}
+    $(X,\, x_0),\, (Y,\, y_0) \in \Obj{\CG_0}$ に対して，
+    \begin{align}
+        \bigl(X \times_{\CG} Y,\, (x_0,\, y_0)\bigr) \in \Obj{\CG_0}
+    \end{align}
+    は積の普遍性を充たす．i.e. 圏 $\CG_0$ は常に積を持つ．
+\end{myprop}
+
+\begin{proof}
+    $\forall (W,\, w_0) \in \Obj{\CG_0}$ および任意の $\CG_0$ の射 $f_1 \in \Hom{\CG_0}\bigl( (W,\, w_0),\, (X,\, x_0) \bigr),\; f_2 \in \Hom{\CG_0}\bigl( (W,\, w_0),\, (Y,\, y_0) \bigr)$ を与える．
+    命題\ref{prop:CG-product-univ}より圏 $\CG$ における積の普遍性の可換図式
+    \begin{center}
+        \begin{tikzcd}[row sep=large, column sep=large]
+            & &W \ar[dl, "f_1"'] \ar[dr, "f_2"] \ar[d, dashed, red, "\exists ! g"] & \\
+            &X &X \times_{\CG} Y \ar[l, "p_1"] \ar[r, "p_2"'] &Y
+        \end{tikzcd}
+    \end{center}
+    が成り立つ．あとは $p_1,\, p_2,\, g$ が基点を保つことを示せば良い．
+    
+    実際
+    $p_1 (x_0,\, y_0) = x_0,\; p_2(x_0,\, y_0) = y_0$
+    なので $p_i\; (i=1,\, 2)$ は圏 $\CG_0$ の射である．
+    また，図式の可換性から $p_1 \circ g(w_0) = f_1(w_0) = x_0 \AND p_2 \circ g(w_0) = f_2(w_0) = y_0$ が成り立つ．故に $g(w_0) \in p_1^{-1}(\{x_0\}) \cap p_2^{-1}(\{y_0\}) = \{(x_0,\, y_0)\}$ が言える．i.e. $g$ も $\CG_0$ の射である．
+\end{proof}
+
+ところが，$\CG_0$ の和はdisjoint union\underline{ではない}．と言うのも，$(X,\, x_0),\, (Y,\, y_0) \in \Obj{\CG_0}$ に対して，$X \amalg Y$ の「基点」と呼ぶべきものは標準的包含の像 $\iota_1(\{x_0\}) \cup \iota_2 (\{y_0\}) = \{ (x_0,\, 1),\, (y_0,\, 2) \}$ であり，1点ではなくなってしまう．
+解決策は，$x_0$ と $y_0$ を同一視することである．このような操作は\hyperref[def:smash]{ウェッジ和}と呼ばれるのだった：
+
+\begin{myprop}[label=prop:CG0-sum]{圏 $\CG_0$ の和}
+    $(X,\, x_0),\; (Y,\, y_0) \in \Obj{\CG_0}$ に対して，${\sim} \subset (X \amalg Y) \times (X \amalg Y)$ を $(x_0,\, 1) \sim (y_0,\, 2)$ を充たす最小の同値関係とする\footnote{つまり同値類を部分集合と見做したとき，$(x_0,\, 1) \sim (y_0,\, 2)$ を充たす同値類全体の共通部分のこと．}．
+    同値関係 $\sim$ による商空間を $X \vee Y$，\hyperref[def:quotient-map]{商写像}を $q \colon X \amalg Y \lto X \vee Y,\; x \lmto [x]$ と書くとき，
+    \begin{align}
+        \bigl( X \vee Y,\, [(x_0,\, 1)]\bigr) \in \Obj{\CG_0}
+    \end{align}
+    は和の普遍性を充たす．i.e. $\CG_0$ は常に和を持つ．
+\end{myprop}
+
+\begin{proof}
+    $\forall (W,\, w_0) \in \Obj{\CG_0}$ および任意の $\CG_0$ の射 $f_1 \in \Hom{\CG_0}\bigl((X,\, x_0),\, (W,\, w_0) \bigr),\; f_2 \in \Hom{\CG_0}\bigl( (Y,\, y_0),\, (W,\, w_0) \bigr)$ を与える．
+    $X \amalg Y$ は圏 $\CG$ における和だから，和の普遍性の可換図式
+    \begin{center}
+        \begin{tikzcd}[row sep=large, column sep=large]
+            & &W \ar[dl, leftarrow, "f_1"'] \ar[dr, leftarrow, "f_2"] \ar[d, dashed, red, leftarrow, "\exists ! g"] & \\
+            &X &X \amalg Y \ar[l,leftarrow, "\iota_1"] \ar[r,leftarrow, "\iota_2"'] &Y
+        \end{tikzcd}
+    \end{center}
+    が成り立つ．ただし $\iota_i \colon X_i \lto X \amalg Y,\; x \lmto (x,\, i) \; (i=1,\, 2)$ は標準的包含である．
+    また，\hyperref[col:univ-quotient]{商空間の普遍性}から $\CG$ の可換図式
+    \begin{center}
+        \begin{tikzcd}[row sep=large, column sep=large]
+            &X \amalg Y \ar[d, "q"'] \ar[r, "g"] & W \\
+            &X \vee Y \ar[ur, red, dashed, "\exists! h"] &
+        \end{tikzcd}
+    \end{center}
+    が成り立つ．あとは $\tilde{\iota}_i \coloneqq q \circ \iota_i$ とおいて，$\tilde{\iota}_1,\, \tilde{\iota_2},\, h$ が基点を保つことを示せば良い．
+    
+    実際
+    $\tilde{\iota}_1 (x_0) = [(x_0,\, 1)] = [(y_0,\, 2)] = \tilde{\iota}_2(y_0)$
+    が成り立つので $\tilde{\iota}_i\; (i=1,\, 2)$ は圏 $\CG_0$ の射である．
+    また，図式の可換性から $h \circ \tilde{\iota}_1(x_0) = g \circ \iota_1(x_0) = f_1(x_0) = w_0 \AND h \circ \tilde{\iota}_2(y_0) = g \circ \iota_2(y_0) = f_2(y_0) = w_0$ が成り立つ．故に $h\bigl([(x_0,\, 1)]\bigr) = w_0$ であり，$h$ は $\CG_0$ の射である．
+    
+    以上の議論から，$\CG_0$ の可換図式
+    \begin{center}
+        \begin{tikzcd}[row sep=large, column sep=large]
+            & &W \ar[dl, leftarrow, "f_1"'] \ar[dr, leftarrow, "f_2"] \ar[d, dashed, red, leftarrow, "\exists ! h"] & \\
+            &X &X \vee Y \ar[l,leftarrow, "\tilde{\iota}_1"] \ar[r,leftarrow, "\tilde{\iota}_2"'] &Y
+        \end{tikzcd}
+    \end{center}
+    が成り立つ．
+\end{proof}
+
+$\CG_0$ の\hyperref[prop:CG0-sum]{和}と\hyperref[prop:CG0-product]{積}の関係は，次の可換図式によって特徴付けられる：
+\begin{center}
+    \begin{tikzcd}[row sep=large, column sep=large]
+        & &X \vee Y \ar[dd, red, hookrightarrow, "j"] & \\
+        &X \ar[ur, "\tilde{\iota}_1"] & &Y \ar[ul, "\tilde{\iota}_2"'] \\
+        & &X \times_{\CG} Y \ar[ul, "p_1"] \ar[ur, "p_2"']&
+    \end{tikzcd}
+\end{center}
+ここに基点を保つ連続写像 $j \colon X \vee Y \hookrightarrow X \times_{\CG} Y$ は
+\begin{align}
+    j\bigl([(x,\, 1)]\bigr) \coloneqq (x,\, y_0),\quad j\bigl([(y,\, 2)]\bigr) \coloneqq (x_0,\, y)
+\end{align}
+で定義される単射である．
+\begin{align}
+    j(X \vee Y) = X \times_{\CG} \{y_0\} \cup \{x_0\} \times_{\CG} Y
+\end{align}
+であり，よく $X \vee Y$ と同一視される．
+
+\subsection{圏 $\mathrm{CG}_0$ の関数空間}
+
+\begin{mydef}[label=def:CG0-Map, breakable]{基点付き関数空間}
+    $X,\, Y \in \Obj{\Cat{T}_2}$ とし，$(X,\, x_0),\, (Y,\, y_0)$ を\hyperref[def:bases-space]{基点付き空間}とする．
+    \begin{itemize}
+        \item 基点を保つ連続写像全体の集合 $\Hom{\CG_0} \bigl( (X,\, x_0),\, (Y,\, y_0) \bigr)$ に\hyperref[def:compact-open]{コンパクト開位相}を入れてできる位相空間を 
+        \begin{align}
+            \bm{C_0 (X,\, Y)} \coloneqq C \bigl( (X,\, x_0),\, (Y,\, y_0) \bigr)
+        \end{align}
+        と書くことにする\footnote{補題\ref{lem:CG-cont}より $C_0(X,\, Y) \in \Obj{\Cat{T}_2}$ である．}．
+        \item $C_0(X,\, Y)$ に\hyperref[def:k-functor]{関手 $k$}を作用させて得られる\hyperref[def:CG]{コンパクト生成空間}を
+        \begin{align}
+            \bm{\mathrm{Map}_0(X,\, Y)} \coloneqq k \bigl( C_0(X,\, Y) \bigr) 
+        \end{align}
+        と書く．$\mathrm{Map}_0(X,\, Y)$ の基点は唯一の\footnote{基点を保たないといけないので．}定数写像 $\mathrm{const}_{y_0} \colon X \lto Y,\; x \lmto y_0$ である．
+        i.e. 組 $\bigl( \MAP(X,\, Y),\, \mathrm{const}_{y_0} \bigr) \in \Obj{\CG_0}$ である．
+    \end{itemize}
+\end{mydef}
+
+$\MAP (X,\, Y)$ に関する\hyperref[thm:CG-adjoint]{随伴定理}を述べるために
+いくつかの下準備をする．
+
+空間対 $(X,\, A) \in \Obj{\PAIR}$ を与える．$X$ 上の同値関係を
+\begin{align}
+    \label{equiv:collapse}
+    \sim\; \coloneqq \bigl\{\, (x,\, y) \in X \times X \bigm| x=y \OR \{x,\, y\} \subset A \,\bigr\} 
+\end{align}
+と定義し，$\sim$ による商空間を $\bm{X/A} \coloneqq X/{\sim}$，\hyperref[def:quotient-map]{商写像}を $q \colon X \lto X/A$ と書く．
+このような構成は \textbf{collapse $\bm{A}$ to a point} と呼ばれる．
+
+$X/A$ に基点を付けたい場合は，一点集合 $\bm{a_0} \coloneqq q(A)$ を基点に選ぶ．
+このとき等化写像 $q \colon X \lto X/A$ はそのまま $\PAIR$ の射 $q \colon (X,\, A) \lto (X/A,\, a_0)$ と見做すことができる．
+$X/A$ の重要な具体例としては，次のスマッシュ積がある：
+
+\begin{mydef}[label=def:smash-re]{スマッシュ積（再掲）}
+    $(X,\, x_0),\; (Y,\, y_0) \in \Obj{\CG_0}$ に対して，\textbf{スマッシュ積}を
+    \begin{align}
+        \bm{X \wedge Y} \coloneqq \frac{X \times_{\CG} Y}{X \vee Y} = \frac{X \times_{\CG} Y}{X \times_{\CG} \{y_0\} \cup \{x_0\} \times_{\CG} Y}
+    \end{align}
+    と定義する．$q \colon X \times_{\CG} Y \lto X \wedge Y,\; (x,\, y) \lmto x \wedge y$ を\hyperref[def:quotient-map]{商写像}とするとき，
+    $x_0 \wedge y = x_0 \wedge y_0 = x \wedge y_0\; (\forall x \in X,\, \forall y \in Y)$ が $X \wedge Y$ の基点となる．
+\end{mydef}
+
+$X/A$ を作る際に $A$ を $X$ の閉集合とすることが多いが，これは次の補題による：
+\begin{mylem}[label=lem:collapse]{}
+    $A$ が閉集合のとき，商写像の制限 $q|_{X\setminus A} \colon X \setminus A \lto q(X \setminus A)$ は同相写像である．
+\end{mylem}
+
+\begin{proof}
+    同値関係の定義\eqref{equiv:collapse}より $\forall x,\,y \in X \setminus A$ に対して $x \neq y \IMP x \not\sim y \IMP q(x) \neq q(y)$ が成り立つ．
+    i.e. $q|_{X\setminus A} \colon X \setminus A \lto q(X \setminus A)$ は連続な全単射である．
+    ところで $A$ が $X$ の閉集合なので $X \setminus A$ は $X$ の開集合．故に $X\setminus A$ の任意の開集合 $U \subset X \setminus A$ は $X$ においても開である．
+    $q|_{X\setminus A}$ が全単射なので $(q|_{X\setminus A})^{-1} \bigl( q|_{X\setminus A}(U) \bigr) = q^{-1} \bigl( q(U) \bigr) = U$ が $X$ の開集合ということになるが，$q$ は\hyperref[def:quotient-map]{等化写像}だから $q|_{X\setminus A}(U)$ は $X/A$ の開集合である．
+    i.e. $q|_{X\setminus A} \colon X \setminus A \lto q(X \setminus A)$ は全単射な開写像であるから同相写像である．
+\end{proof}
+
+
+
+\begin{marker}
+    暫くの間 $X \in \Obj{\CG}$ とし，部分空間 $A \subset X$ を\underline{閉集合}でかつ $X/A$ がHausdorff空間となるようにとる．すると補題\ref{prop:CG-quotient}より $X/A \in \Obj{\CG}$ である．
+    特に $(X/A,\, a_0) \in \Obj{\CG_0}$ となる．
+\end{marker}
+
+
+
+\begin{mylem}[label=lem:CG0-collapse]{}
+    $(X,\, x_0),\; (Y,\, y_0) \in \Obj{\CG_0}$ とする．
+    
+    このとき写像
+    \begin{align}
+        q^* \colon C_0 (X/A,\, Y) \lto C \bigl( (X,\, A),\, (Y,\, y_0) \bigr),\; f \lmto f \circ q
+    \end{align}
+    はwell-definedな全単射連続写像で，\hyperref[def:compact]{コンパクト集合}の1対1対応を与える．
+    
+    特に自然同値
+    \begin{align}
+        \MAP(X/A,\, Y) = \Map{(X,\, A)}{(Y,\, y_0)}
+    \end{align}
+    が成り立つ．
+\end{mylem}
+
+\begin{proof}
+    $q$ が全射連続写像なので $q^*$ はwell-definedかつ全単射な連続写像である．
+    
+    コンパクト集合 $F \subset C \bigl( (X,\, A),\, (Y,\, y_0) \bigr)$ を任意に取ったとき，逆写像 $q^*{}^{-1}$ が $F$ の上で連続であることを示す．
+    任意の1点 $g_0 \in F$ および $C_0(X/A,\, Y)$ の準基に属する開集合 $W(C,\, U) \subset C_0(X/A,\, Y)$ であって $q^*{}^{-1}(g_0) \in W(C,\, U)$ を充たすものをとる．
+    このとき $g_0 \circ q(C) \subset U$ が成り立つ．
+    
+    $a_0 \notin C$ ならば補題\ref{lem:collapse}より $q^{-1}(C) = (q|_{X \setminus A})^{-1}(C)$ は $X$ のコンパクト集合である．よって\hyperref[def:compact-open]{コンパクト開位相の定義}から $W \bigl( q^{-1}(C),\, U \bigr)$ は $g_0$ を含む $C \bigl( (X,\, A),\, (Y,\, y_0) \bigr) $ の開集合で
+    $q^*{}^{-1} \bigl( W \bigl( q^{-1}(C),\, U \bigr) \bigr) \subset W(C,\, U)$ を充たす．
+
+    $a_0 \in C$ とする．$F$ はコンパクトなので補題\ref{lem:CG-eval}-(1) よりevaluation $\varepsilon \colon F \times X \lto X$ は連続である．
+    $e(F \times A) = y_0$ が成り立つ．また，命題\ref{prop:CG-prod-quotient}より $\CG$ における\hyperref[def:quotient-map]{等化写像} $\mathrm{id}_F \colon F \lto F,\; q \colon X \lto X/A$ の直積 $\mathrm{id}_F \times q \colon F \times X \lto F \times (X/A)$ は等化写像なので，
+    \hyperref[col:univ-quotient]{商空間の普遍性}より $\CG$ の可換図式
+    \begin{center}
+        \begin{tikzcd}[row sep=large, column sep=large]
+            F \times X \ar[d, "\mathrm{id}_F \times q"']\ar[r, "\varepsilon"] &Y \\
+            F \times (X/A) \arrow[ur, red, dashed, "\exists!\bar{\varepsilon}"']&
+        \end{tikzcd}
+    \end{center}
+    が成り立つ．$\overline{\varepsilon}(g_0,\, a_0) \in U$ なので，$g_0$ の開近傍 $g_0 \in V \subset F$ および $a_0$ の開近傍 $a_0 \in N \subset X/A$ が存在して $\overline{\varepsilon} (V \times N) \subset U$ を充たす．
+    ここで $C' \coloneqq C \setminus (C \cap N)$ とおくと $C'$ はコンパクト空間 $C$ の閉集合なので補題\ref{lem:Compact-close}よりコンパクト．かつ $a_0 \notin C'$ である．
+    従って $V \cap W \bigl( h^{-1}(C'),\, U \bigr)$ は $g_0$ の $F$ における開近傍である．
+    $\forall g \in V \cap W \bigl( h^{-1}(C'),\, U \bigr)$ は $g \bigl(h^{-1}(C)\bigr) \subset U$ かつ $g \bigl( h^{-1}(C') \bigr) \subset U$ を充たす．$C \subset C' \cup N$ であるから $h^*{}^{-1}(g) \in W(C,\, U)$ である．
+
+    以上の議論と命題\ref{prop:k-functor-basic2}-(1) より，$k(q^*)^{-1} = k(q^*{}^{-1}) \colon \Map{(X,\, A)}{(Y,\, y_0)} \lto \MAP (X/A,\, Y)$ は連続である．i.e. $k(q^*) \colon \MAP(X/A,\, Y) \lto \Map{(X,\, A)}{(Y,\, y_0)}$ は同相写像である．
+\end{proof}
+
+\begin{mytheo}[label=thm:CG0-adjoint]{圏 $\CG_0$ における随伴定理}
+    $(X,\, x_0),\, (Y,\, y_0),\, (Z,\, z_0) \in \Obj{\CG_0}$ ならば
+    \begin{align}
+        \MAP(X \wedge Y,\, Z) = \MAP\bigl(X,\, \MAP(Y,\, Z)\bigr)
+    \end{align}
+    が成り立つ．
+\end{mytheo}
+
+\begin{proof}
+    $W \coloneqq X \times_{\CG} \{y_0\} \cup \{x_0\} \times_{\CG} Y$ とおくと，\hyperref[def:smash-re]{スマッシュ積の定義}より $X \wedge Y = X \times_{\CG}Y/W$ である．
+    補題\ref{lem:CG0-collapse}より
+    \begin{align}
+        \MAP (X \times_{\CG} Y/W,\, Z) = \Map{(X \times_{\CG} Y,\, W)}{(Z,\, z_0)}
+    \end{align}
+    が成り立つ．右辺は $\Map{X \times_{\CG} Y}{Z}$ の部分空間である．
+
+    ところで，$\CG$ の\hyperref[thm:CG-adjoint]{随伴定理}より $\Map{X \times_{\CG} Y}{Z} = \Map{X}{\Map{Y}{Z}}$ が成り立つ．この同相によって
+    \begin{align}
+        \Map{(X \times_{\CG} Y,\, W)}{(Z,\, z_0)} = \MAP \bigl( X,\, \MAP (Y,\, Z) \bigr) 
+    \end{align}
+    が言える．
+\end{proof}
+
+
+\section{非退化な基点を持つコンパクト生成空間}
+
+\textbf{非退化な基点を持つコンパクト生成空間}の圏 $\CG_*$ を次のように定義する：
+\begin{itemize}
+    \item $\Obj{\CG_*}$ は\hyperref[def:bases-space]{基点付き}\hyperref[def:CG]{コンパクト生成空間} $(X,\, x_0)$ であって\hyperref[def:NDR]{NDR対}でもあるもの全体とする\footnote{i.e. 包含写像 $\{x_0\} \hookrightarrow X$ は\hyperref[def:cofibration]{コファイブレーション}である}．
+    \item $\Hom{\CG_*} \bigl( (X,\, x_0),\, (Y,\, y_0) \bigr)$ は基点を保つ連続写像全体の集合とする．
+    \item 合成を写像の合成とする．
+\end{itemize}
+$\CG_*$ は $\CG_0$ の\hyperref[def:fullsub]{充満部分圏}である．
+
+\begin{mylem}[label=lem:NDR2NDR]{}
+    $(X,\, A),\, (Y,\, B)$ を\hyperref[def:NDR]{NDR対}とすると，
+    \begin{align}
+        & & & &X \times B & & \\
+        X \times Y & &X \times B \cup A \times Y & & & &A\times B \\
+        & & & &A \times Y & & \\
+    \end{align}
+    を組み合わせて得られる9個の全ての空間対
+    % \begin{align}
+    %     &(X \times Y,\, X \times B \cup A \times Y) & &(X \times Y,\, X \times B) & &(X \times Y,\, A \times Y) & &(X \times Y,\, A \times B) \\
+    %     &(X \times B \cup A \times Y,\, X \times B) & &(X \times B \cup A \times Y,\, A \times Y) & &(X \times B \cup A \times Y,\, A \times B) & & \\
+    %     &(X \times B \cup A \times B) & &  & &  & &  \\
+    %     &(A \times Y \cup A \times B) & &  & &  & &
+    % \end{align}
+    はNDR対である．
+\end{mylem}
+
+\begin{proof}
+    
+\end{proof}
+
+補題\ref{lem:NDR2NDR}より，\hyperref[prop:CG0-product]{積}は $\CG_0$ と全く同様に構成できる．
+
+\begin{myprop}[label=prop:CGpt-product]{圏 $\CG_*$ の積}
+    $(X,\, x_0),\, (Y,\, y_0) \in \Obj{\CG_*}$ に対して，
+    \begin{align}
+        \bigl(X \times_{\CG} Y,\, (x_0,\, y_0)\bigr) \in \Obj{\CG_*}
+    \end{align}
+    は積の普遍性を充たす．i.e. 圏 $\CG_*$ は常に積を持つ．
+\end{myprop}
+
+\hyperref[prop:CG0-sum]{和}も $\CG_*$ と同じである．
+
+\begin{myprop}[label=prop:CGpt-sum]{圏 $\CG_*$ の和}
+    $(X,\, x_0),\; (Y,\, y_0) \in \Obj{\CG_*}$ に対して，${\sim} \subset (X \amalg Y) \times (X \amalg Y)$ を $(x_0,\, 1) \sim (y_0,\, 2)$ を充たす最小の同値関係とする\footnote{つまり同値類を部分集合と見做したとき，$(x_0,\, 1) \sim (y_0,\, 2)$ を充たす同値類全体の共通部分のこと．}．
+    同値関係 $\sim$ による商空間を $X \vee Y$，\hyperref[def:quotient-map]{商写像}を $q \colon X \amalg Y \lto X \vee Y,\; x \lmto [x]$ と書くとき，
+    \begin{align}
+        \bigl( X \vee Y,\, [(x_0,\, 1)]\bigr) \in \Obj{\CG_*}
+    \end{align}
+    は和の普遍性を充たす．i.e. $\CG_*$ は常に和を持つ．
+\end{myprop}
+
+\end{document}

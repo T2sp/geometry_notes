@@ -1,0 +1,64 @@
+\begin{mydef}[label=def.topomani, breakable]{位相多様体}
+\begin{mydef}[label=def.localcoord, breakable]{局所座標}
+\begin{myprop}[label=prop:topomani-basic, breakable]{位相多様体の位相的性質}
+\begin{mydef}[label=def.atlas]{アトラス}
+    	    node [label={[label distance=-0.3cm, xshift=-2cm, fill=white]:$U_\alpha$}] {};
+    	    node [label={[label distance=-0.8cm, xshift=.75cm, yshift=1cm, fill=white]:$U_\beta$}] {};
+    	\draw[thick, ->] (-3,-5) -- (0, -5) node [label=above:$\varphi_\alpha(U_\alpha)$] {};
+    	\draw[thick, ->] (-3,-5) -- (-3, -2) node [label=right:$\mathbb{R}^n$] {};
+    	\draw[thick, ->] (5, -5) -- (8, -5) node [label=above:$\varphi_\beta(U_\beta)$] {};
+    	\draw[thick, ->] (5, -5) -- (5, -2) node [label=right:$\mathbb{R}^n$] {};
+	\label{fig.manifold-1}
+\begin{myexample}[label=ex:graph-of-function]{関数のグラフ}
+\begin{myexample}[label=ex:topomani-n-sphere]{$n$ 次元球面}
+			% \label{}
+			% \label{}
+\begin{myexample}[label=ex:topomani-projective]{$n$ 次元実射影空間}
+	\begin{mylem}[label=lem:RP-Hausdorff]{}
+\begin{myexample}[label=ex:product-mani]{積多様体}
+\begin{mydef}[label=def.diffeomo]{（$\mathbb{R}^n$ における）微分同相}
+\begin{mydef}[label=diffmani]{$C^\infty$ 多様体}
+\begin{mytheo}[label=thm.inverse]{逆函数定理}
+\begin{mydef}[label=manieq]{$C^\infty$ アトラスの同値関係}
+\begin{mydef}[label=maxatlas]{微分構造・極大アトラス}
+\begin{myexample}[label=ex:diffmani-n-sphere]{$S^n$ の微分構造}
+\begin{myexample}[label=ex:stereographic-projection]{立体射影}
+			\path (A) node[circle, fill, inner sep=1pt, label=below:{$ \varphi_{\mathrm{N}}(x) $}]{};
+			\path (B) node[circle, fill, inner sep=1pt, label=left:{$x$}]{};
+			\path (P) node[circle, fill, inner sep=1pt, label=above:{$ p_{\mathrm{N}} = (0,\, \dots ,1) $}]{};
+		\label{ex.stereo}
+\begin{myexample}[label=ex:diffmani-finvec]{有限次元位相ベクトル空間}
+\begin{myexample}[label=ex:diffmani-finmat]{行列空間}
+\begin{myexample}[label=ex:open-submani]{開部分多様体}
+\begin{myexample}[label=ex:product-diffmani]{\cinfty 積多様体}
+\begin{mydef}[label=def.complexmani]{複素多様体}
+\begin{mydef}[label=complex_structure]{複素構造}
+\begin{mydef}[label=def.Liegroup]{Lie群}
+\begin{myexample}[label=ex:GL]{一般線形群}
+\begin{mydef}[label=def:mani-with-boundary]{境界付き位相多様体}
+\begin{mydef}[label=def:int-manifold-with-boundary]{内部・境界}
+\begin{mytheo}[label=thm:topomani-b-invariance]{多様体の境界の位相的不変性}
+\begin{myprop}[label=prop:manifold-boundary-basic]{位相多様体の境界の基本性質}
+\begin{myprop}[label=prop:topomani-b-basic]{境界付き位相多様体の基本性質}
+\begin{mytheo}[label=thm:smooth-invariance-of-boundary]{多様体の境界の $C^\infty$ 不変性}
+\begin{mydef}[label=def.cinfty]{$C^\infty$ 関数}
+\begin{mylem}[label=lem:cinfty]{}
+\begin{mydef}[label=def.cinfty_mapping]{$C^\infty$ 写像}
+\begin{mylem}[label=lem:cinfty_map]{}
+    	    node [label={[label distance=-0.3cm, xshift=-2cm, fill=white]:$U$}] {};
+    	%     node [label={[label distance=-0.8cm, xshift=.75cm, yshift=1cm, fill=white]:$f^{-1}(V)$}] {};
+    	    % node [label={[label distance=-0.3cm, xshift=-2cm, fill=white]:$f(U)$}]
+    	    node [label={[label distance=-0.8cm, xshift=.75cm, yshift=1cm, fill=white]:$V$}] {};
+    	\draw[thick, ->] (-3,-5) -- (0, -5) node [label=above:$\varphi(U)$] {};
+    	\draw[thick, ->] (-3,-5) -- (-3, -2) node [label=right:$\mathbb{R}^n$] {};
+    	\draw[thick, ->] (7, -5) -- (10, -5) node [label=above:$\psi(V)$] {};
+    	\draw[thick, ->] (7, -5) -- (7, -2) node [label=right:$\mathbb{R}^m$] {};
+	\label{fig.cinfty-1}
+% \begin{myprop}[label=def:cinfty_map]{$C^\infty$ 写像の同値な定義}
+\begin{mylem}[label=lem:cinfty_map-basic]{$C^\infty$ 写像の局所性}
+\begin{mycol}[label=col:cinfty_map-gluing]{\cinfty 写像の貼り合わせ補題}
+\begin{myprop}[label=prop:cinfty_map-basic]{\cinfty 写像の基本性質}
+\begin{mydef}[label=def.diff]{微分同相}
+\begin{myprop}[label=prop:diff-basic]{微分同相写像の基本性質}
+\begin{itemize}\label{def:category-MAN}
+\begin{itemize}\label{def:category-DIFF}

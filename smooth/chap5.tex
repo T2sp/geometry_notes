@@ -1,0 +1,632 @@
+\documentclass[geometry_main]{subfiles}
+
+\begin{document}
+
+\setcounter{chapter}{4}
+
+\chapter{Hodge作用素とLaplacian}
+
+\section{内積と随伴}
+\subsection{内積}
+
+\begin{myaxiom}[label=ax.inner]{内積の公理} 
+	実数体 $\mathbb{R}$ 上の $n$ 次元ベクトル空間 $V$ に対して，$g \colon V \times V \to \mathbb{R}$ は
+	\begin{description} 
+		\item[\textbf{(I1)}] $g$ は双線型写像である
+		\item[\textbf{(I2)}] $g(v,\, w) = g(w,\, v)$
+		\item[\textbf{(I3)}] $g(v,\, v) \ge 0$ かつ等号成立は $v = 0$ のときのみ．
+	\end{description}
+	を充たすとき，（正定値）\textbf{内積} (inner product) と呼ばれる．
+\end{myaxiom}
+
+双線型写像
+\begin{align}
+	\dualip{\;}{} \colon V^* \times V \to \mathbb{R},\; (\omega,\, v) \mapsto \omega[v]
+\end{align}
+を\textbf{双対内積}と呼ぶことにする．
+双対内積を使って，与えられた $\mathbb{R}$ 上のベクトル空間 $V$ の上に内積 $g$ を構成することを考える．
+
+双対ベクトル空間 $V^*$ もまたベクトル空間なので，$\Hom{\mathbb{R}} (V,\, V^*)$ を考えることができる．
+ここで，線型同型写像 $\flat \in \Hom{\mathbb{R}} (V,\, V^*)$ を一つとろう．$\dim V = \dim V^* = n$ なので $\flat \in \mathrm{GL}(n,\, \mathbb{R})$ でもある．このとき，写像
+\begin{align} 
+	\label{eq.g_V}
+	g \colon V \times V \to \mathbb{R},\; (v,\, w) \mapsto \dualip{\flat(v)}{w}
+\end{align}
+は明らかに双線型写像なので，内積の公理 \textbf{(I1)} を充たす．この $g$ が内積の公理\textbf{(I2)}, \textbf{(I3)}を充たすようにするにはどのような条件が必要だろうか．
+
+ここで $V,\, V^*$ の基底 $\{\, e_i\, \},\; \{\, e^i \, \}$ をとり， $v = v^i e_i,\; w = w^i e_i$ と成分表示する．\hyperref[prop:tensor-multillinear]{テンソル積の構成}に従うと $g \in T^0_2(V)$ であるから，$g$ の成分表示は $g_{ij} e^i \otimes e^j$ である．このとき $g(v,\, w)$ を計算すると
+\begin{align} 
+	\label{eq.43}
+	g(v,\, w) = g_{ij} (e^i \otimes e^j) [v^k e_k,\, w^l e_l] = g_{ij}  e^i[v^k e_k] e^j[w^l e_l] = g_{ij} \bigl( v^k e^i[e_k] \bigr) \bigl( w^l e^j[e_l] \bigr) = g_{ij} v^i w^j.
+\end{align}
+が成り立つ．
+\begin{itemize} 
+	\item 公理\textbf{(I2)}を充たすには，$g_{ij} w^i v^j = g_{ij} w^j v^i$ でなくてはならない．したがって $g_{ij} = g_{ji}$ である．
+	\item 公理\textbf{(I3)}を充たすには，2次形式 $g_{ij} v^i v^j$ が正定値でなくてはならない．i.e. 行列 $[g_{ij}]_{1\le i,\, j \le n}$ は正定値である．
+\end{itemize}
+
+逆に内積 $g$ が与えられると，そこから同型写像 $\flat \in \Hom{\mathbb{K}}(V,\, V^*)$ の表現行列が自然に定まる\footnote{$\flat$ の逆写像 $\flat^{-1}$ の存在は，内積の公理\textbf{(I3)}により保証されている．}．
+$\flat(v) = h_i e^i \in V^*$ とおくと
+式\eqref{eq.43}において
+\begin{align} 
+		&g(v,\, w) = \bigl( g_{ij} v^i \bigr) w^j \\
+	=\; &\dualip{\flat(v)}{w} = h_j w^j
+\end{align}
+であるから，
+\begin{align}
+	h_i = g_{ij} v^j
+\end{align}
+となる．i.e. $\flat$ の表現行列は $(\, g_{ij}\, )$ である．
+
+以上の考察から，$\mathbb{R}$ 上のベクトル空間 $V$ に対して以下の事実が分かった：
+\begin{tcolorbox} 
+	$\flat \in \Hom{\mathbb{R}} (V,\, V^*)$ であってその表現行列 $[g_{ij}]$ が正定値対称行列であるような $\flat$ が存在する
+	
+	$\Longleftrightarrow\quad$（正定値）内積を定義できる
+\end{tcolorbox}
+
+\subsection{随伴}
+
+内積 $g$ の定まったベクトル空間 $V$ のことを\textbf{計量線型空間}と呼び，$(V,\, g)$ と書く．
+
+\begin{mydef}[label=def.adj]{随伴写像}
+	二つの計量線型空間 $(V,\, g_V),\; (W,\, g_W)$ および線型写像 $f \in \Hom{\mathbb{K}}(V,\, W)$ を与える．線型写像 $\tilde{f} \in \Hom{\mathbb{K}}(W,\, V)$ であって
+	\begin{align} 
+		g_W\bigl(w,\, f(v)\bigr) = g_V\bigl(v,\, \tilde{f}(w)\bigr),\quad \forall v \in V,\, \forall w \in W
+	\end{align}
+	が成り立つものを $f$ の\textbf{随伴写像} (adjoint mapping) と呼ぶ．
+\end{mydef}
+
+\section{Riemann計量}
+
+\begin{mydef}[label=def.Riemann]{Riemann多様体}
+	\cinfty 多様体 $M$ を与える．各点 $p \in M$ における接空間 $T_pM$ に正定値内積
+	\begin{align} 
+		g_p \colon T_p M \times T_pM \to \mathbb{R}
+	\end{align}
+	が与えられ，$g = \{\, g_p \mid p \in M\, \}$ が $(0,\, 2)$ 型テンソル場を作るとき，$g$ を $M$ 上の\textbf{Riemann計量} (Riemannian matric) という．また，Riemann計量の与えられた多様体を\textbf{Riemann多様体} (Riemannian manifold) と呼ぶ．
+\end{mydef}
+
+\begin{marker} 
+	$g_p$ が内積の公理\ref{ax.inner}-\textbf{(I3)}の代わりに
+	\begin{description} 
+		\item[\textbf{(I3')}] $\forall u \in T_p M$ に対して $g_p(u,\, v) = 0\quad \Longrightarrow \quad v = 0$
+	\end{description}
+	を充たす（\textbf{非退化}; non-degenerate）とき，$g$ を\textbf{擬Riemann計量} (pseudo-Riemannian metric) と呼ぶ．
+\end{marker}
+
+チャート $(U;\, x^\mu)$ に対する $g_p$ の座標表示は
+\begin{align} 
+	g_p = g_{\mu\nu}(p) (\dd{x^\mu})_p \otimes (\dd{x^\nu})_p
+\end{align}
+と書かれる．内積の公理\ref{ax.inner}より，$g_{\mu\nu}(p)$ は正定値対称行列である．
+
+一般相対性理論で使う計量テンソルの定義との対応を見ておく：
+
+$\dd{x^\mu} \in \mathbb{R}$ を微小変位（\underline{点 $p$ における1-形式 $(\dd{x^i})_p$ ではない}）として $\displaystyle \dd{x^\mu} \left(\pdv{}{x^\mu}\right)_p \in T_p M$ のノルムをインターバル $\dd{s}$ と見做すことで，
+\begin{align} 
+	\tcbhighmath[]{\dd{s}^2} = g_p \left[ \dd{x^\mu} \left(\pdv{}{x^\mu}\right)_p,\, \dd{x^\nu} \left(\pdv{}{x^\nu}\right)_p \right] = \dd{x^\mu} \dd{x^\nu} g_p \left[ \left(\pdv{}{x^\mu}\right)_p,\, \left(\pdv{}{x^\nu}\right)_p \right] = \tcbhighmath[]{g_{\mu\nu} \dd{x^\mu} \dd{x^\nu}}
+\end{align}
+を再現する．
+
+行列 $(\, g_{\mu\nu}\, )$ は対称行列なので，その固有値は全て実数である．$g$ がRiemann計量ならば全ての固有値は正であり，擬Riemann計量ならば負のものが混ざることがある．
+
+\begin{mydef}[label=def.matric_index]{計量の指数，Lorentz計量}
+	行列 $(\, g_{\mu\nu}\, )$ の固有値のうち正のものが $i$ 個，負のものが $j$ 個であるとき，対 $(i,\, j)$ を計量の\textbf{指数}という．$j = 1$ ならば\textbf{Lorentz計量}と呼ばれる．
+\end{mydef}
+
+\section{$k$-形式の内積}
+
+ベクトル空間 $V$ に内積 $g$ が定義されると，その双対ベクトル空間にも自然に内積 $G$ が定義される．また，同型 $\extp^1(V^*) \cong V^*$ を考えることで，$V^*$ 上の内積 $G$ を使って $\extp^k(V^*)$ 上の内積を定義できる． $\extp^k(V^*)$ 上に内積が定義されると， $\extp^k(V^*)$ の正規直交基底を考えることができる．
+
+\subsection{計量に誘導される同型写像}
+
+\begin{marker} 
+	\textbf{\underline{5.1.1}}から，内積 $g_p$ の成分表示 $g_{\mu\nu}(p)$ は同型写像 $\flat \in \Hom{\mathbb{R}}(T_p M,\, T^*_p M)$ を誘導する：
+	\begin{align} 
+		\label{eq.up}
+		\omega_\mu = g_{\mu\nu} v^\nu,\quad \forall v = v^\mu \left(\pdv{}{x^\mu}\right)_p \in T_p M
+	\end{align}
+	逆写像 $\flat^{-1}$ は行列 $(\, g_{\mu\nu}(p)\, )$ の逆行列 $(\, g^{\mu\nu}\,)$ によって表現される．$\forall \omega = \omega_\mu (\dd{x^{\mu}})_p \in T^*_p M$ に対して
+	\begin{align} 
+		\label{eq.down}
+		v^\mu = g^{\mu \nu} \omega_{\nu}
+	\end{align}
+	と作用する．式\eqref{eq.up}, \eqref{eq.down}を合わせて添字の上げ下げと呼んだ．
+\end{marker}
+
+上の注釈を代数的に議論する．以下の議論は接空間に限らず一般の体 $\mathbb{K}$ 上の計量線型空間に対して成り立つので，$V = T_pM$ と書く．
+
+まず，線型写像 $\flat \colon V \to V^*$ を次のように構成する：
+\begin{align} 
+	\label{eq.hom_V}
+	\flat(v)[w] \coloneqq g(v,\, w),\quad \forall v,\, w \in V
+\end{align}
+
+\begin{mylem}[label=lem.flat_1]{}
+	上で定義した $\flat$ は線型写像である．
+\end{mylem}
+\begin{proof} 
+	$\forall v,\, v_1,\, v_2 \in T_pM,\, \forall \lambda \in \mathbb{R}$ をとる．双対空間の演算規則により
+	\begin{align} 
+		&\flat(v_1 + v_2)[w] = g_p(v_1 + v_2,\, w) = g_p(v_1,\, w) + g_p(v_2,\, w) = \flat(v_1)[w] + \flat(v_2)[w] = \bigl( \flat(v_1) + \flat(v_2)\bigr)[w] \\
+		&\flat(\lambda v)[w] = g_p(\lambda v,\, w) = \lambda g_p(v,\, w) = \lambda \flat(v)[w].
+	\end{align}
+\end{proof}
+
+\begin{mylem}[]{}
+	$\flat \colon T_p M \to T^*_pM$ は同型写像である．
+\end{mylem}
+\begin{proof} 
+	内積の公理\textbf{(I3)}と補題\ref{lem.flat_1}より，$\forall v_1,\, v_2 \in T_pM $ に対して
+	\begin{align} 
+		v_1 - v_2 \neq 0 \quad &\Longrightarrow \quad \bigl(\flat(v_1) - \flat(v_2)\bigr)[v_1 - v_2] = \bigl(\flat(v_1 - v_2)\bigr)[v_1 - v_2] = g_p(v_1 - v_2, v_1 - v_2) > 0 \\ 
+		&\Longrightarrow \quad \flat(v_1) - \flat(v_2) \neq 0
+	\end{align}
+	i.e. $\flat$ は単射である．$\dim V = \dim V^*$ だから示された．
+\end{proof}
+
+\subsection{共役計量に誘導される同型写像}
+
+次に，共役計量 $g^{\mu\nu}$ による「添字の上げ」を議論する．$V$ の上に内積 $g$ が定まっているとき，$V^*$ にも自然に内積 $G$ が定まる：
+\begin{align} 
+	\label{eq.G_V*}
+	G \colon V^* \times V^* \to \mathbb{K},\; (\omega,\, \eta) \mapsto g(\flat^{-1}(\omega),\, \flat^{-1}(\eta)) = \dualip{\omega}{\flat^{-1}(\eta)}
+\end{align}
+この定義の仕方は式\eqref{eq.g_V}に対応している．$G \in T^2_0(V)$ であるから，$V$ の基底 $\{\, e_\mu\, \}$ を使って
+\begin{align} 
+	G = G^{\mu\nu} e_\mu \otimes e_\nu
+\end{align}
+と書ける．$G^{\mu\nu} = g^{\mu\nu}$ （$[\, g_{\mu\nu}\, ]$ の逆行列）であることを確認する．
+
+式\eqref{eq.hom_V}に倣って線型写像 $\natural \colon V^* \to V^{**}$ を
+\begin{align} 
+	\natural(\omega)[\eta] \coloneqq G(\omega,\, \eta),\quad \forall \omega,\, \eta \in V^*
+\end{align}
+と定義すると，$\natural$ は同型写像になる．$\natural$ の $\omega = \omega_\mu e^\mu \in V^*$ に対する作用を成分表示すると次のようになる：
+\begin{align} 
+	\label{eq.sharp}
+	\natural(\omega)[\eta] = G^{\mu\nu} \omega[e_\mu] \eta[e_\nu] = G^{\mu\nu} \omega_\mu \eta_\nu
+\end{align}
+
+ここで，命題\ref{prop:finvec-doubledual}より $\dim V < \infty$ のとき
+\begin{align} 
+	\varphi \colon &V \lto V^{**},\\ 
+	v &\mapsto \bigl(\omega \lmto \varphi(v) \bigr)
+\end{align}
+は線型同型写像を成す．よって $\sharp \coloneqq \varphi^{-1} \circ \natural$ として線型写像 $\sharp \colon V^* \to V$ を定義すると，$\sharp$ は同型写像になる．
+式\eqref{eq.sharp}より
+\begin{align} 
+	(\varphi \circ \sharp)(\omega)[\eta] = G^{\mu\nu} \omega_\mu \eta_\nu = \omega_\mu G^{\kappa\nu} \eta_\nu e^\mu[e_\kappa] = \omega \bigl[ (G^{\kappa\nu} \eta_\nu) e_\kappa \bigr] = \varphi \bigl( (G^{\kappa\nu} \eta_\nu) e_\kappa \bigr)[\omega]
+\end{align}
+であるから，
+\begin{align} 
+	(\sharp \circ \flat)(v) = (G^{\kappa\nu} g_{\nu\lambda} v^\lambda) e_\kappa
+\end{align}
+がわかる．
+定義\eqref{eq.G_V*}より $\sharp \circ \flat = \mathrm{id}_V$ であるから，$G^{\mu\nu} = g^{\mu\nu}$ とわかる．
+
+\begin{tcolorbox} 
+	ベクトル空間 $V$ 上の内積
+	\begin{align} 
+		g = g_{\mu\nu} e^\mu \otimes e^\nu
+	\end{align}
+	が与えられたとき，双対ベクトル空間 $V^*$ の内積 $G$ が
+	\begin{align} 
+		G = g^{\mu\nu} e_\mu \otimes e_\nu
+	\end{align}
+	として自然に定まる．このとき，計量 $g,\, G$ から線型同型写像
+	\begin{align} 
+		&\flat \colon V \xrightarrow{\cong} V^*, \\
+		&\flat(v)[w] = g(v,\, w). \\
+		&\sharp \colon V^* \xrightarrow{\cong} V, \\
+		&\sharp(\omega)[\eta] = G(\omega,\, \eta)
+	\end{align}
+	がそれぞれ自然に定まり，$\sharp \circ \flat = \mathrm{id}_V$ を充たす，i.e. $\sharp = \flat^{-1}$ である．
+\end{tcolorbox}
+
+\subsection{$k$-形式の内積}
+
+前節で述べた双対ベクトル空間 $V^*$ 上の内積 $G$ によって，$k$-形式同士の内積を定義することができる．
+
+まず，命題\ref{k-form_homo}から $\extp^1(V^*) \cong V^*$ なので，
+\emph{内積 $\bm{G \colon V^* \times V^* \to \mathbb{K}}$ を $\bm{G \colon \extp^1(V^*) \times \extp^1(V^*) \to \mathbb{K}}$ と見做すことができる}．これを $1$-形式同士の内積として定義し，$\forall \omega,\, \eta \in \extp^1(V^*)$ に対して $\dualip{\omega}{\eta} \coloneqq G(\omega,\, \eta) $ と略記する．
+\begin{marker} 
+	\textbf{双対内積} $\dualip{\;}{} \colon V^* \times V \to \mathbb{R},\; (\omega,\, v) \mapsto \omega[v]$ との混同に注意せよ！！！ 以降，文脈上紛らわしいときは $k$-形式の内積を $\dualip{\;}{}_k$ と書くことにする．
+\end{marker}
+
+
+\begin{mydef}[label=def.k-form_inner]{$k$-形式の内積} 
+	$k$-形式同士の内積 $\dualip{\;}{} \colon \extp^k(V^*) \times \extp^k(V^*) \to \mathbb{K}$ を
+	$\alpha_1 \wedge \cdots \alpha_k,\; \beta_1 \wedge \cdots \beta_k \in \extp^k(V^*)$ の形をした元に対して
+	\begin{align} 
+		\dualip{\alpha_1 \wedge \cdots \alpha_k}{\beta_1 \wedge \cdots \beta_k} \coloneqq \det \bigl( \, \dualip{\alpha_\mu}{\beta_\nu} \bigr) 
+	\end{align}
+	と定義する．$\extp^k(V^*)$ 全体に対しては，これを線型に拡張する．違う型同士の内積 $\dualip{\;}{}$ は $0$ と定義する．
+\end{mydef}
+
+\begin{myprop}[label=orthonormal_k-form]{$\extp^k(V^*)$ の正規直交基底}
+	$k$-形式全体の集合 $\extp^k(V^*)$ の上に定義\ref{def.k-form_inner}によって内積を定義する．
+
+	$\{\, e_i\, \}$ を $V$ の正規直交基底，$\{\, \theta^i \, \}$ をその双対基底とする．i.e. $\theta^i[e_j] = \delta^i_j$．このとき，
+	\begin{align} 
+		\bigl\{ \, \theta^{i_1} \wedge \cdots \wedge \theta^{i_k} \bigm| 1 \le i_1 < \cdots < i_k \le n\, \bigr\} 
+	\end{align}
+	は正規直交基底である．
+\end{myprop}
+\begin{proof} 
+	まず，
+	\begin{align} 
+		\dualip{\theta^i}{\theta^j} = G(\theta^i,\, \theta^j) = (g^{\mu\nu} e_\mu \otimes e_\nu)[\theta^i,\, \theta^j] = \mathring{g}^{ij}
+	\end{align}
+	なので $\{\, \theta^i\, \}$ は $\extp^k(V^*)$ の正規直交基底である．ゆえに
+	\begin{align} 
+		\dualip{\theta^{i_1} \wedge \cdots \wedge \theta^{i_k}}{\theta^{j_1} \wedge \cdots \wedge \theta^{j_k}}
+		= \det \bigl( \, \dualip{\theta^{i_\mu}}{\theta^{i_\nu}} \bigr) = \det \bigl( \, \mathring{g}^{i_\mu j_\nu}\, \bigr) 
+	\end{align}
+	であり，添字の集合 $\{\, i_\mu\, \},\, \{\, j_\nu\, \}$ が集合として一致していなければ行列式の行/列で全て $0$ のものが少なくとも1つ存在して $0$ になる．集合として一致している場合は，添字の大小が指定されているので
+	\begin{align} 
+		&\dualip{\theta^{i_1} \wedge \cdots \wedge \theta^{i_k}}{\theta^{j_1} \wedge \cdots \wedge \theta^{j_k}} \\
+		&= \mqty| \dmat{\mathring{g}^{i_1 i_1}, \mathring{g}^{i_2 i_2}, \ddots, \mathring{g}^{i_k i_k}} | \\
+		&= \prod_{\mu = 1}^k \mathring{g}^{i_\mu i_\mu} = \pm 1
+	\end{align}
+	となる．
+\end{proof}
+
+\begin{marker}
+	ここで定義した $k$-形式の内積は，多様体 $M$ の各点 $p$ における局所的なものである．
+	$\dualip{\omega_p}{\eta_p}$ が定義されたので，関数 $\dualip{\omega}{\eta} \colon M \to \mathbb{K},\, p \mapsto \dualip{\omega_p}{\eta_p}$ を考えることができる．以下，$\dualip{\omega}{\eta}$ と書いたらこのような意味を持つとする．
+\end{marker}
+
+\section{Hodge $\star$}
+
+$n$ 次元 \cinfty 多様体 $M$ の各点 $p$ において $\dim \extp^k \bigl(T^*_pM\bigr) = \dim \extp^{n-k}\bigl(T^*_pM\bigr)$ であった．従ってこれらは抽象ベクトル空間としては同型である．
+$M$ にRiemann計量が入っており，かつ向き付けられているならば，同型写像を自然に定めることができる．それがHodgeの $\star$ 作用素である．
+
+\begin{mydef}[label=hodge]{ $\star$ } 
+	\cinfty 多様体 $M$ は指数 $(i,\, j)$ の計量を持つとする．
+	$\theta^1,\, \dots ,\, \theta^k,\, \theta^{k+1} ,\, \dots ,\, \theta^{n} \in T_p^*M$ を $T_p^*M$ の任意の正の向きの正規直交基底とする．このとき，各点 $ p \in M$ において線型写像 $\star$ を
+	\begin{align} 
+		\star(\theta^1 \wedge \cdots \wedge \theta^k) \coloneqq \left(\textcolor{blue}{\prod_{a=1}^k \dualip{\theta^a}{\theta^a}} \right)\, \theta^{k+1} \wedge \dots \wedge \theta^{n}
+	\end{align}
+	と定義する．特に $k = 0,\, n$ のときにそれぞれ
+	\begin{align} 
+		\star 1 \coloneqq \theta^1 \wedge \cdots \wedge \theta^n,\quad \star (\theta^1 \wedge \cdots \wedge \theta^n) \coloneqq (-1)^j
+	\end{align}
+	である\footnote{計量が正定値のとき, i.e. $M$ がRiemann多様体のときは $j=0$ で，青字で示した因子は常に $1$ である．}．$\star 1 \in \Omega^n(M)$ を $M$ の\textbf{体積要素} (volume form) と呼び，$\vol_M$ と書く．
+	
+	$\forall p \in M$ における上述の線型写像をあわせることで\textbf{Hodgeの作用素}
+	\begin{align} 
+		\star \colon \Omega^k(M) \to \Omega^{n-k}(M)
+	\end{align}
+	が定義される．
+\end{mydef}
+
+\begin{marker}	 
+	定義\ref{hodge}に従うと $\star(\theta^{\mu_1} \wedge \cdots \wedge \theta^{\mu_k})$ は，集合 $\{1,\, \dots ,\, n\}$ の部分集合 $\{ \mu_1,\, \dots ,\, \mu_k \}$ の補集合を小さい方から順に並べた添字の集合 $\{ \nu_1,\, \dots ,\, \nu_{n-k} \mid 1 \le \nu_1 < \cdots < \nu_{n-k} \le n\} $ を得て
+	\begin{align} 
+		\star(\theta^{\mu_1} \wedge \cdots \wedge \theta^{\mu_k}) = \mathrm{sgn} \mqty(1 & \dots & k & k+1 & \dots & n \\ \mu_1 & \dots & \mu_k & \nu_1 & \dots & \nu_{n-k}) \left(\prod_{a=1}^k \dualip{\theta^{\mu_a}}{\theta^{\mu_a}}\right)\, \theta^{\nu_1} \wedge \cdots \wedge \theta^{\nu_{n-k}}
+	\end{align}
+	として計算される．これは，Levi-Civita記号とEinsteinの規約を利用した
+	\begin{align} 
+		\frac{1}{(n-k)!}\, \dualip{\theta^{\mu_1}}{\theta^{\textcolor{red}{\nu_1}}} \cdots \dualip{\theta^{\mu_k}}{\theta^{\textcolor{red}{\nu_k}}}\, \epsilon_{\textcolor{red}{\nu_1 \dots \nu_k}\nu_{k+1} \dots \nu_{n}}\, \theta^{\nu_{k+1}} \wedge \cdots \wedge \theta^{\nu_{n}}
+	\end{align}
+	と等しい．いちいちこのように書くのは大変なので，Levi-Civita記号の添字の上げを $\mathring{g}^{\mu\nu} \coloneqq \dualip{\theta^\mu}{\theta^\nu}$ によって行い次のように略記する：
+	\begin{align} 
+		\epsilon^{\mu_1 \dots \mu_k}{}_{\nu_{k+1} \dots \nu_{n}} \coloneqq \, \mathring{g}^{\mu_1\nu_1} \cdots \mathring{g}^{\mu_k\nu_k}\epsilon_{\nu_1 \dots \nu_k\nu_{k+1} \dots \nu_{n}}
+	\end{align}
+\end{marker}	
+
+$\forall \omega \in \Omega^k(M)$ に対して $\star \omega \in \Omega^{n-k}(M)$ が\cinfty 級であることを確認する．そのために，正規直交基底によって $\star \omega$ を成分表示する：
+
+\begin{description} 
+	\item[\textbf{正規直交基底の構成}]　
+	
+	　$M$ の正のチャート $(U;\; x^\mu)$ をとる．$\forall p \in M$ において，自然基底
+	\begin{align} 
+		X_\mu = \pdv{}{x^\mu} \in \mathfrak{X}(M)
+	\end{align}
+	にGram-Schmidtの直交化法を施す：
+	\begin{align} 
+		e_\mu \coloneqq \frac{X_\mu - \sum_{\nu = 1}^{\mu - 1} g(X_\mu,\, e_\nu) e_\nu}{\norm{X_\mu - \sum_{\nu = 1}^{\mu - 1} g(X_\mu,\, e_\nu) e_\nu}}
+	\end{align}
+	$\{e_\mu\}$ は $U$ 上の\cinfty ベクトル場であり，$\forall p \in U$ において接空間 $T_p M$ の正規直交基底をなす．これを $U$ 上の\textbf{正規直交標構} (orthogonal frame) と呼ぶ．
+
+	\item[\textbf{双対基底の構成}]　
+	
+	　$\{\theta^\mu\}$ を $\{e_\mu\}$ の双対基底とする．命題\ref{orthonormal_k-form}より，これらは $\forall p \in M$ において $T_p^*M$ の正の正規直交基底をなす．
+
+	\item[\textbf{局所表示の対応}]　
+	
+	　$\omega \in \Omega^k(M)$ が $U$ 上で
+	\begin{align} 
+		\omega = \omega_{\mu_1 \dots \mu_k} \theta^{\mu_1} \wedge \cdots \wedge \theta^{\mu_k}
+	\end{align}
+	の局所表示を持つとする．このとき定義\ref{hodge}から，各点 $p \in U$ において
+	\begin{align} 
+		\star \omega_p &= \omega_{\mu_1 \dots \mu_k}(p)\, \star(\theta^{\mu_1} \wedge \cdots \wedge \theta^{\mu_k}) \\
+		&= \frac{1}{(n-k)!} \omega_{\mu_1 \mu_2\dots \mu_k}(p)\; \epsilon^{\mu_1 \mu_2 \dots \mu_k}{}_{\nu_{k+1} \nu_{k+2} \dots \nu_{n}}\, \theta^{\nu_{k+1}} \wedge \cdots \wedge \theta^{\nu_n}
+	\end{align}
+	である\footnote{Einsteinの規約により添字 $\nu_{k+1},\, \nu_{k+2},\, \dots ,\, \nu_{n}$ に関しても和をとることになるので，添字 $\mu_1,\, \mu_2,\, \dots ,\, \mu_k$ の組み合わせ一つにつき $(n-k)!$ 個の項が重複する．}．$ \omega_{\mu_1 \dots \mu_k}(p)$ が\cinfty 関数なので $\star \omega$ は\cinfty 級である．
+\end{description}
+
+\begin{myprop}[label=prop.vol]{体積要素の表示}
+	$M$ のチャート $(U;\; x^\mu)$ に対して以下が成立する：
+	\begin{align} 
+		\vol_M = \sqrt{\abs{\det(g_{\mu\nu})} } \dd{x^{1}} \wedge \cdots \wedge \dd{x^n}
+	\end{align}
+\end{myprop}
+
+
+\begin{proof} 
+	別の正のチャート $(V;\; y^\mu)$ をとる．このとき
+	\begin{align} 
+		\dd{x^{1}} \wedge \cdots \wedge \dd{x^{n}} &= \pdv{x^1}{y^{\nu_1}}\dd{y^{\nu_1}} \wedge \cdots \wedge \pdv{x^n}{y^{\nu_n}}\dd{y^{\nu_n}} \\
+		&= \epsilon^{\nu_1 \dots \nu_n} \pdv{x^1}{y^{\nu_1}} \cdots \pdv{x^n}{y^{\nu_n}} \dd{y^1} \wedge \cdots \wedge \dd{y^n} \\
+		&= \det \left( \pdv{x^\mu}{y^{\nu}} \right) \dd{y^1} \wedge \cdots \wedge \dd{y^n} \label{eq.prop5-1-1}
+	\end{align}
+	が成立する．一方，$g$ の $y^\mu$ に関する局所表示を $g'{}_{\mu \nu}$ とおくと 
+	\begin{align} 
+		g_p = g_{ \mu\nu} \dd{x^\mu} \otimes \dd{x^\nu} = g_{\mu\nu} \pdv{x^\mu}{y^\kappa} \pdv{x^\nu}{y^\lambda} \dd{y^\kappa} \otimes \dd{y^\lambda} = g'{}_{\kappa\lambda} \dd{y^\kappa} \dd{y^\lambda}
+	\end{align}
+	であるから
+	\begin{align} 
+		g'{}_{\kappa\lambda} = g_{\mu\nu} \pdv{x^\mu}{y^\kappa} \pdv{x^\nu}{y^\lambda} 
+	\end{align}
+	である．両辺を行列と見做して行列式をとることで
+	\begin{align} 
+		\det (g'{}_{\kappa\lambda}) = \det (g_{\mu\nu}) \left(\det \left( \pdv{x^\mu}{y^{\nu}} \right) \right)^2
+	\end{align}
+	とわかる．ゆえに式\eqref{eq.prop5-1-1}から
+	\begin{align} 
+		\dd{x^{1}} \wedge \cdots \wedge \dd{x^{n}} = \sqrt{\abs{\det (g'{}_{\kappa\lambda})} \bigm/ \abs{\det (g_{\mu\nu})}} \dd{y^1} \wedge \cdots \wedge \dd{y^n}
+	\end{align}
+	である．ここで $(V;\, y^\mu)$ として正規直交標構 $\{\, \theta^a\, \}$ に対応するチャートをとってくれば\footnote{座標近傍は $U$，座標変換が直交行列である．}，$\abs{\det (g'{}_{\kappa\lambda})} = 1$ であるので
+	\begin{align} 
+		\sqrt{\abs{\det (g_{\mu\nu})}} \dd{x^{1}} \wedge \cdots \wedge \dd{x^{n}} = \theta_1 \wedge \cdots \wedge \theta_n = \star 1 = \vol_M
+	\end{align}
+\end{proof}
+
+\begin{myprop}[label=prop.Hodgestar]{$\star$ の性質}
+	多様体 $M$ が指数 $(i,\, j)$ の計量を持つとする．$\forall f,\, g \in \cinftyf{M}$ と $\forall \omega,\, \eta \in \Omega^k(M)$ に対して以下が成立する：
+	\begin{enumerate} 
+		\item $\star (f \omega + g \eta) = f \star \omega + g \star \eta$
+		\item $\star \star \omega = (-1)^{\textcolor{red}{j} + k(n-k)} \omega$
+		\item $\tcbhighmath[]{\omega \wedge \star \eta} = \eta \wedge \star \omega = \tcbhighmath[]{\dualip{\omega}{\eta} \vol_M}$
+		\item $\star (\omega \wedge \star \eta) = \star (\eta \wedge \star \omega) = \dualip{\omega}{\eta}$
+		\item $\dualip{\star \omega}{\star \eta} = (-1)^{\textcolor{red}{j}}\dualip{\omega}{\eta}$
+	\end{enumerate}
+	ただし，$k$-形式の内積 $\dualip{\;}{}$ は定義\ref{def.k-form_inner}によるものとする．
+\end{myprop}
+
+\begin{proof} 
+	$M$ 上の各点 $p$ において示せば良い．
+	\begin{enumerate} 
+		\item $\extp^k(V^*)$ は $\cinftyf{M}$-加群なので，Hodgeの作用素の定義から明かである．
+		\item $\{\, \theta^i\, \}$ を $T_p^*M$ の正規直交標構とする．命題\ref{orthonormal_k-form}より，$\omega_p = \theta^1 \wedge \cdots \wedge \theta^k$ の場合に示せば十分である．
+		\begin{align} 
+			\star \omega_p = \left(\prod_{a=1}^k \dualip{\theta^a}{\theta^a} \right)\, \theta^{k+1} \wedge \cdots \wedge \theta^n
+		\end{align}
+		だから，
+		\begin{align} 
+			\star \star \omega_p &= \mathrm{sgn} \mqty(1 & \dots & n-k & n-k+1 & \dots & n \\ k+1 & \dots & n & 1 & \dots & k) \left(\prod_{a=1}^k \dualip{\theta^a}{\theta^a}\right) \left(\prod_{b=k+1}^{n} \dualip{\theta^b}{\theta^b}\right)\, \theta^{1} \wedge \cdots \wedge \theta^k  \\
+			&= \left(\prod_{a=1}^n \dualip{\theta^a}{\theta^a}\right)\, (-1)^{k(n-k)} \omega_p \\
+			&= (-1)^{j + k(n-k)} \omega_p
+		\end{align}
+		\item 線形性から $\omega_p = \theta^{1} \wedge \cdots \wedge \theta^{k},\; \eta_p = \theta^{\mu_1} \wedge \cdots \wedge \theta^{\mu_k}$ の場合に示せば十分である．
+		\begin{align} 
+			\star(\theta^{\mu_1} \wedge \cdots \wedge \theta^{\mu_k}) = \mathrm{sgn} \mqty(1 & \dots & k & k+1 & \dots & n \\ \mu_1 & \dots & \mu_k & \nu_1 & \dots & \nu_{n-k}) \left(\prod_{a=1}^k \dualip{\theta^{\mu_a}}{\theta^{\mu_a}}\right)\, \theta^{\nu_1} \wedge \cdots \wedge \theta^{\nu_{n-k}}
+		\end{align}
+		であるから，$\omega_p \wedge \star \eta_p \neq 0$ なのは $\{1,\, \dots ,\, k\} = \{\mu_1,\, \dots ,\, \mu_k\}$ の場合のみである．このとき
+		\begin{align} 
+			\omega_p \wedge \star \eta_p = \mathrm{sgn}\mqty(1 & \dots & k \\ \mu_1 & \dots & \mu_k) \left(\prod_{a=1}^k \dualip{\theta^a}{\theta^a}\right)\, \theta^1 \wedge \cdots \wedge \theta^n
+		\end{align}
+		である．一方，$\dualip{\omega_p}{\eta_p} \neq 0$ となるのは $\{1,\, \dots ,\, k\} = \{\mu_1,\, \dots ,\, \mu_k\}$ の場合のみであり，
+		\begin{align} 
+			\dualip{\omega_p}{\eta_p} = \det \bigl( \, \dualip{\theta^i}{\theta^{\mu_j}} \bigr) = \mathrm{sgn}\mqty(1 & \dots & k \\ \mu_1 & \dots & \mu_k) \left(\prod_{a=1}^k \dualip{\theta^a}{\theta^a}\right)
+		\end{align}
+		となる．同様の議論により $\omega \wedge \star \eta = \eta \wedge \star \omega = \dualip{\omega}{\eta} \vol_M$ とわかる．
+		\item $\star\vol_M = 1$ と (3) より従う．
+		\item (2), (4) より
+		\begin{align} 
+			\dualip{\star \omega}{\star \eta} = \star (\star \omega \wedge \star \star \eta) = (-1)^{j+k(n-k)} \star (\star \omega \wedge \eta) = (-1)^{j} \star(\eta \wedge \star \omega) = (-1)^j \dualip{\omega}{\eta}
+		\end{align}
+	\end{enumerate}
+\end{proof}
+
+\begin{marker} 
+	性質 (3) を $\star$ の定義とすることもできる．その場合，「性質 (3) $\; \Longrightarrow\; $ 定義\ref{hodge}」は次のようにして示される：
+
+	\begin{proof} 
+		$M$ の各点 $p$ において示せば良い．$\{\, \theta^i\, \}$ を正規直交標構として $\omega_p = \theta^1 \wedge \cdots \theta^k$ とおくと，性質 (3) より
+		\begin{align} 
+			\omega_p \wedge \star \omega_p &= (\theta^1 \wedge \cdots \theta^k) \wedge \star (\theta^1 \wedge \cdots \theta^k) \\
+			&= \det \bigl( \, \dualip{\theta^\mu}{\theta^\nu}_k \, \bigr)\, \theta^1 \wedge \cdots \wedge \theta^n \\
+			&= \left(\textcolor{blue}{\prod_{a=1}^k \dualip{\theta^a}{\theta^a}} \right)\, \theta^1 \wedge \cdots \wedge \theta^n.
+		\end{align}
+		したがって
+		\begin{align} 
+			\star (\theta^1 \wedge \cdots \theta^k) = \left(\textcolor{blue}{\prod_{a=1}^k \dualip{\theta^a}{\theta^a}} \right)\, \theta^{k+1} \wedge \cdots \wedge \theta^n
+		\end{align}
+	\end{proof}
+\end{marker}
+
+\subsection{双対基底への作用}
+
+命題\ref{prop.vol}と命題\ref{prop.Hodgestar}-(3) を用いると
+\begin{align} 
+	&(\dd{x^{1}} \wedge \cdots \wedge \dd{x^k}) \wedge \star (\dd{x^1} \wedge \cdots \wedge \dd{x^k}) \\
+	&= \det \bigl( \, \dualip{\dd{x^\mu}}{\dd{x^\nu}}\, \bigr)_{1 \le \mu,\, \nu \le k} \sqrt{\abs{\det \bigl( g_{\kappa\lambda} \bigr) }} \dd{x^1} \wedge \cdots \wedge \dd{x^n} \\
+	&= \det \bigl( g^{\mu\nu} \bigr)_{1 \le \mu,\, \nu \le k} \sqrt{\abs{\det \bigl( g_{\kappa\lambda} \bigr) }} \dd{x^1} \wedge \cdots \wedge \dd{x^n}
+\end{align}
+なので，$ g \coloneqq \det \bigl( g_{\kappa\lambda} \bigr)$ とおいて
+\begin{align} 
+	&\star (\dd{x^1} \wedge \cdots \wedge \dd{x^k}) = \det \bigl( g^{\mu\nu} \bigr)_{1 \le \mu,\, \nu \le k} \sqrt{\abs{g}}\, \dd{x^{k+1}} \wedge \cdots \wedge \dd{x^n} \\
+	&= \sqrt{\abs{g}}\, \epsilon_{\mu_1 \dots \mu_k} g^{\mu_1 1} \cdots g^{\mu_k k}\, \dd{x^{k+1}} \wedge \cdots \wedge \dd{x^n} \\
+	&= \frac{\sqrt{\abs{g}}}{(n-k)!}\, \epsilon^{1 \dots k}{}_{\nu_{k+1} \dots \nu_{n}} \, \dd{x^{\nu_{k+1}}} \wedge \cdots \wedge \dd{x^{\nu_n}}.
+\end{align}
+ただし2番目の等号において，添字 $\{ \nu_{k+1},\, \dots \nu_{n}\}$ に関する和をとるようにしたことで重複する項が $(n-k)!$ 個出現するため，$(n-k)!$ で全体を割っている．$\{1,\, \dots ,\, k\}$ の順番を入れ替えることで
+\begin{align} 
+	\label{eq.Hodge_action}
+	\tcbhighmath[]{\star (\dd{x^{\mu_1}} \wedge \cdots \wedge \dd{x^{\mu_k}}) = \frac{\sqrt{\abs{g}}}{(n-k)!}\, \epsilon^{\mu_1 \dots \mu_k}{}_{\nu_{k+1} \dots \nu_{n}} \, \dd{x^{\nu_{k+1}}} \wedge \cdots \wedge \dd{x^{\nu_n}}}
+\end{align}
+である．
+
+\section{ラプラシアンと調和形式}
+
+この節では，$M$ は指数 $(i,\, j)$ の計量 $g$ を持った向き付けられた多様体で，コンパクトかつ境界のないものとする．コンパクト性は $\Omega^k(M)$ に内積\ref{def.k-form_inner2}を入れて計量線型空間にする場合にのみ必要となる．
+
+\begin{mydef}[label=def.k-form_inner2]{$k$-形式の内積その2}
+	$k$-形式全体が作る無限次元ベクトル空間 $\Omega^k(M)$ 上の非退化内積 $\ipdual{\;}{} \colon \Omega^k(M) \times \Omega^k(M) \to \mathbb{R}$ を次のように定義する：
+	\begin{align} 
+		\ipdual{\omega}{\eta} \coloneqq \int_M \dualip{\omega}{\eta}_k\, \vol_M
+	\end{align}
+	特に $M$ がRiemann多様体ならば内積 $\ipdual{\;}{}$ は正定値内積である．
+\end{mydef}
+\begin{proof} 
+	非退化（正定値）内積の公理\ref{ax.inner}-\textbf{(I1), (I2), (I3')}（\textbf{(I3)}）を充たすことを確認すれば良い．
+\end{proof}
+
+命題\ref{prop.Hodgestar}-(3) より
+\begin{align} 
+	\ipdual{\omega}{\eta} = \int_M \omega \wedge \star \eta = \int_M \eta \wedge \star \omega
+\end{align}
+とも書ける．
+
+\subsection{随伴外微分作用素}
+
+\begin{mydef}[label=def.adj_extdiff]{随伴外微分作用素}
+	外微分作用素
+	\begin{align} 
+		\dd{} \colon \Omega^k(M) \to \Omega^{k+1}(M)
+	\end{align}
+	に対して，\textbf{随伴外微分作用素}
+	\begin{align} 
+		\delta \colon \Omega^k(M) \to \Omega^{k-1}(M)
+	\end{align}
+	を次のように定義する：
+	\begin{align} 
+		\delta \coloneqq (-1)^k \star^{-1} \circ \dd{} \circ \star = (-1)^{\textcolor{red}{j} + n(k+1) + 1} \star \circ \dd{} \circ \star
+	\end{align}
+\end{mydef}
+
+\begin{myprop}[label=prop.adj_extdiff]{随伴性}
+	$\cinftyf{M}$-加群 $\Omega^k(M)$ に定義\ref{def.k-form_inner2}の内積 $\ipdual{\;}{}$ を入れて計量線型空間にしたとき，$\delta$ は $\dd{}$ の随伴作用素（定義\ref{def.adj}）である：
+	\begin{align} 
+		\ipdual{\dd{\omega}}{\eta} = \ipdual{\omega}{\delta \eta},\quad \forall \omega \in \Omega^k(M),\, \forall \eta \in \Omega^{k+1}(M)
+	\end{align}
+\end{myprop}
+
+\begin{proof} 
+	\begin{align} 
+		\dd{\omega} \wedge \star \eta = \dd{(\omega \wedge \star \eta)} - (-1)^{k} \omega \wedge \dd{(\star \eta)} = \dd{\omega \wedge \star \eta} + \omega \wedge \star (\delta\eta )
+	\end{align}
+	両辺を $M$ 上で積分してStokesの定理を用いると，$M$ に境界がないことから
+	\begin{align} 
+		\ipdual{\dd{\omega}}{\eta} = \int_M \dd{\omega \wedge \star \eta} + \int_M \omega \wedge \star \delta\eta = \ipdual{\omega}{\delta\eta}.
+	\end{align}
+\end{proof}
+
+\begin{myprop}[label=prop.adj_extdiff2]{}
+	\begin{enumerate} 
+		\item $\star \delta = (-1)^k \dd{} \star$
+		\item $\delta \star = (-1)^{k+1} \star \dd{}$
+		\item $\delta \circ \delta = 0$
+	\end{enumerate}
+\end{myprop}
+
+\begin{proof} 
+	\begin{enumerate} 
+		\item $\star \delta = \star \circ (-1)^k \star^{-1} \circ \dd{} \circ \star = (-1)^k \dd{} \star.$
+		\item $\delta \star = (-1)^{j+n(n-k+1)+1} \circ \dd{} \circ \star \circ \star = (-1)^{j+n(n-k+1)+1}(-1)^{j+(n-k)k} \star \circ \dd{} \circ \star^{-1} \circ \star = (-1)^{k+1} \star \dd{}.$
+		\item $\delta \circ \delta = (-1)^{k-1} \star^{-1} \circ \dd{} \circ \star \circ (-1)^k \star^{-1} \circ \dd{} \circ \star = - \star^{-1} \circ \dd{} \circ \dd{} \circ \star = 0.$
+	\end{enumerate}
+\end{proof}
+
+
+\subsection{Laplacian}
+
+\begin{mydef}[label=def.Laplacian]{Laplacian} 
+	線型作用素
+	\begin{align} 
+		\Delta \coloneqq \dd{\delta} + \delta \dd{} \colon \Omega^k(M) \to \Omega^k(M)
+	\end{align}
+	は\textbf{ラプラシアン} (Laplacian) もしくは\textbf{Laplace-Beltrami作用素} (Laplace-Beltrami operator) と呼ばれる．
+	
+	また，
+	\begin{align} 
+		\Delta \omega = 0
+	\end{align}
+	となる微分形式 $\omega \in \Omega^*(M)$ を\textbf{調和形式} (harmonic form) と呼ぶ．
+\end{mydef}
+
+\begin{myprop}[label=prop.Laplacian]{Laplacianの性質}
+	\begin{enumerate} 
+		\item $\star \Delta = \Delta \star.$ i.e. $\omega$ が調和形式 $\; \Longrightarrow \;$ $\star \omega$ も調和形式
+		\item $\forall \omega,\, \eta \in \Omega^k(M)$ に対して $\ipdual{\Delta \omega}{\eta} = \ipdual{\omega}{\Delta \eta}.$ i.e. $\Delta$ はエルミート作用素である．
+		\item $M$ がRiemann多様体ならば，$\Delta \omega = 0\quad \Longleftrightarrow \quad \dd{\omega} = 0,\, \delta \omega = 0$ 
+	\end{enumerate}
+\end{myprop}
+
+\begin{proof} 
+	\begin{enumerate} 
+		\item 命題\ref{prop.adj_extdiff2}-(1), (2) より
+		\begin{align} 
+			\star \Delta = (-1)^{k+1} \delta \star \delta + (-1)^k \dd{} \star \dd{} = \delta \dd{} \star  + \dd{}\delta \star = \Delta \star.
+		\end{align}
+		\item 命題\ref{prop.adj_extdiff}と内積の対称性より
+		\begin{align} 
+			\ipdual{\Delta \omega}{\eta} &= \ipdual{\dd{}\delta \omega}{\eta} + \ipdual{\eta}{\delta \dd{} \omega} \\
+			&= \ipdual{\delta \omega}{\delta\eta} + \ipdual{\dd{\eta}}{\dd{} \omega} \label{eq.prop5-8} \\
+			&= \ipdual{\dd{}\delta\eta}{\omega} + \ipdual{\omega}{\delta\dd{}\eta} \\
+			&= \ipdual{\omega}{\Delta\eta}.
+		\end{align}
+		\item $(\Longleftarrow)$ は明らか．
+		
+		$(\Longrightarrow)$ $M$ がRiemann多様体であるという仮定から，内積 $\ipdual{\;}{}$ は正定値である．式\eqref{eq.prop5-8}より
+		\begin{align} 
+			\ipdual{\Delta \omega}{\omega} = \ipdual{\delta \omega}{\delta\omega} + \ipdual{\dd{\omega}}{\dd{\omega}}
+		\end{align}
+		であるから，内積の正定値性から $\Delta\omega = 0$ ならば $\delta \omega = \dd{\omega} = 0$ である．
+	\end{enumerate}
+\end{proof}
+
+
+\subsection{Hodgeの定理}
+
+この節では，$M$ は向き付けられたコンパクトRiemann多様体で境界がないものとする．
+
+$M$ 上の調和 $k$-形式全体の集合を
+\begin{align} 
+	\Harm^k(M) \coloneqq \bigl\{ \omega \in \Omega^k(M) \bigm| \Delta \omega = 0 \bigr\} 
+\end{align}
+と書く．命題\ref{prop.Laplacian}-(3) により調和形式は必ず閉形式なので
+\begin{align} 
+	\Harm^k(M) \subset \Ker \bigl( \dd{} \colon \Omega^k(M) \to \Omega^{k+1}(M) \bigr) 
+\end{align}
+であり，後述のde Rhamコホモロジー類 $\irm{H}{DR}^k(M)$ への写像が自然に誘導される：
+\begin{align} 
+	\pi \colon \Harm^k(M) \to \irm{H}{DR}^k(M),\; \omega \mapsto [\omega]
+\end{align}
+
+$\omega \in \Harm^k(M)$ が完全形式である，i.e. $\exists \eta \in \Omega^{k-1},\; \omega = \dd{\eta}$ ならば
+\begin{align} 
+	\ipdual{\omega}{\omega} = \ipdual{\dd{\eta}}{\omega} = \ipdual{\eta}{\delta\omega} = 0.\quad \Longrightarrow \quad \omega = 0.
+\end{align}
+であることから，$\pi$ は単射であるとわかる．実は，次の事実が知られている：
+
+\begin{mytheo}[label=thm.Hodge]{Hodgeの定理} 
+	自然な写像 $\pi \colon \Harm^k(M) \to \irm{H}{DR}^k(M)$ は同型写像である．i.e. 向き付けられたコンパクトRiemann多様体の任意のde Rhamコホモロジー類は，ただ一つの調和形式で代表される．
+\end{mytheo}
+
+定理\ref{thm.Hodge}の証明には，次の定理が有用である：
+
+\begin{mytheo}[label=thm.Hodge_decomp]{Hodge分解}
+	向き付けられたコンパクトRiemann多様体の任意の $k$-形式は，調和形式，完全形式，双対完全形式の和として一意的に分解される：
+	\begin{align} 
+		\Omega^k(M) = \Harm^k(M) \oplus \dd{\Omega^{k-1}(M)} \oplus \delta \Omega^{k+1}(M)
+	\end{align}
+\end{mytheo}
+
+
+\end{document}

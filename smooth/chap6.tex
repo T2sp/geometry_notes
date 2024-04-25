@@ -1,0 +1,314 @@
+\documentclass[geometry_main]{subfiles}
+
+\begin{document}
+
+\setcounter{chapter}{5}
+
+\chapter{ホモロジー・de Rhamコホモロジーの紹介}
+
+\section{多様体のホモロジー}
+
+$X$ を位相空間とする．$X$ の $l$ 次元ホモロジー群 $H_l(X)$ とは，$X$ 中の「$l$ 次元のサイクル」と呼ばれる量が本質的に何個あるかを示すものである．
+ホモロジーの定義は何通りか知られているが，一般に $l$ 単体と呼ばれる単位に分割し，組み合わせ的な構造を利用して定義する．
+本章ではごく部分的に多様体上のホモロジーと de Rham コホモロジーを紹介する．
+詳細は~\cite[第3章]{Morita}や~\cite[Chapter 17, 18]{Lee12}を参照されたし．
+
+\subsection{単体・三角形分割}
+
+手始めに，まず$l$ 単体を定義しよう．
+\begin{mydef}[]{$l$-単体}
+	$\mathbb{R}^N$ の $l+1$ 個の点 $v_0,\, v_1,\, \dots ,\, v_{l}$ は，$l$ 個のベクトル $v_i - v_0 \; (i = 1,\, \dots l)$ が線型独立のとき，\textbf{一般の位置にある}という．
+
+	一般の位置にある $l+1$ 個の点の集合 $\sigma = \{v_0,\, \dots ,\, v_l\}$ に対して，それらの点を含む最小の凸集合
+	\begin{align} 
+		\abs{\sigma} \coloneqq \bigl\{ a_0 v_0 + \cdots + a_l v_l \bigm| a_i \ge 0,\, a_0 + \cdots + a_l = 1 \bigr\} 
+	\end{align}
+	を\textbf{$l$-単体} ($l$-simplex) と呼ぶ．$\sigma$ の空でない部分集合 $\tau \subset \sigma$ に対して，単体 $\abs{\tau}$ のことを $\abs{\sigma}$ の\textbf{辺} (face) と呼ぶ．
+\end{mydef}
+
+\begin{mydef}[label=def.unit]{単体複体} 
+	$\mathbb{R}^N$ の中の単体の集合 $K$ は，次の条件を充たすとき (Euclid) \textbf{単体複体} (Euclidean simplicial complex) と呼ぶ：
+	\begin{enumerate} 
+		\item $\abs{\sigma} \in K$ ならば $\abs{\sigma}$ の任意の辺はまた $K$ に属する．
+		\item 二つの単体 $\abs{\sigma},\, \abs{\tau} \in K$ が空でない共通部分を持つならば $\abs{\sigma} \cap \abs{\tau}$ は $\abs{\sigma}$ と $\abs{\tau}$ の共通の辺である．
+		\item $\forall \abs{\sigma} \in K$ の任意の点 $x \in \abs{\sigma}$ に対して，$x$ 開近傍 $U$ を適切に取れば $U$ と交わる $K$ の単体は有限個しか存在しないようにできる．
+	\end{enumerate}
+\end{mydef}
+
+\begin{mydef}[label=triangle]{多面体・三角形分割}
+	単体複体 $K$ に対して，集合
+	\begin{align} 
+		\abs{K} \coloneqq \bigcup_{\abs{\sigma} \in K} \abs{\sigma}
+	\end{align}
+	を定める．$\abs{K} \subset \mathbb{R}^N$ を\textbf{多面体} (polyhedron) と呼ぶ．
+
+	位相空間 $X$ に対して適当な単体複体 $K$ を選び，同相写像 $t \colon \abs{K} \xrightarrow{\approx} X$ が与えられたとき，同相写像 $t$ を $X$ の\textbf{三角形分割} (triangulation) と呼ぶ．
+\end{mydef}
+
+\subsection{ホモロジー群}
+
+\begin{mydef}[label=def.orient]{単体の向き} 
+	$l$ 単体 $\abs{\sigma}$ の頂点 $\{v_0,\, \dots ,\, v_l\}$ の順序付き添字 $I = (i_0,\, \dots ,\, i_l)$ 全体の集合 $\mathcal{I}$ に以下の同値関係を定める：
+	\begin{align} 
+		\sim\; \coloneqq \bigl\{ (I,\, J) \in \mathcal{I} \times \mathcal{I} \bigm| \exists \tau \in \mathfrak{S}_{l+1}\, \mathrm{s.t.}\, \textbf{偶置換},\; I = \tau J \bigr\} 
+	\end{align}
+	このとき，$I \in \mathcal{I}$ の $\sim$ による同値類 $[I]$ のことを単体 $\abs{\sigma}$ の\textbf{向き} (orientation) と呼ぶ．
+
+	単体 $\abs{\sigma}$ に向きが指定されているとき，$\sigma$ の同値類を\textbf{向き付けられた単体}と呼び，$\expval{\sigma}$ と表す．頂点が $I = (i_0,\, \dots ,\, i_l)$ によって向き付けられているとき，対応する向き付けられた単体を $\expval{v_{i_0} \cdots v_{i_l}}$ と書く．
+\end{mydef}
+
+\begin{mydef}[label=def.chain]{$l$-chain}
+	単体複体 $K =\{\abs{\sigma}_i\}$ の各単体に向きを指定し，それぞれ $\expval{\sigma_i}$ とする．$K$ の $l$-単体 $\expval{\sigma_{i}}_l$ 全体によって生成される自由加群を $K$ の \textbf{$l$次元鎖群 $C_l(K)$} と呼び，$C_l(K)$ の元を \textbf{$l$-チェイン} と呼ぶ．
+\end{mydef}
+
+$\forall  c \in C_l(K)$ は形式和として
+\begin{align} 
+	c = \sum_{i \in I_l} c_i \expval{\sigma_i}_l,\quad c_i \in \mathbb{Z}
+\end{align}
+と書かれる．群 $C_l(K)$ の二項演算 $+$，単位元 $0$，逆元 $-c$はそれぞれ
+\begin{align} 
+	c + c' &\coloneqq \sum_i (c_i + c'{}_i) \expval{\sigma_i}_l, \\
+	0 &\coloneqq \sum_i 0 \expval{\sigma_i}_l, \\
+	-c &\coloneqq \sum_i (-c_i) \expval{\sigma_i}_l
+\end{align}
+である．ただし，$\expval{\sigma_i}_l$ と反対に向き付けられた $l$ 単体は $(-1)\expval{\sigma_i}_l \in C_l(K)$ と同一視する．このとき，自然に
+\begin{align} 
+	C_l(K) \cong \bigoplus_{I_l} \mathbb{Z}
+\end{align}
+である．
+
+\begin{mydef}[label=op_boundary]{境界作用素}
+	準同型写像
+	\begin{align} 
+		\partial_l \colon C_l(K) \to C_{l-1}(K)
+	\end{align}
+	を向き付けられた各 $l$-単体上
+	\begin{align} 
+		\partial_l \expval{v_0 v_1 \cdots v_l} \coloneqq \sum_{i=0}^l (-1)^i \expval{v_0 \cdots \hat{v_i} \cdots v_l}
+	\end{align}
+	と定義する．ただし，$\hat{v_i}$ は $v_i$ を省くことを意味する．
+\end{mydef}
+
+\begin{myprop}[label=prop.op_boundary]{境界の境界} 
+	$\partial_l \circ \partial_{l+1} = 0$
+\end{myprop}
+
+\begin{proof} 
+	$\partial_l$ は $C_l(K)$ 上の線型作用素なので生成元 $\sigma \coloneqq \expval{v_0v_1 \cdots v_{l+1}} \in C_{l+1}(K)$ に対して示せば十分．$l = 0$ のときは自明なので $l > 0$ とする．
+	\begin{align} 
+		&\partial_l \circ \partial_{l+1} \sigma \\
+		&= \sum_{i=0}^{l+1} (-1)^i \partial_l \expval{v_0 \cdots \hat{v_i} \cdots v_{l+1}} \\
+		&= \sum_{i=0}^{l+1}(-1)^i \left(\sum_{j=0}^{i-1} (-1)^j \expval{v_0 \cdots \hat{v_j} \cdots \hat{v_i} \cdots v_{l+1}} + \sum_{j = i+1}^{l+1} (-1)^{j-1} \expval{v_0 \cdots \hat{v_i} \cdots \hat{v_j} \cdots v_{l+1}} \right) \\
+		&= \sum_{i > j} (-1)^{i+j} \expval{v_0 \cdots \hat{v_j} \cdots \hat{v_i} \cdots v_{l+1}} - \sum_{i < j} (-1)^{i+j}\expval{v_0 \cdots \hat{v_i} \cdots \hat{v_j} \cdots v_{l+1}} = 0.
+	\end{align}
+\end{proof}
+
+命題\ref{prop.op_boundary}より，
+\begin{align} 
+	Z_l (K) &\coloneqq \bigl\{ c \in C_l(K) \bigm| \partial_l c = 0 \bigr\} = \Ker \partial_l \\
+	B_l (K) &\coloneqq \bigl\{ \partial_{l+1} c \in C_l(K) \bigm| c \in C_{l+1}(K) \bigr\} = \Im \partial_{l+1}
+\end{align}
+とおくと
+\begin{align} 
+	B_l(K) \subset Z_l(K)
+\end{align}
+となる．
+\begin{marker} 
+	$Z_l(K)$ を\textbf{$l$-輪体群}もしくは\textbf{サイクル}，$B_l(K)$ を\textbf{$l$-境界輪体群}もしくは\textbf{バウンダリー}と呼ぶ．
+\end{marker}
+
+
+\begin{mydef}[label=HomologyGroup]{ホモロジー群}
+	上で定義した $Z_l(K),\, B_l(K)$ に対して，部分群の剰余類を考えることにより
+	\begin{align} 
+		H_l(K) \coloneqq Z_l(K) / B_l(K)
+	\end{align}
+	は商群を作る．これを $K$ の\textbf{ $l$ 次元ホモロジー群}と呼ぶ．
+\end{mydef}
+
+% サイクル $c \in Z_l(K)$ を代表元にもつホモロジー類 $[c] \in H_l(K)$ に対して，別のサイクル $d \in Z_l(K)$ が $d \in [c]$ であるとき，i.e. $c - d \in B_l(K)$ であるとき，$c,\, d$ は\textbf{ホモローグ} (homologue) であるという．
+
+\begin{mytheo}[label=thm:simplicial-topo]{ホモロジー群は位相不変量}
+	ホモロジー群は位相不変量である．i.e. 位相空間 $X,\, Y$ が互いに同相であるとし，それぞれの三角形分割 $f \colon \abs{K} \xrightarrow{\approx} X,\; g \colon \abs{L} \xrightarrow{\approx} Y$ を与える．このとき
+	\begin{align}
+		H_l (K) \cong H_l(L)\quad (l = 0,\, 1,\, \dots)
+	\end{align}
+	が成り立つ．
+\end{mytheo}
+
+
+\section{de Rhamコホモロジー}
+
+\subsection{特異ホモロジー}
+
+\begin{mydef}[label=stdsimplex]{標準$k$-単体}
+	$\mathbb{R}^k$ の部分集合
+	\begin{align} 
+		\varDelta^k \coloneqq \bigl\{ (x^1,\, \dots ,\, x^k) \in \mathbb{R}^k \bigm| x^i \ge 0, \; x^1 + \cdots + x^k \le 1\, \bigr\} 
+	\end{align}
+	は\textbf{標準 $k$-単体} (standard $k$-simplex) と呼ばれる．
+\end{mydef}
+
+\begin{mydef}[label=sg_k-simplez]{\cinfty 特異 $k$-単体} 
+	\cinfty 多様体 $M$ に対して，任意の\cinfty 写像
+	\begin{align} 
+		\sigma \colon \varDelta^k \to X
+	\end{align}
+	を $X$ の\textbf{\cinfty 特異 $k$ 単体} (singular $k$-simplex) と呼ぶ．$M$ の\cinfty 特異 $k$ 単体全体によって生成される自由加群を $S_k(X)$ と書き，その元を $M$ の\textbf{\cinfty 特異 $k$-チェインと呼ぶ}．
+\end{mydef}
+
+\begin{mydef}[label=def.partial]{境界作用素} 
+	$i = 0,\, \dots ,\, k$ に対して連続写像 $\varepsilon_i \colon \varDelta^{k-1} \to \varDelta^k $ を
+	\begin{align} 
+		\varepsilon_0(x_1,\, \dots ,\, x_{k-1}) &\coloneqq \left(1 - \sum_{i=1}^{k-1} x_i,\; x_1,\, \dots ,\, x_{k-1}\right), \\
+		\varepsilon_i(x_1,\, \dots ,\, x_{k-1}) &\coloneqq (x_1,\, \dots ,\, x_{i-1},\, 0 ,\, x_i,\, x_{k-1})
+	\end{align}
+	と定義する．このとき，\textbf{境界作用素}
+	\begin{align} 
+		\partial \colon S_k(M) \to S_{k-1}(M)
+	\end{align}
+	を次のように定義する：
+	\begin{align} 
+		\partial \sigma \coloneqq \sum_{i=0}^k (-1)^i \sigma \circ \varepsilon_i
+	\end{align}
+\end{mydef}
+
+サイクル $Z_k(M)$ および $k$-境界輪体群 $B_k(M)$ を
+\begin{align} 
+	Z_k (M) &\coloneqq \Ker \partial_k \\
+	B_k(M) & \coloneqq \Im \partial_{k+1}
+\end{align}
+と定めると，相変わらず $\partial \circ \partial =0$ であるから $B_{k} (M) \subset Z_k(M)$ が従う．故に部分群の剰余類を考えることができる：
+\begin{mydef}[label=sg_HomologyGroup]{特異ホモロジー群}
+	$B_{k} (M),\; Z_k(M)$ に対して，商群
+	\begin{align} 
+		H_k(M) \coloneqq Z_k(M) / B_k(M)
+	\end{align}
+	を $M$ の\textbf{特異ホモロジー群}と呼ぶ．
+\end{mydef}
+
+\subsection{微分形式のチェイン積分とStokesの定理}
+
+$M$ を \cinfty 多様体，$S_\bullet(M) \coloneqq \{ S_k(M),\, \partial \}$ を $M$ の\cinfty 特異チェイン複体とする．
+
+$M$ の特異 $k$ 単体
+\begin{align} 
+	\sigma \colon \varDelta^k \to M
+\end{align}
+は\cinfty 写像であるから，$k$-形式 $\omega \in \Omega^k(M)$ の引き戻し（命題\ref{prop.pullback}付近を参照） $\sigma^* \omega \in \Omega^k(\varDelta^k)$ が定義される．
+
+\begin{mydef}[label=def.int_k-form_sg]{特異 $k$ 単体上の積分}
+	$\omega \in \Omega^k(M)$ の $\sigma$ 上の積分を
+	\begin{align} 
+		\int_{\sigma} \omega \coloneqq \int_{\varDelta^k} \sigma^* \omega
+	\end{align}
+	により定義する．右辺はただの $k$-中積分である．
+
+	一般の\cinfty 特異 $k$-チェイン $c \in S_k(M)$ が $c = \sum_{i} a_i s_i$ と表示されているときは
+	\begin{align} 
+		\int_c \omega \coloneqq \sum_i a_i \int_{\sigma_i} \omega
+	\end{align}
+	と定義する．
+\end{mydef}
+
+
+\begin{mytheo}[label=Stokes]{チェイン上のStokesの定理}
+	\cinfty 多様体 $M$ の特異 $k$-チェイン $c \in S_k(M)$ と $k-1$-形式 $\omega \in \Omega^{k-1}(M)$ に対し，以下の等式が成立する：
+	\begin{align} 
+		\int_c \dd{\omega} = \int_{\partial c} \omega.
+	\end{align}
+\end{mytheo}
+
+\section{de Rhamの定理}
+
+\subsection{de Rhamコホモロジー}
+
+\begin{mydef}[label=def.close]{閉形式・完全形式} 
+	$k$-形式 $\omega \in \Omega^k(M)$ は
+	\begin{itemize} 
+		\item $\dd{\omega} = 0$ のとき\textbf{閉形式} (closed form)
+		\item $\exists \eta \in \Omega^{k-1}(M),\; \omega = \dd{\eta}$ のとき\textbf{完全形式} (exact form)
+	\end{itemize}
+	と呼ばれる．
+\end{mydef}
+
+$M$ 上の閉じた $k$ -形式全体を $Z^k(M)$ ，完全な $k$-形式全体を $B^k(M)$ と書く：
+\begin{align} 
+	&Z^k(M) \coloneqq \Ker \bigl( \dd{}\colon \Omega^k(M) \to \Omega^{k+1}(M) \bigr) , \\
+	&B^k(M) \coloneqq \Im \bigl( \dd{}\colon \Omega^{k-1}(M) \to \Omega^{k}(M) \bigr).
+\end{align}
+$\dd{}\circ \dd{} = 0$ なので，$B^k(M) \subset Z^k(M)$ である．
+
+\begin{mydef}[label=def.deRham]{de Rhamコホモロジー群} 
+	$\Omega^k(M)$ の部分ベクトル空間 $B^k(M),\, Z^k(M)$ に対して，商空間
+	\begin{align} 
+		\irm{H}{DR}^k(M) \coloneqq Z^k(M) / B^k(M)
+	\end{align}
+	は$M$ の $k$次\textbf{de Rhamコホモロジー群}と呼ばれる．
+
+	$k$ -形式 $\omega \in \Omega^k(M)$ に対し，それを代表元に持つ剰余類 $[\omega] \in \irm{H}{DR}^k (M)$ を $\omega$ の表す\textbf{de Rhamコホモロジー類}と呼ぶ．
+	\begin{align} 
+		\irm{H}{DR}^\bullet(M) \coloneqq \bigoplus_{k=0}^n \irm{H}{DR}^k(M)
+	\end{align}
+	を $M$ の\textbf{de Rhamコホモロジー群}と呼ぶ．
+\end{mydef}
+
+$x \in \irm{H}{DR}^k(M),\; y \in \irm{H}{DR}^l(M)$ が $\omega \in \Omega^k(M),\; \eta \in \Omega^l(M)$ によって $x = [\omega],\; y = [\eta]$ と書かれるとき，$\irm{H}{DR}^\bullet(M)$ 上の積 $\cdot\mathrel{}\colon \irm{H}{DR}^\bullet(M) \times \irm{H}{DR}^\bullet(M) \to \irm{H}{DR}^\bullet(M)$ を以下のように定義する：
+\begin{align} 
+	x \cdot y \coloneqq [\omega \wedge \eta] \in \irm{H}{DR}^{k+l}(M)
+\end{align}
+このとき二項演算 $\cdot$ はwell-definedである，i.e. $\omega,\, \eta$ の取り方によらない．
+
+上で定義した積構造の入った $\bigl( \irm{H}{DR}^\bullet(M),\, \cdot \bigr)$ のことを $M$ の\textbf{de Rhamコホモロジー代数}と呼ぶ．
+
+\subsection{de Rhamの定理}
+
+% \cinfty 多様体のde Rhamコホモロジーは $M$ の微分構造に依存せず，$M$ の位相空間としての構造のみによって定まってしまう．
+
+コホモロジー群とホモロジー群は，Stokesの定理によって双対性を持つ．
+
+\cinfty 多様体 $M$ および $M$ の \cinfty 特異$r$-チェイン $S_k(M)$ を与える．$\forall c \in S_k(M),\; \forall \omega \in \Omega^k(M)\; (1 \le k \le n)$ をとる．ここで双対内積 (duality pairing) を
+\begin{align} 
+	&\dualip{\;}{} \colon S_k(M) \times \Omega^k(M) \to \mathbb{R},\; (c,\, \omega) \mapsto \int_c \omega
+\end{align}
+と定義する．このとき $\dualip{c}{\omega}$ は双線型であり，$\dualip{\;}{\omega} \colon  S_k(M) \to \mathbb{R},\;  \dualip{c}{} \colon  \Omega^k(M) \to \mathbb{R}$ はどちらも線型写像である：
+\begin{align} 
+	\dualip{c_1 + c_2}{\textcolor{red}{\omega}} &= \int_{c_1+c_2} \omega = \int_{c_1} \omega + \int_{c_2} \omega = \dualip{c_1}{\textcolor{red}{\omega}} + \dualip{c_2}{\textcolor{red}{\omega}} \\
+	\dualip{\textcolor{red}{c}}{\omega_1 + \omega_2} &= \int_{c} (\omega_1 + \omega_2) = \int_{c} \omega_1 + \int_{c} \omega_2 = \dualip{\textcolor{red}{c}}{\omega_1} + \dualip{\textcolor{red}{c}}{\omega_2} \\
+\end{align}
+Stokesの定理は
+\begin{align} 
+	\dualip{c}{\dd{\omega}} = \dualip{\partial c}{\omega}
+\end{align}
+と書かれ，この意味で $\dd{}$ と $\partial$ は互いに随伴写像である．
+
+duality pairing $\dualip{\;}{}$ は内積 $\Lambda\colon H_k(M) \times \irm{H}{DR}^k(M) \to \mathbb{R}$ を誘導する．それは以下のように定義される：
+\begin{align} 
+	\label{eq.dualpair}
+	\Lambda\bigl([c],\, [\omega]\bigr) \coloneqq \dualip{c}{\dd{\omega}}
+\end{align}
+定義\ref{eq.dualpair}はwell-definedである．
+
+\begin{mytheo}[label=thm.deRham]{Poincar\'{e}双対}
+	$M$ がコンパクトな\cinfty 多様体ならば $H_k(M),\, \irm{H}{DR}^k(M)$ はともに有限次元である．さらに写像
+	\begin{align} 
+		\Lambda \colon H_k(M) \times \irm{H}{DR}^k(M) \to \mathbb{R}
+	\end{align}
+	は双線型かつ非退化である．i.e. $H_r(M) = \bigl(\irm{H}{DR}^k(M) \bigr)^*$（双対ベクトル空間）である．
+\end{mytheo}
+
+
+\begin{mylem}[label=Poincare]{Poincar\'{e}の補題}
+	$\mathbb{R}^n$ のde Rhamコホモロジーは自明である：
+	\begin{align} 
+		\irm{H}{DR}^k(\mathbb{R}^n) = \irm{H}{DR}^k(\text{一点}\; p_0 \in \mathbb{R}^n) = 
+		\begin{cases} 
+			\mathbb{R} & \colon k = 0 \\
+			0 & \colon k > 0
+		\end{cases}
+	\end{align}
+	i.e. $\omega \in \Omega^k(\mathbb{R})$ を任意の閉形式とすると，ある $k-1$ 形式 $\eta$ が存在して $ \omega = \dd{\eta}$ を充たす．
+\end{mylem}
+
+
+\end{document}

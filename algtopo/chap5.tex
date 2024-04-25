@@ -1,0 +1,712 @@
+\documentclass[algtopo_main]{subfiles}
+\mathchardef\mhyphen="2D
+\begin{document}
+
+\setcounter{chapter}{4}
+
+\chapter{積}
+
+
+この章では $R$ を環とし，$f \in \Hom{\TOP} (X,\ Y)$ および $M \in \Obj{\MOD{R}}$ に対して次のような記法を使う：
+\begin{itemize}
+    \item 位相空間 $X \in \Obj{\TOP}$ に対して $M$ 係数特異チェイン複体を $S_\bullet (X; M) \coloneqq S_\bullet (X) \otimes_R M$ と書く．
+    \item $M$ 係数特異チェイン複体をとる関手 $S_\bullet (\mhyphen; M) \colon \TOP \lto \Chain{\MOD{R}}$ の，$\TOP$ における射 $f$ に対する作用を
+    \begin{align}
+        \label{not:SingularChain-morphism}
+        f_\bullet \coloneqq S_\bullet(f; M) = S_\bullet(f) \otimes_R 1_M \colon S_\bullet (X; M) \lto S_\bullet (Y; M)
+    \end{align}
+    と書き，そこからさらに関手 $H_q \colon \Chain{\MOD{R}} \lto \MOD{R}$ を作用させるときも
+    \begin{align}
+        \label{not:SingularHomology-morphism}
+        f_q \coloneqq H_q \bigl( S_\bullet(f; M) \bigr) \colon H_q \bigl( S_\bullet (X; M) \bigr) \lto H_q \bigl( S_\bullet (Y; M) \bigr) 
+    \end{align}
+    と略記する．
+    \item 反変関手 $\Hom{R}(\mhyphen,\, M) \colon \Chain{\MOD{R}} \lto \Chain{\MOD{R}}$ の，$\Chain{\MOD{R}}$ における射 $f_\bullet \colon S_\bullet (X; \textcolor{red}{R}) \lto S_\bullet (Y; \textcolor{red}{R})$ に対する作用を
+    \begin{align}
+        \label{not:SingularChain-Hom-morphism}
+        f^\bullet \coloneqq \Hom{R} \bigl(S_\bullet(f; R),\, M\bigr) &\colon \Hom{R} \bigl( S_\bullet(Y; R),\, M\bigr) \lto \Hom{R} \bigl( S_\bullet (X; R),\, M \bigr),\\ 
+        &\varphi \lmto \varphi \circ f_\bullet
+    \end{align}
+    と書く．
+    そこからさらに関手 $H^q \colon \Chain{\MOD{R}} \lto \MOD{R}$ を作用させるときも
+    \begin{align}
+        \label{not:SingularCohomology-morphism}
+        f^q \coloneqq H^q\Bigl(\Hom{R} \bigl(S_\bullet(f; R),\, M\bigr)\Bigr) \colon H^q\Bigl(\Hom{R} \bigl( S_\bullet(Y; R),\, M\bigr)\Bigr) \lto H^q \Bigl(\Hom{R} \bigl( S_\bullet (X; R),\, M \bigr)\Bigr)
+    \end{align}
+    と書く．
+    \item 余計な煩雑さを避けるために
+    \begin{align}
+        S_\bullet X &\coloneqq S_\bullet (X; \textcolor{red}{R}), \label{not:SCC} \\
+        H_q X &\coloneqq H_q\bigl(S_\bullet (X; \textcolor{red}{R})\bigr), \label{not:SH} \\
+        S^\bullet X &\coloneqq \Hom{R} \bigl( S_\bullet(X; \textcolor{red}{R}),\; \textcolor{red}{R} \bigr), \label{not:ScCC} \\
+        H^q X &\coloneqq H^q\Bigl(\Hom{R} \bigl( S_\bullet(X; \textcolor{red}{R}),\; \textcolor{red}{R} \bigr)\Bigr) \label{not:ScH}
+    \end{align}
+    と略記することがある．
+\end{itemize}
+
+\begin{mydef}[label=def:graded-mod, breakable]{次数付き加群}
+    \begin{enumerate}
+        \item \textbf{次数付き左 $\bm{R}$ 加群} (graded left $R$ module) $A_\bullet$ とは，左 $R$ 加群の族 $\Familyset[\big]{A_n}{n \in \mathbb{Z}}$ であるか，または 左 $R$ 加群の直和分解 $A = \bigoplus_{n \in \mathbb{Z}} A_n$ のこと．
+        \item 次数付き左 $R$ 加群の準同型写像とは，集合 $\prod_{n \in \mathbb{Z}} \Hom{R} (A_n,\, B_n)$ の元のこと．
+        \item 次数付き左 $R$ 加群 $A_\bullet$ と次数付き右 $R$ 加群 $B_\bullet$ のテンソル積とは，次数付き左 $R$ 加群
+        \begin{align}
+            (A_\bullet \otimes_R B_\bullet)_n \coloneqq \bigoplus_{p+q=n} A_p \otimes_R B_q
+        \end{align}
+        のこと．
+        \item 次数付き左 $R$ 加群 $\Hom{R}(A_\bullet,\, B_\bullet)$ を
+        \begin{align}
+            \Hom{R} (A_\bullet,\, B_\bullet)_n \coloneqq \prod_{k \in \mathbb{Z}} \Hom{R} (A_k,\, B_{k+n})
+        \end{align}
+        と定める．
+        \item \textbf{次数付き環} (graded ring) $R_\bullet$  とは，アーベル群の族 $\Familyset[\big]{R_n}{n \mathbb{Z}}$ であって，
+        写像
+        \begin{align}
+            R_\bullet \otimes R_\bullet \lto R_\bullet,\; a \otimes b \lmto ab
+        \end{align}
+        を持ち，$(ab)c = a(bc)$ が成り立つもののこと．i.e. 環 $R$ であって直和分解 $R = \bigoplus_{n \in \mathbb{Z}} R_n$ を持ち，$R_k \cdot R_l \subset R_{k+l}$ を充たすもののこと．
+        \item 次数付き環が\textbf{可換} (commutative) であるとは，$\forall a \in R_{\abs{a}},\; \forall b \in R_{\abs{b}}$ に対して
+        \begin{align}
+            ab = (-1)^{\abs{a}\abs{b}} ba
+        \end{align}
+        が成り立つこと．
+        \item 次数付き環 $R_\bullet$ 上の次数付き加群 $M_\bullet$ とは，環 $R = \bigoplus_{n \in \mathbb{Z}} R_n$ 上の加群であって $R_k \cdot M_l \subset M_{k+l}$ を充たすもの．
+    \end{enumerate}
+\end{mydef}
+
+\hyperref[def:double-complx]{二重複体}の\hyperref[def:Tot]{全複体}を複体のテンソル積として定める\footnote{$(d^{-p} \otimes 1_{C'{}^{-q+1}}) \circ (1_{C^{-p}} \otimes d'{}^{-q}) = d^{-p} \otimes d'{}^{-q} = (1_{C^{-p+1}} \otimes d'{}^{-q}) \circ (d^{-p} \otimes 1_{C'{}^{-q+1}})$ なので，$\bigl( C^\bullet \otimes_R C'{}^*,\, d^\bullet \otimes 1_{C'{}^*},\, (-1)^\bullet 1_{C{}^\bullet} \otimes d'{}^* \bigr)$ が\hyperref[def:double-complex]{二重複体}になる．従って\hyperref[def:Tot]{全複体の射の定義}と定義\ref{def:tensor-complex}の $\delta$ の第2項の符号は整合的である．}：
+\begin{mydef}[label=def:tensor-complex]{複体のテンソル積}
+    複体 $(C^\bullet,\, d^\bullet),\; (C'{}^\bullet,\, d'{}^\bullet)$ の\textbf{テンソル積} $(C^\bullet \otimes C'{}^\bullet,\; \delta^\bullet)$ とは，次数付き加群のテンソル積
+    \begin{align}
+        (C^\bullet \otimes C'{}^\bullet)^n \coloneqq \bigoplus_{p+q=n} C^p \otimes_R C'{}^q = \Tot (C^\bullet \otimes_R C'{}^*)
+    \end{align}
+    および射
+    \begin{align}
+        \delta (z \otimes w) \coloneqq d z \otimes w + (-1)^p z \otimes d' w \quad \WHERE z \in C^p
+    \end{align}
+    の組のこと．
+\end{mydef}
+
+\section{Eilenberg-Zilber写像}
+
+圏 $\TOP^2$ を次のように定める\footnote{要は2つの $\TOP$ を「直積」してできる圏．}：
+\begin{itemize}
+    \item 位相空間の組 $(X,\, Y)$ を対象とする．空間対ではなく，必ずしも $Y \subset X$ でなくて良い．
+    \item 連続写像の組 $(f,\, g)\; \WHERE f \in \Hom{\TOP} (X',\, X),\, g \in \Hom{\TOP} (Y' ,\, Y)$ を射とする．
+    つまり，
+    \[\Hom{\TOP^2} \bigl( (X,\, Y),\, (X',\, Y') \bigr) \coloneqq \Hom{\TOP} (X,\, X') \times \Hom{\TOP} (Y,\, Y')\]
+    とする．
+    \item 合成は $(f,\, g) \circ (f',\, g') \coloneqq (f \circ f',\, g \circ g')$ と定める．
+\end{itemize}
+
+まず，非輪状モデル定理を述べる．
+\begin{mytheo}[label=thm:AM, breakable]{非輪状モデル定理}
+    任意の圏 $\Cat{C}$ および関手 $F,\, F' \colon \Cat{C} \lto \Chain{\MOD{R}}$ を与える．$\forall X \in \Obj{\Cat{C}}$ に対して定まる複体 $F(X)$ の第 $-n$ 項を $F^{-n}(X)$ と書く．
+    
+    与えられた関手 $F,\, F' \colon \Cat{C} \lto \Chain{\MOD{R}}$ は以下の条件を充たすとする：
+    \begin{enumerate}
+        \item $\forall n < 0,\; F^{-n} = F'{}^{-n} = 0$
+        \item $\Cat{C}$ の一部の対象の集まり $\mathcal{M} \subset \Obj{\Cat{C}}$ が存在して以下を充たす：
+        \begin{description}
+            \item[\textbf{(F)}] $\forall X \in \Obj{\Cat{C}}$ および $\forall n \ge 0$ に対して，左 $R$ 加群 $F^{-n}(X)$ は集合
+            \begin{align}
+                \bigl\{\, F^{-n}(u) \bigl( F^{-n}(M) \bigr) \bigm| u \in \Hom{\Cat{C}}(M,\, X),\, M \in \mathcal{M} \,\bigr\} 
+            \end{align}
+            のある部分集合を基底にもつ自由 $R$ 加群となる．このとき関手 $F \colon \Cat{C} \lto \Chain{\MOD{R}}$ は\textbf{自由} (free) であると言われる．
+            \item[\textbf{(A)}] $\forall M \in \mathcal{M}$ および $\forall n \ge \textcolor{red}{1}$ に対して $H^{-n}\bigl(F'(M)\bigr) = 0$ が成り立つ\footnote{i.e. $F'$ の\hyperref[def:LD]{左導来関手} $L_nF'$ に対して，$\forall M \in \mathcal{M},\; L_nF'(M) = 0$ が成り立つ．}このとき関手 $F'\colon \Cat{C} \lto \Chain{\MOD{R}}$ は \textbf{非輪状} (acyclic) と呼ばれる． 
+        \end{description}
+    \end{enumerate}
+    このとき，\hyperref[def:nat]{自然変換} $\Phi \colon F \lto F'$ が\underline{自然な}\hyperref[def:chain-homotopy]{チェイン・ホモトピー}を除いて一意に定まる．
+
+    特に，$F,\, F'$ がどちらも自由かつ非輪状ならば $F \simeq F'$ であり，$F,\, F'$ を結ぶどの自然変換も互いに\hyperref[def:chain-homotopy]{チェイン・ホモトピック}である．
+\end{mytheo}
+
+\begin{proof}
+    ~\cite[p.165 thorem 8]{Spanier}を参照．
+\end{proof}
+
+$\bm{R}$ \textbf{係数}特異チェイン複体をとる関手 $S_\bullet (\mhyphen; R) \colon \TOP \lto \Chain{\MOD{R}}$ が自由かつ非輪状であることは，$\mathcal{M} = \Familyset[\big]{\Delta^q}{q \in \mathbb{Z}_{\ge 0}}$ おくと確認できる．
+
+
+\begin{mytheo}[label=thm:EZ, breakable]{Eilenberg-Zilberの定理}
+    2つの関手 $F,\, F' \colon \TOP^2 \lto \Chain{\MOD{R}}$ を
+    \begin{align}
+        F \bigl( (X,\, Y) \bigr) &\coloneqq S_\bullet (X \times Y), \\
+        F' \bigl( (X,\, Y) \bigr) &\coloneqq S_\bullet (X) \otimes_R S_\bullet(Y)
+    \end{align}
+    と定めると，これらは\hyperref[def:naturallyeq]{自然同値}である．i.e. \hyperref[def:nat]{自然変換} $A \colon F \lto F',\; B \colon F' \lto F$ が存在して，$\forall (X,\, Y) \in \Obj{\TOP^2}$ に対して合成
+    \begin{align}
+        S_\bullet (X\times Y) &\xrightarrow{A} S_\bullet(X) \otimes_R S_\bullet (Y) \xrightarrow{B} S_\bullet (X\times Y), \\
+        S_\bullet (X) \otimes_R S_\bullet(Y) &\xrightarrow{B} S_\bullet(X\times Y) \xrightarrow{B} S_\bullet (X) \otimes_R S_\bullet (Y)
+    \end{align}
+    が恒等写像に\hyperref[def:chain-homotopic]{チェイン・ホモトピック}で，かつ $A$ （resp. $B$）は\underline{自然な}\hyperref[def:chain-homotopic]{チェイン・ホモトピック}を除いて一意に定まる．
+    特に，$\forall n \in \mathbb{Z}$ に対して自然な同型
+    \begin{align}
+        \label{isom:EZ}
+        H_n (X \times Y) \xrightarrow{\cong} H_n \bigl( S_\bullet (X) \otimes_R S_\bullet (Y) \bigr) 
+    \end{align}
+    がある．
+\end{mytheo}
+
+\begin{proof}
+    $\mathcal{M} \coloneqq \bigl\{\, (\Delta^p\, \Delta^q)  \bigm| p,\, q \ge 0 \,\bigr\}$ とおく．
+    \begin{description}
+        \item[\textbf{(A)}] 　
+        　$\Delta^p \times \Delta^q \approx D^{p+q}$ であるから $\forall M \in \mathcal{M}$ は一点に可縮である．よって $\forall n \ge 1$ に対して $H^{-n} \bigl( F(M) \bigr) = 0$ であり $F$ は非輪状．
+        
+        　一方，\hyperref[col:Kunneth]{K\"unneth公式}より
+        \begin{align}
+            H^{-n} \bigl( S_\bullet(X) \otimes_R S_\bullet(Y) \bigr) &\cong \left( \bigoplus_{p+q = n} H^{-p} \bigl( S_\bullet(X) \bigr) \otimes_R H^{-q} \bigl( S_\bullet (Y) \bigr)   \right) \\
+            &\oplus \left( \bigoplus_{p+q=n-1} \Tor^R_1 \bigl( H^{-p} \bigl( S_\bullet(X) \bigr),\, H^{-q} \bigl( S_\bullet (Y) \bigr)   \bigr)  \right) 
+        \end{align}
+        がわかるが，$\Delta^p \cong D^p$ より $\forall n \ge 1$ に対して右辺は $0$ となり，$F'$ が非輪状であることがわかった．
+        \item[\textbf{(F)}] 　
+        　$S_q (X \times Y)$ は $\Hom{\TOP^2} \bigl( (\Delta^q,\, \Delta^q),\, (X,\, Y) \bigr)$ を基底にもち，$S_\bullet (X) \otimes_R S_\bullet (Y) = \bigoplus_{p+q=n} S_p(X) \otimes_R S_q(Y)$ は $\coprod_{p+q = n} \Hom{\TOP^2} \bigl( (\Delta^p,\, \Delta^q),\, (X,\, Y) \bigr) $ を基底に持つ．i.e. $F,\, F'$ はどちらも自由である．
+    \end{description}
+    以上より\hyperref[thm:AM]{非輪状モデル定理}を使うことができて所望の自然変換 $A \colon F \lto F',\. B \colon F'\lto F$ の存在と，自然なチェイン・ホモトピックを除いた一意性が言えた．
+
+    同型\eqref{isom:EZ}は命題\ref{prop:homotoic-basic}より従う．
+\end{proof}
+
+簡単のため，以降では\hyperref[thm:EZ]{Eilenberg-Zilberの定理}における自然変換 $A,\, B$ を一つに固定する．複体をとる段階では積は $A,\, B$ に依存するが，命題\ref{prop:homotoic-basic}よりホモロジー・コホモロジーをとってしまえばこの依存性は消えるので問題ない．
+
+\section{クロス積}
+
+\subsection{ホモロジーのクロス積}
+
+\begin{mydef}[label=def:algcr-homology]{ホモロジーの代数的クロス積}
+    チェイン複体 $C_\bullet,\, D_\bullet$ を与える．
+    自然な写像
+    \begin{align}
+        \algcr \colon H_p(C_\bullet) \otimes_R H_q(D_\bullet) \lto H_{p+q} (C_\bullet \otimes D_\bullet)
+    \end{align}
+    を，well-definedな対応
+    \begin{align}
+        [z] \otimes [w] \lmto [z \otimes w]
+    \end{align}
+    を線型に拡張することによって定義し\footnote{$[\mhyphen]$ はホモロジー類をとることを意味する．}，
+    ホモロジーの\textbf{代数的クロス積}と呼ぶ．$\algcr ([z] \otimes [w]) = [z \otimes w]$ のことを $[z] \algcr [w]$ と書く．
+\end{mydef}
+
+\begin{proof}
+    複体 $C_\bullet,\, D_\bullet$ の射をそれぞれ $\partial_\bullet,\, \partial'_\bullet$ と書き，\hyperref[def:tensor-complex]{複体のテンソル積}の射を $\delta_\bullet$ と書く．
+    $\forall z \in \Ker \partial_p,\; \forall w \in \Ker \partial_q$ および $\forall \bar{z} \in C_{p+1},\; \forall \bar{w} \in D_{q+1}$ に対して，
+    \begin{align}
+        &(z + \partial_{p+1} \bar{z}) \otimes (w + \partial'_{q+1} \bar{w}) - z \otimes w
+        % &=\partial_{p+1} \bar{z}  \otimes (w + \partial_{q+1} \bar{w}) +  z \otimes \partial_{q+1} \bar{w} \\
+        = z \otimes \partial_{q+1}' \bar{w} + \partial_{p+1} \bar{z} \otimes w + \partial_{p+1} \bar{z} \otimes \partial'_{q+1} \bar{w} \\
+        &= (-1)^p \bigl(\partial_p z \otimes \bar{w} + (-1)^p z \otimes \partial_{q+1}' \bar{w} \bigr) - (-1)^{p}\cancel{ \partial_p z} \otimes \bar{w}\\
+        &\quad +  \bigl(\partial_{p+1} \bar{z} \otimes w + (-1)^{p+1} \bar{z} \otimes \partial_{q}' w \bigr) - (-1)^{p+1} \bar{z} \otimes \cancel{\partial_{q}' w}\\
+        &\quad +  \bigl(\partial_{p+1} \bar{z} \otimes \partial_{q+1}' \bar{w} + (-1)^{p+1} \bar{z} \otimes \partial'_q \partial_{q+1}' \bar{w} \bigr) \\
+        &= \delta_{p+q} \bigl( (-1)^p z \otimes \bar{w} + \bar{z} \otimes w + \bar{z} \otimes \bar{w} \bigr) \in \Im \delta_{p+q}
+        % &= \partial \bigl( u \otimes ( w + \partial_{q+1} \bar{w}) + (-1)^p z \otimes \bar{w} \bigr) 
+    \end{align}
+    より\footnote{$\partial_p z = 0,\; \partial'_q w = 0$ に注意．} $[z] \algcr [w]$ は代表元の取り方によらず，$\algcr$ はwell-definedである．
+\end{proof}
+
+% $R$ が\hyperref[def:PID]{単項イデアル整域}のとき，\hyperref[def:algcr-homology]{代数的クロス積}が同型から「どの程度ずれているか」は\hyperref[col:Kunneth-Tor]{K\"unneth公式}によってわかる．
+
+位相空間 $X,\, Y \in \Obj{\TOP}$ を与える．定義\ref{def:algcr-homology}より，特異チェイン複体の上にwell-definedな写像
+\begin{align}
+    \algcr \colon H_p \bigl( S_\bullet (X) \bigr) \otimes_R H_q \bigl( S_\bullet (X) \bigr) \lto H_{p+q} \bigl( S_\bullet(X) \otimes_R S_\bullet(Y) \bigr) 
+\end{align}
+がある．一方，\hyperref[thm:EZ]{Eilenberg-Zilberの定理}より，$B$ の取り方によらない同型
+\begin{align}
+    B_* \colon H_* \bigl( S_\bullet (X) \otimes_R S_\bullet (Y) \bigr)  \xrightarrow{\cong} H_* \bigl( S_\bullet(X \times Y) \bigr) 
+\end{align}
+がある（記号は記法\eqref{not:SingularChain-Hom-morphism}の通り）．
+
+\begin{mydef}[label=def:homology-cross]{ホモロジーのクロス積}
+    合成
+    \begin{align}
+        \times  \coloneqq B_{p+q} \circ \algcr \colon H_p \bigl( S_\bullet (X) \bigr) \otimes_R H_q \bigl( S_\bullet (Y) \bigr) \lto H_{p+q} \bigl( S_\bullet(X \times Y) \bigr) 
+    \end{align}
+    のことを，ホモロジーの\textbf{クロス積}と呼び，$\forall \alpha \in H_p \bigl( S_\bullet(X) \bigr),\; \forall \beta \in H_p \bigl( S_\bullet(Y) \bigr) $ に対して $\alpha \times \beta \coloneqq \times(\alpha \otimes \beta)$ と書く．
+\end{mydef}
+
+\begin{mytheo}[label=thm:Kunneth-1]{K\"unneth公式}
+    $R$ を\hyperref[def:PID]{単項イデアル整域}とする．
+    このとき $\forall n \in \mathbb{Z}$ に対して分裂する短完全列
+    \begin{align}
+        0 &\lto \bigoplus_{p+q=n} H_p \bigl( S_\bullet(X) \bigr) \otimes_R H_{q} \bigl( S_\bullet(Y) \bigr) \\
+        &\xrightarrow{\times} H_n \bigl( S_\bullet(X \times Y) \bigr) \\
+        &\lto \bigoplus_{p+q=n-1} \Tor^R_1 \Bigl( H_p \bigl(S_\bullet (X)\bigr),\, H_{q} \bigl(S_\bullet (Y)\bigr) \Bigr) 
+    \end{align}
+    が存在する．
+\end{mytheo}
+
+\begin{proof}
+    自由加群からなる複体 $S_\bullet (X),\, S_\bullet(Y)$ に対して\hyperref[col:Kunneth-Tor]{K\"unneth公式}を適用してから\hyperref[thm:EZ]{Eilenberg-Zilberの定理}を使う．
+\end{proof}
+
+\begin{mycol}[]{体係数ホモロジーのクロス積}
+    $R$ が体ならば，\hyperref[def:homology-cross]{ホモロジーのクロス積}は次の同型を誘導する：
+    \begin{align}
+        H_n \bigl(S_\bullet(X \times Y)\bigr) = \bigoplus_{p+q=n} H_p \bigl( S_\bullet (X) \bigr) \otimes_R H_q \bigl( S_\bullet(Y)  \bigr)  
+    \end{align}
+\end{mycol}
+
+\begin{proof}
+    $R$ が体ならば $\Tor_1^R$ は $0$ になる（命題\ref{thm:proj-resol-PID}および\hyperref[def:Tor]{$\Tor$ の定義}を参照）． 
+\end{proof}
+
+\subsection{コホモロジーのクロス積}
+
+環 $R$ 上のチェイン複体 $C_\bullet$ の双対チェイン複体を
+\begin{align}
+    C^\bullet  \coloneqq \Hom{R} (C_\bullet,\, R)
+\end{align}
+で定義する．
+
+\begin{mydef}[label=def:algcr-cohomology]{コホモロジーの代数的クロス積}
+    チェイン複体 $C_\bullet,\, D_\bullet$ を与える．
+    自然な写像
+    \begin{align}
+        \cralg \colon H^p(C^\bullet) \otimes_R H^q(D^\bullet) \lto H^{p+q} \bigl( (C_\bullet \otimes_R D_\bullet)^\bullet \bigr)
+    \end{align}
+    を，well-definedな対応
+    \begin{align}
+        [\alpha] \otimes [\beta] \lmto \left[ \sum_{i,\, \abs{z_i} + \abs{w_i} = p+q} z_i \otimes w_i \lmto   \sum_{i,\, \abs{z_i} + \abs{w_i} = p+q} \alpha(z_i) \cdot \beta(w_i) \right]
+    \end{align}
+    を\footnote{$[\mhyphen]$ はコホモロジー類をとることを意味する．}線型に拡張することで定め，コホモロジーの\textbf{代数的クロス積}と呼ぶ．ただし $\alpha$ と $z_i$ の次数が異なる場合は $\alpha(z_i) = 0$ で，$\beta$ と $w_i$ についても同様である．
+\end{mydef}
+
+\begin{proof}
+    複体 $C^\bullet,\, D^\bullet$ の射をそれぞれ $\partial^\bullet,\, \partial'{}^\bullet$ と書き，\hyperref[def:tensor-complex]{複体のテンソル積}の射を $\delta^\bullet$ と書く．
+    $\forall \alpha \in \Ker \partial^p,\; \forall \beta \in \Ker \partial'{}^q$ および $\forall \bar{\alpha} \in C^{p-1},\; \forall \bar{\beta} \in D^{q-1}$ をとると
+    \begin{align}
+        &\sum_{i,\, \abs{z_i} + \abs{w_i} = p+q} (\alpha + \partial^{p-1} \bar{\alpha})(z_i) \cdot (\beta + \partial'{}^{q-1}\bar{\beta})(w_i) - \sum_{i,\, \abs{z_i} + \abs{w_i} = p+q} \alpha(z_i) \cdot \beta(w_i) \\
+        &= \sum_{i,\, \abs{z_i} + \abs{w_i} = p+q} \bigl( \alpha(z_i) \cdot \bar{\beta}(\partial'_{q}w_i) + \bar{\alpha} (\partial_{p} z_i) \cdot \beta(w_i) + \bar{\alpha} (\partial_{p} z_i) \cdot \bar{\beta}(\partial'_{q}w_i)  \bigr) \\
+        &= \sum_{i,\, (\abs{z_i},\,\abs{w_i}) = (p,\, q)} \Bigl( (-1)^{\abs{z_i}}\bigl(\alpha(\partial_p z_i) \cdot \bar{\beta}(w_i) + (-1)^{\abs{z_i}} \alpha(z_i) \cdot \bar{\alpha}(\partial'_{q}w_i) \bigr) \\
+        &\qquad +\bigl(\bar{\alpha} (\partial_{p} z_i) \cdot \beta(w_i) + (-1)^{\abs{z_i}} \bar{\alpha}(z_i) \cdot \beta(\partial'_q w_i) \bigr) \\
+        &\qquad +\bigl(\bar{\alpha} (\partial_{p} z_i) \cdot \bar{\beta}(\partial'_{q}w_i) + (-1)^{\abs{z_i}} \bar{\alpha}(z_i) \cdot \bar{\beta} (\partial'_{q-1}\partial'_q w_i )\bigr)  \Bigr) \\
+        &= \sum_{i} \Bigl( (-1)^{\abs{z_i}} (\alpha \otimes \bar{\beta})\bigl(\delta_{p+q} (z_i \otimes w_i) \bigr) \\
+        &\qquad +(\bar{\alpha} \otimes \beta)\bigl(\delta_{p+q} (z_i \otimes w_i)\bigr) \\
+        &\qquad +(\bar{\alpha} \otimes \bar{\beta})\bigl(\delta_{p+q} (z_i \otimes \partial'_{q}w_i) \bigr) \Bigr) \\
+        &= \delta^{p+q-1}\bigl( (-1)^p \alpha \otimes \bar{\beta} + \bar{\alpha} \otimes \beta + \bar{\alpha} \otimes \bar{\beta} \bigr) \left( \sum_{i} z_i \otimes w_i \right)
+    \end{align}
+    が成り立つ\footnote{$\alpha,\, \beta$ の引数は次数がそれぞれ $p,\, q$ でなければ $0$ になることに注意する．}のでwell-definedである．
+\end{proof}
+
+特異チェイン複体に上述の構成を適用することで
+\begin{align}
+    \cralg \colon H^p \bigl( S_\bullet (X) \bigr) \otimes_R H^q \bigl( S_\bullet (X) \bigr) \lto H^{p+q} \Bigl( \bigl(S_\bullet (X) \otimes S_\bullet(Y) \bigr)^\bullet \Bigr) 
+\end{align}
+を得る．一方，\hyperref[thm:EZ]{Eilenberg-Zilberの定理}からチェイン・ホモトピー同値写像
+\begin{align}
+    A \colon S_\bullet (X \times Y) \lto S_\bullet(X) \otimes_R S_\bullet (Y)
+\end{align}
+があるが，これの双対をとると
+\begin{align}
+    A^* \colon \bigl(  S_\bullet(X) \otimes_R S_\bullet (Y) \bigr)^* \lto S^* (X \times Y)
+\end{align}
+になる（記号は\eqref{not:SingularChain-Hom-morphism}）．
+さらにコホモロジーを取ることで，$A$ の取り方によらない同型
+\begin{align}
+    A^*\colon H^\bullet \bigl( S_\bullet (X) \otimes_R S_\bullet (Y) \bigr)^\bullet \lto H^\bullet \bigl( S^\bullet (X \times Y) \bigr) 
+\end{align}
+を得る（記号は\eqref{not:SingularCohomology-morphism}の通り）．
+
+\begin{mydef}[label=def:cohomology-cross]{コホモロジーのクロス積}
+    合成
+    \begin{align}
+        \times \coloneqq A^* \circ \cralg \colon H^p \bigl( S^\bullet (X) \bigr) \otimes H^q \bigl( S^\bullet (Y) \bigr) \lto H^{p+q} \bigl( S^\bullet(X \times Y) \bigr) 
+    \end{align}
+    のことをコホモロジーの\textbf{クロス積}と呼ぶ．
+\end{mydef}
+
+\section{カップ積とキャップ積}
+
+
+この節では，原則として記法\eqref{not:SCC}, \eqref{not:SH}を使う．
+
+対角写像を
+\begin{align}
+    \Delta \colon X \lto X \times X,\; x \lmto (x,\, x)
+\end{align}
+とおくと $\Delta \in \Hom{\TOP} (X,\, X\times X)$ である．
+このとき記法\eqref{not:SingularCohomology-morphism}に則って
+\begin{align}
+    \Delta^\bullet \colon H^\bullet (X \times X) \lto H^\bullet (X)
+\end{align}
+と略記する．
+
+\subsection{カップ積と特異コホモロジーの環構造}
+
+\begin{mydef}[label=def:cup]{カップ積}
+    $\forall a \in H^p (X),\; \forall b \in H^q (X)$ の\textbf{カップ積} (cup product) を次のように定義する：
+    \begin{align}
+        \bm{a \smile b} \coloneqq \Delta^{p+q} \bigl( a \times b \bigr) \in H^{p+q} (X)
+    \end{align}
+\end{mydef}
+つまり，
+\begin{align}
+    \smile \colon H^p(X) \otimes_R H^q(X) \lto H^{p+q} (X)
+\end{align}
+となる．バランス写像 $\Phi \colon H^p(X)\times H^q (Y) \lto H^p  (X)\otimes_R H^q (Y)$ を合成することで
+\begin{align}
+    \smile \colon H^p (X) \times H^q (X)  \lto H^{p+q} (X)
+\end{align}
+と書くこともできる．
+
+\begin{mylem}[label=lem:cup-basic]{カップ積の基本性質}
+    $\forall (f,\, g) \in \Hom{\TOP^2} \bigl( (X',\, Y'),\, (X,\, Y) \bigr) $ および $\forall a,\, b \in H^\bullet (X) ,\; \forall c \in H^\bullet  (Y)$ をとる．
+    $\mathrm{pr}_i \colon X\times Y \lto  X_i\; (i=1,\, 2)$ を射影とする．
+    \begin{enumerate}
+        \item $a \smile b = \Delta^\bullet (a \times b)$
+        \item $a \times b = \mathrm{pr}_X {}^\bullet (a) \smile \mathrm{pr}_Y{}^\bullet(b)$
+        \item $f^\bullet(a \smile b) = f^\bullet (a) \smile f^\bullet (b)$
+        \item $(f \times g)^\bullet (a \times c) = f^\bullet(a) \times g^\bullet(c)$
+    \end{enumerate}
+    
+\end{mylem}
+
+\begin{proof}
+    \begin{description}
+        \item[(1)] \hyperref[def:cup]{カップ積の定義}．
+        \item[(4)] \hyperref[thm:EZ]{Eilenberg-Zilberの定理}において $A,\, B$ が自然変換であることから従う．
+        \item[(3)] $(f \times f) \circ \Delta = \Delta \circ f$ であることと (4) から
+        \begin{align}
+            f^\bullet (a) \smile f^\bullet (b) &= \Delta^\bullet (f^\bullet (a) \times g^\bullet (b)) = \bigl( (f \times f) \circ \Delta \bigr)^\bullet (a \times b) \\
+            &= (\Delta \circ f)^\bullet (a \times b) = f^\bullet \bigl( \Delta^\bullet (a \times b) \bigr) = f^\bullet (a \smile b)
+        \end{align}
+        \item[(2)] $(\mathrm{pr}_X \times \mathrm{pr}_Y) \circ \Delta_{X\times Y} = \mathrm{id}_{X\times Y}$ であることと (4) 
+        \begin{align}
+            \mathrm{pr}_X{}^\bullet (a) \smile \mathrm{pr}_Y{}^\bullet (b) &= \Delta^\bullet_{X \times Y} \bigl( \mathrm{pr}_X{}^\bullet (a) \times \mathrm{pr}_Y{}^\bullet (c) \bigr) \\
+            &= \Delta_{X\times Y}^\bullet \bigl( (\mathrm{pr}_X \times \mathrm{pr}_Y)^\bullet (a \times c) \bigr) \\
+            &= \bigl( (\mathrm{pr}_X \times \mathrm{pr}_Y) \circ \Delta_{X\times Y} \bigr)^\bullet (a \times c) \\
+            &= \mathrm{id}_{X\times Y}^\bullet (a \times c) = a\times c
+        \end{align}
+    \end{description}
+    
+\end{proof}
+
+
+\begin{mydef}[label=def:d-approx]{対角近似}
+    $\forall X \in \Obj{\TOP}$ に対して，チェイン複体の射
+    \begin{align}
+        \tau \colon S_\bullet (X) \lto S_\bullet(X) \otimes_R S_\bullet (X)
+    \end{align}
+    は以下の条件を充たすとき\textbf{対角近似} (diagonal approximation) と呼ばれる：
+    \begin{enumerate}
+        \item 任意の $0$-単体 $\sigma$ に対して $\tau(\sigma) = \sigma \otimes \sigma$
+        \item $\tau$ は連続写像に関して自然である．i.e. $\forall f \in \Hom{\TOP}(X,\, Y)$ に対して図式\ref{cmtd:nat-d-approx}が可換になる
+    \end{enumerate}
+\end{mydef}
+\begin{figure}[H]
+    \centering
+    \begin{tikzcd}[row sep=large, column sep=large]
+        &S_\bullet (X) \ar[r, "S_\bullet (f)"] \ar[d, "\tau"] &S_\bullet (Y) \ar[d, "\tau"] \\
+        &S_\bullet (X) \otimes_R S_\bullet(X) \ar[r] &S_\bullet(Y) \otimes_R S_\bullet (Y)
+    \end{tikzcd}
+    \caption{対角近似の自然性}
+    \label{cmtd:nat-d-approx}
+\end{figure}%
+
+\hyperref[def:d-approx]{対角近似}と\hyperref[thm:EZ]{Eilenberg-Zilber map}は，片方が与えられるともう一方も定まる．従って，状況に応じて便利な方を使えば良い．
+
+\begin{mylem}[label=def:EZ-dapprox, breakable]{Eilenberg-Zilber map と対角近似の関係}
+    $A \colon S_\bullet (X \times Y) \xrightarrow{A} S_\bullet (X) \otimes_R S_\bullet (X)$ を与えると，対応する対角近似 $\tau \colon S_\bullet (X) \lto S_\bullet(X) \otimes_R S_\bullet (X)$ が
+    \begin{align}
+        \tau = A \circ \Delta_\bullet
+    \end{align}
+    によって定まる．
+
+    逆に，対角近似 $\tau$ が与えられると対応する $A$ が
+    \begin{align}
+        A = (\mathrm{pr}_X \otimes \mathrm{pr}_Y) \circ \tau
+    \end{align}
+    によって定まる．
+\end{mylem}
+
+\begin{proof}
+関手 $S_\bullet (\mhyphen)\colon \TOP \lto \Chain{\MOD{R}}$ は\hyperref[thm:AM]{自由}で，
+関手 $S_\bullet (\mhyphen) \otimes_R S_\bullet (\mhyphen)$ は\hyperref[thm:AM]{非輪状}である．
+従って\hyperref[thm:AM]{非輪状モデル定理}より\hyperref[def:d-approx]{対角近似} $\tau$ が自然なチェイン・ホモトピーを除いて一意に定まる．
+特に，\hyperref[thm:EZ]{Eilenberg-Zilber map} $A \colon S_\bullet (X \times Y) \xrightarrow{A} S_\bullet (X) \otimes_R S_\bullet (X)$ に対して $\tau = A \circ \Delta_\bullet$ は\hyperref[def:d-approx]{対角近似}である．
+\footnote{従って\hyperref[def:cup]{カップ積の定義}を
+\begin{align}
+    a \smile b = \tau^\bullet (a \cralg b)
+\end{align}
+とすることもできる．}
+
+逆に $(\mathrm{pr}_X \otimes \mathrm{pr}_Y) \circ \tau$ は関手 $F \colon (X,\, Y) \lmto S_\bullet (X \times Y),\; F' \colon (X,\, Y) \lmto S_\bullet(X) \otimes_R S_\bullet(Y)$ の間の\hyperref[def:nat]{自然変換}となる．そして定理\ref{thm:EZ}より，これはEilenberg-Zilber mapと自然にホモトピックである．
+\end{proof}
+
+\begin{mytheo}[label=thm:ring-cohomology, breakable]{特異コホモロジーの環構造}
+    全ての特異 $0$ 単体を $1 \in R$ に移すコサイクルのコホモロジー類を $1 \in H^0(X)$ と書く．
+    $\forall a,\, b,\, c \in H^\bullet (X)$ に対して以下が成り立つ：
+    \begin{enumerate}
+        \item $1 \smile a = a = a \smile 1$
+        \item $(a \smile b) \smile c = a \smile (b \smile c)$
+        \item $a \smile b = (-1)^{\abs{a} \abs{b}} b \smile a$
+    \end{enumerate}
+    従って，組 $\bigl(H^\bullet (X),\, +,\, \smile \bigr)$ は\hyperref[def:graded-mod]{次数付き可換環}になる．
+\end{mytheo}
+
+\begin{proof}
+    \begin{enumerate}
+        \item 
+    \end{enumerate}
+    
+\end{proof}
+
+\subsection{キャップ積と特異ホモロジーの加群構造}
+
+Kroneckerペアリング
+\begin{align}
+    \expval{\, ,\;} \colon S^\bullet (X) \times S_\bullet (X) \lto R
+\end{align}
+は，$a \in S^q(X),\; z \in S_p(X)$ に対して
+\begin{align}
+    \expval{a,\, z} \coloneqq 
+    \begin{cases}
+        a(z), &p=q \\
+        0, &\text{otherwise}
+    \end{cases}
+\end{align}
+として定めた．これを拡張して部分的なevaluation
+\begin{align}
+    E \colon S^\bullet X \otimes_R S_\bullet X \otimes_R S_\bullet X \lto S_\bullet X
+\end{align}
+を，次数が合っている時に
+\begin{align}
+    E(a \otimes z \otimes w) \coloneqq a(w) \otimes z
+\end{align}
+として定める（定義域の一般の元に対してはこれを線型に拡張する）．
+
+\begin{mydef}[label=def:cap-cochain]{コチェインのキャップ積}
+    $\forall a \in S^q(X),\;\forall z \in S_{p+q}(X)$ に対して\textbf{キャップ積} (cap product) を，\hyperref[thm:EZ]{Eilenberg-Zilberの定理}の $A$ を用いて
+    \begin{align}
+        \frown \colon S^q(X) \times S_{p+q} (X) \lto S_q(X),\; (a,\, z) \lmto E \bigl( a \otimes (A \circ \Delta_\bullet)(z) \bigr) 
+    \end{align}
+\end{mydef}
+
+または，\hyperref[def:d-approx]{対角近似} $\tau$ を用いて
+\begin{align}
+    a \frown z = E\bigl(a \otimes \tau(z)\bigr)
+\end{align}
+としてもよい．
+
+\begin{mylem}[label=lem:cap-1]{}
+    特異ホモロジー，コホモロジーの境界写像をそれぞれ $\partial_\bullet,\, \delta^\bullet$ と書く．
+    $\forall \alpha \in S^q(X),\, \forall z \in S_{p+q} (X)$ に対して以下が成り立つ：
+    \begin{align}
+        \partial_p(a \frown z) = (-1)^p \delta^q\alpha \frown z + \alpha \frown \partial_{p+q}z
+    \end{align}
+\end{mylem}
+
+\begin{proof}
+    $\tau(z) = \sum_{i,\; \abs{x_i} + \abs{y_i} = p+q} x_i \otimes y_i$ と書ける．このとき
+    \begin{align}
+        \theta_p (\alpha \frown z) &= \partial_p \left( \sum_{i,\; \abs{y_i} = q} \alpha(y_i) \cdot x_i  \right) = \sum_{i,\; \abs{y_i} = q} \alpha(y_i) \cdot \partial_p x_i, \\
+        \delta^q \alpha \frown z &= \sum_i \delta^p \alpha (y_i) \cdot x_i = \sum_{i,\;\abs{y_i} = q+1} \alpha(\partial_{q+1} y_i) \cdot x_i
+    \end{align}
+    なので，$\tau$ が\hyperref[def:chainmap]{チェイン複体の射}であることに注意すると
+    \begin{align}
+        \alpha \frown \partial_{p+q} z &= E(\alpha \otimes \tau(\partial_{p+q} z)) = E(\alpha \otimes \partial_{p+q} (\tau(z))) \\
+        &= E \left( \alpha \otimes \left( \sum_{i,\; \abs{x_i} + \abs{y_i} = p+q}\partial_{\abs{x_i}} x_i \otimes y_i + \sum_{i,\; \abs{x_i} + \abs{y_i} = p+q} (-1)^{\abs{x_i}} x_i \otimes \partial_{\abs{y_i}} y_i \right)  \right)  \\
+        &= \sum_{i,\; \abs{y_i} = q} \alpha(y_i) \cdot \partial_p x_i + \sum_{i,\, \abs{y_i} = q+1} (-1)^{p-1} \alpha(\partial_{q+1} y_i) \cdot x_i \\
+        &= \partial_p (a \frown z)  + (-1)^{p-1} \delta^q \alpha \frown z
+    \end{align}
+    となって示された．
+\end{proof}
+補題\ref{lem:cap-1}により，次の定義がwell-definedになる．
+\begin{mydef}[label=def:cap]{キャップ積}
+    \textbf{キャップ積} (cap product) を次のように定義する：
+    \begin{align}
+        \frown \colon H^q(X) \times H_{p+q} (X) &\lto H_p(X),\\
+        ([\alpha],\, [z]) &\lmto [\alpha \frown z]
+    \end{align}
+\end{mydef}
+
+\begin{mytheo}[label=thm:mod-homology]{特異ホモロジーの加群構造}
+    $\forall a,\, b \in H^\bullet (X),\; \forall z \in H_\bullet (X)$ に対して以下が成り立つ：
+    \begin{enumerate}
+        \item $\expval{a,\, b \frown z} = \expval{a \smile b,\, z}$
+        \item $a \frown (b \frown z) = (a \smile b) \frown z$
+    \end{enumerate}
+    (2) より，組 $\bigl( H_\bullet (X),\, +,\, \frown \bigr)$ は左 $H^\bullet (X)$ 加群になる．
+\end{mytheo}
+
+\begin{proof}
+    $a = [\alpha],\, b = [\beta]$ とおき，$\tau(z) = \sum_{i,\, \abs{x_i} + \abs{y_i} = \abs{z}} x_i \otimes y_i$ とおく．
+    \begin{enumerate}
+        \item \hyperref[def:cap-cochain]{コチェインのキャップ積の定義}より
+        \begin{align}
+            \expval{a,\, b \frown z} &= \alpha \left( E\left( \beta \otimes \sum_{i,\, \abs{x_i} + \abs{y_i} = \abs{z}} x_i \otimes y_i \right) \right) \\
+            &= \alpha  \sum_{i,\, \abs{x_i} + \abs{y_i} = \abs{z}} x_i \cdot \beta (y_i) \\
+            &= \sum_{i,\, \abs{x_i} + \abs{y_i} = \abs{z}} \alpha (x_i) \beta(y_i).
+        \end{align}
+        一方，\hyperref[def:algcr-cohomology]{コホモロジーの代数的クロス積の定義}より
+        \begin{align}
+            \expval{a \smile b,\, z} &= \bigl(\tau^\bullet (a \cralg b)\bigr) (z) \\
+            &= (a \cralg b)\bigl(\tau(z)\bigr) \\
+            &= \sum_{i,\, \abs{x_i} + \abs{y_i} = \abs{z}} \alpha (x_i) \beta(y_i)
+        \end{align}
+        が成り立つ．よって $\expval{a,\, b \frown z} = \expval{a \smile b,\, z}$ が言えた．
+        \item $\forall c \in H^{\abs{z} - \abs{b} - \abs{a}}$ を与える．このとき $\smile$ の\hyperref[thm:ring-cohomology]{結合則}より
+        \begin{align}
+            \expval{c,\, a \frown (b \frown z)} = \expval{c \smile a,\, b \frown z} = \expval{c \smile (a\smile b),\, z} = \expval{c,\, (a \smile b) \frown z}
+        \end{align}
+        が成り立ち，証明が完了する．
+    \end{enumerate}
+\end{proof}
+
+\subsection{スラント積}
+
+\begin{mydef}[label=def:slant-cochain]{コチェインのスラント積}
+    \hyperref[thm:EZ]{Eilenberg-Zilberの定理}における写像 $A \colon S_\bullet (X \times Y) \lto S_\bullet (X) \otimes_R S_\bullet(Y)$ を用いて，コチェインの\textbf{スラント積} (slant product) を次のように定義する：
+    \begin{align}
+        \backslash \colon S^q(Y) \times S_{p+q} (X \times Y) \lto S_p(X),\; (\alpha,\, z) \lmto E \bigl( \alpha \otimes A(z) \bigr) 
+    \end{align}
+\end{mydef}
+
+\begin{mydef}[label=def:slant]{スラント積}
+    \textbf{スラント積} (slant product) を次のように定義する：
+    \begin{align}
+        \backslash \colon H^q(Y) \times H_{p+q} (X \times Y) &\lto H_p(X),\\ 
+        ([\alpha],\, [z]) &\lmto [\alpha \backslash z]
+    \end{align}
+\end{mydef}
+
+対応関係は
+\begin{itemize}
+    \item \hyperref[def:cup]{カップ積} $\leftrightarrow$ \hyperref[def:cohomology-cross]{クロス積}
+    \item \hyperref[def:cap]{キャップ積} $\leftrightarrow$ \textbf{スラント積}
+\end{itemize}
+のようになっている．
+例えば定理\ref{thm:mod-homology}-(1) と対応して
+\begin{align}
+    \expval{a,\, b \backslash z} = \expval{a \times b,\, z}
+\end{align}
+が成り立つ．
+
+% \section{Alexander-Whitney対角近似}
+
+\section{空間対のカップとキャップ}
+
+$(X,\, A),\; (Y,\, B)$ を空間対とする．標準的射影
+\begin{align}
+    S_\bullet X \otimes_R S_\bullet Y \twoheadrightarrow \frac{S_\bullet X}{S_\bullet A} \otimes_R \frac{S_\bullet Y}{S_\bullet B}
+\end{align}
+の核は $S_\bullet A \otimes_R S_\bullet Y + S_\bullet X \otimes_R S_\bullet B$ なので準同型定理から自然な同型
+\begin{align}
+    \frac{S_\bullet X}{S_\bullet A} \otimes_R \frac{S_\bullet Y}{S_\bullet B} \cong \frac{S_\bullet X \otimes_R S_\bullet Y}{S_\bullet A \otimes_R S_\bullet Y + S_\bullet X \otimes_R S_\bullet B}
+\end{align}
+が従う．
+$X = Y$ とすると，対角近似 $\tau \colon S_\bullet X \lto  S_\bullet (X) \otimes_R S_\bullet (X)$ は $\tau(S_\bullet A) \subset S_\bullet A \otimes_R S_\bullet A,\; \tau (S_\bullet B) \subset S_\bullet B \otimes_R S_\bullet B$ を充たす．従って合成
+\begin{align}
+    S_\bullet X \xrightarrow{\tau} S_\bullet X \otimes_R S_\bullet X \twoheadrightarrow \frac{S_\bullet X \otimes_R S_\bullet X}{S_\bullet A \otimes_R S_\bullet X + S_\bullet X \otimes_R S_\bullet B}
+\end{align}
+の核は $S_\bullet A + S_\bullet B$ だから，準同型
+\begin{align}
+    \overline{\tau} \colon \frac{S_\bullet X}{S_\bullet A + S_\bullet B} \lto \frac{S_\bullet X \otimes_R S_\bullet X}{S_\bullet A \otimes_R S_\bullet X + S_\bullet X \otimes_R S_\bullet B}
+\end{align}
+が誘導される．
+
+\hyperref[def:algcr-cohomology]{コホモロジーの代数的クロス積}と $\overline{\tau}^\bullet$ の合成
+\begin{align}
+    \Hom{R} \left( \frac{S_\bullet X}{S_\bullet A},\, R \right) \otimes_R \Hom{R} \left( \frac{S_\bullet X}{S_\bullet B},\, R \right) &\xrightarrow{\cralg} \Hom{R} \left( \frac{S_\bullet X}{S_\bullet A} \otimes_R \frac{S_\bullet Y}{S_\bullet B},\, R \right) \\ 
+    &\cong \Hom{R} \left( \frac{S_\bullet X \otimes_R S_\bullet X}{S_\bullet A \otimes_R S_\bullet X + S_\bullet X \otimes_R S_\bullet B},\, R \right) \\
+    &\xrightarrow{\overline{\tau}^\bullet} \Hom{R} \left( \frac{S_\bullet X}{S_\bullet A + S_\bullet B},\, R \right) 
+\end{align}
+のコホモロジーをとることでカップ積
+\begin{align}
+    \label{eq:rel-cup}
+    H^p (X,\, A) \times H^q(X,\, B) \lto H^{p+q} \left( \Hom{R} \left( \frac{S_\bullet X}{S_\bullet A + S_\bullet B},\, R \right)   \right)
+\end{align}
+を誘導する．
+
+\begin{mydef}[label=def:exc-pair]{切除対}
+    位相空間 $X$ と，その部分空間 $A,\, B \subset X$ を与える．標準的包含
+    \begin{align}
+        S_\bullet (A) + S_\bullet (B) \hookrightarrow S_\bullet (A \cup B)
+    \end{align}
+    がチェイン・ホモトピー同値写像であるとき，部分空間の対$\{A,\, B\}$ を\textbf{切除対} (excisive pair) と呼ぶ．
+\end{mydef}
+
+チェイン・ホモトピーは\hyperref[def:Ab-func]{加法的関手}によって保存されるから，\hyperref[def:exc-pair]{切除対} $\{A,\, B\}$ に対して
+\begin{align}
+    \Hom{R} \bigl( S_\bullet (A \cup B),\, R \bigr) \lto \Hom{R} \bigl( S_\bullet (A) + S_\bullet (B),\, R \bigr) 
+\end{align}
+もまたチェイン・ホモトピー同値写像である．従って命題\ref{prop:chain-homotopy}より同型
+\begin{align}
+    \label{isom:relative-cup}
+    H^q (A \cup B) \cong H^q \Bigl( \Hom{R} \bigl( S_\bullet (A) + S_\bullet (B),\, R \bigr)  \Bigr) 
+\end{align}
+を誘導する．
+
+\hyperref[def:exc-pair]{切除対} $\{A,\, B\}$ に対して，横の2行が完全な図式
+\begin{align}
+    0 \lto S_\bullet A + S_\bullet B \lto  S_\bullet X \lto \frac{S_\bullet X}{S_\bullet A + S_\bullet B} \lto 0
+\end{align}
+\begin{center}
+    \begin{tikzcd}[row sep=large, column sep=large]
+        &0 \ar[r] &S_\bullet (A) + S_\bullet (B) \ar[r] \ar[d, hookrightarrow] & S_\bullet X \ar[r]\ar[d, "1"] &\frac{S_\bullet(X)}{S_\bullet (A) + S_\bullet (B)} \ar[r] \ar[d] &0 &(\text{exact}) \\
+        &0 \ar[r] &S_\bullet (A \cup B) \ar[r] & S_\bullet X \ar[r] &\frac{S_\bullet(X)}{S_\bullet (A \cup B)} \ar[r]&0 &(\text{exact})
+    \end{tikzcd}
+\end{center}
+がある．これの\hyperref[prop:LES-cohomology]{コホモロジー長完全列}をとると，同型\eqref{isom:relative-cup}により可換図式
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzcd}[sep=small]
+        &\cdots \ar[r] &H^q(S_\bullet (A) + S_\bullet (B))^\bullet \ar[r] \ar[d, "\cong"] & H^q (X) \ar[r]\ar[d, "="] &H^q \left(\frac{S_\bullet(X)}{S_\bullet (A) + S_\bullet (B)}\right)^\bullet \ar[r, "\delta^q"]\ar[d, red] &H^{q+1}(S_\bullet (A) + S_\bullet (B))^\bullet \ar[r] \ar[d, "\cong"] & H^{q+1} (X) \ar[r]\ar[d, "="] &\cdots \\
+        &\cdots \ar[r] &H^q(A \cup B) \ar[r] & H^q(X) \ar[r] &H^q (X,\, A \cup  B) \ar[r, "\delta'{}^q"]&H^{q+1}(A\cup B) \ar[r] &H^{q+1}(X) \ar[r] &\cdots
+    \end{tikzcd}
+\end{figure}%
+
+が得られる．5項補題により，赤色をつけた写像
+\begin{align}
+    H^q \left(\Hom{R}\left(\frac{S_\bullet(X)}{S_\bullet (A) + S_\bullet (B)},\, R\right)\right) \lto H^q (X,\, A \cup B) 
+\end{align}
+が同型であることがわかる．従って式\eqref{eq:rel-cup}から次の定理が言える：
+
+\begin{mytheo}[label=thm:relative-cup]{空間対のカップ積}
+    $\{A,\, B\}$ が\hyperref[def:exc-pair]{切除対}ならば，写像
+    \begin{align}
+        \smile \colon H^p(X,\, A) \times H^q(X,\, B) \lto H^{p+q} (X,\, A\cup B)
+    \end{align}
+    はwell-definedである．
+\end{mytheo}
+
+\begin{marker}
+    \begin{itemize}
+        \item $\{A,\, A\}$ は常に\hyperref[def:exc-pair]{切除対}である．従って $H^\bullet (X,\, A)$ は\hyperref[thm:relative-cup]{空間対のカップ積}によって環になる．
+        \item $\{A,\, \emptyset\}$ も常に\hyperref[def:exc-pair]{切除対}である．従って
+        \begin{align}
+            \smile \colon H^p(X,\, A) \times H^q(X) \lto H^{p+q} (X,\, A)
+        \end{align}
+        は常にwell-defined．
+    \end{itemize}
+\end{marker}
+
+キャップ積に関しても同様の定理が成り立つ：
+\begin{mytheo}[label=thm:relative-cap]{空間対のキャップ積}
+    $\{A,\, B\}$ が\hyperref[def:exc-pair]{切除対}ならば，写像
+    \begin{align}
+        \frown \colon H^q(X,\, A) \times H_{p+q}(X,\, A\cup B) \lto H_{p} (X,\, B)
+    \end{align}
+    はwell-definedである．
+\end{mytheo}
+
+\section{Poincar\"e双対}
+
+% \subsection{Poincar\"e双対}
+
+\begin{mytheo}[label=thm:Poincare-dual]{Poincar\"e双対定理}
+    $M$ を\underline{コンパクト}な\underline{向き付け可能}な $n$ 次元位相多様体とする．
+
+    このとき，左 $R$ 加群 $\pi$ に対して以下の同型がある：
+    \begin{align}
+        \frown [M] \colon H^p (M; \pi) \xrightarrow{\cong} H_{n-p} (M; \pi)
+    \end{align}
+    ただし，$[M]$ は\hyperref[thm:fundamental-class]{$M$ の基本類}である．
+\end{mytheo}
+
+\begin{proof}
+    ~\cite[p.276]{Milnor}や~\cite[p.241]{Hatcher}などを参照．
+\end{proof}
+
+
+\end{document}

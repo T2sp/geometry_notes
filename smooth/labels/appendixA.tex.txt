@@ -1,0 +1,75 @@
+\begin{mydef}[label=def:subbase]{準開基}
+\begin{mylem}[label=lem:continuous, breakable]{写像の連続性}
+\begin{mydef}[label=def.intensity_topo]{位相の強弱}
+\begin{marker}\label{remark:subbase}
+% \begin{mydef}[label=def:initial-topo]{始位相}
+% \begin{mydef}[label=def:final-topo]{終位相}
+\begin{mydef}[label=def:category, breakable]{圏}
+\begin{mydef}[label=def:initial-terminal]{始対象・終対象}
+\begin{mydef}[label=def:iso]{同型射}
+\begin{myprop}[label=prop:univ-initial-terminal]{始対象・終対象の一意性}
+\begin{mydef}[label=def:product]{積}
+			\label{cmtd:univ-product}
+\begin{myprop}[label=prop:unique-product]{積の一意性}
+\begin{myprop}[label=prop:product-sets, breakable]{圏 $\SETS$ における積の存在}
+		f &\lmto \bigl( p_X \circ f,\, p_Y \circ f \bigr) \label{eq:univ-product}
+\begin{myprop}[label=prop:product-top]{圏 $\TOP$ における積の存在}
+\begin{mycol}[label=col:continuous-product]{}
+\begin{marker}\label{remark:product}
+% 	\item $\Obj{\OP{\Cat{C}}} \coloneqq \Obj{\Cat{C}}$ \label{def:op-category}
+\begin{mydef}[label=def:sum]{和}
+			\label{cmtd:univ-sum}
+\begin{myprop}[label=prop:sum-sets]{圏 $\SETS$ における和の存在}
+		f &\lmto \bigl( f \circ i_1,\, f \circ i_2 \bigr) \label{eq:univ-sum}
+\begin{myprop}[label=prop:sum-top]{圏 $\TOP$ における和の存在}
+			\label{eq:disjoint-union-topology}
+\begin{marker}\label{remark:sum}
+% 	\label{def:dp}
+% \begin{myaxiom}[label=ax.choice]{選択公理}
+% 	\label{def.disjoint-union}
+% \begin{mydef}[label=def.disjoint_topo]{直和位相}
+\begin{mydef}[label=def:equalizer, breakable]{等化子}
+			\label{cmtd:univ-equalizer}
+\begin{myprop}[label=prop:equalizer-sets]{圏 $\SETS$ における等化子の存在}
+			\label{eq:equalizer-sets}
+\begin{myprop}[label=prop:equalizer-topo, breakable]{圏 $\TOP$ における等化子の存在}
+\begin{marker}\label{remark:equalizer}
+\begin{mydef}[label=def:coequalizer, breakable]{余等化子}
+			\label{cmtd:univ-coequalizer}
+\begin{myprop}[label=prop:coequalizer-sets]{圏 $\SETS$ における余等化子の存在}
+\begin{myprop}[label=prop:coequalizer-top]{圏 $\TOP$ における余等化子の存在}
+\begin{marker}\label{remark:coequalizer}
+\begin{mydef}[label=def:pullback, breakable]{引き戻し}
+			\label{cmtd:univ-pullback}
+\begin{myprop}[label=prop:pullback-sets]{圏 $\SETS$ における引き戻し}
+\begin{myprop}[label=prop:pullback-top]{圏 $\TOP$ における引き戻しの存在}
+\begin{marker}\label{remark:pullback}
+\begin{mydef}[label=def:pushout, breakable]{押し出し}
+			\label{cmtd:univ-pushout}
+\begin{myprop}[label=prop:pushout-sets]{圏 $\SETS$ における押し出し}
+\begin{myprop}[label=prop:pushout-top]{圏 $\TOP$ における押し出しの存在}
+\begin{marker}\label{remark:pushout}
+% \begin{mydef}[label=def:gluing]{位相空間の貼り合わせ}
+\begin{mydef}[label=def:op-category, breakable]{反対圏}
+\begin{mydef}[label=def:initial-topo, breakable]{始位相}
+\begin{mydef}[label=def:final-topo, breakable]{終位相}
+\begin{mydef}[label=def:functor, breakable]{関手}
+\begin{mydef}[label=def:diagram]{図式}
+\begin{mydef}[label=def:DG, breakable]{有向グラフ}
+\begin{mydef}[label=def:free-category]{自由圏}
+\begin{myexample}[label=ex:Free-0]{自由圏 $\bm{0}$}
+\begin{myexample}[label=ex:Free-1]{自由圏 $\bm{1}$}
+\begin{myexample}[label=ex:Free-2]{自由圏 $\bm{n}$}
+\begin{mydef}[label=def:commutative]{可換図式}
+\begin{mydef}[label=def:Cone, breakable]{錐の圏}
+\begin{mydef}[label=def:limit, breakable]{極限}
+			\label{cmtd:lim}
+\begin{myprop}[label=prop:unique-limit]{極限の一意性}
+\begin{myexample}[label=ex:limit-initial]{終対象}
+\begin{myexample}[label=ex:limit-product]{積}
+\begin{myexample}[label=ex:limit-equalizer]{等化子}
+\begin{myexample}[label=ex:limit-pullback]{引き戻し}
+\begin{myprop}[label=prop:limit-basic]{極限の存在}
+\begin{mycol}[label=col:limit-sets]{圏 $\SETS$ における極限}
+			\label{eq:limit-sets}
+\begin{mycol}[label=col:limit-sets]{圏 $\SETS$ における極限}

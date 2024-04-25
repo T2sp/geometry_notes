@@ -1,0 +1,60 @@
+\begin{myaxiom}[label=ax.equiv]{同値関係}
+\begin{myprop}[label=prop.equiv]{同値関係の性質}
+\begin{mydef}[label=def.quo-proj]{商集合・標準射影}
+\begin{myaxiom}[label=ax.topo]{位相空間の公理}
+\begin{mydef}[label=def.opbase]{開基}
+\begin{myprop}[label=prop.opbdet]{}
+\begin{mytheo}[label=ax.opbase]{開基の公理}
+\begin{mytheo}[label=thm.optotopo]{開基から構成される位相}
+\begin{mydef}[label=def:second-countable]{第2可算公理}
+\begin{mydef}[label=def:neighborhood]{近傍・開近傍}
+\begin{myprop}[label=prop.opdet]{開集合の特徴付け}
+\begin{mytheo}[label=thm:closure1]{閉包の特徴付け}
+\begin{mydef}[label=def:boundary-p, breakable]{集積点・境界点・内部}
+\begin{mydef}[label=def:boundary-topo]{境界・内部}
+\begin{mytheo}[label=thm:boundary]{境界・内部の特徴付け}
+	\tcbhighmath[]{\partial A \supset \partial \partial A} \label{eq:topo-boundary1}
+	&= \partial\partial A \cap \emptyset^c = \tcbhighmath[]{\partial\partial A} \label{eq:topo-boundary2}
+\begin{mydef}[label=def.reltopo]{相対位相}
+\begin{mydef}[label=def.prodtopo]{積位相}
+\begin{mydef}[label=def.quotopo]{商位相}
+\begin{myaxiom}[label=ax.metric]{距離の公理}
+\begin{mydef}[label=def:metric-space]{距離空間}
+\begin{mydef}[label=def:epsilon-neighbourhood]{$\varepsilon$近傍}
+\begin{mytheo}[label=thm.metrictopo]{距離空間の位相}
+\begin{mydef}[label=def:separation, breakable]{分離公理}
+			\coordinate [label=below:$x$] (x) at (0,0);
+			\coordinate [label=below:$y$] (y) at (2,0);
+				\node (V) [fill=red!10, draw=FireBrick, dashed, circle through=(P),label=45:\textcolor{red}{$V$}] at (y) {};
+			% \node (V) [fill=red!10, draw=FireBrick, dashed, circle through=(P),label=45:\textcolor{red}{$V$}] at (y) {};
+		\label{fig.T1}
+			\coordinate [label=below:$x$] (x) at (0,0);
+			\coordinate [label=below:$y$] (y) at (2,0);
+				\node (U) [fill=red!10, draw=FireBrick, dashed, circle through=(P),label=135:\textcolor{red}{$U$}] at (x) {};	
+				\node (V) [fill=red!10, draw=FireBrick, dashed, circle through=(Q),label=45:\textcolor{red}{$V$}] at (y) {};
+			% \node (U) [draw,dashed,red,circle through=(P),label=135:\textcolor{red}{$U$}] at (x) {};
+			% \node (V) [draw,dashed,red,circle through=(Q),label=45:\textcolor{red}{$V$}] at (y) {};
+		\label{fig.T2}
+			\coordinate [label=below:$x$] (x) at (0,0);
+			\node (F) [fill=blue!10, draw=Indigo, circle through=(R),label=below:\textcolor{blue}{$F$}] at (y) {};	
+				\node (U) [fill=red!10, draw=FireBrick, dashed, circle through=(P),label=135:\textcolor{red}{$U$}] at (x) {};	
+				\node (V) [fill=red!10, draw=FireBrick, dashed, circle through=(Q),label=45:\textcolor{red}{$V$}] at (y) {};
+		\label{fig.T3}
+			\node (F1) [fill=blue!10, draw=Indigo, circle through=(R),label=below:\textcolor{blue}{$F_1$}] at (x) {};	
+			\node (F2) [fill=blue!10, draw=Indigo, circle through=(S),label=below:\textcolor{blue}{$F_2$}] at (y) {};	
+				\node (U1) [fill=red!10, draw=FireBrick, dashed, circle through=(P),label=135:\textcolor{red}{$U_1$}] at (x) {};	
+				\node (U2) [fill=red!10, draw=FireBrick, dashed, circle through=(Q),label=45:\textcolor{red}{$U_2$}] at (y) {};
+		\label{fig.T4}
+	\label{fig.sep}
+\begin{mydef}[label=def:sequence-convergence]{点列の収束}
+\begin{myprop}[label=prop:Hausdorff-sequence-converge]{Hausdorff空間における点列の収束性}
+\begin{mytheo}[label=thm:separation-basic]{}
+\begin{mydef}[label=def.continuous]{連続性}
+\begin{myprop}[label=prop:cont-composite]{連続写像の合成は連続写像}
+	\label{def.edlogic}
+\begin{mydef}[label=def.homeo]{同相}
+\begin{mydef}[label=def.compact]{コンパクト}
+\begin{mydef}[label=def.joint]{連結空間}
+\begin{mytheo}[label=thm.connect]{}
+\begin{mytheo}[label=thm.unionc]{}
+\begin{mylem}[label=lem.connect]{}

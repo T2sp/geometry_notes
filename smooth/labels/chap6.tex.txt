@@ -1,0 +1,19 @@
+\begin{mydef}[label=def.unit]{単体複体} 
+\begin{mydef}[label=triangle]{多面体・三角形分割}
+\begin{mydef}[label=def.orient]{単体の向き} 
+\begin{mydef}[label=def.chain]{$l$-chain}
+\begin{mydef}[label=op_boundary]{境界作用素}
+\begin{myprop}[label=prop.op_boundary]{境界の境界} 
+\begin{mydef}[label=HomologyGroup]{ホモロジー群}
+\begin{mytheo}[label=thm:simplicial-topo]{ホモロジー群は位相不変量}
+\begin{mydef}[label=stdsimplex]{標準$k$-単体}
+\begin{mydef}[label=sg_k-simplez]{\cinfty 特異 $k$-単体} 
+\begin{mydef}[label=def.partial]{境界作用素} 
+\begin{mydef}[label=sg_HomologyGroup]{特異ホモロジー群}
+\begin{mydef}[label=def.int_k-form_sg]{特異 $k$ 単体上の積分}
+\begin{mytheo}[label=Stokes]{チェイン上のStokesの定理}
+\begin{mydef}[label=def.close]{閉形式・完全形式} 
+\begin{mydef}[label=def.deRham]{de Rhamコホモロジー群} 
+	\label{eq.dualpair}
+\begin{mytheo}[label=thm.deRham]{Poincar\'{e}双対}
+\begin{mylem}[label=Poincare]{Poincar\'{e}の補題}

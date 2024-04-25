@@ -1,0 +1,7 @@
+\begin{mylem}[label=lem:sets,breakable]{集合論の小定理集}
+            &\textcolor{red}{\Longrightarrow}\quad \exists x \in X \setminus U,\; y = f(x) \label{eq:apD-4-1-1}\\
+            \label{eq.apD-4-1-2}
+\begin{mylem}[label=lem:finite-bijection]{有限集合上の単射と全射}
+	b(x) = \label{eq:apD-bump}
+    \label{fig:apD-bump}
+\begin{mylem}[label=gen_cinfty]{\cinfty 関数の拡張}

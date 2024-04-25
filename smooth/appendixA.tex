@@ -1,0 +1,2023 @@
+\documentclass[geometry_main]{subfiles}
+
+\begin{document}
+
+\setcounter{chapter}{0}
+
+\chapter{集合と位相のあれこれ}
+
+一部の議論は\hyperref[def.opbase]{開基}だけでは不十分なので，\textbf{準開基}の概念を導入する：
+\begin{mydef}[label=def:subbase]{準開基}
+	位相空間 $(X,\, \mathscr{O})$ の位相の部分集合 $\mathcal{SB} \subset \mathscr{O}$ が\textbf{準開基} (subbase) であるとは，
+    \begin{align}
+        \Bigl\{\, S_1 \cap \cdots \cap S_n \Bigm| \Familyset[\big]{S_i}{i = 1,\, \cdots,\, n} \subset \mathcal{SB},\; n=0,\, 1,\, \dots \,\Bigr\}
+    \end{align}
+    が $\mathscr{O}$ の\hyperref[def.opbase]{開基}になることをいう\footnote{$n=0$ のときは $X$ である．}．
+\end{mydef}
+次に，写像の連続性を判定する際に便利な補題を用意しておく：
+\begin{mylem}[label=lem:continuous, breakable]{写像の連続性}
+    $(X,\, \mathscr{O}_X),\, (Y,\, \mathscr{O}_Y),\, (Z,\, \mathscr{O}_Z)$ を位相空間，$\mathcal{SB}_Y \subset \mathscr{O}_Y$ を $Y$ の\hyperref[def:subbase]{準開基}，$\mathcal{B}_Y \subset \mathscr{O}_Y$ を $Y$ の\hyperref[def.opbase]{開基}とする．
+	% 直積集合 $X \times Y$ には\hyperref[def.prodtopo]{積位相}を入れる．i.e. 部分集合族
+    % \begin{align}
+    %     \mathcal{B}_{X \times Y} \coloneqq \bigl\{\, U \times V \subset X \times Y \bigm| U \in \mathscr{O}_X,\; V \in \mathscr{O}_Y \,\bigr\} 
+    % \end{align}
+    % が $X \times Y$ の開基である．
+    \begin{enumerate}
+        \item 写像 $f \colon X \lto Y$ が\hyperref[def.continuous]{連続} $\iff$ $\forall S \in \mathcal{SB}_Y$ に対して $f^{-1}(S) \in \mathscr{O}_X$
+        \item 写像 $f \colon X \lto Y$ が\hyperref[def.continuous]{連続} $\iff$ $\forall B \in \mathcal{B}_Y$ に対して $f^{-1}(B) \in \mathscr{O}_X$
+        % \item $\forall x_0 \in X,\; \forall y_0 \in Y$ について，標準的包含
+        % \begin{align}
+        %     i_1{}_{y_0} &\colon X \lto X \times Y,\; x \lmto (x,\, y_0) \\
+        %     i_2{}_{x_0} &\colon Y \lto X \times Y,\; y \lmto (x_0,\, y)
+        % \end{align}
+        % は\hyperref[def.continuous]{連続}である．
+        % \item 標準的射影
+        % \begin{align}
+        %     p_1 &\colon X \times Y \lto X,\; (x,\, y) \lmto x \\
+        %     p_2 &\colon X \times Y \lto Y,\; (x,\, y) \lmto y \\
+        % \end{align}
+        % は\hyperref[def.continuous]{連続}である．
+        % \item 写像 $f \colon X \times Y \lto Z$ が\hyperref[def.continuous]{連続}ならば，$\forall x_0 \in X,\; \forall y_0 \in Y$ に対して制限 $f|_{\{x_0\} \times Y},\; f|_{X \times \{y_0\}}$ も\hyperref[def.continuous]{連続}である．
+        % \item 写像 $f \colon Z \lto X \times Y,\; z \lmto \bigl( f_1(z),\, f_2(z) \bigr)$ が\hyperref[def.continuous]{連続}ならば写像 $f_1 \colon Z \lto X,\; f_2 \colon Z \lto Y$ も\hyperref[def.continuous]{連続}である．
+    \end{enumerate}
+\end{mylem}
+
+\begin{proof}
+    \begin{enumerate}
+        \item 
+        \begin{description}
+            \item[\textbf{$\bm{(\Longrightarrow)}$}] $\forall S \in \mathcal{SB}_Y$ は $Y$ の開集合なので明らか．
+            \item[\textbf{$\bm{(\Longleftarrow)}$}] $\forall U \in \mathscr{O}_Y$ を1つとって固定する．準基の定義より集合
+            \begin{align}
+                \mathcal{B} \coloneqq \Bigl\{\, S_1 \cap \cdots \cap S_n \Bigm| \Familyset[\big]{S_i}{i = 1,\, \cdots,\, n} \subset \mathcal{SB},\; n=0,\, 1,\, \dots \,\Bigr\}
+            \end{align}
+            は $Y$ の\hyperref[def.opbase]{開基}だから，ある部分集合族 $\Familyset[\big]{B_\lambda}{\lambda \in \Lambda} \subset \mathcal{B}$ が存在して $U = \bigcup_{\lambda \in \Lambda} B_\lambda$ が成り立つ．
+            示すべきは $f^{-1}(U) \in \mathscr{O}_X$ だが，
+            \begin{align}
+                f^{-1}(U) = \bigcup_{\lambda \in \Lambda} f^{-1}(B_\lambda)
+            \end{align}
+            なので $\forall \lambda \in \Lambda$ について $f^{-1} (B_\lambda) \in \mathscr{O}_X$ を示せば十分．
+            ところで $B_\lambda \in \mathscr{B}$ なので，ある $S_1,\, \dots ,\, S_n \in \mathcal{SB}_Y$ が存在して $B_\lambda = \bigcap_{i=1}^n S_i$ と書ける．このとき仮定より
+            \begin{align}
+                f^{-1}(B_\lambda) = f^{-1}\left( \bigcap_{i=1}^n S_i \right)  = \bigcap_{i=1}^n f^{-1}(S_i) \in \mathscr{O}_X
+            \end{align}
+            が言える．
+        \end{description}
+        \item \hyperref[def.opbase]{開基}は\hyperref[def:subbase]{準開基}でもあるので (1) より従う．
+    \end{enumerate}
+\end{proof}
+
+
+% \section{位相の強弱}
+
+位相空間 $X,\, Y$ の間の写像 $f \colon X \to Y$ の連続性の定義\ref{def.continuous}から，$X$ に開集合が多く，$Y$ に開集合が少ないほど $f$ は連続になりやすいと言える．
+
+\begin{mydef}[label=def.intensity_topo]{位相の強弱}
+	集合 $X$ 上に二つの位相 $\mathscr{O}_1,\, \mathscr{O}_2$ を与える．
+	\begin{align}
+		\mathscr{O}_1 \subset \mathscr{O}_2
+	\end{align}
+	が成り立つことを，\textbf{$\bm{\mathscr{O}_1}$ は $\bm{\mathscr{O}_2}$ より弱い (weaker) ，粗い (coarser) } 位相であるとか，\textbf{$\bm{\mathscr{O}_2}$ は $\bm{\mathscr{O}_1}$ より強い (stronger) ，細かい (finer) } 位相であると表現する．
+\end{mydef}
+
+\begin{marker}\label{remark:subbase}
+	集合 $X$ の部分集合族 $\mathcal{SB} \subset 2^X$ を\hyperref[def:subbase]{準開基}とする $X$ の位相 $\mathscr{O} \subset 2^X$ は，$\bm{\mathcal{SB}}$ \textbf{を含む $\bm{X}$ の位相のうち最弱のものである．}
+\end{marker}
+
+% \begin{mydef}[label=def:initial-topo]{始位相}
+% 	位相空間 $(Y,\, \mathscr{O}_Y)$ と\underline{写像} $f \colon \textcolor{blue}{X} \to Y$ を与える．
+% 	$f$ による $\textcolor{blue}{X}$ の\textbf{始位相} (initial topology)\footnote{この命名の由来は，後で位相空間の圏における極限を定義する際に明らかになる．\textbf{極限位相} (lomit topology) とか，\textbf{射影的位相} (projective topology) と呼ばれる場合もある．}とは，
+% 	$\textcolor{blue}{X}$ の部分集合族
+% 	\begin{align}
+% 		\mathscr{O}_{\textcolor{blue}{X}} (f^{-1}) \coloneqq \bigl\{ f^{-1}(V) \subset \textcolor{blue}{X} \bigm| V \in \mathscr{O}_Y \bigr\} \subset 2^{\textcolor{blue}{X}}
+% 	\end{align}
+% 	のことを言う．
+
+% 	$\mathscr{O}_X(f^{-1})$ は $\bm{f}$ \textbf{が連続となるような} $\textcolor{blue}{\bm{X}}$ \textbf{の位相のうち最弱 (coarsest) なものである．}
+% \end{mydef}
+% \begin{proof}
+% 	位相空間の公理\ref{ax.topo}を充していることは始位相\ref{def:final-topo}の場合とほぼ同じ議論で示せる．
+	
+% 	定義から明らかに $\mathscr{O}_X(f^{-1})$ は最弱である．
+% \end{proof}
+
+% \begin{mydef}[label=def:final-topo]{終位相}
+% 	位相空間 $(X,\, \mathscr{O}_X)$ と\underline{写像} $f \colon X \to \textcolor{blue}{Y}$ を与える．
+% 	$f$ による $\textcolor{blue}{Y}$ の\textbf{終位相} (final topology)\footnote{この命名の由来は，後で位相空間の圏における余極限を定義する際に明らかになる．\textbf{余極限位相} (colomit topology) とか，\textbf{帰納的位相} (inductive topology) と呼ばれる場合もある．}とは，
+% 	$\textcolor{blue}{Y}$ の部分集合族
+% 	\begin{align}
+% 		\mathscr{O}_{\textcolor{blue}{Y}} (f) \coloneqq \bigl\{ V \subset \textcolor{blue}{Y} \bigm| f^{-1}(V) \in \mathscr{O}_X \bigr\} \subset 2^{\textcolor{blue}{Y}}
+% 	\end{align}
+% 	のことを言う．
+
+% 	$\mathscr{O}_Y(f)$ は $\bm{f}$ \textbf{が連続となるような} $\textcolor{blue}{\bm{Y}}$ \textbf{の位相のうち最強 (finest) なものである．}
+% \end{mydef}
+
+% \begin{proof}
+% 	位相空間の公理\ref{ax.topo}を充していることを確認する
+% 	\begin{description}
+% 		\item[\textbf{(O1)}] $f$ が写像であることから $f^{-1}(Y) = X$ および $f^{-1}(\emptyset) = \emptyset$ が成り立つ．
+% 		\item[\textbf{(O2)}] 
+% 		\begin{align}
+% 			V_1,\, \dots ,\, V_n \in \mathscr{O}_Y(f) \quad &\Longrightarrow \quad f^{-1}(V_1),\, \cdots ,\, f^{-1}(V_n) \in \mathscr{O}_X \\
+% 			&\Longrightarrow \quad f^{-1}\left( \bigcap_{i=1}^n V_i \right) = \bigcap_{i=1}^n f^{-1}(V_i) \in \mathscr{O}_X \\
+% 			&\Longrightarrow \quad \bigcap_{i=1}^n V_i \in \mathscr{O}_Y(f).
+% 		\end{align}
+% 		\item[\textbf{(O3)}] 
+% 		\begin{align}
+% 			\{V_\lambda \mid \lambda \in \Lambda\} \subset \mathscr{O}_Y(f) \quad &\Longrightarrow \quad \forall \lambda \in \Lambda,\; f^{-1}(V_\lambda) \in \mathscr{O}_X \\
+% 			&\Longrightarrow \quad f^{-1}\left( \bigcup_{\lambda\in \Lambda} V_i \right) = \bigcup_{\lambda \in \Lambda} f^{-1}(V_\lambda) \in \mathscr{O}_X \\
+% 			&\Longrightarrow \quad \bigcup_{\lambda \in \Lambda} V_\lambda \in \mathscr{O}_Y(f).
+% 		\end{align}
+% 	\end{description}
+	
+% 	定義から明らかに $\mathscr{O}_Y(f)$ は最強である．
+% \end{proof}
+
+\section{位相空間の圏}
+
+第1章で\hyperref[def.prodtopo]{積位相}・\hyperref[def.quotopo]{商位相}を定義した．
+これらは，ある位相空間 $X,\, Y$ を素材にして新しい位相空間を作る手法であった．
+このような構成のフレームワークを圏の言葉を使って整理してみよう．
+
+\begin{mydef}[label=def:category, breakable]{圏}
+	\textbf{圏} (category) $\Cat{C}$ とは，以下の4種類のデータからなる：
+	\begin{itemize}
+		\item \textbf{対象} (object) と呼ばれる要素の集まり\footnote{$\Obj{\Cat{C}}$ は，集合論では扱えないほど大きなものになっても良い．}
+		\begin{align}
+			\bm{\Obj{\Cat{C}}}
+		\end{align}
+		
+		\item $\forall A,\, B \in \Obj{\Cat{C}}$ に対して，$A$ から $B$ への\textbf{射} (morphism) と呼ばれる要素の\underline{集合}
+		\begin{align}
+			\bm{\Hom{\Cat{C}}(A,\, B)}
+		\end{align}
+		
+		\item $\forall A \in \Obj{\Cat{C}}$ に対して，$A$ 上の\textbf{恒等射} (identity morphism) と呼ばれる射
+		\begin{align}
+			\bm{\mathrm{Id}_A} \in \Hom{\Cat{C}}(A,\, A)
+		\end{align}
+		
+		\item $\forall A,\, B,\, C \in \Obj{\Cat{C}}$ と $\forall f \in \Hom{\Cat{C}}(A,\, B),\, \forall g \in \Hom{\Cat{C}}(B,\, C)$ に対して，$f$ と $g$ の\textbf{合成} (composite) と呼ばれる射 $\bm{g \circ f} \in \Hom{\Cat{C}}(A,\, C)$ を対応させる集合の写像
+		\begin{align}
+			\bm{\circ} \colon \Hom{\Cat{C}}(A,\, B) \times \Hom{\Cat{C}}(B,\, C) \lto \Hom{\Cat{C}}(A,\, C),\; (f,\, g) \lmto g\circ f
+		\end{align}
+	\end{itemize}
+	これらの構成要素は，次の2条件を満たさねばならない：
+	\begin{enumerate}
+		\item \textbf{(unitality)}：任意の射 $f \colon A \lto B$ に対して
+		\begin{align}
+			f \circ \mathrm{Id}_A = f,\quad \mathrm{Id}_B \circ f = f
+		\end{align}
+		が成り立つ．
+		\item \textbf{(associativity)}：任意の射 $f \colon A \lto B,\; g \colon B \lto C,\; h \colon C \lto D$ に対して
+		\begin{align}
+			h \circ (g \circ f) = (h \circ g) \circ f
+		\end{align}
+		が成り立つ．
+	\end{enumerate}
+\end{mydef}
+
+\begin{marker}
+	要素 $f \in \Hom{\Cat{C}} (A,\, B)$ を
+	\begin{align}
+		\bm{f \colon A \lto B}
+	\end{align}
+	のように矢印で表すことがある．$A$ は $f$ の\textbf{始域} (domain)，$B$ は $f$ の\textbf{終域} (codomain) と呼ばれ，それぞれ
+	\begin{align}
+		\bm{\dom f} \coloneqq A,\quad \bm{\cod f} \coloneqq B
+	\end{align}
+	と書かれる．
+\end{marker}
+
+
+素直な例として，\textbf{集合と写像の圏} $\SETS$ がある．これは
+\begin{itemize}
+	\item $\Obj{\SETS}$ は，すべての集合の集まり．
+	\item $\Hom{\SETS}(X,\, Y)$ は，集合 $X$ と $Y$ の間の全ての写像がなす集合．
+	\item 任意の集合 $X$ に対して，恒等射 $\mathrm{Id}_X \in \Hom{\SETS}(X,\, X)$ とは，恒等写像 $\mathrm{id}_X \colon X \lto X$ のこと．
+	\item 射 $f \in \Hom{\SETS}(X,\, Y),\; g \in \Hom{\SETS}(Y,\, Z)$ の合成とは，写像の合成 $g\circ f \colon X \lto Z$ のこと．
+\end{itemize}
+として構成される\hyperref[def:category]{圏}のことを言う．
+幾何学の舞台となる\textbf{位相空間の圏}は，よく $\TOP$ と表記されるが，次のようにして構成される：
+\begin{itemize}
+	\item $\Obj{\TOP}$ はすべての\hyperref[ax.topo]{位相空間}の集まり．
+	\item $\Hom{\TOP}(X,\, Y)$ とは，位相空間 $X$ と $Y$ の間の全ての\hyperref[def.continuous]{連続写像}が成す集合．
+	\item 任意の位相空間 $X$ に対して，恒等射 $\mathrm{Id}_X \in \Hom{\TOP}(X,\, X)$ とは恒等写像 $\mathrm{id}_X \colon X \lto X$ のこと\footnote{恒等写像 $\mathrm{id}_X$ は，$X$ の任意の開集合 $U \subset X$ に対して $(\mathrm{id}_X)^{-1}(U) = U \subset X$ が $X$ の開集合となるので連続写像である．}．
+	\item 射 $f \in \Hom{\TOP}(X,\, Y),\; g \in \Hom{\TOP}(Y,\, Z)$ の合成とは，写像の合成 $g \circ f \colon X \lto Z$ のこと\footnote{命題\ref{prop:cont-composite}より，連続写像同士の合成は連続写像であることに注意．}．
+\end{itemize}
+一般の圏 $\Cat{C}$ において，射 $f \in \Hom{\Cat{C}}(X,\, Y)$ はただの集合の要素なのであって写像とは限らない．従って $f$ の性質を調べる際に元の行き先を具体的に追跡することができない場合もある．
+幸いにして，圏 $\SETS,\, \TOP$ における射は写像なので，このような心配はしなくても本書の中では問題ない．
+
+\subsection{始対象と終対象}
+
+\begin{mydef}[label=def:initial-terminal]{始対象・終対象}
+	\hyperref[def:category]{圏} $\Cat{C}$ を与える．
+	\begin{itemize}
+		\item 対象 $\bm{I} \in \Obj{\Cat{C}}$ が\textbf{始対象} (initial object) であるとは，
+		$\forall \textcolor{blue}{Z} \in \Obj{\Cat{C}}$ に対して射
+		\begin{align}
+			\bm{I} \lto \forall \textcolor{blue}{Z}
+		\end{align}
+		がただ一つだけ存在すること．
+		\item 対象 $\bm{T} \in \Obj{\Cat{C}}$ が\textbf{終対象} (terminal object) であるとは，
+		$\forall \textcolor{blue}{Z} \in \Obj{\Cat{C}}$ に対して射
+		\begin{align}
+			\forall\textcolor{blue}{Z} \lto \bm{T}
+		\end{align}
+		がただ一つだけ存在すること．
+	\end{itemize}
+\end{mydef}
+この定義は，\textbf{任意の}対象に対してある\textbf{一意的な}射が存在する，という風な構造をしている．
+このような特徴付けを\textbf{普遍性} (universal property) と呼ぶ．
+
+任意の圏において，2つの対象が「交換可能」であることを表すのが\textbf{同型射}の概念である．
+\begin{mydef}[label=def:iso]{同型射}
+	\hyperref[def:category]{圏} $\Cat{C}$ を与える．
+	\begin{itemize}
+		\item 射 $f \colon A \lto B$ が\textbf{同型射} (isomorphism) であるとは，射 $g \colon B \lto A$ が存在して
+		$ g \circ f = \mathrm{Id}_A \AND f \circ g = \mathrm{Id}_B$ を充たすこと．
+		このとき $f$ と $g$ は互いの\textbf{逆射} (inverse) であると言い，$g = \bm{f^{-1}},\; f = \bm{g}^{-1}$ と書く\footnote{逆射は存在すれば一意である．}．
+		\item $A,\, B \in \Obj{\Cat{C}}$ の間に同型射が存在するとき，対象 $A$ と $B$ は\textbf{同型} (isomorphic) であると言い，$\bm{A\cong B}$ と書く．
+	\end{itemize}
+\end{mydef}
+
+圏 $\SETS$ における同型射とは，全単射のことである．
+\textbf{圏 $\TOP$ における同型射とは，\hyperref[def.homeo]{同相写像}に他ならない．}
+
+\begin{myprop}[label=prop:univ-initial-terminal]{始対象・終対象の一意性}
+	\hyperref[def:category]{圏} $\Cat{C}$ の始対象・終対象は，存在すれば\hyperref[def:iso]{同型}を除いて一意である．
+\end{myprop}
+
+\begin{proof}
+	$I,\, I' \in \Obj{\Cat{C}}$ がどちらも\hyperref[def:initial-terminal]{始対象}であるとする．\hyperref[def:initial-terminal]{始対象の普遍性}により
+	次のような射が一意的に存在する：
+	\begin{center}
+		\begin{tikzcd}[row sep=large, column sep=large]
+			&I \ar[r, red, dashed, "a"] &I' \\
+			&I \ar[r, red, dashed, "b"] &I
+		\end{tikzcd}
+	\end{center}
+	これらを合成すると射 $b \circ a \colon I \lto I$ が得られるが，一方で
+	\hyperref[def:category]{圏の定義}から恒等射 $\mathrm{Id}_I \colon I \lto I$ も存在する：
+	\begin{center}
+		\begin{tikzcd}[row sep=large, column sep=large]
+			&I \ar[dr, red, dashed, "a"]\ar[rr, red, dashed, "\mathrm{id}_I"]& &I \\
+			& &I' \ar[ur, red, dashed, "b"]
+		\end{tikzcd}
+	\end{center}
+	\hyperref[def:initial-terminal]{始対象の普遍性}より射 $I \lto I$ は一意でなくてはならないから，
+	$b \circ a = \mathrm{Id}_I$ である．
+	全く同様の議論により $a \circ b = \mathrm{Id}_{I'}$ も従うので，$I$ と $I'$ は\hyperref[def:iso]{同型}である．
+
+	終対象の一意性も全く同様の議論によって示せる．
+\end{proof}
+基本的に，普遍性による定義には同じ論法が使える．
+命題\ref{prop:univ-initial-terminal}の主張には「存在すれば」と言う枕詞がついている．
+従って\textbf{考えている圏において実際に\hyperref[def:initial-terminal]{始対象・終対象}が存在するかどうかは全く別の問題である．}
+
+\begin{myprop}[]{圏 $\SETS$ における始対象・終対象の存在}
+	圏 $\SETS$ において，
+	\begin{itemize}
+		\item 空集合 $\emptyset$ は\hyperref[def:initial-terminal]{始対象}である．
+		\item 1点集合 $\{\mathrm{pt}\}$ は\hyperref[def:initial-terminal]{終対象}である．
+	\end{itemize}
+\end{myprop}
+
+\begin{proof}
+	$\forall \textcolor{blue}{Z} \in \Obj{\SETS}$ をとる．
+	\begin{itemize}
+		\item $\emptyset$ から $\textcolor{blue}{Z}$ への写像 $f$ とは，部分集合 $f \subset \emptyset \times \textcolor{blue}{Z}$ であって命題 $\forall s \; (s \in \emptyset \Longrightarrow \exists ! t \in \textcolor{blue}{Z},\; (s,\, t) \in f )$ が真になるもののことであった．
+		$s \in \emptyset$ は常に偽なのでこの命題は任意の $f \subset \emptyset \times \textcolor{blue}{Z}$ について成り立つが，
+		集合論の約束により $\emptyset \times \textcolor{blue}{Z} = \emptyset$ なので結局 $f = \emptyset$ となって一意性が示された．
+		\item $\textcolor{blue}{Z}$ から $\{\mathrm{pt}\}$ への写像は定数写像 $c \colon \textcolor{blue}{Z} \lto \{\mathrm{pt}\},\; x \lmto \mathrm{pt}$ のみである．
+	\end{itemize}
+\end{proof}
+
+\begin{myprop}[]{圏 $\TOP$ における始対象・終対象の存在}
+	圏 $\TOP$ において，
+	\begin{itemize}
+		\item 空集合 $\emptyset$ は\hyperref[def:initial-terminal]{始対象}である．
+		\item 1点が成す位相空間 $\{\mathrm{pt}\}$ は\hyperref[def:initial-terminal]{終対象}である．
+	\end{itemize}
+\end{myprop}
+
+\begin{proof}
+	$\forall \phase{\textcolor{blue}{Z}} \in \Obj{\TOP}$ をとる．
+	$\SETS$ \textbf{における証明中に登場した射が連続写像であることを示せば良い}．
+	\begin{itemize}
+		\item $\SETS$ における証明から，写像 $\emptyset \colon \emptyset \lto \textcolor{blue}{Z}$ が一意に存在する．明らかにこれは連続である．
+		\item $\SETS$ における証明から，写像 $c \colon \textcolor{blue}{Z} \lto \{\mathrm{pt}\}$ は定数写像のみである．
+		\hyperref[ax.topo]{位相空間の公理}から $\{\mathrm{pt}\}$ の開集合は $\emptyset,\; \{\mathrm{pt}\}$ のみであり，
+		$c^{-1}(\emptyset) = \emptyset,\; c^{-1}(\{\mathrm{pt}\}) = X$ はどちらも $X$ の開集合なので $c$ は連続である．
+	\end{itemize}
+\end{proof}
+
+
+\subsection{積と和}
+
+まず，任意の圏における積を普遍性を用いて定義する．
+\begin{mydef}[label=def:product]{積}
+	\hyperref[def:category]{圏} $\Cat{C}$ と，その対象 $X,\, Y \in \Obj{\Cat{C}}$ を与える．
+	$X$ と $Y$ の\textbf{積} (product) とは， 
+	\begin{itemize}
+		\item $\bm{X \times Y}$ と書かれる $\Cat{C}$ の対象
+		\item \textbf{標準的射影} (canonical projection) と呼ばれる2つの射
+		\begin{align}
+			\bm{p_X} &\in \Hom{\Cat{C}}(\bm{X \times Y},\, X) \\ 
+			\bm{p_Y} &\in \Hom{\Cat{C}}(\bm{X \times Y},\, Y)
+		\end{align}
+	\end{itemize}
+	の組であって，以下の普遍性を充たすもののこと：
+	\begin{description}
+		\item[\textbf{(積の普遍性)}] $\forall  \textcolor{blue}{Z} \in \Obj{\Cat{C}}$ および $\forall \textcolor{blue}{f} \in \Hom{\Cat{C}}(\textcolor{blue}{Z},\, X),\; \forall \textcolor{blue}{g} \in \Hom{\Cat{C}}(\textcolor{blue}{Z},\, Y)$ に対して，
+		射 $\textcolor{red}{f \times g} \in \Hom{\Cat{C}}(\textcolor{blue}{Z},\, \bm{X \times Y})$ が一意的に存在して図式\ref{cmtd:univ-product}を可換にする．
+		\begin{figure}[H]
+			\centering
+			\begin{tikzcd}[row sep=large, column sep=large]
+				& &\forall \textcolor{blue}{Z} \ar[dl, blue, "f"']\ar[dr, blue, "g"]\ar[d, red, dashed, "\exists ! f \times g"] & \\
+				&X &\bm{X \times Y} \ar[l, "\bm{p_X}"] \ar[r, "\bm{p_Y}"'] &Y
+			\end{tikzcd}
+			\caption{積の普遍性}
+			\label{cmtd:univ-product}
+		\end{figure}%
+	\end{description}
+\end{mydef}
+
+\begin{myprop}[label=prop:unique-product]{積の一意性}
+	圏 $\Cat{C}$ の積は，存在すれば\hyperref[def:iso]{同型}を除いて一意である．
+\end{myprop}
+
+\begin{proof}
+	もう1つの圏 $\Cat{C}$ の対象 $P \in \Obj{\Cat{C}}$ と射 $\pi_{X} \colon P \lto X,\; \pi_Y \colon P \lto Y$ の組が\hyperref[cmtd:univ-prod]{積の普遍性}を充しているとする：
+	\begin{center}
+		\begin{tikzcd}[row sep=large, column sep=large]
+			& &\forall \textcolor{blue}{Z} \ar[dl, blue, "f"']\ar[dr, blue, "g"]\ar[d, red, dashed, "\exists ! f \times g"] & \\
+			&X &X \times Y \ar[l, "p_X"] \ar[r, "p_Y"'] &Y \\
+			& &\forall \textcolor{blue}{Z} \ar[dl, blue, "f"']\ar[dr, blue, "g"]\ar[d, red, dashed, "\exists ! h"] & \\
+			&X &P \ar[l, "\pi_X"] \ar[r, "\pi_Y"'] &Y
+		\end{tikzcd}
+	\end{center}
+	このとき，$Z = X \times Y,\, P$ と選ぶことで
+	\begin{center}
+		\begin{tikzcd}[row sep=large, column sep=large]
+			% & &X \times Y \ar[dl, "p_X"']\ar[dr, "p_Y"]\ar[d, red, dashed, "\exists ! \mathrm{Id}_{X \times Y}"] & \\
+			% &X &X \times Y \ar[l, "p_X"] \ar[r, "p_Y"'] &Y \\
+			& &P \ar[dl, "\pi_X"']\ar[dr, "\pi_Y"]\ar[d, red, dashed, "\exists ! \pi_X \times \pi_Y"] & \\
+			&X &X \times Y \ar[l, "p_X"] \ar[r, "p_Y"']\ar[d, red, dashed, "\exists! h"] &Y \\
+			&  &P \ar[ul, "\pi_X"]\ar[ur, "\pi_Y"'] & \\
+			& &X \times Y \ar[dl, "p_X"']\ar[dr, "p_Y"]\ar[d, red, dashed, "\exists ! h"] & \\
+			&X &P \ar[l, "\pi_X"] \ar[r, "\pi_Y"']\ar[d, red, dashed, "\exists! \pi_X \times \pi_Y"] &Y \\
+			&  &X \times Y \ar[ul, "p_X"]\ar[ur, "p_Y"'] &
+		\end{tikzcd}
+	\end{center}
+	が成り立つ．
+	一方で可換図式
+	\begin{center}
+		\begin{tikzcd}[row sep=large, column sep=large]
+			% & &X \times Y \ar[dl, "p_X"']\ar[dr, "p_Y"]\ar[d, red, dashed, "\exists ! \mathrm{Id}_{X \times Y}"] & \\
+			% &X &X \times Y \ar[l, "p_X"] \ar[r, "p_Y"'] &Y \\
+			& &P \ar[dl, "\pi_X"']\ar[dr, "\pi_Y"]\ar[dd, red, dashed, "\exists ! \mathrm{Id}_P"] & \\
+			&X & &Y \\
+			&  &P \ar[ul, "\pi_X"]\ar[ur, "\pi_Y"'] & \\
+			& &X \times Y \ar[dl, "p_X"']\ar[dr, "p_Y"]\ar[dd, red, dashed, "\exists ! \mathrm{Id}_{X \times Y}"] & \\
+			&X & &Y \\
+			&  &X \times Y \ar[ul, "p_X"]\ar[ur, "p_Y"'] &
+		\end{tikzcd}
+	\end{center}
+	も成り立つが，\hyperref[def:product]{積の普遍性}から赤点線で書いた矢印は一意でなくてはならない．従って
+	\begin{align}
+		h \circ (\pi_X \times \pi_Y) = \mathrm{Id}_{P} \AND (\pi_X \times \pi_Y) \circ h = \mathrm{Id}_{X \times Y}
+	\end{align}
+	が示された．
+\end{proof}
+
+$\SETS$ における積とは，直積集合のことである．
+\begin{myprop}[label=prop:product-sets, breakable]{圏 $\SETS$ における積の存在}
+	圏 $\SETS$ とその対象 $X,\, Y \in \Obj{\SETS}$ に対して，
+	\begin{itemize}
+		\item 直積集合 $X \times Y \in \Obj{\SETS}$
+		\item 標準的射影
+		\begin{align}
+			p_X &\colon X \times Y \lto X,\, (x,\, y) \lmto x \\
+			p_Y &\colon X \times Y \lto Y,\, (x,\, y) \lmto y
+		\end{align}
+	\end{itemize}
+	の組は（圏論的な）\hyperref[def:product]{積}である．
+\end{myprop}
+
+\begin{proof}
+	$\forall  \textcolor{blue}{Z} \in \Obj{\Cat{C}}$ を1つとる．
+	\hyperref[def:product]{積の普遍性}は，写像
+	\begin{align}
+		\psi \colon \Hom{\SETS}(\textcolor{blue}{Z},\, X \times Y) &\lto \Hom{\SETS}(\textcolor{blue}{Z},\, X) \times \Hom{\SETS}(\textcolor{blue}{Z},\, Y) \\
+		f &\lmto \bigl( p_X \circ f,\, p_Y \circ f \bigr) \label{eq:univ-product}
+	\end{align}
+	が全単射であることと同値である．
+	\begin{description}
+		\item[\textbf{(全射性)}] 　
+		
+		　$\forall (f_1,\, f_2) \in \Hom{\SETS}(\textcolor{blue}{Z},\, X) \times \Hom{\SETS}(\textcolor{blue}{Z},\, Y)$ を1つとる．
+		このとき写像 $f \in \Hom{\SETS}(\textcolor{blue}{Z},\, X \times Y)$ を，$\forall z \in \textcolor{blue}{Z}$ に対して
+		\begin{align}
+			f(z) = \bigl( f_1(z),\, f_2(z) \bigr) 
+		\end{align}
+		を充たすものとして定義すると
+		\begin{align}
+			p_X \circ f (z) &= f_1(z),\\ 
+			p_Y \circ f (z) &= f_2(z)
+		\end{align}
+		が成り立つので $(f_1,\, f_2) = \psi(f)$ である．
+		\item[\textbf{(単射性)}] 　
+		
+		　$f,\, g \in \Hom{\SETS}(\textcolor{blue}{Z},\, X \times Y)$ が
+		$\psi (f) = \psi(g)$ を充たすとする．このとき $\forall z \in \textcolor{blue}{Z}$ に対して
+		$(x,\, y) \coloneqq g(z)$ とおけば
+		\begin{align}
+			x &= p_X \circ g (z) = p_X \circ f(z),\\ 
+			y &= p_Y \circ g (z) = p_Y \circ f(z)
+		\end{align}
+		が成り立つので，
+		\begin{align}
+			g(z) = \bigl( x,\, y \bigr) = \bigl( p_X \circ f(z),\, p_Y \circ f(z) \bigr) = f(z)
+		\end{align}
+		が言える．i.e. $f = g$ であり，$\psi$ は単射である．
+	\end{description}
+\end{proof}
+
+
+
+圏 $\TOP$ における（圏論的な）\hyperref[def:product]{積}を構成するには，\hyperref[prop:product-sets]{$\SETS$ の積}の上に適切な位相を入れると良い．
+つまり，位相空間 $\phase{X}$ と $\phase{Y}$ の\hyperref[def:product]{積}とは，
+\begin{itemize}
+	\item \hyperref[prop:product-sets]{$\SETS$ の積} $X \times Y$ の上に，
+	\item \hyperref[prop:product-sets]{$\SETS$ の積の標準的射影} $p_X,\, p_Y$ が $\TOP$ の射，i.e. \hyperref[def.continuous]{連続写像}になるような位相 $\mathscr{O}_{X \times Y}$ 
+\end{itemize}
+を入れて構成される位相空間 $(X \times Y,\, \mathscr{O}_{X \times Y})$ のことである．
+幸い，見慣れた\hyperref[def.prodtopo]{積空間}はこれらの条件を充している：
+\begin{myprop}[label=prop:product-top]{圏 $\TOP$ における積の存在}
+	圏 $\TOP$ とその対象 $\phase{X},\, \phase{Y} \in \Obj{\TOP}$ に対して，
+	\begin{itemize}
+		\item \hyperref[prop:product-sets]{$\SETS$ の積} $X \times Y$ の上に，
+		部分集合族
+		\begin{align}
+			\bigl\{\, U \times V \subset X \times Y \bigm| U \in \mathscr{O}_X,\, V \in \mathscr{O}_Y \,\bigr\} 
+		\end{align}
+		を\hyperref[def.opbase]{開基}とする位相 $\mathscr{O}_{X\times Y}$ を入れてできる位相空間
+		\begin{align}
+			(X \times Y,\, \mathscr{O}_{X \times Y}) \in \Obj{\TOP}
+		\end{align}
+		\item \hyperref[prop:product-sets]{$\SETS$ の積の標準的射影}
+		\begin{align}
+			p_X &\colon X \times Y \lto X,\, (x,\, y) \lmto x \\
+			p_Y &\colon X \times Y \lto Y,\, (x,\, y) \lmto y
+		\end{align}
+	\end{itemize}
+	の組は（圏論的な）\hyperref[def:product]{積}である．
+\end{myprop}
+
+\begin{proof}
+	$\forall U \in \mathscr{O}_X,\, \forall V \in \mathscr{O}_Y$ に対して
+	\begin{align}
+		p_X^{-1}(U) &= U \times Y, \\
+		p_Y^{-1}(V) &= X \times V
+	\end{align}
+	が成り立つが，$X \in \mathscr{O}_X,\, Y \in \mathscr{O}_Y$ なので右辺はどちらも開基に属する．i.e. $p_X^{-1}(U) \in \mathscr{O}_{X \times Y},\; p_Y^{-1}(V) \in \mathscr{O}_{X \times Y}$ であり，$p_X,\, p_Y$ はどちらも連続である．
+	\hyperref[cmtd:univ-product]{積の普遍性}は\hyperref[prop:product-sets]{$\SETS$ の積の普遍性}から従う．
+\end{proof}
+
+\begin{mycol}[label=col:continuous-product]{}
+	$\forall \phase{X},\, \phase{Y},\, \phase{Z} \in \Obj{\TOP}$ を与える．
+
+	このとき，写像 $f \colon Z \lto X \times Y,\; z \lmto \bigl( f_1(z),\, f_2(z) \bigr) $ が\hyperref[def.continuous]{連続}ならば
+	2つの写像 $f_1 \colon Z \lto X,\; z \lmto f_1(z),\; f_2 \colon Z \lto Y,\; z \lmto f_2(z)$ はどちらも連続である．
+\end{mycol}
+
+\begin{proof}
+	命題\ref{prop:product-top}より標準的射影 $p_X \colon X \times Y \lto X,\; p_Y \colon X \times Y \lto Y$ はどちらも連続だから，
+	$f_1 = p_X \circ f,\; f_2 = p_Y \circ f$ はどちらも連続写像同士の合成となり，連続である．
+\end{proof}
+
+位相 $\mathscr{O}_{X \times Y}$ の開基は
+\begin{align}
+	\bigl\{\, U \times V \bigm| U \in \mathscr{O}_X,\, V \in \mathscr{O}_Y \,\bigr\} 
+	&=\bigl\{\, (U \cap X) \times (V \cap Y) \bigm| U \in \mathscr{O}_X,\, V \in \mathscr{O}_Y \,\bigr\} \\
+	&= \bigl\{\, (U \times Y) \cap (X \times V) \bigm| U \in \mathscr{O}_X,\, V \in \mathscr{O}_Y \,\bigr\} 
+\end{align}
+であるから，$\mathscr{O}_{X \times Y}$ は部分集合族
+\begin{align}
+	&\bigl\{\, (U \times Y) \bigm| U \in \mathscr{O}_X \,\bigr\} \cup \bigl\{\, (X \times V) \bigm| V \in \mathscr{O}_Y \,\bigr\} \\
+	=\; &\bigl\{\, p_X^{-1}(U) \subset X \times Y \bigm| U \in \mathscr{O}_X \,\bigr\} \cup \bigl\{\, p_Y^{-1}(V) \subset X \times Y \bigm| V \in \mathscr{O}_Y \,\bigr\} 
+\end{align}
+を\hyperref[def:subbase]{準開基}に持つ．
+
+\begin{marker}\label{remark:product}
+	つまり，位相 $\mathscr{O}_{X \times Y}$ とは，\textbf{$\bm{p_X},\, \bm{p_Y}$ の両方を連続にする\hyperref[def.intensity_topo]{最弱の}位相である．}
+\end{marker}
+
+
+% \subsection{和}
+
+% 圏 $\Cat{C}$ の\textbf{反対圏} (opposite category) $\OP{\Cat{C}}$ とは，
+% \begin{itemize}
+% 	\item $\Obj{\OP{\Cat{C}}} \coloneqq \Obj{\Cat{C}}$ \label{def:op-category}
+% 	\item $\Hom{\OP{\Cat{C}}} (A,\, B) \coloneqq \Hom{\Cat{C}}(\textcolor{red}{B},\, \textcolor{red}{A})$
+% 	\item 合成
+% 	\begin{align}
+% 		\OP{\circ} \colon \Hom{\OP{\Cat{C}}}(A,\, B) \times \Hom{\OP{\Cat{C}}}(B,\, C) \lto \Hom{\OP{\Cat{C}}}(A,\, C),\; (f,\, g) \lmto g\circ f
+% 	\end{align}
+% 	は，$\Cat{C}$ における合成を $\circ$ と書いたときに
+% 	\begin{align}
+% 		g \OP{\circ} f \coloneqq f \circ g
+% 	\end{align}
+% 	と定める．
+% \end{itemize}
+% のようにして構成される\hyperref[def:category]{圏}のことである．
+% 要するに，$\Cat{C}$ と対象は同じだが\textbf{矢印が全て逆向き}になっているような圏のこと．
+
+\begin{mydef}[label=def:sum]{和}
+	\hyperref[def:category]{圏} $\Cat{C}$ と，その対象 $X,\, Y \in \Obj{\Cat{C}}$ を与える．
+	$X$ と $Y$ の\textbf{和} (sum)，もしくは\textbf{余積} (coproduct) とは， 
+	\begin{itemize}
+		\item $\bm{X \amalg Y}$ と書かれる $\Cat{C}$ の対象
+		\item \textbf{標準的包含} (canonical injection) と呼ばれる2つの射 
+		\begin{align}
+			\bm{i_X} &\in \Hom{\Cat{C}} (X,\, \bm{X \amalg Y})\\ 
+			\bm{i_Y} &\in \Hom{\Cat{C}} (Y,\, \bm{X \amalg Y})
+		\end{align}
+	\end{itemize}
+	の組であって，以下の普遍性を充たすもののこと：
+	\begin{description}
+		\item[\textbf{(和の普遍性)}] $\forall  \textcolor{blue}{Z} \in \Obj{\Cat{C}}$ および $\forall \textcolor{blue}{f} \in \Hom{\Cat{C}}(X,\, \textcolor{blue}{Z}),\; \forall \textcolor{blue}{g} \in \Hom{\Cat{C}}(Y,\, \textcolor{blue}{Z})$ に対して，
+		$\textcolor{red}{f \amalg g} \in \Hom{\Cat{C}}(\bm{X \amalg Y},\, \textcolor{blue}{Z})$ が一意的に存在して図式\ref{cmtd:univ-sum}を可換にする．
+		\begin{figure}[H]
+			\centering
+			\begin{tikzcd}[row sep=large, column sep=large]
+				& &\forall \textcolor{blue}{Z} \ar[from=dl, blue, "f"]\ar[from=dr, blue, "g"']\ar[from=d, red, dashed, "\exists ! f \amalg g"'] & \\
+				&X &\bm{X \amalg Y} \ar[from=l, "\bm{i_X}"'] \ar[from=r, "\bm{i_Y}"] &Y
+			\end{tikzcd}
+			\caption{和の普遍性}
+			\label{cmtd:univ-sum}
+		\end{figure}%
+	\end{description}
+	% 反対圏 $\OP{\Cat{C}}$ における\hyperref[def:product]{積}のことと言っても良い．
+\end{mydef}
+
+\begin{myprop}[]{和の一意性}
+	圏 $\Cat{C}$ の和は，存在すれば\hyperref[def:iso]{同型}を除いて一意である．
+\end{myprop}
+
+\begin{proof}
+	\hyperref[prop:unique-product]{積の一意性}の証明と全く同様の論法で示せる．
+\end{proof}
+
+それでは，圏 $\SETS$ の\hyperref[def:sum]{和}を構成してみよう．
+\begin{myprop}[label=prop:sum-sets]{圏 $\SETS$ における和の存在}
+	圏 $\SETS$ とその対象 $X,\, Y \in \Obj{\SETS}$ に対して，
+	\begin{itemize}
+		\item 次のように定義される $\bm{X \sqcup Y} \in \Obj{\SETS}$\footnote{接バンドルを念頭において，成分を通常の非交和とは逆の順番に書いた．}
+		\begin{align}
+			\bm{X \sqcup Y} \coloneqq \bigl\{\, (1,\, x) \bigm| x \in X \,\bigr\} \cup \bigl\{\, (2,\, y) \bigm| y \in Y \,\bigr\} 
+		\end{align}
+		この集合は $X$ と $Y$ の\textbf{非交和} (disjoint union) と呼ばれる．
+		\item 標準的包含
+		\begin{align}
+			i_1 &\colon X \lto X \sqcup Y,\; x \lmto (1,\, x) \\
+			i_2 &\colon Y \lto X \sqcup Y,\; y \lmto (2,\, y)
+		\end{align}
+	\end{itemize}
+	の組は（圏論的な）\hyperref[def:sum]{和}である．
+\end{myprop}
+
+\begin{proof}
+	$\forall  \textcolor{blue}{Z} \in \Obj{\Cat{C}}$ を1つとる．
+	\hyperref[def:sum]{和の普遍性}は，写像
+	\begin{align}
+		\psi \colon \Hom{\SETS}(X \sqcup Y,\, \textcolor{blue}{Z}) &\lto \Hom{\SETS}(X,\, \textcolor{blue}{Z}) \times \Hom{\SETS}(Y,\, \textcolor{blue}{Z}) \\
+		f &\lmto \bigl( f \circ i_1,\, f \circ i_2 \bigr) \label{eq:univ-sum}
+	\end{align}
+	が全単射であることと同値である．
+	\begin{description}
+		\item[\textbf{(全射性)}] 　
+		
+		　$\forall (f_0,\, f_1) \in \Hom{\SETS}(X,\, \textcolor{blue}{Z}) \times \Hom{\SETS}(Y,\, \textcolor{blue}{Z})$ を1つとる．
+		このとき写像 $f \in \Hom{\SETS}(X \sqcup Y,\, \textcolor{blue}{Z})$ を，$\forall (\delta,\, z) \in X \sqcup Y$ に対して
+		\begin{align}
+			f(\delta,\, z) = 
+			\begin{cases}
+				f_1(z), &\delta = 1, \\
+				f_2(z), &\delta = 2
+			\end{cases}
+		\end{align}
+		を充たすものとして定義すると，$\forall x \in X,\, \forall y \in Y$ に対して
+		\begin{align}
+			f \circ i_1(x) &= f_1(x),\\ 
+			f \circ i_2 (y) &= f_2(y)
+		\end{align}
+		が成り立つので $(f_1,\, f_2) = \psi(f)$ である．
+		\item[\textbf{(単射性)}] 　
+		
+		　$f,\, g \in \Hom{\SETS}(X \sqcup Y,\, \textcolor{blue}{Z})$ が
+		$\psi (f) = \psi(g)$ を充たすとする．このとき $\forall (\delta,\, z) \in X \sqcup Y$ に対して
+		$\delta =1$ のとき
+		\begin{align}
+			g \circ i_1 (z) = f \circ i_1(z)
+		\end{align}
+		が，$\delta = 2$ のとき
+		\begin{align}
+			g \circ i_2 (z) = f\circ i_2(z)
+		\end{align}
+		がそれぞれ成り立つので，
+		\begin{align}
+			g(\delta,\, z) = 
+			\begin{cases}
+				f \circ i_1(z) = f(\delta,\, z), &\delta=1 \\
+				f \circ i_2(z) = f(\delta,\, z), &\delta=2
+			\end{cases}
+		\end{align}
+		が言える．i.e. $f = g$ であり，$\psi$ は単射である．
+	\end{description}
+\end{proof}
+
+圏 $\TOP$ において，2つの対象 $\phase{X},\, \phase{Y} \in \Obj{\TOP}$ の（圏論的な）\hyperref[def:sum]{和}を構成するには，\hyperref[prop:sum-sets]{$\SETS$ の和} $X \amalg Y$ の上に適切な位相を入れて
+標準的包含 $i_1,\, i_2$ が連続になるようにすれば良い．
+% 例えば $i_1,\, i_2$ による\hyperref[def:final-topo]{終位相}の共通部分：
+% \begin{align}
+% 	\mathscr{O}_{X \amalg Y} &\coloneqq \mathscr{O}_X(i_1) \cap \mathscr{O}_Y(i_2) \\
+% 	&= \bigl\{\, U \subset X \amalg Y \bigm| i_1^{-1}(U) \in \mathscr{O}_X \AND i_2^{-1}(U) \in \mathscr{O}_Y \,\bigr\}
+% \end{align}
+% このようにして構成された位相空間 $\phase{X \amalg Y}$ のことを\textbf{直和位相空間}と呼ぶ．
+% そのためには，\textbf{先述の\hyperref[prop:product-sets]{積の構成}において登場した射の向きを逆にするだけでよい}．
+% \begin{itemize}
+% 	\item \textbf{直和} (disjoint union) とする：
+% 	\begin{align}
+% 		X \amalg Y \coloneqq \bigl\{\, (x,\, 0) \bigm| x \in X \,\bigr\} \cup \bigl\{\, (y,\, 1) \bigm| y \in Y \,\bigr\} 
+% 	\end{align}
+% 	\item 連続写像
+% 	\begin{align}
+% 		i_X &\colon X \lto X \amalg Y,\; x \lmto (x,\, 0) \\
+% 		i_Y &\colon Y \lto X \amalg Y,\; y \lmto (y,\, 1)
+% 	\end{align}
+% 	を標準的包含とする．
+% 	\item 位相は，2つの標準的包含による\hyperref[def:final-topo]{終位相}の共通部分とする：
+% 	\begin{align}
+% 		\mathscr{O}_{X \amalg Y} &\coloneqq \mathscr{O}_X(i_X) \cap \mathscr{O}_Y(i_Y) \\
+% 		&= \bigl\{\, U \subset X \amalg Y \bigm| i_X^{-1}(U) \in \mathscr{O}_X \AND i_Y^{-1}(U) \in \mathscr{O}_Y \,\bigr\}
+% 	\end{align}
+% \end{itemize}
+% このようにして構成された位相空間 $\phase{X \amalg Y}$ のことを\textbf{直和位相空間}と呼ぶ．
+% $\mathscr{O}_{X \amalg Y}$ は $i_X,\, i_Y$ を連続にする\hyperref[def.intensity_topo]{最強の}位相である．
+
+
+\begin{myprop}[label=prop:sum-top]{圏 $\TOP$ における和の存在}
+	圏 $\TOP$ とその対象 $\phase{X},\, \phase{Y} \in \Obj{\TOP}$ に対して，
+	\begin{itemize}
+		\item \hyperref[prop:sum-sets]{$\SETS$ の和} $X \amalg Y$ の上に，位相
+		\begin{align}
+			\label{eq:disjoint-union-topology}
+			\mathscr{O}_{X\amalg Y} \coloneqq \bigl\{\, U \subset X \amalg Y \bigm| i_1^{-1}(U) \in \mathscr{O}_X \AND i_2^{-1}(U) \in \mathscr{O}_Y \,\bigr\}
+		\end{align}
+		を入れてできる位相空間
+		\begin{align}
+			(X\amalg Y,\, \mathscr{O}_{X \amalg Y}) \in \Obj{\TOP}.
+		\end{align}
+		なお，$\mathscr{O}_{X\amalg Y}$ は\textbf{直和位相} (disjoint union topology) と呼ばれる．
+		\item 標準的包含
+		\begin{align}
+			i_1 &\colon X \lto X \amalg Y,\; x \lmto (0,\, x) \\
+			i_2 &\colon Y \lto X \amalg Y,\; y \lmto (1,\, y)
+		\end{align}
+	\end{itemize}
+	の組は（圏論的な）\hyperref[def:sum]{和}である．
+\end{myprop}
+
+\begin{proof}
+	定義\eqref{eq:disjoint-union-topology}より，$\forall U \in \mathscr{O}_{X \amalg Y}$ に対して
+	\begin{align}
+		i_1^{-1}(U) &\in \mathscr{O}_X, \\
+		i_2^{-1}(U) &\in \mathscr{O}_Y \\
+	\end{align}
+	が成り立つ．i.e. $i_1,\, i_2$ はどちらも連続である．\hyperref[cmtd:univ-sum]{和の普遍性}は\hyperref[prop:sum-sets]{$\SETS$ の和の普遍性}から従う．
+\end{proof}
+
+\begin{marker}\label{remark:sum}
+	\hyperref[prop:product-top]{積位相}とは対照的に，直和位相は\textbf{標準的包含} $\bm{i_1},\, \bm{i_1}$ \textbf{の両方を連続にする\hyperref[def.intensity_topo]{最強の}位相である．}
+\end{marker}
+% 公理的集合論の公理から，$\Lambda$ を添字集合とする集合族 $\{ A_\lambda\}_{\lambda \in \Lambda}$ が与えられたとき，全ての $A_\lambda$ を含む集合 $X$ が存在する．従って，集合族 $\{A_\lambda\}$ の\textbf{直積} (direct product) を写像の集合として
+% \begin{align}
+% 	\prod_{\lambda \in \Lambda} A_\lambda \coloneqq \bigl\{\, f \colon \Lambda \to X \bigm| \forall \lambda \in \Lambda,\; f(\lambda) \in A_\lambda \bigr\} 
+% \end{align}
+% と定義できる．また，同じことだが $a_\lambda \coloneqq f(\lambda)$ とおくと，元の族の集合として
+% \begin{align}
+% 	\label{def:dp}
+% 	\prod_{\lambda \in \Lambda} A_\lambda = \bigl\{ \, (a_\lambda)_{\lambda \in \Lambda}\bigm| \forall \lambda \in \Lambda,\; a_\lambda \in A_\lambda \bigr\} 
+% \end{align}
+% とも書ける．
+
+% \begin{myaxiom}[label=ax.choice]{選択公理}
+% 	$\Lambda$ を添字集合とする集合族 $\{A_\lambda\}_{\lambda \in \Lambda}$ を与える．
+% 	このとき $\forall \lambda \in \Lambda$ に対して $A_\lambda \neq \emptyset$ ならば，直積 $\displaystyle \prod_{\lambda \in \Lambda} A_\lambda$ は空集合でない．
+% \end{myaxiom}
+
+
+% $\Lambda$ を添字集合とする集合族 $\{ A_\lambda \}_{\lambda \in \Lambda}$ が与えられたとする．もし $A_\lambda \cap A_\mu \neq \emptyset,\; \lambda \neq \mu$ なる添字の組 $\lambda,\, \mu \in \Lambda$ が存在したとしても，次のようにして非交和を作ることができる：
+% \begin{align}
+% 	\label{def.disjoint-union}
+% 	\coprod_{\lambda \in \Lambda} \coloneqq \bigcup_{\lambda \in \Lambda} \bigl\{ (a,\, \lambda) \bigm| a \in A_\lambda \bigr\} 
+% \end{align}
+% これを集合族 $\{ A_\lambda \}_{\lambda \in \Lambda}$ の\textbf{直和} (disjoint union) と呼ぶ．
+% なお，direct sum も同じく直和と訳されるので注意である．
+
+% \begin{mydef}[label=def.disjoint_topo]{直和位相}
+% 	$\{\,	(X_\lambda,\, \mathscr{O}_{X_\lambda})\, \}_{\lambda \in \Lambda}$ を添字集合 $\Lambda$ を持つ位相空間の族とする．
+% 	集合族 $\{ X_\lambda \}$ の直和
+% 	\begin{align}
+% 		X \coloneqq \coprod_{\lambda\in \Lambda} X_\lambda
+% 	\end{align}
+% 	と，標準的射影 (canonical injection)
+% 	\begin{align}
+% 		\varphi_\lambda \colon X_\lambda \hookrightarrow X,\; x \mapsto (x,\, \lambda)
+% 	\end{align}
+% 	を考える．このとき直和 $X$ の上の位相 $\mathscr{O}_X$ が，$\varphi_\lambda$ の終位相\ref{def:final-topo}の $\forall \lambda \in \Lambda$ に関する和集合として定まる．あからさまには以下の通り：
+% 	\begin{align}
+% 		\mathscr{O}_X \coloneqq \bigcup_{\lambda \in \Lambda}\bigl\{\, U \subset X \bigm| \varphi_\lambda^{-1}(U) \in \mathscr{O}_{X_\lambda} \bigr\}.
+% 	\end{align}
+% 	組 $(X,\, \mathscr{O}_X)$ のことを\textbf{直和位相空間} (disjoint union) と呼ぶ．
+% \end{mydef}
+
+\subsection{等化子と余等化子}
+
+\begin{mydef}[label=def:equalizer, breakable]{等化子}
+	圏 $\Cat{C}$ における対象 $X,\, Y \in \Obj{\Cat{C}}$ と，それらの間の2つの射
+	\begin{center}
+		\begin{tikzcd}
+			X \ar[r,shift left=.75ex,"f"]\ar[r,shift right=.75ex,swap,"g"] &Y
+		\end{tikzcd}
+	\end{center}
+	を任意に与える．射 $f,\, g$ の\textbf{等化子} (equalizer) とは，
+	\begin{itemize}
+		\item $\Cat{C}$ の対象 $\bm{\mathrm{Eq}(f,\, g)} \in \Obj{\Cat{C}}$
+		\item 射 $\bm{e} \in \Hom{\Cat{C}} \bigl(\bm{\mathrm{Eq}(f,\, g)},\, X\bigr)$ であって
+		$f \circ \bm{e} = g \circ \bm{e}$
+		を充たすもの
+	\end{itemize}
+	の組であって，以下の普遍性を充たすもののこと：
+	\begin{description}
+		\item[\textbf{(等化子の普遍性)}] $\forall \textcolor{blue}{Z} \in \Obj{\Cat{C}}$ および
+		$f \circ \textcolor{blue}{z} = g \circ \textcolor{blue}{z}$
+		を充たす任意の射 $\textcolor{blue}{z} \in \Hom{\Cat{C}} (\textcolor{blue}{Z},\, X)$ に対して，
+		射 $\textcolor{red}{u} \in \Hom{\Cat{C}}\bigl(\textcolor{blue}{Z},\, \bm{\mathrm{Eq}(f,\, g)}\bigr)$ が一意的に存在して図式\ref{cmtd:univ-equalizer}を可換にする．
+		\begin{figure}[H]
+			\centering
+			\begin{tikzcd}[row sep=large, column sep=large]
+				&\bm{\mathrm{Eq}(f,\, g)} \ar[r, "\bm{e}"] &X \ar[r,shift left=.75ex,"f"]\ar[r,shift right=.75ex,swap,"g"] &Y \\
+				&\forall \textcolor{blue}{Z} \ar[u, red, dashed, "\exists! u"]\ar[ur, blue, "z"'] & &
+			\end{tikzcd}
+			\caption{等化子の普遍性}
+			\label{cmtd:univ-equalizer}
+		\end{figure}%
+	\end{description}
+\end{mydef}
+
+\begin{myprop}[]{等化子の一意性}
+	圏 $\Cat{C}$ の等化子は，存在すれば\hyperref[def:iso]{同型}を除いて一意である．
+\end{myprop}
+
+\begin{proof}
+	\hyperref[prop:unique-product]{積の一意性}と同様の論法で示せる．
+\end{proof}
+
+$\SETS$ における等化子は，方程式 $f(x) = g(x)$ の解空間のようなものである．
+
+\begin{myprop}[label=prop:equalizer-sets]{圏 $\SETS$ における等化子の存在}
+	$\forall X,\, Y \in \Obj{\SETS}$ と，$\forall f,\, g \in \Hom{\SETS}(X,\, Y)$ を与える．このとき，
+	\begin{itemize}
+		\item $X$ の部分集合
+		\begin{align}
+			\label{eq:equalizer-sets}
+			\mathrm{Eq}(f,\, g) \coloneqq \bigl\{\, x \in X \bigm| f(x) = g(x) \,\bigr\}
+		\end{align}
+		\item 包含写像
+		\begin{align}
+			e \colon \mathrm{Eq}(f,\, g) \lto X,\; x\lmto x
+		\end{align}
+	\end{itemize}
+	の組は写像 $f,\, g$ の\hyperref[def:equalizer]{等化子}である．
+\end{myprop}
+
+\begin{proof}
+	$\forall \textcolor{blue}{Z} \in \Obj{\SETS}$ を与える．\hyperref[cmtd:univ-equalizer]{等化子の普遍性}は写像
+	\begin{align}
+		\psi \colon \Hom{\SETS} \bigl(\textcolor{blue}{Z},\, \mathrm{Eq}(f,\, g)\bigr) &\lto \bigl\{\, \textcolor{blue}{z} \in \Hom{\SETS}(\textcolor{blue}{Z},\, X) \bigm| f \circ \textcolor{blue}{z} = g \circ  \textcolor{blue}{z} \,\bigr\} \\
+		h &\lmto e \circ h
+	\end{align}
+	がwell-definedな全単射であることと同値である．
+	\begin{description}
+		\item[\textbf{(well-definedness)}] 　
+		
+		　$\forall h \in \Hom{\SETS} \bigl(\textcolor{blue}{Z},\, \mathrm{Eq}(f,\, g)\bigr)$ を1つとる．
+		集合 $\mathrm{Eq}(f,\, g)$ の定義\eqref{eq:equalizer-sets}から，このとき $\forall x \in \textcolor{blue}{Z}$ に対して $f \bigl( e \circ h(x) \bigr) =  f \bigl( h(x) \bigr) = g \bigl( h(x) \bigr) = g \bigl( e \circ h(x) \bigr)$ が言えるので $\psi$ はwell-definedである．
+		
+		\item[\textbf{(全射性)}] 　
+		
+		　$f \circ \textcolor{blue}{z} = g \circ \textcolor{blue}{z}$ を充たす任意の射 $\textcolor{blue}{z} \in \Hom{\SETS}(\textcolor{blue}{Z},\, X)$ を与える．
+		このとき $\forall x \in \textcolor{blue}{Z}$ に対して $f \bigl(z(x)\bigr) = g \bigl( z(x) \bigr)$ が成り立つので $z(x) \in \mathrm{Eq}(f,\, g)$ であり，$z(x) = e \circ z(x)$ が言える．
+		i.e. $z = \psi(z)$ である．
+
+		\item[\textbf{(単射性)}] 　
+		
+		　2つの射 $h,\, k \in \Hom{\SETS}\bigl(\textcolor{blue}{Z},\, \mathrm{Eq}(f,\, g)\bigr)$ が $\psi(h) = \psi(k)$ を充たすとする．
+		このとき $\forall x \in \textcolor{blue}{Z}$ に対して $h(x) = e \circ h(x) = \psi(h)(x) = \psi(k)(x) = e \circ k(x) = k(x)$ が成り立つので $h = k$ が言える．i.e. $\psi$ は単射である．
+	\end{description}
+\end{proof}
+
+これに位相を入れることで位相空間の圏 $\TOP$ における等化写像が構成できる．
+
+\begin{myprop}[label=prop:equalizer-topo, breakable]{圏 $\TOP$ における等化子の存在}
+	$\forall (X,\, \mathscr{O}_X),\, (Y,\, \mathscr{O}_Y) \in \Obj{\TOP}$ と，
+	$\forall f,\, g \in \Hom{\TOP}(X,\, Y)$
+	を与える．このとき，
+	\begin{itemize}
+		\item \hyperref[prop:equalizer-sets]{圏 $\SETS$ における等化子}
+		$\mathrm{Eq}(f,\, g)$
+		に $X$ からの\hyperref[def.reltopo]{相対位相}
+		\begin{align}
+			\mathscr{O}_{\mathrm{Eq}(f,\, g)} \coloneqq \bigl\{\, U \cap \mathrm{Eq}(f,\, g) \bigm| U \in \mathscr{O}_X \,\bigr\} 
+		\end{align}
+		を入れてできる位相空間 
+		\begin{align}
+			\bigl( \mathrm{Eq}(f,\, g),\; \mathscr{O}_{\mathrm{Eq}(f,\, g)} \bigr) \in \Obj{\TOP}
+		\end{align}
+		\item 包含写像
+		\begin{align}
+			e \colon \mathrm{Eq}(f,\, g) \lto X,\; x \lmto x
+		\end{align}
+	\end{itemize}
+	の組は連続写像 $f,\, g$ の\hyperref[def:equalizer]{等化子}である．
+\end{myprop}
+
+\begin{proof}
+	$\forall U \in \mathscr{O}_X$ に対して
+	\begin{align}
+		e^{-1}(U) = U \cap \mathrm{Eq}(f,\, g) \in \mathscr{O}_{\mathrm{Eq}(f,\, g)}
+	\end{align}
+	なので $e$ は連続である．\hyperref[def:equalizer]{等化子の普遍性}は\hyperref[prop:equalizer-sets]{$\SETS$ における等化子の普遍性}から従う．
+\end{proof}
+
+\begin{marker}\label{remark:equalizer}
+	$\mathrm{Eq}(f,\, g)$ に入れた位相は包含写像\textbf{$\bm{e}$ を連続にする\hyperref[def.intensity_topo]{最弱}の位相}である．
+\end{marker}
+
+% \hyperref[def:op-category]{反対圏}における\hyperref[def:equalizer]{等化子}を考える．
+\begin{mydef}[label=def:coequalizer, breakable]{余等化子}
+	圏 $\Cat{C}$ における対象 $X,\, Y \in \Obj{\Cat{C}}$ と，それらの間の2つの射
+	\begin{center}
+		\begin{tikzcd}
+			X \ar[r,shift left=.75ex,"f"]\ar[r,shift right=.75ex,swap,"g"] &Y
+		\end{tikzcd}
+	\end{center}
+	を任意に与える．射 $f,\, g$ の\textbf{余等化子} (coequalizer) とは，
+	\begin{itemize}
+		\item $\Cat{C}$ の対象 $\bm{Q} \in \Obj{\Cat{C}}$
+		\item 射 $\bm{q} \in \Hom{\Cat{C}}(Y,\, \bm{Q})$ であって
+		$\bm{q} \circ f = \bm{q} \circ g$
+		を充たすもの
+	\end{itemize}
+	の組であって，以下の普遍性を充たすもののこと：
+	\begin{description}
+		\item[\textbf{(余等化子の普遍性)}] $\forall \textcolor{blue}{Z} \in \Obj{\Cat{C}}$ および
+		$\textcolor{blue}{z} \circ f = \textcolor{blue}{z} \circ g$
+		を充たす任意の射
+		$\textcolor{blue}{z} \in \Hom{\Cat{C}} (Y,\, \textcolor{blue}{Z})$ に対して，射 $\textcolor{red}{u} \in \Hom{\Cat{C}}(\bm{Q},\, \textcolor{blue}{Z})$ が一意的に存在して図式\ref{cmtd:univ-coequalizer}を可換にする．
+		\begin{figure}[H]
+			\centering
+			\begin{tikzcd}[row sep=large, column sep=large]
+				&X \ar[r,shift left=.75ex,"f"]\ar[r,shift right=.75ex,swap,"g"] &Y\ar[r, "\bm{q}"]\ar[dr, blue, "z"'] &\bm{Q} \ar[d, red, dashed, "\exists! u"] \\
+				& & &\forall \textcolor{blue}{Z}
+			\end{tikzcd}
+			\caption{余等化子の普遍性}
+			\label{cmtd:univ-coequalizer}
+		\end{figure}%
+	\end{description}
+\end{mydef}
+
+\begin{myprop}[]{余等化子の一意性}
+	圏 $\Cat{C}$ の\hyperref[def:coequalizer]{余等化子}は，存在すれば\hyperref[def:iso]{同型}を除いて一意である．
+\end{myprop}
+
+集合と写像の圏 $\SETS$ においては，余等化子はある種の商集合である．
+% \hyperref[prop:equalizer-sets]{$\SETS$ における等化子}は方程式 $f(x) = g(x)$ の解空間の気持ちだったが，
+% $\SETS$ における余等化子は常に $f(x) = g(x)$ が成り立つような空間である．
+
+\begin{myprop}[label=prop:coequalizer-sets]{圏 $\SETS$ における余等化子の存在}
+	$\forall X,\, Y \in \Obj{\SETS}$ と，$\forall f,\, g \in \Hom{\SETS}(X,\, Y)$ を与える．
+	部分集合 $\sim\; \subset Y \times Y$ を，$\forall x \in X$ に対して $f(x)\sim g(x)$ を充たす $Y$ の最小の\hyperref[ax.equiv]{同値関係}とする．
+	このとき，
+	\begin{itemize}
+		\item $Y$ の商集合
+		\begin{align}
+			Y / {\sim} \coloneqq \bigl\{\, [y] \bigm| y \in Y \,\bigr\} 
+		\end{align}
+		\item 商写像
+		\begin{align}
+			q \colon Y \lto Y/{\sim},\; y \lmto [y]
+		\end{align}
+	\end{itemize}
+	の組は写像 $f,\, g$ の\hyperref[def:coequalizer]{余等化子}である．
+\end{myprop}
+
+\begin{proof}
+	本題に入る前に，$Y$ の同値関係 $\sim \; \subset Y \times Y$ は，$\forall x \in X$ に対して $\bigl( f(x),\, g(x) \bigr) \in R$ を充たす全ての同値関係\footnote{$Y \times Y$ はこの条件を充たす同値関係なので，${\sim}$ の存在が言える．} $R \subset Y \times Y$ の共通部分であることに注意する．
+	
+	$\forall \textcolor{blue}{Z} \in \Obj{\SETS}$ を与える．\hyperref[cmtd:univ-coequalizer]{余等化子の普遍性}は写像
+	\begin{align}
+		\psi \colon \Hom{\SETS} \bigl(Y/{\sim},\, \textcolor{blue}{Z}\bigr) &\lto \bigl\{\, \textcolor{blue}{z} \in \Hom{\SETS}(Y,\, \textcolor{blue}{Z}) \bigm| \textcolor{blue}{z} \circ f = \textcolor{blue}{z} \circ g \,\bigr\} \\
+		h &\lmto h \circ q
+	\end{align}
+	がwell-definedな全単射であることと同値である．
+	\begin{description}
+		\item[\textbf{(well-definedness)}] 　
+		
+		　$\forall h \in \Hom{\SETS} (Y/{\sim},\, \textcolor{blue}{Z})$ を1つとる．
+		同値関係 $\sim$ の定義から $\forall x \in X$ に対して $[f(x)] = [g(x)]$ が成り立つから
+		$h \circ q \bigl( f(x) \bigr) = h \bigl( [f(x)] \bigr) = h \bigl( [g(x)] \bigr) = h\circ q \bigl( g(x) \bigr)$ 
+		が言える．i.e. $\psi(h) \circ f = \psi(h) \circ g$ なので $\psi$ はwell-definedである．
+		
+		\item[\textbf{(全射性)}] 　
+		
+		　$\textcolor{blue}{z} \circ f = \textcolor{blue}{z} \circ g$ を充たす任意の射 $\textcolor{blue}{z} \in \Hom{\SETS}(Y,\, \textcolor{blue}{Z})$ を与える．
+		$Y$ の同値関係 $R_{\textcolor{blue}{z}} \subset Y \times Y$ を
+		\begin{align}
+			(y,\, y') \in R_{\textcolor{blue}{z}} \IFF \textcolor{blue}{z}(y) = \textcolor{blue}{z}(y')
+		\end{align}
+		によって定義する\footnote{$\textcolor{blue}{z}$ が写像であることから $\textcolor{blue}{z}(y) = \textcolor{blue}{z}(y)$ なので $(y,\, y) \in R_{\textcolor{blue}{z}}$（反射律）が，$\textcolor{blue}{z}(y) = \textcolor{blue}{z}(y') \IMP \textcolor{blue}{z}(y') = \textcolor{blue}{z}(y)$ なので $(y,\, y') \in R_{\textcolor{blue}{z}} \IMP (y',\, y) \in R_{\textcolor{blue}{z}}$ （対称律）が，$\textcolor{blue}{z}(y) = \textcolor{blue}{z}(y') \AND \textcolor{blue}{z}(y') = \textcolor{blue}{z}(y'') \IMP \textcolor{blue}{z}(y) = \textcolor{blue}{z}(y'')$ なので $(y,\, y'),\; (y',\, y'') \in R_{\textcolor{blue}{z}} \IMP (y,\, y'') \in R_{\textcolor{blue}{z}}$（推移律）が従う．}．
+		このとき，$\forall x \in X$ に対して $\textcolor{blue}{z} \bigl( f(x) \bigr) = \textcolor{blue}{z} \bigl( g(x) \bigr)$ が成り立つので $\bigl( f(x),\, g(x) \bigr) \in R_{\textcolor{blue}{z}}$ であり，
+		${\sim} \subset R_{\textcolor{blue}{z}}$ が分かる．
+		つまり $y \sim y' \IMP (y,\, y') \in R_{\textcolor{blue}{z}} \IMP z(y) = z(y')$ なので，写像
+		\begin{align}
+			\overline{z} \colon Y/{\sim} \lto \textcolor{blue}{Z},\; [y] \lmto \textcolor{blue}{z}(y)
+		\end{align}
+		は $[y]$ の代表元の取り方によらず，well-definedである．
+		故に $z = \overline{z} \circ q = \psi(\overline{z})$ である．
+
+		\item[\textbf{(単射性)}] 　
+		
+		　2つの射 $h,\, k \in \Hom{\SETS}(Y/{\sim},\, \textcolor{blue}{Z})$ が $\psi(h) = \psi(k)$ を充たすとする．
+		このとき $\forall y \in Y$ に対して $h \circ q(y) = k\circ q(y) \iff h([y]) = k([y])$ が成り立つので $h = k$ が言える．i.e. $\psi$ は単射である．
+	\end{description}
+\end{proof}
+
+
+% 実際，与えられた2つの写像 $f,\, g \colon X \lto Y$ に対して，
+% $f (x)\sim g(x)$ を充たす最小の\hyperref[ax.equiv]{同値関係}を $\sim\; \subset Y \times Y$ と定めるとき，
+% 商集合 $Y / {\sim}$ と商写像 $\pi \colon Y \lto Y/{\sim},\; y \lmto [y]$ は\hyperref[cmtd:univ-coequalizer]{余等化子の普遍性}を充たす．
+
+\begin{myprop}[label=prop:coequalizer-top]{圏 $\TOP$ における余等化子の存在}
+	$\forall (X,\, \mathscr{O}_X),\, (Y,\, \mathscr{O}_Y) \in \Obj{\TOP}$ と，$\forall f,\, g \in \Hom{\TOP}(X,\, Y)$ を与える．
+	このとき，
+	\begin{itemize}
+		\item \hyperref[prop:coequalizer-sets]{$\SETS$ の余等化子} $Y/{\sim}$ に $Y$ からの\hyperref[def.quotopo]{商位相}
+		\begin{align}
+			\mathscr{O}_{Y/{\sim}} \coloneqq \bigl\{\, U \subset Y/{\sim} \bigm| q^{-1}(U) \in \mathscr{O}_X \,\bigr\} 
+		\end{align}
+		を入れてできる商位相空間
+		\begin{align}
+			\bigl( Y/{\sim},\, \mathscr{O}_{Y/{\sim}} \bigr) \in \Obj{\TOP}
+		\end{align}
+		\item 商写像
+		\begin{align}
+			q \colon Y \lto Y/{\sim},\; y \lmto [y]
+		\end{align}
+	\end{itemize}
+	の組は連続写像 $f,\, g$ の\hyperref[def:coequalizer]{余等化子}である．
+\end{myprop}
+
+\begin{proof}
+	$\forall U \in \mathscr{O}_{Y/{\sim}}$ に対して $q^{-1}(U) \in \mathscr{O}_{Y/{\sim}}$ なので $q$ は連続である．\hyperref[def:coequalizer]{余等化子の普遍性}は\hyperref[prop:coequalizer-sets]{$\SETS$ における余等化子の普遍性}から従う．
+\end{proof}
+
+\begin{marker}\label{remark:coequalizer}
+	$Y/{\sim}$ に入れた位相は\textbf{商写像 $\bm{q}$ を連続にする\hyperref[def.intensity_topo]{最強}の位相}であると言える．
+\end{marker}
+
+
+\subsection{引き戻しと押し出し}
+
+\begin{mydef}[label=def:pullback, breakable]{引き戻し}
+	圏 $\Cat{C}$ における対象 $X,\, Y,\, Z \in \Obj{\Cat{C}}$ と，それらの間の2つの射
+	\begin{center}
+		\begin{tikzcd}[row sep=large, column sep=large]
+			& &Y \ar[d, "g"'] \\
+			&X \ar[r, "f"] &Z
+		\end{tikzcd}
+	\end{center}
+	を与える．射 $f,\, g$ の\textbf{引き戻し} (pullback)\footnote{\textbf{ファイバー積} (fiber product) と呼ぶ場合がある．} とは，
+	\begin{itemize}
+		\item $\Cat{C}$ の対象 $\bm{P} \in \Obj{\Cat{C}}$
+		\item 2つの射 $\bm{\pi_1} \in \Hom{\Cat{C}}(\bm{P},\, X),\; \bm{\pi_2} \in \Hom{\Cat{C}}(\bm{P},\, Y)$ であって
+		$f \circ \bm{\pi_1} = g \circ \bm{\pi_2}$ を充たすもの：
+		\begin{center}
+			\begin{tikzcd}[row sep=large, column sep=large]
+				&\bm{P} \ar[d,"\bm{\pi_1}"']\ar[r, "\bm{\pi_2}"] &Y \ar[d, "g"'] \\
+				&X \ar[r, "f"] &Z
+			\end{tikzcd}
+		\end{center}
+	\end{itemize}
+	の組であって，以下の普遍性を充たすもののこと：
+	\begin{description}
+		\item[\textbf{(引き戻しの普遍性)}] $\forall \textcolor{blue}{W} \in \Obj{\Cat{C}}$ および
+		2つの射
+		$\textcolor{blue}{w_1} \in \Hom{\Cat{C}} (\textcolor{blue}{W},\, X),\; \textcolor{blue}{w_2} \in \Hom{\Cat{C}}(\textcolor{blue}{W},\, Y)$ であって
+		$f \circ \textcolor{blue}{w_1} = g \circ \textcolor{blue}{w_2}$ を充たすもの
+		に対して，射 $\textcolor{red}{u} \in \Hom{\Cat{C}}(\textcolor{blue}{W},\, \bm{P})$ が一意的に存在して図式\ref{cmtd:univ-pullback}を可換にする．
+		\begin{figure}[H]
+			\centering
+			\begin{tikzcd}[row sep=large, column sep=large]
+				&\forall \textcolor{blue}{W} \ar[ddr, blue, bend right, "w_1"']\ar[drr, blue, bend left, "w_2"]\ar[dr, red, dashed, "\exists! u"] & & \\
+				& &\bm{P} \ar[d, "\pi_1"']\ar[r, "\pi_2"] &Y \ar[d, "g"'] \\
+				& &X \ar[r, "f"] &Z
+			\end{tikzcd}
+			\caption{引き戻しの普遍性}
+			\label{cmtd:univ-pullback}
+		\end{figure}%
+	\end{description}
+	対象 $\bm{P}$ はしばしば $\bm{X \times_Z Y}$ と書かれる．
+\end{mydef}
+
+\begin{myprop}[]{引き戻しの一意性}
+	圏 $\Cat{C}$ の\hyperref[def:pullback]{引き戻し}は，存在すれば\hyperref[def:iso]{同型}を除いて一意である．
+\end{myprop}
+
+\begin{myprop}[label=prop:pullback-sets]{圏 $\SETS$ における引き戻し}
+	$\forall X,\, Y,\, Z \in \Obj{\SETS}$ と，$\forall f \in \Hom{\SETS}(X,\, Z),\; \forall g \in \Hom{\SETS}(Y,\, Z)$ を与える．
+	このとき，
+	\begin{itemize}
+		\item 集合
+		\begin{align}
+			X \times_Z Y \coloneqq \bigl\{\, (x,\, y) \in X \times Y \bigm| f(x) = g(y)  \,\bigr\} 
+		\end{align}
+		\item \hyperref[prop:product-sets]{$\SETS$ における積の標準的射影} $p_X,\, p_Y$ の制限
+		\begin{align}
+			\pi_1 \coloneqq p_X|_{X \times_Z Y} \colon X \times_Z Y \lto X,\; (x,\, y) \lmto x \\
+			\pi_2 \coloneqq p_Y|_{X \times_Z Y} \colon X \times_Z Y \lto Y,\; (x,\, y) \lmto y
+		\end{align}
+	\end{itemize}
+	の組は写像 $f,\, g$ の\hyperref[def:pullback]{引き戻し}である．
+\end{myprop}
+
+\begin{proof}
+	$\forall \textcolor{blue}{W} \in \Obj{\SETS}$ を与える．\hyperref[cmtd:pullback]{引き戻しの普遍性}は写像
+	\begin{align}
+		\psi \colon \Hom{\SETS} (\textcolor{blue}{W},\, \bm{X \times_Z Y}) &\lto \bigl\{\, (\textcolor{blue}{w_1},\, \textcolor{blue}{w_2}) \in \Hom{\SETS}(\textcolor{blue}{W},\, X) \times \Hom{\SETS}(\textcolor{blue}{W},\, Y) \bigm| f \circ \textcolor{blue}{w_1} = g \circ \textcolor{blue}{w_2} \,\bigr\} \\
+		h &\lmto \bigl( \pi_1 \circ h,\, \pi_2 \circ h\bigr) 
+	\end{align}
+	がwell-definedな全単射であることと同値である．
+	\begin{description}
+		\item[\textbf{(well-definedness)}] 　
+		
+		　$\forall h \in \Hom{\SETS} (\textcolor{blue}{W},\, \bm{X \times_Z Y})$ を1つとる．
+		このとき $\forall x \in \textcolor{blue}{W}$ に対して
+		$h(x) = \bigl( h_1(x),\, h_2(x) \bigr) \in X \times_Z Y$ と書くと
+		$f \bigl( h_1(x) \bigr) = g \bigl( h_2(x) \bigr)$ が成り立つ．$h_1(x) = \pi_1 \circ h(x),\; h_2(x) = \pi_2 \circ h(x)$ なので $\psi$ がwell-definedであることが示された．
+
+		\item[\textbf{(全射性)}] 　
+		
+		　$f \circ \textcolor{blue}{w_1} = g \circ \textcolor{blue}{w_2}$ を充たす任意の写像の組 $(\textcolor{blue}{w_1},\, \textcolor{blue}{w_2}) \in \Hom{\SETS}(\textcolor{blue}{W},\, X) \times \Hom{\SETS}(\textcolor{blue}{W},\, Y)$ をとる．
+		このとき写像
+		\begin{align}
+			w \colon \textcolor{blue}{W} \lto X \times_Z Y
+		\end{align}
+		を $\forall x \in \textcolor{blue}{W}$ に対して
+		\begin{align}
+			w(x) \coloneqq \bigl( w_1(x),\, w_2(x) \bigr) 
+		\end{align}
+		と定めると $w$ はwell-definedである．従って\hyperref[prop:product-sets]{$\SETS$ における積の普遍性}の証明から $(w_1,\, w_2) = \psi(w)$ である．
+
+		\item[\textbf{(単射性)}] 　
+		
+		　\hyperref[prop:product-sets]{$\SETS$ における積の普遍性}の証明と全く同様に示せる．
+	\end{description}
+\end{proof}
+
+\begin{myprop}[label=prop:pullback-top]{圏 $\TOP$ における引き戻しの存在}
+	$\forall (X,\, \mathscr{O}_X),\, (Y,\, \mathscr{O}_Y),\, \phase{Z} \in \Obj{\TOP}$ と，$\forall f \in \Hom{\TOP}(X,\, Z),\, \forall g \in \Hom{\TOP}(Y,\, Z)$ を与える．
+	このとき，
+	\begin{itemize}
+		\item \hyperref[prop:pullback-sets]{$\SETS$ の引き戻し} $X \times_Z Y$ の上に\hyperref[prop:product-top]{積空間} $(X \times Y,\, \mathscr{O}_{X \times Y})$ からの\hyperref[def.reltopo]{相対位相}
+		\begin{align}
+			\mathscr{O}_{X \times_Z Y} \coloneqq \bigl\{\, U \cap X \times_Z Y \bigm| U \in \mathscr{O}_{X \times Y} \,\bigr\} 
+		\end{align}
+		を入れてできる位相空間
+		\begin{align}
+			\bigl( X \times_Z Y,\, \mathscr{O}_{X \times_Z Y} \bigr) \in \Obj{\TOP}
+		\end{align}
+		\item \hyperref[prop:product-top]{$\TOP$ における積の標準的射影} $p_X,\, p_Y$ の制限
+		\begin{align}
+			\pi_1 \coloneqq p_X|_{X \times_Z Y} \colon X \times_Z Y \lto X,\; (x,\, y) \lmto x \\
+			\pi_2 \coloneqq p_Y|_{X \times_Z Y} \colon X \times_Z Y \lto Y,\; (x,\, y) \lmto y
+		\end{align}
+	\end{itemize}
+	の組は連続写像 $f,\, g$ の\hyperref[def:pullback]{引き戻し}である．
+\end{myprop}
+
+\begin{proof}
+	命題\ref{prop:product-top}より $p_X,\, p_Y$ は連続なので，$\pi_1,\, \pi_2$ も連続である．\hyperref[cmtd:pullback]{引き戻しの普遍性}は\hyperref[prop:pullback-sets]{$\SETS$ における引き戻しの普遍性}から従う．
+\end{proof}
+
+\begin{marker}\label{remark:pullback}
+	$X \times_Z Y$ に入れた位相は $\bm{\pi_1},\, \bm{\pi_2}$ \textbf{を連続にする\hyperref[def.intensity_topo]{最弱}の位相である．}
+\end{marker}
+
+% \subsection{貼り合わせ}
+
+\begin{mydef}[label=def:pushout, breakable]{押し出し}
+	圏 $\Cat{C}$ における対象 $X,\, Y,\, Z \in \Obj{\Cat{C}}$ と，それらの間の2つの射
+	\begin{center}
+		\begin{tikzcd}[row sep=large, column sep=large]
+			& &Y \\
+			&X &Z \ar[l, "f"']\ar[u, "g"]
+		\end{tikzcd}
+	\end{center}
+	を与える．射 $f,\, g$ の\textbf{押し出し} (pushout)\footnote{\textbf{ファイバー和} (fiber sum) と呼ぶ場合がある．} とは，
+	\begin{itemize}
+		\item $\Cat{C}$ の対象 $\bm{P} \in \Obj{\Cat{C}}$
+		\item 2つの射 $\bm{\iota_1} \in \Hom{\Cat{C}}(X,\, \bm{P}),\; \bm{\iota_2} \in \Hom{\Cat{C}}(Y,\, \bm{P})$ であって
+		$\bm{\iota_1} \circ f = \bm{\iota_2} \circ g$ を充たすもの：
+		\begin{center}
+			\begin{tikzcd}[row sep=large, column sep=large]
+				&\bm{P} \ar[from=d,"\bm{\iota_1}"]\ar[from=r, "\bm{\iota_2}"'] &Y \ar[from=d, "g"] \\
+				&X \ar[from=r, "f"'] &Z
+			\end{tikzcd}
+		\end{center}
+	\end{itemize}
+	の組であって，以下の普遍性を充たすもののこと：
+	\begin{description}
+		\item[\textbf{(押し出しの普遍性)}] $\forall \textcolor{blue}{W} \in \Obj{\Cat{C}}$ および
+		2つの射
+		$\textcolor{blue}{w_1} \in \Hom{\Cat{C}} (X,\, \textcolor{blue}{W}),\; \textcolor{blue}{w_2} \in \Hom{\Cat{C}}(Y,\, \textcolor{blue}{W})$ であって
+		$\textcolor{blue}{w_1} \circ f = \textcolor{blue}{w_2} \circ g$ を充たすもの
+		に対して，射 $\textcolor{red}{u} \in \Hom{\Cat{C}}(\bm{P},\, \textcolor{blue}{W})$ が一意的に存在して図式\ref{cmtd:univ-pullback}を可換にする．
+		\begin{figure}[H]
+			\centering
+			\begin{tikzcd}[row sep=large, column sep=large]
+				&\forall \textcolor{blue}{W} \ar[from=ddr, blue, bend left, "w_1"]\ar[from=drr, blue, bend right, "w_2"']\ar[from=dr, red, dashed, "\exists! u"] & & \\
+				& &\bm{P} \ar[from=d, "\iota_1"]\ar[from=r, "\iota_2"'] &Y \ar[from=d, "g"] \\
+				& &X \ar[from=r, "f"'] &Z
+			\end{tikzcd}
+			\caption{押し出しの普遍性}
+			\label{cmtd:univ-pushout}
+		\end{figure}%
+	\end{description}
+	対象 $\bm{P}$ はしばしば $\bm{X \amalg_Z Y}$ と書かれる．
+\end{mydef}
+
+\begin{myprop}[]{押し出しの一意性}
+	圏 $\Cat{C}$ の\hyperref[def:pushout]{押し出し}は，存在すれば\hyperref[def:iso]{同型}を除いて一意である．
+\end{myprop}
+
+\begin{myprop}[label=prop:pushout-sets]{圏 $\SETS$ における押し出し}
+	$\forall X,\, Y,\, Z \in \Obj{\SETS}$ と，$\forall f \in \Hom{\SETS}(Z,\, X),\; \forall g \in \Hom{\SETS}(Z,\, Y)$ を与える．
+	% \hyperref[prop:sum-sets]{disjoint union} $X \amalg Y$ を考える．
+	部分集合 $\sim\; \subset (X \amalg Y) \times (X \amalg Y)$ を，$\forall z \in Z$ に対して $\bigl(1,\, f(z)\bigr) \sim \bigl(2,\, g(z)\bigr)$ を充たす $X \amalg Y$ の最小の同値関係とする．
+	このとき，
+	\begin{itemize}
+		\item \hyperref[prop:sum-sets]{$\SETS$ の和} $X \amalg Y$ の商集合
+		\begin{align}
+			X \amalg_Z Y \coloneqq (X \amalg Y)/{\sim}
+		\end{align}
+		\item \hyperref[prop:sum-sets]{$\SETS$ における和の標準的包含} $i_1,\, i_2$ と
+		商写像 $q \colon X \amalg Y \lto X \amalg_Z Y,\; (\delta,\, w) \lmto [\delta,\, w]$ の合成
+		\begin{align}
+			\iota_1 &\coloneqq q \circ i_1 \colon X \lto X \amalg_Z Y,\; x \lmto [1,\, x] \\
+			\iota_2 &\coloneqq q \circ i_2 \colon Y \lto X \amalg_Z Y,\; y \lmto [2,\, y]
+		\end{align}
+	\end{itemize}
+	の組は写像 $f,\, g$ の\hyperref[def:pushout]{押し出し}である．
+\end{myprop}
+
+\begin{proof}
+	$\forall \textcolor{blue}{W} \in \Obj{\SETS}$ を与える．\hyperref[cmtd:pushout]{押し出しの普遍性}は写像
+	\begin{align}
+		\psi \colon \Hom{\SETS} (\bm{X \amalg_Z Y},\, \textcolor{blue}{W}) &\lto \bigl\{\, (\textcolor{blue}{w_1},\, \textcolor{blue}{w_2}) \in \Hom{\SETS}(X,\, \textcolor{blue}{W}) \times \Hom{\SETS}(Y,\, \textcolor{blue}{W}) \bigm| \textcolor{blue}{w_1} \circ f = \textcolor{blue}{w_2} \circ g \,\bigr\} \\
+		h &\lmto \bigl( h \circ \iota_1,\, h \circ \iota_2\bigr) 
+	\end{align}
+	がwell-definedな全単射であることと同値である．
+	\begin{description}
+		\item[\textbf{(well-definedness)}] 　
+		
+		　$\forall h \in \Hom{\SETS} (\textcolor{blue}{W},\, \bm{X \times_Z Y})$ を1つとる．
+		このとき同値関係 $\sim$ の定義から，$\forall z \in Z$ に対して
+		$(h \circ \iota_1) \circ f(z) = h\bigl([1,\, f(z)]\bigr) = h \bigl( [2,\, g(z)] \bigr) = (h \circ \iota_2) \circ g(z)$
+		が成り立つ．i.e. $\psi$ はwell-definedである．
+
+		\item[\textbf{(全射性)}] 　
+		
+		　$\textcolor{blue}{w_1} \circ f = \textcolor{blue}{w_2} \circ g$ を充たす任意の写像の組 $(\textcolor{blue}{w_1},\, \textcolor{blue}{w_2}) \in \Hom{\SETS}(X,\, \textcolor{blue}{W}) \times \Hom{\SETS}(Y,\, \textcolor{blue}{W})$ をとる．
+		同値関係 $R_{\textcolor{blue}{w_1w_2}} \subset (X \amalg Y) \times (X \amalg Y)$ を
+		\begin{align}
+			\bigl((\delta,\, v),\, (\delta',\, v')\bigr) \in R_{\textcolor{blue}{w_1w_2}} \IFF w_\delta(v) = w_{\delta'} (v')
+		\end{align}
+		により定義する．このとき $\forall z \in Z$ に対して $\textcolor{blue}{w_1} \bigl( f(z) \bigr) = \textcolor{blue}{w_2} \bigl( g(z) \bigr)$ が成り立つので $\Bigl( \bigl( 1,\, f(z) \bigr),\, \bigl( 2,\, g(z) \bigr) \Bigr) \in R_{\textcolor{blue}{w_1} \textcolor{blue}{w_2}}$ であり，
+		同値関係 ${\sim}$ の最小性から $\sim\; \subset R_{\textcolor{blue}{w_1} \textcolor{blue}{w_2}}$ が分かる．
+		よって写像
+		\begin{align}
+			\overline{w} \colon X \amalg_Z Y \lto \textcolor{blue}{W},\; [\delta,\, v] \lmto w_{\delta}(v)
+		\end{align}
+		はwell-definedである．従って $(\textcolor{blue}{w_1},\, \textcolor{blue}{w_2}) = \bigl( \overline{w} \circ \iota_1,\, \overline{w} \circ \iota_2 \bigr) = \psi(\overline{w})$ が示された．
+
+		\item[\textbf{(単射性)}] 　
+		
+		　\hyperref[prop:sum-sets]{$\SETS$ における和の普遍性}の証明と全く同様に示せる．
+	\end{description}
+\end{proof}
+
+\begin{myprop}[label=prop:pushout-top]{圏 $\TOP$ における押し出しの存在}
+	$\forall (X,\, \mathscr{O}_X),\, (Y,\, \mathscr{O}_Y),\, \phase{Z} \in \Obj{\TOP}$ と，$\forall f \in \Hom{\TOP}(Z,\, X),\, \forall g \in \Hom{\TOP}(Z,\, Y)$ を与える．
+	このとき，
+	\begin{itemize}
+		\item \hyperref[prop:pushout-sets]{$\SETS$ の押し出し} $X \amalg_Z Y$ の上に\hyperref[prop:sum-top]{直和位相空間} $(X \amalg Y,\, \mathscr{O}_{X \amalg Y})$ からの\hyperref[quotopo]{商位相}
+		\begin{align}
+			\mathscr{O}_{X \amalg_Z Y} \coloneqq \bigl\{\, U \subset X \amalg_Z Y \bigm| q^{-1}(U) \in \mathscr{O}_{X \amalg Y} \,\bigr\} 
+		\end{align}
+		を入れてできる位相空間
+		\begin{align}
+			\bigl( X \amalg_Z Y,\, \mathscr{O}_{X \amalg_Z Y} \bigr) \in \Obj{\TOP}
+		\end{align}
+		\item \hyperref[prop:sum-top]{$\TOP$ における和の標準的包含} $i_1,\, i_2$ と
+		商写像 $q \colon X \amalg Y \lto X \amalg Y/{\sim},\; (\delta,\, z) \lmto [\delta,\, z]$ の合成
+		\begin{align}
+			\iota_1 &\coloneqq q \circ i_1 \colon X \lto X \amalg_Z Y,\; x \lmto [0,\, x] \\
+			\iota_2 &\coloneqq q \circ i_2 \colon Y \lto X \amalg_Z Y,\; y \lmto [1,\, y]
+		\end{align}
+	\end{itemize}
+	の組は連続写像 $f,\, g$ の\hyperref[def:pushout]{押し出し}である．
+\end{myprop}
+
+\begin{proof}
+	命題\ref{prop:product-top}より $i_1,\, i_2$ は連続である．
+	$\mathscr{O}_{X \amalg_Z Y}$ の定義より $q$ も連続だから
+	$\iota_2,\, \iota_2$ も連続である．\hyperref[cmtd:pushout]{押し出しの普遍性}は\hyperref[prop:pushout-sets]{$\SETS$ における押し出しの普遍性}から従う．
+\end{proof}
+
+\begin{marker}\label{remark:pushout}
+	$X \amalg_Z Y$ に入れた位相は $\bm{\iota_1},\, \bm{\iota_2}$ \textbf{を連続にする\hyperref[def.intensity_topo]{最強}の位相である．}
+\end{marker}
+
+% \begin{mydef}[label=def:gluing]{位相空間の貼り合わせ}
+% 	位相空間 $(X,\, \mathscr{O}_X),\; (Y,\, \mathscr{O}_Y)$ とそれらの部分空間 $A \subset X,\, B \subset Y$ を与える．$f \colon A \to B$ を同相写像とする．
+% 	このとき，位相空間 $X,\, Y$ を $f$ で\textbf{貼り合わせた空間} $X \cup_f Y$ とは，\hyperref[def.quotopo]{商空間}
+% 	\begin{align}
+% 		X \cup_f Y &\coloneqq X \amalg Y/\mathord{\sim},\\
+% 		\WHERE \mathord{\sim} &\coloneqq \bigl\{\, \bigl((x,\, 1),\, (y,\, 2)\bigr) \in X \amalg Y \times  X \amalg Y \bigm| x \in A,\, y = f(x) \,\bigr\} 
+% 	\end{align}
+% 	のことを言う．
+% \end{mydef}
+
+\subsection{双対性}
+
+これまで登場した普遍性の図式を列挙してみよう．
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}{0.4\columnwidth}
+		\centering
+		\begin{tikzcd}[row sep=large, column sep=large]
+			&\bm{1} \ar[from=r, red, dashed] &\forall \textcolor{blue}{Z}
+		\end{tikzcd}
+		\caption{\hyperref[def:initial-terminal]{終対象の普遍性}}
+	\end{subfigure}
+	\hspace{5mm}
+	\begin{subfigure}{0.4\columnwidth}
+		\centering
+		\begin{tikzcd}[row sep=large, column sep=large]
+			&\bm{0} \ar[r, red, dashed] &\forall \textcolor{blue}{Z}
+		\end{tikzcd}
+		\caption{\hyperref[def:initial-terminal]{始対象の普遍性}}
+	\end{subfigure}
+\end{figure}%
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}{0.4\columnwidth}
+		\centering
+		\begin{tikzcd}[row sep=large, column sep=large]
+			& &\forall \textcolor{blue}{Z} \ar[dl, blue, "f"']\ar[dr, blue, "g"]\ar[d, red, dashed, "\exists ! f \times g"] & \\
+			&X &\bm{X \times Y} \ar[l, "\bm{p_X}"] \ar[r, "\bm{p_Y}"'] &Y
+		\end{tikzcd}
+		\caption{\hyperref[def:product]{積の普遍性}}
+	\end{subfigure}
+	\hspace{5mm}
+	\begin{subfigure}{0.4\columnwidth}
+		\centering
+		\begin{tikzcd}[row sep=large, column sep=large]
+			& &\forall \textcolor{blue}{Z} \ar[from=dl, blue, "f"]\ar[from=dr, blue, "g"']\ar[from=d, red, dashed, "\exists ! f \amalg g"'] & \\
+			&X &\bm{X \amalg Y} \ar[from=l, "\bm{i_X}"'] \ar[from=r, "\bm{i_Y}"] &Y
+		\end{tikzcd}
+		\caption{\hyperref[def:sum]{和の普遍性}}
+	\end{subfigure}
+\end{figure}%
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}{0.4\columnwidth}
+		\centering
+		\begin{tikzcd}[row sep=large, column sep=large]
+			&\bm{\mathrm{Eq}(f,\, g)} \ar[r, "\bm{e}"] &X \ar[r,shift left=.75ex,"f"]\ar[r,shift right=.75ex,swap,"g"] &Y \\
+			&\forall \textcolor{blue}{Z} \ar[u, red, dashed, "\exists! u"]\ar[ur, blue, "z"'] & &
+		\end{tikzcd}
+		\caption{\hyperref[def:equalizer]{等化子の普遍性}}
+	\end{subfigure}
+	\hspace{5mm}
+	\begin{subfigure}{0.4\columnwidth}
+		\centering
+		\begin{tikzcd}[row sep=large, column sep=large]
+			&\bm{Q} \ar[from=r, "\bm{q}"'] &X \ar[from=r,shift left=.75ex,"f"]\ar[from=r,shift right=.75ex,swap,"g"] &Y \\
+			&\forall \textcolor{blue}{Z} \ar[from=u, red, dashed, "\exists! u"']\ar[from=ur, blue, "z"] & &
+		\end{tikzcd}
+		\caption{\hyperref[def:coequalizer]{余等化子の普遍性}}
+	\end{subfigure}
+\end{figure}%
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}{0.4\columnwidth}
+		\centering
+		\begin{tikzcd}[row sep=large, column sep=large]
+			&\forall \textcolor{blue}{W} \ar[ddr, blue, bend right, "w_1"']\ar[drr, blue, bend left, "w_2"]\ar[dr, red, dashed, "\exists! u"] & & \\
+			& &\bm{P} \ar[d, "\pi_1"']\ar[r, "\pi_2"] &Y \ar[d, "g"'] \\
+			& &X \ar[r, "f"] &Z
+		\end{tikzcd}
+		\caption{\hyperref[def:pullback]{引き戻しの普遍性}}
+	\end{subfigure}
+	\hspace{5mm}
+	\begin{subfigure}{0.4\columnwidth}
+		\centering
+		\begin{tikzcd}[row sep=large, column sep=large]
+			&\forall \textcolor{blue}{W} \ar[from=ddr, blue, bend left, "w_1"]\ar[from=drr, blue, bend right, "w_2"']\ar[from=dr, red, dashed, "\exists! u"] & & \\
+			& &\bm{P} \ar[from=d, "\iota_1"]\ar[from=r, "\iota_2"'] &Y \ar[from=d, "g"] \\
+			& &X \ar[from=r, "f"'] &Z
+		\end{tikzcd}
+		\caption{\hyperref[def:pushout]{押し出しの普遍性}}
+	\end{subfigure}
+\end{figure}%
+
+今や法則は一目瞭然である．つまり，\textbf{右の図式は左の図式の射の向きを逆にしたものだと言える．}
+\begin{mydef}[label=def:op-category, breakable]{反対圏}
+	圏 $\Cat{C}$ の\textbf{反対圏} (opposite category)\footnote{\textbf{双対圏} (dual category) とも言う．} $\OP{\Cat{C}}$ とは，
+	\begin{itemize}
+		\item $\Obj{\OP{\Cat{C}}} \coloneqq \Obj{\Cat{C}}$
+		\item $\Hom{\OP{\Cat{C}}} (A,\, B) \coloneqq \Hom{\Cat{C}}(\textcolor{red}{B},\, \textcolor{red}{A})$
+		\item 合成
+		\begin{align}
+			\OP{\circ} \colon \Hom{\OP{\Cat{C}}}(A,\, B) \times \Hom{\OP{\Cat{C}}}(B,\, C) \lto \Hom{\OP{\Cat{C}}}(A,\, C),\; (f,\, g) \lmto g\circ f
+		\end{align}
+		は，$\Cat{C}$ における合成を $\circ$ と書いたときに
+		\begin{align}
+			g \OP{\circ} f \coloneqq f \circ g
+		\end{align}
+		と定める．
+	\end{itemize}
+	のようにして構成される\hyperref[def:category]{圏}のことである．
+	要するに，$\Cat{C}$ と対象は同じだが\textbf{矢印が全て逆向き}になっているような圏のこと．
+\end{mydef}
+
+これまでに登場した圏 $\TOP$ における構成は，
+\begin{enumerate}
+	\item まず圏 $\SETS$ において普遍性を充たすような対象を構成し，
+	\item $\SETS$ における普遍性に登場する射が連続になるような上手い位相を入れる
+\end{enumerate}
+という流れであった．そして注意\ref{remark:product}, \ref{remark:sum}, \ref{remark:equalizer}, \ref{remark:coequalizer}, \ref{remark:pullback}, \ref{remark:pushout}から，
+\textbf{位相の入れ方にも一種の双対性が見てとれる}：
+\begin{table}[H]
+	\centering
+	\begin{tabular}{l|l}
+		\multicolumn{1}{c}{\hyperref[def.intensity_topo]{最弱}の位相} &
+		\multicolumn{1}{|c}{\hyperref[def.intensity_topo]{最強}の位相} \\
+		\hhline{-|-} 
+		\hyperref[def:initial-terminal]{始対象} &\hyperref[def:initial-terminal]{終対象} \\
+		\hyperref[def:product]{積} &\hyperref[def:sum]{和} \\
+		\hyperref[def:equalizer]{等化子} &\hyperref[def:coequalizer]{余等化子} \\
+		\hyperref[def:pullback]{引き戻し} &\hyperref[def:pushout]{押し出し} \\
+	\end{tabular}
+\end{table}%
+こうして我々は，\textbf{始位相}と\textbf{終位相}の概念にたどり着く．
+
+\begin{mydef}[label=def:initial-topo, breakable]{始位相}
+	\begin{itemize}
+		\item \underline{集合} $\textcolor{blue}{X} \in \Obj{\SETS}$
+		\item 位相空間の族 $\Familyset[\big]{(Y_\lambda,\, \mathscr{O}_\lambda) \in \Obj{\TOP}}{\lambda \in \Lambda}$
+		\item \underline{写像}の族 $\mathcal{F} \coloneqq \Familyset[\big]{\textcolor{blue}{\varphi_\lambda} \colon \textcolor{blue}{X} \lto Y_\lambda}{\lambda \in \Lambda}$
+	\end{itemize}
+	を与える．写像の族 $\mathcal{F}$ によって誘導される $\textcolor{blue}{X}$ の\textbf{始位相} (initial topology)\footnote{\textbf{極限位相} (limit topology) や，\textbf{射影的位相} (projective topology) と呼ぶことがある．} とは，
+	$\textcolor{blue}{X}$ の\hyperref[ax.topo]{位相}のうち，$\forall \lambda \in \Lambda$ について $\varphi_\lambda$ を\hyperref[def.continuous]{連続}にする\textbf{最弱の}位相のこと．
+	\tcblower
+	明示的には，$\textcolor{blue}{X}$ の部分集合族
+	\begin{align}
+		\bigcup_{\lambda \in \Lambda} \bigl\{\, \varphi_\lambda^{-1}(U) \subset \textcolor{blue}{X} \bigm| U \in \mathscr{O}_\lambda \,\bigr\} 
+	\end{align}
+	を\hyperref[def:subbase]{準開基}とする $\textcolor{blue}{X}$ の位相のことを言う．
+\end{mydef}
+
+\begin{mydef}[label=def:final-topo, breakable]{終位相}
+	\begin{itemize}
+		\item \underline{集合} $\textcolor{blue}{Y} \in \Obj{\SETS}$
+		\item 位相空間の族 $\Familyset[\big]{(X_\lambda,\, \mathscr{O}_\lambda) \in \Obj{\TOP}}{\lambda \in \Lambda}$
+		\item \underline{写像}の族 $\mathcal{F} \coloneqq \Familyset[\big]{\textcolor{blue}{\varphi_\lambda} \colon X_\lambda \lto \textcolor{blue}{Y}}{\lambda \in \Lambda}$
+	\end{itemize}
+	を与える．写像の族 $\mathcal{F}$ によって誘導される $\textcolor{blue}{Y}$ の\textbf{終位相} (final topology)\footnote{\textbf{余極限位相} (colimit topology) や，\textbf{帰納的位相} (inductive topology) と呼ぶことがある．} とは，
+	$\textcolor{blue}{Y}$ の\hyperref[ax.topo]{位相}のうち，$\forall \lambda \in \Lambda$ について $\varphi_\lambda$ を\hyperref[def.continuous]{連続}にする\textbf{最強の}位相のこと．
+	\tcblower
+	明示的には，$\textcolor{blue}{Y}$ の部分集合族
+	\begin{align}
+		\bigcap_{\lambda \in \Lambda} \bigl\{\, U \subset \textcolor{blue}{Y} \bigm| \varphi_\lambda^{-1} (U) \in \mathscr{O}_\lambda\,\bigr\} 
+	\end{align}
+	のことである．
+\end{mydef}
+
+\subsection{極限と余極限}
+
+実は，\hyperref[def:initial-terminal]{終対象}, \hyperref[def:product]{積}, \hyperref[def:equalizer]{等化子}, \hyperref[def:pullback]{引き戻し}およびそれらの双対は全て統一的に理解できる．
+それは\textbf{\hyperref[def:limit]{極限}}とその双対（\textbf{余極限}）である．
+極限の定義の準備をする．
+
+\begin{mydef}[label=def:functor, breakable]{関手}
+	2つの\hyperref[def:category]{圏} $\Cat{C},\, \Cat{D}$ をとる．
+	\begin{align}
+		\bm{F \colon \Cat{C} \lto \Cat{D}}
+	\end{align}
+	と書かれる $\Cat{C}$ から $\Cat{D}$ への\textbf{関手} (functor) は，以下の2つの対応付けからなる：
+	\begin{itemize}
+		\item $\forall X \in \Obj{\Cat{C}}$ にはある対象 $\bm{F(X)} \in \Obj{\Cat{D}}$ を対応させ，
+		\item $\forall f \in \Hom{\Cat{C}}(X,\, Y)$ にはある射 $\bm{F(f)} \in \Hom{\Cat{D}} \bigl( F(X),\, F(Y) \bigr)$ を対応させる．
+	\end{itemize}
+	これらの構成要素は次の2条件を充たさねばならない：
+	\begin{enumerate}
+		\item $\forall X \in \Obj{\Cat{C}}$ に対して
+		\begin{align}
+			F(\mathrm{Id}_X) = \mathrm{Id}_{F(X)}
+		\end{align}
+		が成り立つ．
+		\item $\forall X,\, Y,\, Z \in \Obj{\Cat{C}}$ および $\forall f \in \Hom{\Cat{C}}(X,\, Y),\; \forall g \in \Hom{\Cat{C}}(Y,\, Z)$ に対して
+		\begin{align}
+			F(g \circ f) = F(g) \circ F(f)
+		\end{align}
+		が成り立つ．
+	\end{enumerate}
+	
+\end{mydef}
+
+これまでもなんとなく\textbf{図式}という用語を使ってきたが，正確な定義は次のようになる．
+\begin{mydef}[label=def:diagram]{図式}
+	圏 $\Cat{C}$ における $\bm{\Cat{I}}$ \textbf{型} (type $\Cat{I}$) の\textbf{図式} (diagram) とは，圏 $\Cat{I}$ からの\hyperref[def:functor]{関手}
+	\begin{align}
+		\bm{D} \colon \Cat{I} \lto \Cat{C}
+	\end{align}
+	のこと．圏 $\Cat{I}$ は\textbf{添字圏} (indexing category) と呼ばれる．
+\end{mydef}
+
+定義\ref{def:diagram}はかなり抽象的だが，
+例えば添字圏 $\Cat{I}$ として\textbf{有向グラフ}から作られる\textbf{自由圏}を考えてみると，
+見慣れた（手でかけるサイズの）可換図式がきっちり定義されていることが確認できる．
+
+\begin{mydef}[label=def:DG, breakable]{有向グラフ}
+	\begin{itemize}
+		\item \textbf{頂点} (vertex) 集合 $V$
+		\item \textbf{辺} (edge) 集合 $E$
+		\item \textbf{始点関数} (source function) $s \colon E \lto V$
+		\item \textbf{終点関数} (target function) $t \colon E \lto V$
+	\end{itemize}
+	の4つ組 $\Gamma \coloneqq (V,\, E,\, s,\, t)$ のことを\textbf{有向グラフ} (directed graph) と呼ぶ~\cite{Brendan}．
+	頂点 $v,\, w \in V$ に対して $s(e) = v,\; t(e) = w$ を充たすような辺 $e \in E$ のことを，\textbf{$\bm{v}$ から $\bm{w}$ へ向かう辺}と呼ぶ．
+	\tcblower
+	\begin{itemize}
+		\item 有向グラフ $\Gamma$ の長さ $n \ge 0$ の\textbf{道} (path) とは
+		組 $(v;\, e_1,\, \dots,\, e_n) \in V \times E^n$ であって以下を充たすもののこと\footnote{長さ $0$ の道とは $(v) \in V$ のことである．つまり，文字通り\textbf{辺を1回も辿らない}．}：
+		\begin{enumerate}
+			\item $s(e_1) = v$
+			\item $\forall i \in \{1,\, \dots,\, n-1\}$ に対して $t(e_i) = s(e_{i+1})$
+		\end{enumerate}
+		\item $\Gamma$ の長さ $n$ の道 $p \coloneqq (v;\, e_1,\, \dots,\, e_n)$ の\textbf{始点}を
+		\begin{align}
+			\bm{s(p)} \coloneqq v
+		\end{align}
+		と定義する．$p$ の\textbf{終点}は
+		\begin{align}
+			\bm{t(p)} \coloneqq
+			\begin{cases}
+				v, &n=0 \\
+				t(e_n), &n \ge 1
+			\end{cases}
+		\end{align}
+		と定義する．
+		\item $\Gamma$ の2つの道 $p \coloneqq (v;\, e_1,\, \dots,\, e_n),\, q \coloneqq (w;,\, f_1,\, \dots,\, f_m)$ が $t(p) = s(q)$ を充たすとき，$p,\, q$ の\textbf{連結}と呼ばれる長さ $n+m$ の道を
+		\begin{align}
+			\bm{p \circ q} \coloneqq \bigl(v;\, e_1,\, \dots,\, e_n,\, f_1,\, \dots,\, f_m \bigr) \in V \times E^{n+m}
+		\end{align}
+		によって定義する．
+		\item $\Gamma$ の2つの道 $p,\, q$ が\textbf{平行} (parallel) であるとは，
+		\begin{align}
+			s(p) = s(q)\AND t(p) = t(q)
+		\end{align}
+		が成り立つこと．
+	\end{itemize}
+\end{mydef}
+
+\begin{mydef}[label=def:free-category]{自由圏}
+	任意の\hyperref[def:DG]{有向グラフ} $\Gamma = (V,\, E,\, s,\, t)$ に対して，$\Gamma$ 上の\textbf{自由圏} (free category) $\FREE(\Gamma)$ を次のように定義する：
+	\begin{itemize}
+		\item 対象は $\Gamma$ の頂点とする：$\Obj{\FREE(\Gamma)} \coloneqq \Gamma$
+		\item $\Hom{\FREE(\Gamma)}(v,\, w)$ は $v$ から $w$ へのすべての\hyperref[def:DG]{道}が成す集合とする．
+		\item 対象 $v$ 上の恒等射は $v$ を始点とする長さ $0$ の道とする．
+		\item 射の合成は道の連結とする．
+	\end{itemize}	
+\end{mydef}
+
+\hyperref[def:free-category]{自由圏}の例をいくつか挙げる．
+
+\begin{myexample}[label=ex:Free-0]{自由圏 $\bm{0}$}
+	頂点も辺も空であるような\hyperref[def:DG]{有向グラフ}を素材とする自由圏
+	\begin{align}
+		\bm{0} \coloneqq \FREE \Bigl(\, \boxdiagram{} \, \Bigr)
+	\end{align}
+	においては $\Obj{\bm{0}} = \emptyset$ で，射も空である．
+\end{myexample}
+
+\begin{myexample}[label=ex:Free-1]{自由圏 $\bm{1}$}
+	自由圏
+	\begin{align}
+		\bm{1} \coloneqq \FREE \Bigl(\, \boxdiagram{\overset{v_1}{\bullet}}\, \Bigr)
+	\end{align}
+	においては $\Obj{\bm{1}} = \{v_1\}$ で，
+	射は $\Hom{\bm{1}}(v_1,\, v_1) = \{(v_1)\}$ の1つしかない．
+	
+	一方，自由圏
+	\begin{align}
+		\bm{1'} \coloneqq \FREE \Bigl(\, \boxdiagram{\overset{v_1}{\bullet} \arrow[loop right, "e_1"]}\, \Bigr)
+	\end{align}
+	を考えると，
+	\begin{align}
+		\Hom{\bm{1'}}(v_1,\, v_1) = \bigl\{\, (v_1),\, (v_1;\, e_1),\, (v_1;\, e_1) \circ (v_1;\, e_1), \, \dots \,\bigr\}
+	\end{align}
+	のように無限個の射がある．
+\end{myexample}
+
+\begin{myexample}[label=ex:Free-2]{自由圏 $\bm{n}$}
+	\begin{align}
+		\bm{2} \coloneqq \FREE\Bigl(\, \boxdiagram{\overset{v_1}{\bullet} \ar[r, "e_1"] \&\overset{v_2}{\bullet}}\, \Bigr)
+	\end{align}
+	においては $\Obj{\bm{2}} = \{v_1,\, v_2\}$ で，射は
+	\begin{align}
+		\Hom{\bm{2}}(v_1,\, v_1) &= \{(v_1)\} \\
+		\Hom{\bm{2}}(v_2,\, v_2) &= \{(v_2)\} \\
+		\Hom{\bm{2}}(v_1,\, v_2) &= \{(v_1;\, e_1)\}
+	\end{align}
+	の3つである．
+	同様にして自由圏 $\bm{3},\, \bm{4},\, \dots$ を定義できる．
+\end{myexample}
+
+% 一方で素材となる\hyperref[def:DG]{有向グラフ}として
+% \begin{center}
+% 	\begin{tikzcd}
+% 		&\Gamma = \Bigl(\overset{v_1}{\bullet} \arrow[loop right, "e_1"]&\Bigr)
+% 	\end{tikzcd}
+% \end{center}
+% を考えると，
+% \begin{align}
+% 	\Hom{\FREE{\Gamma}}(v_1,\, v_1) = \bigl\{\, (v_1),\, (v_1;\, e_1),\, (v_1;\, e_1) \circ (v_1;\, e_1), \, \dots \,\bigr\}
+% \end{align}
+% のように無限個の射がある．
+
+
+以降では文脈上明らかな場合は\hyperref[def:DG]{有向グラフ}とそれを素材にした\hyperref[def:free-category]{自由圏}の違いを無視する．
+可換図式の定式化は次のようになる：
+\begin{mydef}[label=def:commutative]{可換図式}
+	圏 $\Cat{C}$ における $\Cat{I}$ 型の\hyperref[def:diagram]{図式} $D \colon \Cat{I} \lto \Cat{C}$ が\textbf{可換図式} (commutative diagram) であるとは，
+	$\Cat{I}$ における全ての\hyperref[def:DG]{平行}な射の組 $f,\, g \colon i \lto j$ に対して $D(f) = D(g)$ が成り立つこと．
+\end{mydef}
+
+\begin{myexample}[]{積の普遍性の図式}
+	\begin{align}
+		\Cat{I} \coloneqq \FREE \left(\, 
+		\boxdiagram{
+			\&\overset{4}{\bullet}\ar[d, "e_{43}"]\ar[dr, "e_{42}"] \& \\
+			\overset{1}{\bullet}\ar[from=ur, "e_{41}"']\ar[from=r, "e_{31}"] \&\overset{3}{\bullet}\ar[r, "e_{32}"'] \&\overset{2}{\bullet}
+		}
+		\,\right)
+	\end{align}
+	と定義すると，$\Cat{I}$ における\hyperref[def:DG]{平行な射}は
+	\begin{align}
+		\Hom{\Cat{I}}(4,\, 1) &= \bigl\{\, e_{41},\,  e_{31} \circ e_{43} \bigr\}, \\
+		\Hom{\Cat{I}}(4,\, 2) &= \bigl\{\, e_{42},\,  e_{32} \circ e_{43} \bigr\}
+	\end{align}
+	である．一般に\hyperref[def:DG]{平行な道}の間には\textbf{道の等式}を課すことができる．今回の場合
+	\begin{align}
+		e_{41} &= e_{31} \circ e_{43}, \\
+		e_{42} &= e_{32} \circ e_{43} 
+	\end{align}
+	の2つを課すことで\hyperref[def:diagram]{図式} 
+	\begin{align}
+		D \colon 
+		\boxdiagram{
+			\&\overset{4}{\bullet}\ar[d, "e_{43}"]\ar[dr, "e_{42}"] \& \\
+			\overset{1}{\bullet} \ar[from=ur, "e_{41}"']\ar[from=r, "e_{31}"]\&\overset{3}{\bullet}\ar[r, "e_{32}"'] \&\overset{2}{\bullet} \\
+			e_{41} = e_{31} \circ e_{43},\& \& e_{42} = e_{32} \circ e_{43}
+		} \lto \Cat{C}
+	\end{align}
+	はちょうど圏 $\Cat{C}$ における\hyperref[cmtd:univ-product]{積の普遍性}を表す\hyperref[def:commutative]{可換図式}になる．
+\end{myexample}
+
+圏 $\Cat{C}$ における\hyperref[def:diagram]{図式}の概念が定義されたので，極限の定義を始める．
+\begin{mydef}[label=def:Cone, breakable]{錐の圏}
+	$D \colon \Cat{I} \lto \Cat{C}$ を\hyperref[def:diagram]{図式}とする．
+	\begin{itemize}
+		\item $D$ 上の\textbf{錐} (cone) とは，
+		\begin{itemize}
+			\item $\Cat{C}$ の対象 $\bm{C} \in \Obj{\Cat{C}}$
+			\item $\Cat{C}$ の射の族 $\bm{c}_\bullet \coloneqq \Familyset[\big]{\bm{c}_i \in \Hom{\Cat{C}}\bigl(\bm{C},\, D(i)\bigr)}{i \in \Obj{\Cat{I}}}$
+		\end{itemize}
+		の組 $(\bm{C},\, \bm{c}_\bullet)$ であって，
+		$\forall i,\, j \in \Obj{\Cat{I}}$ および $\forall f \in \Hom{\Cat{I}}(i,\, j)$ に対して
+		\begin{align}
+			\bm{c}_j = \bm{c}_i \circ D(f)
+		\end{align}
+		を充たす，i.e. 以下の図式を可換にするもののこと．
+		\begin{center}
+			\begin{tikzcd}
+				& &\bm{C} \ar[dl, bend right, "\bm{c}_i"']\ar[dr, bend left, "\bm{c}_j"] & \\
+				&D(i) \ar[rr, "D(f)"] & &D(j)
+			\end{tikzcd}
+		\end{center}
+		\item \textbf{錐の射} (morphism of cones) 
+		\begin{center}
+			\begin{tikzcd}
+				&(\bm{C},\, \bm{c}_\bullet) \ar[r, red, "u"] &(\bm{C'},\, \bm{c'}_\bullet)
+			\end{tikzcd}
+		\end{center}
+		とは，$\Cat{C}$ の射 $\textcolor{red}{u} \in \Hom{\Cat{C}} (\bm{C},\, \bm{C'})$ であって，$\forall i \in \Obj{\Cat{I}}$ に対して
+		\begin{align}
+			\bm{c}_i = \textcolor{red}{u} \circ \bm{c'}_i
+		\end{align}
+		を充たす，i.e. 以下の図式を可換にするもののこと．
+		\begin{center}
+			\begin{tikzcd}
+				& &\bm{C} \ar[ddl, bend right, "\bm{c}_i"']\ar[d, red, "u"]\\
+				& &\bm{C'}\ar[dl, bend right, "\bm{c'}_i"] \\
+				&D(i) &
+			\end{tikzcd}
+		\end{center}
+	\end{itemize}
+	$D$ 上の錐と錐の射を全て集めたものは圏 $\CONE{D}$ を成す．
+\end{mydef}
+
+\begin{mydef}[label=def:limit, breakable]{極限}
+	\hyperref[def:diagram]{図式} $D \colon \Cat{I} \lto \Cat{C}$ の\textbf{極限} (limit)\footnote{\textbf{普遍錐} (universal cone) とも言う．}とは，
+	圏 $\CONE{D}$ の\hyperref[def:initial-terminal]{終対象}のこと．記号として $\bigl(\bm{\varprojlim D},\, \bm{p}_\bullet\bigr)$ と書く．
+	i.e. 極限 $\bigl(\bm{\varprojlim D},\, \bm{p}_\bullet\bigr) \in \Obj{\CONE{D}}$ は，以下の普遍性を充たす：
+	\begin{description}
+		\item[\textbf{(極限の普遍性)}] 　
+		
+		$\forall (\textcolor{blue}{\bm{C}},\, \textcolor{blue}{\bm{c}}_\bullet) \in \Obj{\CONE{D}}$ に対して，\hyperref[def:Cone]{錐の射} $\textcolor{red}{u} \in \Hom{\CONE{D}} \bigl((\textcolor{blue}{\bm{C}},\, \textcolor{blue}{\bm{c}}_\bullet),\, \bigl(\bm{\varprojlim D},\, \bm{p}_\bullet\bigr) \bigr)$ が一意的に存在して，$\forall i,\, j \in \Obj{\Cat{I}}$ および $\forall f\in \Hom{\Cat{I}}(i,\, j)$ に対して図式を可換にする．
+		\begin{figure}[H]
+			\centering
+			\begin{tikzcd}[row sep=large, column sep=large]
+				& &\forall \textcolor{blue}{\bm{C}} \ar[ddl, bend right, blue, "\bm{c}_i"']\ar[ddr, bend left, blue, "\bm{c}_j"]\ar[d, red, dashed, "\exists! u"] &\\
+				& &\bm{\varprojlim D} \ar[dl, bend right, "\bm{p}_i"]\ar[dr, bend left, "\bm{p}_j"'] & \\
+				&D(i) \ar[rr, "F(f)"]& &D(j)
+			\end{tikzcd}
+			\caption{極限の普遍性}
+			\label{cmtd:lim}
+		\end{figure}%
+	\end{description}
+	
+\end{mydef}
+
+\begin{myprop}[label=prop:unique-limit]{極限の一意性}
+	\hyperref[def:diagram]{図式} $D \colon \Cat{I},\, \Cat{C}$ の\hyperref[def:limit]{極限}は，存在すれば\hyperref[def:iso]{同型}を除いて一意である．
+\end{myprop}
+
+\begin{proof}
+	\hyperref[prop:univ-initial-terminal]{終対象の一意性}より明らか．
+\end{proof}
+
+\begin{myexample}[label=ex:limit-initial]{終対象}
+	\hyperref[ex:Free-0]{何もない圏} $\bm{0}$ を添字圏とする\hyperref[def:diagram]{図式} $D \colon \bm{0} \lto \Cat{C}$ の上の\hyperref[def:limit]{極限}は\hyperref[def:initial-terminal]{終対象}である：
+	\begin{align}
+		\varprojlim D \cong \bm{T}.
+	\end{align}
+\end{myexample}
+
+\begin{myexample}[label=ex:limit-product]{積}
+	図式 
+	\[
+		D \colon \FREE \left(\, \boxdiagram{
+			\overset{1}{\bullet} \&\overset{2}{\bullet}
+		} \, \right)
+		\lto \Cat{C}
+	\]
+	の上の\hyperref[def:Cone]{錐} $\bigl(\bm{C},\, \{\bm{c}_1,\, \bm{c}_2\}\bigr) \in \Obj{\CONE{D}}$ は
+	\begin{center}
+		\begin{tikzcd}
+			& &\bm{C} \ar[dl, bend right, "\bm{c}_1"']\ar[dr, bend left, "\bm{c}_2"] & \\
+			&D(1) & &D(2)
+		\end{tikzcd}
+	\end{center}
+	の形をしている．この図式 $D$ の極限は\hyperref[def:product]{積}である：
+	\begin{align}
+		\bigl(\varprojlim D,\, \{\bm{p}_1,\, \bm{p}_2\} \bigr) \cong \bigl(D(1) \times D(2),\, \{p_{D(1)},\, p_{D(2)}\}\bigr).
+	\end{align}
+\end{myexample}
+
+\begin{myexample}[label=ex:limit-equalizer]{等化子}
+	
+\end{myexample}
+
+
+図式 
+\[ 
+	D \colon \FREE \left(\, \boxdiagram{
+		\overset{1}{\bullet} \ar[r,shift left=.75ex,"f"]\ar[r,shift right=.75ex,swap,"g"] \&\overset{2}{\bullet}
+	} \, \right) 
+	\lto \Cat{C}
+\]
+の上の\hyperref[def:Cone]{錐} $\bigl(\bm{C},\, \{\bm{c}_1,\, \bm{c}_2\}\bigr) \in \Obj{\CONE{D}}$ は
+\begin{center}
+	\begin{tikzcd}[row sep=large, column sep=large]
+		&D(1) \ar[r,shift left=.75ex,"D(f)"]\ar[r,shift right=.75ex,swap,"D(g)"] &D(2) \\
+		&\bm{C} \ar[u, "\bm{c}_1"']\ar[ur, bend right, "\bm{c}_2"] &
+	\end{tikzcd}
+\end{center}
+の形をした\hyperref[def:commutative]{可換図式}を成す．図式の可換性から
+\begin{align}
+	D(f) \circ \bm{c}_1 = \bm{c}_2 \AND D(g) \circ \bm{c}_1 = \bm{c}_2
+\end{align}
+が成り立つので，結局 $D(f) \circ \bm{c}_1 = D(f) \circ \bm{c}_2$ が成り立つ．
+この場合，$\bm{c}_2$ は冗長なので省略すると\hyperref[cmtd:univ-equalizer]{等化子の普遍性の図式}を得る．
+つまり，$\bigl(\varprojlim D,\, \{\bm{p}_1\} \bigr)$ は射 $D(f),\, D(g)$ の\hyperref[def:equalizer]{イコライザ}となる．
+
+\begin{myexample}[label=ex:limit-pullback]{引き戻し}
+	図式 
+	\[
+		D \colon \FREE \left(\,\boxdiagram{
+			\&\overset{2}{\bullet} \ar[d, "g"'] \\
+			\overset{1}{\bullet} \ar[r, "f"]\&\overset{3}{\bullet}
+		}\, \right)
+		\lto \Cat{C}
+	\] 
+	の上の\hyperref[def:Cone]{錐} $\bigl(\bm{C},\, \{\bm{c}_1,\, \bm{c}_2,\, \bm{c}_3\}\bigr) \in \Obj{\CONE{D}}$ は
+	\begin{center}
+		\begin{tikzcd}[row sep=large, column sep=large]
+			&\bm{C} \ar[d, bend right, "\bm{c}_1"]\ar[dr, bend left, "\bm{c}_3"]\ar[r, bend left, "\bm{c}_2"] &D(2) \ar[d, "D(g)"] \\
+			&D(1) \ar[r, "D(f)"] &D(3)
+		\end{tikzcd}
+	\end{center}
+	の形をした\hyperref[def:commutative]{可換図式}を成す．図式の可換性から $\bm{c}_3$ は冗長なので省略すると\hyperref[cmtd:univ-pullback]{引き戻しの普遍性の図式}が得られる．従って
+	\begin{align}
+		\bigl(\varprojlim D,\, \{\bm{p}_1,\, \bm{p}_2\} \bigr) \cong \bigl(D(1) \times_{D(3)} D(2),\, \{\pi_1,\, \pi_2\}\bigr)
+	\end{align}
+	である．
+\end{myexample}
+
+\begin{myprop}[label=prop:limit-basic]{極限の存在}
+	圏 $\Cat{C}$ が任意の\hyperref[def:diagram]{図式} $D \colon \Cat{I} \lto \Cat{C}$ に対して\hyperref[def:limit]{極限}を持つ必要十分条件は，
+	圏 $\Cat{C}$ において常に\hyperref[def:product]{積}と\hyperref[def:equalizer]{イコライザ}が存在することである．
+\end{myprop}
+
+\begin{proof}
+	$\Cat{I}$ の全ての射の集まりを $\mathrm{Mor}(\Cat{I})$ と書くことにする．
+	$\Longrightarrow$ はすでに確認したので，$\Longleftarrow$ を示す．
+	圏 $\Cat{C}$ において常に\hyperref[def:product]{積}と\hyperref[def:equalizer]{イコライザ}が存在するとする．
+	
+	任意の型 $\Cat{I}$ を持つ\hyperref[def:diagram]{図式}
+	\begin{align}
+		D \colon \Cat{I} \lto \Cat{C}
+	\end{align}
+	を与える．仮定より $\Cat{C}$ は常に\hyperref[def:product]{積}を持つから，\hyperref[def:limit]{極限}の第1候補として
+	\begin{align}
+		\prod_{i \in \Obj{\Cat{I}}} D(i)
+	\end{align}
+	を考えることができる．$\forall j \in \Obj{\Cat{I}}$ について，$D(j)$ へ伸びる標準的射影 $p_j \colon \prod_{i \in \Obj{\Cat{I}}} D(i) \lto D(j)$ があるからである．
+	しかし，$\forall i,\, j \in \Obj{\Cat{I}}$ および $\forall f \in \Hom{\Cat{I}}(i,\, j)$ に関して図式
+	\begin{center}
+		\begin{tikzcd}
+			& &\displaystyle\prod_{i \in \Obj{\Cat{I}}} D(i) \ar[dl, bend right, "p_i"']\ar[dr, bend left, "p_j"] & \\
+			&D(i) \ar[rr, "D(f)"] & &D(j)
+		\end{tikzcd}
+	\end{center}
+	は必ずしも\hyperref[def:commutative]{可換}になってくれない．そこで，この非可換性を図式
+	\begin{center}
+		\begin{tikzcd}
+			&\displaystyle\prod_{i \in \Obj{\Cat{I}}} D(i) \ar[r,shift left=.75ex, red, "\phi"]\ar[r,shift right=.75ex,swap, blue,"\psi"] &\displaystyle\prod_{f \in \mathrm{Mor}(\Cat{I})} D(\cod f)
+		\end{tikzcd}
+	\end{center}
+	の\hyperref[def:equalizer]{等化子}
+	\begin{center}
+		\begin{tikzcd}
+			\bm{E} \ar[r, "\bm{e}"] &\displaystyle\prod_{i \in \Obj{\Cat{I}}} D(i) \ar[r,shift left=.75ex, red, "\phi"]\ar[r,shift right=.75ex,swap, blue,"\psi"] &\displaystyle\prod_{f \in \mathrm{Mor}(\Cat{I})} D(\cod f)
+		\end{tikzcd}
+	\end{center}
+	によって補正することを考える．仮定より $\Cat{C}$ は常に等化子を持つのでこのような構成は可能である．
+	ただし $\textcolor{red}{\phi},\, \textcolor{blue}{\psi}$ は
+	$\prod_{f \in \mathrm{Mor}(\Cat{I})} D(\cod f)$\footnote{$\prod_{i \in \Obj{\Cat{I}}} D(i)$ とは添字集合が異なるので，標準的射影も違うものになっていることに注意．}
+	に関する2つの\hyperref[cmtd:univ-product]{積の普遍性の図式}
+	\begin{figure}[H]
+		\centering
+		\begin{subfigure}{0.4\columnwidth}
+			\centering
+			\begin{tikzcd}
+				& &\displaystyle\prod_{i \in \Obj{\Cat{I}}} D(i) \ar[dl, bend right, "p_{\cod f}"']\ar[d, red, dashed, "\exists!\phi"] \\
+				&D(\cod f) &\displaystyle\prod_{f \in \mathrm{Mor}(\Cat{I})} D(\cod f) \ar[l, "p_{f}"]
+			\end{tikzcd}
+		\end{subfigure}
+		\hspace{5mm}
+		\begin{subfigure}{0.4\columnwidth}
+			\centering
+			\begin{tikzcd}
+				& &\displaystyle\prod_{i \in \Obj{\Cat{I}}} D(i) \ar[dl, bend right, "D(f) \circ p_{\dom f}"']\ar[d, blue, dashed, "\exists!\psi"] \\
+				&D(\cod f) &\displaystyle\prod_{f \in \mathrm{Mor}(\Cat{I})} D(\cod f) \ar[l, "p_{f}"]
+			\end{tikzcd}
+		\end{subfigure}
+	\end{figure}%
+	によって特徴づけられている．
+
+	\begin{itemize}
+		\item \hyperref[def:equalizer]{等化子} $\bm{E} \in \Obj{\Cat{C}}$
+		\item 射の族 $\bm{\pi}_\bullet \coloneqq \Familyset[\big]{p_i \circ \bm{e}}{i \in \Obj{\Cat{I}}}$
+	\end{itemize}
+	の組 $\bigl(\bm{E},\, \bm{\pi}_\bullet\bigr)$ が図式 $D$ の\hyperref[def:limit]{極限}であることを示す．
+	まず $\forall i,\, j \in \Obj{\Cat{I}}$ および $\forall f \in \Hom{\Cat{I}}(i,\, j)$ に対して
+	\begin{align}
+		\bm{\pi}_j &= p_j \circ \bm{e} = p_{\cod f} \circ \bm{e} = p_f \circ (\textcolor{red}{\phi} \circ \bm{e}), \\
+		D(f) \circ \bm{\pi}_i &= D(f) \circ p_i \circ \bm{e} = (D(f) \circ p_{\dom f}) \circ \bm{e} = p_f \circ (\textcolor{blue}{\psi} \circ \bm{e})
+	\end{align}
+	が成り立つが，等化子の定義より $\textcolor{red}{\phi} \circ \bm{e} = \textcolor{blue}{\psi} \circ \bm{e}$ が成り立つので図式
+	\begin{center}
+		\begin{tikzcd}
+			& &\bm{E} \ar[dl, bend right, "\bm{\pi}_i"']\ar[dr, bend left, "\bm{\pi}_j"] & \\
+			&D(i) \ar[rr, "D(f)"] & &D(j)
+		\end{tikzcd}
+	\end{center}
+	は\hyperref[def:commutative]{可換}である．i.e. $(\bm{E},\, \bm{\pi}_i) \in \Obj{\CONE{D}}$ が分かった．
+	
+	次に\hyperref[def:Cone]{錐} $(\bm{E},\, \bm{\pi}_i)$ が $\CONE{D}$ の\hyperref[def:initial-terminal]{終対象}であることを示す．
+	$\forall (\bm{C},\, \bm{c}_\bullet) \in \Obj{\CONE{D}}$ をとる．そして\hyperref[cmtd:univ-product]{積の普遍性の図式}を使って $\forall i\in \Obj{\Cat{I}}$ について $c_i \in \Hom{\Cat{C}} \bigl( \bm{C},\, D(i) \bigr)$ を
+	\begin{center}
+		\begin{tikzcd}[row sep=large, column sep=large]
+			& &\bm{C} \ar[dl, bend right, "c_i"']\ar[d, red, dashed, "\exists! \overline{c}"] \\
+			&D(i) &\displaystyle \prod_{i \in \Obj{\Cat{I}}} D(i) \ar[l, "p_i"]
+		\end{tikzcd}
+	\end{center}
+	のように一意に分解する．
+	このとき\hyperref[def:Cone]{錐の定義}から$\forall i,\, j \in \Obj{\Cat{I}}$ および $\forall f \in \Hom{\Cat{I}}(i,\, j)$ に対して $\bm{c}_j = D(f) \circ \bm{c}_i$ が成り立つので，
+	\begin{align}
+		\bm{c}_j &=p_j \circ \overline{c} = p_{\cod f} \circ \overline{c} = p_f \circ (\textcolor{red}{\phi} \circ \overline{c}) \\
+		&= D(f) \circ \bm{c}_i = D(f) \circ p_{\dom f} \circ \overline{c} = p_f \circ (\textcolor{blue}{\psi} \circ \overline{c})
+	\end{align}
+	が言える．従って $\prod_{f \in \mathrm{Mor}(\Cat{I})} D(\cod f)$ に関する\hyperref[cmtd:univ-product]{積の普遍性}から 
+	$\textcolor{red}{\phi} \circ \overline{c} = \textcolor{blue}{\psi} \circ \overline{c}$
+	が言えて，\hyperref[cmtd:univ-equalizer]{等化子の普遍性の図式}
+	\begin{center}
+		\begin{tikzcd}[row sep=large, column sep=large]
+			&\bm{E} \ar[r, "\bm{e}"] &\displaystyle\prod_{i \in \Obj{\Cat{I}}} D(i) \ar[r,shift left=.75ex, red, "\phi"]\ar[r,shift right=.75ex,swap, blue,"\psi"] &\displaystyle\prod_{f \in \mathrm{Mor}(\Cat{I})} D(\cod f) \\
+			&\bm{C} \ar[u, red, dashed, "\exists! u"]\ar[ur, "\overline{c}"'] & &
+		\end{tikzcd}
+	\end{center}
+	を書くことができる．このとき $\forall i \in \Obj{\Cat{I}}$ に関して
+	\begin{align}
+		\bm{c}_i = p_i \circ \overline{c} = p_i \circ \bm{e} \circ \textcolor{red}{u} = \bm{\pi}_i \circ \textcolor{red}{u}
+	\end{align}
+	が成り立つので $\textcolor{red}{u} \in \Hom{\Cat{C}} (\bm{C},\, \bm{E})$ は一意な\hyperref[def:Cone]{錐の射}だと分かった．
+\end{proof}
+
+命題\ref{prop:limit-basic}の証明は具体的に\hyperref[def:limit]{極限}を構成する手法を与えている点でも重要である．
+\hyperref[prop:equalizer-sets]{圏 $\SETS$ における等化子の構成}を思い出すと，$\SETS$ における極限を書き下すことができる：
+
+\begin{mycol}[label=col:limit-sets]{圏 $\SETS$ における極限}
+	任意の\hyperref[def:diagram]{図式} $D \colon \Cat{I} \lto \SETS$ を与える．$\Cat{I}$ の全ての射の集まりを $\mathrm{Mor}(\Cat{I})$ と書く．
+	このとき，
+	\begin{itemize}
+		\item $\displaystyle \prod_{i \in \Obj{\Cat{I}}} D(i)$ の部分集合
+		\begin{align}
+			\label{eq:limit-sets}
+			\varprojlim D \coloneqq \Bigl\{\, (x_i)_{i \in \Obj{\Cat{I}}} \in \prod_{i \in \Obj{\Cat{I}}} D(i) \Bigm| \forall f \in \mathrm{Mor}(\Cat{I}),\; x_{\cod f} = D(f)(x_{\dom f}) \,\Bigr\} 
+		\end{align}
+		\item 写像の族
+		\begin{align}
+			\bm{p}_\bullet \coloneqq \bigl\{\bm{p}_i \colon \varprojlim D \lto D(i),\; (x_j)_{j \in \Obj{\Cat{I}}} \lmto x_i\bigr\}_{i \in \Obj{\Cat{I}}}
+		\end{align}
+	\end{itemize}
+	の組は図式 $D$ の\hyperref[def:limit]{極限}である．
+\end{mycol}
+
+この公式いくつかの例で確認してみよう．
+
+\begin{myexample}[]{終対象}
+	\hyperref[ex:Free-0]{対象も射もない}図式
+	\begin{align}
+		D \colon \bm{0} \lto \SETS
+	\end{align}
+	を考える．添字集合 $\Lambda$ を持つ直積は $\Lambda$ からの写像だから，今の場合 $\prod_{i \in \Obj{\bm{0}}} D(i) = \emptyset$ である．
+	公式\eqref{eq:limit-sets}の条件は $\forall f\; \bigl(\, f \in \Mor{\Cat{I}} \IMP x_{\cod f} = D(f)(x_{\dom f})\, \bigr)$ と読めるが，$\mathrm{Mor} (\Cat{I}) = \emptyset$ なのでこの命題は常に真である．
+	従って公式\eqref{eq:limit-sets}が表すものは1元集合
+	\begin{align}
+		\varprojlim D = \{\emptyset\}
+	\end{align}
+	であり，\hyperref[def:initial-terminal]{$\SETS$ における終対象}である．
+\end{myexample}
+
+\begin{myexample}[]{積}
+	図式
+	\[
+		D \colon \FREE \left(\, 
+		\boxdiagram{
+			\overset{1}{\bullet} \&\overset{2}{\bullet}
+		}\,\right)
+		\lto \SETS
+	\]
+	は対象をちょうど2つ持つが射を持たない．
+	$\Mor{\Cat{I}} = \emptyset$ なので公式\eqref{eq:limit-sets}の条件は常に充たされ，結局
+	\begin{align}
+		\varprojlim D = D(1) \times D(2)
+	\end{align}
+	がわかる．これは\hyperref[prop:product-sets]{$\SETS$ における積}である．
+	なお，この議論は射を持たない圏を添字圏に持つ任意の図式に対して有効である．
+\end{myexample}
+
+\begin{myexample}[]{等化子}
+	図式
+	\[
+		D \colon \FREE \left(\, 
+		\boxdiagram{
+			\overset{1}{\bullet}\ar[r,shift left=.75ex, "f"]\ar[r,shift right=.75ex,swap, "g"] \&\overset{2}{\bullet}
+		}\,\right)
+		\lto \SETS
+	\]
+	の極限を公式\eqref{eq:limit-sets}を使って書き下すと
+	\begin{align}
+		\varinjlim D &= \bigl\{\, (x_1,\, x_2) \in D(1) \times D(2) \bigm| x_2 = D(f)(x_1) \AND x_2 = D(g)(x_1) \,\bigr\} \\
+		&\cong \bigl\{\, x_1 \in D(1) \bigm| D(f)(x_1) = D(g)(x_1) \,\bigr\}
+	\end{align}
+	となり\footnote{$\SETS$ における\hyperref[def:iso]{同型}なので，これらの間には全単射が存在すると言うことである．}，\hyperref[prop:equalizer-sets]{$\SETS$ における等化子}と同型である．
+
+\end{myexample}
+
+\begin{myexample}[]{引き戻し}
+	図式
+	\[
+		D \colon \FREE \left(\,
+		\boxdiagram{
+			\&\overset{2}{\bullet} \ar[d, "g"'] \\
+			\overset{1}{\bullet} \ar[r, "f"]\&\overset{3}{\bullet}
+		}\,\right)
+		\lto \SETS
+	\]
+	の極限を公式\eqref{eq:limit-sets}を使って書き下すと
+	\begin{align}
+		\varinjlim D &= \bigl\{\, (x_1,\, x_2,\, x_3) \in D(1) \times D(2) \times D(3) \bigm| x_3 = D(f)(x_1) \AND x_3 = D(g)(x_2) \,\bigr\} \\
+		&\cong \bigl\{\, (x_1,\, x_2) \in D(1) \times D(2) \bigm| D(f)(x_1) = D(g)(x_2) \,\bigr\}
+	\end{align}
+	となり，\hyperref[prop:pullback-sets]{$\SETS$ における引き戻し}と同型である．
+\end{myexample}
+
+\begin{mycol}[label=col:limit-sets]{圏 $\SETS$ における極限}
+	任意の\hyperref[def:diagram]{図式} $D \colon \Cat{I} \lto \TOP$ を与える．$\Cat{I}$ の全ての射の集まりを $\mathrm{Mor}(\Cat{I})$ と書く．
+	このとき，
+	\begin{itemize}
+		\item \hyperref[col:limit-sets]{$\SETS$ における極限}
+		$\bigl(\varprojlim D ,\, \bm{p}_{\bullet}\bigr)$
+		に，写像の族 $\bm{p}_\bullet$ によって誘導される $\varprojlim D$ の\hyperref[def:initial-topo]{始位相} $\mathscr{O}_{\bm{p}_\bullet}$ を入れてできる位相空間
+		\begin{align}
+			\bigl( \varprojlim D,\, \mathscr{O}_{\bm{p}_\bullet} \bigr) 
+		\end{align}
+		\item 写像の族
+		\begin{align}
+			\bm{p}_\bullet \coloneqq \bigl\{\bm{p}_i \colon \varprojlim D \lto D(i),\; (x_j)_{j \in \Obj{\Cat{I}}} \lmto x_i\bigr\}_{i \in \Obj{\Cat{I}}}
+		\end{align}
+	\end{itemize}
+	の組は図式 $D$ の\hyperref[def:limit]{極限}である．
+\end{mycol}
+
+\begin{proof}
+	\hyperref[def:initial-topo]{始位相}は $\forall p_i \in \bm{p}_\bullet$ を連続にする位相である．\hyperref[cmtd:univ-limit]{極限の普遍性}は命題\ref{prop:limit-basic}の証明から従う．
+\end{proof}
+
+
+
+% \begin{align}
+% 	\bm{2} \coloneqq \FREE{\, \overset{v_1}{\bullet} \xrightarrow{e_1} \overset{v_2}{\bullet}\, }
+% \end{align}
+% においては $\Obj{\bm{2}} = \{v_1,\, v_2\}$ で，
+% 射は
+% \begin{align}
+% 	\mathrm{Id}_{v_1} &= (v_1) \in \Hom{\bm{2}}(v_1,\, v_2), \\
+% 	\mathrm{Id}_{v_2} &= (v_2) \in \Hom{\bm{2}}(v_2,\, v_2), \\
+% 	(e_1) &\in \Hom{\bm{2}}(v_1,\, v_2)
+% \end{align}
+% の3つである．同様にして $\bm{3},\, \bm{4},\, \dots$ を定義することができる．
+% \hyperref[def:free-category]{自由圏}だと「余分な」射が存在するかもしれない．それ故に道の等式を指定して射の個数を制限する．
+% 例えば\hyperref[def:DG]{有向グラフ}
+
+
+% \section{一点コンパクト化}
+
+
+
+\end{document}

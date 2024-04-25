@@ -1,0 +1,24 @@
+	g_{\mu\nu} &= \mathring{g}_{ab} \vbud{e}{a}{\mu} \vbud{e}{b}{\nu} \label{eq.7-1} \\ 
+	\label{eq.7-2}
+	\label{eq.7-3}
+% \begin{mydef}[label=def.tangentbandle]{接束} 
+\begin{mydef}[label=def.connection]{接続}
+\begin{mydef}[label=def.curvature]{曲率}
+			&= \tcbhighmath[]{h R(X,\, Y)(\xi)}. \label{eq.lem7-1-1}
+\begin{mydef}[label=def.torsion]{捩率}
+\begin{mydef}[label=def.form_connection]{接続$1$-形式}
+\begin{mydef}[label=def.form_curvature]{曲率$2$-形式}
+\begin{mytheo}[label=eq.structure1]{Cartanの構造方程式}
+\begin{mycol}[label=Bianchi2]{（第2）Bianchiの恒等式}
+\begin{mydef}[label=def.compatible]{計量接続} 
+\begin{myprop}[label=prop.Levi-Civita]{}
+		\label{eq.Levi-Civita-1}
+		\Longleftrightarrow \quad & \alpha^{a}{}_{bc} = \beta^a{}_{bc} - \beta^a{}_{cb} \label{eq.Levi-Civita-2}
+\begin{mytheo}[label=thm.Levi-Civita]{Levi-Civita接続（接続形式）}
+\begin{mytheo}[label=thm.Levi-Civita]{Levi-Civita接続（接続係数）}
+\begin{mylem}[label=lem.prop7-2]{}
+		&\quad + \dualip{\comm{X}{Y}}{Z} - \dualip{\comm{Y}{Z}}{X} + \dualip{\comm{Z}{X}}{Y}\, \bigr)\label{eq.prop7-2}
+\begin{mydef}[label=def.Christoffel]{接続係数}
+\begin{myprop}[label=covdv_tensor]{共偏微分の一般化}
+\begin{mydef}[label=def.parallel]{平行}
+\begin{mydef}[label=def.geodesic]{測地線} 

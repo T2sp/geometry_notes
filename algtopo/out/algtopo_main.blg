@@ -1,0 +1,47 @@
+This is upBibTeX, Version 0.99d-j0.36-u1.29 (utf8.euc) (TeX Live 2023)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: algtopo_main.aux
+The style file: jplain.bst
+Database file #1: reference.bib
+You've used 11 entries,
+            2620 wiz_defined-function locations,
+            659 strings with 5371 characters,
+and the built_in function-call counts, 3078 in all, are:
+= -- 228
+> -- 92
+< -- 1
++ -- 40
+- -- 28
+* -- 103
+:= -- 464
+add.period$ -- 34
+call.type$ -- 11
+change.case$ -- 38
+chr.to.int$ -- 0
+cite$ -- 11
+duplicate$ -- 207
+empty$ -- 315
+format.name$ -- 42
+if$ -- 693
+int.to.chr$ -- 0
+int.to.str$ -- 11
+missing$ -- 21
+newline$ -- 59
+num.names$ -- 22
+pop$ -- 128
+preamble$ -- 1
+purify$ -- 36
+quote$ -- 0
+skip$ -- 155
+stack$ -- 0
+substring$ -- 56
+swap$ -- 9
+text.length$ -- 1
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 24
+warning$ -- 0
+while$ -- 22
+width$ -- 13
+write$ -- 117
+is.kanji.str$ -- 96

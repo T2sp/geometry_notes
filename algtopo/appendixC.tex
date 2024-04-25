@@ -1,0 +1,165 @@
+\documentclass[algtopo_main]{subfiles}
+
+\begin{document}
+
+\setcounter{chapter}{2}
+
+\chapter{位相群}
+
+\section{定義と基本的な性質}
+
+\begin{mydef}[label=def:TG]{位相群}
+    群 $G$ が\textbf{位相群} (topological group) であるとは，
+    集合としての $G$ が\underline{Hausdorff空間}であって，かつ積 $G \times G \lto G,\; (g,\, h) \lmto gh$ と逆元をとる写像 $G \lto G,\; g \lmto g^{-1}$ の両方が連続写像であることを言う．
+\end{mydef}
+
+\begin{itemize}
+    \item $\forall g \in G$ に対して定まる同相写像\footnote{逆写像は $(L_g)^{-1} (x) = g^{-1} x$ である．$L_g,\, (L_g)^{-1}$ の連続性は位相群の定義より明らか．}
+    \begin{align}
+        L_g \colon G \lto G,\; x \lmto gx
+    \end{align}
+    のことを\textbf{左移動} (left translation) と言う．
+    写像 $L \colon G \lto \Homeo (G),\; g \lmto L_g$ は群準同型になる
+    \footnote{
+        位相空間 $G$ の同相群 $\Homeo(G)$ の群演算は写像の合成で，逆元は逆写像である．
+        $\forall x \in G$ に対して，群 $G$ の結合律から $L(gh)(x) = L_{gh}(x) = ghx = L_g \bigl( L_h(x)\bigr) = \bigl(L(g) \circ L(h)\bigr)(x)$ が，
+        $L_g$ が逆写像 $x \lmto g^{-1} x$ を持つことから $L(g^{-1})(x) = g^{-1} x = (L_g)^{-1}(x) = \bigl( L(g) \bigr)^{-1} (x)$ が従う．
+    }．
+    \item $\forall g \in G$ に対して定まる同相写像
+    \begin{align}
+        R_g \colon G \lto G,\; x \lmto xg
+    \end{align}
+    のことを\textbf{右移動} (right translation) と言う．
+    群 $G$ と同じ台集合を持つが積演算の順序が逆であるような位相群を $\OP{G}$ と書くとき，写像 $R \colon \textcolor{red}{\OP{G}} \lto \Homeo (G),\; g \lmto R_g$ は群準同型になる．
+    \footnote{
+        混乱を避けるために群 $\OP{G}$ の積を $*$ と書くことにする．
+        $\forall x \in G$ に対して，群 $G$ の積の結合律から $R(g*h)(x) = R_{g*h}(x) = R_{hg}(x) = xhg = R_g \bigl( R_h(x)\bigr) = \bigl(R(g) \circ R(h)\bigr)(x)$ が，
+        $R_g$ が逆写像 $x \lmto x g^{-1}$ を持つことから $R(g^{-1})(x) = x g^{-1} = (R_g)^{-1}(x) = \bigl( R(g) \bigr)^{-1} (x)$ が従う．
+    }． 
+\end{itemize}
+\underline{部分集合}\footnote{部分群でなくてもよい} $A,\, B \subset G$ に対して
+\begin{align}
+    AB &\coloneqq \bigl\{\, ab \bigm| a \in A,\, b \in B \,\bigr\}, \\
+    A^{-1} &\coloneqq \bigl\{\, a^{-1} \bigm| a \in A \,\bigr\}, \\
+    A^n &\coloneqq \bigl\{\, a_1 a_2 \cdots a_n \bigm| a_i \in A \in B \,\bigr\}
+\end{align}
+と書くことにする．
+
+\begin{mylem}[label=lem:TG-neighbor-basic]{}
+    $G$ を\hyperref[def:TG]{位相群}とする．このとき $\forall g \in G$ に対して以下が成り立つ：
+    \begin{enumerate}
+        \item $U \subset G$ が点 $1_G \in G$ の近傍 $\IFF$ $gU \subset G$ が点 $g \in G$ の近傍
+        \item $U \subset G$ が点 $1_G \in G$ の近傍 $\IMP$ $U^{-1},\; U \cap U^{-1}$ も点 $1_G \in G$ の近傍
+        \item $U \subset G$ が点 $1_G \in G$ の近傍 $\IMP$ 点 $1_G$ の近傍 $V$ であって $V = V^{-1}$ を充たすもの\footnote{このような近傍は\textbf{対称} (symmetric) であると言われる．}が存在し，$V \subset U$ を充たす．
+        
+        i.e. $1_G$ の近傍のうち対称であるものの全体は $1_G$ の基本近傍系を成す．
+        \item $U \subset G$ が点 $g \in G$ の近傍 $\IMP$ 点 $1_G \in G$ の近傍 $V \subset G$ であって $VgV \subset U$ を充たすものが存在する．
+        \item $U \subset G$ が点 $1_G \in G$ の近傍で，かつ $n$ が自然数 $\IMP$ 点 $1_G \in G$ の近傍 $V \subset G$ であって $V^n \subset U$ を充たすものが存在する．
+    \end{enumerate}
+\end{mylem}
+
+\begin{proof}
+    $\forall g \in G$ を1つとって固定する．左移動 $L_{g}$ は同相写像なので2つの写像 $L_g,\; L_{g^{-1}}$ はどちらも連続である．
+    \begin{enumerate}
+        \item
+        \begin{description}
+            \item[\textbf{$\bm{(\Longrightarrow)}$}] 近傍の定義より，ある $G$ の開集合 $V$ が存在して $1_G \in V \subset U$ を充たす．
+            このとき $g \in gV \subset gU$ が成り立つが，$L_{g^{-1}}$ が連続写像なので集合 $gV = (L_{g^{-1}})^{-1} (V)$ は開集合である．
+            i.e. $gU$ は点 $g$ の近傍である．
+            \item[\textbf{$\bm{(\Longleftarrow)}$}] 近傍の定義より，ある $G$ の開集合 $V$ が存在して $g \in V \subset gU$ を充たす．
+            このとき $1_G \in g^{-1}V \subset U$ が成り立つが，$L_{g}$ が連続写像なので集合 $g^{-1}V = (L_{g})^{-1} (V)$ は開集合である．
+            i.e. $U$ は点 $1_G$ の近傍である．
+        \end{description}
+        \item 
+        近傍の定義より，ある $G$ の開集合 $V$ が存在して $1_G \in V \subset U$ を充たす．
+        このとき $1_G \in V^{-1} \subset U^{-1}$ が成り立つが，\hyperref[def:TG]{位相群の定義}より逆元をとる写像 $\pi \colon x \lmto x^{-1}$ は連続であるから $V^{-1} = \pi^{-1} (V)$ は開集合である．
+        i.e. $U^{-1}$ は点 $1_G$ の近傍である．
+        
+        また，$1_G \in V \cap V^{-1} \subset U \cap U^{-1}$ も成り立つが，位相空間の公理により $V \cap V^{-1}$ も開集合である．i.e. $U \cap U^{-1}$ は点 $1_G$ の近傍である．
+        \item 
+        近傍の定義より，ある $G$ の開集合 $W$ が存在して $1_G \in W \subset U$ を充たす．
+        $V \coloneqq W \cap W^{-1}$ とおくと $V \subset U$ であり，かつ $W$ 自身も近傍なので (2) が使えて $V$ は $1_G$ の近傍であるとわかる．
+        また，$v \in V \iff v \in W \AND v \in W^{-1} \iff v^{-1} \in W^{-1} \AND v^{-1} \in W \iff v^{-1} \in V^{-1}$ が成り立つので $V = V^{-1}$ である．
+        \item 
+        近傍の定義より，ある $G$ の開集合 $W$ が存在して $g \in W \subset U$ を充たす．\hyperref[def:TG]{位相群の定義}より写像 $\mu \colon G \times G \times G \lto G,\; (g,\, h,\, k) \lmto ghk$ は連続だから
+        $\mu^{-1}(W)$ は開集合で，$(1_G,\, g,\, 1_G) \in \mu^{-1}(W)$ を充たす． 
+        従って\footnote{位相空間 $X$ の部分集合 $U \subset X$ が開集合である必要十分条件は，$\forall x \in U$ に対して $U$ に含まれる $X$ の近傍が存在すること．} $1_G$ の近傍 $W_1,\, W_2$ であって $W_1 \times \{g\} \times W_2 \subset \mu^{-1}(V)$ を充たすものが存在する．ここで $V \coloneqq W_1 \cap W_2$ とおくと $V$ は $1_G$ の近傍で，かつ $\mu(V \times \{g\} \times V) = V g V \subset U$ が成り立つ．
+        \item 
+        $n$ 個の積をとる写像 $\mu \colon G \times \cdots \times G  \lto G,\; (g_1,\, \dots ,\,  g_n) \lmto g_1 \cdots g_n$ は連続だから，(4) と同様にして証明できる．
+    \end{enumerate} 
+\end{proof}
+
+\begin{myprop}[]{}
+    位相群 $G$ の任意の部分群 $H \subset G$ に対して，閉包 $\overline{H}$ もまた部分群である．
+    特に $H \triangleleft G$ \footnote{$H$ は $G$ の正規部分群}ならば $\overline{H} \triangleleft G$ である．
+\end{myprop}
+
+\begin{proof}
+    \hyperref[def:TG]{位相群の定義}より写像 $\mu \colon G \times G \lto G,\; (g,\, h) \lmto gh^{-1}$ は連続である．このとき
+    \begin{align}
+        \mu(\overline{H}\times \overline{H}) = \mu(\overline{H \times H}) \subset\overline{\mu(H \times H)} = \overline{H}
+    \end{align}
+    が成り立つので $\overline{H}$ は部分群である\footnote{部分集合 $A \subset G$ について $\mu(A) \subset A$ が成り立つならば $1_G \in A$ かつ $A$ は群演算（乗法および逆元）について閉じていることが言える．}．
+
+    $H \triangleleft G$ とすると，$\forall g \in G$ に対して写像 $L_g \circ R_{g^{-1}} \colon G \lto G,\; h \lmto ghg^{-1}$ が同相写像であること
+    \footnote{ここで使っているのは連続性と単射性である．集合の写像 $f \colon A \lto B$ が単射であるならば任意の部分集合 $U_1\, U_2 \subset A$ に対して $f(U_1 \cap U_2) = f(U_1) \cap f(U_2)$ が成り立つ．}
+    により
+    \begin{align}
+        g \overline{H} g^{-1} = L_g \circ R_{g^{-1}} (\overline{H}) = \overline{L_g \circ R_{g^{-1}}(H)} = \overline{H} \quad (\forall g \in G)
+    \end{align}
+    が言える．i.e. $\overline{H} \triangleleft G$ である．
+\end{proof}
+
+\begin{myprop}[label=prop:TG-mod]{位相群の剰余類による商集合はHausdorff}
+    $H$ を\hyperref[def:TG]{位相群} $G$ の閉部分群とする．
+    左剰余類 $gH$ による商集合 $G/H$ に，商写像 $\varpi \colon G \lto G/H$ によって誘導される商位相を入れて位相空間にしたものを考える．
+    このとき $G/H$ はHausdorff空間であり，かつ $\varpi$ は連続な開写像\footnote{開集合を開集合に移す写像．}である．
+\end{myprop}
+
+\begin{proof}
+    \begin{description}
+        \item[\textbf{$\bm{\varpi}$ は連続な開写像}] 　
+        
+        　商位相の定義より $\varpi$ は連続である．
+        $G$ の任意の開集合 $U \subset G$ をとる．このとき
+        \begin{align}
+            \varpi (U) = UH = \bigcup_{h \in H} Uh = \bigcup_{h \in H} R_h(U)
+        \end{align}
+        が成り立つが，$\forall h \in H$ に対して右移動 $R_h$ は同相写像なので $R_h(U)$ は開集合であり，位相空間の公理から $\varpi (U)$ が開集合であることがわかった．
+        \item[\textbf{$G/H$ はHausdorff空間}] 　
+        
+        　異なる2点 $g_1 H,\, g_2 H \in G/H$ を任意にとる．このとき $g_1 H \neq g_2 H \iff g_1^{-1} g_2 \notin H \iff g_1^{-1} g_2 \in H^c$ が成り立つ．
+        
+        　ところで，仮定より $H$ は閉集合であるから補集合 $H^c$ は開集合である．故に $H^c$ は点 $g_1^{-1} g_2 \in G$ の開近傍であるから補題\ref{lem:TG-neighbor-basic}-(4) が使えて，点 $1_G$ の近傍 $U \subset G$ であって 
+        $U(g_1^{-1} g_2) U \subset H^c \iff U(g_1^{-1} g_2) U \cap H = \emptyset$ を充たすものが存在することがわかる．
+        補題\ref{lem:TG-neighbor-basic}-(3) より $U$ として $U = U^{-1}$ を充たすものを取ることができるから，
+        $(g_1^{-1} g_2) H \cap UH =\emptyset$ が言える．故に $g_2 U \cap g_1 UH = \emptyset$ である．さらに $H^2 = H$ なので $g_2 UH \cap g_1 UH = \emptyset$ がわかる．
+        
+        　ところで $\varpi$ は開写像だから $g_i UH = \varpi(g_i U)$ は $G/H$ の開集合である．$g_i H \in g_i UH$ であるから $G/H$ がHausdorff空間であることが示された．
+    \end{description}
+\end{proof}
+
+\begin{myprop}[label=prop:TG-modG]{位相群の剰余群は位相群}
+    命題\ref{prop:TG-mod}と同様の設定を考える． 
+    このとき $H$ が位相群 $G$ の閉正規部分群ならば，剰余群\footnote{一般に位相群とは限らない．} $G/H$ は位相群である．
+\end{myprop}
+
+\begin{proof}
+    $H$ が正規部分群であることから写像
+    \begin{align}
+        \psi &\coloneqq \varpi \times \varpi \colon G \times G \lto (G/H) \times (G/H),\; (g_1,\, g_2) \lmto (g_1 H,\, g_2 H) \\
+        \eta  &\colon G \times G \lto G,\; (g_1,\, g_2) \lmto g_1^{-1} g_2 \\
+        \mu &\colon (G/H) \times (G/H) \lto G/H,\; (g_1 H,\, g_2 H) \lmto (g_1^{-1} g_2) H
+    \end{align}
+    はwell-definedである．このとき以下の可換図式が成り立つ：
+    \begin{center}
+        \begin{tikzcd}[row sep=large, column sep=large]
+            &G\times G \ar[d, "\psi"]\ar[r, "\eta"] &G \ar[d, "\varpi"] \\
+            &(G/H) \times (G/H) \ar[r, red, "\mu"] &G/H
+        \end{tikzcd}
+    \end{center}
+    $\mu$ が連続であることを示せばよい．実際，$G$ が位相群なので $\eta$ は連続であり，命題\ref{prop:TG-mod}より $\varpi,\, \psi$ は連続だから $\mu$ は連続である．
+\end{proof}
+
+
+\end{document}

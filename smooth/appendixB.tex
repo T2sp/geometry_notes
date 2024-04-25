@@ -1,0 +1,243 @@
+\documentclass[geometry_main]{subfiles}
+
+\begin{document}
+
+\setcounter{chapter}{1}
+
+\chapter{多様体のあれこれ}
+
+この章では，主に多様体に関する内容を雑多にまとめる．
+
+% \section{極大アトラスからの多様体の位相の構成}
+
+% 位相多様体は第2可算なHausdorff空間 $(M,\, \mathscr{O})$ だが，集合 $M$ にいきなり\hyperref[ax.topo]{位相}を与えてしまうと微分構造の全貌が良くわからない気がする．
+% 実は，極大アトラスを先に与えておくと自然にHausdorff空間を構成することができるのである．
+
+% $M$ を集合とする．\textbf{部分集合}（$M$ の位相が現時点では未定義なので，開集合ではない） $U \subset M$ を勝手にとる．
+% このとき，$U$ から $\mathbb{R}^d$ の開集合 $V$ への写像 $\varphi \colon U \to V$ が\textbf{全単射}（現時点ではまだ同相写像でない）ならば，組 $(U,\, \varphi)$ を集合 $M$ の $d$ 次元の\textbf{チャート} (chart) と呼ぶことにする．
+% チャート $(U,\, \varphi)$ および点 $p \in U$ が与えられたとき，$d$ 個の要素
+% \begin{align}
+% 	\varphi(p) = \bigl( x^1(p),\, \dots ,\, x^d(p) \bigr) \in \mathbb{R}^d
+% \end{align}
+% のことを点 $p$ のチャート $(U,\, \varphi)$ における\textbf{座標} (coordinates) と呼ぶ．
+
+\section{位相多様体の性質}
+
+まず，\hyperref[def.compact]{コンパクト性}に類似する概念をいくつか紹介する：
+\begin{mydef}[label=def:cover, breakable]{被覆}
+    \begin{itemize}
+        \item 集合族 $\mathcal{U} \coloneqq \Familyset[\big]{U_\lambda}{\lambda \in \Lambda}$ が\underline{集合} $X$ の\textbf{被覆} (cover) であるとは，
+        \begin{align}
+            X \subset \bigcup_{\lambda \in \Lambda} U_\lambda
+        \end{align}
+        が成り立つこと．
+        \item \underline{位相空間} $X$ の被覆 $\mathcal{U} \coloneqq \Familyset[\big]{U_\lambda}{\lambda \in \Lambda}$ が\textbf{開} (open) であるとは，$\forall \lambda \in \Lambda$ に対して $U_\lambda$ が $X$ の開集合であること．
+        \item 位相空間 $X$ の被覆 $\mathcal{V} \coloneqq \Familyset[\big]{V_\alpha}{\alpha \in A}$ が，別の $X$ の被覆 $\mathcal{U} \coloneqq \Familyset[\big]{U_\lambda}{\lambda \in \Lambda}$ の\textbf{細分} (refinement) であるとは，
+        $\forall V_\alpha \in \mathcal{V}$ に対してある $U_\lambda \in \mathcal{U}$ が存在して $V_\alpha \subset U_\lambda$ が成り立つこと．
+        \item 位相空間 $X$ の\underline{開}被覆 $\mathcal{U} \coloneqq \Familyset[\big]{U_\lambda}{\lambda \in \Lambda}$ が\textbf{局所有限} (locally finite) であるとは，$\forall x \in X$ に対して以下の条件が成り立つこと：
+        \begin{description}
+            \item[\textbf{(locally finiteness)}] $x$ のある近傍 $V \subset X$ が存在して集合
+            \begin{align}
+                \bigl\{\, \lambda \in \Lambda \bigm| U_\lambda \cap V \neq \emptyset \,\bigr\} 
+            \end{align}
+            が有限集合になる．
+        \end{description}
+    \end{itemize}
+\end{mydef}
+
+\begin{mydef}[label=def:compacts]{パラコンパクト・コンパクト・局所コンパクト}
+    位相空間 $X$ を与える．
+	\begin{itemize}
+		\item \textbf{パラコンパクト} (paracompact) であるとは，任意の\hyperref[def:cover]{開被覆}が\hyperref[def:cover]{局所有限}かつ開な細分を持つこと．
+		\item 位相空間 $X$ の部分集合 $A \subset X$ は，以下の条件を充たすとき\textbf{コンパクト} (compact) であると言われる：
+		\begin{description}
+			\item[\textbf{(Heine-Boralの性質)}] $A$ の任意の\hyperref[def:cover]{開被覆} $\mathcal{U} \coloneqq \Familyset[\big]{U_\lambda}{\lambda \in \Lambda}$ に対して，
+			ある\underline{有限}部分集合 $I \subset \Lambda$ が存在して $\Familyset[\big]{U_i}{i \in I} \subset \mathcal{U}$ が $A$ の開被覆となる\footnote{このことを「任意の開被覆は有限部分被覆を持つ」と表現する．}．
+		\end{description}
+		\item 位相空間 $X$ が\textbf{局所コンパクト} (locally compact) であるとは，$\forall x \in X$ が少なくとも1つのコンパクトな\hyperref[def:neighborhood]{近傍}を持つこと．
+	\end{itemize}
+\end{mydef}
+
+\section{微分構造の構成}
+
+\hyperref[maxatlas]{微分構造}を定義通りに構成するならば，
+まず\hyperref[def.topomani]{位相多様体}であることを確認してから座標変換が $C^\infty$ 級であることを確認しなくてはならず，若干面倒である．
+しかし，幸いにしてこの確認の工程をまとめた便利な補題がある~\cite[p.21, Lemma 1.35]{Lee12}．
+\begin{mylem}[label=lem:cinfty-chart]{微分構造の構成}
+	\begin{itemize}
+		\item \underline{集合} $M$
+		\item $M$ の部分集合族 $\Familyset[\big]{U_\lambda}{\lambda \in \Lambda}$
+		\item 写像の族 $\Familyset[\big]{\varphi_\lambda \colon U_\lambda \lto \mathbb{R}^n}{\lambda \in \Lambda}$
+	\end{itemize}
+	の3つ組であって以下の条件を充たすものを与える：
+	\begin{description}
+		\item[\textbf{(DS-1)}]  $\forall \lambda \in \Lambda$ に対して 
+		$\varphi_\lambda (U_\lambda) \subset \mathbb{R}^n$ は $\mathbb{R}^n$ の開集合であり，
+		$\varphi_\lambda \colon U_\lambda \lto \varphi_\lambda (U_\lambda)$
+		は全単射である．
+		\item[\textbf{(DS-2)}]  $\forall \alpha,\, \beta \in \Lambda$ に対して $\varphi_\alpha (U_\alpha \cap U_\beta),\, \varphi_\beta (U_\alpha \cap U_\beta) \subset \mathbb{R}^n$ は $\mathbb{R}^n$ の開集合である．
+		\item[\textbf{(DS-3)}]  $\forall \alpha,\, \beta \in \Lambda$ に対して，$U_\alpha \cap U_\beta \neq \emptyset$ ならば $\varphi_\beta \circ \varphi_\alpha^{-1} \colon \varphi_\alpha (U_\alpha \cap U_\beta) \lto \varphi_\beta (U_\alpha \cap U_\beta)$ は $C^\infty$ 級である．
+		\item[\textbf{(DS-4)}]  添字集合 $\Lambda$ の\underline{可算濃度の}部分集合 $I \subset \Lambda$ が存在して
+		$\Familyset[\big]{U_i}{i \in I}$ が $M$ の\hyperref[def:cover]{被覆}になる．
+		\item[\textbf{(DS-5)}]  $p,\, q \in M$ が $p \neq q$ ならば，
+		ある $\lambda \in \Lambda$ が存在して $p,\, q \in U_\lambda$ を充たすか，
+		またはある $\alpha,\, \beta \in \Lambda$ が存在して $U_\alpha \cap U_\beta = \emptyset$ かつ $p \in U_\alpha,\; q \in U_\beta$ を充たす．
+	\end{description}
+	このとき，$M$ の\hyperref[maxatlas]{微分構造}であって，$\forall \lambda \in \Lambda$ に対して $(U_\lambda,\, \varphi_\lambda)$ を\hyperref[diffmani]{$C^\infty$ チャート}として持つものが一意的に存在する．
+\end{mylem}
+
+\begin{proof}
+	\begin{description}
+		\item[\textbf{位相の構成}]　
+		
+		　$\mathbb{R}^n$ の\hyperref[thm.metrictopo]{Euclid位相}を $\mathscr{O}_{\mathbb{R}^n}$ と表記する．集合
+		\begin{align}
+			\mathscr{B} \coloneqq \bigl\{\, \varphi_\lambda^{-1}(U) \bigm| \lambda \in \Lambda,\; U \in \mathscr{O}_{\mathbb{R}^n} \,\bigr\} 
+		\end{align}
+		が\hyperref[ax.opbase]{開基の公理} \textsf{\textbf{(B1)}}, \textsf{\textbf{(B2)}} を充たすことを確認する．
+		\begin{description}
+			\item[\textbf{(B1)}] \textsf{\textbf{(DS-4)}}より明らか．
+			\item[\textbf{(B2)}] $B_1,\, B_2 \in \mathscr{B}$ を任意にとる．
+			このとき $\mathscr{B}$ の定義から，ある $\alpha,\, \beta \in \Lambda$ および $U,\, V \in \mathscr{O}_{\mathbb{R}^n}$ が存在して $B_1 = \varphi_\alpha^{-1}(U),\, B_2 = \varphi_\beta^{-1}(V)$ と書ける．
+			補題\ref{lem:sets}-(4) より
+			\begin{align}
+				B_1 \cap B_2 &= \varphi_\alpha^{-1}(U) \cap \varphi_\beta^{-1}(V) \\
+				&= \varphi_\alpha^{-1} \bigl( U \cap (\varphi_\alpha \circ \varphi_\beta^{-1})(V) \bigr) \\
+				&= \varphi_\alpha^{-1} \bigl( U \cap (\varphi_\beta \circ \varphi_\alpha^{-1})^{-1}(V) \bigr)
+			\end{align}
+			が成り立つが，\textsf{\textbf{(DS-3)}}より $\varphi_\beta \circ \varphi_\alpha^{-1}$ は連続なので $(\varphi_\beta \circ \varphi_\alpha^{-1})^{-1}(V) \in \mathscr{O}_{\mathbb{R}^n}$ である．よって
+			\begin{align}
+				B_1 \cap B_2 \in \mathscr{B}
+			\end{align}
+			であり，\textsf{\textbf{(B2)}}が示された．
+		\end{description}
+		従って定理\ref{thm.optotopo}より，$\mathscr{B}$ を\hyperref[def.opbase]{開基}とする $M$ の位相 $\mathscr{O}_M$ が存在する．
+		\item[$\bm{\varphi_\lambda}$ \textbf{が同相写像であること}]　
+		
+		　$\forall \lambda \in \Lambda$ を1つ固定する．$\mathscr{O}_M$ の構成と補題\ref{lem:sets}-(4) より，$\forall V \in \mathscr{O}_{\mathbb{R}^n}$ に対して
+		$\varphi_\lambda^{-1}\bigl( V \cap \varphi_\lambda(U_\lambda) \bigr) = \varphi_\lambda^{-1}(V) \cap U_\lambda$ は $U_\lambda$ の開集合である\footnote{$U_\lambda$ には $\phase{M}$ からの\hyperref[def.reltopo]{相対位相}が，$\varphi_\lambda(U_\lambda)$ には $\phase{\mathbb{R}^n}$ からの相対位相を入れている．}．i.e. $\varphi_\lambda \colon U_\lambda \lto \varphi_\lambda(U_\lambda)$ は連続である．
+		
+		　$\forall B \in \mathscr{B}$ をとる．このとき補題\ref{lem:sets}-(9) より $\varphi_\lambda(B \cap U_\lambda) = \varphi_\lambda(B) \cap \varphi_\lambda(U_\lambda)$ が成り立つが，$\mathscr{O}_M$ の定義より $\varphi_\lambda(B) \in \mathscr{O}_{\mathbb{R}^n}$ なので $\varphi_\lambda(B \cap U_\lambda)$ は $\varphi_\lambda(U_\lambda)$ の開集合である．
+		相対位相の定義とde Morgan則より，$U_\lambda$ の任意の開集合は $B \cap U_\lambda$ の形をした部分集合の和集合で書けるので，補題\ref{lem:sets}-(1) と\hyperref[ax.topo]{位相空間の公理}から $\varphi_\lambda$ は $U_\lambda$ の開集合を $\varphi_\lambda(U_\lambda)$ の開集合に移す．
+		i.e. $\varphi_\lambda \colon U_\lambda \lto \varphi_\lambda(U_\lambda)$ は連続な全単射でかつ開写像であるから同相写像である．
+
+		\item[\textbf{Hausdorff性}]　
+		
+		　位相空間 $\phase{M}$ がHausdorff空間であることを示す．
+		$M$ の異なる2点 $p,\, q$ を勝手にとる．このとき\textsf{\textbf{(DS-5)}}より，
+		\begin{itemize}
+			\item ある $\lambda \in \Lambda$ が存在して $p,\, q \in U_\lambda$ を充たす
+			\item ある $\alpha,\, \beta \in \Lambda$ が存在して $U_\alpha \cap U_\beta = \emptyset$ かつ $p \in U_\alpha,\; q \in U_\beta$ を充たす
+		\end{itemize}
+		のいずれかである．後者ならば証明することは何もない．
+
+		　前者の場合を考える．このとき $\varphi_\lambda(U_\lambda)$ は $\mathbb{R}^n$ の開集合だから，$\mathbb{R}^n$ のHausdorff性から $\varphi_\lambda(U_\lambda)$ もHausdorff空間であり，従って $\varphi_\lambda(U_\lambda)$ の開集合 $U,\, V \subset \varphi\lambda(U_\lambda)$ であって $\varphi_\lambda(p) \in U \AND \varphi_\lambda(q) \in V \AND U \cap V = \emptyset$ を充たすものが存在する．
+		このとき補題\ref{lem:sets}-(4) より $\varphi_\lambda^{-1}(U) \cap \varphi_\lambda^{-1}(V) = \varphi^{-1}_\lambda(U\cap V) = \emptyset$ で，かつ $\mathscr{O}_M$ の構成から $\varphi_\lambda^{-1}(U),\, \varphi_\lambda^{-1}(V) \subset M$ はどちらも $M$ の開集合である．
+		そのうえ $p \in \varphi_\lambda^{-1}(U) \AND q \in \varphi_\lambda^{-1}(V)$ が成り立つので $M$ はHausdorff空間である．
+
+		\item[\textbf{第2可算性}]　
+		
+		　$\mathbb{R}^n$ は\hyperref[def:second-countable]{第2可算}なので，$\forall \lambda \in \Lambda$ に対して $\varphi_\lambda(U_\lambda)$ も第2可算である．$\varphi_\lambda \colon U_\lambda \lto \varphi_\lambda (U_\lambda)$ は同相写像なので，$U_\lambda$ も第2可算である．
+		従って\textsf{\textbf{(DS-4)}}から $M$ も第2可算である．
+	\end{description}
+	以上の考察から，位相空間 $\phase{M}$ が\hyperref[def.topomani]{位相多様体}であることが示された．
+	さらに\textsf{\textbf{(DS-3)}}より $\mathcal{A} \coloneqq \Familyset[\big]{(U_\lambda,\, \varphi_\lambda)}{\lambda \in \Lambda}$ は $\phase{M}$ の\hyperref[diffmani]{$C^\infty$ アトラス}であることもわかる．
+
+	最後に，$\mathcal{A}$ の\hyperref[maxatlas]{極大アトラス} $\mathcal{A}^+$ が，\underline{集合} $M$ 上の，与えられた全ての $(U_\lambda,\, \varphi_\lambda)$ を\hyperref[diffmani]{$C^\infty$ チャート}とする唯一の微分構造であることを示す．
+
+	\item[\textbf{位相の一意性}]　
+	
+	　与えられた集合 $M$ の上の\hyperref[ax.topo]{位相} $\mathscr{T}$ であって，位相空間 $(M,\, \mathscr{T})$ が\hyperref[def:second-countable]{第2可算}な\hyperref[def:separation]{Hausdorff空間}となるようなものを任意にとる．
+	$\forall \lambda \in \Lambda$ に対して
+	与えられた全単射 $\varphi_\lambda \colon U_\lambda \lto \varphi_\lambda(U_\lambda)$ が同相写像であるためには，$\forall V \in 2^{U_\lambda}$ に対して
+	\begin{align}
+		V \in \mathscr{T} \IFF \varphi_\lambda(V) \in \mathscr{O}_{\mathbb{R}^n}
+	\end{align}
+	が成り立つことが必要十分である．
+	そしてこのとき 
+\end{proof}
+
+
+\section{部分多様体}
+
+\begin{mydef}[label=def.submani]{部分多様体}
+	$n$ 次元\cinfty 多様体 $(M,\, \mathscr{O}_M)$ を与える．部分集合 $N \subset M$ は以下の条件を充たすとき\textbf{部分多様体} (submanifold) と呼ばれる：
+	\begin{description} 
+		\item[\textbf{(sub)}] $\forall p \in N$ に対してある開近傍 $U \in \mathscr{O}_M$ と $U$ 上定義された座標関数 $x^\mu \colon U \to \mathbb{R}$ が存在して，
+		\begin{align} 
+			\exists k \ge 0,\; N \cap U = \bigl\{ q \in U \bigm| x^{k+1}(q) = \cdots = x^n(q) = 0 \bigr\}.
+		\end{align}
+	\end{description}
+	
+	$N$ が $M$ の閉集合であるときは\textbf{閉部分多様体}と呼ぶ．
+\end{mydef}
+
+\begin{mydef}[label=def.embedding]{はめ込みと埋め込み}
+	\cinfty 多様体 $M,\, N$ と \cinfty 写像 $f \colon M \to N$ を与える．
+	\begin{enumerate} 
+		\item $\forall p \in M$ において $f$ の微分写像 $f_* \colon T_p M \to T_{f(p)}N$ が\underline{単射}のとき，$f$ を\textbf{はめ込み} (immersion) と呼ぶ．
+		\item $f \colon M \to N$ が\underline{はめ込み}であって，かつ全射 $f\colon M \twoheadrightarrow f(M)$ が同相写像であるとき，$f$ を\textbf{埋め込み} (embedding) と呼ぶ．
+		\item $f \colon M \to N$ が\underline{全射}であって，かつ $\forall p \in M$ において $f_* \colon T_p M \to T_{f(p)}N$ が\underline{全射}であるとき， $f$ を\textbf{沈め込み} (submersion) と呼ぶ．
+	\end{enumerate}
+\end{mydef}
+
+\begin{mytheo}[]{埋め込みと部分多様体}
+	$f \colon M \to N$ を埋め込みとする．このとき $f(M) \subset N$ は $N$ の部分多様体であり，$f \colon M \twoheadrightarrow f(M)$ は微分同相写像である．
+	
+	逆に $M$ が $N$ の部分多様体であるとき，包含写像\footnote{$M \subset N$ のとき，$p \in M$ を $N$ の元として扱う写像．$\iota(p) = p$ である．\textbf{標準単射} (canonical injection) と呼ばれることもある．} $\iota \colon M \hookrightarrow N$ は埋め込みである．
+\end{mytheo}
+
+\begin{mytheo}[label=thm.Whitney]{Whitney の埋め込み定理}
+	任意の $n$ 次元 \cinfty 多様体は $\mathbb{R}^{2n+1}$ の中に閉部分多様体として埋め込むことができる．
+\end{mytheo}
+
+\subsection{誘導計量}
+
+\begin{mydef}[label=def.induced_metric]{誘導計量}
+	$(N,\, h)$ をRiemann多様体，\cinfty 写像 $f \colon M \to N$ をはめ込みとする．このとき，2-形式 $h \in \Omega^2(N)$ の引き戻し（\ref{def.k-form_pullback}）$f^*h$ は $M$ 上のRiemann計量 $g \in \Omega^2(M)$ を定める：
+	\begin{align}
+		g_p (u,\, v) \coloneqq h_{f(p)} \bigl(f_*(u),\, f_*(v)\bigr), \quad \forall p \in M,\, \forall u,\, v \in T_p M
+	\end{align}
+	これを $f$ による $M$ の\textbf{誘導計量}と呼ぶ．
+\end{mydef}
+
+誘導計量を $M$ のチャート $(U;\, x^\mu)$ および $N$ のチャート $(V;\, y^\nu)$ に関して成分表示すると
+\begin{align}
+	g_p (u,\, v) &= g_{\mu\nu}(p) u^\mu v^\nu\\
+	&= h_{\alpha \beta}\bigl( f(p) \bigr)\, \pdv{y^\alpha}{x^\mu}\bigl( f(p) \bigr)\pdv{y^\beta}{x^\nu}\bigl( f(p) \bigr) u^\mu v^\nu
+\end{align}
+だから，
+\begin{align}
+	g_{\mu\nu}(p) = h_{\alpha \beta}\bigl( f(p) \bigr)\, \pdv{y^\alpha}{x^\mu}\bigl( f(p) \bigr)\pdv{y^\beta}{x^\nu}\bigl( f(p) \bigr)
+\end{align}
+である．
+特に\cinfty 多様体 $M$ のEuclid空間 $\mathbb{R}^{n}$ へのはめ込み $\vb*{r} \colon M \to \mathbb{R}^{n},\, (x^\mu) \mapsto \vb*{r}(x^\mu)$ が与えられたとき，
+$M$ のRiemann計量がしばしば
+\begin{align}
+	g_{\mu\nu} =  \pdv{\vb*{r}}{x^\mu} \vdot \pdv{\vb*{r}}{x^\nu}
+\end{align}
+と書かれるのはこのためである．
+
+\begin{marker}
+	多様体 $N$ が擬Riemann多様体のときは，多様体 $M$ が誘導計量を持つとは限らない．
+\end{marker}
+
+例えばEuclid空間 $\mathbb{R}^3$ に埋め込まれた単位球面 $S^2$ を考える．はめ込みを
+\begin{align}
+	\vb*{r} \colon (\theta,\, \phi) \mapsto \mqty[\sin \theta \cos\phi \\ \sin\theta \sin \phi \\ \cos \theta]
+\end{align}
+として与えると，$S^2$ の誘導計量は
+\begin{align}
+	g_{\mu\nu} \dd{x^\mu} \otimes \dd{x^\nu} &= \pdv{\vb*{r}}{x^\mu} \vdot \pdv{\vb*{r}}{x^\nu} \dd{x^\mu} \otimes \dd{x^\nu} \\
+	&= \dd{\theta} \otimes \dd{\theta} + \sin^2 \theta\, \dd{\phi} \otimes \dd{\phi}
+\end{align}
+と求まる．
+
+\section{隅付き多様体}
+
+
+\section{力学系としての多様体}
+
+
+
+\end{document}

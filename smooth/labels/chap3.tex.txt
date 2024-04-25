@@ -1,0 +1,74 @@
+\begin{myaxiom}[label=ax.vector, breakable]{ベクトル空間の公理}
+\begin{myprop}[label=prop:initial-terminal-vec]{零ベクトル空間}
+\begin{myprop}[label=prop:product-vec, breakable]{直積ベクトル空間}
+\begin{myprop}[label=prop:product-vec-general]{直積ベクトル空間}
+\begin{myprop}[label=prop:sum-vect, breakable]{直和ベクトル空間}
+\begin{myprop}[label=prop:quotient-vec]{商ベクトル空間}
+\begin{mydef}[label=def.dualspace, breakable]{双対空間}
+% 	\label{eq.duality}
+\begin{myprop}[label=def.basisforDVS]{有限次元ベクトル空間の双対空間の基底}
+		\label{eq.duality}
+\begin{myprop}[label=prop:dualspace-basic]{}
+	\label{eq:dualspace-natural}
+\begin{myprop}[label=prop:finvec-doubledual]{}
+\begin{mydef}[label=def:natural, breakable]{自然変換}
+			\label{cmtd:naturality}
+\begin{mydef}[label=def:univ-tensor-vec, breakable]{ベクトル空間のテンソル積}
+			\label{cmtd:univ-tensor-vec}
+\begin{myprop}[label=prop:unique-tensor-vec]{テンソル積の一意性}
+\begin{mylem}[label=lem:univ-free-vec, breakable]{自由ベクトル空間の普遍性}
+		\label{cmtd:free-vec}
+\begin{myprop}[label=prop:tensor-vec, breakable]{テンソル積}
+\begin{myprop}[label=prop:basis-tensor]{テンソル積の基底}
+\begin{myprop}[label=prop:basis-L]{}
+\begin{myprop}[label=prop:tensor-multillinear]{テンソル積の構成その2}
+\begin{myaxiom}[label=ax.alg]{体上の多元環}
+\begin{mydef}[label=op_cinfty]{$C^\infty (M)$ 上の演算}
+	\label{eq:directional}
+\begin{mylem}[label=lem:tangentv-Rn]{}
+\begin{myprop}[label=prop:tangentv-Rn]{$\mathbb{R}^n_p$ と $T_p \mathbb{R}^n$}
+\begin{mycol}[label=col:basis-tangentv-Rn]{$T_x\mathbb{R}^n$ の自然基底}
+\begin{mydef}[label=def.tangentv]{接空間}
+\begin{mydef}[label=def.op_tangent]{接空間の演算}
+\begin{mylem}[label=lem:tangentv]{}
+\begin{myprop}[label=prop:tangentv-local]{接ベクトルの局所性}
+\begin{mydef}[label=def:functor-Tp]{\cinfty 写像の微分}
+\begin{myprop}[label=prop:functor-Tp]{$T_p$ の関手性}
+\begin{myprop}[label=prop:iso-opensub-tangent]{接空間の局所性}
+\begin{myprop}[label=prop:dim-tangentv]{接空間の次元}
+		\begin{mylem}[label=lem:dim-tangentv-b]{}
+\begin{myprop}[label=prop:product-tangentv]{積多様体の接空間}
+	\label{eq:iso-coord-1}
+	\label{eq:natural-basis}
+\begin{myprop}[label=naturalbasis]{自然基底}
+	\label{eq:coord-3}
+	\label{eq:differential-coord}
+	&= \pdv{x'{}^\nu}{x^\mu} () \bigl(\varphi(p) \bigr) \eval{\pdv{}{x'{}^\nu}}_{p} \label{eq:trans-naturalbasis}
+	\label{eq:transform-vector}
+% \begin{mytheo}[label=naturalbasis]{自然基底}
+% \begin{myprop}[label=prop.trans]{自然基底の取り替え}
+	\label{def.curve}
+	\label{eq:velocity}
+\begin{myprop}[label=prop:tangent-velocity]{速度ベクトルの集合としての接空間}
+		\label{eq:gamma}
+\begin{mydef}[label=def:bundle-tangent]{接束} 
+\begin{myaxiom}[label=ax.module]{環上の加群}
+\begin{mydef}[label=vectorfield]{ベクトル場}
+		\label{eq.local}
+\begin{mydef}[label=def.totvecf]{}
+\begin{myprop}[label=char_diff]{}
+\begin{mydef}[label=def.d]{ベクトル場による微分}
+% \begin{mydef}[label=def.dualspace]{双対空間}
+% \begin{mydef}[label=prop.dualspace]{}
+% 	\label{eq.duality}
+% \begin{myprop}[label=def.basisforDVS]{}
+\begin{mydef}[label=def.cotangentv]{余接空間}
+% 		\tcbhighmath[]{f_*(v)(g) \coloneqq v[g \circ f]} \label{def.differential_map}
+% \begin{myprop}[label=prop.differential-L]{$f_*$ の線型性} 
+% \begin{myprop}[label=prop.differential-D]{$f_*$ の微分としての性質} 
+% \begin{mytheo}[label=thm.gousei]{合成写像への作用} 
+% \begin{myprop}[label=prop.differential-R]{自然基底への作用}
+% \begin{mytheo}[label=thm.vector_gousei]{接ベクトルの合成写像への作用}
+	\label{eq:1-form}
+	&= T^{i_1 \dots i_r}_{j_1 \dots j_s}(p) \alpha_1{}_{i_1} \cdots \alpha_r{}_{i_r}  w_1{}^{j_1} \cdots w_s{}^{j_s}. \label{eq.31-1}
+\begin{mydef}[label=tensorfield]{テンソル場} 

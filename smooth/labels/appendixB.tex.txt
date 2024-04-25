@@ -1,0 +1,6 @@
+\begin{mydef}[label=def:cover, breakable]{被覆}
+\begin{mydef}[label=def:compacts]{パラコンパクト・コンパクト・局所コンパクト}
+\begin{mydef}[label=def.submani]{部分多様体}
+\begin{mydef}[label=def.embedding]{はめ込みと埋め込み}
+\begin{mytheo}[label=thm.Whitney]{Whitney の埋め込み定理}
+\begin{mydef}[label=def.induced_metric]{誘導計量}

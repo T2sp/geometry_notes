@@ -1,0 +1,719 @@
+\documentclass[geometry_main]{subfiles}
+
+\begin{document}
+
+\setcounter{chapter}{3}
+
+\chapter{微分形式}
+
+\section{外積代数}
+
+\begin{mydef}[label=def.ext]{外積代数}
+$V$ を体 $\mathbb{K}$ 上のベクトル空間とする．このとき\textbf{外積代数} (exterior algebra) $\left( \extp^\bullet (V),\, +,\, \wedge \right)$ は，以下のように定義される $\mathbb{K}$ 上の\hyperref[ax.alg]{多元環}（定義\ref{ax.alg}）である：
+	\begin{enumerate}
+		\item $\mathbb{K}$ 上 $V$ の元によって生成される
+		\item 単位元 $1$ を持つ
+		\item 任意の $x,\, y \in V$ に対して以下の関係式が成り立つ：
+		\begin{align}
+			x \wedge y = - y \wedge x
+		\end{align}
+	\end{enumerate}
+\end{mydef}
+
+$\forall x \in V$の次数を $1$ とおくことで，$\extp^\bullet (V)$ の単項式の次数が定義される．次数が $k$ の単項式の $\mathbb{K}$ 係数線型結合全体の集合を $\extp^k (V)$ と書くと，直和分解
+\begin{align}
+	\extp^\bullet (V) = \bigoplus_{k=0}^\infty \extp^k (V)
+\end{align}
+が成立する．
+
+\begin{marker} 
+	$\extp^0(V) = \mathbb{K}$ と約束する．また，自然に $\extp^1(V) \cong V$ である．
+\end{marker}
+
+
+$\dim V = n < \infty$ とする．$\{\, e_i \, \}$ を $V$ の基底とすると，$\extp^k (V)$ の基底は $e_{i_1} \wedge \cdots \wedge e_{i_k}$ の形をした単項式のうち，互いに線形独立なものである．定義\ref{def.ext}-(3) より，添字の組 $(i_1,\, \dots ,\, i_k)$ の中に互いに等しいものがあると $0$ になり，また，添字の順番を並べ替えただけの項は線形独立にならない．以上の考察から，次のようになる：
+
+\begin{mydef}[label=basisforext]{外積代数の基底}
+	$\extp^k (V)$ の基底として
+	\begin{align}
+		\bigl\{\, e_{i_1} \wedge \cdots \wedge e_{i_k} \bigm| 1 \le i_1 < \cdots < i_k \le n \, \bigr\}
+	\end{align}
+	をとることができる．このとき $\displaystyle \dim \extp^k (V) = \binom{n}{k}$ である．	
+\end{mydef}
+二項定理から，$\dim \extp^\bullet (V) = 2^n$ である．また，$k > n$ のとき $\extp^k (V) = \{ 0 \}$ である．
+
+\section{交代形式}
+
+\begin{mydef}[label=def.anticom]{交代形式}
+	$V$ を $\mathbb{K}$ 上のベクトル空間とする．\underline{$(0,\, r)$ 型テンソル} $ \omega \in \mathcal{T}_r^0 (V)$ であって，任意の置換  $ \sigma \in \mathfrak{S}_r$ に対して
+	\begin{align}
+		\omega \bigl[ X_{ \sigma(1) },\, \dots ,\, X_{ \sigma(r) } \bigr] = \mathrm{sgn}\, \sigma\; \omega \bigl[ X_1,\, \dots ,\, X_r \bigr],\quad X_i \in V
+	\end{align}
+	となるものを $V$ 上の $r$ 次の\textbf{交代形式}と呼ぶ．
+\end{mydef}
+
+$V$ 上の $r$ 次の交代形式全体の集合を $A^r(V)$ と書く．\underline{$A^r(V)$ はテンソル空間 $\mathcal{T}^0_r(V)$ の部分ベクトル空間である}．次数の異なる交代形式全体
+\begin{align}
+	A^\bullet (V) \coloneqq \bigoplus_{r = 0}^\infty A^r(V)
+\end{align}
+を考える．ただし $A^0(V) = \mathbb{K}$ と定義する．交代性より $k > n$ のとき $A^k(V) = \{ 0 \}$ になる．
+
+\begin{mytheo}[label=alghom]{外積代数と交代形式の同型}
+	写像 $ \iota \colon \extp^\bullet (V^*) \to A^\bullet(V)$ を以下のように定義する：
+	
+	まず，写像 $ \iota_k \colon \extp^k (V^*) \to A^k(V)$ の $ \omega = \alpha_1 \wedge \cdots \wedge \alpha_k \in \extp^k (V^*) \; ( \alpha_i \in V^* )$ への作用を
+	\begin{align}
+		\iota_k( \omega )[X_1,\, \dots ,\, X_k] \coloneqq \det \bigl(\, \alpha_i [X_j] \, \bigr)
+	\end{align}
+	と定義する．$\forall \omega \in \extp^\bullet (V)^*$ に対する $ \iota $ の作用は $ \iota_k $ の作用を線形に拡張する．	
+
+	このとき，$ \iota $ は同型写像である．
+\end{mytheo}
+\begin{proof}
+	各 $ \iota_k $ が同型写像であることを示せば良い\footnote{添字がややこしいのでこの証明ではEinsteinの規約を用いない．}．$V$ の基底 $\{ e_i \}$ と $V^*$ の基底 $\{ e^i \}$ は $e^i[e_j] = \delta^i_j$ を充しているものとする．このとき $\extp^k (V^*)$ の基底を
+	\begin{align} 
+		\bigl\{\, e^{i_1} \wedge \cdots \wedge e^{i_k} \bigm| 1 \le i_1 < \cdots < i_k \le n \,\bigr\}
+	\end{align}
+	にとれる．$\bigl\{\, \iota_k \bigl( e^{i_1} \wedge \cdots \wedge e^{i_k} \bigr) \bigm| 1 \le i_1 < \cdots < i_k \le n \,\bigr\} \subset A^k(V)$ が $A^k(V)$ の基底を成すことを示す．
+	
+	ある $\lambda_{i_1 \dots i_k} \in \mathbb{K}$ に対して
+	\begin{align} 
+		\sum_{1 \le i_1 < \cdots < i_k \le n}\lambda_{i_1 \dots i_k} \iota_k \bigl( e^{i_1} \wedge \cdots \wedge e^{i_k} \bigr) = 0 \in A^k(V)
+	\end{align}
+	ならば，
+	\begin{align} 
+		0 &= \sum_{1 \le i_1 < \cdots < i_k \le n} \lambda_{i_1 \dots i_k} \iota_k \bigl( e^{i_1} \wedge \cdots \wedge e^{i_k} \bigr) [e_{j_1}, \dots ,\, e_{j_k}] \\
+		&= \sum_{1 \le i_1 < \cdots < i_k \le n} \lambda_{i_1 \dots i_k} \det \bigl( e^{i_l}[e_{j_m}] \bigr) \\
+		&= \sum_{1 \le i_1 < \cdots < i_k \le n} \lambda_{i_1 \dots i_k} \det \bigl( \delta^{i_l}_{j_m} \bigr) \\
+		&= \lambda_{j_1 \dots j_k} 
+	\end{align}
+	なので線形独立である．
+	
+	次に $\forall \omega \in A^k(V)$ を一つとる．このとき $\omega_{i_1 \dots i_k} \coloneqq \omega[e_{i_1},\, \dots ,\, e_{i_k}]$ とおいて
+	\begin{align} 
+		\tilde{\omega} \coloneqq \sum_{1 \le i_1 < \cdots < i_k \le n} \omega_{i_1 \dots i_k} e^{i_1} \wedge \cdots \wedge e^{i_k} \in \extp^k(V^*)
+	\end{align}
+	と定義すると
+	\begin{align} 
+		\iota_k(\tilde{\omega}) = \sum_{1 \le i_1 < \cdots < i_k \le n} \omega_{i_1 \dots i_k} \iota_k \bigl( e^{i_1} \wedge \cdots \wedge e^{i_k} \bigr) = \omega
+	\end{align}
+	なので $\iota_k$ は全射である．従って $\iota_k \colon \extp^\bullet(V^*) \xrightarrow{\cong} A^k(V)$ である．
+\end{proof}
+
+\begin{marker} 
+	定理\ref{alghom}において構成した $\iota_k$ は，定数倍しても同型写像を与える．文献によっては $1/k!$ 倍されていたりするので注意．$1/k!$ 倍する定義は，特性類の一般論の記述に便利である．
+\end{marker}
+
+\begin{mycol}[label=lem.op]{交代形式の外積}
+	$\tilde{\omega} \in \extp^k(V^*),\; \tilde{\eta} \in \extp^l(V^*)$ を与える．同型写像 $\iota \colon \extp^\bullet(V^*) \xrightarrow{\cong} A^\bullet(V)$ による対応を
+	\begin{align} 
+		\tilde{\omega} &\mapsto \omega \coloneqq \iota(\tilde{\omega}), \\
+		\tilde{\eta} &\mapsto \omega \coloneqq \iota(\tilde{\eta}), \\
+		\tilde{\omega}\wedge \tilde{\eta} &\mapsto \omega \wedge \eta \coloneqq \iota(\tilde{\omega} \wedge \tilde{\eta})
+	\end{align}
+	とおくと， \underline{$A^\bullet(V)$ 上の}\textbf{外積} (exterior product) $\wedge \colon A^k(V) \times A^l(V) \to A^{k+l}(V)$ が次のようにして定まる：
+	\begin{align} 
+		&(\omega \wedge \eta)[X_1,\, \dots ,\, X_{k+l}] \\
+		&= \frac{1}{k !\, l !} \sum_{\sigma \in \mathfrak{S}_{k+l}} \sgn{\sigma} \omega[X_{\sigma(1)},\, \dots ,\, X_{\sigma(k)}]\, \eta[X_{\sigma(k+1)},\dots ,\, X_{\sigma(k+l)}]
+	\end{align}
+	ただし，$X_i \in V$ は任意とする．
+\end{mycol}
+
+\begin{proof} 
+	$\iota_k$ の線形性から，
+	\begin{align} 
+		\tilde{\omega} = e^{i_1} \wedge \cdots \wedge e^{i_k},\quad \tilde{\eta} = e^{j_1} \wedge \cdots \wedge e^{j_{l}}
+	\end{align}
+	について示せば十分．また，$\extp^\bullet(V^*)$ 上の二項演算 $\wedge$ の交代性から添字 $i_1,\, \dots ,\, i_k,\; j_1, \, \dots ,\, j_l$ は全て異なるとしてよい．
+	
+	ここで，左辺を計算するために次のような置換 $\tau \in \mathfrak{S}_{k+l}$ を考える：
+	\begin{align} 
+		\tau \coloneqq \mqty(i_1 & \dots & i_k & j_1 & \dots & j_l \\ m_1 & \dots & m_k & m_{k+1} & \dots & m_{k+l}),\quad m_1 < m_2 < \cdots < m_{k+l}.
+	\end{align}
+	このとき
+	\begin{align} 
+		\tilde{\omega} \wedge \tilde{\eta} = \sgn{\tau} e^{m_1} \wedge \cdots \wedge e^{m_{k+l}}
+	\end{align}
+	である．したがって
+	\begin{align} 
+		(\omega \wedge \eta)[e_{m_1},\, \dots ,\, e_{m_{k+l}}] = \sgn{\tau} \iota_{k+l}( e^{m_1} \wedge \cdots \wedge e^{m_{k+l}} )[e_{m_1},\, \dots ,\, e_{m_{k+l}}] = \tcbhighmath[]{\sgn{\tau}}.
+	\end{align}
+	
+	次に，右辺を計算する．
+	\begin{align} 
+		&\sum_{\sigma \in \mathfrak{S}_{k+l}} \sgn{\sigma} \omega[e_{\sigma(m_1)},\, \dots ,\, e_{\sigma(m_{k})}] \, \eta[e_{\sigma(m_{k+1})},\, \dots ,\, e_{\sigma(m_{k+l})}] \\
+		&= \sum_{\sigma \in \mathfrak{S}_{k+l}} \sgn{\sigma} \iota_k(e^{\textcolor{red}{i_1}} \wedge \cdots \wedge e^{\textcolor{red}{i_k}})[e_{\sigma\tau(\textcolor{red}{i_1})},\, \dots ,\, e_{\sigma\tau(\textcolor{red}{i_{k}})}]\, \iota_l (e^{\textcolor{blue}{j_1}} \wedge \cdots \wedge e^{\textcolor{blue}{j_{l}}})\eta[e_{\sigma\tau(\textcolor{blue}{j_{1}})},\, \dots ,\, e_{\sigma\tau(\textcolor{blue}{j_{l}})}] \label{eq.33-1}\\
+	\end{align}
+	式\eqref{eq.33-1}の和において，$\exists \rho \in \textcolor{red}{\mathfrak{S}_k},\; \exists \pi \in \textcolor{blue}{\mathfrak{S}_l},\; \sigma\tau(\textcolor{red}{i_1 \cdots i_k}) = \rho(\textcolor{red}{i_1 \cdots i_k}),\, \sigma\tau(\textcolor{blue}{j_1 \cdots j_l}) = \pi(\textcolor{blue}{j_1 \cdots j_l})$ を充たすような $\sigma \in \mathfrak{S}_{k+l}$ の項のみが非ゼロである．そのような $\sigma$ に対して $\sigma\tau = \rho\pi,\; \rho\pi(i_1 \cdots i_k) = \rho(i_1 \cdots i_k),\; \rho\pi(j_1 \cdots j_l) = \pi(j_1 \cdots j_l)$ と書けるから
+	\begin{align} 
+		&\sum_{\sigma \in \mathfrak{S}_{k+l}} \sgn{\sigma} \iota_k(e^{i_1} \wedge \cdots \wedge e^{i_k})[e_{\sigma\tau(i_1)},\, \dots ,\, e_{\sigma\tau(i_{k})}]\, \iota_l (e^{j_1} \wedge \cdots \wedge e^{j_{l}})\eta[e_{\sigma\tau(j_{1})},\, \dots ,\, e_{\sigma\tau(j_{l})}] \\
+		&= \sum_{\rho \in \mathfrak{S}_{k}} \sum_{\pi \in \mathfrak{S}_{l}} \sgn{\sigma} \iota_k(e^{i_1} \wedge \cdots \wedge e^{i_k})[e_{\rho(i_1)},\, \dots ,\, e_{\rho(i_{k})}]\, \iota_l (e^{j_1} \wedge \cdots \wedge e^{j_{l}})\eta[e_{\pi(j_{1})},\, \dots ,\, e_{\pi(j_{l})}] \\
+		&= \sum_{\rho \in \mathfrak{S}_{k}} \sum_{\pi \in \mathfrak{S}_{l}} \sgn{\sigma} \sgn{\rho} \sgn{\pi} \\
+		&= \sum_{\rho \in \mathfrak{S}_{k}} \sum_{\pi \in \mathfrak{S}_{l}} \sgn{\sigma} \sgn{\rho\pi} \\
+		&= \tcbhighmath[]{k!\, l! \sgn{\tau}}.
+	\end{align}
+	となる．よって示された．
+\end{proof}
+
+\section{\cinfty 多様体上の微分形式}
+
+前節の結果を用いて，局所座標に依存しない微分形式の定義を与えることができる．
+
+\begin{mydef}[label=def.form]{微分形式}
+	$M$ を\cinfty 多様体とする．$\omega$ が $M$ 上の\textbf{$k$-形式} ($k$-form) であるとは，各点 $p \in M$ において $\omega_p \in \extp^k\bigl(T^*_pM\bigr)$ を対応させ，$\omega_p$ が $p$ に関して\cinfty 級である，i.e.
+	\begin{align} 
+		\omega_p = \omega_{i_1 \cdots i_k}(p) \, (\dd{x^{i_1}})_p \wedge \cdots \wedge (\dd{x^{i_k}})_p
+	\end{align}
+	の各係数 $\omega_{i_1 \cdots i_k}(p)$ が\cinfty 関数であることを言う．
+\end{mydef}
+
+ベクトル束の言葉を使うと，
+\begin{align} 
+	\Omega^k(M) = \bigcup_{p \in M} \extp^k\bigl(T^*_pM\bigr)\; \text{の}\; C^\infty \; \text{級の切断の全体}
+\end{align}
+となる．
+
+もう一つの解釈は，交代形式の定義\ref{def.anticom}を前面に押し出す方法である．この解釈では\hyperref[ax.alg]{多元環} $\cinftyf{M}$ 上の $(0,\, r)$-階テンソル場（定義\ref{tensorfield}）としての側面が明らかになる：
+
+\begin{mytheo}[label=k-form_homo]{$k$ 形式の同型}
+	$M$ を\cinfty 多様体とする．$M$ 上の $k$-形式全体の集合 $\Omega^k(M)$ は，
+	\begin{align} 
+		\bigl\{\, &\tilde{\omega} \colon \mathfrak{X}(M) \times \cdots \times \mathfrak{X}(M) \to \cinftyf{M} \\
+		\bigm| \; &\tilde{\omega}\; \text{は}\;\cinftyf{M}\;\text{-加群として多重線型かつ交代的}\; \bigr\} 
+	\end{align}
+	と自然に同型である．
+\end{mytheo}
+
+\begin{proof} 
+	$\cinftyf{M}$-加群として多重線型かつ交代的であるような写像 $\tilde{\omega}\colon \vecfield{M} \times \cdots \times \vecfield{M} \to \cinftyf{M}$ が与えられたとする．まず $\forall X_i \in \vecfield{M}$ に対して，$\tilde{\omega}\bigl( X_1,\, \dots ,\, X_k \bigr) \in \cinftyf{M}$ の点 $p \in M$ における値が，各 $X_i$ の点 $p$ における値 $\eval{X_i}_p \in T_p M$ のみによって定まることを確認する．
+	$\tilde{\omega}$ の線形性から $\tilde{\omega}\bigl( X_1,\, \dots ,\, X_i - Y_i,\, \dots,\, X_k \bigr) = \tilde{\omega}\bigl( X_1,\, \dots ,\, X_i ,\, \dots,\, X_k \bigr) - \tilde{\omega}\bigl( X_1,\, \dots ,\, Y_i ,\, \dots,\, X_k \bigr)$ なので，ある $i$ について $\eval{X_i}_p = 0$（$0$ 写像）ならば $\tilde{\omega}\bigl( X_1,\, \dots ,\, X_k \bigr)(p) = 0$（実数）であることを確認すれば良い．
+	$i = 1$ としても一般性を失わない．$(U;\; x^\mu)$ を $p$ の周りのチャートとする．このとき $U$ 上では $X^\mu \in \cinftyf{U}$ を用いて
+	\begin{align} 
+		\label{eq.thm4-3-1}
+		X_1 = X^\mu \pdv{}{x^\mu},\quad X^\mu(p) = 0
+	\end{align}
+	と書ける．ここで $X_1$ の座標表示\eqref{eq.thm4-3-1}の定義域を補題\ref{gen_cinfty}を用いて $M$ 全域に拡張することを考える．そのために $\overline{V} \subset U$ なる $p$ の開近傍 $V$ と，$V$ 常恒等的に $1$ であり $U$ の外側では $0$ であるような\cinfty 関数 $h \in \cinftyf{M}$ をとることができる．
+	このとき 
+	\begin{align} 
+		Y_i \coloneqq h \pdv{}{x^i}
+	\end{align} 
+	とおくと $Y_i \in \vecfield{M}$ となり，$\tilde{X}^\mu \coloneqq h X^\mu$ とおけば $\tilde{X}^\mu \in \cinftyf{M}$ となる．このとき
+	\begin{align} 
+		X_1 = X_1 + h^2(X_1 - X_1) = \tilde{X}^\mu Y_\mu + (1 - h^2) X_1 \in \vecfield{M}
+	\end{align}
+	の右辺は $V \subset U$ 上至る所で座標表示\eqref{eq.thm4-3-1}を再現することがわかる．従って $\tilde{\omega}$ の$\cinftyf{M}$-線形性から
+	\begin{align} 
+		&\tilde{\omega}\bigl( X_1,\, \dots ,\, X_k \bigr)(p) \\
+		&= \tilde{X}^\mu (p)\, \tilde{\omega}\bigl(Y_\mu,\, X_2,\, \dots ,\, X_k \bigr)(p) + \bigl( 1 - h(p)^2 \bigr)\, \tilde{\omega}\bigl(X_1,\, X_2,\, \dots ,\, X_k \bigr)(p) \\
+		&= 0
+	\end{align}
+	となり，示された．
+
+	故に，次のような $k$-形式 $\omega$ の定義はwell-definedである\footnote{定理\ref{alghom}を使って各点 $p$ において $\omega_p \in \extp^k\bigl(T^*_pM\bigr)$ を $A^k(T_pM)$ の元と見做していることに注意}：任意の $k$ 個の接ベクトル $X_i \in T_pM$ が与えられたとき，$k$ 個のベクトル場 $\tilde{X}_i \in \vecfield{M}$ であって $\eval{\tilde{X}_i}_p = X_i$ を充たすものたちを適当に選ぶ．そして
+	\begin{align} 
+		\omega_p \bigl[ X_1,\, \dots ,\, X_k \bigr] \coloneqq \tilde{\omega} \bigl( \tilde{X}_1 ,\, \dots ,\, \tilde{X}_k \bigr) (p)
+	\end{align}
+	と定めると，上述の議論から左辺は $\tilde{X}_i$ の選び方に依らないのである．ベクトル場の\cinfty 性から $\omega_p$ が $p$ に関して\cinfty 級であることは明らかなので，このようにして定義された対応 $\omega \colon p \mapsto \omega_p$ は微分形式である．
+\end{proof}
+
+
+\section{微分形式の演算}
+
+\cinfty 多様体 $M$ 上の $k$-形式全体の集合を $\Omega^k(M)$ と書き，
+\begin{align} 
+	A^\bullet(M) \coloneqq \bigoplus_{k=0}^n \Omega^k(M)
+\end{align}
+として $M$ 上の微分形式全体を考える．$A^\bullet(M)$ 上に様々な演算を定義する．
+\begin{marker}		 
+	しばらくの間，微分形式全体 $\Omega^k(M)$ を定理\ref{k-form_homo}の意味で捉える．i.e. $\omega \in \Omega^k(M)$ は $k$ 個のベクトル場に作用する．作用を受けるベクトル場は $(\;)$ で囲むことにする：
+	\begin{align} 
+		\omega \colon (X_1,\, \dots ,\, X_k) \mapsto \omega(X_1,\, \dots ,\, X_k)
+	\end{align}
+\end{marker}		
+
+\subsection{外積}
+
+微分形式全体 $\Omega^k(M)$ を定理\ref{k-form_homo}の意味で捉える．このとき，$k$-形式と $l$-形式の外積 
+\begin{align} 
+	\wedge \colon \Omega^k(M) \to \Omega^l(M),\; (\omega,\, \eta) \mapsto \omega \wedge \eta
+\end{align}
+は，各点 $p \in M$ で
+\begin{align} 
+	(\omega \wedge \eta)_p \coloneqq \omega_p \wedge \eta_p \in A^{k+l}(T_p M)
+\end{align}
+と定義される双線型写像である．
+
+\begin{myprop}[label=extp_1]{外積の性質}
+	外積は以下の性質を持つ：
+	\begin{enumerate} 
+		\item $\eta \wedge \omega = (-1)^{kl} \omega \wedge \eta$
+		\item 任意の\underline{ベクトル場} $X_1,\, \dots ,\, X_{k+l} \in \mathfrak{X}(M)$ に対して
+		\begin{align} 
+			&(\omega \wedge \eta)(X_1,\, \dots ,\, X_{k+l}) \\
+			&= \frac{1}{k !\, l !} \sum_{\sigma \in \mathfrak{S}_{k+l}} \sgn{\sigma} \omega(X_{\sigma(1)},\, \dots ,\, X_{\sigma(k)})\, \eta(X_{\sigma(k+1)},\dots ,\, X_{\sigma(k+l)})
+		\end{align}
+	\end{enumerate}
+\end{myprop}
+
+\begin{proof} 
+	定理\ref{k-form_homo}より，各点 $p \in M$ において $(\omega \wedge \eta)_p$ を外積代数 $\extp^{k+l}\bigl(T^*_pM\bigr)$ の元と見做してよい．
+	\begin{enumerate} 
+		\item 外積代数の基底 $e^{i_1} \wedge \cdots \wedge e^{i_k} \wedge e^{j_1} \wedge \cdots \wedge e^{j_l}$ において $e^{j_1}$ を一番左に持ってくると全体が $(-1)^k$ 倍される．これを $l$ 回繰り返すと全体が $(-1)^{kl}$ 倍される．
+		\item $(\omega \wedge \eta)_p$ に対して定理\ref{alghom}を用いればよい．
+	\end{enumerate}
+\end{proof}
+
+
+\subsection{外微分}
+
+\begin{mydef}[label=extdiff_1]{外微分（局所表示）} 
+	$M$ のチャート $(U;\, x^i)$ を与える．$k$-形式 $\omega \in \Omega^k(M)$ の座標表示が
+	\begin{align} 
+		\omega = \omega_{i_1 \cdots i_k} \dd{x^{i_1}} \wedge \cdots \wedge \dd{x^{i_k}} 
+	\end{align}
+	と与えられたとき，\textbf{外微分} (exterior differention) 
+	\begin{align} 
+		\dd{} \colon \Omega^k(M) \to \Omega^{k+1}(M)
+	\end{align}
+	は次のように定義される：
+	\begin{align} 
+		\dd{\omega} \coloneqq \pdv{\omega_{i_1 \cdots i_k}}{x^{\textcolor{red}{j}}} \dd{x^{\textcolor{red}{j}}} \wedge \dd{x^{i_1}} \wedge \cdots \wedge \dd{x^{i_k}} 
+	\end{align}
+\end{mydef}
+
+\begin{mytheo}[label=extdiff_2]{外微分（内在的）}
+	$\omega \in \Omega^k(M)$ を $M$ 上の任意の $k$-形式とする．このとき，任意のベクトル場 $X_1,\, \dots ,\, X_{k+1} \in \mathfrak{X} (M)$ に対して
+	\begin{align} 
+		\dd{\omega} (X_1,\, \dots ,\, X_{k+1}) = &\sum_{i=1}^{k+1} (-1)^{i+1} X_i \bigl( \omega(X_1,\, \dots ,\, \hat{X_i},\, \dots,\, X_{k+1}) \bigr) \\
+		&+ \sum_{i < j} (-1)^{i+j} \omega \bigl( [X_i,\, X_j],\, X_1,\, \dots ,\, \hat{X_i},\, \dots ,\, \hat{X_j},\, \dots ,\, X_{k+1} \bigr) 
+	\end{align}
+	ただし $\hat{X_i}$ は $X_i$ を省くことを意味する．また，$\comm{X}{Y}$ は\textbf{Lie括弧積}と呼ばれる $\vecfield{M}$ 上の二項演算で，以下のように定義される：
+	\begin{align} 
+		\comm{X}{Y}f \coloneqq X(Yf) - Y(Xf)
+	\end{align}
+\end{mytheo}
+
+定理\ref{extdiff_2}の $k=1$ の場合を書くと次の通り：
+\begin{align} 
+	\dd{\omega}(X,\, Y) = (X\omega)(Y) - (Y\omega)(X) - \omega(\comm{X}{Y}).
+\end{align}
+
+\begin{mytheo}[label=extdiff_3]{外微分の性質}
+	外微分 $\dd{}$ は以下の性質をみたす：
+	\begin{enumerate} 
+		\item $\dd{}\circ \dd{} = 0$
+		\item $\dd{(\omega \wedge \eta)} = \dd{\omega} \wedge \eta + (-1)^k \omega \wedge \dd{\eta},\quad \omega \in \Omega^k(M)$
+	\end{enumerate}
+\end{mytheo}
+
+\begin{proof} 
+	$\forall \omega \in \Omega^k(M)$ と $M$ のチャート $(U;\, x^i)$ をとる．
+	\begin{enumerate} 
+		\item \begin{align} 
+			\dd[2]{\omega} = \pdv[2]{\omega_{i_1 \dots i_k}}{x^\mu}{x^\nu} \dd{x^\mu} \wedge \dd{x^\nu} \wedge \dd{x^{i_1}} \wedge \cdots \wedge \dd{x^{i_k}}
+		\end{align}
+		であるが，$\omega$ は \cinfty 級なので偏微分は可換である．従って添字の対 $\mu,\, \nu$ に関して対称かつ反対称な総和をとることになるから $\dd[2]{\omega} = 0$ である．
+		\item $\omega = \omega_{i_1 \dots i_k} \dd{x^{i_1}} \wedge \cdots \wedge \dd{x^{i_k}},\; \eta = \eta_{j_1 \dots j_l}\, \dd{x^{j_1}} \wedge \cdots \wedge \dd{x^{j_l}}$ とする．
+		\begin{align} 
+			\dd{(\omega \wedge \eta)} &= \dd{\bigl( \omega_{i_1 \dots i_k}\eta_{j_1 \dots j_l} \dd{x^{i_1}} \wedge \cdots \wedge \dd{x^{i_k}} \wedge \dd{x^{j_1}} \wedge \cdots \wedge \dd{x^{j_l}} \bigr)}\\
+			&=  \left( \pdv{\omega_{i_1 \dots i_k}}{x^\mu} \eta_{j_1 \dots j_l} + \omega_{i_1 \dots i_k} \pdv{\eta_{j_1 \dots j_l}}{x^\mu} \right)\, \dd{x^\mu} \wedge \dd{x^{i_1}} \wedge \cdots \wedge \dd{x^{i_k}} \wedge \dd{x^{j_1}} \wedge \cdots \wedge \dd{x^{j_l}} \\
+			&= 	\left(\pdv{\omega_{i_1 \dots i_k}}{x^\mu} \dd{x^\mu} \wedge \dd{x^{i_1}} \wedge \cdots \wedge \dd{x^{i_k}} \right)  \wedge \bigl( \eta_{j_1 \dots j_l}\, \dd{x^{j_1}} \wedge \cdots \wedge \dd{x^{j_l}} \bigr) \\
+			&\quad + (-1)^k \bigl( \omega_{i_1 \dots i_k} \, \dd{x^{i_1}} \wedge \cdots \wedge \dd{x^{i_k}} \bigr) \wedge \left( \pdv{\eta_{j_1 \dots j_l}}{x^\mu}\, \dd{x^\mu} \wedge \dd{x^{j_1}} \wedge \cdots \wedge \dd{x^{j_l}} \right) \\
+			&= \dd{\omega} \wedge \eta + (-1)^k \omega \wedge \dd{\eta}
+		\end{align}
+	\end{enumerate}
+\end{proof}
+
+\subsection{引き戻し}
+
+二つの\cinfty 多様体 $M,\, N$ と，その上の \cinfty 写像 $f \colon M \to N$ を与える．微分写像
+\begin{align} 
+	f_* \colon T_p M \to T_{f(p)}N
+\end{align}
+が $f_* \in \Hom{\mathbb{R}} ( T_p M,\,  T_{f(p)}N)$ であることから，それの\textbf{引き戻し} $f^*$ を，$\forall \alpha \in T_{f(p)}^* N,\, \forall X \in T_p M$ に対して次のように定義できる：
+\begin{align} 
+	&f^* \colon T_{f(p)}^* N \to T_{p}^*M, \\
+	&f^*(\alpha)[X] \coloneqq \alpha\bigl[f_*(X)\bigr]
+\end{align}
+
+$\extp^1 \bigl( T^*_{f(p)} N\bigr) \cong T^*_{f(p)} N$ を思い出すと，$f^*$ の定義域，値域は自然に\underline{点 $p$ における} $k$-形式へ拡張される．
+具体的には，$\forall \omega \in \extp^k\bigl(T_{f(p)}^* N\bigr),\, \forall X_i \in T_p M$ に対して
+\begin{align} 
+	&f^* \colon \extp^k\bigl(T_{f(p)}^* N\bigr) \to \extp^k(T_{p}^*M), \\
+	&f^*(\omega)[X_1,\, \dots ,\, X_k] \coloneqq \omega\bigl[f_*(X_1),\, \dots ,\, f_*(X_k)\bigr]
+\end{align}
+と定義する．
+さらに，各点 $p \in M$ について和集合をとることで$k$-形式全体に作用するようになる：
+\begin{align} 
+	&f^* \colon \Omega^k(N) \to \Omega^k(M), \\
+	&\tcbhighmath[]{f^*(\omega)(X_1,\, \dots ,\, X_k) \coloneqq \omega\bigl(f_*(X_1),\, \dots ,\, f_*(X_k)\bigr)} \label{def.k-form_pullback}
+\end{align}
+ただし $\forall \omega \in \Omega^k(N),\, \forall X_i \in \vecfield{M}$ である．$f^*(\omega) \in \Omega^k(M)$ を $f$ による $\omega \in \Omega^k(N)$ の\textbf{引き戻し}と呼ぶ．
+
+\begin{myprop}[label=prop.pullback]{引き戻しの性質} 
+	$f^*$ は線型写像であり，以下の性質をみたす：
+	\begin{enumerate} 
+		\item $f^*(\omega \wedge \eta) = f^*(\omega) \wedge f^*(\eta)$
+		\item $\dd{(f^*(\omega))} = f^*(\dd{\omega})$
+	\end{enumerate}
+	特に，性質(1)から $f^* \colon A^\bullet(M) \to A^\bullet(N)$ は環準同型写像である．
+\end{myprop}
+
+\begin{proof} 
+	$k+l$ 個のベクトル場 $X_i \in \vecfield{M}$ を任意にとる．
+	\begin{enumerate} 
+		\item 命題\ref{extp_1}-(2) より
+		\begin{align} 
+			&\bigl( f^*(\omega) \wedge f^*(\eta) \bigr)(X_1,\, \dots ,\, X_{k+l}) \\
+			&= \frac{1}{k!\, l!} \sum_{\sigma \in \mathfrak{S}_{k+l}} \sgn{\sigma} (f^* \omega)(X_{\sigma(1)},\, \dots ,\, X_{\sigma(k)})\, (f^* \eta)(X_{\sigma(k+1)},\, \dots ,\, X_{\sigma(k+l)}) \\
+			&= \frac{1}{k!\, l!} \sum_{\sigma \in \mathfrak{S}_{k+l}} \sgn{\sigma} \omega\bigl(f_*(X_{\sigma(1)}),\, \dots ,\, f_*(X_{\sigma(k)}) \bigr)\, \eta\bigl( f_*(X_{\sigma(k+1)}),\, \dots ,\, f_*(X_{\sigma(k+l)})\bigr) \\
+			&= (\omega \wedge \eta)\bigl( f_*(X_1),\, \dots ,\, f_*(X_{k+l}) \bigr) \\
+			&= f^*(\omega \wedge \eta)(X_1,\, \dots ,\, X_{k+l})
+		\end{align}
+		\item 微分写像の定義\eqref{def.differential_map}から，$f_* \colon \vecfield{M} \to \vecfield{N}$ の\underline{ベクトル場} $X \in \vecfield{M}$ への作用は
+		\begin{align} 
+			(f_* X) h = X(h \circ f) \circ f^{-1} \in \cinftyf{N},\quad \forall h \in \cinftyf{N}
+		\end{align}
+		である．故にLie括弧積との順序は
+		\begin{align} 
+			\comm{f_*X}{f_*Y} h &= f_* X \bigl((f_* Y) h\bigr) - f_*Y \bigl( (f_* X) h\bigr) \\
+			&= X \Bigl( \bigl((f_* Y) h\bigr) \circ f \Bigr) \circ f^{-1} - Y \Bigl( \bigl((f_* X) h\bigr) \circ f \Bigr) \circ f^{-1} \\
+			&= X \Bigl( \bigl(Y(h \circ f) \circ f^{-1}\bigr) \circ f \Bigr) \circ f^{-1} - Y \Bigl( \bigl(X(h \circ f) \circ f^{-1}\bigr) \circ f \Bigr) \circ f^{-1} \\
+			&= \Bigl( X \bigl( Y(h \circ f)\bigr) - Y \bigl( X(h \circ f) \bigr) \Bigr) \circ f^{-1} \\
+			&= \comm{X}{Y}(h \circ f) \circ f^{-1} \\
+			&= (f_*\comm{X}{Y})h,\quad \forall h \in \cinftyf{N}
+		\end{align}
+		となり，可換である．従って定理\ref{extdiff_1}より
+		\begin{align} 
+			&\dd{\bigl( f^*(\omega) \bigr)} (X_1,\, \dots ,\, X_{k+1}) \\
+			&= \sum_{i=1}^{k+1} (-1)^{i+1} X_i \bigl( (f^*\omega)(X_1,\, \dots ,\, \hat{X_i},\, \dots,\, X_{k+1}) \bigr) \\
+			&\quad + \sum_{i < j} (-1)^{i+j} (f^*\omega) \bigl( [X_i,\, X_j],\, X_1,\, \dots ,\, \hat{X_i},\, \dots ,\, \hat{X_j},\, \dots ,\, X_{k+1} \bigr) \\
+			&= \sum_{i=1}^{k+1} (-1)^{i+1} X_i \Bigl( \omega\bigl(f_*(X_1),\, \dots ,\, \widehat{f_*(X_i)},\, \dots,\, f_*(X_{k+1})\bigr) \Bigr) \\
+			&\quad + \sum_{i < j} (-1)^{i+j} \omega \bigl( f_*([X_i,\, X_j]),\, f_*(X_1),\, \dots ,\, \widehat{f_*(X_i)},\, \dots ,\, \widehat{f_*(X_j)},\, \dots ,\, f_*(X_{k+1}) \bigr) \\
+			&= \sum_{i=1}^{k+1} (-1)^{i+1} X_i \Bigl( \omega\bigl(f_*(X_1),\, \dots ,\, \widehat{f_*(X_i)},\, \dots,\, f_*(X_{k+1})\bigr) \Bigr) \\
+			&\quad + \sum_{i < j} (-1)^{i+j} \omega \bigl( [f_*(X_i),\, f_*(X_j)],\, f_*(X_1),\, \dots ,\, \widehat{f_*(X_i)},\, \dots ,\, \widehat{f_*(X_j)},\, \dots ,\, f_*(X_{k+1}) \bigr) \\
+			&= f^*(\dd{\omega}) (X_1,\, \dots ,\, X_{k+1}).
+		\end{align}
+	\end{enumerate}
+\end{proof}
+
+\subsection{内部積とLie微分}
+
+\begin{mydef}[label=int_prod]{内部積}
+	$X \in \vecfield{M}$ を $M$ 上の任意のベクトル場とする．このとき $X$ による\textbf{内部積} (interior product) 
+	\begin{align} 
+		\iunit_X \colon \Omega^k(M) \to \Omega^{k-1}(M)
+	\end{align}
+	が次のように定義される：
+	\begin{align} 
+		\iunit_{\textcolor{red}{X}}(\omega)(X_1,\, \dots ,\, X_{k-1}) \coloneqq \omega(\textcolor{red}{X},\, X_1,\, \dots ,\, X_{k-1}),\quad \forall \omega \in \Omega^k(M),\, \forall X_i \in \vecfield{M}
+	\end{align}
+	ただし，$k=0$ のときは $\iunit_X = 0$ と定義する．
+\end{mydef}
+	
+\begin{myprop}[label=prop.int_prod]{内部積の性質}
+	$\forall \omega,\, \omega_1,\, \omega_2 \in \Omega^k(M),\; \forall f \in \cinftyf{M}$ をとる．
+	\begin{enumerate} 
+		\item $\Omega^k(M)$ を $\cinftyf{M}$ 加群と見たとき，$\iunit_X \in \Hom{\cinftyf{M}}\bigl(\Omega^k(M),\,\Omega^{k-1}(M)\bigr)$ である：
+		\begin{align} 
+			\iunit_X(\omega_1 + \omega_2) = \iunit_X(\omega_1) + \iunit_X(\omega_2),\quad \iunit_X(f \omega) = f\, \iunit_X(\omega).
+		\end{align}
+		\item $\iunit_X$ は\textbf{反微分}である：
+		\begin{align} 
+			\iunit_X(\omega \wedge \eta) = \iunit_X(\omega) \wedge \eta + (-1)^k \omega \wedge \iunit_X(\eta)
+		\end{align}
+	\end{enumerate}
+\end{myprop}
+
+\begin{proof} 
+	\begin{enumerate} 
+		\item 定義より明らか．
+		\item 命題\ref{extp_1}より
+		\begin{align} 
+			&\iunit_X(\omega \wedge \eta) (X_1,\, \dots,\, X_{k+l-1}) \\
+			&= \omega \wedge \eta (X,\, X_1,\, \dots,\, X_{k+l-1}) \\
+			&= \frac{1}{k!\, l!} \sum_{i=1}^k \sum_{\sigma \in \mathfrak{S}_{k+l-1}} (-1)^{i+1}\sgn{\sigma} \omega(X_{\sigma(1)},\, \dots ,\, \underbrace{X}_{i} ,\,\dots,\, X_{\sigma(k-1)})\, \eta(X_{\sigma(k)},\, \dots ,\, X_{\sigma(k+l-1)}) \\
+			&\quad + (-1)^k \frac{1}{k!\, l!} \sum_{j=1}^l \sum_{\sigma \in \mathfrak{S}_{k+l-1}} (-1)^{j+1}\sgn{\sigma} \omega(X_{\sigma(1)},\, \dots ,\, X_{\sigma(k)})\, \eta(X_{\sigma(k+1)},\, \dots ,\, \underbrace{X}_{j} ,\,\dots,\, X_{\sigma(k+l-1)}) \\
+			&= \bigl(\iunit_X(\omega) \wedge \eta + (-1)^k \omega \wedge \iunit_X(\eta)\bigr) (X_1,\, \dots,\, X_{k+l-1}).
+		\end{align}
+	\end{enumerate}
+\end{proof}
+
+\begin{mydef}[label=Lie_diff]{Lie微分}
+	$X \in \vecfield{M}$ を $M$ 上の任意のベクトル場とする．このとき $X$ による\textbf{Lie微分} (Lie derivative) が
+	\begin{align} 
+		\mathcal{L}_X \colon \Omega^k(M) \to \Omega^{k}(M)
+	\end{align}
+	が次のように定義される：
+	\begin{align} 
+		\mathcal{L}_{\textcolor{red}{X}}(\omega)(X_1,\, \dots ,\, X_k) \coloneqq \textcolor{red}{X}\bigl(\omega(X_1,\, \dots ,\, X_k)\bigr) - \sum_{i=1}^k \omega(X_1,\, \dots ,\, \comm{\textcolor{red}{X}}{X_i},\, \dots ,\, X_k)
+	\end{align}
+\end{mydef}
+
+Lie微分は定理\ref{k-form_homo}の条件を充している，i.e. $\mathcal{L}_X \omega$ は $\cinftyf{M}$ 加群として多重線型かつ交代的であるから，微分形式と呼ばれうる．
+
+\begin{mytheo}[label=thm.Cartan]{Cartanの公式}
+	$X,\, Y \in \vecfield{M},\; \omega \in \Omega^k(M)$ とする．このとき，以下が成立する：
+	\begin{enumerate} 
+		\item $\iunit_{\comm{X}{Y}}(\omega) = \comm{\mathcal{L}_X}{\iunit_Y} \omega$
+		\item $\mathcal{L}_X = \iunit_X \dd{} + \dd{} \iunit_X$
+	\end{enumerate}
+\end{mytheo}
+
+\begin{proof} 
+	任意の $k-1$ 個のベクトル場 $X_i \in \vecfield{M}$ をとる．
+	\begin{enumerate} 
+		\item $k=0$ のときは $\Omega^0(M) = \cinftyf{M}$ なので，明らかである．
+		
+		　$k > 0$ とする．Lie微分の定義\ref{Lie_diff}より
+		\begin{align} 
+			&\bigl( \Liedv{X} \iunit_Y (\omega) \bigr)(X_1,\, \dots X_{k-1}) \\
+			&= X \bigl( (\iunit_Y(\omega))(X_1,\, \dots ,\, X_{k-1}) \bigr)  - \sum_{i=1}^{k-1} \bigl( \iunit_Y(\omega) \bigr) (X_1,\, \dots ,\, \comm{X}{X_i},\, \dots ,\, X_{k-1}) \\
+			&= X \bigl( \omega(Y,\, X_1,\, \dots ,\, X_{k-1}) \bigr)  - \sum_{i=1}^{k-1} \omega(Y,\, X_1,\, \dots ,\, \comm{X}{X_i},\, \dots ,\, X_{k-1}) 
+		\end{align}
+		である．一方
+		\begin{align} 
+			&\bigl( \iunit_Y(\Liedv{X} \omega) \bigr)(X_1,\, \dots X_{k-1}) \\
+			&= (\Liedv{X} \omega)(Y,\, X_1,\, \dots X_{k-1}) \\
+			&= X \bigl( \omega(Y,\, X_1,\, \dots ,\, X_{k-1}) \bigr) - \omega(\comm{X}{Y},\, X_1,\, \dots ,\, X_{k-1}) \\
+			&\quad - \sum_{i=1}^{k-1} \omega(Y,\, X_1,\, \dots ,\, \comm{X}{X_i},\, \dots ,\, X_{k-1}) 
+		\end{align}
+		だから，
+		\begin{align} 
+			\bigl(\comm{\Liedv{X}}{\iunit_Y}\omega\bigr) (X_1,\, \dots X_{k-1}) &= \bigl( \Liedv{X} \iunit_Y (\omega) \bigr)(X_1,\, \dots X_{k-1}) - \bigl( \iunit_Y(\Liedv{X} \omega) \bigr)(X_1,\, \dots X_{k-1}) \\
+			&= \iunit_{\comm{X}{Y}}(\omega) (X_1,\, \dots X_{k-1}).
+		\end{align}
+		
+		\item $k=0$ のときは $\Liedv{\omega} = X \omega\quad (\omega \in \cinftyf{M})$ より明らか．$k > 0$ とする．定理\ref{extdiff_1}より
+		\begin{align} 
+			&\iunit_X(\dd{\omega})(X_1,\, \dots ,\, X_k) \\
+			&= \dd{\omega}(X,\, X_1,\, \dots ,\, X_k) \\
+			&= X\omega (X_1,\, \dots ,\, X_k) + \sum_{i=1}^{k} (-1)^{i} X_i \bigl( \omega(X,\, X_1,\, \dots ,\, \hat{X_i},\, \dots ,\, X_k) \bigr)  \\
+			&\quad + \sum_{j=1}^k (-1)^{j} \omega(\comm{X}{X_j},\, X_1,\, \dots ,\, \hat{X}_j ,\, \dots,\, X_{k}) \\
+			&\quad + \sum_{i<j} (-1)^{i+j} \omega(\comm{X_i}{X_j},\, X,\, X_1,\, \dots ,\, \hat{X}_i,\, \dots ,\, \hat{X}_j ,\, \dots ,\, X_k).
+		\end{align}
+		一方，
+		\begin{align} 
+			&\dd{ \bigl( \iunit_X (\omega) \bigr) }(X_1,\, \dots ,\, X_k) \\
+			&= \sum_{i=1}^k (-1)^{i+1} X_i \bigl( \omega(X,\, X_1,\, \dots ,\, \hat{X}_i ,\,\dots ,\, X_k) \bigr) \\
+			&\quad + \sum_{i<j} (-1)^{i+j} \omega(X,\, \comm{X_i}{X_j},\, X_1,\, \dots ,\, \hat{X}_i ,\, \dots ,\, \hat{X}_j,\, \dots ,\, X_k)
+		\end{align}
+		であるから，
+		\begin{align} 
+			&\bigl( \iunit_X \dd{} + \dd{} \iunit_X \bigr) \omega (X_1,\, \dots ,\, X_k) \\
+			&= X\omega (X_1,\, \dots ,\, X_k) + \sum_{j=1}^k (-1)^{j} \omega(\comm{X}{X_j},\, X_1,\, \dots ,\, \hat{X}_j ,\, \dots,\, X_{k}) \\
+			&= (\Liedv{X}\omega)(X_1,\, \dots,\, X_k).
+		\end{align}
+	\end{enumerate}
+\end{proof}
+
+Cartanの公式\ref{thm.Cartan}より，Lie微分の様々な性質が示される：
+
+\begin{mytheo}[label=thm.Lie_1]{Lie微分の性質}
+	$X,\, Y \in \vecfield{M},\; \omega \in \Omega^k(M)$ とする．このとき，以下が成立する：
+	\begin{enumerate} 
+		\item $\Liedv{X} (\omega \wedge \eta) = \Liedv{X}(\omega) \wedge \eta + \omega \wedge \Liedv{X}(\eta)$
+		\item $\Liedv{X}(\dd{\omega}) = \dd{\bigl(\Liedv{X}(\omega)\bigr)}$
+		\item $\comm{\Liedv{X}}{\Liedv{Y}} = \Liedv{\comm{X}{Y}}$
+	\end{enumerate}
+\end{mytheo}
+
+\begin{proof} 
+	\begin{enumerate} 
+		\item Cartanの公式\ref{thm.Cartan}-(2) および内部積と外微分が共に反微分であることを利用すると
+		\begin{align} 
+			&\Liedv{X}(\omega \wedge \eta) \\
+			&= \iunit_X \bigl( \dd{\omega} \wedge \eta + (-1)^k \omega \wedge \dd{\eta} \bigr) + \dd{\bigl( \iunit_X(\omega) \wedge \eta + (-1)^k \omega \wedge \iunit_X(\eta) \bigr) } \\
+			&= \iunit_X(\dd{\omega}) \wedge \eta + \textcolor{red}{\cancel{(-1)^{k+1} \dd{\omega} \wedge \iunit_X(\eta)}} + \textcolor{blue}{\cancel{(-1)^k \iunit_X(\omega) \wedge \dd{\eta}}} + (-1)^{2k} \omega \wedge \iunit_X(\dd{\eta}) \\
+			&\quad + \dd{\iunit_X(\omega) \wedge \eta} + \textcolor{blue}{\cancel{(-1)^{k-1} \iunit_X(\omega) \wedge \dd{\eta}}} + \textcolor{red}{\cancel{(-1)^k \dd{\omega} \wedge \iunit_X(\eta)}} + (-1)^{2k} \omega \wedge \dd{\iunit_X(\eta)} \\
+			&= \Liedv{X}(\omega) \wedge \eta + \omega \wedge \Liedv{X}(\eta).
+		\end{align}
+		\item Cartanの公式\ref{thm.Cartan}-(2) から
+		\begin{align} 
+			\Liedv{X}(\dd{\omega}) = \cancel{\iunit_X (\dd[2]{\omega})} + \dd{} \iunit_X(\dd{\omega}) =  \dd{} \iunit_X(\dd{\omega}) + \dd[2]{\iunit_X(\omega)} = \dd{ \bigl( \Liedv{X}(\omega) \bigr) }.
+		\end{align}
+		\item $k$ に関する数学的帰納法により示す．$k=0$ のとき $\Omega^0(M) = \cinftyf{M}$ なので
+		\begin{align} 
+			\Liedv{\comm{X}{Y}} \omega = \comm{X}{Y}\omega = X(Y\omega) - Y(X\omega) = \comm{\Liedv{X}}{\Liedv{Y}}\omega
+		\end{align}
+		であり，成立している．
+
+		　$k \ge 0$ について正しいと仮定する．$\forall \omega \in \Omega^{k+1}(M)$ を一つとる．$\forall Z \in \vecfield{M}$ に対して $\iunit_Z \omega \in \Omega^{k}(M)$ だから，帰納法の仮定より
+		\begin{align} 
+			\label{eq.prop4-7_ass}
+			\Liedv{\comm{X}{Y}} \iunit_Z(\omega) = \comm{\Liedv{X}}{\Liedv{Y}}\iunit_Z(\omega)
+		\end{align}
+		が成立する．一方Cartanの公式\ref{thm.Cartan}-(1) より
+		\begin{align} 
+			\Liedv{\comm{X}{Y}} \iunit_Z = \iunit_Z \Liedv{\comm{X}{Y}} + \iunit_{\comm{\comm{X}{Y}}{Z}} \label{eq.prop4-7_3}
+		\end{align}
+		である．さらに
+		\begin{align} 
+			&\Liedv{X} \Liedv{Y} \iunit_Z \\
+			&= \Liedv{X} \bigl( \iunit_Z \Liedv{Y} + \iunit_{\comm{Y}{Z}} \bigr) \\
+			&= \iunit_Z \Liedv{X} \Liedv{Y} + \iunit_{\comm{X}{Z}} \Liedv{Y} + \iunit_{\comm{Y}{Z}} \Liedv{X} + \iunit_{\comm{X}{\comm{Y}{Z}}}, \label{eq.prop4-7_1}\\
+			&\Liedv{Y} \Liedv{X} \iunit_Z \\
+			&= \iunit_Z \Liedv{Y} \Liedv{X} + \iunit_{\comm{Y}{Z}} \Liedv{X} + \iunit_{\comm{X}{Z}} \Liedv{Y} + \iunit_{\comm{Y}{\comm{X}{Z}}} \label{eq.prop4-7_2}
+		\end{align}
+		であることもわかる．式\eqref{eq.prop4-7_1}$-$\eqref{eq.prop4-7_2}より
+		\begin{align} 
+			&\comm{\Liedv{X}}{\Liedv{Y}} \iunit_Z \\
+			&= \iunit_Z \comm{\Liedv{X}}{\Liedv{Y}} + \iunit_{\comm{X}{\comm{Y}{Z}}} - \iunit_{\comm{Y}{\comm{X}{Z}}}
+		\end{align}
+		これを式\eqref{eq.prop4-7_3}から引いてJacobi恒等式 $\comm{\comm{X}{Y}}{Z} + \comm{\comm{Y}{Z}}{X} + \comm{\comm{Z}{X}}{Y} = 0$ を用いると
+		\begin{align} 
+			\comm{\bigl( \Liedv{\comm{X}{Y}} - \comm{\Liedv{X}}{\Liedv{Y}} \bigr)}{\iunit_Z } = 0.
+		\end{align}
+		\eqref{eq.prop4-7_ass}に代入すると
+		\begin{align} 
+			\iunit_Z \bigl( \Liedv{\comm{X}{Y}} - \comm{\Liedv{X}}{\Liedv{Y}}  \bigr) \omega = 0.
+		\end{align}
+		$Z$ は任意だったから $ \bigl( \Liedv{\comm{X}{Y}} - \comm{\Liedv{X}}{\Liedv{Y}}  \bigr) \omega = 0$ を得て証明が完了する．
+	\end{enumerate}
+\end{proof}
+
+\section{微分形式の積分}
+
+\subsection{パラコンパクト・1の分割}
+
+\begin{mydef}[label=def:locally-finite]{局所有限}
+	$X$ を位相空間とし， $\mathcal{U} = \{\, U_\lambda \,\}_{\lambda \in \Lambda}$ を $X$ の被覆とする．
+	$\forall x \in X$ において，$x$ の近傍 $V$ であって，$V$ と交わる $U_\lambda$ が有限個であるようなものが存在するとき，$\mathcal{U}$ は\textbf{局所有限} (locally finite) な被覆と呼ばれる．
+\end{mydef}
+
+$X$ の\textbf{任意の開被覆}が局所有限な細分を持つとき，$X$ は\textbf{パラコンパクト} (paracompact) であるという．この条件は\hyperref[def.compact]{コンパクト}よりも弱い．次の定理は，全ての\underline{多様体}（\cinfty 多様体だけでなく！）がパラコンパクトよりももう少し良い性質を持っていることを保証してくれる：
+\begin{mytheo}[]{}
+	$M$ を位相多様体とする．$M$ の任意の開被覆に対して，その細分となる高々可算個の元からなる\footnote{添字集合 $I$ の濃度 (cardinality) が $\abs{I} \le \aleph_0.$}局所有限な開被覆 $\mathcal{V} = \bigl\{\, V_i \,\bigr\}_{i \in I}$ であって，$\overline{V_i}$ が全てコンパクトとなるものが存在する．
+
+	必要ならば，さらに強い条件を充たすようにできる．i.e. 開被覆を成す各 $V_i$ 上にチャート $(V_i,\, \psi_i)$ をとることができて，$\psi_i(V_i) = D(3)$ \footnote{半径 $3$ の開円板．記号の使い方は \ref{gen_cinfty} を参照．}かつ $\bigl\{\, \psi_i^{-1}\bigl(D(1)\bigr) \,\bigr\}_{i \in I}$ が既に $M$ の開被覆となっている．
+\end{mytheo}
+
+位相空間 $X$ の連続関数 $f \colon X \to \mathbb{R}$ に対して，$f$ の値が $0$ にならない点全体の集合を含む最小の閉集合
+\begin{align} 
+	\mathrm{supp} f \coloneqq \overline{\bigl\{ x \in X \bigm| f(x) \neq 0 \bigr\} }
+\end{align}
+を $f$ の \textbf{台} (support) と呼ぶ．
+
+\begin{mydef}[label=partition_unity]{1の分割}
+	$M$ を\cinfty 多様体とする．$M$ 上の高々可算個の \cinfty 関数の族 $\bigl\{\, f_i \in \cinftyf{M} \,\bigr\}_{i \in I} $ は，
+	\begin{enumerate} 
+		\item $\forall p \in M,\; \forall i \in I$ に対して $f_i (p) \ge 0$ であり，$\bigl\{\, \mathrm{supp}\, f_i \,\bigr\}_{i \in I}$ は\hyperref[def:locally-finite]{局所有限}
+		\item $\forall p \in M$ に対して $\sum_{i \in I} f_i(p) = 1$
+	\end{enumerate}
+	の2条件を充たすとき，$M$ 上の\textbf{$1$の分割} (partition of unity) という．
+
+	その上 $\bigl\{\, \mathrm{supp}\, f_i \,\bigr\}_{i \in I}$ が $M$ の開被覆 $\{ U_\lambda\}$ の細分になっているとき，1の分割 $\bigl\{\, f_i \,\bigr\}_{i \in I} $ は開被覆 $\{ U_\lambda \}$ に\textbf{従属する}という．
+\end{mydef}
+
+\begin{mytheo}[]{1の分割の存在}
+	$M$ を\cinfty 多様体，$\{U_\lambda\}$ をその開被覆とする．このとき，$\{U_\lambda\}$ に従属する1の分割が存在する．
+\end{mytheo}
+
+これらの存在定理のおかげで，安心してベクトル場や微分形式，微分形式の積分などをアトラス全体にわたって「貼り合わせる」ことができる．
+
+\subsection{多様体の向き付け}
+
+$n$ 次元多様体 $M$ をとる．多様体の各点 $p$ における\textbf{向き} (orientation) は，接空間 $T_pM$ の順序付き基底を考えることで定義される．
+
+$e_1,\, \dots ,\, e_n$ と $f_1,\, \dots ,\, f_n$ を $T_pM$ の二つの順序付き基底とする．これらは正則な線型変換 $T \colon T_p M \to T_pM$ で移り合うが，$\det T > 0$ であるときに $\{ e_i \} \sim \{f_i\}$ であるとして，$T_pM$ の順序付き基底全体の集合 $\mathcal{B}_p$ の上の同値関係 $\sim$ を定義する：
+\begin{align} 
+	\sim \; \coloneqq \bigl\{ \bigl(\{e_i\},\, \{f_i\}\bigr) \in \mathcal{B}_p \times \mathcal{B}_p \bigm| \exists T = [T^i_j] \in \mathrm{GL}(n,\, \mathbb{R})\, \mathrm{s.t.}\, f_i = T^j_i e_j,\; \det T > 0 \bigr\} 
+\end{align}
+$\sim$ が同値関係であることは明らかである．故に同値類 $[\{ e_i \}] \in \mathcal{B}_p /\mathord{\sim}$ を考えることができ，これを点 $p$ における\textbf{向き}と呼ぶ．
+
+$M$ が\cinfty 多様体の場合，$T_pM$ における自然基底を代表元にもつ同値類 $[\{(\pdv*{}{x^i})_p\}]$ を定義でき，これを\textbf{正の向き}と呼ぶ．$M$ の座標変換に伴う基底の取り替えはJacobi行列で表現されるから，Jacobianの正負で向きを判定できる．
+
+\begin{mydef}[label=def.orientable]{向き付け可能} 
+	\cinfty 多様体 $M$ が\textbf{向き付け可能} (orientable) であるとは，$M$ のアトラス $\mathcal{S} = \{(U_\lambda,\, \varphi_\lambda)\}_{\lambda \in \Lambda}$ であって，全ての座標変換 $f_{\beta \alpha} = \varphi_{\beta} \circ \varphi_{\alpha}^{-1}$ のJacobianが $\varphi_{\alpha}(U_\alpha \cap U_\beta)$ の全ての点で正になるようなものが存在することを言う．
+\end{mydef}
+
+\subsection{$n$次元多様体上の$n$形式の積分}
+
+$n$ 次元\cinfty 多様体 $M$ が向き付け可能としよう．
+
+$M$ のチャート $(U,\, \varphi) = (U;\; x^i)$ をとる．$n$-形式 $\omega \in \Omega^k(M)$ が
+\begin{align} 
+	\omega \coloneqq h(p) \dd{x^1} \wedge \cdots \wedge \dd{x^n}
+\end{align}
+と座標表示されているとする．
+別のチャート $(V,\, \psi) = (V;\; y^i)$ をとったときの $U \cap V \neq \emptyset$ 上の $\omega$ は
+\begin{align} 
+	\omega &= h(p) \pdv{x^1}{y^{j_1}}\dd{y^{j_1}} \wedge \cdots \wedge \pdv{x^n}{y^{j_n}}\dd{y^{j_n}} \\
+	&=  h(p)\, \epsilon^{j_1 \dots j_n} \pdv{x^1}{y^{j_1}} \cdots \pdv{x^n}{y^{j_n}} \dd{y^1} \wedge \cdots \wedge \dd{y^n} \\
+	&= h(p)\, \det \left( \pdv{x^k}{y^{l}} \right) \dd{y^1} \wedge \cdots \wedge \dd{y^n}
+\end{align}
+である．よって座標変換としてJacobianが正のものだけを考えれば， $\displaystyle \int \omega$ は既知の重積分の変数変換公式と整合的である．ここで\underline{$M$ が向き付け可能であると言う仮定が効いてくる}のである．
+
+以上の考察から，$n$-形式 $\omega$ のチャート $(U_i;\, x^\mu)$ 上の積分を
+\begin{align} 
+	\int_{U_i} \omega \coloneqq \int_{\varphi(U_i)} h\bigl(\varphi^{-1}_i (x)\bigr) \dd{x^1} \cdots \dd{x^n}
+\end{align}
+として定義できる．積分範囲を $M$ に拡張するには\hyperref[partition_unity]{1の分割}を使う：
+
+\begin{mydef}[label=def.int-n]{$n$-形式の積分} 
+	$\omega \in \Omega^n(M)$ は台がコンパクトであるとする．また，$M$ の座標近傍からなる開被覆 $\{U_i\}$ と，それに従属する1の分割 $\{ f_i \}$ をとる．このとき $\omega$ の $M$ 上の積分を次のように定義する：
+	\begin{align} 
+		\int_M \omega \coloneqq \sum_{i} \int_{U_i} f_i \omega
+	\end{align}
+\end{mydef}
+
+\begin{myprop}[]{} 
+	定義\ref{def.int-n}は座標近傍の開被覆 $\{U_i\}$ やそれに従属する1の分割 $\{f_i\}$ の取り方によらない．
+\end{myprop}
+
+\section{ベクトル空間に値をとる微分形式}
+
+$k$-形式 $\omega \in \Omega^k(M)$ は $\forall p \in M$ において多重線型写像
+\begin{align}
+	\omega_p \coloneqq T_pM \times \cdots  \times T_pM \to \mathbb{K}
+\end{align}
+を対応させ，それが $p$ に関して\cinfty 級につながっているものであった．ここで，値域 $\mathbb{K}$ を一般の $\mathbb{K}$-ベクトル空間 $V$ に置き換えてみる：
+\begin{align}
+	\omega_p \coloneqq T_pM \times \cdots  \times T_pM \to V
+\end{align}
+このようなもの全体の集合を $\Omega^k(M;\, V)$ と書くことにする．$V$ の基底を $\{\, \hat{e}_i\, \}_{1\le i \le r}$ とおくと
+\begin{align}
+	\omega(X_1,\, \cdots ,\, X_k) = \sum_{i=1}^r \omega_i(X_1,\, \cdots ,\, X_k)\, \hat{e}_i, \quad \omega_i \in \Omega^k(M)
+\end{align}
+と展開できる．$\hat{e}_i$ は $A^\bullet(M)$ の演算と無関係である．
+
+\subsection{外微分}
+
+定義\ref{extdiff_1}, \ref{extdiff_2}による外微分を $\{\, \hat{e}_i\, \}_{1\le i \le r}$ による展開係数に適用するだけである：
+\begin{align}
+	&\dd{} \colon \Omega^k(M;\, V) \to \Omega^{k+1}(M;\, V),\\
+	&\dd{\omega} \coloneqq \sum_{i=1}^r \dd{\omega_i} \hat{e}_i
+\end{align}
+
+\subsection{外積}
+
+外積をとった後の値域はテンソル積 $V \otimes W$ である：
+\begin{align}
+	&\wedge \colon \Omega^k(M;\, V) \times \Omega^l(M;\, W) \to \Omega^{k+l}(M;\, V \otimes W),\\
+	&(\omega \wedge \eta)(X_1,\, \dots ,\, X_{k+l}) \coloneqq \frac{1}{k!\, l!}\sum_{\sigma \in \mathfrak{S}_{k+l}} \sgn{\sigma} \omega\bigl(X_{\sigma(1)},\, \dots ,\, X_{\sigma(k)}\bigr) \otimes \eta\bigl(X_{\sigma(k+1)},\, \dots ,\, X_{\sigma(k+l)}\bigr)
+\end{align}
+予め $\omega = \sum_{i=1}^r \omega_i \hat{e}_i,\; \eta = \sum_{i=1}^s \eta_i \hat{f}_i$ と展開しておくと
+\begin{align}
+	\omega \wedge \eta = \sum_{i,\, j} \omega_i \wedge \eta_j\, \hat{e}_i \otimes \hat{f}_j
+\end{align}
+と書ける．外微分は基底 $\{\, \hat{e}_i \otimes \hat{f}_j\, \}$ には作用しないので，命題\ref{extdiff_3}-(2) はそのまま成り立つ：
+\begin{align}
+	\dd{(\omega \wedge \eta)} = \dd{\omega} \wedge \eta + (-1)^k \omega \wedge \dd{\eta}
+\end{align}
+
+\subsection{括弧積}
+
+双線型写像 $\comm{\;}{\;} \colon V \times V \to V$ がLie代数の公理を充してしているとする．このとき
+\begin{align}
+	&\comm{\;}{\;} \colon \textcolor{red}{\Omega^k(M;\, V) \times \Omega^l(M;\, V)} \xrightarrow{\wedge} \Omega^{k+l}(M;\, V \otimes V) \xrightarrow{\comm{\;}{\;}} \textcolor{red}{\Omega^{k+l}(M;\, V)},\\
+	&\comm{\omega}{\eta} \coloneqq \sum_{i,\, j} \omega_i \wedge \eta_j \comm{\hat{e}_i}{\hat{e}_j}
+\end{align}
+と定義する．命題\ref{extp_1}-(1), \ref{extdiff_3}-(2) から
+\begin{align}
+	\tcbhighmath[]{\comm{\eta}{\omega}} &= \sum_{i,\, j} \eta_j \wedge \omega_i \comm{\hat{e}_j}{\hat{e}_i} = \sum_{i,\, j} (-1)^{kl} \omega_i \wedge \omega_j \cdot -\comm{\hat{e}_i}{\hat{e}_j} = \tcbhighmath[]{(-1)^{kl+1} \comm{\omega}{\eta}} \\
+	\tcbhighmath[]{\dd{\comm{\omega}{\eta}}} &= \sum_{i,\, j} \dd{\bigl( \omega_i \wedge \eta_j \bigr)} \comm{\hat{e}_i}{\hat{e}_j} = \tcbhighmath[]{\comm{\dd{\omega}}{\eta} + (-1)^k \comm{\omega}{\dd{\eta}} }
+\end{align}
+がわかる．
+
+
+\end{document}

@@ -1,0 +1,768 @@
+\documentclass[geometry_main]{subfiles}
+
+\begin{document}
+
+% \setcounter{chapter}{0}
+
+\chapter{位相空間からの出発}
+
+\section{同値類による類別}
+
+集合 $X$ の二項関係 (binary relation) $\sim$ とは，直積集合 $X \times X$ の\textbf{部分集合}である．i.e. $\sim\; \subset X \times X$．$(a,\, b) \in X \times X$ が $(a,\, b) \in \; \sim$ を充たすことを $a \sim b$ と表す．
+
+\begin{myaxiom}[label=ax.equiv]{同値関係}
+	集合 $X$ の関係 $\sim$ が\textbf{同値関係} (equivalence relation) であるとは，$X$ の任意の元 $a,\, b,\, c$ に対して以下が成立することを言う：
+	\begin{description}
+		\item[\textbf{反射律} (reflexive)] $a \sim a$
+		\item[\textbf{対称律} (symmetric)] $a \sim b \quad \Longrightarrow \quad b \sim a$
+		\item[\textbf{推移律} (transitive)] $a \sim b$ かつ $b \sim c \quad \Longrightarrow \quad a \sim c$
+	\end{description}
+\end{myaxiom}
+
+\begin{mydef}{同値類}
+	$a \in X$ の\textbf{同値類}を以下のように定義する：
+	\begin{align}
+		[\textcolor{red}{a}] \coloneqq \bigl\{\, x \in X \bigm| x \sim \textcolor{red}{a} \,\bigr\}
+	\end{align}
+	$[a]$ を $C(a)$ などと書くこともある．今回は $[a]$ を採用する．
+\end{mydef}
+
+\begin{myprop}[label=prop.equiv]{同値関係の性質}
+	同値類 $[a],\, [b] \subset X$ は以下を充たす：
+	\begin{enumerate}
+		\item $a \in [a]$
+		\item $a \sim b \quad \Longleftrightarrow \quad [a] = [b]$
+		\item $[a] \neq [b] \quad \Longrightarrow \quad [a] \cap [b] = \emptyset$
+	\end{enumerate}
+\end{myprop}
+\begin{proof}
+	\begin{enumerate}
+		\item 同値関係の反射律より自明．
+		\item $(\Longrightarrow)$ $a \sim b$ ならば，同値関係の推移律より $\forall x \in [a]$ に対して $x \sim b$ が成立する．i.e. $[a] \subset [b]$ である．同値関係の対称率より $\forall y \in [b]$ に対しても同様に $y \sim a$ であり，$[a] \supseteq [b]$ である．従って $[a] = [b]$ である．
+		
+		$(\Longleftarrow)$ $[a] = [b]$ ならば，$\forall x \in [a]$ に対して $x\sim b$ かつ $x \sim a$ が成り立つ．故に同値関係の推移率より $a \sim b$ である．
+		\item 対偶を示す．$[a] \cap [b] \neq \emptyset$ ならばある $x \in X$ が存在して $x \sim a$ かつ $x \sim b$ を充たす．故に同値関係の推移律から $a \sim b$ である．よって\textbf{(2)}から， $[a] = [b]$ である．
+	\end{enumerate}
+\end{proof}
+
+命題\ref{prop.equiv}より，集合 $X$ は異なる同値類による\textbf{非交和} (disjoint union) として表される．このことを，$X$ が同値関係 $\sim$ によって\textbf{類別}されたと言う．
+
+\begin{mydef}[label=def.quo-proj]{商集合・標準射影}
+	集合 $X$ の上に同値関係 $\sim$ を与える．
+	\begin{enumerate}
+		\item $X$ の\textbf{商集合} (quotient set) を以下のように定義する：
+		\begin{align}
+			X/\mathord{\sim} \coloneqq \bigl\{\, [x] \subset X \bigm| x \in X \,\bigr\}
+		\end{align}
+		\item $X$ の\textbf{標準射影}\footnote{\textbf{商写像} (quotient mapping), \textbf{自然な全射} (natural surjection) など様々な呼び方がある．その名の通り $\pi$ は全射である．全射性を表すために $\pi \colon X \twoheadrightarrow X/\mathord{\sim}$ と書くこともある．} (canonical projection) $\pi$ を以下のように定義する：
+		\begin{align}
+			\pi \colon X \to X/\mathord{\sim} ,\; x \mapsto [x]
+		\end{align}
+	\end{enumerate}
+\end{mydef}
+
+$C \in X/\mathord{\sim}$ に対して $x \in C$ となる $X$ の元 $x$ を\footnote{当たり前だが，このとき $C = [x]$ である}，同値類 $C$ の\textbf{代表元} (representative) と呼ぶ．
+$X/\mathord{\sim}$ の異なる同値類の代表元をちょうど一つずつ含む部分集合 $R \subset X$ のことを同値関係 ${\sim}$ の\textbf{完全代表系}と呼ぶ．
+同値関係 ${\sim}$ による $X$ の類別は，完全代表系 $R$ を用いて
+\begin{align}
+	X = \coprod_{x \in R} [x]
+\end{align}
+と表記される．これは\hyperref[def.disjoint-union]{集合の直和}と呼ばれるものの一例である．
+
+\newpage
+
+\section{位相空間}
+
+位相空間論については~\cite[第2章]{Nomura}, ~\cite{Matuzaka}を参考にした．
+
+\begin{myaxiom}[label=ax.topo]{位相空間の公理}
+	集合 $X \neq \emptyset$ の部分集合族 $\mathscr{O} \subset 2^{X}$ が\footnote{$X$ の\textbf{冪集合} (power set) $2^X$ とは，$X$ の部分集合全体の集合である．$\mathscr{P}(X)$ などと書くこともある．}次の3条件を充たすとき，$\mathscr{O}$ を $X$ の\textbf{位相} (topology) と呼ぶ：
+	\begin{description}
+		\item[\textbf{(O1)}] $ X \in \mathscr{O},\; \emptyset \in \mathscr{O}$.
+		\item[\textbf{(O2)}] $1 \le n < \infty$ のとき，以下が成立する：
+			\begin{align}
+				U_1,\, U_2,\, \dots ,\, U_n \in \mathscr{O}. \quad \Longrightarrow \quad \bigcap_{i=1}^n U_i \in \mathscr{O}.
+			\end{align}
+		\item[\textbf{(O3)}] 任意の添字集合 $ \Lambda $ に対して以下が成立する：
+			\begin{align}
+				\bigl\{\, U_{\lambda} \, \bigr\}_{\lambda \in \Lambda} \subset \mathscr{O}. \quad \Longrightarrow \quad \bigcup_{ \lambda \in \Lambda } U_{ \lambda } \in \mathscr{O}.
+			\end{align}
+	\end{description}
+\end{myaxiom}
+
+\begin{mydef}{位相空間・開集合・閉集合}
+	集合 $X \neq \emptyset$ が位相 $\mathscr{O}$ を持つとき，組 $(X,\, \mathscr{O})$ のことを\textbf{位相空間} (topological space) と呼ぶ．また，位相 $\mathscr{O}$ の元のことを\textbf{開集合}と呼ぶ．
+
+	$X$ の部分集合 $U$ が\textbf{閉集合}であるとは，その補集合 $U^c$ が開集合であることを言う．
+\end{mydef}
+
+\subsection{位相の構成}
+
+ある集合 $X$ とその部分集合族 $\mathscr{B} \subset 2^X$ が与えられたとき，$\mathscr{B}$ を素材にして
+$X$ の上の\hyperref[ax.topo]{位相}を構成する方法があると便利である．
+定理\ref{thm.optotopo}はこの様な構成が可能になる十分条件を与えてくれる．
+
+\begin{mydef}[label=def.opbase]{開基}
+	$(X,\, \mathscr{O})$ を位相空間とし，$\mathscr{B} \subset \mathscr{O}$ とする．$\mathscr{B}$ が位相 $\mathscr{O}$ の\textbf{開基} (open base) であるとは，任意の $U \in \mathscr{O}$ が $\mathscr{B}$ の元の和集合として表されることを言う．
+\end{mydef}
+
+\begin{myprop}[label=prop.opbdet]{}
+	$\mathscr{B} \subset \mathscr{O}$ が位相空間 $(X,\, \mathscr{O})$ の\hyperref[def.opbase]{開基}である必要十分条件は
+	\begin{align}
+		\forall U \in \mathscr{O},\, \forall x \in U,\, \exists B \in \mathscr{B}, \; x \in B \subset U
+	\end{align}
+が成立することである．
+\end{myprop}
+\begin{proof}
+	　$(\Longrightarrow)$ $\mathscr{B}$ を $(X,\, \mathscr{O})$ の\hyperref[def.opbase]{開基}とすると，任意の $U \in \mathscr{O}$ に対して $\mathscr{B}$ の部分集合 $ \{ V_{ \lambda } \in \mathscr{B} \mid \lambda \in \Lambda \}$ が存在して
+	\begin{align}
+		U = \bigcup_{ \lambda \in \Lambda } V_{ \lambda }
+	\end{align}
+	と書ける．このとき，任意の $x \in U$ に対してある $ \mu \in \Lambda$ が存在して $x \in V_{ \mu } \subset U$ を充たす．
+
+	$(\Longleftarrow)$ 逆に $\forall U \in \mathscr{O},\, \forall x \in U,\, \exists B \in \mathscr{B}, \; x \in B \subset U$ であるとする．任意の $U \in \mathscr{O}$ および $\forall x \in U$ に対して $B(x) \coloneqq B$ とおくと，$B(x) \subset U$ だから $ \bigcup_{x \in U} B(x) \subset  U$ である．一方
+	\begin{align}
+		\forall y \in U,\, y \in B(y) \subset \bigcup_{x \in U} B(x) 
+	\end{align}
+	より $ \bigcup_{x \in U} B(x) \supseteq U$ であり，結局 $ U = \bigcup_{x \in U} B(x),\quad B(x) \in \mathscr{B}$ である．i.e. $\mathscr{B}$ は $(X,\, \mathscr{O} )$ の\hyperref[def.opbase]{開基}である．	
+\end{proof}
+
+\begin{mytheo}[label=ax.opbase]{開基の公理}
+	$(X,\, \mathscr{O})$ を位相空間とする．\hyperref[def.opbase]{開基} $\mathscr{B} \subset \mathscr{O}$ は以下の性質を充たす：
+	\begin{description}
+		\item[\textbf{(B1)}] $\displaystyle \bigcup_{B \in \mathscr{B}} B = X$
+		\item[\textbf{(B2)}] $\forall B_1,\, B_2 \in \mathscr{B}$ をとってきたとき，$\forall x \in B_1 \cap B_2$ に対して $\exists B \in \mathscr{B},\; x \in B\; \text{かつ} \; B \subset B_1 \cap B_2$ が成り立つ．  
+	\end{description}
+\end{mytheo}
+\begin{proof}
+	\begin{description}
+		\item[\textbf{(B1)}] $\bigcup_{B \in \mathscr{B}} B \subset X$ は自明．$X \in \mathscr{O}$ より，\hyperref[def.opbase]{開基}の定義から $\bigcup_{B \in \mathscr{B}} B \supseteq X$ も成り立つ．
+		\item[\textbf{(B2)}] 公理\ref{ax.topo}-\textsf{\textbf{(B2)}}より $B_1 \cap B_2 \in \mathscr{O}$ である．よって命題\ref{prop.opbdet}から $\forall x \in B_1 \cap B_2$ に対して $x \in B \subset B_1 \cap B_2$ を充たす $B$ が存在する．
+	\end{description}
+\end{proof}
+
+\begin{mytheo}[label=thm.optotopo]{開基から構成される位相}
+	集合 $X$ の部分集合族 $\mathscr{B} \subset 2^X$ が\hyperref[ax.opbase]{開基の公理}\textsf{\textbf{(B1)}}, \textsf{\textbf{(B2)}}を充たすとき，$\mathscr{B}$ を\hyperref[def.opbase]{開基}とするような $X$ 上の位相 $\mathscr{O}$ が存在する．
+\end{mytheo}
+\begin{proof}
+	$\mathscr{O}$ を $\mathscr{B}$ の任意の元の和集合全体が作る集合族とする．このとき $\mathscr{O}$ が公理\ref{ax.topo}を充たすことを確認する．
+	\begin{description}
+		\item[\textbf{(O1)}] \hyperref[ax.opbase]{\textsf{\textbf{(B1)}}}より明らか．
+		\item[\textbf{(O3)}] $\mathscr{O}$ の構成より明らか．
+		\item[\textbf{(O2)}] 帰納法から，$n=2$ の場合を示せば十分である．任意の $U,\, V \in \mathscr{O}$ をとると，$\mathscr{O}$ の定義から
+		\begin{align}
+			U = \bigcup_{\lambda \in \Lambda_1} B_\lambda,\quad V = \bigcup_{\mu \in \Lambda_2} B_\mu \quad (B_\lambda,\, B_\mu \in \mathscr{B})
+		\end{align}
+		と書ける．このとき $\cap$ の分配律から
+		\begin{align}
+			U \cap V = \left(\bigcup_{\lambda \in \Lambda_1} B_\lambda \right) \cap \left(\bigcup_{\lambda \in \Lambda_2} B_\mu\right) = \bigcup_{(\lambda,\, \mu) \in \Lambda_1 \times \Lambda_2} B_\lambda \cap B_\mu
+		\end{align}
+		が成り立つ．
+		公理\ref{ax.topo}-\textsf{\textbf{(O3)}}より，
+		$\forall (\lambda,\, \mu) \in \Lambda_1 \times \Lambda_2$ に対して $B_\lambda \cap B_\mu \in \mathscr{O}$ が成り立つことを示せば $U \cap V \in \mathscr{O}$ が言えて証明が完了する．
+
+		　$\forall (\lambda,\, \mu) \in \Lambda_1 \times \Lambda_2$ を1つとる．\textsf{\textbf{(B2)}}より，$B_\lambda \cap B_\mu$ の各点 $x \in B_{\lambda} \cap B_{\mu}$ に対してある $B(x) \in \mathscr{B}$ が存在して $x \in B(x) \subset B_\lambda \cap B_\mu$ が成り立つ．
+		このとき
+		\begin{align}
+			B_\lambda \cap B_\mu = \bigcup_{x \in B_\lambda\cap B_\mu} B(x)
+		\end{align}
+		が成り立つので，$\mathscr{O}$ の構成より $B_\mu \cap B_\lambda \in \mathscr{O}$ が示された．
+	\end{description}
+\end{proof}
+
+\begin{mydef}[label=def:second-countable]{第2可算公理}
+	位相空間 $(X,\, \mathscr{O})$ が高々可算濃度の\hyperref[def.opbase]{開基}を少なくとも1つ持つとき，位相空間 $X$ は\textbf{第2可算公理}を充たすと言う．また，このような位相空間 $X$ のことを\textbf{第2可算空間} (second-countable space) と呼ぶ．
+\end{mydef}
+
+\begin{mydef}[label=def:neighborhood]{近傍・開近傍}
+	$(X,\, \mathscr{O})$ を位相空間とする．$X$ の部分集合 $V$ が点 $x \in X$ の\textbf{近傍} (neighborhood) であるとは，以下が成立することを言う：
+	\begin{align}
+		\exists U \in \mathscr{O},\;  x \in U\; \text{かつ}\; U \subset V.
+	\end{align}
+	
+	とくに $V \in \mathscr{O}$ であるときは\textbf{開近傍}と呼ぶ．
+\end{mydef}
+
+以降では，部分集合 $U \subset X$ が点 $x \in X$ の近傍であることを $x \in U \subset X$ と表記する場合がある．
+
+\begin{myprop}[label=prop.opdet]{開集合の特徴付け}
+	$(X,\, \mathscr{O})$ を位相空間とする．$X$ の空でない部分集合 $U$ が開集合である必要十分条件は，$\forall x \in U$ に対して $U$ に含まれる $x$ の\hyperref[def:neighborhood]{近傍}が存在することである．
+\end{myprop}
+\begin{proof}
+	$(\Longrightarrow)$ $U \subset X$ が開集合である，i.e. $U \in \mathscr{O}$ のとき，$U$ 自身が $\forall x \in U$ の開\hyperref[def:neighborhood]{近傍}である．
+
+	$(\Longleftarrow)$ $\forall x \in U$ を一つとる．$x$ の $U$ に含まれる\hyperref[def:neighborhood]{近傍}を $V(x)$ と書くと，\hyperref[def:neighborhood]{近傍}の定義から $W(x) \in \mathscr{O}$ が存在して $x \in W(x) \subset V(x)$ を充たす．$V(x) \subset U$ だから $x$ を動かすことで $\bigcup_{x \in U} W(x) =U$ とわかる． 
+\end{proof}
+
+\begin{mydef}{基本近傍系}
+	$(X,\, \mathscr{O})$ を位相空間とし，点 $x \in X$ の\hyperref[def:neighborhood]{近傍}全ての集合を $\mathscr{V}(x)$ と書く，部分集合 $\mathscr{V}_0(x) \subset \mathscr{V}(x)$ が $x$ の\textbf{基本\hyperref[def:neighborhood]{近傍}系}であるとは，以下が成立することを言う：
+	\begin{align}
+		\forall V \in \mathscr{V}(x),\, \exists V_0 \in \mathscr{V}_0(x),\; V_0 \subset V.
+	\end{align}
+\end{mydef}
+
+\begin{mydef}{第1可算公理}
+	位相空間 $(X,\, \mathscr{O})$ の各点が高々可算濃度の基本\hyperref[def:neighborhood]{近傍}系を持つとき，位相空間 $X$ は\textbf{第1可算公理}を充たすと言う．また，このような位相空間 $X$ のことを\textbf{第1可算空間} (first-countable space) と呼ぶ．
+\end{mydef}
+
+\subsection{内部・境界}
+
+\begin{myprop}{閉包}
+	$(X,\, \mathscr{O})$ を位相空間とする．$X$ の任意の部分集合 $A$ に対して， $A$ を含む最小の閉集合 $\overline{A}$ が存在する．$\overline{A}$ を $A$ の\textbf{閉包}と呼ぶ．
+\end{myprop}
+\begin{proof}
+	公理\ref{ax.topo}-\textbf{(O3)}より，任意個の閉集合の共通部分は閉集合である．
+	また，$X^c = \emptyset \in \mathscr{O}$ なので $X$ 自身は閉集合であり，$A \subset X$ が成り立つ．i.e. $A$ を含む閉集合が存在する．
+	従って $\overline{A}$ は $A$ を含む全ての閉集合の共通部分とすればよい．
+\end{proof}
+
+\begin{mytheo}[label=thm:closure1]{閉包の特徴付け}
+	$(X,\, \mathscr{O})$ を位相空間とし，$\forall x \in X$ の基本\hyperref[def:neighborhood]{近傍}系 $\mathscr{V}_0(x)$ を与える．$X$ の任意の部分集合 $A$ に対して以下が成り立つ：
+	\begin{align}
+		x \in \overline{A} \IFF \forall V \in \mathscr{V}_0(x),\; A \cap V \neq \emptyset
+	\end{align}
+\end{mytheo}
+
+\begin{proof}
+	両辺の否定が同値であることを示す．
+	\begin{align}
+		p \notin \overline{A} &\IFF \exists F\mathrel{}\mathrm{s.t.}\mathrel{} F^c \in \mathscr{O},\; A \subset F \AND p \notin F \\
+		&\IFF \exists U \in \mathscr{O},\; A \cap U = \emptyset \AND p \in U \\
+		&\IFF \exists V \in \mathscr{V}_0(x),\; A \cap V = \emptyset
+	\end{align}
+\end{proof}
+
+\begin{mydef}[label=def:boundary-p, breakable]{集積点・境界点・内部}
+	$(X,\, \mathscr{O})$ を位相空間とする．$\forall x \in X$ および $\forall A \subset X$ を一つとり，点 $x$ の\hyperref[def:neighborhood]{近傍}全体の成す集合を $\mathscr{V}(x)$ とおく．
+	\begin{enumerate}
+		\item $\textcolor{red}{x}$ が $\textcolor{blue}{A}$ の\textbf{集積点} (accumulation point)
+		\begin{flalign}
+			&\stackrel{\mathrm{def}}{\Longleftrightarrow}\quad \forall V \in \mathscr{V}(\textcolor{red}{x}),\; V \cap (\textcolor{blue}{A} \setminus \{\textcolor{red}{x}\}) \neq \emptyset &
+		\end{flalign}
+		\item $\textcolor{red}{x}$ が $\textcolor{blue}{A}$ の\textbf{境界点} (boundary point)
+		\begin{flalign}
+			&\stackrel{\mathrm{def}}{\Longleftrightarrow}\quad \forall V \in \mathscr{V}(\textcolor{red}{x}),\; V \cap \textcolor{blue}{A} \neq \emptyset \AND V \cap (X \setminus \textcolor{blue}{A}) \neq \emptyset &
+		\end{flalign}
+		\item $\textcolor{red}{x}$ が $\textcolor{blue}{A}$ の\textbf{内点} (interior point)
+		\begin{flalign}
+			&\stackrel{\mathrm{def}}{\Longleftrightarrow}\quad \exists V \in \mathscr{V}(\textcolor{red}{x}),\; V \subset \textcolor{blue}{A} &
+		\end{flalign}
+	\end{enumerate}
+\end{mydef}
+
+\begin{mydef}[label=def:boundary-topo]{境界・内部}
+	\begin{enumerate}
+		\item $A$ の集積点全体の集合を\textbf{導集合} (derived set) と呼び，$A^d$ と書く．
+		\item $A$ の境界点全体の集合を\textbf{境界} (boundary) と呼び，$\partial A$ と書く．
+		\item $A$ の内点全体の集合を\textbf{内部} (interior) と呼び，$\mathrm{Int}(A)$ と書く．
+	\end{enumerate}
+\end{mydef}
+
+\begin{marker}
+	後の章で述べるが，これらは\hyperref[def:int-manifold-with-boundary]{多様体の内部・境界}とは異なる概念である．
+\end{marker}
+
+\begin{mytheo}[label=thm:boundary]{境界・内部の特徴付け}
+	位相空間 $(X,\, \mathscr{O})$ の任意の部分集合 $A$ をとる．
+	\begin{enumerate}
+		\item $\partial A = \overline{A} \cap \overline{X \setminus A}$
+		\item $\displaystyle\mathrm{Int}(A) = \bigcup_{\substack{U \in \mathscr{O}, \\ U \subset A}} U$
+		\item $\mathrm{Int}(A) = X \setminus \overline{(X \setminus A)}$
+		\item $\partial A = \overline{A} \setminus \mathrm{Int}(A)$
+	\end{enumerate}
+\end{mytheo}
+
+\begin{proof}
+	\begin{enumerate}
+		\item 境界点の定義\ref{def:boundary-p}-(2)および定理\ref{thm:closure1}より明らか．
+		\item 内点の定義\ref{def:boundary-p}-(3)および定理\ref{prop.opdet}より明らか．
+		\item de Morgan則と(2)を使うと
+		\begin{align}
+			X \setminus \mathrm{Int}(A) = \Biggl(\bigcup_{\substack{U \in \mathscr{O}, \\ U \subset A}} U\Biggr)^c = \bigcap_{\substack{U \in \mathscr{O}, \\ U \subset A}} U^c = \bigcap_{\substack{F\; \mathrm{s.t.}\;\mathrm{closed}, \\ F \supset X \setminus A}} F = \overline{X \setminus A}.
+		\end{align}
+		がわかるので，両辺の補集合をとって $\mathrm{Int}(A) = X \setminus \overline{(X \setminus A)}$ を得る．
+		\item (1), (3) から従う．
+	\end{enumerate}
+\end{proof}
+
+定理\ref{thm:boundary}-(1)より，$\partial A$ は閉集合である．閉集合ならば自身の境界を含むので
+\begin{align}
+	\tcbhighmath[]{\partial A \supset \partial \partial A} \label{eq:topo-boundary1}
+\end{align}
+が言える．さらに定理\ref{thm:boundary}を全て活用すると
+\begin{align}
+	\tcbhighmath[]{\partial \partial \partial A} &= \overline{\partial \partial A} \setminus \mathrm{Int}(\partial \partial A) = \partial \partial A \cap \bigl(\mathrm{Int}(\partial \partial A)\bigr)^c \quad (\because \partial\partial A\; \text{は閉集合})\\
+	&= \partial \partial A \cap \biggl(\mathrm{Int}\Bigl(\partial A \cap \bigl( \mathrm{Int}(\partial A) \bigr)^c \Bigr)\biggr)^c \\
+	&= \partial \partial A \cap \biggl(\mathrm{Int}(\partial A) \cap \mathrm{Int}\Bigl( \bigl( \mathrm{Int}(\partial A) \bigr)^c \Bigr)\biggr)^c \\
+	&= \partial \partial A \cap \biggl(\mathrm{Int}(\partial A) \cap X \setminus \overline{\Bigl(X \setminus \bigl( \mathrm{Int}(\partial A) \bigr)^c \Bigr)}\biggr)^c \\
+	&= \partial \partial A \cap \biggl(\mathrm{Int}(\partial A) \cap X \setminus \overline{\mathrm{Int}(\partial A)}\biggr)^c \\
+	&= \partial\partial A \cap \emptyset^c = \tcbhighmath[]{\partial\partial A} \label{eq:topo-boundary2}
+\end{align}
+がわかる．
+
+\subsection{相対位相・積位相・商位相}
+
+\begin{mydef}[label=def.reltopo]{相対位相}
+	位相空間 $(X,\, \mathscr{O})$ を与える．$X$ の部分集合 $Y \subset X$ に対して
+	\begin{align}
+		\mathscr{O}_Y \coloneqq \bigl\{\, U \cap Y \bigm| U \in \mathscr{O} \,\bigr\}
+	\end{align}
+	は $Y$ 上の位相を定める．$\mathscr{O}_Y$ を\textbf{相対位相} (relative topology) と呼び，位相空間 $(Y,\, \mathscr{O}_Y)$ を\textbf{部分空間} (topological subspace) と呼ぶ．
+\end{mydef}
+\begin{proof}
+	$\mathscr{O}_Y$ が公理\ref{ax.topo}を充たすことを確認しておく．
+	\begin{description}
+		\item[\textbf{(O1)}] $Y = X \cap Y \in \mathscr{O},\; \emptyset = \emptyset \cap Y \in \mathscr{O}$
+		\item[\textbf{(O2)}] $\bigcap_{i=1}^n (U_i \cap Y) = \left( \bigcap_{i = 1}^n U_i\right) \cap Y$ より従う．
+		\item[\textbf{(O3)}] $\cap$ の分配律 $\bigcup_{\lambda \in \Lambda} U_\lambda \cap Y = \left(\bigcup_{\lambda \in \Lambda} U_\lambda \right) \cap Y$ より従う．
+	\end{description}
+\end{proof}
+
+次に，有限個の位相空間から新しい位相空間を作る方法として積位相を導入する．無限個の位相空間の積位相については触れない．
+
+\begin{mydef}[label=def.prodtopo]{積位相}
+	2つの位相空間 $(X,\, \mathscr{O}_X),\; (Y,\, \mathscr{O}_Y)$ を与える．直積集合 $X \times Y$ の上に
+	\begin{align}
+		\mathscr{B}_{X\times Y} \coloneqq \bigl\{\, \textcolor{red}{U\times V} \subset X\times Y \bigm| U\in \mathscr{O}_X,\, V \in \mathscr{O}_Y \,\bigr\}
+	\end{align} 
+	を\hyperref[def.opbase]{開基}とする位相 $\mathscr{O}_{X \times Y}$ が定まる．$\mathscr{O}_{X \times Y}$ を\textbf{積位相} (product topology)，位相空間 $(X\times Y,\, \mathscr{O}_{X\times Y})$ を\textbf{積空間} (product space) と呼ぶ．
+\end{mydef}
+
+\begin{proof}
+	定理\ref{thm.optotopo}より，$\mathscr{B}_{X\times Y}$ が\hyperref[def.opbase]{開基}の公理\ref{ax.opbase}を満たしていることを確認すれば良い．
+	\begin{description}
+		\item[\textbf{(B1)}] 自明
+		\item[\textbf{(B2)}] 任意の $B_1,\, B_2 \in \mathscr{B}_{X\times Y}$ をとる．このとき $U_i \in \mathscr{O}_X,\, V_i \in \mathscr{O}_Y \; (i=1,\, 2)$ が存在して $B_i = U_i \times V_i$ と書ける．従って $B_1 \cap B_2 = (U_1 \times V_1) \cap (U_2 \times V_2) = (U_1 \cap U_2) \times (V_1 \cap V_2)$ であり，公理\ref{ax.topo}-\textbf{(O2)}より $B_1 \cap B_2 \in \mathscr{B}_{X\times Y}$ とわかる．
+	\end{description}
+\end{proof}
+
+\hyperref[def.opbase]{開基}の定義\ref{def.opbase}から，積空間 $(X\times Y,\, \mathscr{O}_{X\times Y})$ の任意の開集合，i.e. 積位相 $\mathscr{O}_{X\times Y}$ の任意の元は，$\Lambda$ を任意の添字集合として
+\begin{align}
+	\bigcup_{\lambda \in \Lambda} U_{\lambda} \times V_{\lambda},\quad U_\lambda \in \mathscr{O}_X,\, V_\lambda \in \mathscr{O}_Y
+\end{align}
+と書ける．
+
+\begin{mydef}[label=def.quotopo]{商位相}
+	位相空間 $(X,\, \mathscr{O})$ と $X$ 上の同値関係 $\sim$ を与える．$\pi \colon X \twoheadrightarrow X/\mathord{\sim}$ を標準射影とする．
+	商集合 $X/\mathord{\sim}$ の上に
+	\begin{align}
+		\mathscr{O}_{X/\mathord{\sim}} \coloneqq \bigl\{\, \textcolor{red}{U} \subset X/\mathord{\sim} \bigm| \pi^{-1}(U) \in \mathscr{O} \,\bigr\}
+	\end{align}
+	なる位相が定まる．$\mathscr{O}_{X/\mathord{\sim}}$ を\textbf{商位相} (quotient topology) と呼び，位相空間 $(X/\mathord{\sim},\, \mathscr{O}_{X/\mathord{\sim}})$ を\textbf{商空間} (quotient space) と呼ぶ\footnote{\textbf{等化空間} (identification space) と言うこともあるらしい．}．
+\end{mydef}
+\begin{proof}
+	$\mathscr{O}_{X/\mathord{\sim}}$ が公理\ref{ax.topo}を充たすことを確認する．
+	\begin{description}
+		\item[\textbf{(O1)}] 自明．
+		\item[\textbf{(O2)}] 任意の $U_1,\, \dots ,\, U_n \in \mathscr{O}_{X/\mathord{\sim}}$ をとる．このとき $\pi^{-1}\left(\bigcap_{i=1}^n U_i\right) = \bigcap_{i=1}^n \pi^{-1}(U_i) \in \mathscr{O}$ である．
+		\item[\textbf{(O3)}] 任意の添字集合 $\Lambda$ に関して，集合族 $\bigl\{\, U_\lambda \,\bigr\}_{\lambda \in \Lambda} \subset \mathscr{O}_{X/\mathord{\sim}}$ をとる．このとき $\pi^{-1} \left( \bigcup_{\lambda \in \Lambda} U_\lambda \right) = \bigcup_{\lambda \in \Lambda} \pi^{-1} (U_\lambda) \in \mathscr{O}$ である．
+	\end{description}
+\end{proof}
+
+\subsection{距離空間}
+
+位相空間のうち，特に扱いやすい対象である．
+
+\begin{myaxiom}[label=ax.metric]{距離の公理}
+	$X \neq \emptyset$ を集合とする．関数 $d \colon X\times X \to \mathbb{R}$ が以下を充たすとき，$d$ のことを\textbf{距離} (metric) と呼ぶ：
+	\begin{description}
+		\item[\textbf{(D1)}] $d(x, \, y) \ge 0.$ 等号成立は $x = y$ のときのみ．
+		\item[\textbf{(D2)}] $d(x,\, y) = d(y,\, x)$
+		\item[\textbf{(D3)}] $d(x,\, z) \le d(x,\, y) + d(y,\, z)$  (\textbf{三角不等式}; triangle inequality)
+	\end{description} 
+\end{myaxiom}
+
+\begin{mydef}[label=def:metric-space]{距離空間}
+	集合 $X \neq \emptyset$ が距離 $d$ を持つとき，組 $(X,\, d)$ のことを\textbf{距離空間} (metric space) と呼ぶ．
+\end{mydef}
+
+距離空間は位相空間になることを確認しよう．
+
+\begin{mydef}[label=def:epsilon-neighbourhood]{$\varepsilon$近傍}
+	$(X,\, d)$ を距離空間とする．点 $x \in X$ の\textbf{ $\bm{\varepsilon}$ \hyperref[def:neighborhood]{近傍}}を以下のように定義する：
+	\begin{align}
+		B_\varepsilon (x) \coloneqq \bigl\{\, y \in X \bigm| d(x,\, y) < \varepsilon \,\bigr\}
+	\end{align}
+\end{mydef}
+
+\begin{mytheo}[label=thm.metrictopo]{距離空間の位相}
+	$(X,\, d)$ を距離空間とする．集合族 $\mathscr{O}(d)$ を
+	\begin{align}
+		\mathscr{O}(d) \coloneqq \bigl\{\, U \subset X \bigm| \forall x \in U,\, \exists \varepsilon > 0,\; B_\varepsilon (x) \subset U \,\bigr\}
+	\end{align}
+	と定めると，$\mathscr{O}(d)$ は $X$ の位相になる．
+\end{mytheo}
+\begin{proof}
+	$\mathscr{O}(d)$ が公理\ref{ax.topo}を充たすことを確認する．
+	\begin{description}
+		\item[\textbf{(O1)}] $\emptyset \in \mathscr{O}(d)$ は明らか．距離の公理\ref{ax.metric}-\textbf{(D1)}より $X \in \mathscr{O}(d)$ が従う．
+		\item[\textbf{(O2)}] 任意の $U_1,\, \dots ,\, U_n \in \mathscr{O}(d)$ をとる．$\forall x \in U_1 \cap U_2 \cap \cdots \cap U_n$ をとる．このとき $\exists \varepsilon_i,\; B_{\varepsilon_i} (x) \subset U_i \; (1 \le \forall i \le n)$ であるから，$\varepsilon \coloneqq \min \{ \varepsilon_i \}$ とおくと $B_{\varepsilon} (x) \subset \bigcap_{i=1}^n U_i $ である．i.e. $\bigcap_{i=1}^n U_i \in \mathscr{O}(d)$ である．
+		\item[\textbf{(O3)}] 任意の添字集合 $\Lambda$ に対する集合族 $\bigl\{\, U_\lambda \,\bigr\}_{\lambda \in \Lambda} \subset \mathscr{O}(d)$ をとる．$x \in \bigcup_{\lambda \in \Lambda} U_\lambda $ ならば，ある $\mu \in \Lambda$ が存在して $x \in U_\mu$ である．
+		$U_\mu$ は開集合であるから，命題\ref{prop.opdet}よりある $\varepsilon > 0$ が存在して $B_\varepsilon(x) \subset U_\mu$ を充たす．従って $B_\varepsilon (x) \subset \bigcup_{\lambda \in \Lambda} U_\lambda \in \mathscr{O}(d)$ となる．
+	\end{description}
+\end{proof}
+
+\begin{mycol}{}
+	$\varepsilon$ \hyperref[def:neighborhood]{近傍}の全体
+	\begin{align}
+		\mathscr{B}(d) \coloneqq \bigl\{\, B_\varepsilon(x) \bigm| x \in X,\, \varepsilon > 0 \,\bigr\}
+	\end{align}
+	は位相 $\mathscr{O}(d)$ の\hyperref[def.opbase]{開基}である．
+\end{mycol}
+
+\begin{proof}
+	命題\ref{prop.opbdet}より明らか．
+\end{proof}
+
+\subsection{位相空間の分類}
+
+扱いやすさによって分類する．
+
+\begin{mydef}[label=def:separation, breakable]{分離公理}
+	$(X,\, \mathscr{O})$ を位相空間とする．点 $x \in X$ の\hyperref[def:neighborhood]{近傍}全体が成す集合を $\mathscr{V}(x)$ と書く．
+	\begin{enumerate}
+		\item $X$ が\textbf{$\bm{\mathrm{T}_1}$空間}
+		
+		$\stackrel{\mathrm{def}}{\Longleftrightarrow}$　$X$ の任意の異なる2点 $x,\, y \in X$ に対して以下が成り立つ：
+		\begin{align}
+			\exists \textcolor{red}{V} \in \mathscr{V}(\textcolor{red}{y}),\; x \notin \textcolor{red}{V}
+		\end{align}
+		% 任意の異なる2点 $x,\, y \in X$ に対して，$y$ の\hyperref[def:neighborhood]{近傍} $V$ が存在して $x \notin V$ となる
+		\item $X$ が\textbf{$\bm{\mathrm{T}_2}$空間 (Hausdorff空間)}
+		
+		$\stackrel{\mathrm{def}}{\Longleftrightarrow}$　$X$ の任意の異なる2点 $x,\, y \in X$ に対して以下が成り立つ：
+		\begin{align}
+			\exists \textcolor{red}{U} \in \mathscr{V}(x),\, \exists \textcolor{red}{V} \in \mathscr{V}(y),\; \textcolor{red}{U} \cap \textcolor{red}{V} = \emptyset
+		\end{align}
+		% 任意の異なる2点 $x,\, y \in X$ に対して，$x,\, y$ のそれぞれの\hyperref[def:neighborhood]{近傍} $U,\, V$ が存在して $U \cap V = \emptyset$ となる
+		\item $X$ が\textbf{正則空間}
+		
+		$\stackrel{\mathrm{def}}{\Longleftrightarrow}$　$X$ は $\mathrm{T}_1$空間であり，$\forall x \in X$ と $x$ を含まない任意の閉集合 $\textcolor{blue}{F} \subset X$ に対して以下が成り立つ：
+		\begin{align}
+			\exists \textcolor{red}{U},\, \textcolor{red}{V} \in \mathscr{O},\; x \in \textcolor{red}{U} \AND  \textcolor{blue}{F} \subset \textcolor{red}{V} \AND \textcolor{red}{U} \cap \textcolor{red}{V} = \emptyset
+		\end{align}
+		% 開集合 $U,\, V$ が存在して $x \in U,\, F \subset V$ かつ $U\cap V = \emptyset$ となる
+		\item $X$ が\textbf{正規空間}
+		
+		$\stackrel{\mathrm{def}}{\Longleftrightarrow}$　$X$ は$\mathrm{T}_1$空間であり，任意の交わらない閉集合 $\textcolor{blue}{F_1},\, \textcolor{blue}{F_2} \subset X$ に対して以下が成立する：
+		\begin{align}
+			\exists \textcolor{red}{U_1},\, \textcolor{red}{U_2} \in \mathscr{O},\; \textcolor{blue}{F_1} \subset \textcolor{red}{U_1} \AND \textcolor{blue}{F_2} \subset \textcolor{red}{U_2} \AND \textcolor{red}{U_1} \cap \textcolor{red}{U_2} = \emptyset
+		\end{align}
+		% 開集合 $U_1,\, U_2$ が存在して $F_i \subset U_i$ かつ $U_1 \cap U_2 = \emptyset$ となる
+	\end{enumerate}
+\end{mydef}
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}{0.4\columnwidth}
+		\centering
+		\begin{tikzpicture}
+			\coordinate [label=below:$x$] (x) at (0,0);
+			\coordinate [label=below:$y$] (y) at (2,0);
+			\coordinate (P) at (2.8,0);
+
+			\fill (x) circle (1pt) (y) circle (1pt);
+			\begin{scope}[on background layer]		
+				\node (V) [fill=red!10, draw=FireBrick, dashed, circle through=(P),label=45:\textcolor{red}{$V$}] at (y) {};
+			\end{scope}	
+			% \node (V) [fill=red!10, draw=FireBrick, dashed, circle through=(P),label=45:\textcolor{red}{$V$}] at (y) {};
+			% \draw [dashed, red] (y) circle [ radius=0.8 ];
+		\end{tikzpicture}
+		\caption{$\mathrm{T}_1$空間}
+		\label{fig.T1}
+	\end{subfigure}
+	\hspace{5mm}
+	\begin{subfigure}{0.4\columnwidth}
+		\centering
+		\begin{tikzpicture}
+			\coordinate [label=below:$x$] (x) at (0,0);
+			\coordinate [label=below:$y$] (y) at (2,0);
+			\coordinate (P) at (0.8,0);
+			\coordinate (Q) at (2.8,0);
+
+			\fill (x) circle (1pt) (y) circle (1pt);
+			\begin{scope}[on background layer]	
+				\node (U) [fill=red!10, draw=FireBrick, dashed, circle through=(P),label=135:\textcolor{red}{$U$}] at (x) {};	
+				\node (V) [fill=red!10, draw=FireBrick, dashed, circle through=(Q),label=45:\textcolor{red}{$V$}] at (y) {};
+			\end{scope}	
+			% \node (U) [draw,dashed,red,circle through=(P),label=135:\textcolor{red}{$U$}] at (x) {};
+			% \node (V) [draw,dashed,red,circle through=(Q),label=45:\textcolor{red}{$V$}] at (y) {};
+			% \draw [dashed, red] (x) circle [ radius=0.8 ];
+			% \draw [dashed, red] (y) circle [ radius=0.8 ];
+		\end{tikzpicture}
+		\caption{$\mathrm{T}_2$空間 (Hausdorff空間)}
+		\label{fig.T2}
+	\end{subfigure}
+	\begin{subfigure}{0.4\columnwidth}
+		\centering
+		\begin{tikzpicture}
+			\coordinate [label=below:$x$] (x) at (0,0);
+			\coordinate (y) at (2,0);
+			\coordinate (P) at (0.8,0);
+			\coordinate (Q) at (2.8,0);
+			\coordinate (R) at (2.3,0);
+
+			\fill (x) circle (1pt);
+			\node (F) [fill=blue!10, draw=Indigo, circle through=(R),label=below:\textcolor{blue}{$F$}] at (y) {};	
+			
+			\begin{scope}[on background layer]	
+				\node (U) [fill=red!10, draw=FireBrick, dashed, circle through=(P),label=135:\textcolor{red}{$U$}] at (x) {};	
+				\node (V) [fill=red!10, draw=FireBrick, dashed, circle through=(Q),label=45:\textcolor{red}{$V$}] at (y) {};
+			\end{scope}	
+			% \draw [dashed, red] (x) circle [ radius=0.8 ];
+			% \draw [dashed, red] (y) circle [ radius=0.8 ];
+			% \filldraw [fill=blue, opacity=.3, draw=Indigo] (y) circle [ radius=0.5 ];
+		\end{tikzpicture}
+		\caption{正則空間}
+		\label{fig.T3}
+	\end{subfigure}
+	\hspace{5mm}
+	\begin{subfigure}{0.4\columnwidth}
+		\centering
+		\begin{tikzpicture}
+			\coordinate (x) at (0,0);
+			\coordinate (y) at (2,0);
+			\coordinate (P) at (0.8,0);
+			\coordinate (Q) at (2.8,0);
+			\coordinate (R) at (0.3,0);
+			\coordinate (S) at (2.3,0);
+
+			\node (F1) [fill=blue!10, draw=Indigo, circle through=(R),label=below:\textcolor{blue}{$F_1$}] at (x) {};	
+			\node (F2) [fill=blue!10, draw=Indigo, circle through=(S),label=below:\textcolor{blue}{$F_2$}] at (y) {};	
+			\begin{scope}[on background layer]	
+				\node (U1) [fill=red!10, draw=FireBrick, dashed, circle through=(P),label=135:\textcolor{red}{$U_1$}] at (x) {};	
+				\node (U2) [fill=red!10, draw=FireBrick, dashed, circle through=(Q),label=45:\textcolor{red}{$U_2$}] at (y) {};
+			\end{scope}
+			% \draw [dashed, red] (x) circle [ radius=0.8 ];
+			% \draw [dashed, red] (y) circle [ radius=0.8 ];
+			% \filldraw [fill=blue, opacity=.3, draw=Indigo] (x) circle [ radius=0.5 ];
+			% \filldraw [fill=blue, opacity=.3, draw=Indigo] (y) circle [ radius=0.5 ];
+		\end{tikzpicture}
+		\caption{正規空間}
+		\label{fig.T4}
+	\end{subfigure}
+	\caption{位相空間の分類}
+	\label{fig.sep}
+\end{figure}%
+
+例えば\hyperref[def:separation]{Hausdorff空間}は，点列の収束性が良い空間である．
+\begin{mydef}[label=def:sequence-convergence]{点列の収束}
+	$(X,\, \mathscr{O})$ を位相空間，$\bigl(x_n\bigr)_{n=1}^\infty$ を $X$ の点列\footnote{写像 $x \colon \mathbb{N} \lto X,\, n \lmto x_n$ のこと．厳密には $\Familyset[\big]{x_n}{n \in \mathbb{N}}$ とは異なる概念である．} とする．
+	
+	$\bigl(x_n\bigr)_{n=1}^\infty$ が\textbf{極限} (limit) $x \in X$ に\textbf{収束する} (converge) とは，
+	$x$ の任意の\hyperref[def:neighborhood]{近傍} $x \in U \subset X$ に対してある $N(U) \subset \mathbb{N}$ が存在して，
+	\begin{align}
+		\forall n > N(U),\; x_n \in U
+	\end{align}
+	が成り立つことを言う．
+\end{mydef}
+
+\begin{myprop}[label=prop:Hausdorff-sequence-converge]{Hausdorff空間における点列の収束性}
+	\hyperref[def:separation]{Hausdorff空間} $(X,\, \mathscr{O})$ の\hyperref[def:sequence-convergence]{収束する}点列 $\bigl(x_n\bigr)_{n=1}^\infty$ はただ1つの極限を持つ．
+\end{myprop}
+
+\begin{proof}
+	\hyperref[def:separation]{Hausdorff空間} $M$ の点列 $\Familyset[\big]{x_n}{n \in \mathbb{N}}$ が異なる2点 $x,\, y \in M$ に収束すると仮定する．
+	$M$ のHausdorff性から\hyperref[def:neighborhood]{開近傍} $x \in U \subset M,\; y \in V \subset M$ であって $U \cap V = \emptyset$ であるものが存在する．
+	このとき\hyperref[def:sequence-convergence]{点列の収束の定義}からある $N_x,\, N_y \in \mathbb{N}$ が存在して $\forall n \ge N_x,\; x_n \in U$ かつ $\forall m \ge N_y,\; x_m \in V$ ということになるが，$N \coloneqq \max \{N_x,\, N_y\}$ とおくと $x_N \in U \cap V$ となって $U \cap V = \emptyset$ に矛盾．従って背理法から $x = y$ が言える．
+\end{proof}
+
+
+\begin{mytheo}[label=thm:separation-basic]{}
+	距離空間 $\Rightarrow$ 正規空間 $\Rightarrow$ 正則空間 $\Rightarrow$ Hausdorff空間 $\Rightarrow$ $\mathrm{T}_1$空間 
+\end{mytheo}
+
+
+% \begin{mytheo}{長田-Smirnov}
+% 	位相空間 $X$ が距離化可能であるためには，$X$ が $ \sigma$-局所有限基底を持つ正則空間であることが必要十分である．
+% \end{mytheo}
+
+\section{連続写像・同相}
+
+2つの位相空間の間の写像の性質を考える．
+
+\begin{mydef}[label=def.continuous]{連続性}
+	2つの位相空間 $\phase{X},\; \phase{Y}$ の間の写像 $f\colon X \to Y$ が\textbf{連続} (continuous) であるとは，以下が成立することを言う：
+	\begin{align}
+		V \in \mathscr{O}_Y \; \Longrightarrow \; f^{-1}(V) \in \mathscr{O}_X.
+	\end{align}
+\end{mydef}
+
+\begin{myprop}[label=prop:cont-composite]{連続写像の合成は連続写像}
+	位相空間 $\phase{X},\; \phase{Y},\; \phase{Z}$ を与える．
+	このとき，任意の連続写像 $f \colon X \lto Y,\; g \colon Y \lto Z$ の合成写像 $g \circ f \colon X \lto Z$ もまた連続である．
+\end{myprop}
+
+\begin{proof}
+	$\forall U \in \mathscr{O}_Z$ とする．
+	このとき $g$ の連続性から $g^{-1}(U) \in \mathscr{O}_Y$ が従い，さらに $f$ の連続性から $f^{-1} \bigl( g^{-1}(U) \bigr) \in \mathscr{O}_X$ が従う．
+	ところで，$x \in f^{-1} \bigl( g^{-1}(U) \bigr) \iff f(x) \in g^{-1}(U) \iff g \bigl( f(x) \bigr) = g \circ f(x) \in U$ が言えるので，集合の等式 $f^{-1} \bigl( g^{-1}(U) \bigr) = (g\circ f)^{-1}(U)$ が成り立つ．
+	以上の議論から $(g\circ f)^{-1}(U) \in \mathscr{O}_X$ が示された．
+\end{proof}
+
+2つの距離空間 $(X,\, d_X),\; (Y,\, d_Y)$ の間の写像 $f \colon X \to Y$ の連続性の定義として馴染み深いものは，おそらく\edlogic 論法によるものであろう：
+\begin{align}
+	\label{def.edlogic}
+	\forall x \in X,\, \textcolor{blue}{\forall \varepsilon > 0,\, \exists \delta > 0}, \forall y \in Y,\; \textcolor{red}{d_X}(x,\, y) < \delta \; \Longrightarrow \; \textcolor{red}{d_Y}\bigl( f(x),\, f(y)\bigr) < \varepsilon
+\end{align}
+この定義は直観的にも分かり易い${}^{[\textcolor{blue}{\text{\textit{要検証}}}]}$が，距離空間に対してしか適用できないという欠点がある．
+定義\ref{def.continuous}は定義\eqref{def.edlogic}を改良して，適用範囲を一般の位相空間に拡張したものと言える．
+実際，距離空間 $(X,\, d_X),\, (Y,\, d_Y)$ のそれぞれに定理\ref{thm.metrictopo}で作った位相 $\mathscr{O}(d_X),\, \mathscr{O}(d_Y)$ を入れると，定義\ref{def.continuous}と定義\eqref{def.edlogic}は同値になる：
+\begin{proof}
+	($\Longrightarrow$) 任意の $\varepsilon > 0$ をとる．$B_\varepsilon \bigl( f(x) \bigr) \in \mathscr{O}(d_Y)$ であるから，定義\ref{def.continuous}より $f^{-1} \Bigl( B_\varepsilon \bigl( f(x) \bigr) \Bigr) \in \mathscr{O}(d_X)$ である．従って命題\ref{prop.opdet}から，ある $\delta > 0$ が存在して $B_\delta (x) \subset f^{-1} \Bigl( B_\varepsilon \bigl( f(x) \bigr) \Bigr)$ となる．i.e.
+	\begin{align}
+		d_X(x,\, y) < \delta \quad &\Longrightarrow \quad y \in B_{\delta}(x) \subset f^{-1} \Bigl( B_\varepsilon \bigl( f(x) \bigr) \Bigr) \\
+		&\Longrightarrow \quad f(y) \in B_\varepsilon \bigl( f(x)\bigr) \\
+		&\Longrightarrow \quad d_Y\bigl(f(x),\, f(y) \bigr) < \varepsilon.
+	\end{align}
+
+	($\Longleftarrow$) 任意の $V \in \mathscr{O}(d_Y)$ をとる．$U \coloneqq f^{-1}(V) \in \mathscr{O}(d_X)$ を示す．
+	$\forall x \in U$ を一つとる．このとき $f(x) \in V$ だから，定理\ref{thm.metrictopo}による $\mathscr{O}(d_Y)$ の定義からある $\varepsilon>0$ が存在して $B_\varepsilon \bigl(f(x)\bigr) \subset V$ となる．ここで定義\eqref{def.edlogic}を充たす $\delta$ をとることができて，
+	\begin{align}
+		\forall y \in X,\; d_X(x,\, y) < \delta \; &\Longrightarrow \; d_Y\bigl(f(x),\, f(y)\bigr) < \varepsilon. \\
+		&\Longleftrightarrow \quad f\bigl( B_\delta(x)\bigr) \subset B_\varepsilon\bigl( f(x) \bigr).
+	\end{align}
+	を充たす．従って $B_\delta(x) \subset f^{-1}\Bigl( B_\varepsilon\bigl( f(x) \bigr) \Bigr) \subset f^{-1} (V) = U$ であり，$U \in \mathscr{O}(d_X)$ が示された．
+\end{proof}
+
+\begin{mydef}[label=def.homeo]{同相}
+	2つの位相空間 $\phase{X},\; \phase{Y}$ を与える．写像$f\colon X \to Y$ が\textbf{同相写像} (homeomorphism) であるとは，$f$ が\textbf{連続}かつ\textbf{全単射}かつ\textbf{逆写像 $f^{-1} \colon Y \to X$ が連続}であることを言う．$X$ と $Y$ の間に同相写像が存在するとき $X$ は $Y$ に\textbf{同相} (homeomorphic) であると言い，$X \approx Y$ と書く．
+\end{mydef}
+
+全ての位相空間の集まり\footnote{$\mathscr{T}$ は集合\textbf{ではない}．} $\mathscr{T}$ を考えよう．同相 $\approx$ は $\mathscr{T}$ の同値関係であるから，\textbf{$\mathscr{T}$ は同相 $\approx$ によって類別できる}．ここから，同相類を如何にして特徴づけられるのかと言う問いが自然に生じる．
+一つの方法としては，同相の下で変わらない\textbf{位相的性質}，\textbf{位相不変量}を見つけることである．重要な位相的性質としては
+\begin{itemize}
+	\item \textbf{Hausdorff性}
+	\item \textbf{コンパクト性}
+	\item \textbf{連結性}
+	\item 代数的構造（環・群 etc.）
+\end{itemize}
+などが挙げられる．
+
+\section{コンパクト性}
+
+極めて単純な例だが，同相 $(-1,\, 1) \approx (\mathbb{R},\, d_2)$ を考える\footnote{$d_2$ はEuclid距離．以下，なんの断りもなく距離空間 $\mathbb{R}^n$ と言ったら距離として $d_2$ が定まっているとする．}．実際，同相写像を例えば
+\begin{align}
+	f\colon (-1,\, 1) \to \mathbb{R},\; x \mapsto \tan(\frac{\pi}{2}x)
+\end{align}
+と定義することができる．このことは，直観的には「有限の広がり」を持つ $(-1,\, 1)$ が「無限の広がり」を持つ $\mathbb{R}$ と同じであることを意味し，奇妙な感じがする\footnote{もっとも，これを奇妙と思うかどうかは人によると思いますが...}定義\ref{def.compact}はこのような奇妙なことが起こらない位相空間のクラスを特徴付ける．
+
+\begin{mydef}[label=def.compact]{コンパクト}
+	$(X,\, \mathscr{O})$ を位相空間とする．$X$ の部分集合 $A \subset X$ が\textbf{コンパクト} (compact) であるとは，$A$ が以下の\textbf{Heine-Borelの性質}を持つことを言う\footnote{このことを，\textbf{\textcolor{red}{任意の}開被覆は有限被覆を持つ}と表現する．}：
+	\begin{itemize}
+		\item 開集合族 $\bigl\{\, U_\lambda \,\bigr\}_{\lambda \in \Lambda} \subset \mathscr{O}$ によって $\displaystyle A \subset \bigcup_{\lambda \in \Lambda} U_\lambda$ となるとき，添字集合 $\Lambda$ の有限部分集合 $F \subset \Lambda$ が存在して $\displaystyle A \subset \bigcup_{\mu \in F} U_\mu$ となる．
+	\end{itemize}
+\end{mydef}
+
+次の定理は，位相空間のコンパクト性が位相的性質であることを保証する．
+
+\begin{mytheo}{}
+	2つの位相空間 $\phase{X},\; \phase{Y}$ と，その間の連続写像 $f \colon X \to Y$ を与える．部分集合 $K \subset X$ がコンパクトなら，$f$ による $K$ の像 $f(K) \subset Y$ もまたコンパクトである．
+\end{mytheo}
+\begin{proof}
+	$f(K)$ の任意の開被覆 $f(K) \subset \bigcup_{\mu \in M} V_\mu$ をとる．このとき
+	\begin{align}
+		K \subset f^{-1}\bigl( f(K) \bigr) \subset f^{-1}\left(\bigcup_{\mu \in M} V_\mu\right) = \bigcup_{\mu \in M} f^{-1}(V_\mu).
+	\end{align}
+	連続写像の定義\ref{def.continuous}より全ての $f^{-1}(V_\mu)$ は開集合であるから，$\bigcup_{\mu \in M} f^{-1}(V_\mu)$ は $K$ の開被覆を与える．故に，$K$ のコンパクト性を仮定したので，添字集合 $M$ の部分集合 $\{ \mu_1\, \dots ,\, \mu_n \} \subset M$ が存在して
+	\begin{align}
+		K \subset \bigcup_{i=1}^n f^{-1} (V_{\mu_i})
+	\end{align}
+	と書ける．よって
+	\begin{align}
+		f(K) \subset f\left( \bigcup_{i=1}^n f^{-1} (V_{\mu_i})\right) = \bigcup_{i=1}^n f\bigl(f^{-1} (V_{\mu_i})\bigr) \subset \bigcup_{i=1}^n V_{\mu_i}
+	\end{align}
+	となり，$f(K)$ の有限開被覆が得られる．i.e. $f(K)$ はコンパクトである．
+\end{proof}
+
+次の定理は，Zornの補題を用いて証明される．
+\begin{mytheo}{Tychonoffの定理}
+	$\bigl\{\, X_\lambda \,\bigr\}_{\lambda \in \Lambda}$ をコンパクト空間の族とすると，積空間\footnote{$\Lambda$ が有限集合でなくともよい．} $\prod_{\lambda \in \Lambda} X_\lambda$ もコンパクトである．
+\end{mytheo}
+
+\section{連結性}
+
+\begin{mydef}[label=def.joint]{連結空間}
+	\begin{enumerate}
+		\item 位相空間 $(X,\, \mathscr{O})$ の部分空間 $(A,\, \mathscr{O}_A)$ が\textbf{連結} (connected) であるとは，$A$ が空でない2つの開集合\footnote{$\mathscr{O}_A$を位相とする．}の非交和にならないことである．
+		\item 部分空間 $A$ が\textbf{弧状連結} (path-connected) であるとは，任意の2点 $x,\, y \in A$ が $A$ 上の連続曲線で結ばれることである．i.e. 連続写像 $\varphi \colon [0,\, 1] \to A$ であって $\varphi(0) = x,\, \varphi(1) = y$ であるものが存在することである． 
+	\end{enumerate}
+\end{mydef}
+
+次の定理は，位相空間の連結性が位相的性質であることを保証する．
+\begin{mytheo}[label=thm.connect]{}
+	2つの位相空間 $\phase{X},\; \phase{Y}$ と，その間の連続写像 $f \colon X \to Y$ を与える．部分空間 $K \subset X$ が連結なら，$K$ の像 $f(K) \subset Y$ もまた連結である．
+\end{mytheo}
+
+\begin{proof}
+	$K$ が連結のとき，$f(K)$ が $f(K)$ のある開集合 $V_1,\, V_2$ に対して $f(K) = V_1 \sqcup V_2$ と書かれたとする．$V_1 = \emptyset$ または $V_2 = \emptyset$ であることを示す．
+	仮定より $K \subset f^{-1} \bigl(f(K)\bigr) = f^{-1}(V_1) \sqcup f^{-1}(V_2)$ である．故に
+	\begin{align}
+		K = \bigl(f^{-1}(V_1)\sqcup f^{-1} (V_2)\bigr)\cap K = \bigl(f^{-1}(V_1) \cap K\bigr) \sqcup \bigl(f^{-1} (V_2) \cap K\bigr).
+	\end{align}
+	ここで，相対位相の定義\ref{def.reltopo}より $Y$ の開集合 $U_1$ が存在して $V_1 = U_1 \cap f(K)$ と書けるから，$f^{-1}(V_1) = f^{-1}(U_1) \cap f^{-1}\bigl(f(K)\bigr)$ となり，$f^{-1}(V_1) \cap K = f^{-1}(U_1) \cap K$ である．連続写像の定義\ref{def.continuous}より $f^{-1}(U_1)$ は $X$ の開集合であるから，$f^{-1}(V_1) \cap K$ は $K$ の開集合である（$\because\;$ \hyperref[def.reltopo]{相対位相の定義}）．同様に $f^{-1}(V_2) \cap K$ もまた $K$ の開集合である．$K$ は連結なのでどちらかが空集合である．
+	$f^{-1}(V_1) \cap K = \emptyset$ とすると $K \subset \bigl(f^{-1}(V_1)\bigr)^c = f^{-1} (V_1^c)$ なので $f(K) \subset f\bigl(f^{-1}(V_1^c)\bigr) \subset V_1^c = V_2$ となり，$V_1 = \emptyset$ である．
+	また，全く同様の議論により $f^{-1}(V_2) \cap K = \emptyset$ ならば $V_2 = \emptyset$ である．
+\end{proof}
+
+次の2つの定理の証明はテクニカルなので省略する．
+
+\begin{mytheo}{積空間の連結性}
+	$\bigl\{\, X_\lambda \,\bigr\}_{\lambda \in \Lambda}$ を連結空間の族とすると，積空間 $\prod_{\lambda \in \Lambda} X_\lambda$ も連結である．
+\end{mytheo}
+
+\begin{mytheo}[label=thm.unionc]{}
+	$(X,\, \mathscr{O})$ を位相空間，$\bigl\{\, A_\lambda \,\bigr\}_{\lambda \in \Lambda}$ を $X$ 上の連結集合の族とする．$\bigcap_{\lambda \in \Lambda} A_\lambda \neq \emptyset$ ならば，$\bigcup_{\lambda \in \Lambda} A_\lambda$ も連結集合である． 
+\end{mytheo}
+
+連結な集合で位相空間を類別できる．
+
+\begin{mydef}{連結成分}
+	位相空間 $X$ 上の二項関係
+	\begin{align}
+		\sim\; \coloneqq \bigl\{\, (x,\, y) \in X \times X \bigm| \exists A \subset X \; \mathrm{s.t.} \; \text{連結}, \;\; x \in A,\; y \in A \,\bigr\} 
+	\end{align}
+	と定めると $\mathord{\sim}$ は同値関係になる．この同値関係 $\mathord{\sim}$ による同値類を $X$ の\textbf{連結成分}  (connected component) と呼ぶ．
+\end{mydef}
+
+\begin{proof}
+	$\sim$ が同値関係の公理\ref{ax.equiv}を充していることを確認する：
+	\begin{enumerate}
+		\item $\{x\}$ は連結なので $x \sim x$．
+		\item 対称律は自明．
+		\item $x \sim y$ ならば $x,\, y \in A$ なる連結集合 $A$，$y \sim z$ ならば $y,\, z \in B$ なる連結集合 $B$ が取れる．$\{ y \} \in A \cap B$ なので定理\ref{thm.unionc}が使えて $x,\, z \in A \cup B$ なる連結集合 $A \cup B$ が得られる．
+	\end{enumerate}
+\end{proof}
+
+\begin{mytheo}{}
+	位相空間 $(X,\, \mathscr{O})$ の部分空間 $(A,\, \mathscr{O}_A)$ が弧状連結ならば連結である．
+\end{mytheo}
+
+\hrulefill
+
+\begin{mylem}[label=lem.connect]{}
+	$\mathbb{R}$ の部分集合 $I \coloneqq [0,\, 1]$ は連結である．
+\end{mylem}
+
+\begin{proof}
+	$I$ が連結でないと仮定する．
+	このとき $I$ の開集合 $U_1,\, U_2$ が存在して $I = U_1 \sqcup U_2,\, U_1 \neq \emptyset,\, U_2 \neq \emptyset$ が成り立つ．
+	一般性を失わずに $0 \in U_1$ としてよい．
+	
+	ここで $z \coloneqq \sup \bigl\{\, t \in I \bigm| [0,\, t] \subset U_1 \,\bigr\} $ とおく．$z \in U_1$ ならば，$U_1$ は $I$ の開集合なので，命題\ref{prop.opdet}からある $\varepsilon > 0$ が存在して
+	$(z -\varepsilon,\, z + \varepsilon) \subset U_1$ となる
+	\footnote{$(z -\varepsilon,\, z + \varepsilon)$ は距離空間 $\mathbb{R}$ における点 $z$ の\hyperref[def:epsilon-neighbourhood]{$\varepsilon$ 近傍}である．}．
+	しかるにこれは $z$ の定義に矛盾する．
+
+	一方 $z \in U_2$ ならば，$U_2$ が $I$ の開集合であることから $\varepsilon > 0$ が存在して $(z -\varepsilon,\, z+ \varepsilon) \subset U_2$ を充たす． 
+	しかるに $z$ の定義から，ある $z_0 \in U_1$ が存在して $z_0 \in (z - \varepsilon,\, z)$ を充たす．$(z - \varepsilon,\, z) \subset (z -\varepsilon,\, z+ \varepsilon) \subset U_2$ を考慮するとこれは $U_1 \cap U_2 \neq \emptyset$ を意味し，$U_1,\, U_2$ がdisjointであるという仮定に反する．よって背理法から $I$ は連結である．
+\end{proof}
+
+\hrulefill
+
+\begin{proof}
+	定理\ref{thm.connect}と補題\ref{lem.connect}より，連続曲線の像 $\varphi([0,\, 1])$ は連結である．よって $\forall x,\, y \in A$ を含む連結成分が存在する．
+	i.e. 勝手な $x \in A$ をとってくると $\forall y \in A$ に対して $x \sim y$ なので，$x$ の連結成分 $[x] = X$ である．
+\end{proof}
+
+\end{document}

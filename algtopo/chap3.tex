@@ -1,0 +1,517 @@
+\documentclass[algtopo_main]{subfiles}
+\mathchardef\mhyphen="2D
+\begin{document}
+
+\setcounter{chapter}{2}
+
+
+\chapter{コホモロジーの定義}
+
+まず，純粋に代数的な準備をする．
+
+\begin{mylem}[label=lem:splitting]{分裂補題}
+    左 $R$ 加群の短完全列
+    \begin{align}
+        \label{SES:3-1}
+        0 \lto M_1 \xrightarrow{i_1} M \xrightarrow{p_2} M_2 \lto 0
+    \end{align}
+    が与えられたとする．このとき，以下の二つは同値である：
+    \begin{enumerate}
+        \item 左 $R$ 加群の準同型 $i_2 \colon M_2 \lto M$ であって $p_2 \circ i_2 = 1_{M_2}$ を充たすものが存在する
+        \item 左 $R$ 加群の準同型 $p_1 \colon M \lto M_1$ であって $p_1 \circ i_1 = 1_{M_1}$ を充たすものが存在する
+    \end{enumerate}
+\end{mylem}
+
+\begin{proof}
+    \begin{description}
+        \item[\textbf{(1) $\Longrightarrow$ (2)}] 写像
+        \begin{align}
+            p_1' \colon M \lto M,\; x \lmto x - i_2 \bigl( p_2(x) \bigr) 
+        \end{align}
+        を定義すると，
+        \begin{align}
+            p_2 \bigl( p_1'(x) \bigr) = p_2(x) - ((p_2 \circ i_2) \circ p_2)(x) = p_2(x) - p_2(x) = 0
+        \end{align}
+        が成り立つ．従って，\eqref{SES:3-1}が完全列であることを使うと $p_1'(x) \in \Ker p_2 = \Im i_1$ である．さらに $i_1$ が単射であることから
+        \begin{align}
+            \exists ! y \in M_1,\; p_1'(x) = i_1(y)
+        \end{align}
+        が成り立つ．ここで写像
+        \begin{align}
+            p_1 \colon M \lto M_1,\; x \lmto y
+        \end{align}
+        を定義するとこれは準同型写像であり，$\forall x \in M_1$ に対して
+        \begin{align}
+            p_1' \bigl( i_1(x) \bigr) = i_1(x) - (i_2 \circ (p_2 \circ i_1))(x) = i_1(x)
+        \end{align}
+        が成り立つ\footnote{\eqref{SES:3-1}が完全列であるため，$p_2 \circ i_1 = 0$}ことから
+        \begin{align}
+            (p_1 \circ i_1)(x) = x
+        \end{align}
+        とわかる．i.e. $p_1 \circ i_1 = 1_{M_1}$
+        \item[\textbf{(1) $\Longleftarrow$ (2)}] \eqref{SES:3-1}は完全列であるから $M_2 = \Ker 0 =  \Im p_2$ である．
+        従って $\forall x \in M_2 = \Im p_2$ に対して，$x = p_2(y)$ を充たす $y \in M$ が存在する．ここで写像
+        \begin{align}
+            i_2 \colon M_2 \lto M,\; x \lmto y - i_1 \bigl( p_1(y) \bigr) 
+        \end{align}
+        はwell-definedである．$x = p_2(y')$ を充たす勝手な元 $y' \in M$ をとってきたとき，$p_2(y-y') = 0$ より $y-y' \in \Ker p_2 = \Im i_1$ だから，$i_1$ の単射性から
+        \begin{align}
+            \exists ! z \in M_1,\quad y-y' = i_1(z)
+        \end{align}
+        が成り立ち，このとき
+        \begin{align}
+           \Bigl( y - i_1 \bigl( p_1(y) \bigr) \Bigr) - \Bigl( y' - i_1 \bigl( p_1(y') \bigr)  \Bigr) = i_1(z) - (i_1 \circ (p_1 \circ i_1))(z) = i_1(z) - i_1(z) = 0
+        \end{align}
+        とわかるからである．$i_2$ は準同型写像であり，$\forall x \in M_2$ に対して
+        \begin{align}
+            (p_2 \circ i_2)(x) = p_2(y) - ((p_2 \circ i_1) \circ p_1)(y) = p_2(y) = x
+        \end{align}
+        なので $p_2 \circ i_2 = 1_{M_2}$．
+    \end{description}
+\end{proof}
+
+\begin{mycol}[label=col:split]{}
+    左 $R$ 加群の短完全列
+    \begin{align}
+        0 \lto M_1 \xrightarrow{i_1} M \xrightarrow{p_2} M_2 \lto 0
+    \end{align}
+    が補題\ref{lem:splitting}の条件を充たすならば
+    \begin{align}
+        M \cong M_1 \oplus M_2 
+    \end{align}
+\end{mycol}
+
+\begin{proof}
+    補題\ref{lem:splitting}の条件 (1) が満たされているとする．このとき補題\ref{lem:splitting}証明から $\forall x \in M$ に対して
+    \begin{align}
+        i_1  \bigl( p_1(x) \bigr) = p_1'(x) = x - i_2 \bigl( p_2(x) \bigr) \IFF i_1 \bigl(p_1(x)  \bigr) + i_2 \bigl( p_2(x) \bigr) = x
+    \end{align}
+    また，完全列の定義から $p_2 \bigl( i_1(x) \bigr) = 0$ であるから $\forall x \in M_2$ に対して
+    \begin{align}
+        p_1' \bigl( i_2(x) \bigr) = i_2(x) - ((i_2 \circ p_2) \circ i_2)(x) = 0 = i_1(0)
+    \end{align}
+    であり，結局 $p_1 \bigl( i_2(x) \bigr) = 0$ とわかる．
+
+    ここで準同型写像
+    \begin{align}
+        &f\colon M_1 \oplus M_2 \lto M,\; (x,\, y) \lmto i_1(x) + i_2(y), \\
+        &g\colon M \lto M_1 \oplus M_2,\; x \lmto \bigl( p_1(x),\, p_2(x) \bigr) 
+    \end{align}
+    を定めると
+    \begin{align}
+        (g \circ f)(x,\, y) &= \bigl( p_1(i_1(x)) + p_1(i_2(y)) ,\, p_2(i_1(x)) + p_2(i_2(x)) \bigr) = (x,\, y) , \\
+        (f\circ g)(x) &= i_1(p_1(x)) + i_2(p_2(x)) = x
+    \end{align}
+    なので $f,\, g$ は同型写像．
+\end{proof}
+
+\begin{mydef}[label=def:split]{分裂}
+    左 $R$ 加群の短完全列
+    \begin{align}
+        0 \lto M_1 \xrightarrow{i_1} M \xrightarrow{p_2} M_2 \lto 0
+    \end{align}
+    が\textbf{分裂} (split) するとは，補題\ref{lem:splitting}の条件を充たすことをいう．
+\end{mydef}
+
+左 $R$ 加群 $N$ および左 $R$ 加群の準同型 $f \colon M_1 \lto M_2$ に対して
+\begin{align}
+    f_* &\colon \Hom{R}(N,\, M_1) \lto \Hom{R}(N,\, M_2),\; \varphi \lmto f \circ \varphi \\
+    f^* &\colon \Hom{R}(M_2,\, N) \lto \Hom{R}(M_1,\, N),\; \varphi \lmto \varphi \circ f
+\end{align}
+とおく．$f_*,\, f^*$ は $\mathbb{Z}$ 加群の準同型である．
+
+\begin{myprop}[label=prop:Hom-split]{}
+    \begin{enumerate}
+        \item $0 \lto M_1 \xrightarrow{f} M_2 \xrightarrow{g} M_3$ を左 $R$ 加群の完全列，$N$ を左 $R$ 加群とすると，$\mathbb{Z}$ 加群\footnote{i.e. 和について可換群}の完全列
+        \begin{align}
+            0 \lto \Hom{R}(N,\, M_1) \xrightarrow{f_*} \Hom{R}(N,\, M_2) \xrightarrow{g_*} \Hom{R}(N,\, M_3)
+        \end{align}
+        が成り立つ．
+        \item $M_1 \xrightarrow{f} M_2 \xrightarrow{g} M_3 \lto 0$ を左 $R$ 加群の完全列，$N$ を左 $R$ 加群とすると，$\mathbb{Z}$ 加群の完全列
+        \begin{align}
+            0 \lto \Hom{R}(M_3,\, N) \xrightarrow{g^*} \Hom{R}(M_2,\, N) \xrightarrow{f^*} \Hom{R}(M_3,\, N)
+        \end{align}
+        が成り立つ．
+        \item $0 \lto M_1 \xrightarrow{f} M_2 \xrightarrow{g} M_3 \lto 0$ を\textbf{分裂する}左 $R$ 加群の完全列，$N$ を左 $R$ 加群とすると，$\mathbb{Z}$ 加群の完全列
+        \begin{align}
+            &0 \lto \Hom{R}(N,\, M_1) \xrightarrow{f_*} \Hom{R}(N,\, M_2) \xrightarrow{g_*} \Hom{R}(N,\, M_3) \lto 0\\
+            &0 \lto \Hom{R}(M_3,\, N) \xrightarrow{g^*} \Hom{R}(M_2,\, N) \xrightarrow{f^*} \Hom{R}(M_1,\, N) \lto 0
+        \end{align}
+        が成り立つ．
+    \end{enumerate}
+\end{myprop}
+
+\begin{proof}
+    \begin{enumerate}
+        \item 　まず，$\varphi \in \Ker f_* \IFF f \circ \varphi = 0$ かつ $f$ は単射なので$\Ker f_* \subset \Im 0$ である\footnote{$f \colon M_1 \to M_2$ は単射だから $\Ker f = \{0\}$．故に $\forall x \in N$ に対して $f \bigl( \varphi(x) \bigr) = 0 \IFF \varphi(x) \in \Ker f = \{0\}$．i.e. $\varphi = 0$} ．
+        $\Ker f_* \supset \Im 0$ は明らかであり，$\Ker f_* = \Im 0$ が言えた．
+        
+        　次に，$g \circ f = 0$ なので 
+        \begin{align}
+            \psi \in \Im f_* \IFF \exists \alpha \in \Hom{R}(N,\, M_1),\; \psi = f \circ \alpha\IMP g_* \bigl( \psi \bigr) = g \circ f \circ \alpha = 0
+        \end{align}
+        が成り立ち，$\Ker g_* \supset \Im f_*$ がわかる．また，
+        \begin{align}
+            \psi \in \Ker g_* \IFF g \circ \psi = 0 \IMP \Im \psi \subset \Ker g = \Im f
+        \end{align}
+        が成り立つ．$f$ は単射だから\footnote{したがって $\forall x \in N$ に対して $\exists! y \in \Im f \subset M_2,\; \psi(x) = f(y)$ であり，写像 $\beta \colon N \to M_2,\; x \mapsto y$ はwell-defined．}
+        \begin{align}
+            \exists \beta \in \Hom{R}(N,\, M_2),\quad \psi = f \circ \beta = f_*(\beta) \in \Im f_*
+        \end{align}
+        が成り立つ．i.e. $\Ker g_* \subset \Im f_*$ である．
+        \item 　まず，$\varphi \in \Ker g^* \IFF \varphi \circ g = 0$ かつ $g$ が全射なので $\Ker g_* \subset \Im 0$ である\footnote{$g \colon M_2 \to M_3$ が全射なので $\forall x \in M_3,\; \exists y \in M_2,\; x = g(y)$．故に $\varphi(x) = (\varphi \circ g)(y) = 0$．i.e. $\varphi = 0$．}．
+        $\Ker g^* \supset \Im 0$ は自明なので $\Ker g^* = \Im 0$ が言えた．
+
+        　次に，$g \circ f = 0$ より
+        \begin{align}
+            \psi \in \Im g^* &\IFF \exists \alpha \in \Hom{R}(M_3,\, N),\; \psi = \alpha \circ g \IMP f^*(\psi) = \alpha \circ g \circ f = 0
+        \end{align}
+        が成り立ち，$\Ker f^* \supset \Im g^*$ がわかる．また，
+        \begin{align}
+            \psi \in \Ker f^* \IFF \psi \circ f = 0 \IMP \psi(\Im f) = 0
+        \end{align}
+        より $\Im f \subset\Ker \psi$ であるから，\hyperref[lem:fig:quomod-univ]{商加群の普遍性}より次の可換図式が成り立つ\footnote{$M_1 \xrightarrow{f} M_2 \xrightarrow{g} M_3 \to 0$ が完全列なので $\Im f = \Ker g$ かつ $M_3= \Im g$．よって準同型定理から $M_2/\Im f = M_2/\Ker g \cong M_3$．}：
+        \begin{figure}[H]
+            \centering
+            \begin{tikzcd}[row sep=large, column sep=large]
+                &M_2 \ar[r, "\psi"]\ar[d, "g"]           &N \\
+                &M_2/\Im f \cong M_3 \ar[ur, "\exists! h"'] &
+            \end{tikzcd}
+        \end{figure}%
+        i.e. $\psi = h \circ g = g^*(h) \in \Im g^*$ であり，$\Ker f^* \subset \Im g^*$ がわかった．
+        \item 　与えられた完全列が分裂するので，
+        \begin{align}
+            &\exists i_2 \in \Hom{R}(M_3,\,M_2),\; g \circ i_2 = 1_{M_3} \\
+            &\exists p_1 \in \Hom{R}(M_2,\,M_1),\; p_1 \circ f = 1_{M_1}
+        \end{align}
+        である．故に
+        \begin{align}
+            g_* \circ i_2{}_* &= (g \circ i_2)_* = 1_{M_3}{}_* = 1_{\Hom{R}(N,\, M_3)} \\
+            f^* \circ p_1{}^* &= (p_1 \circ f)^* = 1_{M_1}{}^* = 1_{\Hom{R}(M_1,\, N)}
+        \end{align}
+        なので，$\forall \varphi \in \Hom{R}(N,\, M_3),\; \forall \psi \in \Hom{R}(M_1,\, N)$ に対して
+        \begin{align}
+            \varphi &= g_* \bigl( i_2{}_*(\varphi) \bigr) \in \Im g_* \\
+            \psi &= f^* \bigl( p_2{}^*(\psi) \bigr) \in \Im f^*
+        \end{align}
+        が成り立つ．i.e. $\Im g_* = \Ker 0,\; \Im f^* = \Ker 0$ である．
+
+        残りは (1), (2) から従う．
+    \end{enumerate}
+    
+\end{proof}
+
+一般のコチェイン複体を定義する．
+
+\begin{mydef}[label=def:CCC]{コチェイン複体}
+    $R$ を可換環とする．加群と準同型の族 $C^\bullet = \Familyset[\big]{C^q,\,\delta^q \colon C^q \to C^{q+1}}{q \ge 0}$ が\textbf{$\bm{R}$ コチェイン複体}であるとは，
+    $\forall q \ge 0$ について $C^q$ が $R$-加群，$\delta^q$ が $R$ 準同型であって
+    \begin{align}
+        \delta^{q+1} \delta^q = 0
+    \end{align}
+    が成り立つことを言う．
+\end{mydef}
+
+\begin{itemize}
+    \item $\delta^q$ を\textbf{余境界写像} (coboundary map) と呼ぶ．
+    \item $C^q$ の部分加群
+    \begin{align}
+        Z^q(C^\bullet) \coloneqq \Ker \bigl( \delta^q \colon C^q \to C^{q+1} \bigr) 
+    \end{align}
+    を\textbf{第 $\bm{q}$ コサイクル群}，その元を\textbf{$\bm{q}$-コサイクル} ($q$-cocycle)，
+    \item $C^q$ の部分加群
+    \begin{align}
+        B^q(C^\bullet) \coloneqq \Im \bigl( \delta^{q-1} \colon C^{q-1} \to C^q \bigr) 
+    \end{align}
+    を\textbf{第 $\bm{q}$ コバウンダリー群}，その元を\textbf{$\bm{q}$-コバウンダリー} ($q$-coboundary) と呼ぶ．
+\end{itemize}
+
+\section{コチェイン写像}
+
+$C^\bullet = \Familyset[\big]{C^q,\, \delta^q}{q \ge 0},\;D^\bullet = \Familyset[\big]{D^q,\, \delta'{}^q}{q \ge 0}$ をチェイン複体とする．
+
+\begin{mydef}[label=def:cochainmap]{コチェイン写像}
+    準同型 $f_q \colon C^q \to D^q$ の族 $f_\bullet \coloneqq \Familyset[\big]{f_q}{q\ge 0}$ が\textbf{コチェイン写像} (cochain map) であるとは，$\forall q \ge 0$ に対して
+    \begin{align}
+        \delta'{}^q \circ f_q = f_{q+1} \circ \delta^q
+    \end{align}
+    が成り立つことを言う．i.e. 図式\ref{fig:cochainmap}が可換になると言うこと．
+\end{mydef}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzcd}[row sep=large, column sep=large]
+		&\cdots \ar[r, "\delta^{q-2}"]  &C^{q-1} \ar[d, "f_{q-1}"]\ar[r, "\delta^{q-1}"]  &C^{q} \ar[d, "f_{q}"]\ar[r, "\delta^{q}"]  &C^{q+1} \ar[d, "f_{q+1}"]\ar[r, "\delta^{q+1}"] &\cdots \\
+		&\cdots \ar[r, "\delta'{}^{q-2}"] &D^{q-1}                  \ar[r, "\delta'{}^{q-1}"] &D^{q} 		        \ar[r, "\delta'{}^{q}"] &D^{q+1}                  \ar[r, "\delta'{}^{q+1}"] & \cdots
+	\end{tikzcd}
+    \caption{コチェイン写像}
+    \label{fig:cochainmap}
+\end{figure}%
+
+
+
+\begin{mylem}[label=lem:chain1]{}
+    $\forall q \ge 0$ について以下が成り立つ：
+    \begin{align}
+        f_q \bigl( Z^q(C^\bullet) \bigr) &\subset Z^q(D^\bullet) \\
+        f_q \bigl( B^q(C^\bullet) \bigr) &\subset B^q(D^\bullet)
+    \end{align}
+\end{mylem}
+
+\begin{proof}
+    一つ目は
+    \begin{align}
+        z \in Z^q(C^\bullet) = \Ker \delta^q &\IFF \delta^q(z) = 0 \\
+        &\IMP \delta'{}^q \bigl( f_q(z) \bigr) = f_{q+1} \bigl( \delta^q(z) \bigr) = 0 \\
+        &\IFF f_q(z) \in Z^q(D^\bullet) = \Ker \delta'{}^q
+    \end{align}
+    二つ目は
+    \begin{align}
+        b \in B^q(C^\bullet) = \Ker \delta^q &\IFF \exists \beta \in C^{q-1},\; b = \delta^{q-1}(\beta)\\
+        &\IMP f_q(b) = \delta'{}^{q-1} \bigl( f_{q-1}(\beta) \bigr)  \in B^q(D^\bullet) = \Im \delta'{}^{q-1}
+    \end{align}
+\end{proof}
+
+いま，コチェイン写像 $f_\bullet \coloneqq \Familyset[\big]{f_q \colon C^q \to D^q}{q \ge 0}$ を与える．
+標準射影を
+\begin{align}
+    \pi \colon Z^q(D^\bullet) \to Z^q(D^\bullet) / B^q(D^\bullet), z \mapsto [z] = z + B^q(D^\bullet)
+\end{align}
+とおくと，
+補題\ref{lem:chain1}から
+\begin{align}
+    (\pi\circ f_q)\bigl( B^q(C^\bullet)\bigr) \subset \pi \bigl( B^q(D^\bullet) \bigr) = \{0_{Z^q(D^\bullet)/B^q(D^\bullet)} \}
+\end{align}
+が成り立つ．i.e. $B^q(C^\bullet) \subset \Ker \pi\circ f_q$ である．
+よって\hyperref[lem:quomod-univ]{商加群の普遍性}から，
+次のような可換図式を書くことができる：
+\begin{figure}[H]
+    \centering
+    \begin{tikzcd}[row sep=large, column sep=large]
+        Z^q(C^\bullet) \ar[d, "p"']\ar[r, "f_q"] &Z^q(D^\bullet) \ar[r, "\pi"]  &Z^q(D^\bullet)/B^q(D^\bullet)\\
+        Z^q(C^\bullet)/B^q(C^\bullet) \arrow[ur, dashed, blue, "\exists!\overline{f_q}"]\arrow[urr, dashed, red, "\exists!\overline{\pi \circ f_q}"']  & &
+    \end{tikzcd}
+    \caption{誘導準同型}
+    \label{fig:induced-cohom}
+\end{figure}%
+
+\begin{mydef}[label=def:induced-cochain]{コチェイン写像による誘導準同型}
+    図式\ref{fig:induced-cohom}中の赤字で示した準同型は\textbf{誘導準同型} (induced homomorphism) と呼ばれ，コホモロジー群の間の準同型を定める：
+    \begin{align}
+        f_* \coloneqq \overline{\pi \circ f_q} \colon H^q(C^\bullet) \to H^q(D^\bullet),\; [z] \mapsto [f_q(z)]
+    \end{align}
+\end{mydef}
+
+\section{特異コホモロジー}
+
+しばらくの間 $\mathbb{Z}$ 加群 $M$ を一つ取って固定する．
+\begin{mydef}[label=def:singularcochain]{特異 $q$ コチェイン}
+    位相空間 $X$ および $\forall q \ge 0$ に対して
+    \begin{align}
+        S^q(X;\, M) \coloneqq \Homo \bigl( S_q(X),\, M \bigr) 
+    \end{align}
+    と定義される $S^q(X;\, M)$ の元は\textbf{特異 $\bm{q}$ コチェイン} (sigular $q$-cochain) と呼ばれる．
+\end{mydef}
+
+双線型写像
+\begin{align}
+    \label{def:KroneckerPairing}
+    \dualip{\;}{\;} \colon S^q(X;\, M) \times S_q(X) \to M,\; (u,\, c) \mapsto u(c)
+\end{align}
+は\textbf{Kronecker pairing}と呼ばれる．
+
+\begin{mydef}[label=def:SCH-cochainmap]{特異コチェインの余境界写像}
+    境界写像 $\partial_{q+1} \colon S_{q+1}(X) \to S_q(X)$ の双対写像を
+    \begin{align}
+        \delta^q \colon S^q(X;\, M) \to S^{q+1}(X;\, M),\; u \mapsto u \circ \partial_{q+1}
+    \end{align}
+    と書く．
+\end{mydef}
+定義より以下が成り立つ：
+\begin{align}
+    \dualip{\delta^q u}{c} = \dualip{u}{\partial_{q+1} c}
+\end{align}
+
+前節の議論により
+\begin{align}
+    \delta^{q} \delta^{q-1} = 0
+\end{align}
+は分かっている．これは
+\begin{align}
+    \Im \delta^{q-1} \subset \Ker \delta^q
+\end{align}
+を意味するので，
+\begin{align}
+    Z^q\bigl(S^\bullet(X;\, M)\bigr) &\coloneqq \Ker \delta^q \\
+    B^q \bigl( S^\bullet(X;\, M) \bigr) &\coloneqq \Im \delta^{q-1}
+\end{align}
+と書くと次のような構成ができる：
+\begin{mydef}[label=def:SCH]{特異コホモロジー}
+    族 $\Familyset[\big]{S^q(X;\, M),\, \delta^q}{q\ge 0}$ は位相空間 $X$ の\textbf{特異コチェイン複体} (singular cochain complex) と呼ばれ，そのコホモロジーは
+    \begin{align}
+        H^q(X;\, M) \coloneqq Z^q\bigl(S^\bullet(X;\, M)\bigr)/B^q\bigl(S^\bullet(X;\, M)\bigr)
+    \end{align}
+    と書かれる．$H^q(X;\, M)$ は $\mathbb{Z}$ 加群 $M$ に値を持つ $X$ の\textbf{特異コホモロジー群} (singular cohomology group with coefficients in the $\mathbb{Z}$ module $M$) と呼ばれる．
+\end{mydef}
+
+\subsection{Kronecker写像}
+
+\hyperref[def:KroneckerPairing]{Kronecker pairing}は双線型写像
+\begin{align}
+    \label{eq:Kronecker-induced}
+    \dualip{\;}{\;} \colon H^q(X;\, M) \times H_q(X) \to M,\; ([u],\, [z]) \mapsto u(z)
+\end{align}
+を誘導する．
+
+\begin{mylem}[]{}
+    上で定義した写像 $\dualip{\;}{\;} \colon H^q(X;\, M) \times H_q(X) \to M$ はwell-definedである．
+\end{mylem}
+
+\begin{proof}
+    $\forall f \in S^{q-1}(X;\, M),\; \forall c \in S_{q+1}(X)$ に対して
+    \begin{align}
+        u + \delta^{q-1} f &\in [u] = u + \Im \delta^{q-1} , \\
+        z + \partial_{q+1} c &\in [z] = z + \Im \partial_{q+1} 
+    \end{align}
+    である．これらのpairingを計算すると
+    \begin{align}
+        (u + \delta^{q-1} f)(z + \partial_{q+1} c) &= (u + f \partial_q)(z + \partial_{q+1} c) \\
+        &= u(z) + f \bigl( \partial_q z \bigr) + u \bigl( \partial_{q+1}c \bigr) + \partial_q \partial_{q+1} c \\
+        &= u(z) + f \bigl( \partial_q z \bigr) + (\delta^q u)(c)  
+    \end{align}
+    $u \in \Ker \delta^q,\; z \in \Ker \partial_q$ なので結局
+    \begin{align}
+        (u + \delta^{q-1} f)(z + \partial_{q+1} c) = u(z)
+    \end{align}
+    が従う．
+\end{proof}
+
+\begin{mydef}[label=def:KroneckerMap]{Kronecker写像}
+    \eqref{eq:Kronecker-induced}の双線型写像が定める準同型
+    \begin{align}
+        \kappa \colon H^q(X;\, M) \to \Homo \bigl( H_q(X),\, M \bigr),\; [u] \mapsto \dualip{[u]}{\mhyphen}
+    \end{align}
+    を\textbf{Kronecker写像} (Kronecker map) と呼ぶ．
+\end{mydef}
+
+\subsection{関手性}
+
+$f \in \Hom{\TOP}(X,\, Y)$ をとる．補題\ref{lem:SC-chain}より，$f$ はチェイン写像
+\begin{align}
+    f_* \colon S_\bullet(X) \longrightarrow S_\bullet(Y)
+\end{align}
+を誘導した．
+
+一方，
+\begin{align}
+    f^* \colon S^q(\textcolor{red}{Y};\, M) \longrightarrow S^q(\textcolor{red}{X};\, M),\; u \longmapsto u \circ f_*
+\end{align}
+という準同型も考えられる． $f_*$ がチェイン写像であることから
+\begin{align}
+    (\delta^q \circ f^*)(u) &= f^*(u) \circ \partial_{q+1} \\
+    &= u \circ (f_* \circ \partial_{q+1}) \\
+    &= (u \circ \partial'_{q+1}) \circ f_* \\
+    &= f^*(u \circ \partial'_{q+1}) \\
+    &= (f^* \circ \delta'{}^q)(u)
+\end{align}
+が成立するので $f^*$ は\hyperref[def:cochainmap]{コチェイン写像}の要件を充たす．
+従って\hyperref[def:induced-cochain]{コチェイン写像による誘導準同型}を考えることができる：
+\begin{align}
+    f^* \colon H^q(\textcolor{red}{Y};\, M) \longrightarrow H^q(\textcolor{red}{X};\, M),\; [u] \mapsto [f^*(u)]
+\end{align}
+$\forall [u] \in H^q(Y;\, M),\; [z] \in H_q(X)$ に対して
+\begin{align}
+    \dualip{f^*[u]}{[z]} &= \dualip{[f^* u]}{[z]} \\
+    &= (f^* \circ u)(z) \\
+    &= (u \circ f_*)(z) \\
+    &= u \bigl( f_*(z) \bigr) \\
+    &= \dualip{[u]}{f_*[z]}
+\end{align}
+が成り立つ．この意味で $f^*$ は $f_*$ の一種の双対写像であると言える．
+
+\begin{myprop}[label=prop:co-property1]{コホモロジーの関手性}
+    $H^q$ は位相空間の圏 $\TOP$ から $\mathbb{Z}$ 加群の圏 $\MOD{\mathbb{Z}}$ への\textbf{反変}関手となる．
+    i.e. $\forall X,\, Y,\, Z \in \Obj{\TOP}$ と $\forall q \ge 0$ に対して以下が成り立つ：
+    \begin{enumerate}
+        \item 恒等写像 $1_X \in \Hom{\TOP}(X,\, X)$ について
+        \begin{align}
+            (1_X)^* = 1_{H^q(X;\ M)} \in \Hom{\MOD{\mathbb{Z}}}\bigl( H^q(X;\, M),\, H^q(X;\, M) \bigr) 
+        \end{align}
+        \item 連続写像 $f \in \Hom{\TOP}(X,\, Y),\; g \in \Hom{\TOP}(Y,\, Z)$ について
+        \begin{align}
+            (g\circ f)^* = \textcolor{red}{f^* \circ g^*} \in \Hom{\MOD{\mathbb{Z}}}\bigl( H^q(\textcolor{red}{Z};,\, M),\, H_q(\textcolor{red}{X};\, M) \bigr) 
+        \end{align}
+    \end{enumerate}
+\end{myprop}
+
+% \begin{proof}
+%     $\forall z \in Z^q(X) = \Ker \bigl(\partial_q \colon S_q(X) \to S_{q-1}(X) \bigr)$ をとる．
+%     補題\ref{lem:SC-chain}の対応 $\mhyphen_q \colon \Hom{\TOP}(X,\, Y) \to \Hom{\MOD{\mathbb{Z}}} \bigl( S_q(X),\, S_q(Y) \bigr)$ 
+%     により定まる\hyperref[def:chainmap]{チェイン写像}の\hyperref[def:induced-chain]{誘導準同型}を考えることで
+%     \begin{align}
+%         (1_X)_q{}_*([z]) &= [(1_X)_q(z)] = [z] = 1_{H_q(X)}([z]), \\
+%         (g \circ f)_q{}_*([z]) &= [(g\circ f)_q(z)] = [(g_q \circ f_q)(z)] = (g_q{}_* \circ f_q{}_*) ([z]).
+%     \end{align}
+% \end{proof}
+
+% \section{空間対のコホモロジー}
+
+% \textbf{空間対 $\bm{(X,\, A)}$ の特異コチェイン複体}を次のように定義する：
+% \begin{align}
+%     S^q(X,\, A;\, M) \coloneqq \Hom{R} \bigl( S_q(X,\, A;,\, M),\, M \bigr) 
+% \end{align}
+
+% \subsection{コホモロジー完全列}
+
+% \begin{mylem}[label=lem:split]{}
+%     $R$ 加群の短完全列
+%     \begin{align}
+%         0 \longrightarrow A \longrightarrow B \longrightarrow C \longrightarrow 0
+%     \end{align}
+%     が与えられたとする．このとき，
+%     \begin{align}
+%         0 &\longrightarrow \Hom{R}(C,\, M) \longrightarrow \Hom{R}(B,\, M) \longrightarrow \Hom{R}(A,\, M) \longrightarrow 0, \\
+%         0 &\longrightarrow \Hom{R}(M,\, A) \longrightarrow \Hom{R}(M,\, B) \longrightarrow \Hom{R}(M,\, C) \longrightarrow 0
+%     \end{align}
+%     は完全列である．
+% \end{mylem}
+
+% \begin{proof}
+%     \begin{enumerate}
+%         \item 
+%     \end{enumerate}
+    
+% \end{proof}
+
+\section{コホモロジーのEilenberg-Steenrod公理系}
+
+\begin{myaxiom}[label=ax:cohomology]{コホモロジーのEilenberg-Steenrod公理系}
+    \textbf{コホモロジー理論}は
+    \begin{align}
+        H^\bullet \colon \{\text{pairs, ct. maps}\} \longrightarrow \{\text{graded}\; R\; \text{modules},\; \text{homomorphisms}\}
+    \end{align}
+    なる反変関手であって，以下の公理を充たすものである：
+    \begin{description}
+        \item[\textbf{(ES-ch1)}] 任意の空間対 $(X,\, A)$ および非負整数 $q \ge 0$ に対して\textbf{自然な}準同型
+        \begin{align}
+            \delta \colon H^q(A) \longrightarrow H^{q+1}(X,\, A)
+        \end{align}
+        が存在して，包含写像 $i \colon A \hookrightarrow X,\; j \colon X \hookrightarrow (X,\, A)$ を用いて次のホモロジー長完全列が誘導される：
+        \begin{align}
+            \cdots \to H^{q-1}(A) \xrightarrow{\delta} H^q(X,\, A) \xrightarrow{j^*} H_q(X) \to \cdots 
+        \end{align}
+        \item[\textbf{(ES-ch2)}] 2つの連続写像 $f,\, g \colon (X,\, A) \to (Y,\, B)$ がホモトピックならば，誘導準同型 $f^*,\, g^* \colon H^q(Y,\, B) \to H^q(X,\, A)$ は
+        \begin{align}
+            f^* = g^*
+        \end{align}
+        となる．
+        \item[\textbf{(ES-h3)}]  $U \subset X \AND \overline{U} \subset \Int(A)$ ならば，包含写像 $i \colon (X \setminus U,\, A \setminus U) \longrightarrow (X,\, A)$ が誘導する準同型
+        \begin{align}
+            i^* \colon H^q(X,\, A) \longrightarrow H^q(X \setminus U,\, A \setminus U)
+        \end{align}
+        は$\forall q \ge 0$ に対して同型となる．
+        \item[\textbf{(ES-h4)}] $q \neq 0$ ならば $H^q(*) = 0$．
+    \end{description}
+\end{myaxiom}
+
+\end{document}

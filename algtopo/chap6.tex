@@ -1,0 +1,670 @@
+\documentclass[algtopo_main]{subfiles}
+\mathchardef\mhyphen="2D
+\begin{document}
+
+\setcounter{chapter}{5}
+
+\chapter{ファイバー束}
+
+% \section{層と\v{C}echコホモロジー}
+
+% 位相空間 $X$ を1つとって固定する．$X$ の位相 $\mathscr{O}_X$ の上には圏の構造が入る：
+% \begin{itemize}
+%     \item $\Obj{\mathbb{O}_X} \coloneqq \mathscr{O}_X$
+%     \item $\forall U,\, V \in \Obj{\mathbb{O}_X}$ に対して，射を
+%     \begin{align}
+%         \Hom{\mathbb{O}_X} (U,\, V) \coloneqq
+%         \begin{cases}
+%             \{\text{包含写像}\; U \hookrightarrow V\}, & U\subset V \\
+%             \emptyset, & U\not\subset V
+%         \end{cases}
+%     \end{align}
+%     と定義する．ただし，$U \subset V$ のとき $\Hom{\mathbb{O}_X} (U,\, V)$ は一点集合である．
+% \end{itemize}
+
+% \subsection{前層と層}
+
+% \begin{mydef}[label=def:presheaf, breakable]{前層}
+%     $\Cat{C}$ を圏とする．位相空間 $X$ 上の，$\Cat{C}$ に値をとる\textbf{前層} (presheaf) とは，関手
+%     \begin{align}
+%         P \colon \OP{\mathbb{O}_X} \lto \Cat{C}
+%     \end{align}
+%     のことを言う．
+
+%     i.e. $X$ の開集合 $U,\, V,\, W \in \Obj{\mathbb{O}_X}$ であって $W \subset V \subset U$ を充たすものに対して
+%     \begin{itemize}
+%         \item 圏 $\Cat{C}$ における対象 $P(U) \in \Obj{\Cat{C}}$
+%         \item 圏 $\Cat{C}$ における射 $P(\textcolor{red}{V} \hookrightarrow \textcolor{red}{U}) \in \Hom{\Cat{C}} \bigl( P(U),\, P(V) \bigr)$ （これを\textbf{制限写像}と呼ぶ）
+%     \end{itemize}
+%     を対応させ，
+%     \begin{itemize}
+%         \item $P(U \stackrel{\mathrm{id}_U}{\hookrightarrow} U) = \mathrm{id}_{P(U)}$
+%         \item $P(W \hookrightarrow V \hookrightarrow U) = P(W \hookrightarrow V) \circ P(V \hookrightarrow U)$
+%     \end{itemize}
+%     を充たすようなもの\footnote{$W \hookrightarrow V \hookrightarrow U$ は開集合の包含写像の合成のことなので，$W \hookrightarrow U$ と書いても良い．}のこと．
+% \end{mydef}
+
+% $C^\infty$ 多様体 $M$ に対して関手 $C^\infty \colon \OP{\mathbb{O}_M} \lto \SETS$ を
+% \begin{itemize}
+%     \item $C^\infty(U) \coloneqq \bigl\{\, f \colon U \lto \mathbb{R} \bigm| C^\infty\;\text{関数} \,\bigr\} $
+%     \item $C^\infty(V \hookrightarrow U) \colon C^\infty(U) \lto C^\infty (V),\; f \lmto f|_V$
+% \end{itemize}
+% と定義すると $C^\infty$ は\hyperref[def:presheaf]{前層}になる．
+
+% より一般に，ファイバー束 $E \xrightarrow{\pi} B$ の底空間 $B$ に対して関手 $\Gamma \colon \OP{\mathbb{O}_B} \lto \SETS$ を
+% \begin{itemize}
+%     \item $\Gamma(U) \coloneqq \bigl\{\, s \colon U \lto \pi^{-1}(U) \bigm| \text{切断} \,\bigr\}$
+%     \item $\Gamma (V \hookrightarrow U) \colon \Gamma(U) \lto \Gamma(V),\; s \lmto s|_V$
+% \end{itemize}
+% と定義すると $\Gamma$ は\hyperref[def:presheaf]{前層}になる．
+
+% 位相空間 $X$ 上の，圏 $\Cat{C}$ に値をとる\hyperref[def:presheaf]{前層}の圏 $\PSH{X}{\Cat{C}}$ とは，3つ組
+% \begin{itemize}
+%     \item $\Obj{\PSH{X}{\Cat{C}}} \coloneqq \bigl\{ \text{前層}\; P \colon \mathbb{O}_X \lto \Cat{C}\bigr\}$
+%     \item $\Hom{\PSH{X}{\Cat{C}}} (P,\, Q) \coloneqq \bigl\{\text{自然変換}\; \tau \colon P \lto Q \bigr\}$
+%     \item \hyperref[def:nat]{自然変換}の合成
+% \end{itemize}
+% のことである．射の方はわかりにくいかもしれないが，要は任意の\hyperref[def:presheaf]{前層} $P,\, Q \colon \mathbb{O}_X \lto \Cat{C}$ に対する集合族
+% \begin{align}
+%     \tau \coloneqq \Familyset[\big]{\tau_U \in \Hom{\mathcal{C}} \bigl( P(U),\, Q(U) \bigr)  }{U \in \Obj{\OP{\mathbb{O}_X}}}
+% \end{align}
+% であって，$X$ の任意の開集合 $U,\, V \; \text{s.t.}\; U \subset V$ に対して定まる図式
+% \begin{center}
+%     \begin{tikzcd}[row sep=large, column sep=large]
+%         &P(U) \ar[d, red, "\tau_U"]\ar[r, "P(V \hookrightarrow U)"] &P(V) \ar[d, red, "\tau_V"] \\
+%         &Q(U) \ar[r, "Q(V \hookrightarrow U)"] &Q(V)
+%     \end{tikzcd}
+% \end{center}
+% が可換になるようなもののことである．
+% 証明はしないが，次の命題が成り立つことが知られている：
+
+% \begin{myprop}[label=def:Psh-category]{}
+%     $X$ を位相空間とする．
+%     圏 $\Cat{A}$ がアーベル圏ならば，
+%     \hyperref[def:presheaf]{前層}の圏 $\PSH{X}{\Cat{A}}$ もアーベル圏である．
+% \end{myprop}
+
+% 層を定義する．大雑把に言うと，層とは\hyperref[def:presheaf]{前層}であって，部分開被覆による貼り合わせを記述できるようなものである．
+% \begin{mydef}[label=sheaf, breakable]{層}
+%     圏 $\Cat{C}$ においていつでも積が存在するとする．
+%     \hyperref[def:presheaf]{前層} $F \in \Obj{\PSH{X}{\Cat{C}}}$ が\textbf{層} (sheaf) であるとは，
+%     位相空間 $X$ の任意の開集合 $U \in \Obj{\mathbb{O}_X}$ の任意の開被覆 $\Familyset[\big]{U_i}{i \in I}$ をとったときに以下が成り立つことを言う：
+%     \begin{itemize}
+%         \item $\Cat{C}$ における射\footnote{$p_i$ は積の標準的射影}
+%         \begin{align}
+%             \prod_{i \in I} F(U_i) \xrightarrow{p_{\textcolor{red}{i}}} F(U_i) \xrightarrow{F(U_i  \cap U_j \hookrightarrow U_i)} F(U_i \cap U_j),\quad \forall \textcolor{red}{i} \in I
+%         \end{align}
+%         が引き起こす唯一の\footnote{\hyperref[prop:univ-dp]{積の普遍性}を使った}射を
+%         \begin{align}
+%             \pi_1 \colon \prod_{i \in I} F(U_i) \lto \prod_{i,\, j \in I} F(U_i \cap U_j),
+%         \end{align}
+%         \item $\Cat{C}$ における射
+%         \begin{align}
+%             \prod_{i \in I} F(U_i) \xrightarrow{p_{\textcolor{blue}{j}}} F(U_j) \xrightarrow{F(U_i  \cap U_j \hookrightarrow U_i)} F(U_i \cap U_j), \quad \forall \textcolor{blue}{j} \in I
+%         \end{align}
+%         が引き起こす唯一の射を
+%         \begin{align}
+%             \pi_2 \colon \prod_{i \in I} F(U_i) \lto \prod_{i,\, j \in I} F(U_i \cap U_j),
+%         \end{align}
+%         \item $\Cat{C}$ における射
+%         \begin{align}
+%             F(U_i \hookrightarrow U) \colon F(U) \lto F(U_i),\quad \forall i \in I
+%         \end{align}
+%         が引き起こす唯一の射を
+%         \begin{align}
+%             \iota \colon F(U) \lto \prod_{i \in I} F(U_i)
+%         \end{align}
+%     \end{itemize}
+%     とおいたとき，$\Cat{C}$ における射 $\pi_1,\, \pi_2 \colon \prod_{i \in I} F(U_i) \lto \prod_{i,\, j \in I} F(U_i \cap U_j)$ の\hyperref[def:equalizer]{イコライザ}が $\iota \colon F(U) \lto \prod_{i \in I} F(U_i)$ と一致する．
+% \end{mydef}
+
+% ややこしいようだが，$\Cat{C} = \SETS$ の場合は同型
+% \begin{align}
+%     F(U) \xrightarrow{\cong} \Bigl\{\, \Dpmember[\big]{x_i}{i} \in \prod_{i \in I} F(U_i) \Bigm| \substack{\forall i,\, j \in I,\\ F(U_i\cap U_j \hookrightarrow U_i)(x_i) = F(U_i \cap U_j \hookrightarrow U_j)(x_j)}   \,\Bigr\} 
+% \end{align}
+% が $\iota$ によって誘導されることと同値である．
+
+% $\Cat{C}$ がアーベル圏のときは，図式
+% \begin{align}
+%     0 \lto F(U) \xrightarrow{\iota} \prod_{i \in I} F(U_i) \xrightarrow{\pi_1 - \pi_2} \prod_{i,\, j \in I} F(U_i \cap U_j)
+% \end{align}
+% が完全列になることと同値である．
+
+% \subsection{\v{C}echコホモロジー}
+
+\section{ファイバー束}
+
+\textcolor{red}{(2023/5/11) この章は未完である} 
+
+\subsection{位相群の作用}
+
+位相空間 $X$ の\textbf{同相群} (homeomorphism group) $\Homeo(X)$  とは
+\begin{itemize}
+    \item 集合 $\Homeo(X) \coloneqq \bigl\{\, f \colon X \lto X \bigm| \textbf{同相写像} \,\bigr\} $
+    \item 単位元を恒等写像 $\mathrm{id}_X$
+    \item 群演算を連続写像の合成
+    \item 逆元を逆写像
+\end{itemize}
+として定義される群のことを言う．
+
+$G$ を\textbf{位相群}とする．i.e. $G$ は位相空間であり，かつ群であって写像
+\begin{itemize}
+    \item 積 $\mu \colon G \times G \lto G,\; (g,\, h) \lmto gh$
+    \item 逆元 $\pi \colon G \lto G,\; g \lmto g^{-1}$
+\end{itemize}
+が連続写像であるようなものである．
+
+\begin{mydef}[label=def:TG-action, breakable]{位相群の作用}
+    \begin{itemize}
+        \item \textbf{位相群} $G$ が位相空間 $X$ へ\textbf{作用している}とは，
+        群準同型 $\psi \colon G \lto \Homeo(X)$ が存在して写像
+        \begin{align}
+            \Theta \colon G \times X \lto X,\; (g,\, x) \lmto \psi(g)(x)
+        \end{align}
+        が連続写像となることを言う．写像 $\Theta$ のことを $G$ の $X$ への\textbf{左作用} (left action) と呼び，$\bm{g \cdot x} \coloneqq \Theta(g,\, x)$ と略記する．
+        \item 点 $x \in X$ の\textbf{軌道} (orbit) とは，集合
+        \begin{align}
+            G \cdot x \coloneqq \bigl\{\, g \cdot x \in X\bigm| g \in G \,\bigr\} 
+        \end{align}
+        のこと．
+        \item 同値関係
+        \begin{align}
+            \sim\; \coloneqq \bigl\{\, (x,\, y) \in X \times X \bigm| y \in G \cdot x \,\bigr\} 
+        \end{align}
+        による商集合を\textbf{軌道空間} (orbit space) と呼び $\bm{X/G}$ と書く．
+        \item \textbf{不動点集合} (fixed set) とは，集合
+        \begin{align}
+            X^G \coloneqq \bigl\{\, x \in X \bigm| \forall g\in G,\; g \cdot x = x \,\bigr\} 
+        \end{align}
+        のこと．
+        \item 群の作用は $\forall x \in X,\; \forall g \in G \setminus \{1_G\},\; g \cdot x \neq x$ を充たすとき\textbf{自由} (free) と呼ばれる．
+        \textbf{軌道空間}
+        \item 群の作用は群準同型 $\psi \colon G \lto \Homeo(X)$ が単射のとき\textbf{効果的} (effective) と呼ばれる\footnote{従ってこのとき $\Ker \psi = \{1_G\}$ である．i.e. 自明な作用 $(g,\, x) \lmto x$ は $1_G \cdot x$ のみである．}．
+    \end{itemize}
+\end{mydef}
+
+\begin{marker}
+    定義\ref{def:TG-action}において，$\Homeo(X)$ に位相（コンパクト開位相など）を入れる場合がある．この場合は $G \lto \Homeo(X)$ が連続であることを定義とする．
+\end{marker}
+
+\subsection{ファイバー束}
+
+\begin{mydef}[label=def:FB, breakable]{ファイバー束}
+    位相群 $G$ は位相空間 $F$ に\hyperref[def:TG-action]{効果的に作用}しているとする．
+    $F$ をファイバー，$G$ を\textbf{構造群} (structure group) に持つ\textbf{ファイバー束} (fiber bundle) とは，
+    \begin{itemize}
+        \item 位相空間 $E,\, B,\, F$
+        \item 連続な全射 $\pi \colon E \lto B$
+        \item 同相写像\footnote{部分空間 $\pi^{-1}(U) \subset E$ には $E$ からの相対位相が入っているものとする．}の集合
+        \begin{align}
+            \mathrm{LT}(B) \coloneqq \bigl\{\, \varphi \colon U \times F \lto \pi^{-1}(U) \bigm| U \in \Obj{\mathbb{O}_B} \,\bigr\}.
+        \end{align}
+        $\mathrm{LT}(B)$ の元 $\varphi \colon U \times F \lto \pi^{-1}(U)$ のことを\textbf{ $\bm{U}$ 上の局所自明化}と呼ぶ．
+        \item 位相群 $G$
+    \end{itemize}
+    の6つ組であって以下を充たすもののこと：
+    \begin{enumerate}
+        \item $\mathrm{LT}(B)$ の任意の元 $\varphi \colon U \times F \lto \pi^{-1}(U)$ に対して図式\ref{cmtd:FB-LT}が可換になる．
+        \item $B$ の各点 $x \in B$ は，その上に局所自明化が存在するような開近傍 $x \in U \subset B$ を持つ．
+        \item $U$ 上の任意の局所自明化 $\varphi \colon U \times F \lto \pi^{-1}(U)$ および $B$ の開集合 $V \subset U$ に対して，制限 $\varphi|_{V \times F}$ は $V$ 上の局所自明化になる．
+        \item $U$ 上の任意の局所自明化 $\varphi,\, \varphi' \colon U \times F \lto \pi^{-1}(U)$ に対し，
+        \textbf{変換関数} (transition function) と呼ばれる\underline{連続写像} $\theta_{\varphi,\, \varphi'} \colon U \lto G$ が存在して
+        \begin{align}
+            \varphi'(u,\, f) = \varphi \bigl(u,\, \theta_{\varphi,\, \varphi'} (u) \cdot f\bigr)\quad \forall u \in U,\, \forall f \in F
+        \end{align}
+        が成り立つ．
+        \item $\mathrm{LT}(B)$ は条件 (1)-(4) を充たす連続写像の集合として最大のものである．
+    \end{enumerate}
+    このようなファイバー束を $\bm{F \hookrightarrow E \xrightarrow{\pi} B}$ で表す．
+\end{mydef}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzcd}[row sep=large, column sep=large]
+        &U \times F \ar[rr, "\varphi"] \ar[dr, "\mathrm{proj}_1"'] & &\pi^{-1}(U) \ar[dl, "\pi"] \\
+        & &U &
+    \end{tikzcd}
+    \caption{局所自明性．$\mathrm{proj}_1$ は第1成分への射影である．}
+    \label{cmtd:FB-LT}
+\end{figure}%
+
+
+
+\begin{myprop}[label=prop:cocycle]{ファイバー束の復元}
+	\begin{itemize}
+        \item 位相空間 $B,\, F$
+        \item 位相群 $G$ の $F$ への\hyperref[def:TG-action]{作用}
+        \item 族 $\mathcal{T} \coloneqq \Familyset[\big]{(U_\lambda,\, \theta_\lambda)}{\lambda \in \Lambda}$．ただし $U_\alpha$ は $B$ の開集合で，$\theta_\alpha \colon U_\alpha \lto G$ は連続写像である．
+    \end{itemize}
+    が与えられ，以下の条件を充たしているとする：
+    \begin{enumerate}
+        \item 
+        \begin{align}
+            B = \bigcup_{\lambda \in \Lambda} U_\lambda
+        \end{align}
+        \item \begin{align}
+            (U_\alpha,\, \theta_\alpha) \in \mathcal{T} \AND W \subset U_\alpha\IMP (W,\, \theta_\alpha|_W) \in \mathcal{T}
+        \end{align}
+        \item 
+        \begin{align}
+            (U,\, \theta_\alpha),\, (U,\, \theta_\beta) \in \mathcal{T} \IMP (U,\, \theta_\alpha \cdot \theta_\beta) \in \mathcal{T}
+        \end{align}
+        ただし，$\forall u \in U$ に対して $(\theta_\alpha \cdot \theta_\beta)(u) \coloneqq \theta_\alpha (u) \theta_\beta (u) \in G$ と略記した．
+        \item $\mathcal{T}$ は条件 (1)-(3) を充たすもののうち最大の集合である．
+    \end{enumerate}
+    
+	このとき，\hyperref[def:FB]{ファイバー束} $F \hookrightarrow E \xrightarrow{\pi} B$ であって，構造群を $G$，変換関数を $\theta_\alpha$ とするものが存在する．
+\end{myprop}
+\begin{proof}
+    % 従って
+    % \begin{align}
+    %     \theta_\alpha (u) \theta_\alpha (u)
+    % \end{align}
+    
+	% \begin{align}
+	% 	t_{\alpha\beta}(b) \circ t_{\beta\alpha} (b) = t_{\alpha\alpha}(b) = \mathrm{id}_{F},\quad \forall b \in U_\alpha \cap U_\beta
+	% \end{align}
+	% だから $t_{\beta\alpha}(b) = t_{\alpha\beta}(b)^{-1}$ である．
+
+	$\forall \lambda \in \Lambda$ に対して，$U_\lambda \subset B$ には底空間 $B$ からの相対位相を入れ，$U_\lambda \times F$ にはそれと $F$ の位相との積位相を入れることで，直和位相空間
+	\begin{align}
+	\mathcal{E} \coloneqq \coprod_{\lambda \in \Lambda} U_\lambda \times F
+	\end{align}
+	を作ることができる\footnote{$\mathcal{E}$ はいわば，「貼り合わせる前の互いにバラバラな素材（局所自明束 $U_\alpha \times F$）」である．証明の以降の部分では，これらの「素材」を $U_\alpha \cap U_\beta \neq \emptyset$ の部分に関して「良い性質を持った接着剤 $\{ \theta_{\lambda} \}$」を用いて「貼り合わせる」操作を，位相を気にしながら行う．}．
+	$\mathcal{E}$ の任意の元は $(\textcolor{red}{\lambda},\, b,\, f) \in  \textcolor{red}{\Lambda} \times  U_\lambda \times F$ と書かれる．
+
+	さて，$\mathcal{E}$ 上の二項関係 $\sim$ を以下のように定める：
+	\begin{align}
+		\label{eq.prop9-1_equiv}
+		\sim\; \coloneqq \Bigl\{ \bigl( \, (\alpha,\, b,\, f),\, (\beta,\, c,\, h)\, \bigr) \in \mathcal{E} \times \mathcal{E} \Bigm| b=c \AND \substack{\exists (U_\lambda,\, \theta_\lambda) \in \mathcal{T}\; \mathrm{s.t.}\; U_\lambda \subset U_\alpha \cap U_\beta,\\ f = \theta_\lambda(c) \cdot h} \Bigr\} 
+	\end{align}
+    \begin{description}
+        \item[\textbf{反射律}] $\forall \lambda \in \Lambda$ に対して定数写像 $1_\lambda \colon U_\lambda \lto G,\; u \lmto 1_G$ は連続である．従って条件 (4) より $(U_\lambda,\, 1_\lambda) \in \mathcal{T}$ が言えるので，$\forall (\alpha,\, b,\, f) \in \mathcal{E}$ に対して $f = 1_G \cdot f = 1_\alpha (b) \cdot f$．i.e. $(\alpha,\, b,\, f) \sim (\alpha,\, b,\, f).$
+        \item[\textbf{対称律}] 位相群の定義より，$\forall (U_\lambda,\, \theta_\lambda) \in \mathcal{T}$ に対して $\uirm{\theta_\lambda}{inv} \colon U_\lambda \lto G,\; u \lmto \theta_\lambda(u)^{-1}$ は連続写像であり，もし $(U_\lambda,\, \uirm{\theta_\lambda}{inv}) \in \mathcal{T}$ ならば条件 (2), (3) を充たす．よって条件 (4) より実際に $(U_\lambda,\, \uirm{\theta_\lambda}{inv}) \in \mathcal{T}$ であり，
+        \begin{align}
+            (\alpha,\, b,\, f) \sim (\beta,\, c,\, h) &\IMP b=c \AND \exists (U_\lambda,\, \theta_\lambda) \in \mathcal{T},\, U_\lambda = U_\alpha \cap U_\beta,\; f = \theta_{\lambda}(c) \cdot h \\
+            &\IMP b=c \AND (U_\lambda,\, \uirm{\theta_\lambda}{inv}) \in \mathcal{T},\; \uirm{\theta_\lambda}{inv}(c) \cdot f = \bigl(\uirm{\theta_\lambda}{inv}(c) \theta_\lambda(c) \bigr) \cdot h \\
+            &\IFF c=b \AND (U_\lambda,\, \uirm{\theta_\lambda}{inv}) \in \mathcal{T},\; h = \uirm{\theta_\lambda}{inv}(b) \cdot f \\
+            &\IFF (\beta,\, c,\, h) \sim (\alpha,\, b,\, f).
+        \end{align}
+        \item[\textbf{推移律}] 条件 (2), (3) より
+        \begin{align}
+            &(\alpha,\, b,\, f) \sim (\beta,\, c,\, h),\; (\beta,\, c,\, h) \sim (\gamma,\, d,\, k) \\
+            &\IMP b = c \AND c = d \\ 
+            &\qquad \AND \exists (U_\lambda,\, \theta_\lambda),\,(U_\mu,\, \theta_\mu) \in \mathcal{T},\;  U_\lambda = U_\alpha \cap U_\beta,\, U_\mu = U_\beta \cap U_\gamma,\; f = \theta_\lambda (c) \cdot h,\, h = \theta_\mu (d) \cdot k \\
+            &\IMP b = d \AND (U_\alpha \cap U_\beta \cap U_\gamma,\, \theta_\beta \cdot \theta_\gamma) \in \mathcal{T},\; f = (\theta_\beta \cdot \theta_\gamma)(d) \cdot k \\
+            &\IFF (\alpha,\, b,\, f) \sim (\beta,\, d,\, k).
+        \end{align}
+    \end{description}
+    従って $\sim$ は同値関係である．
+	$E \coloneqq \mathcal{E}/{\sim}$ とおき，商写像を $\mathcal{E} \twoheadrightarrow E,\; (\alpha,\, b,\, f)  \lmto [ (\alpha,\, b,\, f)]$ と書くことにする．
+	集合 $E$ には商位相を入れる．
+    %このとき開集合 $\{\alpha\} \times U_\alpha \times F \subset \mathcal{E}$ は $\mathrm{pr}$ によって $E$ の開集合 $\mathrm{pr}(\{\alpha\} \times U_\alpha \times F) \subset{E}$ に移される．ゆえに $E$ は $\bigl\{\, \mathrm{pr}(\{\alpha\} \times U_\alpha \times V_\beta)\, \bigr\}$ を座標近傍にもつ位相空間である%（ここに $\{ V_\beta \}$ は，\cinfty 多様体 $F$ の座標近傍である）．
+	
+	次に連続な全射 $\pi \colon E \twoheadrightarrow B$ を
+	\begin{align}
+		\pi \bigl(\, [(\lambda,\, b,\, f)]\, \bigr) \coloneqq b
+	\end{align}
+	と定義する．$\sim$ の定義\eqref{eq.prop9-1_equiv}より $(\lambda,\, b,\, f) \sim (\mu,\, c,\, h)$ ならば $b=c$ なので $\pi$ はwell-definedである．
+    次に $\forall \lambda \in \Lambda$ に対して% $U_\lambda$ 上の\hyperref[def:FB]{局所自明化}を 
+	\begin{align}
+		\varphi_\lambda \colon U_\lambda \times F \lto \pi^{-1}(U_\lambda),\; (b,\, f) \lmto [(\lambda,\, b,\, f)]
+	\end{align}
+	と定義して
+    \begin{align}
+        \mathrm{LT}(B) \coloneqq \Familyset[\big]{\varphi_\lambda}{\lambda \in \Lambda}
+    \end{align}
+    とおく．
+    \begin{enumerate}
+        \item $\forall \varphi_\lambda \in \mathrm{LT}(B)$ を1つとると，$\forall (b,\, f) \in U_\lambda \times F$ に対して
+        \begin{align}
+            (\pi \circ \varphi_\lambda)(b,\, f) = \pi([(\lambda,\, b,\, f)]) = b = \mathrm{proj}_1(b,\, f)
+        \end{align}
+        が成り立つ．i.e. 集合 $\mathrm{LT}(B)$ の任意の元は\hyperref[cmtd:FB-LT]{局所自明性}を充たす．
+        \item 条件-(2) より $\forall x \in B$ に対して $x \in U_\lambda$ となるような $\lambda \in \Lambda$ が存在する．構成より，このとき $\varphi_\lambda \in \mathrm{LT}(B)$ である．
+        \item $\forall \varphi_\lambda \in \mathrm{LT}(B)$ を1つとる．条件-(2) より $B$ の部分集合 $W$ が $W \subset U_\lambda$ を充たすなら $(W,\, \theta_\lambda|_W) \in \mathcal{T}$ が成り立つ．従って $\exists \mu \in \Lambda,\; W = U_\mu$ が成り立つから，制限 $\varphi_\lambda|_{W \times F}$ は $\varphi_\mu \in \mathrm{LT}(B)$ と等しい．
+        \item $\forall \varphi_\alpha,\, \varphi_\beta \in \mathrm{LT}(B)$ をとる．同値関係\eqref{eq.prop9-1_equiv}の定義より $\forall (b,\, f) \in (U_\alpha \cap U_\beta) \times F$ に対して
+        \begin{align}
+            \varphi_\beta (b,\, f) = [(\beta,\, b,\, f)] = [(\alpha,\, b,\, \theta_\alpha(b) \cdot f)] = \varphi_\alpha \bigl( b,\, \theta_\alpha(b) \cdot f \bigr) 
+        \end{align}
+        が成り立つ．
+        \item 条件-(4) より，$\mathrm{LT}(B)$ は\hyperref[def:FB]{ファイバー束の定義}の条件-(5) を充たす．
+    \end{enumerate}
+    以上で題意のファイバー束の構成が完了した．
+\end{proof}
+
+% \section{例}
+
+\begin{myexample}[]{$S^2$ 上のファイバー束}
+    \begin{itemize}
+        \item ファイバー $S^1$
+        \item 底空間 $S^2$
+        \item 構造群 $\gSO{2}$ 
+    \end{itemize}
+    として，\hyperref[def:FB]{ファイバー束} $S^1 \hookrightarrow E \to S^2$ を構成しよう．
+
+    $1$ の原始 $m$ 乗根を $\zeta_m \coloneqq e^{2\pi \iunit / m}$ とおく．写像
+    \begin{align}
+        \psi \colon \mathbb{Z}_m \lto \Homeo(S^{2n+1}),\; \zeta_m^k \lmto \bigl(\,(z_1,\, \cdots,\, z_{n+1}) \lmto (\zeta_m^k z_1,\, \cdots,\, \zeta_m^k z_{n+1}) \bigr) 
+    \end{align}
+    は群準同型になる．実際，$\mathbb{Z}_m$ の勝手な元 $\zeta_m^k,\, \zeta_m^l$ を取ってくると， $\forall z = (z_1,\, \cdots,\, z_{n+1}) \in S^{2n+1}$ に対して
+    \begin{align}
+        \abs{\psi \bigl( \zeta_m^k \bigr) (z)} = \sum_{i=1}^{n+1} \abs{\zeta_m^k z_{i}}^2 = \sum_{i=1}^{n+1} \abs{z_i}^2 = 1
+    \end{align}
+    なので $\Im \psi \subset \Homeo(S^{2n+1})$ であり，かつ
+    \begin{align}
+        \psi (1) (z) &= z = \mathrm{id}_{S^{2n+1}} (z),\\
+        \psi \bigl( \zeta_m^k \zeta_m^l \bigr) (z) &= \zeta_m^k \zeta_m^l z = \zeta_m^k \bigl(\zeta_m^l z\bigr) = \Bigl(\psi \bigl( \zeta_m^k \bigr) \circ \psi \bigl( \zeta_m^l \bigr)\Bigr)(z)
+    \end{align}
+    が成り立つ．さらに写像
+    \begin{align}
+        \mathbb{Z}_m \times S^{2n+1} \lto S^{2n+1},\; \bigl(\zeta_m^k,\, z\bigr) \lmto \psi \bigl( \zeta_m^k \bigr) (z)
+    \end{align}
+    は連続写像だから，$\mathbb{Z}_m$ の $S^{2n+1}$ への\hyperref[def:TG-action]{作用}が定義された．
+
+    \begin{mydef}[label=def:lens]{レンズ空間}
+        \begin{itemize}
+            \item $2n+1$ 次元の\textbf{レンズ空間} (lens space) とは，$\mathbb{Z}_m$ の $S^{2n+1}$ への\hyperref[def:TG-action]{作用}による\hyperref[def:TG-action]{軌道空間}
+            \begin{align}
+                L_m^{2n+1} \coloneqq S^{2n+1}/\mathbb{Z}_m
+            \end{align}
+            のことを言う．
+            \item 自然な包含 $S^{2n+1} \hookrightarrow S^{2n+3},\; (z_1,\, \cdots,\, z_{n+1}) \lmto (z_1,\, \cdots,\, z_{n+1},\, 0)$ によって，$2n+1$ 次元レンズ空間の族 $\bigl\{ L_m^{2n+1} \bigr\}_{n\in \mathbb{Z}_{\ge 0}}$ は\hyperref[def:directedSet]{有向集合} $(\mathbb{Z}_{\ge 0},\, \le)$ 上の図式をなす．
+            \textbf{無限次元レンズ空間}とは，この図式上の\hyperref[prop:univ-indprojlim]{帰納極限}
+            \begin{align}
+                \bm{L^\infty_m} \coloneqq \varinjlim_{n \in \mathbb{Z}_{\ge 0}} L_m^{2n+1}
+            \end{align}
+            のことを言う．
+        \end{itemize}
+    \end{mydef}
+    $m \ge 1$ とし，$3$ 次元\hyperref[def:lens]{レンズ空間} $L^3_m$ を考える．$(z_1,\, z_2) \in S^3$ の同値類を $[(z_1,\, z_2)] \in S^3 / \mathbb{Z}_m$ と書くと，写像
+    \begin{align}
+        \pi \colon L_m^3 \lto S^2 = \mathbb{C} \cup \{ \infty \},\; [(z_1,\, z_2)] \lmto \frac{z_1}{z_2}
+    \end{align}
+    は\footnote{$S^2 = \mathbb{C} \cup \{\infty\}$ と言うのは，Riemann球面を考えている．}well-definedな全射になる．
+    \begin{description}
+        \item[\textbf{$\bm{m=0}$}] 全空間 $E = S^2 \times S^1$ として，自明束
+        \begin{align}
+            S^1 \hookrightarrow S^2 \times S^1 \xrightarrow{\mathrm{proj}_1} S^2
+        \end{align}
+        \item[\textbf{$\bm{m=1}$}] 全空間 $E = L^3_1 = S^3$ として，\textbf{Hopf-fibration}
+        \begin{align}
+            S^1 \hookrightarrow S^3 \xrightarrow{\pi} S^2
+        \end{align}
+        \item[\textbf{$\bm{m > 1}$}] Hopf写像 $S^3 \lto S^2$ は商写像 $S^3 \twoheadrightarrow L^3_m$ を使った合成
+        \begin{align}
+            S^3 \twoheadrightarrow L^3_m \xrightarrow{\pi} S^2
+        \end{align}
+        からなる．このときファイバーは $S^1 / \mathbb{Z}_m \approx S^1$ となり，結果的に $S^1$ バンドル
+        \begin{align}
+            S^1 \hookrightarrow S^3 \to S^2
+        \end{align}
+        が実現される．
+    \end{description}
+\end{myexample}
+
+% \subsection{$S^2$ 上のファイバー束}
+
+
+\section{主束}
+
+位相群 $G$ は，自分自身に\textbf{左移動} (left transition) として左から\hyperref[def:TG-action]{作用}しているとする：
+\begin{align}
+    G \lto \Homeo(G),\; g \lmto (x \lmto gx)
+\end{align}
+
+\begin{mydef}[label=def:GB]{主束}
+    位相空間 $B$ 上の\textbf{主 $\bm{G}$ 束} (principal $G$-bundle) とは，
+    \hyperref[def:FB]{ファイバー束} $\textcolor{red}{G} \hookrightarrow P \xrightarrow{\pi} B$ であって，構造群 $G$ がファイバー $G$ に左移動として\hyperref[def:TG-action]{作用}しているもののこと．
+\end{mydef}
+
+\begin{myprop}[label=prop:GB-right]{主 $G$ 束における右作用}
+    \hyperref[def:GB]{主 $G$ 束} $G \hookrightarrow P \xrightarrow{\pi} B$ を与える．
+    このとき，位相群 $G$ は全空間 $P$ に右から\hyperref[def:TG-action]{自由に作用}し，その\hyperref[def:TG-action]{軌道空間}が $B$ になる．
+\end{myprop}
+
+\begin{proof}
+    $\forall p \in P$ を1つとる．
+    $p \in \pi^{-1}(U)$ を充たす任意の $B$ の開集合 $U \subset B$ をとり，その上の任意の\hyperref[def:FB]{局所自明化} $\varphi \colon U \times G \lto \pi^{-1}(U)$ をとる．
+    $\varphi$ は同相写像だから $\varphi(u,\, g) = p$ を充たす $u \in U,\, g \in G$ が存在する．
+    以上の準備の下で，写像 $\phi \colon P \times G \lto P$ を
+    \begin{align}
+        \phi (p,\, g') \coloneqq \varphi(u,\, g g')
+    \end{align}
+    と定義する．
+    \begin{description}
+        \item[\textbf{$\bm{\phi}$ はwell-defined}] $U$ 上の別の局所自明化 $\varphi' \colon U \times G \lto \pi^{-1}(U)$ をとる．このとき変換関数 $\theta_{\varphi,\, \varphi'} \colon U \lto G$ が存在して
+        \begin{align}
+            p = \varphi(u,\, g) = \varphi'(u,\, \theta_{\varphi,\, \varphi'}(u) \cdot g)
+        \end{align}
+        が成り立つ．故に
+        \begin{align}
+            \varphi(u,\, gg') = \varphi' \bigl( u,\, \theta_{\varphi,\, \varphi'}(u) \cdot (gg') \bigr) = \varphi' \bigl( u,\, (\theta_{\varphi,\, \varphi'} (u) \cdot g)g' \bigr)
+        \end{align}
+        であり，$\phi$ は局所自明化の取り方によらない．
+        \item[\textbf{$\phi$ は自由}] $\forall p \in \pi^{-1}(U)$ をとる．$\phi(p,\, g') = p$ ならば
+        \begin{align}
+            \phi(p,\, g') = \varphi(u,\, gg') = p = \varphi(u,\, g 1_G)
+        \end{align}
+        が成り立つが，局所自明化は全単射なので $gg' = g \IMP g' = 1_G$ が従う．i.e. 右作用 $\phi$ は\hyperref[def:TG-action]{自由}である．
+        \item[\textbf{軌道空間が $\bm{B}$}] $G$ の $U \times G$ への右作用による\hyperref[def:TG-action]{軌道空間}は $(U \times G) / G = U \times \{1_G\} = U$ となる\footnote{$\forall g \in G$ に対して $g = 1_G \cdot g \in 1_G \cdot G$ である．}から，$G$ の $P$ への右作用 $\phi \colon P \times G \lto P$ による軌道空間は $P/G = B$ となる．
+    \end{description}
+    
+\end{proof}
+
+\begin{mytheo}[label=thm:GB-orbit]{}
+    コンパクトHausdorff空間 $P$ と，$P$ に\hyperref[def:TG-action]{自由に作用}しているコンパクトLie群 $G$ を与える．このとき，\hyperref[def:TG-action]{軌道空間}への商写像
+    \begin{align}
+        \pi\colon P \twoheadrightarrow P/G
+    \end{align}
+    は\hyperref[def:GB]{主 $G$ 束}である．
+\end{mytheo}
+
+\begin{proof}
+    ~\cite[p.88 Theorem 5.8.]{Bredon}を参照
+\end{proof}
+
+\subsection{主束からファイバー束を構成する}
+
+位相群 $G$ が位相空間 $F,\, F'$ の両方に\hyperref[def:TG-action]{作用}しているとする．
+このとき $G$ を構造群に持つ\hyperref[def:FB]{ファイバー束} $F \hookrightarrow E \xrightarrow{\pi} B$ を与えると，
+命題\ref{prop:cocycle}より\underline{全く同一の変換関数を持つ}別のファイバー束 $F' \hookrightarrow E' \xrightarrow{\pi'} B$ を定義することができる．
+このような操作を\textbf{ファイバーの取り替え}と呼ぶ．
+特に，ファイバーの取り替えによって，構造群 $G$ を持つファイバー束
+\begin{figure}[H]
+    \centering
+    \begin{tikzcd}[row sep=large, column sep=large]
+        F \ar[r] &E \ar[d, "\pi"] \\
+        &B
+    \end{tikzcd}
+\end{figure}%
+から主 $G$ 束
+\begin{figure}[H]
+    \centering
+    \begin{tikzcd}[row sep=large, column sep=large]
+        G \ar[r] &P(E) \ar[d, "\pi"] \\
+        &B
+    \end{tikzcd}
+\end{figure}%
+を得ることができる（これを\textbf{underlying principal bundle}と呼ぶ）．
+
+逆に，命題\ref{prop:cocycle}を使って与えられた主 $G$ 束と位相群 $G$ の位相空間 $F$ への作用からファイバー束を得ることもできる
+命題\ref{prop:cocycle}を使わない構成法もある：
+\begin{myprop}[label=prop:Borel-const, breakable]{Borel構成}
+    $G \hookrightarrow P \xrightarrow{\pi} B$ を\hyperref[def:GB]{主 $G$ 束}とし，位相群 $G$ の位相空間 $F$ への\hyperref[def:TG-action]{作用} $\Theta \colon G \times F \lto F$ を与える．
+    \begin{itemize}
+        \item 
+        積空間 $P \times F$ 上の同値関係を次のように定義する\footnote{$G$ は命題\ref{prop:GB-right}の方法で $P$ に右から\hyperref[def:TG-action]{自由に作用}しているとする．}：
+        \begin{align}
+            \sim \; \coloneqq \bigl\{\, \bigl(\,(p,\, f),\, (p \cdot g,\, g^{-1} \cdot f)\,\bigr) \in (P \times F) \times (P \times F)\bigm| g \in G \,\bigr\} 
+        \end{align}
+        同値関係 $\sim$ による商空間を $P \times_G F \coloneqq (P\times F)/{\sim}$ とおく．
+        \item $(p,\, f) \in P \times F$ の $\sim$ による同値類を $[p,\, f]$ と書く．このとき写像
+        \begin{align}
+            q \colon P \times_G F \lto B,\; [p,\, f] \lmto \pi(p)
+        \end{align}
+        はwell-definedである．
+    \end{itemize}
+    このとき，$F \hookrightarrow P \times_G F \xrightarrow{q} B$ は構造群 $G$ を持ち，\textbf{変換関数が $\bm{G \hookrightarrow P \xrightarrow{\pi} B}$ と同じ}であるような\hyperref[def:FB]{ファイバー束}になる．
+\end{myprop}
+
+\begin{proof}
+    
+\end{proof}
+
+% \begin{mytheo}[label=thm:local-coefficient]{}
+%     弧状連結（かつ半局所単連結な）空間 $B$ 上の任意の局所係数は，可換群 $A$ を用いて
+%     \begin{align}
+%         A \hookrightarrow \tilde{B} \times_{\pi_1(B)} A \xrightarrow{q} B
+%     \end{align}
+%     の形をとる．i.e. $B$ の普遍被覆空間 $\tilde{B}$ による\hyperref[def:GB]{主 $\pi_1(B)$ 束} $\pi_1(B) \hookrightarrow \tilde{B} \xrightarrow{\pi} B$ から\hyperref[prop:Borel-const]{Borel構成}によって得られる．
+%     ただし，基本群 $\pi_1(B)$ の可換群 $A$ への作用は，群準同型 $\pi_1(B) \lto \Aut(A)$ によって与えられる．
+% \end{mytheo}
+
+\section{構造群の収縮}
+
+$G$ を構造群とするファイバー束 $F \hookrightarrow E \xrightarrow{\pi} B$ を，
+部分位相群 $H \subset G$ を構造群に持つファイバー束と見做せる場合がある．このようなとき，構造群が\textbf{$\bm{H}$ に収縮した} (reduced to $H$) という．
+
+\begin{myprop}[]{}
+    位相群 $G$ およびその位相部分群 $H \subset G$ を与える．
+    $H$ は $G$ に左移動として作用し，$H \hookrightarrow Q \xrightarrow{\pi} B$ が\hyperref[def:GB]{主 $H$ 束}であるとする．
+
+    このとき，\hyperref[prop:Borel-const]{Borel構成}による $G \hookrightarrow Q \times_H G \xrightarrow{q} B$ は主 $G$ 束である．
+\end{myprop}
+
+\begin{proof}
+    
+\end{proof}
+
+\begin{mydef}[label=def:reducible]{収縮可能}
+    \begin{itemize}
+        \item 与えられた主 $G$ 束 $G \hookrightarrow E \xrightarrow{\pi} B$ に対して，
+        構造群 $G$ が部分群 $H \subset G$ に\textbf{収縮できる}とは，ある主 $H$ 束 $H \hookrightarrow Q \xrightarrow{q} B$ が存在して可換図式\ref{cmtd:reduce}が成り立ち，かつ写像 $r$ が $G$-同値になることを言う．
+        \item （必ずしも主束でない）一般のファイバー束に対して構造群が収縮するとは，underlying principal bundleが収縮することをいう．
+    \end{itemize}
+\end{mydef}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzcd}[row sep=large, column sep=large]
+        &Q \times_H G \ar[rr, "r"]\ar[dr, "q"] & &E \ar[dl, "\pi"] \\
+        & &B &
+    \end{tikzcd}
+    \caption{構造群の収縮}
+    \label{cmtd:reduce}
+\end{figure}%
+
+\section{束写像と引き戻し}
+
+\begin{mydef}[label=def:bundle-morphism]{束写像}
+    構造群 $G$ およびファイバー $F$ を持つ2つの\hyperref[def:FB]{ファイバー束} $F \hookrightarrow E \xrightarrow{\pi} B,\; F \hookrightarrow E' \xrightarrow{\pi'} B'$ を与える．
+
+    \textbf{ファイバー束の射} (morphism of fiber bundle) とは，連続写像の組 $(\tilde{f} \colon E \lto E',\, f \colon B \lto B')$ であって以下の条件を充たすもののこと：
+    \begin{itemize}
+        \item 図式\ref{cmtd:bundle-morphism}が可換になる
+        \item $\forall b \in B$ に対し，$b \in U$ を充たす $B$ の任意の開集合 $U$ と，その上の任意の局所自明化 $\phi \colon U \times F \lto \pi^{-1}(U)$ をとる．また，$f(b) \in U'$ を充たす任意の $B'$ の開集合 $U'$，および $U'$ 上の任意の局所自明化 $\phi' \colon U' \times F \lto \pi'{}^{-1}(U')$ をとる． このとき，合成
+        \begin{align}
+            \{b\} \times F \xrightarrow{\phi} \pi^{-1}(\{b\}) \xrightarrow{\tilde{f}} p'{}^{-1} \bigl( \{f(b)\} \bigr) \xrightarrow{\phi'{}^{-1}} \bigl\{ f(b) \bigr\} \times F
+        \end{align}
+        は連続写像 $F \lmto F,\; f \lmto \theta_{\phi,\, \phi'} (b) \cdot f$ に等しい．
+        \item 特に，写像 $U \cap f^{-1}(U') \lto G,\; b \lmto \theta_{\phi,\, \phi'}(b)$ は連続である．
+    \end{itemize}
+\end{mydef}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzcd}[row sep=large, column sep=large]
+        &E\ar[r, "\tilde{f}"] \ar[d, "\pi"] &E' \ar[d, "\pi'"] \\
+        &B \ar[r, "f"] &B'
+    \end{tikzcd}
+    \caption{束写像}
+    \label{cmtd:bundle-morphism}
+\end{figure}%
+
+\begin{itemize}
+    \item \textbf{ファイバー束の同型射}とは，定義\ref{def:bundle-morphism}の意味での束写像 $(\tilde{f},\, f)$ であって，逆向きの束写像 $(\tilde{g},\, g)$ が存在して合成が恒等射になるようなもののことを言う．
+    \item \textbf{ゲージ変換} (gauge transformation) とは，ファイバー束 $F \hookrightarrow E \xrightarrow{\pi} B$ から自分自身への束写像 $(g,\, \mathrm{id}_B)$ のことを言う．i.e. 図式\ref{cmtd:gauge}が可換になる．
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzcd}[row sep=large, column sep=large]
+        &E \ar[dr, "\pi"]\ar[rr, "g"] & &E \ar[dl, "\pi"] \\
+        & &B &
+    \end{tikzcd}
+    \caption{ゲージ変換}
+    \label{cmtd:gauge}
+\end{figure}%
+
+\begin{marker}
+    ゲージ変換全体の集合は群をなす
+\end{marker}
+
+\begin{mydef}[label=def:FB-pullback]{引き戻し}
+    構造群 $G$ を持つファイバー束 $F \hookrightarrow E \xrightarrow{\pi} B$ と，連続写像 $f \colon B' \lto B$ を与える．
+    ファイバー束 $F \hookrightarrow E \xrightarrow{\pi} B$ の\textbf{引き戻し} (pullback) とは，以下の2つ組のことを言う：
+    \begin{itemize}
+        \item 位相空間
+        \begin{align}
+            f^*(E) \coloneqq \bigl\{\, (b',\, e) \in B' \times E \bigm| \pi(e) = f(b') \,\bigr\} 
+        \end{align}
+        \item 連続な全射
+        \begin{align}
+            q \colon f^* (E) \lto B',\; (b',\, e) \lmto b'
+        \end{align}
+    \end{itemize}
+\end{mydef}
+
+引き戻しの定義から，図式\ref{cmtd:FB-pullback}は可換図式になる．
+\begin{figure}[H]
+    \centering
+    \begin{tikzcd}[row sep=large, column sep=large]
+        &f^*(E) \ar[d, "q"]\ar[r, twoheadrightarrow] &E \ar[d, "\pi"] \\
+        &B' \ar[r, "f"] &B
+    \end{tikzcd}
+    \caption{引き戻し}
+    \label{cmtd:FB-pullback}
+\end{figure}%
+
+
+\begin{myprop}[label=prop:FB-pullback]{}
+    ファイバー束 $F \hookrightarrow E \xrightarrow{\pi} B$ の\hyperref[def:FB-pullback]{引き戻し}は構造群 $G$ を持つファイバー束 $F \hookrightarrow f^*(E) \xrightarrow{q} B'$ をなす．
+
+    また，標準的射影 $f^*(E) \lto E$ は\hyperref[def:bundle-morphism]{束写像}になる．
+\end{myprop}
+
+\begin{proof}
+    
+\end{proof}
+
+\begin{myprop}[]{}
+    構造群 $G$ を持つ2つのファイバー束 $F \hookrightarrow E' \xrightarrow{\pi'} B',\; F \hookrightarrow E \xrightarrow{\pi} B$ と，定義\ref{def:bundle-morphism}の意味での束写像 $(\tilde{f},\, f)$ を与える（可換図式\ref{cmtd:prop-FBp-1}）．
+    このとき図式\ref{cmtd:prop-FBp-2}に示す分解  $f^* \circ \beta = \tilde{f}$ が存在して $(\beta,\, \mathrm{id}_{B'})$ が\hyperref[def:bundle-morphism]{束写像}となる．
+\end{myprop}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.4\columnwidth}
+        \centering
+        \begin{tikzcd}[row sep=large, column sep=large]
+            &E' \ar[d, "\pi'"]\ar[r, "\tilde{f}"] &E \ar[d, "\pi"] \\
+            &B' \ar[r, "f"] &B
+        \end{tikzcd}
+        \caption{}
+        \label{cmtd:prop-FBp-1}
+    \end{subfigure}
+    \hspace{5mm}
+    \begin{subfigure}{0.4\columnwidth}
+        \centering
+        \begin{tikzcd}[row sep=large, column sep=large]
+            &E' \ar[dr, "\pi'"]\ar[r, red, dashed, "\beta"] &f^*(E) \ar[d, "q"]\ar[r, "f^*"] &E \ar[d, "\pi"] \\
+            & &B' \ar[r, "f"] &B
+        \end{tikzcd}
+        \caption{}
+        \label{cmtd:prop-FBp-2}
+    \end{subfigure}
+\end{figure}%
+
+
+\end{document}

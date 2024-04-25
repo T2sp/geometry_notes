@@ -1,0 +1,28 @@
+\begin{myaxiom}[label=ax.inner]{内積の公理} 
+	\label{eq.g_V}
+	\label{eq.43}
+\begin{mydef}[label=def.adj]{随伴写像}
+\begin{mydef}[label=def.Riemann]{Riemann多様体}
+\begin{mydef}[label=def.matric_index]{計量の指数，Lorentz計量}
+		\label{eq.up}
+		\label{eq.down}
+	\label{eq.hom_V}
+\begin{mylem}[label=lem.flat_1]{}
+	\label{eq.G_V*}
+	\label{eq.sharp}
+\begin{mydef}[label=def.k-form_inner]{$k$-形式の内積} 
+\begin{myprop}[label=orthonormal_k-form]{$\extp^k(V^*)$ の正規直交基底}
+\begin{mydef}[label=hodge]{ $\star$ } 
+\begin{myprop}[label=prop.vol]{体積要素の表示}
+		&= \det \left( \pdv{x^\mu}{y^{\nu}} \right) \dd{y^1} \wedge \cdots \wedge \dd{y^n} \label{eq.prop5-1-1}
+\begin{myprop}[label=prop.Hodgestar]{$\star$ の性質}
+	\label{eq.Hodge_action}
+\begin{mydef}[label=def.k-form_inner2]{$k$-形式の内積その2}
+\begin{mydef}[label=def.adj_extdiff]{随伴外微分作用素}
+\begin{myprop}[label=prop.adj_extdiff]{随伴性}
+\begin{myprop}[label=prop.adj_extdiff2]{}
+\begin{mydef}[label=def.Laplacian]{Laplacian} 
+\begin{myprop}[label=prop.Laplacian]{Laplacianの性質}
+			&= \ipdual{\delta \omega}{\delta\eta} + \ipdual{\dd{\eta}}{\dd{} \omega} \label{eq.prop5-8} \\
+\begin{mytheo}[label=thm.Hodge]{Hodgeの定理} 
+\begin{mytheo}[label=thm.Hodge_decomp]{Hodge分解}

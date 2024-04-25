@@ -1,0 +1,610 @@
+\documentclass[geometry_main]{subfiles}
+
+\begin{document}
+
+\setcounter{chapter}{6}
+
+\chapter{Riemann幾何学の紹介}
+
+\section{多脚場}
+
+計量 $g$ の表現行列 $[\, g_{\mu\nu}\, ]$ は多様体 $M$ の各点 $p \in M$ において対称行列なので，直交行列を用いて対角化することができる．さらにスケール変換を施すことで，指数 $(i,\, j)$ の計量テンソルは
+\begin{align} 
+	g_{\mu\nu} &= \mathring{g}_{ab} \vbud{e}{a}{\mu} \vbud{e}{b}{\nu} \label{eq.7-1} \\ 
+	\mathring{g}_{ab} &= \mathrm{diag}\bigl( \underbrace{-1,\, \dots ,\, -1}_{i},\, \underbrace{1,\, \dots ,\, 1}_{j} \bigr) 
+\end{align}
+と分解される．$\vbud{e}{a}{\mu}$ は\textbf{多脚場} (vierbein) と呼ばれる．この分解は双対基底 $\{\, (\dd{x^\mu})_p \, \}$ の取り替えに対応する：
+\begin{align} 
+	g_p = g_{\mu\nu} (\dd{x^\mu})_p \otimes (\dd{x^\nu})_p = \mathring{g}_{ab} \bigl( \vbud{e}{a}{\mu} (\dd{x^\mu})_p \bigr) \otimes \bigl( \vbud{e}{b}{\nu} (\dd{x^\nu})_p \bigr)
+\end{align}
+こうして得られた $T^*_pM$ の新しい基底を $\{\, \hat{\theta}^a \, \}$ と書こう．
+
+$\{\, \hat{\theta}^a\, \}$ に双対的な $T_pM$ の基底 $\{\, \hat{e}_b\, \}$ を $\hat{\theta}^a \bigl[ \hat{e}_b \bigr] = \delta^a_b$ を充たす接ベクトルとして定義する．自然基底からの基底の取り替えを $\hat{e}_a = \vbdu{E}{a}{\nu} \displaystyle \left( \pdv{}{x^\nu} \right)_p$ とおくと
+\begin{align} 
+	\tcbhighmath[]{\delta^a_b} = \hat{\theta}^a \bigl[ \hat{e}_b \bigr] = \vbud{e}{a}{\mu} (\dd{x^\mu})_p \left[ \vbdu{E}{b}{\nu} \left( \pdv{}{x^\nu} \right)_p \right] = \vbud{e}{a}{\mu} \vbdu{E}{b}{\nu} (\dd{x^{\mu}})_p \left[ \left( \pdv{}{x^\nu} \right)_p  \right] = \vbud{e}{a}{\mu} \vbdu{E}{b}{\nu} \delta^\mu_\nu = \tcbhighmath[]{ \vbud{e}{a}{\mu} \vbdu{E}{b}{\mu}}
+\end{align}
+であることがわかる．i.e. $[\, \vbud{e}{a}{\mu}\, ]$ と $[\, \vbdu{E}{b}{\nu}\, ]$ は互いに逆行列である\footnote{逆行列の存在は，$\det (\vbud{e}{a}{\mu}) = \sqrt{(-1)^i \det (g_{\mu\nu})} \neq 0$ であることによって保証されている．}．
+この事実と $[\, g_{\mu\nu}\, ]$ の逆行列 $[\, g^{\mu\nu}\, ]$ を使うと，式\eqref{eq.7-1}から
+\begin{align} 
+	\label{eq.7-2}
+	\vbdu{E}{a}{\mu} = g^{\mu\nu} \mathring{g}_{ab} \vbud{e}{b}{\nu}
+\end{align}
+であることがわかる．さらに，共役計量に対しては
+\begin{align} 
+	\label{eq.7-3}
+	g^{\mu\nu} = \mathring{g}^{ab} \vbdu{E}{a}{\mu} \vbdu{E}{b}{\nu}
+\end{align}
+が成立する．
+
+$\bigl\{ \hat{e}_a \bigr\}$ は正規直交系をなす：
+\begin{align} 
+	g_p[\hat{e}_a,\, \hat{e}_b] = \vbdu{E}{a}{\mu} \vbdu{E}{b}{\nu} g_p \left[ \pdv{}{x^{\mu}},\, \pdv{}{x^{\nu}} \right] = g_{\mu\nu} \vbdu{E}{a}{\mu} \vbdu{E}{b}{\nu} = \mathring{g}_{ab}.
+\end{align}
+この意味で $\{\, \hat{e}_a\, \}$ と $\{\, \hat{\theta}^a\, \}$ を\textbf{正規直交標構} (orthonormal frame) と呼ぶ．
+
+\section{接続形式・曲率形式}
+
+% ベクトル束のうち接束だけを先に定義しておこう．
+
+% \begin{mydef}[label=def.tangentbandle]{接束} 
+% 	\cinfty 多様体 $M$ を与える．集合
+% 	\begin{align} 
+% 		TM \coloneqq \bigcup_{p \in M} T_pM
+% 	\end{align}
+% 	と射影
+% 	\begin{align} 
+% 		&\pi \colon TM \to M,\\
+% 		&\pi(X) \coloneqq p,\quad \forall X \in T_pM \subset TM
+% 	\end{align}
+% 	の組のことを $M$ の\textbf{接束} (tangent bandle) と呼ぶ．
+% \end{mydef}
+
+% $\dim M = n$ とする．接束はそれ自身が自然に\underline{ $2n$ 次元\cinfty 多様体}になり，射影 $\pi$ は \cinfty 写像になる．このことを確認するには，$M$ の位相と\cinfty アトラスのみを使って $TM$ に位相と\cinfty アトラスを入れることができることを見ればよい：
+
+% $\mathcal{S}$ を $M$ のアトラスとする．一点 $p \in M$ を任意にとり，$p$ の周りのチャート $(U,\, \varphi) \in \mathcal{S}$ を一つとる．
+% \begin{align} 
+% 	\varphi(U) \subset \mathbb{R}^n 
+% \end{align}
+% である．また，微分同相写像 $\varphi \colon U \to \mathbb{R}^n$ は \cinfty 多様体 $U$ から \cinfty 多様体 $\mathbb{R}^n$ への \cinfty 写像と思うことで，微分写像（命題\ref{prop.differential-L}） $\varphi_* \colon T_p U \to T_{\varphi(p)} \mathbb{R}^n$ が誘導される：
+% \begin{align} 
+% 	\varphi_* (v) = a^\mu \left( \pdv{}{x^\mu} \right)_{\varphi(p)},\quad \forall v \in T_p U.
+% \end{align}
+
+% ここで，写像 $\tilde{\varphi}_U \colon \pi^{-1}(U) \to \varphi(U) \times \mathbb{R}^n \subset \tcbhighmath[]{\mathbb{R}^{2n}}$ を
+% \begin{align} 
+% 	\tilde{\varphi}_U(v) \coloneqq \bigl( x^1(p),\, \dots ,\, x^n(p);\; a^1,\, \dots ,\, a^n \bigr),\quad \forall v \in T_p U
+% \end{align}
+% として定義すれば，$\tilde{\varphi}$ は全単射になる． 
+% $TM$ の位相 $\mathscr{O}_{TM}$ は，各 $U$ に対して次の条件を充たすものとして定義する：
+% \begin{enumerate} 
+% 	\item $\pi^{-1}(U) \in \mathscr{O}_{TM}$ 
+% 	\item $\tilde{\varphi}_U$ は位相同型である
+% \end{enumerate}
+
+% $TM$ のアトラスは，
+% \begin{align} 
+% 	\tilde{\mathcal{S}} \coloneqq \Bigl\{ \bigl( \pi^{-1}(U),\, \tilde{\varphi}_U \bigr)  \Bigm| (U,\, \varphi) \in \mathcal{S} \Bigr\} 
+% \end{align}
+% とおけば良い．接ベクトルの変換則\ref{prop.trans}から $\tilde{\mathcal{S}}$ の座標変換は全て\cinfty 級である．
+
+\subsection{接束の接続・曲率}
+
+ベクトル束 $\pi \colon E \to M$ に対して，$\pi \circ \xi = \mathrm{id}_{M}$ となるような\cinfty 写像 $\xi \colon M \to E$ を\textbf{切断} (section) と呼ぶ．
+ベクトル束の切断全体の集合を $\Gamma(E)$ と書くと，$\Gamma(E)$ は $\cinftyf{M}$-加群となる．
+
+開集合 $U\subset M$ 上の $n$ 個の切断の組 $\{\, \xi_i \mid \xi_i \colon U \to E\, \}$ であって，$\forall p \in U$ において $\{\,\xi_i (p)\,\}$ が $E_p$ の基底となっているものを $U$ 上の\textbf{フレーム} (frame) と呼ぶ．
+
+\begin{mydef}[label=def.connection]{接続}
+	\cinfty 多様体 $M$ のベクトル束 $\pi \colon E \to M$ の\textbf{接続} (connection) とは，\underline{$\cinftyf{M}$-双線型写像}
+	\begin{align} 
+		\nabla \colon \vecfield{M} \times \Gamma(E) \to \Gamma(E)
+	\end{align}
+	であって，$\forall f \in \cinftyf{M},\; \forall X \in \vecfield{M},\; \forall \xi \in \Gamma(E)$ に対して
+	\begin{enumerate} 
+		\item $\nabla_{fX} \xi = f \nabla_X \xi$
+		\item $\nabla_{X}(f\xi) = f \nabla_X \xi + (Xf) \xi$
+	\end{enumerate}
+	を充たすもののことを言う．$\nabla_X \xi$ を $\xi$ の $X$ による\textbf{共変微分} (covariant differential) と呼ぶ．
+\end{mydef}
+
+\begin{mydef}[label=def.curvature]{曲率}
+	$\nabla$ をベクトル束 $ \pi \colon E \to M$ 上の接続とする．このとき，$\forall X,\, Y \in \vecfield{M}$ に対して
+	\begin{align} 
+		R(X,\, Y) \coloneqq \nabla_X \nabla_Y - \nabla_Y \nabla_X - \nabla_{\comm{X}{Y}}
+	\end{align}
+	を対応付ける写像 $R$ を，接続 $\nabla$ の\textbf{曲率} (curvature) と呼ぶ．
+\end{mydef}
+
+\begin{mylem}[]{曲率の性質}
+	$\forall X,\, Y \in \vecfield{M},\; \forall f,\, g,\, h \in \cinftyf{M},\; \forall \xi \in \Gamma(E)$ に対して以下が成立する：
+	\begin{enumerate} 
+		\item $R(Y,\, X) = - R(X,\, Y)$
+		\item $R(fX,\, gY)(h\xi) = fgh\, R(X,\, Y)(\xi)$
+	\end{enumerate}
+\end{mylem}
+
+\begin{proof} 
+	\begin{enumerate} 
+		\item Lie括弧積の定義より $[Y,\, X] = -[X,\, Y]$ であることと接続の定義\ref{def.connection}-(2) から明らか．
+		\item 　まず，$f = g \equiv 1$ の場合を示す．接続の定義\ref{def.connection}から
+		\begin{align} 
+			\nabla_X \nabla_Y (h\xi) &= \connect{X}{\bigl( h \connect{Y}{\xi} + (Yh) \xi \bigr) } \\
+			&= h \connect{X}{\connect{Y}{\xi}} + (Xh) \connect{Y}{\xi} + (Yh) \connect{X}{\xi} + (XYh) \xi.
+		\end{align}
+		同様にして
+		\begin{align} 
+			\nabla_Y \nabla_X (h\xi) = h \connect{Y}{\connect{X}{\xi}} + (Yh) \connect{X}{\xi} + (Xh) \connect{Y}{\xi} + (YXh) \xi.
+		\end{align}
+		となる．一方，
+		\begin{align} 
+			\connect{\comm{X}{Y}}{(h\xi)} = h \connect{\comm{X}{Y}}{\xi} + \bigl( \comm{X}{Y}h \bigr) \xi =  h \connect{\comm{X}{Y}}{\xi} + ( XYh )\xi - (YXh)\xi 
+		\end{align}
+		であるから，
+		\begin{align} 
+			\tcbhighmath[]{R(X,\, Y)(h\xi)} &= \nabla_X \nabla_Y (h\xi) - \nabla_X \nabla_Y (h\xi) -\connect{\comm{X}{Y}}{(h\xi)}  \\
+			&= h \bigl( \connect{X}{\connect{Y}{\xi}} - \connect{Y}{\connect{X}{\xi}} - \connect{\comm{X}{Y}}{\xi}\bigr) \\
+			&= \tcbhighmath[]{h R(X,\, Y)(\xi)}. \label{eq.lem7-1-1}
+		\end{align}
+		
+		　次に，一般の $f,\, g$ を考える．接続の定義\ref{def.connection}から
+		\begin{align} 
+			R(fX\, gY) &= \connect{fX}{\connect{gY}{}} - \connect{gY}{\connect{fX}{}} - \connect{\comm{fX}{gY}}{} \\
+			&= f\connect{X}{\bigl(g\connect{Y}{}\bigr)} - g\connect{Y}{\bigl(f\connect{X}{}\bigr)} - \connect{\comm{fX}{gY}}{} \\
+			&= fg \connect{X}{\connect{Y}{}} + f(Xg) \connect{Y}{} - gf \connect{Y}{\connect{X}{}} - g(Yf) \connect{X}{} - \connect{\comm{fX}{gY}}{}.
+		\end{align}
+		Lie括弧積の公式 $\comm{fX}{gY} = fg\comm{X}{Y} + f(Xg) Y - g(Yf)X$ と接続の双線型性を使うと
+		\begin{align} 
+			\connect{\comm{fX}{gY}}{} = fg \connect{\comm{X}{Y}}{} + f(Xg) \connect{Y}{} - g(Yf) \connect{X}{}
+		\end{align}
+		だから，
+		\begin{align} 
+			R(fX\, gY) = fg \bigl( \connect{X}{\connect{Y}{}} - \connect{Y}{\connect{X}{}} - \connect{\comm{X}{Y}}{} \bigr) = fg\, R(X,\, Y).
+		\end{align}
+		式\eqref{eq.lem7-1-1}と併せて $R(fX,\, gY)(h\xi) = fgh\, R(X,\, Y)(\xi)$ を得る．
+	\end{enumerate}
+\end{proof}
+
+
+\begin{marker} 
+	特に $\Gamma(TM) = \vecfield{M}$ であるから，\underline{接束上の}接続 $\nabla$ に対して $R(X,\, Y) Z \quad \bigl(\; \forall X,\, Y,\, Z \in \vecfield{M}\; \bigr)$ は $(1,\, 3)$-型テンソル場を成す．これを接続 $\nabla$ の\textbf{曲率テンソル}と呼ぶ．
+\end{marker}
+
+\begin{mydef}[label=def.torsion]{捩率}
+	$\nabla$ を\underline{接束} $ \pi \colon TM \to M$ 上の接続とする．このとき $\forall X,\, Y \in \vecfield{M}$ に対して
+	\begin{align} 
+		T(X,\, Y) \coloneqq \nabla_X Y - \nabla_Y X - \comm{X}{Y} \in \vecfield{M}
+	\end{align}
+	を対応させる写像 $T$ を\textbf{捩率} (torsion) と呼ぶ．$T$ が定義する $(1,\, 2)$-型テンソル場を\textbf{捩率テンソル}と呼ぶ．
+\end{mydef}
+
+\subsection{微分形式による $\nabla,\, R$ の局所表示}
+
+$\nabla$ をベクトル束 $\pi \colon  E \to M$ の接続， $R$ をその曲率とする．
+
+\begin{mydef}[label=def.form_connection]{接続$1$-形式}
+	開集合 $M \subset U$ 上のフレーム $\{\, \xi_i\, \} \subset \Gamma(\eval{E}_U)$ が与えられているとする．このとき，$\forall X \in \vecfield{U}$ に対して
+	\begin{align} 
+		\omega^i_j(X) \xi_i \coloneqq \connect{X}{\xi_j} 
+	\end{align}
+	によって $n^2$ 個の $\omega^i_j(X) \in \cinftyf{U}$ を定義する．
+	
+	$n^2$ 個の $\omega^i_j \colon \vecfield{M} \to \mathbb{R}$ をまとめて
+	\begin{align} 
+		\omega \coloneqq \bigl( \omega^i_j \bigr) 
+	\end{align}
+	と書き，\textbf{接続形式} (connection form) と呼ぶ．
+\end{mydef}
+
+接続の定義\ref{def.connection}-(1)より，$\forall f \in \cinftyf{U}$ に対して
+\begin{align} 
+	\omega^i_j(fX) \xi_i = \connect{fX}{\xi_j} = f \connect{X}{\xi_i} = f\, \omega^i_j(X) s_i
+\end{align}
+が成り立つ．i.e. $\omega^i_j (fX) = f\, \omega^i_j (X)$ である．
+$X$ に関する加法準同型性も同様に従うので，$\omega^i_j \colon \vecfield{U} \to \mathbb{R}$ は $\cinftyf{U}$-線型写像である．従って命題\ref{alghom}から $\omega^i_j \in \Omega^1(U)$ となる．これが $\omega$ が接続$1$-形式と呼ばれる所以である．
+
+\begin{marker} 
+	$\omega$ 自身は $n\times n$ 正則行列全体が作るLie代数 $\mathfrak{gl}(n)$ に値をとる$1$-形式と見做される．
+\end{marker}
+
+\begin{mydef}[label=def.form_curvature]{曲率$2$-形式}
+	開集合 $M \subset U$ 上のフレーム $\{\, \xi_i\, \} \subset \Gamma(\eval{E}_U)$ が与えられているとする．このとき，$\forall X,\, Y \in \vecfield{U}$ に対して
+	\begin{align} 
+		\Omega^i_j(X,\, Y) \xi_i \coloneqq R(X,\, Y)(\xi_j )
+	\end{align}
+	によって $n^2$ 個の $\Omega^i_j(X,\, Y) \in \cinftyf{U}$ を定義する．
+	
+	$n^2$ 個の $\Omega^i_j \colon \vecfield{M} \times \vecfield{M} \to \mathbb{R}$ をまとめて
+	\begin{align} 
+		\Omega \coloneqq \bigl( \omega^i_j \bigr) 
+	\end{align}
+	と書き，\textbf{曲率形式} (curvature form) と呼ぶ．
+\end{mydef}
+
+補題\ref{lem.connect}より，$\forall f,\, g \in \cinftyf{U}$ に対して
+\begin{enumerate} 
+	\item 
+	$\Omega^i_j(X,\, Y) \xi_i = R(X,\, Y)(\xi_i) = -R(Y,\, X)(\xi_i) = -\Omega^i_j(Y,\, X)\xi_i$
+	\item 
+	$\Omega^i_j(fX,\, gY) \xi_i = R(fX,\, gY)(\xi_i) = fg R(X,\, Y)(\xi_i) = fg \Omega^i_j(X,\, Y)\xi_i$
+\end{enumerate}
+が成り立つ．i.e. $\Omega^i_j (X,\, Y) = -\Omega^i_j (X,\, Y),\; \Omega^i_j(fX,\, gY) = fg \Omega^i_j(X,\, Y)$ である．
+従って $\Omega^i_j \colon \vecfield{U} \times \vecfield{U} \to \mathbb{R}$ は $\cinftyf{U}$-双線型線型かつ交代的な写像である．故に命題\ref{alghom}から $\Omega^i_j \in \Omega^2(U)$ となる．
+この意味で $\omega	\colon \vecfield{U} \times \vecfield{U} \to \mathfrak{gl}(n)$ は$2$-形式である．
+
+
+
+\begin{mytheo}[label=eq.structure1]{Cartanの構造方程式}
+	ベクトル束の接続形式 $\omega$ と曲率形式 $\Omega$ は以下の等式をみたす：
+	\begin{align} 
+		\dd{\omega} = - \omega \wedge \omega + \Omega
+	\end{align}
+	成分表示で
+	\begin{align} 
+		\dd{\omega^i_j} = - \omega^i_k \wedge \omega^k_j + \omega^i_j.
+	\end{align}
+\end{mytheo}
+
+\begin{proof} 
+	曲率形式の定義\ref{def.form_connection}から
+	\begin{align} 
+		R(X,\, Y)(\xi_j) = \Omega^i_j(X,\, Y) \xi_j
+	\end{align}
+	一方，曲率の定義\ref{def.curvature}から
+	\begin{align} 
+		R(X,\, Y)(\xi_j) &= \bigl( \connect{X}{\connect{Y}{}} - \connect{Y}{\connect{X}{}} - \connect{\comm{X}{Y}}{}\bigr)(\xi_j) \\
+		&= \connect{X}{\omega^i_j(Y) \xi_i} - \connect{Y}{\omega^i_j(X) \xi_i} - \omega^i_j(\comm{X}{Y}) \xi_i \\
+		&= \omega^k_j(Y) \omega^i_k(X)\xi_i + \bigl( X\omega^i_j(Y) \bigr) \xi_i \\
+		&\quad - \omega^k_j(X) \omega^i_k(Y)\xi_i - \bigl( Y\omega^i_j(X) \bigr) \xi_i \\
+		&\quad - \omega^i_j(\comm{X}{Y}) \xi_i
+	\end{align}
+	外微分の公式\ref{extdiff_3}と外積の性質\ref{extp_1}から
+	\begin{align} 
+		\dd{\omega^i_j}(X,\, Y) &= (X\omega^i_j)(Y) - (Y\omega^i_j)(X) - \omega^i_j(\comm{X}{Y}), \\
+		\omega^i_k \wedge \omega^k_j (X,\, Y) &= \omega^i_k(X) \omega^k_j(Y) - \omega^i_k(Y) \omega^k_j(X)
+	\end{align}
+	なので，
+	\begin{align} 
+		\Omega^i_j(X,\, Y) \xi_j = R(X,\, Y)(\xi_j) = \bigl(\, \dd{\omega^i_j}(X,\, Y) + \omega^i_k \wedge \omega^k_j (X,\, Y) \, \bigr) \xi_i.
+	\end{align}
+\end{proof}
+
+\begin{mycol}[label=Bianchi2]{（第2）Bianchiの恒等式}
+	接続形式 $\omega$ と曲率形式 $\Omega$ に対して以下の恒等式が成り立つ：
+	\begin{align} 
+		\dd{\Omega} + \omega \wedge \Omega - \Omega \wedge \omega = 0
+	\end{align}
+	成分表示で
+	\begin{align} 
+		\dd{\Omega^i_j} + \omega^i_k \wedge \Omega^k_j - \Omega^i_k \wedge \omega^k_j = 0
+	\end{align}
+\end{mycol}
+
+\begin{proof} 
+	構造方程式\ref{eq.structure1}の両辺の外微分をとることで，
+	\begin{align} 
+		0 &= - \dd{\omega} \wedge \omega - (-1) \omega \wedge \dd{\omega} + \dd{\Omega} \\
+		&= \omega \wedge \omega \wedge \omega - \Omega \wedge \omega - \omega \wedge \omega \wedge \omega + \omega \wedge \Omega + \dd{\Omega} \\
+		&= \dd{\Omega} + \omega \wedge \Omega - \Omega \wedge \omega.
+	\end{align}
+\end{proof}
+
+\section{Levi-Civita接続}
+
+\begin{mydef}[label=def.compatible]{計量接続} 
+	（擬）Riemann 多様体 $M$ が計量 $\dualip{\;}{}\colon \vecfield{M} \times \vecfield{M} \to \cinftyf{M}$ を持つとする．$M$ の接束 $\pi \colon TM \to M$ 上の接続 $\nabla$ が計量と\textbf{両立する} (compatible) 接続，あるいは\textbf{計量接続} (metric connection) であるとは，$\nabla$ が $\forall X,\, Y,\, Z \in \vecfield{M}$ に対して以下の条件を充たすことを言う：
+	\begin{align} 
+		X \dualip{Y}{Z} = \dualip{\connect{X}{Y}}{Z} + \dualip{Y}{\connect{X}{Z}}
+	\end{align}
+\end{mydef}
+
+\begin{myprop}[label=prop.Levi-Civita]{}
+	（擬）Riemann多様体 $M$ と，その座標近傍 $U$ をとる．$\{\, \hat{e}_a\, \}$ を $TU$ の正規直交標構，$\{\, \hat{\theta}^a \, \} \subset \Omega^1(U)$ をその双対基底とする．このとき以下の2条件を充たすような $U$ 上の $1$-形式 $\omega \coloneqq (\vbud{\omega}{a}{b}) \colon \vecfield{U} \to \mathfrak{gl}(n)$ がただ一つ存在する：
+	\begin{enumerate} 
+		\item $\vbud{\omega}{a}{b} = - \vbud{\omega}{b}{a}$
+		\item $\dd{\hat{\theta}^a} = - \vbud{\omega}{a}{b} \wedge \hat{\theta}^b$
+	\end{enumerate}
+\end{myprop}
+
+\begin{proof} 
+	まず，$\dd{\hat{\theta}^a} \in \Omega^2(U)$ を命題\ref{prop.orthonormal}の正規直交基底で展開する：
+	\begin{align} 
+		\dd{\hat{\theta}^a} = \frac{1}{2} \alpha^{a}{}_{bc}\, \hat{\theta}^b \wedge \hat{\theta}^c,\quad \alpha^{a}{}_{bc} = - \alpha^{a}{}_{cb}
+	\end{align}
+	$\hat{\theta}^b \wedge \hat{\theta}^c$ の線型独立性から，展開係数 $ \alpha^{a}{}_{bc}$ は一意に定まる．
+	
+	次に，$\vbud{\omega}{a}{b}$ を
+	\begin{align} 
+		\vbud{\omega}{a}{b} = \beta^a{}_{bc} \, \hat{\theta}^c
+	\end{align}
+	と表示し，命題の条件を充たすように $\beta^a{}_{bc}$ を決めることにする．まず，条件 (1) から
+	\begin{align} 
+		\label{eq.Levi-Civita-1}
+		\beta^a{}_{bc} = - \beta^b{}_{ac}
+	\end{align}
+	が必要である．また，
+	\begin{align} 
+		\vbud{\omega}{a}{b} \wedge \hat{\theta}^b = -\beta^a{}_{bc} \, \hat{\theta}^b \wedge \hat{\theta}^c
+	\end{align}
+	だから，条件 (2) を充たすには
+	\begin{align} 
+		&\frac{1}{2} \alpha^{a}{}_{bc}\, \hat{\theta}^b \wedge \hat{\theta}^c = \beta^a{}_{bc} \, \hat{\theta}^b \wedge \hat{\theta}^c \\
+		\Longleftrightarrow \quad & \alpha^{a}{}_{bc} = \beta^a{}_{bc} - \beta^a{}_{cb} \label{eq.Levi-Civita-2}
+	\end{align}
+	が必要である．
+
+	ここで，式\eqref{eq.Levi-Civita-2}の添字を交換することで
+	\begin{align} 
+		\alpha^{a}{}_{bc} &= \beta^a{}_{bc} - \beta^a{}_{cb} \\
+		\alpha^{b}{}_{ac} &= \beta^b{}_{ac} - \beta^b{}_{ca} \\
+		\alpha^{c}{}_{ba} &= \beta^c{}_{ba} - \beta^c{}_{ab}
+	\end{align}
+	を得る．式\eqref{eq.Levi-Civita-1}を用いて整理すると
+	\begin{align} 
+		\alpha^{a}{}_{bc} &= \beta^a{}_{bc} - \beta^a{}_{cb} \\
+		\alpha^{b}{}_{ac} &= -\beta^a{}_{bc} - \beta^b{}_{ca} \\
+		\alpha^{c}{}_{ba} &= -\beta^b{}_{ca} + \beta^a{}_{cb}
+	\end{align}
+	だから，これを $\beta^a{}_{bc}$ について解くと
+	\begin{align} 
+		\beta^a{}_{bc} = \frac{1}{2} \bigl( \alpha^{a}{}_{bc} - \alpha^{b}{}_{ac} + \alpha^{c}{}_{ba}  \bigr) 
+	\end{align}
+	を得る．右辺は一意に定まるので左辺も一意に定まる，i.e. $\vbud{\omega}{a}{b}$ は一意に定まる．
+\end{proof}
+
+命題\ref{prop.Levi-Civita}で存在が示された $1$-形式 $\omega = (\vbud{\omega}{a}{b})$ を接続形式とする $TU$ 上の接続 $\nabla \colon \vecfield{U} \times \vecfield{U} \to \vecfield{U}$ が
+\begin{align} 
+	\nabla \hat{e}_b \coloneqq \vbud{\omega}{a}{b} \otimes \hat{e}_a
+\end{align}
+と定義される．命題\ref{prop.Levi-Civita}の条件 (1) より，このとき $\nabla$ は計量と両立する．
+
+接束 $TU$ の接続 $\nabla$ は，余接束 $T^*U$ の接続 $\nabla^*$ を誘導する．今回の場合は
+\begin{align} 
+	\nabla^* \hat{\theta}^a \coloneqq -\vbud{\omega}{a}{b} \otimes \hat{\theta}^b
+\end{align}
+である．従って，命題\ref{prop.Levi-Civita}の条件 (2) は合成写像
+\begin{align} 
+	\Gamma(T^*U) = \Omega^1(U) \xrightarrow{\nabla^*} \Gamma(T^*U \otimes T^*U) \xrightarrow{\wedge} \Gamma \bigl( \Omega^2(T^*U) \bigr) = \Omega^2(U)
+\end{align}
+が $\hat{\theta}^a$ を $\dd{\hat{\theta}^a}$ に移すことを主張している．
+
+\begin{mytheo}[label=thm.Levi-Civita]{Levi-Civita接続（接続形式）}
+	任意の（擬）Riemann多様体の接束は，その（擬）Riemann計量と両立し，かつ合成写像 $\wedge \circ \nabla^*$ が外微分 $\dd{}$ と一致するようなただ一つの接続 $\nabla$ を持つ．この $\nabla$ を\textbf{Levi-Civita接続} (Levi-Civita connection) と呼ぶ．
+\end{mytheo}
+
+\section{接続係数による定式化}
+
+\begin{mytheo}[label=thm.Levi-Civita]{Levi-Civita接続（接続係数）}
+	任意の（擬）Riemann多様体 $M$ には，その（擬）Riemann計量 $\dualip{\;}{} \colon \vecfield{M} \times \vecfield{M} \to \cinftyf{M}$ と両立する対称接続 $\nabla$ がただ一つ存在する．
+	i.e. $\nabla$ は $\forall X,\, Y,\, Z \in \vecfield{M},\; \forall f \in \cinftyf{M}$ に対して
+	\begin{enumerate} 
+		\item $\connect{X}{Y} - \connect{Y}{X} - \comm{X}{Y} = T(X,\, Y) = 0$
+		\item $X \dualip{Y}{Z} = \dualip{\connect{X}{Y}}{Z} + \dualip{Y}{\connect{X}{Z}}$
+	\end{enumerate}
+	を充たす．このような $\nabla$ を\textbf{Levi-Civita接続}と呼ぶ．
+\end{mytheo}
+
+\hrulefill
+
+\begin{mylem}[label=lem.prop7-2]{}
+	$(0,\, 1)$-型テンソル場 $\alpha \colon \vecfield{M} \to \cinftyf{M}$ が $\alpha \in \Hom{\cinftyf{M}}\bigl(\, \vecfield{M},\, \cinftyf{M}\, \bigr)$ であるならば，$V \in \vecfield{M}$ であって $\alpha(X) = \dualip{V}{X},\; \forall  X \in \vecfield{M}$ であるものがただ一つ存在する．
+\end{mylem}
+\begin{proof} 
+	$M$ のチャート $(U;\; x^\mu)$ に対して $\alpha$ を $\alpha = \alpha_\mu \dd{x^\mu}$ と局所表示する．このとき，$V \coloneqq g^{\mu\nu} \alpha_\nu \partial_\mu$ が求めるベクトル場である．
+\end{proof}
+
+\hrulefill
+
+\begin{proof} 
+	題意を充たす接続 $\nabla$ が存在すると仮定する．このとき条件 (2) より
+	\begin{align} 
+		X \dualip{Y}{Z} &= \dualip{\connect{X}{Y}}{Z} + \dualip{Y}{\connect{X}{Z}} \\
+		Y \dualip{Z}{X} &= \dualip{\connect{Y}{Z}}{X} + \dualip{Z}{\connect{Y}{X}}\\
+		Z\dualip{X}{Y} &= \dualip{\connect{Z}{X}}{Y} + \dualip{X}{\connect{Z}{Y}}
+	\end{align}
+	が成立する．これを $\dualip{\connect{X}{Y}}{Z}$ について解いて条件 (1) を用いると
+	\begin{align} 
+		\dualip{\connect{X}{Y}}{Z} &= \frac{1}{2} \bigl(\, X \dualip{Y}{Z} + Y \dualip{Z}{X} - Z\dualip{X}{Y} \\
+		&\quad + \dualip{\comm{X}{Y}}{Z} - \dualip{\comm{Y}{Z}}{X} + \dualip{\comm{Z}{X}}{Y}\, \bigr)\label{eq.prop7-2}
+	\end{align}
+	となるから，補題\ref{lem.prop7-2}より $\connect{X}{Y}$ は一意である．
+
+	次に，$\nabla$ が存在することを示す．実際，$\forall X,\, Y \in \vecfield{M}$ に対して $\alpha \colon  \vecfield{M} \to \cinftyf{M}$ を，$\alpha(Z)$ として式\eqref{eq.prop7-2}の右辺によって定義する．この $\alpha$ は $\cinftyf{f}$-線型なので $\alpha(Z) = \dualip{\nabla_X Y}{Z}$ なる $\nabla_X Y \in \vecfield{M}$ が存在する．この $\nabla_X Y$ が接続の定義\ref{def.connection}および条件 (1),\, (2) を充たすことは，Lie括弧積の性質から直接示される．
+\end{proof}
+
+Levi-Civita接続 $\nabla$ に対して，
+\begin{align} 
+	\vecfield{M} \times \vecfield{M} \to \vecfield{M},\; (X,\, Y) \mapsto \connect{X}{Y}
+\end{align}
+と定義される写像は $Y$ に関して $\cinftyf{M}$-線型でないため，$\cinftyf{M}$-加群としては $(1,\, 2)$-型テンソル場\underline{ではない}．
+
+\begin{mydef}[label=def.Christoffel]{接続係数}
+	$M$ のチャート $(U;\, x^\mu$) に対して，$n^3$ 個の\cinfty 関数 $\varGamma^\mu_{\nu\lambda} \colon U \to \mathbb{R}$ が
+	\begin{align} 
+		\chris{\mu}{\nu}{\lambda} \partial_\mu \coloneqq \connect{\partial_\nu}{\partial_\lambda}
+	\end{align}
+	として定まる．これを\textbf{接続係数}，もしくは \textbf{Christoffel記号}と呼ぶ．
+\end{mydef}
+
+Christoffel記号を使って共変微分 $\connect{X}{Y}$ を成分表示すると，接続の定義\ref{def.connection}-(2) に注意\footnote{$X,\, Y$ は\textbf{ベクトル場}なので，自然基底ベクトル場 $\partial_\mu \in \vecfield{U}$ による展開係数は\cinfty 関数である．}して
+\begin{align} 
+	\tcbhighmath[]{\connect{X}{Y}} &= \connect{X^\mu \partial_\mu}{(Y^\nu \partial_\nu)} = X^\mu \connect{\partial_\mu}{(Y^\nu \partial_\nu)} \\
+	&= X^\mu(\partial_\mu Y^\nu) \partial_\nu + X^\mu Y^\nu \connect{\partial_\mu} \partial_\nu \\
+	&= \tcbhighmath[]{\bigl( \, X(Y^\nu) + \chris{\nu}{\mu}{\lambda} X^\mu Y^\lambda \bigr)\, \partial_\nu}
+\end{align}
+となる．
+
+\subsection{テンソル場の共変微分}
+
+（擬）Riemann多様体 $M$ を与える．$U$ を $M$ の開集合とし，$\mathfrak{T}(U) \coloneqq \bigoplus_{r,\, s = 0}^\infty \mathfrak{T}^r_s (U)$ を $U$ 上のテンソル場（定義\ref{tensorfield}）全体が作る $\cinftyf{U}$-多元環とする．$\mathcal{C} \colon \mathfrak{T}^r_s(U) \to \mathfrak{T}^{r-1}_{s-1}(U)$ で縮約を表す．
+
+\begin{myprop}[label=covdv_tensor]{共偏微分の一般化}
+	$X \in \vecfield{U}$ に対して，写像
+	\begin{align} 
+		\connect{X}{} \colon \mathfrak{T}(U) \to \mathfrak{T}(U)
+	\end{align}
+	であって次の条件を充たすものが一意に存在する：
+	\begin{enumerate} 
+		\item $\connect{X}{}$ はテンソル場の型を保つ $\mathbb{R}$-線型写像であり，$\forall T,\, T' \in \mathfrak{T}(U)$ に対して
+		\begin{align} 
+			\connect{X}{\bigl( T \otimes T' \bigr) } &= \connect{X}{T} \otimes T' + T \otimes \connect{X}{T'},\\
+			\connect{X}{\mathcal{C}(T)} &= C \bigl( \connect{X}{T} \bigr) 
+		\end{align}
+		を充たす．i.e. $\connect{X}{}$ は微分である．
+		\item $\connect{X}{}$ は $\mathfrak{T}^0_0(U) = \cinftyf{U}$ 上
+		\begin{align} 
+			\connect{X}{f} \coloneqq Xf,\quad \forall \cinftyf{U}
+		\end{align}
+		であり，
+		$\mathfrak{T}^1_0(U) = \vecfield{U}$ 上はLevi-Civita接続による共変微分である．
+		\item $V \subset U$ を開集合とすると，$\eval{(\connect{X}{T})}_V = \connect{\eval{X}_V}{ \bigl( \eval{T}_V \bigr) } $
+	\end{enumerate}
+\end{myprop}
+
+\begin{proof} 
+	まず，$\mathfrak{T}^0_1(U) = \Omega^1(U)$ への作用を構成する．\underline{duality pairing} $\dualip{\;}{} \colon \Omega^1(U) \times \vecfield{U} \to \cinftyf{U}$ は $(1,\, 1)$-型テンソル場を作り，定義から $\forall \omega \in \Omega^1(U),\; \forall Y \in \vecfield{U}$ に対して $\dualip{\omega}{Y} = \omega \otimes Y$ であるから，条件 (1) により
+	\begin{align} 
+		\connect{X}{\dualip{\omega}{Y}} = \dualip{\connect{X}{\omega}}{Y} + \dualip{\omega}{\connect{X}{Y}}
+	\end{align}
+	でなくてはならない．一方，条件 (2) から
+	\begin{align} 
+		\connect{X}{\dualip{\omega}{Y}} = X \bigl(  \dualip{\omega}{Y} \bigr) 
+	\end{align}
+	である．
+	従って $\connect{X}{\omega} \in \Omega^1(U)$ は，与えられた $\omega$ に対して $\dualip{\omega}{Y} \coloneqq \omega(Y)$ であったから
+	\begin{align} 
+		(\connect{X}{\omega})(Y) \coloneqq X \bigl( \omega(Y) \bigr) - \omega \bigl( \connect{X}{Y} \bigr),\quad \forall Y \in \vecfield{U}
+	\end{align}
+	と定義される．これは一意的であり，(3) を充たす．
+
+	次に，$\omega \in \mathfrak{T}^0_s (U)$ の場合を構成する．$s=1$ の場合と同様に $\forall Y_1,\, \dots ,\, Y_s \in \vecfield{U}$ に対して
+	\begin{align} 
+		\bigl( \connect{X}{\omega} \bigr)(Y_1,\, \dots ,\, Y_s)
+		&\coloneqq X \bigl( \omega(X_1,\, \dots ,\, X_s) \bigr) \\
+		&\quad - \sum_{i=1}^s \omega \bigl(Y_1,\, \dots ,\, \connect{X}{Y_i},\, \dots ,\, Y_s \bigr)
+	\end{align}
+	と $\connect{X}{\omega} \in \mathfrak{T}^0_s (U)$ を定義すればよい．
+
+	最後に，$T \in \mathfrak{T}^r_s (U)$ の場合を構成する．定義\ref{def.tensor}から $\omega_1,\, \dots ,\, \omega_r \in \Omega^1(U)$ に対して $T(\omega_1,\, \dots ,\, \omega_r) \in \mathfrak{T}^0_s(U)$ になることを考慮して
+	\begin{align} 
+		\bigl( \connect{X}{T} \bigr)(\omega_1,\, \dots ,\, \omega_r)
+		&\coloneqq \connect{X}{ T\bigl( \omega_1,\, \dots ,\, \omega_r \bigr) } \\
+		&\quad - \sum_{i=1}^r T \bigl(\omega_1,\, \dots ,\, \connect{X}{\omega_i},\, \dots ,\, \omega_s \bigr)
+	\end{align}
+	と $\bigl( \connect{X}{T} \bigr)(\omega_1,\, \dots ,\, \omega_r) \in \mathfrak{T}^0_s(U)$ を定義すればよい．
+\end{proof}
+
+\subsection{曲線に沿った共変微分}
+
+\cinfty 曲線 $c\colon [a,\, b] \to M$ を与える．
+
+\cinfty 曲線 $c$ に沿ったベクトル場 $Y(t)$ を考える．i.e. $\forall t \in [a,\, b]$ に対して
+\begin{align} 
+	Y(t) \in T_{c(t)} M
+\end{align}
+であり，かつ
+\begin{align}
+	Y(t) \circ c \colon [a,\, b] \to TM
+\end{align}
+が\cinfty 級写像である状況である．このとき $\dot{c}(t) \in TM$ だから $\connect{\dot{c}(t)}$ を考えることができる．各点 $c(t) \in M$ において丁寧に計算すると
+\begin{align} 
+	&\bigl(\connect{\dot{c}(t)}{Y}\bigr)\bigl( c(t) \bigr) \\
+	&= \dv{}{t}()(x^\mu \circ c)(t) \left(\pdv{}{x^\mu}\right)_{c(t)} [Y^\nu (t)]\, \left(\pdv{}{x^\nu}\right)_{c(t)} + \chris{\nu}{\mu}{\lambda} \bigl( c(t) \bigr)  \dv{}{t}()(x^\mu \circ c)(t) Y^\lambda(t) \, \left(\pdv{}{x^\nu}\right)_{c(t)} \\
+	&= \left(\, \dv{Y^\nu}{t}()(t) + \chris{\nu}{\mu}{\lambda} \bigl( c(t) \bigr) \dot{x}^\mu (t) Y^\lambda(t)\right)\, (\partial_\nu)_{c(t)}
+\end{align}
+なので，結局
+\begin{align} 
+	\connect{\dot{c}(t)}{Y} = \left(\, \dv{Y^\nu}{t} + \chris{\nu}{\mu}{\lambda} \dot{x}^\mu Y^\lambda\right)\, \partial_\nu
+\end{align}
+とわかった．
+
+\begin{mydef}[label=def.parallel]{平行}
+	\cinfty 曲線 $c \colon [a,\, b] \to M$ に沿ったベクトル場 $Y(t)$ が\textbf{$c$ に沿って平行}であるとは，
+	\begin{align} 
+		\connect{\dot{c}(t)}{Y} \equiv 0
+	\end{align}
+	であることを言う．
+\end{mydef}
+
+定義\ref{def.parallel}をチャート $(U;\; x^\mu)$ に関して局所表示すると
+\begin{align} 
+	\dv{Y^\nu}{t} + \chris{\nu}{\mu}{\lambda} \dot{x}^\mu Y^\lambda = 0\quad (\mu = 1,\, \dots ,\, n)
+\end{align}
+なる1階線形常微分方程式系が得られる．常微分方程式の一般論から，
+$c$ に沿って平行な\cinfty 級のベクトル場 $Y(t)$ であって，初期条件 $Y(a) = u \in T_{c(a)}M$ を充たすものがただ一つ存在する．
+解の線形性も考慮すると，写像
+\begin{align} 
+	T_{c(a)}M \ni u \mapsto Y \in TM
+\end{align}
+は単射な線型写像である．特に，線型写像
+\begin{align} 
+	P(c) \colon T_{c(a)}M \to T_{c(b)}M,\; u \mapsto Y(b)
+\end{align}
+を $c$ に沿った\textbf{平行移動}と呼ぶ．$P(c)$ は全単射であり，これによって $T_{c(a)}M \cong T_{c(b)}M$ である．
+また，Levi-Civita接続の定義\ref{thm.Levi-Civita}-(2) から $P(c)$ は内積を保つ．
+
+\begin{tcolorbox} 
+	異なる2点 $p,\, q \in M$ を結ぶ \cinfty 曲線 $c$ が与えられれば，Levi-Civita接続により接空間 $T_p M,\, T_qM$ の間に計量同型写像が存在する．
+\end{tcolorbox}
+
+
+\subsection{測地線}
+
+\begin{mydef}[label=def.geodesic]{測地線} 
+	（擬）Riemann多様体の上にLevi-Civita接続 $\nabla$ を与える．\cinfty 曲線 $c \colon [a,\, b] \to M$ が以下の条件を充たすとき，$c$ は\textbf{測地線} (geodesic) と呼ばれる：
+	\begin{align} 
+		\connect{\dot{c}(t)} \dot{c}(t) = 0.
+	\end{align}
+\end{mydef}
+
+定義\ref{def.geodesic}は，「接ベクトル場 $\dot{c}$ が $c$ 自身に沿って平行である」ことを定式化したものである．
+
+
+% \section{古典的なテンソル解析との関係}
+
+% 多脚場による展開係数の添字は $a,\, b,\, c,\, \dots$ で書くことにする：
+% \begin{align} 
+% 	\alpha = \alpha_\mu \dd{x^\mu} = \alpha_a \hat{\theta}^a \in \Omega^1(M)
+% \end{align}
+% また，ひとまず $k$-形式 $\vbud{V}{a}{b}$ の\textbf{共変外微分} (covariant exterior derivative) $D \colon \Omega^k(M) \to \Omega^{k+1}(M)$ を
+% \begin{align} 
+% 	D\vbud{V}{a}{b} \coloneqq \dd{\vbud{V}{a}{b}} + \vbud{\omega}{a}{c} \wedge \vbud{V}{c}{b} - (-1)^k\, \vbud{V}{a}{c} \wedge \vbud{\omega}{c}{b}
+% \end{align}
+% と定義しておく．
+
+
+
+% 曲率形式は
+% \begin{align} 
+% 	\Omega^a{}_{b} &= \frac{1}{2} R^a{}_{bcd} \hat{\theta}^c \wedge \hat{\theta}^d = \frac{1}{2} R^a{}_{b\mu\nu} \hat{\theta}^\mu \wedge \hat{\theta}^\nu \\
+% 	\mathrm{i.e.} \quad R^\kappa{}_{\lambda\mu\nu} &= \vbdu{E}{a}{\kappa} \vbud{e}{b}{\lambda} R^a{}_{b\mu\nu}
+% \end{align}
+% $R^\kappa{}_{\lambda\mu\nu}$ をRiemannテンソルと呼んだ．
+
+% ここで，\textbf{捩率形式} (torsion form) を
+% \begin{align} 
+% 	T^a \coloneqq \frac{1}{2} T^a{}_{bc}  \hat{\theta}^c \wedge \hat{\theta}^d = \frac{1}{2} T^a{}_{b\mu\nu} \hat{\theta}^\mu \wedge \hat{\theta}^\nu \\
+% \end{align}
+% と定義しておく．このとき，命題\ref{prop.Levi-Civita}の条件 (2) は
+% \begin{align} 
+% 	T^a = \dd{\hat{\theta}^a} + \vbud{\omega}{a}{b} \wedge \hat{\theta}^b = 0
+% \end{align}
+% と書かれる．
+% \begin{marker} 
+% 	$T^a = \dd{\hat{\theta}^a} + \vbud{\omega}{a}{b} \wedge \hat{\theta}^b$ もまたCartanの構造方程式と呼ばれる．
+% \end{marker}
+
+
+% \subsection{Levi-Civita接続}
+
+% 古典的なテンソル解析では，Levi-Civita接続はChristoffel記号 $\varGamma^\mu_{\nu\lambda}$ として扱われていた．定理\ref{thm.Levi-Civita}とは以下のように関係している：
+% \begin{enumerate} 
+% 	\item 計量接続： $g_{\mu\nu}{}_{;\alpha} = \partial_\alpha\, g_{\mu\nu} - \varGamma^\lambda_{\alpha\mu} g_{\lambda\nu} - \varGamma^\lambda_{\alpha\nu} g_{\mu\lambda} = 0$
+% 	\item 捩率ゼロ： $g_{\mu\nu}{}_{;\alpha} = \partial_\alpha\, g_{\mu\nu} - \varGamma^\lambda_{\alpha\mu} g_{\lambda\nu} - \varGamma^\lambda_{\alpha\nu} g_{\mu\lambda} = 0$
+% \end{enumerate}
+% (1) から
+% \begin{align} 
+% 	\varGamma^\mu_{\alpha\beta} = \frac{1}{2} \bigl( \partial_\alpha g_{\nu\beta} + \partial_\beta g_{\nu\alpha} - \partial_\nu g_{\alpha\beta} \bigr) 
+% \end{align}
+% とわかる．
+
+\end{document}

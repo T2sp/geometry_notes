@@ -1,0 +1,51 @@
+	\label{eq.chap9-1}
+\begin{mydef}[label=def.fiber-1]{微分可能ファイバー束}
+	\label{fig.fiber1}
+と呼ぶ\footnote{紛らわしくないとき，ファイバー束 $(E,\, \pi,\, B,\, F)$ のことを $\pi \colon E \to B$ ，または単に $E$ と略記することがある．}．また，射影 $\pi$ による1点集合 $\{b\}$ の逆像 $\pi^{-1}(\{b\}) \subset E$ のことを\textbf{点} $\bm{b}$ \textbf{のファイバー} (fiber) と呼び，$F|_b$ と書く．\label{def:point-fiber}
+\begin{mydef}[label=def.bundlemap]{束写像}
+	\label{fig.bundlemap}
+\begin{mydef}[label=def.bundle_isomorphism]{ファイバー束の同型}
+	\label{fig.bundle_homo}
+% \begin{mydef}[label=def.trivial]{自明化}
+\begin{mydef}[label=def.section]{切断}
+		\label{subfig.fiber-l}
+		\label{subfig.fiber-m}
+		\label{subfig.fiber-lm}
+	\label{fig.fiber2}
+	t_{\beta\alpha} \colon U_\alpha \cap U_\beta \to \Diff F \label{eq.9-2-1}
+\begin{mydef}[label=def.fiber_transform]{変換関数}
+	\label{eq.cocycle}
+\begin{myprop}[label=prop.cocycle]{ファイバー束の復元}
+		\label{eq.prop9-1_equiv}
+\begin{mydef}[label=def.structure_group]{構造群}
+\begin{mydef}[label=def.addmissible]{許容}
+\begin{mydef}[label=def.structure_equiv]{座標束の同値関係}
+\begin{mydef}[label=def.G-bundle]{$G$-束}
+\begin{mydef}[label=def.G-bundlemap]{$G$-束の束写像}
+	\label{fig.G-bundlemap}
+\begin{mydef}[label=def.Gbundle_isomorphism]{$G$-束の同型}
+% 	\label{fig.G-bundle_homo}
+\begin{mydef}[label=reduce]{縮小}
+\begin{myprop}[label=prop.G-cocycle]{$G$-束の復元}
+\begin{mydef}[label=associatedbundle]{同伴束}
+	\label{fig.induced}
+	\label{fig.induced_local}
+\begin{mydef}[label=def.PFD]{主束}
+\begin{myprop}[label=prop.PFD_right]{全空間への右作用}
+		\label{eq.prop.9-3-1}
+\begin{mydef}[label=def.vectorbandle]{ベクトル束}
+\begin{mydef}[label=def.zero_section]{ゼロ切断}
+\begin{mydef}[label=def.VB_frame]{局所フレーム}
+\begin{myprop}[label=prop.localtrivialization-frame]{局所自明化と局所フレーム}
+\begin{mydef}[label=def.section_vec]{$\Gamma(E)$ の演算}
+\begin{mydef}[label=def.metric-fiber]{ベクトル束のRiemann計量}
+\begin{mydef}[label=def.restriction]{制限}
+\begin{mydef}[label=def.subbundle]{部分束}
+% \begin{mydef}[label=def.quo-linear]{商ベクトル空間}
+\begin{mydef}[label=def.quo-VB]{商束}
+\begin{mydef}[label=def.normal-bundle]{法束}
+\begin{mydef}[label=def.Whitney-sum]{Whitney和}
+	\label{fig.Whitney}
+\begin{mydef}[label=def.dual-bundle]{双対束}
+\begin{mydef}[label=def.tensor-bundle]{テンソル積束}
+\begin{mydef}[label=def.tensor-bundle]{外積束}

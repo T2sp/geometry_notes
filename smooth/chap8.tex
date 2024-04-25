@@ -1,0 +1,180 @@
+\documentclass[geometry_main]{subfiles}
+
+\begin{document}
+
+\setcounter{chapter}{7}
+
+\chapter{複素多様体の紹介}
+
+この章の内容は~\cite[3.4]{EGH}によるところが大きい．
+
+複素関数 $f \colon \mathbb{C}^m \to \mathbb{C}$ が\textbf{正則} (holomorphic) であるとは，$f(z^1,\, \dots ,\, z^m) = f_1(x^1,\, \dots ,\, x^m;\; y^1,\, \dots ,\, y^m) + \iunit f_2(x^1,\, \dots ,\, x^m;\; y^1,\, \dots ,\, y^m)$ が各変数 $z^\mu = x^\mu + \iunit y^\mu$ に関して\textbf{Cauchy-Riemann の関係式}
+\begin{align} 
+	\pdv{f_1}{x^\mu} = \pdv{f_2}{y^\mu},\quad \pdv{f_2}{x^\mu} = -\pdv{f_1}{y^\mu}
+\end{align}
+を充たすことを言う．
+
+写像 $(f^1,\, \dots,\, f^n) \colon \mathbb{C}^m \to \mathbb{C}^n$ は，各関数 $f^\lambda$ が正則であるとき正則であると言う．
+
+複素多様体の定義を再掲する：
+
+\begin{mydef}[label=def.complexmani]{複素多様体（再掲）}
+	$M$ を位相空間とする．
+	集合族 $\mathcal{S} = \{(U_\lambda,\, \varphi_\lambda)\mid \varphi_\lambda \colon U_\lambda \xrightarrow{\approx} \mathbb{C}^m \}_{\lambda \in \Lambda}$ が与えられ，$\{\, U_\lambda \, \}_{\lambda \in \Lambda}$ が $M$ の開被覆になっており，かつその全ての座標変換 $f_{\beta\alpha} = \varphi_{\beta} \circ \varphi_{\alpha}^{-1}$ が\underline{正則}であるとき，$M$ は\textbf{複素多様体}と呼ばれる．
+
+	座標近傍が $\mathbb{C}^m$ と同相のとき，$m$ を\textbf{複素次元}と呼んで $\dim_{\mathbb{C}} M = m$ と書く．実次元 $2m$ は単に $\dim M = 2m$ と書く．
+\end{mydef}
+
+$M$ のアトラスの上には，定義\ref{manieq}で定めた同値関係が定まる．
+
+\begin{mydef}[label=complex_structure]{複素構造}
+	複素多様体 $M$ のアトラス $\mathcal{S}$ を与える．定義\ref{manieq}で定めた同値関係による $\mathcal{S}$ の同値類 $[\mathcal{S}]$ を $M$ の\textbf{複素構造} (complex structure) と呼ぶ．
+\end{mydef}
+
+\section{複素化の概要}
+
+複素次元 $m$ の複素多様体 $M$ のチャート $(U;\, z^\mu)$ をとる．$2m$ 個の接ベクトルを
+\begin{align} 
+	\pdv{}{z^\mu} &\coloneqq \frac{1}{2} \left(\pdv{}{x^\mu} - \iunit \pdv{}{y^\mu}\right) \\
+	\pdv{}{\bar{z}^\mu} &\coloneqq \frac{1}{2} \left(\pdv{}{x^\mu} + \iunit \pdv{}{y^\mu}\right) \\
+\end{align}
+と定義し，対応する双対ベクトルを
+\begin{align} 
+	\dd{z_\nu} &\coloneqq \dd{x_\nu} + \iunit \dd{y_\nu} \\
+	\dd{\bar{z}_\nu} &\coloneqq \dd{x_\nu} - \iunit \dd{y_\nu} \\
+\end{align}
+と定義する．このとき，\underline{\cinfty 関数} $f$ の外微分は
+\begin{align} 
+	\dd{f} &= \sum_\mu \left(\pdv{f_1}{x^\mu} \dd{x^\mu} + \pdv{f_1}{y^\mu} \dd{y^\mu} \right) + \iunit \sum_\mu \left(\pdv{f_2}{x^\mu} \dd{x^\mu} + \pdv{f_2}{y^\mu} \dd{y^\mu} \right) \\
+	&= \sum_\mu \pdv{f}{z^\mu} \dd{z^\mu} + \sum_\mu \pdv{f}{\bar{z}^\mu} \dd{\bar{z}^\mu}
+\end{align}
+と書かれる．
+\begin{align} 
+	\partial f &\coloneqq \sum_\mu \pdv{f}{z^\mu} \dd{z^\mu} \\
+	\overline{\partial} f &\coloneqq \sum_\mu \pdv{f}{\bar{z}^\mu} \dd{\bar{z}^\mu}
+\end{align}
+とおけば $\dd{f} = \partial f + \overline{\partial} f$ である．1変数正則関数 $f(z)$ の場合，Cauchy-Riemannの関係式から
+\begin{align} 
+	\overline{\partial} f = \pdv{f}{\bar{z}} \dd{\bar{z}} = 0
+\end{align}
+であった．これは $m$ 変数\underline{正則関数} $f$ の場合に一般化され，
+\begin{align} 
+	\pdv{f}{\bar{z}^\mu} = 0\quad (1\le \forall \mu\le m)
+\end{align}
+あるいは $\overline{\partial} f = 0$ となる．
+
+別のチャート $(V;\, w^\nu)$ をとると，座標変換は正則である．故に $U \cap V$ 上で
+\begin{align} 
+	\dd{w^\mu} &= \partial w^\mu + \overline{\partial} w^\mu = \partial w^\mu = \sum_\nu \pdv{w^\mu}{z^\nu} \dd{z^\nu}, \\
+	\dd{\bar{w}^\mu} &= \partial \bar{w}^\mu + \overline{\partial} \bar{w}^\mu = \overline{\partial} \bar{w}^\mu = \sum_\nu \pdv{\bar{w}^\mu}{\bar{z}^\nu} \dd{\bar{z}^\nu}
+\end{align}
+が成立する．
+従って，
+\begin{align} 
+	T^{1,\, 0}M &\coloneqq \Span \left\{ \pdv{}{z^\mu} \right\},\quad  T^{0,\, 1}M \coloneqq \Span \left\{ \pdv{}{\bar{z}^\mu} \right\} \\
+	T^{1,\, 0}{}^*M &\coloneqq \Span \left\{ \dd{z^\mu} \right\},\quad  T^{0,\, 1}{}^*M \coloneqq \Span \left\{ \dd{\bar{z}^\mu} \right\} \\
+\end{align}
+と定義すると直和分解
+\begin{align} 
+	TM \otimes \mathbb{C} &= T^{1,\, 0}M \oplus T^{0,\, 1}M \\
+	TM^* \otimes \mathbb{C} &= T^{1,\, 0}{}^*M \oplus T^{0,\, 1}{}^*M \\
+\end{align}
+が成立する．
+
+\subsection{Dolbeault作用素}
+
+\textbf{複素 $r$-形式}の基底は $p$ 個の $\dd{z^\mu}$ と $q$ 個の $\dd{\bar{z}^\mu}$ がWedge積で結合したものである（ただし $r = p+q$）．対 $(p,\, q)$ のことを\textbf{双次数}と呼ぶ．
+双次数 $(p,\, q)$ の複素 $r$ 形式全体の集合を $\Omega^{p,\, q}(M)$ と書くと，直和分解
+\begin{align} 
+	\Omega^r(M){}^\mathbb{C} = \bigoplus_{p+q = r} \Omega^{p,\, q}(M)
+\end{align}
+が成り立つ．
+
+先ほど定義した $\partial \colon \Omega^{0,\, 0}(M) \to \Omega^{1,\, 0}(M),\; \bar{\partial} \colon \Omega^{0,\, 0}(M) \to \Omega^{0,\, 1}(M)$ は，次のように一般化される：
+\begin{align} 
+	\partial \colon \Omega^{p,\, q}(M) \to \Omega^{p+1,\, q}(M),\quad \bar{\partial} \colon \Omega^{p,\, q}(M) \to \Omega^{p,\, q+1}(M)
+\end{align}
+このような $\partial,\, \bar{\partial}$ は\textbf{Dolbeault作用素}と呼ばれる．
+Dolbeault作用素によって，複素$p+q$-形式の外微分 $\dd{} \colon \Omega^{p+q}(M){}^\mathbb{C} \to \Omega^{p+q+1}(M){}^\mathbb{C}$ は
+\begin{align} 
+	\dd{} = \partial + \bar{\partial}
+\end{align}
+と分解される．
+
+Hodge作用素は
+\begin{align} 
+	\star \colon \Omega^{p,\, q}(M) \to \Omega^{m-p,\, m-q}
+\end{align}
+と作用する．定義\ref{def.adj_extdiff}を参照すると，複素Riemann多様体 $M$ の外微分 $\dd{}$ の随伴作用素は
+\begin{align} 
+	\delta = - \star \dd{} \star \colon \Omega^{p+q}(M){}^\mathbb{C} \to \Omega^{p+q-1}(M){}^\mathbb{C}
+\end{align}
+と定義される．Dolbeaut作用素の随伴
+\begin{align} 
+	\partial^\dagger \colon \Omega^{p,\, q}(M) \to \Omega^{p-1,\, q}(M),\quad \bar{\partial}^\dagger \colon \Omega^{p,\, q}(M) \to \Omega^{p,\, q-1}(M)
+\end{align}
+によって
+\begin{align} 
+	\delta = \partial^\dagger + \bar{\partial}^\dagger
+\end{align}
+と書かれる．このとき，3通りのLaplacianが定義できる：
+\begin{align} 
+	\Delta &\coloneqq (\dd{} + \delta)^2 \\
+	\Delta_{\partial} &\coloneqq (\partial + \partial^\dagger)^2 \\
+	\Delta_{\bar{\partial}} &\coloneqq (\bar{\partial} + \bar{\partial}^\dagger)^2 
+\end{align}
+一般に，これらの間に特別な関係はない．
+
+\subsection{概複素構造}
+
+多様体 $M$ は，線型写像 $J \colon TM \to TM$ であって $J^2 = -1$ を充たす $J$ が\underline{大域的に}存在するとき，\textbf{概複素構造} (almost complex structure) を持つという．奇数次元の多様体が概複素構造を持つことはない．
+
+任意の複素多様体 $M$ が概複素構造を持つことを確認する．$M$ の各点 $p$ と，それを含むチャート $(U;\, z^\mu) = (U;\, x^\mu;\, y^\mu)$ をとる．において，線型写像 $J_p \colon T_p M \to T_p M$ を
+\begin{align} 
+	J_p \left(\pdv{}{x^\mu}\right) \coloneqq \pdv{}{y^\mu},\quad J_p \left(\pdv{}{y^\mu}\right) = -\pdv{}{x^\mu}
+\end{align}
+で定義する．定義から $(J_p)^2 = -1_p$ であることは明らか．
+
+別のチャート $(V;\, w^\mu) = (V;\, u^\mu,\, v^\mu)$ をとり $w^\mu = u^\mu + \iunit v^\mu$ とすると，Cauchy-Riemannの関係式から
+\begin{align} 
+	J_p \left(\pdv{}{u^\mu}\right) &= J_p \left(\pdv{x^\nu}{u^\mu} \pdv{}{x^\nu} + \pdv{y^\nu}{u^\mu} \pdv{}{y^\nu} \right) = \pdv{x^\nu}{v^\mu} \pdv{}{y^\nu} + \left(-\pdv{y^\nu}{v^\mu}\right) \left(-\pdv{}{x^\nu}\right) = \pdv{}{v^\mu} \\
+	J_p \left(\pdv{}{v^\mu}\right) &= J_p \left(\pdv{x^\nu}{v^\mu} \pdv{}{x^\nu} + \pdv{y^\nu}{v^\mu} \pdv{}{y^\nu} \right) = -\pdv{x^\nu}{u^\mu} \pdv{}{y^\nu} + \pdv{y^\nu}{u^\mu} \left(-\pdv{}{x^\nu}\right) = -\pdv{}{u^\mu}
+\end{align}
+が成立するため，$J_p$ の作用はチャートの取り方によらない．ゆえに，$J_p$ の表現行列はチャートの取り方によらずに
+\begin{align} 
+	\mqty(0 & I_m \\ -I_m & 0)\label{eq.rep1}
+\end{align}
+である．$J_p$ は，その構成からわかるように $\forall p \in M$ で定義でき，それらを集めた $J = \{\, J_p \mid p \in M\, \}$ は $M$ 上至る所\cinfty 級である．故に $J \in \mathfrak{T}^2_0(M)$ であり，$M$ の外複素構造を定める．
+
+\subsection{K\"ahler多様体}
+
+複素多様体 $M$ のRiemann計量 $g$ が，$\forall p \in M$ と $\forall X,\, Y \in T_pM$ に対して
+\begin{align} 
+	g_p(J_p X,\, J_p Y) = g_p(X,\, Y)
+\end{align}
+を充たすとき，$g$ は\textbf{Hermite計量}と呼ばれる．このとき，組 $(M,\, g)$ を\textbf{Hermite多様体}と呼ぶ．
+任意の複素多様体 $(M,\, g)$ は，
+\begin{align} 
+	\hat{g}_p(X,\, Y) \coloneqq \frac{1}{2} \bigl( g_p(X,\, Y) + g_p(J_p X,\, J_p Y) \bigr) 
+\end{align}
+として新しい計量 $\hat{g}$ を定義することでHermite多様体になる．
+
+\begin{tcolorbox} 
+	複素多様体 $\; \Longrightarrow \;$ Hermite多様体
+\end{tcolorbox}
+
+
+Hermite多様体 $(M,\, g)$ 上には自然に
+\begin{align} 
+	K \coloneqq \frac{\iunit}{2} g_{\mu \bar{\nu}} \dd{z^\mu} \wedge \dd{\bar{z}^\nu}
+\end{align}
+なる $2$-形式が定義される．$K$ を\textbf{K\"ahker形式}と呼ぶ．$K$ は実形式である．
+
+\begin{mydef}[label=Kahler]{K\"ahker多様体}
+	Hermite多様体 $(M,\, g)$ であって，そのK\"ahler形式 $K$ が閉形式であるものを言う．i.e. $\dd{K} = 0.$ このとき，計量 $g$ は $M$ のK\"ahler計量と呼ばれる．
+\end{mydef}
+
+例えば，$\cdim M = 1$ の任意の複素多様体 $(M,\, g)$ はK\"ahler多様体である．$M$ のK\"ahler形式 $K$ は実 $2$-形式だから，その外微分 $\dd{K}$ は$3$-形式であり，$\dim M = 2$ であることから $0$ になるのである．
+1次元コンパクト複素多様体は\textbf{Riemann面}と呼ばれる．
+
+\end{document}

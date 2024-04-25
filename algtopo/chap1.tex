@@ -1,0 +1,248 @@
+\documentclass[algtopo_main]{subfiles}
+\mathchardef\mhyphen="2D
+\begin{document}
+
+% \setcounter{chapter}{0}
+
+\chapter{必要最低限の圏論}
+
+
+\section{諸定義}
+
+ものの集まりを\textbf{クラス} (class) と呼ぶことにする\footnote{集合全体の集合を考えるとRussellのパラドクスに陥る．これを避けるために，集合よりも上位の概念であるクラスを新しく導入する必要がある．なお，考察の対象とする集合の範囲を\textbf{宇宙} (universe) という大きな集合に属するものに限る流儀もある．この場合，圏を扱うときに既知の集合論をそのまま適用できるが，集合論の公理に宇宙の存在の公理を追加する必要がある．}．
+3つのもの $\mathcal{C}$ は以下の要素からなるとする：
+\begin{enumerate}
+    \item クラス $\mathrm{Ob}(\mathcal{C})$．その元は\textbf{対象} (object) と呼ばれる．
+    \item $\forall X,\, Y \in \mathrm{Ob}(\mathcal{C})$ に対して定まる\underline{集合} $\Hom{\mathcal{C}}(X,\, Y)$．
+    \item $\forall X,\, Y,\, Z \in \mathrm{Ob}(\mathcal{C})$ に対して定まる\underline{写像} $\circ\mathrel{} \colon \Hom{\mathcal{C}}(X,\, Y) \times \Hom{\mathcal{C}}(Y,\, Z) \to \Hom{\mathcal{C}}(X,\, Z)$．
+\end{enumerate}
+
+\begin{marker}
+    \begin{itemize}
+        \item 集合 $\Hom{\mathcal{C}}(X,\, Y)$ は記号として $\mathrm{Hom}(X,\, Y)$ とか $\mathcal{C}(X,\, Y)$ とも書かれる．
+        \item 元 $f \in \Hom{\mathcal{C}}(X,\, Y)$ のことを $X$ から $Y$ への\textbf{射} (morphism) と呼び，$\bm{f \colon X \to Y}$ と書く．
+        \item 写像 $\circ$ のことを\textbf{合成} (composite) と呼ぶ．
+        射 $f \colon X \to Y$ と $g \colon Y \to Z$ の合成は $\bm{g \circ f \colon X \to Z}$ と書かれる．
+    \end{itemize}
+\end{marker}
+
+
+\begin{mydef}[label=def:category]{圏}
+    $\mathcal{C}$ が\textbf{圏} (category) であるとは，次の2条件を充たすことを言う：
+    \begin{enumerate}
+        \item $\forall  X \in \mathrm{Ob}(\mathcal{C})$ に対して\textbf{恒等射} (identity) と呼ばれる射 $1_X \in \Hom{\mathcal{C}}(X,\, X)$ が存在して，$\forall W,\ Y \in \mathrm{Ob}(\mathcal{C})$ および $\forall f \in \Hom{\mathcal{C}}(W,\, X),\; \forall g \in \Hom{\mathcal{C}}(X,\, Y)$ について以下が成り立つ：
+        \begin{align}
+            1_X \circ f = f,\quad g \circ 1_X = g
+        \end{align}
+        \item $\forall  X,\, Y,\, Z,\, W \in \mathrm{Ob}(\mathcal{C})$ と $\forall f \in \Hom{\mathcal{C}}(X,\, Y),\; \forall g \in \Hom{\mathcal{C}}(Y,\, Z),\; \forall h \in \Hom{\mathcal{C}}(Z,\, W)$ に対して\textbf{結合則} (associativity) が成り立つ．i.e.
+        \begin{align}
+            (h \circ g) \circ f = h \circ (g \circ f) \in \Hom{\mathcal{C}}(X,\, W)
+        \end{align}
+    \end{enumerate}
+\end{mydef}
+
+\begin{itemize}
+    \item $\Obj{\SETS}$ を全ての集合とし，それらの間の全ての写像を射とし，$\circ$ を通常の写像の合成とするものの集まり $\SETS$ は圏を成す．
+    \item $\Obj{\TOP}$ を全ての位相空間とし，それらの間の全ての連続写像を射とし，$\circ$ を通常の写像の合成とするものの集まり $\TOP$ は圏を成す．
+    \item 可換環 $R$ について，$\Obj{\MOD{R}}$ を全ての $R$ 加群とし，それらの間の全ての $R$ 準同型を射とし，$\circ$ を通常の写像の合成とするものの集まり $\MOD{R}$ は圏を成す．
+\end{itemize}
+
+\begin{mydef}[label=def:small-monoid]{小圏・モノイド}
+    \begin{itemize}
+        \item $\Obj{\mathcal{C}}$ が集合であるような圏 $\mathcal{C}$ は\textbf{小圏} (small category) と呼ばれる．
+        \item $\forall X \in \Obj{\mathcal{C}}$ が一点集合であるような圏 $\mathcal{C}$ は\textbf{モノイド} (monoid) と呼ばれる．
+    \end{itemize}
+\end{mydef}
+
+\begin{mydef}[label=def:mono-epi]{単射，全射}
+    $\Cat{C}$ を\hyperref[def:category]{圏}，$A,\, B \in \Obj{\Cat{C}},\; f \in \Hom{\Cat{C}}(A,\, B)$ とする．
+    \begin{itemize}
+        \item $f$ が\textbf{単射} (monomorphism) であるとは，$\forall X \in \Obj{\Cat{C}}$ に対して写像
+        \begin{align}
+            f^* \colon \Hom{\Cat{C}} (X,\, A) &\lto \Hom{\Cat{C}} (X,\, B), \\
+            g \lmto f \circ g
+        \end{align}
+        が集合の写像として単射であること．
+        \item $f$ が\textbf{全射} (epimorphism) であるとは，$\forall  X \in \Obj{\Cat{C}}$ に対して
+        に対して写像
+        \begin{align}
+            {}^* f \colon \Hom{\Cat{C}} (B,\, X) &\lto \Hom{\Cat{C}} (A,\, X), \\
+            g \lmto g \circ f
+        \end{align}
+        が集合の写像として単射であること．
+    \end{itemize}
+\end{mydef}
+
+
+\begin{mydef}[label=def:isomorphism]{同型射}
+    圏 $\mathcal{C}$ と射 $f \in \Hom{\Cat{C}}(X,\, Y)$ をとる．
+    \begin{itemize}
+        \item $f$ が\textbf{同型射} (isomorphism) であるとは，
+        \begin{align}
+            \exists g \in \Hom{\mathcal{C}}(Y,\, X),\quad g \circ f = 1_X \AND f \circ g = 1_Y
+        \end{align}
+        が成り立つことを言う．このときの射 $g \in \Hom{\mathcal{C}}(Y,\, X)$ のことを $f$ の\textbf{逆} (inverse) と呼ぶ．
+        \item 同型射 $f \in \Hom{\mathcal{C}}(X,\, Y)$ が存在するとき，$X$ と $Y$ は\textbf{同型} (isomorphic) であると言う．
+        \item 対象 $X \in \Obj{\mathcal{C}}$ について，$\Hom{\mathcal{C}}(X,\, X)$ の元のうち同型射であるもの全体の集合は合成によって群を成す．この部分集合を $\Aut_{\mathcal{C}}(X) \subset \Hom{\mathcal{C}}(X,\, X)$ と書き，$X$ の $\mathcal{C}$ における\textbf{自己同型群} (automorphism group) と呼ぶ．
+    \end{itemize}
+\end{mydef}
+
+\begin{mydef}[label=def:sub]{部分対象}
+    $\Cat{C}$ を圏とする．
+    \begin{itemize}
+        \item $A \in \Obj{\Cat{C}}$ の \textbf{部分対象} (subobject) とは，$B \in \Obj{\Cat{C}}$ と\hyperref[def:mono-epi]{単射} $f \in \Hom{\Cat{C}}(B,\, A)$ の組 $(B,\, f)$ のことを言う．
+        \item $A \in \Obj{\Cat{C}}$ の部分対象 $(B,\, f),\; (C,\, g)$ が\textbf{同値} (equivalent) であるとは，ある\hyperref[def:isomorphism]{同型射} $\varphi \in \Hom{\Cat{C}} (B,\, C)$ であって $g \circ \varphi = f$ を充たすものが存在することを言う\footnote{$B \simeq C$ や $f \simeq g$ と略記することがある．}．
+    \end{itemize}
+\end{mydef}
+
+\begin{mydef}[label=def:quo]{商対象}
+    $\Cat{C}$ を圏とする．
+    \begin{itemize}
+        \item $A \in \Obj{\Cat{C}}$ の \textbf{商対象} (quotient bject) とは，$B \in \Obj{\Cat{C}}$ と\hyperref[def:mono-epi]{全射} $f \in \Hom{\Cat{C}}(A,\, )$ の組 $(B,\, f)$ のことを言う．
+        \item $A \in \Obj{\Cat{C}}$ の部分対象 $(B,\, f),\; (C,\, g)$ が\textbf{同値} (equivalent) であるとは，ある\hyperref[def:isomorphism]{同型射} $\varphi \in \Hom{\Cat{C}} (B,\, C)$ であって $\varphi \circ f = g$ を充たすものが存在することを言う\footnote{$B \simeq C$ や $f \simeq g$ と略記することがある．}．
+    \end{itemize}
+\end{mydef}
+
+\begin{mydef}[label=def:fullsub]{充満部分圏}
+    2つの圏 $\mathcal{C},\, \mathcal{D}$ をとる．圏 $\mathcal{D}$ が $\mathcal{C}$ の\textbf{充満部分圏} (full subcategory) であるとは，次の2条件が充たされることを言う：
+    \begin{enumerate}
+        \item クラス $\Obj{\mathcal{D}} \subset \Obj{\mathcal{C}},$
+        \item $\forall X,\, Y \in \Obj{\mathcal{D}},\quad \Hom{\mathcal{D}}(X,\, Y) = \Hom{\mathcal{C}}(X,\, Y).$
+    \end{enumerate}
+\end{mydef}
+
+\begin{mydef}[label=def:opcategory]{反対圏}
+    圏 $\mathcal{C}$ に対して，その\textbf{反対圏} (opposite category) $\OP{\Cat{C}}$ を次のように定義する：
+    \begin{align}
+        \Obj{\OP{\Cat{C}}} &\coloneqq \Obj{\mathcal{C}}, \\
+        \Hom{\OP{\Cat{C}}}(X,\, Y) &\coloneqq \Hom{\mathcal{C}}(Y,\, X)\quad \forall X,\, Y \in \Obj{\OP{\Cat{C}}}
+    \end{align}
+\end{mydef}
+
+\section{関手と自然変換}
+
+圏を対象と考えたとき，射にあたるのは\textbf{関手} (functor) である．
+
+$\mathcal{C},\, \mathcal{D}$ を圏とする．$\mathcal{C}$ と $\mathcal{D}$ の間の対応
+\begin{align}
+    F \colon \mathcal{C} \longrightarrow \mathcal{D}
+\end{align}
+は次の2種類の対応付けから成るとする：
+\begin{enumerate}
+    \item $\forall X \in \Obj{\Cat{C}}$ に対して，記号 $F(X)$ で書かれる $\Obj{\Cat{D}}$ の元を\underline{一意に}対応づける\footnote{いわば，「写像」$F \colon \Obj{\Cat{C}} \to \Obj{\Cat{D}}$ とでも言うべきもの．}．
+    \item $\forall X,\, Y \in \Obj{\Cat{C}}$ に対して，射を移す\underline{写像}
+    \begin{align}
+        F \colon \Hom{\mathcal{C}}(X,\, Y) \longrightarrow \Hom{\mathcal{D}} \bigl( F(X),\, F(Y) \bigr),\; f \longmapsto F(f)
+    \end{align}
+    を対応付ける．
+\end{enumerate}
+
+\begin{mydef}[label=def:covariant]{共変関手}
+    $F \colon \Cat{C} \longrightarrow \Cat{D}$ が\textbf{共変関手} (covariant functor) であるとは，以下の2条件を充たすことを言う：
+    \begin{description}
+        \item[\textbf{(恒等射を保つ)}]
+        
+        $\forall X \in \Obj{\Cat{C}}$ に対して
+        \begin{align}
+            F(1_X) = 1_{F(X)} \in \Hom{\Cat{D}} \bigl( F(X),\, F(X) \bigr) 
+        \end{align}
+        が成り立つ．
+        \item[\textbf{(合成を保つ)}]
+
+        $\forall f \in \Hom{\Cat{C}}(X,\, Y),\; \forall g \in \Hom{\Cat{D}}(Y,\, Z)$ に対して
+        \begin{align}
+            F(g \circ f) = F(g) \circ F(f) \in \Hom{\Cat{D}}\bigl( F(X),\, F(Z) \bigr) 
+        \end{align}
+        が成り立つ．
+    \end{description}
+\end{mydef}
+
+射の向きを逆にすると\textbf{反変関手}の定義になる．いま $\mathcal{C},\, \mathcal{D}$ を圏とし，$\mathcal{C}$ と $\mathcal{D}$ の間の対応
+\begin{align}
+    F \colon \mathcal{C} \longrightarrow\mathcal{D}
+\end{align}
+は次の2種類の対応付けから成るとする：
+\begin{enumerate}
+    \item $\forall X \in \Obj{\Cat{C}}$ に対して，記号 $F(X)$ で書かれる $\Obj{\Cat{D}}$ の元を\underline{一意に}対応づける．
+    \item $\forall X,\, Y \in \Obj{\Cat{C}}$ に対して，射を移す\underline{写像}
+    \begin{align}
+        F \colon \Hom{\mathcal{C}}(X,\, Y) \longrightarrow \Hom{\mathcal{D}} \bigl( \textcolor{red}{F(Y)},\, \textcolor{red}{F(X)} \bigr),\; f \longmapsto F(f)
+    \end{align}
+\end{enumerate}
+
+\begin{mydef}[label=def:contrav]{反変関手}
+    $F \colon \Cat{C} \to \Cat{D}$ が\textbf{反変関手} (contravariant functor) であるとは，以下の2条件を充たすことを言う：
+    \begin{description}
+        \item[\textbf{(恒等射を保つ)}]
+        
+        $\forall X \in \Obj{\Cat{C}}$ に対して
+        \begin{align}
+            F(1_X) = 1_{F(X)} \in \Hom{\Cat{D}} \bigl( F(X),\, F(X) \bigr) 
+        \end{align}
+        が成り立つ．
+        \item[\textbf{(合成を保つ)}]
+
+        $\forall f \in \Hom{\Cat{C}}(X,\, Y),\; \forall g \in \Hom{\Cat{D}}(Y,\, Z)$ に対して
+        \begin{align}
+            F(g \circ f) = \textcolor{red}{F(f)} \circ \textcolor{red}{F(g)} \in \Hom{\Cat{D}}\bigl( \textcolor{red}{F(Z)},\, \textcolor{red}{F(X)} \bigr) 
+        \end{align}
+        が成り立つ．
+    \end{description}
+\end{mydef}
+
+関手を対象と考えたときに，射にあたるものが次に定義する\textbf{自然変換}である：
+
+\begin{mydef}[label=def:nat]{自然変換}
+    2つの共変関手 $F,\, G \colon \Cat{C} \to \Cat{D}$ について，以下のような対応 $\varphi \colon F \to G$ のことを\textbf{自然変換} (natural transformation) と呼ぶ：
+    \begin{enumerate}
+        \item $\forall X \in \Obj{\Cat{C}}$ に対して，射
+        \begin{align}
+            \varphi_X \in \Hom{\Cat{D}} \bigl( F(X),\, G(X) \bigr) 
+        \end{align}
+        を対応付ける．
+        \item $\forall f \in \Hom{\Cat{C}} (X,\, Y)$ について図式\ref{fig:nat}が可換になる．
+    \end{enumerate}
+\end{mydef}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzcd}[row sep=large, column sep=large]
+		F(X) \ar[d, "\varphi_X"] \ar[r, "F(f)"] &F(Y) \ar[d, "\varphi_Y"] \\
+		G(X)                      \ar[r, "G(f)"] &G(Y)
+	\end{tikzcd}
+    \caption{自然変換}
+    \label{fig:nat}
+\end{figure}%
+
+共変関手 $F$ から $G$ への自然変換全体が成すクラスを $\NAT(F,\, G)$ と書くことにする．
+
+\begin{mydef}[label=def:naturallyeq]{自然同値}
+    2つの共変関手 $F,\, G \colon \Cat{C} \longrightarrow \Cat{D}$ の間の自然変換 $\varphi \colon F \longrightarrow G$ を与える．
+    \begin{itemize}
+        \item $\varphi$ が\textbf{自然同値} (natural equivalence) であるとは，$\forall X \in \Obj{\Cat{C}}$ に対して $\varphi_X \in \Hom{\Cat{D}} \bigl( F(X),\, G(X) \bigr)$ が\hyperref[def:isomorphism]{同型射}であることを言う．
+        \item 共変関手 $F,\, G$ が\textbf{自然同値} (naturally equivalent) であるとは，$F$ から $G$ への自然同値が存在することを言う．
+        \item 共変関手 $F$ に対し，$\mathrm{id}{F(X)} \colon F(X) \longrightarrow F(X)$ により定まる $F$ から $F$ 自身への自然変換 $\varphi$ を\textbf{恒等自然変換} (identity natural transformation) と呼ぶ．
+    \end{itemize}
+\end{mydef}
+
+\begin{mydef}[label=def:faithful]{}
+    共変関手 $F \colon \Cat{C} \longrightarrow \Cat{D}$ を与える．
+    \begin{itemize}
+        \item $F$ が\textbf{忠実} (faithful) であるとは， $\forall X,\,Y \in \Obj{\Cat{C}}$ に対して写像
+        \begin{align}
+            F \colon \Hom{\mathcal{C}}(X,\, Y) \longrightarrow \Hom{\mathcal{D}} \bigl( F(X),\, F(Y) \bigr),\; f \longmapsto F(f)
+        \end{align}
+        が単射であること．
+        \item $F$ が\textbf{充満} (full) であるとは， $\forall X,\,Y \in \Obj{\Cat{C}}$ に対して写像
+        \begin{align}
+            F \colon \Hom{\mathcal{C}}(X,\, Y) \longrightarrow \Hom{\mathcal{D}} \bigl( F(X),\, F(Y) \bigr),\; f \longmapsto F(f)
+        \end{align}
+        が全射であること．
+        \item $F$ が\textbf{本質的全射} (essentially surjective) であるとは， $\forall Z \in \Obj{\Cat{D}}$ に対して $X \in \Obj{\Cat{C}}$ が存在して $F(X)$ が $Y$ と同型になること．
+    \end{itemize}
+    忠実充満関手のことを\textbf{埋め込み}と呼ぶことがある．
+\end{mydef}
+
+
+
+\end{document}

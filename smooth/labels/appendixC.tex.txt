@@ -1,0 +1,87 @@
+\begin{mydef}[label=def.subgroup]{部分群}
+\begin{myprop}[label=prop.det_subgroup]{部分群であることの判定法}
+\begin{mydef}[label=def:group-word]{word}
+\begin{myprop}[label=prop:group-word]{部分加群の生成}
+\begin{mydef}[label=def:group-cyclic]{巡回群}
+\begin{mydef}[label=def.hom_group]{群準同型}
+\begin{myprop}[label=prop.hom_group-1]{}
+\begin{mydef}[label=def.ker_group]{準同型の核・像}
+\begin{myprop}[label=prop.ker_group-1]{}
+\begin{myprop}[label=prop.hom_group-2]{準同型の単射性判定}
+\begin{mydef}[label=def.class_residue]{剰余類}
+\begin{myprop}[label=prop.class_residual-1]{剰余類の位数}
+\begin{mytheo}[label=thm.Lagrange]{Lagrangeの定理}
+\begin{myprop}[label=prop:double-coset]{}
+\begin{mydef}[label=def:double-coset]{両側剰余類}
+\begin{mydef}[label=def.subgroup_normal]{正規部分群}
+\begin{myprop}[label=prop.kernel1]{$\Ker$ は正規部分群}
+\begin{mylem}[label=lem.subgroup_normal]{}
+\begin{mytheo}[label=def.quotient_group]{剰余群}
+		\label{eq.def-quotient}
+\begin{mycol}[label=natural-homo]{標準射影と剰余群}
+\begin{mydef}[label=def:prod-group-subset]{群 $G$ の部分集合の積}
+\begin{myprop}[label=prop:prod-group]{部分集合の積が部分群になる必要十分条件}
+\begin{mydef}[label=def:prod-group]{群の直積}
+\begin{myprop}[label=prop:prod-group]{群の直積の特徴付け}
+% \begin{mydef}[label=def:semiprod-group]{内部半直積}
+\begin{mydef}[label=def:semiprod-group-inner]{外部半直積}
+\begin{mytheo}[label=thm.homo1]{準同型定理(第一同型定理)}
+	\label{fig.homo1}
+		\label{eq.thm-B4-1}
+\begin{mytheo}[label=thm.homo2]{準同型定理(第二同型定理)}
+\begin{mytheo}[label=thm.homo3]{準同型定理(第三同型定理)}
+\begin{mydef}[label=def.group_action]{群の作用}
+\begin{mydef}[label=def.natural_action]{剰余群への自然な作用}
+		\label{eq.def.natural_action}
+\begin{mydef}[label=def.adjoint_action]{随伴作用}
+\begin{mydef}[label=def.orbit]{軌道，等質空間，安定化群}
+\begin{mydef}[label=def.center]{正規化群，中心化群}
+\begin{mydef}[label=def.conjugation]{共役類}
+\begin{myaxiom}[label=ax:ring]{環の公理}
+\begin{mydef}[label=def:zero-ring]{単元}
+\begin{mydef}[label=def:homo-ring]{環の準同型・同型}
+\begin{mydef}[label=def:domain]{整域・零因子}
+\begin{mydef}[label=def:subring]{部分環}
+\begin{myprop}[label=prop:subring]{部分環の判定}
+\begin{mydef}[label=def:ker-ring]{核・像}
+\begin{mydef}[label=def:ideal]{イデアル}
+\begin{mydef}[label=def:gen-ideal,breakable]{イデアルの生成}
+\begin{mydef}[label=def:subtract-prod-ideal]{イデアルの和・積}
+\begin{mytheo}[label=def:quotient-ring]{剰余環}
+\begin{mycol}[label=natural-homo-ring]{剰余環への自然な全射準同型}
+\begin{mydef}[label=def:PID]{単項イデアル整域}
+\begin{mytheo}[label=thm.homo-ring1]{環の準同型定理(第一同型定理)}
+	\label{fig.homo-ring1}
+\begin{mytheo}[label=thm.homo-ring3]{環の準同型定理(第三同型定理)}
+\begin{mydef}[label=def:prod-ring]{環の直積}
+\begin{mytheo}[label=thm:ChineseRemainder]{中国式剰余定理}
+\begin{mycol}[label=col:ChineseRemainder]{古典的な中国式剰余定理}
+\begin{mytheo}[label=thm:ChineseRemainder-ideal]{可換環における中国式剰余定理}
+\begin{myaxiom}[label=ax:module,breakable]{加群の公理}
+\begin{mydef}[label=def:submodule]{部分加群}
+\begin{myprop}[label=prop:submodule]{部分加群の判定法}
+\begin{mydef}[label=def:sum-module]{部分加群の共通部分・和}
+\begin{mydef}[label=def:linear]{線形独立}
+\begin{mydef}[label=def:gen-module,breakable]{加群の生成}
+\begin{myprop}[label=prop:gen-submodule]{部分加群の生成}
+\begin{mydef}[label=def:homo-module]{加群の準同型}
+\begin{myprop}[label=def:hom-hom]{$\Hom{R}$ 加群}
+\begin{mytheo}[label=def:quotient-module]{剰余加群}
+\begin{mycol}[label=natural-homo-module]{剰余加群への自然な全射準同型}
+\begin{mydef}[label=def:ker-module]{核・像・余核}
+\begin{myprop}[label=prop:ker-module]{}
+\begin{mytheo}[label=thm.homo1]{加群の準同型定理(第一同型定理)}
+	\label{fig.homo-module1}
+\begin{mytheo}[label=thm.homo-ring3]{環の準同型定理(第二，第三同型定理)}
+\begin{mydef}[label=def:dp-mod,breakable]{加群の直積・直和}
+\begin{mydef}[label=def:inj-proj]{標準射影，標準包含}
+\begin{myprop}[label=prop:universality-dp,breakable]{直積・直和の普遍性}
+		\label{fig:DP}
+		\label{fig:DS}
+\begin{mydef}[label=def:free-mod,breakable]{自由加群}
+\begin{myprop}[label=prop:free-module-basis]{基底を持つ $R$ 加群は自由加群}
+\begin{mydef}[label=torsion-module]{捩れ元・捩れ部分加群}
+\begin{myprop}[label=prop:torsion-module]{}
+% \begin{mydef}[label=def:divisor]{約元}
+% \begin{mytheo}[label=thm:fin-gen-module]{有限生成加群の基本定理}
+% \begin{myaxiom}[label=ax:alg-ring]{環上の多元環}

@@ -1,0 +1,174 @@
+\contentsline {chapter}{\numberline {第1章}位相空間からの出発}{7}{chapter.1}%
+\contentsline {section}{\numberline {1.1}同値類による類別}{7}{section.1.1}%
+\contentsline {section}{\numberline {1.2}位相空間}{9}{section.1.2}%
+\contentsline {subsection}{\numberline {1.2.1}位相の構成}{9}{subsection.1.2.1}%
+\contentsline {subsection}{\numberline {1.2.2}内部・境界}{12}{subsection.1.2.2}%
+\contentsline {subsection}{\numberline {1.2.3}相対位相・積位相・商位相}{14}{subsection.1.2.3}%
+\contentsline {subsection}{\numberline {1.2.4}距離空間}{15}{subsection.1.2.4}%
+\contentsline {subsection}{\numberline {1.2.5}位相空間の分類}{17}{subsection.1.2.5}%
+\contentsline {section}{\numberline {1.3}連続写像・同相}{18}{section.1.3}%
+\contentsline {section}{\numberline {1.4}コンパクト性}{20}{section.1.4}%
+\contentsline {section}{\numberline {1.5}連結性}{21}{section.1.5}%
+\contentsline {chapter}{\numberline {第2章}多様体}{24}{chapter.2}%
+\contentsline {section}{\numberline {2.1}位相多様体}{24}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}定義}{24}{subsection.2.1.1}%
+\contentsline {subsection}{\numberline {2.1.2}アトラス}{26}{subsection.2.1.2}%
+\contentsline {section}{\numberline {2.2}$C^\infty $ 多様体}{31}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}$C^\infty $ 構造}{31}{subsection.2.2.1}%
+\contentsline {subsection}{\numberline {2.2.2}複素多様体・およびLie群の定義}{39}{subsection.2.2.2}%
+\contentsline {section}{\numberline {2.3}境界付き多様体}{41}{section.2.3}%
+\contentsline {section}{\numberline {2.4}$C^\infty $ 写像}{44}{section.2.4}%
+\contentsline {subsection}{\numberline {2.4.1}微分同相}{47}{subsection.2.4.1}%
+\contentsline {section}{\numberline {2.5}多様体の圏}{47}{section.2.5}%
+\contentsline {chapter}{\numberline {第3章}接空間・余接空間}{49}{chapter.3}%
+\contentsline {section}{\numberline {3.1}代数的準備}{49}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}ベクトル空間の圏}{50}{subsection.3.1.1}%
+\contentsline {subsection}{\numberline {3.1.2}双対ベクトル空間}{52}{subsection.3.1.2}%
+\contentsline {subsection}{\numberline {3.1.3}ベクトル空間のテンソル積}{56}{subsection.3.1.3}%
+\contentsline {subsection}{\numberline {3.1.4}多元環}{63}{subsection.3.1.4}%
+\contentsline {section}{\numberline {3.2}接空間}{64}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}$\mathbb {R}^n$ の接空間}{65}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.2}$C^\infty $多様体の接空間}{66}{subsection.3.2.2}%
+\contentsline {section}{\numberline {3.3}$C^\infty $写像の微分}{68}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}接空間の性質}{70}{subsection.3.3.1}%
+\contentsline {section}{\numberline {3.4}座標表示}{72}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}接ベクトルの表示}{72}{subsection.3.4.1}%
+\contentsline {subsection}{\numberline {3.4.2}微分の座標表示}{74}{subsection.3.4.2}%
+\contentsline {subsection}{\numberline {3.4.3}座標変換の座標表示}{75}{subsection.3.4.3}%
+\contentsline {subsection}{\numberline {3.4.4}曲線の速度ベクトルとしての接ベクトル}{76}{subsection.3.4.4}%
+\contentsline {section}{\numberline {3.5}接束}{78}{section.3.5}%
+\contentsline {section}{\numberline {3.6}ベクトル場}{79}{section.3.6}%
+\contentsline {subsection}{\numberline {3.6.1}ベクトル場の微分としての特徴付け}{80}{subsection.3.6.1}%
+\contentsline {section}{\numberline {3.7}余接空間}{80}{section.3.7}%
+\contentsline {subsection}{\numberline {3.7.1}余接空間の基底}{81}{subsection.3.7.1}%
+\contentsline {subsection}{\numberline {3.7.2}座標表示}{81}{subsection.3.7.2}%
+\contentsline {section}{\numberline {3.8}$C^\infty $多様体上のテンソル}{82}{section.3.8}%
+\contentsline {subsection}{\numberline {3.8.1}テンソルの作用}{82}{subsection.3.8.1}%
+\contentsline {subsection}{\numberline {3.8.2}成分表示の変換則}{83}{subsection.3.8.2}%
+\contentsline {subsection}{\numberline {3.8.3}テンソル場}{83}{subsection.3.8.3}%
+\contentsline {chapter}{\numberline {第4章}微分形式}{85}{chapter.4}%
+\contentsline {section}{\numberline {4.1}外積代数}{85}{section.4.1}%
+\contentsline {section}{\numberline {4.2}交代形式}{86}{section.4.2}%
+\contentsline {section}{\numberline {4.3}$C^\infty $多様体上の微分形式}{89}{section.4.3}%
+\contentsline {section}{\numberline {4.4}微分形式の演算}{90}{section.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}外積}{90}{subsection.4.4.1}%
+\contentsline {subsection}{\numberline {4.4.2}外微分}{91}{subsection.4.4.2}%
+\contentsline {subsection}{\numberline {4.4.3}引き戻し}{93}{subsection.4.4.3}%
+\contentsline {subsection}{\numberline {4.4.4}内部積とLie微分}{94}{subsection.4.4.4}%
+\contentsline {section}{\numberline {4.5}微分形式の積分}{98}{section.4.5}%
+\contentsline {subsection}{\numberline {4.5.1}パラコンパクト・1の分割}{98}{subsection.4.5.1}%
+\contentsline {subsection}{\numberline {4.5.2}多様体の向き付け}{99}{subsection.4.5.2}%
+\contentsline {subsection}{\numberline {4.5.3}$n$次元多様体上の$n$形式の積分}{100}{subsection.4.5.3}%
+\contentsline {section}{\numberline {4.6}ベクトル空間に値をとる微分形式}{101}{section.4.6}%
+\contentsline {subsection}{\numberline {4.6.1}外微分}{101}{subsection.4.6.1}%
+\contentsline {subsection}{\numberline {4.6.2}外積}{101}{subsection.4.6.2}%
+\contentsline {subsection}{\numberline {4.6.3}括弧積}{102}{subsection.4.6.3}%
+\contentsline {chapter}{\numberline {第5章}Hodge作用素とLaplacian}{103}{chapter.5}%
+\contentsline {section}{\numberline {5.1}内積と随伴}{103}{section.5.1}%
+\contentsline {subsection}{\numberline {5.1.1}内積}{103}{subsection.5.1.1}%
+\contentsline {subsection}{\numberline {5.1.2}随伴}{104}{subsection.5.1.2}%
+\contentsline {section}{\numberline {5.2}Riemann計量}{105}{section.5.2}%
+\contentsline {section}{\numberline {5.3}$k$-形式の内積}{105}{section.5.3}%
+\contentsline {subsection}{\numberline {5.3.1}計量に誘導される同型写像}{106}{subsection.5.3.1}%
+\contentsline {subsection}{\numberline {5.3.2}共役計量に誘導される同型写像}{106}{subsection.5.3.2}%
+\contentsline {subsection}{\numberline {5.3.3}$k$-形式の内積}{108}{subsection.5.3.3}%
+\contentsline {section}{\numberline {5.4}Hodge $\star $}{109}{section.5.4}%
+\contentsline {subsection}{\numberline {5.4.1}双対基底への作用}{113}{subsection.5.4.1}%
+\contentsline {section}{\numberline {5.5}ラプラシアンと調和形式}{114}{section.5.5}%
+\contentsline {subsection}{\numberline {5.5.1}随伴外微分作用素}{114}{subsection.5.5.1}%
+\contentsline {subsection}{\numberline {5.5.2}Laplacian}{115}{subsection.5.5.2}%
+\contentsline {subsection}{\numberline {5.5.3}Hodgeの定理}{116}{subsection.5.5.3}%
+\contentsline {chapter}{\numberline {第6章}ホモロジー・de Rhamコホモロジーの紹介}{117}{chapter.6}%
+\contentsline {section}{\numberline {6.1}多様体のホモロジー}{117}{section.6.1}%
+\contentsline {subsection}{\numberline {6.1.1}単体・三角形分割}{117}{subsection.6.1.1}%
+\contentsline {subsection}{\numberline {6.1.2}ホモロジー群}{118}{subsection.6.1.2}%
+\contentsline {section}{\numberline {6.2}de Rhamコホモロジー}{120}{section.6.2}%
+\contentsline {subsection}{\numberline {6.2.1}特異ホモロジー}{120}{subsection.6.2.1}%
+\contentsline {subsection}{\numberline {6.2.2}微分形式のチェイン積分とStokesの定理}{121}{subsection.6.2.2}%
+\contentsline {section}{\numberline {6.3}de Rhamの定理}{122}{section.6.3}%
+\contentsline {subsection}{\numberline {6.3.1}de Rhamコホモロジー}{122}{subsection.6.3.1}%
+\contentsline {subsection}{\numberline {6.3.2}de Rhamの定理}{123}{subsection.6.3.2}%
+\contentsline {chapter}{\numberline {第7章}Riemann幾何学の紹介}{125}{chapter.7}%
+\contentsline {section}{\numberline {7.1}多脚場}{125}{section.7.1}%
+\contentsline {section}{\numberline {7.2}接続形式・曲率形式}{126}{section.7.2}%
+\contentsline {subsection}{\numberline {7.2.1}接束の接続・曲率}{126}{subsection.7.2.1}%
+\contentsline {subsection}{\numberline {7.2.2}微分形式による $\nabla ,\, R$ の局所表示}{128}{subsection.7.2.2}%
+\contentsline {section}{\numberline {7.3}Levi-Civita接続}{130}{section.7.3}%
+\contentsline {section}{\numberline {7.4}接続係数による定式化}{132}{section.7.4}%
+\contentsline {subsection}{\numberline {7.4.1}テンソル場の共変微分}{133}{subsection.7.4.1}%
+\contentsline {subsection}{\numberline {7.4.2}曲線に沿った共変微分}{134}{subsection.7.4.2}%
+\contentsline {subsection}{\numberline {7.4.3}測地線}{135}{subsection.7.4.3}%
+\contentsline {chapter}{\numberline {第8章}複素多様体の紹介}{136}{chapter.8}%
+\contentsline {section}{\numberline {8.1}複素化の概要}{137}{section.8.1}%
+\contentsline {subsection}{\numberline {8.1.1}Dolbeault作用素}{138}{subsection.8.1.1}%
+\contentsline {subsection}{\numberline {8.1.2}概複素構造}{139}{subsection.8.1.2}%
+\contentsline {subsection}{\numberline {8.1.3}K\"ahler多様体}{139}{subsection.8.1.3}%
+\contentsline {chapter}{\numberline {第9章}ファイバー束}{141}{chapter.9}%
+\contentsline {section}{\numberline {9.1}定義の精密化}{142}{section.9.1}%
+\contentsline {subsection}{\numberline {9.1.1}ファイバー束の同型}{143}{subsection.9.1.1}%
+\contentsline {subsection}{\numberline {9.1.2}切断}{144}{subsection.9.1.2}%
+\contentsline {section}{\numberline {9.2}変換関数}{144}{section.9.2}%
+\contentsline {subsection}{\numberline {9.2.1}構造群}{147}{subsection.9.2.1}%
+\contentsline {subsection}{\numberline {9.2.2}構造の類別}{147}{subsection.9.2.2}%
+\contentsline {section}{\numberline {9.3}$G$-束}{149}{section.9.3}%
+\contentsline {subsection}{\numberline {9.3.1}同伴束}{150}{subsection.9.3.1}%
+\contentsline {subsection}{\numberline {9.3.2}誘導束}{150}{subsection.9.3.2}%
+\contentsline {section}{\numberline {9.4}主束}{151}{section.9.4}%
+\contentsline {section}{\numberline {9.5}ベクトル束}{153}{section.9.5}%
+\contentsline {subsection}{\numberline {9.5.1}局所フレーム}{154}{subsection.9.5.1}%
+\contentsline {subsection}{\numberline {9.5.2}切断のなすベクトル空間}{154}{subsection.9.5.2}%
+\contentsline {subsection}{\numberline {9.5.3}ベクトル束の計量}{155}{subsection.9.5.3}%
+\contentsline {section}{\numberline {9.6}ベクトル束の構成法}{155}{section.9.6}%
+\contentsline {subsection}{\numberline {9.6.1}部分束}{155}{subsection.9.6.1}%
+\contentsline {subsection}{\numberline {9.6.2}商束}{156}{subsection.9.6.2}%
+\contentsline {subsection}{\numberline {9.6.3}Whitney和}{157}{subsection.9.6.3}%
+\contentsline {subsection}{\numberline {9.6.4}双対束}{157}{subsection.9.6.4}%
+\contentsline {subsection}{\numberline {9.6.5}テンソル積束}{158}{subsection.9.6.5}%
+\contentsline {chapter}{\numberline {付録A}集合と位相のあれこれ}{159}{appendix.A}%
+\contentsline {section}{\numberline {A.1}位相空間の圏}{160}{section.A.1}%
+\contentsline {subsection}{\numberline {A.1.1}始対象と終対象}{162}{subsection.A.1.1}%
+\contentsline {subsection}{\numberline {A.1.2}積と和}{164}{subsection.A.1.2}%
+\contentsline {subsection}{\numberline {A.1.3}等化子と余等化子}{170}{subsection.A.1.3}%
+\contentsline {subsection}{\numberline {A.1.4}引き戻しと押し出し}{174}{subsection.A.1.4}%
+\contentsline {subsection}{\numberline {A.1.5}双対性}{180}{subsection.A.1.5}%
+\contentsline {subsection}{\numberline {A.1.6}極限と余極限}{182}{subsection.A.1.6}%
+\contentsline {chapter}{\numberline {付録B}多様体のあれこれ}{194}{appendix.B}%
+\contentsline {section}{\numberline {B.1}位相多様体の性質}{194}{section.B.1}%
+\contentsline {section}{\numberline {B.2}微分構造の構成}{195}{section.B.2}%
+\contentsline {section}{\numberline {B.3}部分多様体}{197}{section.B.3}%
+\contentsline {subsection}{\numberline {B.3.1}誘導計量}{198}{subsection.B.3.1}%
+\contentsline {section}{\numberline {B.4}隅付き多様体}{199}{section.B.4}%
+\contentsline {section}{\numberline {B.5}力学系としての多様体}{199}{section.B.5}%
+\contentsline {chapter}{\numberline {付録C}代数学のあれこれ}{200}{appendix.C}%
+\contentsline {section}{\numberline {C.1}群の準同型}{201}{section.C.1}%
+\contentsline {subsection}{\numberline {C.1.1}定義}{201}{subsection.C.1.1}%
+\contentsline {subsection}{\numberline {C.1.2}核と像}{202}{subsection.C.1.2}%
+\contentsline {subsection}{\numberline {C.1.3}剰余類}{203}{subsection.C.1.3}%
+\contentsline {subsection}{\numberline {C.1.4}両側剰余類}{205}{subsection.C.1.4}%
+\contentsline {subsection}{\numberline {C.1.5}正規部分群}{206}{subsection.C.1.5}%
+\contentsline {subsection}{\numberline {C.1.6}直積・半直積}{208}{subsection.C.1.6}%
+\contentsline {subsection}{\numberline {C.1.7}準同型定理}{211}{subsection.C.1.7}%
+\contentsline {section}{\numberline {C.2}群の作用}{214}{section.C.2}%
+\contentsline {subsection}{\numberline {C.2.1}種々の作用}{215}{subsection.C.2.1}%
+\contentsline {subsection}{\numberline {C.2.2}群の作用に関する諸定義}{215}{subsection.C.2.2}%
+\contentsline {section}{\numberline {C.3}環}{217}{section.C.3}%
+\contentsline {subsection}{\numberline {C.3.1}部分環}{218}{subsection.C.3.1}%
+\contentsline {subsection}{\numberline {C.3.2}イデアル}{220}{subsection.C.3.2}%
+\contentsline {subsection}{\numberline {C.3.3}準同型定理}{222}{subsection.C.3.3}%
+\contentsline {subsection}{\numberline {C.3.4}環の直積}{223}{subsection.C.3.4}%
+\contentsline {subsection}{\numberline {C.3.5}中国式剰余定理}{223}{subsection.C.3.5}%
+\contentsline {section}{\numberline {C.4}加群}{226}{section.C.4}%
+\contentsline {subsection}{\numberline {C.4.1}加群の生成}{228}{subsection.C.4.1}%
+\contentsline {subsection}{\numberline {C.4.2}加群の準同型}{229}{subsection.C.4.2}%
+\contentsline {subsection}{\numberline {C.4.3}剰余加群}{230}{subsection.C.4.3}%
+\contentsline {subsection}{\numberline {C.4.4}準同型定理}{232}{subsection.C.4.4}%
+\contentsline {section}{\numberline {C.5}直積・直和・自由加群}{233}{section.C.5}%
+\contentsline {subsection}{\numberline {C.5.1}普遍性}{234}{subsection.C.5.1}%
+\contentsline {subsection}{\numberline {C.5.2}自由加群}{238}{subsection.C.5.2}%
+\contentsline {section}{\numberline {C.6}ベクトル空間}{239}{section.C.6}%
+\contentsline {subsection}{\numberline {C.6.1}階数・退化次数の定理}{240}{subsection.C.6.1}%
+\contentsline {subsection}{\numberline {C.6.2}分裂補題と射影的加群}{242}{subsection.C.6.2}%
+\contentsline {chapter}{\numberline {付録D}小技集}{247}{appendix.D}%
+\contentsline {section}{\numberline {D.1}集合と写像の関係}{247}{section.D.1}%
+\contentsline {section}{\numberline {D.2}$C^\infty $ 関数の構成}{251}{section.D.2}%
+\contentsline {chapter}{参考文献}{253}{appendix*.43}%

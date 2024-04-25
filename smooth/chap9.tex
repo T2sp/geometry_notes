@@ -1,0 +1,831 @@
+\documentclass[geometry_main]{subfiles}
+
+\begin{document}
+
+\setcounter{chapter}{8}
+
+\chapter{ファイバー束}
+
+二つの \cinfty 多様体 $B,\, N$ が与えられたとしよう．$B$ を\textbf{底空間}，$F$ を\textbf{ファイバー}と呼ぶことにする．
+このとき，大雑把に言うと，\emph{局所的に}積多様体\footnote{位相は積位相（定義\ref{def.prodtopo}）を入れるのだった．} $B \times F$ と同一視される\cinfty 多様体 $E$ のことを \emph{$\bm{F}$ をファイバーとする $\bm{B}$ 上のファイバー束}と呼ぶ．もう少し真面目に言うと，$M$ のチャート $(U_i,\, \varphi)$ をとってきたときに積多様体
+\begin{align}
+	\label{eq.chap9-1}
+	U_i \times F
+\end{align}
+と $E$ の開集合との間に微分同相写像が存在することである．
+
+しかし，これだけだと $E$ の\emph{大域的な}幾何構造が見えてこない．
+情報の欠落をなんとかするには $M$ の開被覆 $\{ U_i \}$ に関して局所的な積多様体\eqref{eq.chap9-1}の構造を張り合わせる必要がある．そのために，我々は全ての $U_i \cap U_j \neq \emptyset$ 上において，\textbf{変換関数} $\{\Phi_{ij}\}$ を
+\begin{align}
+	\Phi_{ij} \colon F|_{U_i} \to F|_{U_j}
+\end{align}
+として用意する．変換関数の構成の如何によっては，ファイバー束 $E$ の大域的な幾何構造は極めて複雑なものになりうる．
+
+これだけだとよくわからないので，まず手始めに $S^1$ を底空間とするファイバー束を具体的に構成してみよう．
+$1$次元実多様体 $S^1$ の \cinfty アトラス $\{(U_+,\, \varphi_+),\; (U_-,\, \varphi_-)\}$ を次のようにとる：
+\begin{align}
+	U_+ &\coloneqq \bigl\{ e^{\iunit \theta} \bigm| \theta \in (-\varepsilon,\, \pi + \varepsilon) \bigr\}, & \varphi_+ &\colon U_+ \to \mathbb{R},\; e^{\iunit \theta} \mapsto \theta \\
+	U_- &\coloneqq \bigl\{ e^{\iunit \theta} \bigm| \theta \in (\pi -\varepsilon,\, 2\pi + \varepsilon) \bigr\}, & \varphi_- &\colon U_- \to \mathbb{R},\; e^{\iunit \theta} \mapsto \theta \\
+\end{align}
+ファイバー $F$ としては $1$ 次元実多様体
+\begin{align}
+	F \coloneqq [-1,\, 1] \subset \mathbb{R}
+\end{align}
+を選ぶ．このときファイバー束 $E$ は積多様体 $U_+ \times F$ および $U_- \times F$ の二部分からなり，それぞれチャート
+\begin{align}
+	\bigl(\, U_+;\; \theta,\, t_+\, \bigr),\quad \bigl(\, U_-;\; \theta,\, t_-\, \bigr)
+\end{align}
+を持つ（当然だが $t_{\pm} \in [-1,\, 1]$ である）．なお，この時点では $U_+ \times F,\, U_- \times F$ の「つながり方」は未定義である．
+
+ところで，$S^1$ の開被覆 $U_+,\, U_-$ は2ヶ所で重なっている：
+\begin{align}
+	\varphi_{\pm}(U_+ \cap U_-) = \textcolor{red}{(-\varepsilon,\, 0] \cup [2\pi,\, 2\pi + \varepsilon)} \cup \textcolor{blue}{(\pi-\varepsilon,\, \pi + \varepsilon)}
+\end{align}
+ここで，変換関数を
+\begin{align}
+	\Phi_{+-} \colon F|_{U_-} \to F|_{U_+},\; 
+	\begin{cases}
+		t_+ = t_- & \colon \theta \in \textcolor{red}{(-\varepsilon,\, 0] \cup [2\pi,\, 2\pi + \varepsilon)} \\
+		t_+ = t_- &	\colon \theta \in \textcolor{blue}{(\pi-\varepsilon,\, \pi + \varepsilon)}
+	\end{cases}
+\end{align}
+と定義することでファイバー束 $E$ は\emph{円筒}と同相に， 
+\begin{align}
+	\Phi_{+-} \colon F|_{U_-} \to F|_{U_+},\; 
+	\begin{cases}
+		t_+ = t_- & \colon \theta \in \textcolor{red}{(-\varepsilon,\, 0] \cup [2\pi,\, 2\pi + \varepsilon)} \\
+		t_+ = -t_- & \colon \theta \in \textcolor{blue}{(\pi-\varepsilon,\, \pi + \varepsilon)}
+	\end{cases}
+\end{align}
+と定義することでファイバー束 $E$ は\textbf{M\"obiusの帯}と同相になる．前者は特に $E \approx S^2 \times F$ と言うことだが，このような状況を指してファイバー束 $E$ は\textbf{自明束}であると表現する．
+
+\section{定義の精密化}
+
+ファイバー束のイメージが掴めたところで，数学的に厳密な定義を与える．まずは変換関数を入れる前の段階までの定式化である：
+
+\begin{mydef}[label=def.fiber-1]{微分可能ファイバー束}
+	\cinfty 多様体 $F,\, E,\, B$ を与える．\cinfty 写像 $\pi \colon E \to B$ が与えられ，それが次の条件を充たすとき，組 $(E,\, \pi ,\, B,\, F)$ を $F$ をファイバーとする\textbf{微分可能ファイバー束} (differentiable fiber bundle) と呼ぶ：
+	\begin{description}
+		\item[\textbf{(局所自明性)}]　
+		
+		$\forall b \in B$ に対して，$b$ のある開近傍 $U$ と微分同相写像 $\varphi \colon \pi^{-1}(U) \xrightarrow{\simeq} U \times F$ が存在して
+		\begin{align}
+			\forall u \in \pi^{-1} (U),\; \pi(u) = \mathrm{proj}_1 \circ \varphi(u)
+		\end{align}
+		となる，i.e. 図\ref{fig.fiber1}が可換図式となる．
+		ただし，$\mathrm{proj}_1$ は第一成分への射影である：
+		\begin{align}
+			\mathrm{proj}_1 \colon U \times F \to U ,\; (p,\, f) \mapsto p
+		\end{align}
+		微分同相写像 $\varphi$ のことを\textbf{局所自明化} (local trivialization) と呼ぶ．
+	\end{description}
+\end{mydef}
+
+\begin{figure}[H]
+	\centering
+	\begin{tikzcd}
+		\pi^{-1}(U) \arrow[d, "\pi"'] \arrow{r}{\varphi} & 
+			U \times F \arrow{dl}{\mathrm{proj}_1} \\
+		U &
+	\end{tikzcd}
+	\caption{局所自明性}
+	\label{fig.fiber1}
+\end{figure}%
+
+\begin{marker}
+	定義\ref{def.fiber-1}において，$\pi$ を連続写像に，$\varphi$ を位相同型写像に置き換えると一般のファイバー束の定義が得られる．
+	しかし，以降では微分可能ファイバー束しか考えないので定義\ref{def.fiber-1}の条件を充たす $(E,\, \pi ,\, B,\, F)$ のことを\textbf{ファイバー束}と呼ぶことにする．
+\end{marker}
+
+ファイバー束 $(E,\, \pi ,\, B,\, F)$ に関して，
+\begin{itemize}
+	\item $E$ を\textbf{全空間} (total space)
+	\item $B$ を\textbf{底空間} (base space)
+	\item $F$ を\textbf{ファイバー} (fiber)
+	\item $\pi$ を\textbf{射影} (projection)
+\end{itemize}
+と呼ぶ\footnote{紛らわしくないとき，ファイバー束 $(E,\, \pi,\, B,\, F)$ のことを $\pi \colon E \to B$ ，または単に $E$ と略記することがある．}．また，射影 $\pi$ による1点集合 $\{b\}$ の逆像 $\pi^{-1}(\{b\}) \subset E$ のことを\textbf{点} $\bm{b}$ \textbf{のファイバー} (fiber) と呼び，$F|_b$ と書く．\label{def:point-fiber}
+
+\subsection{ファイバー束の同型}
+
+\cinfty 多様体 $F$ を共通のファイバーに持つ二つのファイバー束 $(E_i,\, \pi_i,\, B_i,\, F)$ を考える．このとき，二つの底空間 $B_i$ の間の\cinfty 写像と同様に，全空間 $E_i$ の間の微分同相写像を考えることができる．これら二つの\cinfty 写像は\textbf{束写像} (bundle map) と呼ばれる．
+
+\begin{mydef}[label=def.bundlemap]{束写像}
+	ファイバー $F$ を共有する二つのファイバー束 $\xi_i = (E_i,\, \pi_i,\, B_i,\, F)$ を与える．
+	このとき $\xi_1$ から $\xi_2$ への\textbf{束写像} (bundle map) とは，二つの\cinfty 写像 $\textcolor{blue}{f} \colon B_1 \to B_2,\; \textcolor{red}{\tilde{f}} \colon E_1 \to E_2$ であって図\ref{fig.bundlemap}が可換図式になり，
+	かつ底空間 $B_1$ の各点 $b$ において，\textbf{点} $\bm{b}$ \textbf{のファイバー} $\bm{\pi_1^{-1}(\{b\})} \subset E_1$ への $\textcolor{red}{\tilde{f}}$ の制限 
+	\begin{align}
+		\tilde{f}|_{\pi_1^{-1}(\{b\})} \colon \pi_1^{-1}(\{b\}) \to \tilde{f} \bigl( \pi_1^{-1}(\{b\}) \bigr) \subset E_2
+	\end{align}
+	が微分同相写像になっているもののことを言う．
+\end{mydef}
+
+\begin{figure}[H]
+	\centering
+	\begin{tikzcd}
+			E_1 \arrow[d, "\pi_1"'] \arrow[red]{r}[red]{\tilde{f}}
+				& E_2 \arrow{d}{\pi_2} \\
+			B_1 \arrow[blue]{r}[blue]{f}
+			&B_2
+	\end{tikzcd}
+	\caption{束写像}
+	\label{fig.bundlemap}
+\end{figure}%
+
+\begin{mydef}[label=def.bundle_isomorphism]{ファイバー束の同型}
+	ファイバー $F$ と底空間 $B$ を共有する二つのファイバー束 $\xi_i = (E_i,\, \pi_i,\, B,\, F)$ を与える．
+	このとき，ファイバー束 $\xi_1$ と $\xi_2$ が\textbf{同型} (isomorphic) であるとは，
+	$f \colon B \to B$ が恒等写像となるような束写像 $\tilde{f} \colon E_1 \to E_2$ が存在することを言う．記号として $\xi_1 \simeq \xi_2$ とかく．
+\end{mydef}
+
+\begin{figure}[H]
+	\centering
+	\begin{tikzcd}[column sep=small]
+			E_1 \arrow[dr, "\pi_1"'] \arrow[red]{rr}[red]{\tilde{f}} &	& E_2 \arrow{dl}{\pi_2} \\
+			& B &
+	\end{tikzcd}
+	\caption{ファイバー束の同型}
+	\label{fig.bundle_homo}
+\end{figure}%
+
+積束 $(B \times F,\, \mathrm{proj}_1,\, B,\, F)$ と同型なファイバー束を\textbf{自明束} (trivial bundle) と呼ぶ．
+
+\subsection{切断}
+
+% さて，ファイバー束 $\xi = (E,\, \textcolor{red}{\pi},\, B,\, F)$ が与えられたとき，底空間 $B$ の任意の部分多様体 $M \subset B$ は自然にファイバー束の構造を持つ．それはファイバー $F$ と射影 $\pi$ を共有し，元の全空間 $E$ を部分集合 $\pi^{-1}(M) \subset E$ に制限することで構成される：
+% \begin{align}
+% 	\xi|_M \coloneqq \bigl( \textcolor{red}{\pi^{-1}}(M),\, \textcolor{red}{\pi}|_{\pi^{-1}(M)},\, M,\, F \bigr) 
+% \end{align}
+% $\xi|_M$ のことを $\xi$ の $M$ への\textbf{制限} (restriction) と呼ぶ．
+
+% \begin{mydef}[label=def.trivial]{自明化}
+% 	ファイバー束 $\xi = (E,\, \pi,\, B,\, F)$ を与える．底空間 $B$ の部分多様体 $M$ に対して，$\xi$ の $M$ への制限が $M$ 上の積束 $M \times F$ と同型である，i.e.
+% 	\begin{align}
+% 		\xi|_M \simeq (M \times F,\, \pi_0,\, M,\, F)
+% 	\end{align}
+% 	であるとき，$\xi_M$ は $\xi$ の $M$ 上の\textbf{自明化} (trivialization) と呼ばれる．
+% \end{mydef}
+
+ファイバー束 $(E,\, \pi,\, B,\, F)$ は，射影 $\pi$ によってファイバー $F$ の情報を失う．$F$ を復元するためにも，$s \colon B \to E$ なる写像の存在が必要であろう．
+
+\begin{mydef}[label=def.section]{切断}
+	ファイバー束 $\xi = (E,\, \pi,\, B,\, F)$ の\textbf{切断} (cross section) とは，\cinfty 写像 $s \colon B \to E$ であって $ \pi \circ s = \mathrm{id}_B$ となるもののことを言う．
+\end{mydef}
+各点 $b \in B$ に対して，明らかに $s(b) \in \pi^{-1}(\{b\})$ である．
+
+切断は\textbf{大域的な}対象であり，与えられたファイバー束が切断を持つとは限らない．一方，各点 $b \in B$ の開近傍 $U$ 上であれば，図\ref{fig.fiber1}の示す局所自明性から\textbf{局所切断} $s \colon U \to \pi^{-1}(U)$ が必ず存在する．
+$\mathrm{proj}_1^{-1}(\{	b \}) = \{b\} \times F$ であることを考慮すると $\pi^{-1}(\{b\}) \simeq F$ とわかるので，局所切断 $s \colon U \to \pi^{-1}(U)$ は \cinfty 写像 $\tilde{s} \colon U \to F$ と一対一に対応する．
+
+$B$ 上の切断全体の集合を $\Gamma(B,\, E)$ と書くことにする．例えば $\Gamma(B,\, TB) \simeq \vecfield{B}$ である．
+
+\section{変換関数}
+
+つぎに，変換関数を定式化しよう．
+$\xi = (E,\, \pi,\, B,\, F)$ をファイバー束とする．底空間 $B$ の開被覆 $\{ U_\lambda\}_{\lambda \in \Lambda}$ をとると，定義\ref{def.fiber-1}から，どの $\alpha \in \Lambda$ に対しても局所自明性（図\ref{subfig.fiber-l}）
+が成り立つ．ここでもう一つの $\beta \in \Lambda$ をとり，$U_\alpha \cap U_\beta$ に関して局所自明性の図式を横に並べることで，自明束 $\mathrm{proj}_1 \colon (U_\alpha \cap U_\beta) \times F \to U_\alpha \cap U_\beta$ の自己同型（図\ref{subfig.fiber-lm}）が得られる．
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}{0.4\columnwidth}
+		\centering
+		\begin{tikzcd}
+			U_\alpha \times F \arrow[dr, "\mathrm{proj}_1"']  & 
+				\pi^{-1}(U_\alpha) \arrow[l, "\varphi_\alpha"'] \arrow[d, "\pi"] \\
+			& U_\alpha
+		\end{tikzcd}
+		\caption{$U_\alpha$ に関する局所自明性}
+		\label{subfig.fiber-l}
+	\end{subfigure}
+	\hspace{5mm}
+	\begin{subfigure}{0.4\columnwidth}
+		\centering
+		\begin{tikzcd}
+			\pi^{-1}(U_\beta) \arrow[d, "\pi"'] \arrow{r}{\varphi_\beta} & 
+			U_\beta \times F \arrow{dl}{\mathrm{proj}_1} \\
+			U_\beta &
+		\end{tikzcd}
+		\caption{$U_\beta$ に関する局所自明性}
+		\label{subfig.fiber-m}
+	\end{subfigure}
+	\vspace{5mm}
+	\begin{subfigure}{0.4\columnwidth}
+		\centering
+		\begin{tikzcd}[column sep=small]
+			(U_\alpha \cap U_\beta) \times F \arrow[dr, "\mathrm{proj}_1"'] \arrow[red]{rr}[red]{\varphi_\beta \circ \varphi_\alpha^{-1}} & &
+				(U_\alpha \cap U_\beta) \times F \arrow{dl}{\mathrm{proj}_1}  \\
+				& U_\alpha \cap U_\beta &
+		\end{tikzcd}
+		\caption{自明束 $(U_\alpha \cap U_\beta) \times F$ の自己同型}
+		\label{subfig.fiber-lm}
+	\end{subfigure}
+	\caption{局所自明性の結合}
+	\label{fig.fiber2}
+\end{figure}
+
+つまり，$F \to F$ の微分同相写像全体のなす群（\textbf{微分同相群}）を $\Diff F$ と書くとき写像
+\begin{align}
+	t_{\beta\alpha} \colon U_\alpha \cap U_\beta \to \Diff F \label{eq.9-2-1}
+\end{align}
+が存在し，$\forall (b,\, f) \in (U_\alpha \cap U_\beta) \times F$ に対して
+\begin{align}
+	\bigl(\varphi_\beta \circ \varphi_\alpha^{-1}\bigr)(b,\, f) = \bigl( b,\, t_{\beta\alpha}(b)(f) \bigr) 
+\end{align}
+と作用する\footnote{なお $\varphi_\beta \circ \varphi_\alpha^{-1}$ の作用で点 $b$ が動かないのは，図式\ref{subfig.fiber-lm} が可換図式である，i.e. $\mathrm{proj}_1(b,\, f) = b = \bigl(\mathrm{proj}_1 \circ (\varphi_\beta \circ \varphi^{-1}_\alpha) \bigr)(b,\, f)$ であることによる．}．
+
+\begin{mydef}[label=def.fiber_transform]{変換関数}
+	上の設定において，式\eqref{eq.9-2-1}の $t_{\alpha\beta}$ をファイバー束 $\xi$ の\textbf{変換関数} (transition function) と呼ぶ．
+\end{mydef}
+
+全ての $U_\alpha \cap U_\beta$ に関する変換関数の族 $\{t_{\alpha\beta}\}$ が $\forall b \in U_\alpha \cap U_\beta \cap U_\gamma$ に対して条件
+\begin{align}
+	\label{eq.cocycle}
+	t_{\alpha\beta}(b) \circ t_{\beta\gamma}(b) = t_{\alpha\gamma}(b)
+\end{align}
+を充たすことは図式\ref{fig.fiber2}より明かである．
+次の命題は，ファイバー束 $(E,\, \pi,\, B,\, F)$ を構成する「素材」には
+\begin{itemize}
+	\item 底空間となる\cinfty 多様体 $B$
+	\item ファイバーとなる\cinfty 多様体 $F$
+	\item $B$ の開被覆 $\{ U_\lambda \}$
+	\item \eqref{eq.cocycle}を充たす\cinfty 関数族 $\{t_{\alpha\beta} \colon U_\beta \cap U_\alpha \to \Diff F\}$
+\end{itemize}
+があれば十分であることを主張する：
+
+\begin{myprop}[label=prop.cocycle]{ファイバー束の復元}
+	任意の \cinfty 多様体 $B,\, F$ を与える．
+
+	$B$ の開被覆 $\{U_\lambda\}$ と，\textbf{コサイクル条件}\eqref{eq.cocycle} (cocycle condition) を充たす\cinfty 級関数の族 $\{ t_{\alpha\beta} \colon U_\beta \cap U_\alpha \mapsto \Diff F \}$ が与えられたとき，ファイバー束 $\xi = (E,\, \pi,\, B,\, F)$ であって，その変換関数が $\{t_{\alpha\beta}\}$ となるものが存在する．
+\end{myprop}
+\begin{proof}
+	まず手始めに，cocycle条件\eqref{eq.cocycle}より
+	\begin{align}
+		t_{\alpha\alpha}(b) \circ t_{\alpha\alpha} (b ) = t_{\alpha\alpha}(b),\quad \forall b \in U_\alpha
+	\end{align}
+	だから $t_{\alpha\alpha}(b) = \mathrm{id}_{F}$ であり，また
+	\begin{align}
+		t_{\alpha\beta}(b) \circ t_{\beta\alpha} (b) = t_{\alpha\alpha}(b) = \mathrm{id}_{F},\quad \forall b \in U_\alpha \cap U_\beta
+	\end{align}
+	だから $t_{\beta\alpha}(b) = t_{\alpha\beta}(b)^{-1}$ である．
+
+	開被覆 $\{U_\lambda\}$ の添字集合を $\Lambda$ とする．このとき $\forall \lambda \in \Lambda$ に対して，$U_\lambda \subset B$ には底空間 $B$ からの\hyperref[def.reltopo]{相対位相}を入れ，$U_\lambda \times F$ にはそれと $F$ の位相との\hyperref[def.prodtopo]{積位相}を入れることで，\hyperref[def.disjoint_topo]{直和位相空間}
+	\begin{align}
+	\mathcal{E} \coloneqq \coprod_{\lambda \in \Lambda} U_\lambda \times F
+	\end{align}
+	を作ることができる\footnote{$\mathcal{E}$ はいわば，「貼り合わせる前の互いにバラバラな素材（局所自明束 $U_\alpha \times F$）」である．証明の以降の部分では，これらの「素材」を $U_\alpha \cap U_\beta \neq \emptyset$ の部分に関して「良い性質\eqref{eq.cocycle}を持った接着剤 $\{ t_{\alpha\beta} \}$」を用いて「貼り合わせる」操作を，位相を気にしながら行う．}．
+	$\mathcal{E}$ の任意の元は $(\textcolor{red}{\lambda},\, b,\, f) \in  \textcolor{red}{\Lambda} \times  U_\lambda \times F$ と書かれる．
+
+	さて，$\mathcal{E}$ 上の二項関係 $\sim$ を以下のように定める：
+	\begin{align}
+		\label{eq.prop9-1_equiv}
+		\sim\; \coloneqq \Bigl\{ \bigl( \, (\alpha,\, b,\, f),\, (\beta,\, c,\, h)\, \bigr) \in \mathcal{E} \times \mathcal{E} \Bigm| b=c,\; f = t_{\alpha\beta}(b)(h) \Bigr\} 
+	\end{align}
+	$\sim$ が同値関係の公理\ref{ax.equiv}を充たすことを確認する：
+	\begin{description}
+		\item[\textbf{反射律}] 冒頭の議論から $t_{\alpha\alpha}(b) = \mathrm{id}_F$ なので良い．
+		\item[\textbf{対称律}] 冒頭の議論から $t_{\beta\alpha}(b) = t_{\alpha\beta}(b)^{-1}$  なので，
+		\begin{align}
+			(\alpha,\, b,\, f) \sim (\beta,\, c,\, h) \quad &\Longrightarrow \quad b=c,\; f = t_{\alpha\beta}(b)(h) \\
+			&\Longrightarrow \quad c=b,\; h = t_{\alpha\beta}(b)^{-1}(f) = t_{\beta\alpha}(b)(f) \\
+			&\Longrightarrow \quad (\beta,\, c,\, h) \sim (\alpha,\, b,\, f).
+		\end{align}
+		\item[\textbf{推移律}] cocycle条件\eqref{eq.cocycle}より
+		\begin{align}
+			(\alpha,\, b,\, f) \sim (\beta,\, c,\, h),\; (\beta,\, c,\, h) \sim (\gamma,\, d,\, k) \quad
+			&\Longrightarrow \quad b=c,\, c=d,\; f = t_{\alpha\beta}(b)(h),\, h = t_{\beta\gamma}(c)(k) \\
+			&\Longrightarrow \quad b=d,\; f = t_{\alpha\beta}(b) \circ t_{\beta\gamma}(b)(k) = t_{\alpha\gamma}(b)(k)  \\
+			&\Longrightarrow \quad (\alpha,\, b,\, f) \sim (\gamma,\, d,\, k).
+		\end{align}
+	\end{description}
+	したがって $\sim$ は同値関係である．
+	$\sim$ による $\mathcal{E}$ の商集合を $E$ と書き，\hyperref[def.quo-proj]{標準射影} (canonical injection) を $\mathrm{pr} \colon \mathcal{E} \to E,\; (\alpha,\, b,\, f)  \mapsto [ (\alpha,\, b,\, f)]$ と書くことにする．
+
+	集合 $E$ に\hyperref[def.quotopo]{商位相}を入れて $E$ を位相空間にする．このとき開集合 $\{\alpha\} \times U_\alpha \times F \subset \mathcal{E}$ は $\mathrm{pr}$ によって $E$ の開集合 $\mathrm{pr}(\{\alpha\} \times U_\alpha \times F) \subset{E}$ に移される．ゆえに $E$ は $\bigl\{\, \mathrm{pr}(\{\alpha\} \times U_\alpha \times V_\beta)\, \bigr\}$ を座標近傍にもつ\cinfty 多様体である（ここに $\{ V_\beta \}$ は，\cinfty 多様体 $F$ の座標近傍である）．
+	
+	次に\cinfty 写像 $\pi \colon E \to B$ を
+	\begin{align}
+		\pi \bigl(\, [(\alpha,\, b,\, f)]\, \bigr) \coloneqq b
+	\end{align}
+	と定義すると，これは\hyperref[def.fiber-1]{局所自明化} 
+	\begin{align}
+		\varphi_\alpha \colon \pi^{-1}(U_\alpha) \to U_\alpha \times F,\; [(\alpha,\, b,\, f)] \mapsto (b,\, f)
+	\end{align}
+	による\hyperref[fig.bundle_homo]{局所自明性}を持つ．
+	従って組 $\xi = (E,\, \pi,\, B,\, F)$ はファイバー束になり，証明が終わる．
+\end{proof}
+
+
+\subsection{構造群}
+
+以上の議論から，任意の $F$ をファイバーとするファイバー束が，底空間 $B$ の開被覆 $\{U_\lambda\}$ に対して局所的な自明束 $U_\lambda \times F$ を変換関数 $\{ t_{\alpha\beta}\}$ によって「張り合わせる」ことで構成されることがわかった．しかし，式\eqref{eq.9-2-1}の変換関数の値域として選んだ $\Diff F$ は集合として大きすぎて扱いが難しい．
+そこで，微分同相群 $\Diff F$ の代わりにその部分群 $G \subset \Diff F$ を使うと言う発想に至る．
+特に $G$ としてLie変換群\footnote{つまり，構造群 $G$ はファイバー $F$ に左から作用する．}を選ぶことが多い，これが\textbf{構造群}である．
+
+\begin{mydef}[label=def.structure_group]{構造群}
+	ファイバー束 $\xi = (E,\, \pi,\, B,\, F)$ を与える．底空間 $B$ の開被覆 $\{U_\lambda\}_{\lambda \in \Lambda}$ と，各 $U_\lambda$ に関する\hyperref[def.fiber-1]{局所自明化} $\varphi_\lambda \colon \pi^{-1}(U_\lambda) \to U_\lambda \times F$ が与えられたとする．
+	このとき，全ての添字の組 $\forall (\alpha,\, \beta) \in \Lambda \times \Lambda$ に対して，
+	変換関数 $t_{\alpha\beta} \colon U_\alpha \cap U_\beta \to \Diff F$ と $F$ 上のあるLie変換群 $G \subset \Diff F$ が
+	\begin{align}
+		\Im t_{\alpha\beta} \subset G
+	\end{align}
+	を充し，かつ $t_{\alpha\beta}$ 自身が\cinfty 級ならば，\textbf{開被覆と局所自明化の組} $\bm{\{U_\lambda\} \times \{\varphi_\lambda\}}$ はファイバー束 $\xi$ に $G$ を\textbf{構造群} (structure group) とするファイバー束の構造を定めると言う．
+
+	構造群 $G$ が指定されたファイバー束のことを記号として $(E,\, \pi,\, B,\, F,\, G)$ と書く．
+\end{mydef}
+構造群 $G$ を指定する開被覆 $\{U_\lambda\}$ およびその上の\hyperref[def.fiber-1]{局所自明化} $\{	\varphi_\lambda \}$ を明記するときは\textbf{座標束}と呼び，記号として $\bm{\bigl( E,\, \pi ,\, B,\, F,\, G,\, \{ \varphi_\lambda\},\, \{U_\lambda\} \bigr)}$ と書く．
+座標束は\hyperref[def.atlas]{多様体のアトラス}と類似の概念である．
+
+\subsection{構造の類別}
+
+座標束 $(E,\, \pi,\, B,\, F,\, G,\, \{\varphi_\lambda\},\, \{U_\lambda\})$ を与える．
+ここで，底空間 $B$ の開集合 $U$ 上に別の局所自明化 $\varphi \colon \pi^{-1} (U) \to U \times F$ が与えられたとしよう．
+開被覆の添字集合を $\Lambda$ とするとき，$\forall \alpha \in \Lambda$ に対して自明束 $(U \cap U_\alpha) \times F$ の自己\hyperref[def.bundle_isomorphism]{同型}
+\begin{figure}[H]
+	\centering
+	\begin{tikzcd}[column sep=small]
+		(U_\alpha \cap U) \times F \arrow[dr, "\mathrm{proj}_1"'] \arrow[red]{rr}[red]{\varphi \circ \varphi_\alpha^{-1}} & &
+			(U_\alpha \cap U) \times F \arrow{dl}{\mathrm{proj}_1}  \\
+			& U_\alpha \cap U &
+	\end{tikzcd}
+\end{figure}%
+を考えることができる．このとき，ある写像 $t_{\alpha} \colon U_\alpha \cap U \to \Diff F$ が存在して
+\begin{align}
+	(\varphi \circ \varphi^{-1}_\alpha) (b,\, f) = \bigl(\, b,\, t_{\alpha}(b)(f)\, \bigr)
+\end{align}
+と書けるが，$\bm{\mathrm{Im}}\, \bm{t_\alpha \subset G}$ \emph{とは限らない}!
+
+\begin{mydef}[label=def.addmissible]{許容}
+	上述の設定において，\hyperref[def.fiber-1]{局所自明化} $\varphi$ が座標束 $\bigl(E,\, \pi,\, B,\, F,\, G,\, \{\varphi_\lambda\},\, \{U_\lambda\}\bigr)$ の\textbf{許容される} (admissible) \textbf{局所自明化}
+	であるとは，$\forall \alpha \in \Lambda$ に対して $\Im g_\alpha \subset G$ かつ $g_\alpha$ が\cinfty 級であることを言う．
+\end{mydef}
+
+全空間 $E$，射影 $\pi$，底空間 $B$，ファイバー $F$ を持ち，$G$ を構造群とする座標束全体の集合を $\mathscr{F}(E,\, B,\, F,\, G)$ と書こう．
+$(E,\, \pi,\, B,\, F,\, G,\, \{\varphi_\lambda\},\, \{U_\lambda\}) \in \mathscr{F}(E,\, B,\, F,\, G)$ のことを $(\{U_\lambda\},\, \{\varphi_\lambda\})$ と略記する．
+
+\begin{mydef}[label=def.structure_equiv]{座標束の同値関係}
+	$\mathscr{F}(E,\, B,\, F,\, G)$ 上の同値関係 $\sim$ を以下のように定める：
+	\begin{align}
+		\sim \; \coloneqq \Bigl\{ \bigl(\, (\{U_\lambda\},\, \{\varphi_\lambda\}),\, (\{V_\mu\},\, \{\psi_\mu\})\, \bigr)   \Bigm|
+		\psi_\mu\;(\forall \mu)\; \text{は座標束}\; (\{U_\lambda\},\, \{\varphi_\lambda\})\;\text{に許容される} \Bigr\} 
+	\end{align}
+\end{mydef}
+
+同値関係\ref{def.structure_equiv}は
+\begin{align}
+	\sim \; = \Bigl\{ \bigl(\, (\{U_\lambda\},\, \{\varphi_\lambda\}),\, (\{V_\mu\},\, \{\psi_\mu\})\, \bigr)  \Bigm| (\{U_\lambda\} \cup \{V_\mu\},\, \{\varphi_\lambda\} \cup \{\psi_\mu\}) \in \mathscr{F}(E,\, B,\, F,\, G)  \Bigr\} 
+\end{align}
+とも書けて，アトラスの同値関係\ref{manieq}と似ている．
+
+\begin{mydef}[label=def.G-bundle]{$G$-束}
+	同値関係\ref{def.structure_equiv}による同値類を $\bm{G}$\emph{-束} ($G$-bundle) と呼び，$\bm{(E,\, \pi,\, B,\, F,\, G)}$ と書く．
+\end{mydef}
+
+\section{$G$-束}
+
+ほとんどファイバー束と同じ扱いである．
+\begin{mydef}[label=def.G-bundlemap]{$G$-束の束写像}
+	ファイバー $F$ を共有する二つの $G$-束 $\xi_i = (E_i,\, \pi_i,\, B_i,\, F,\, G)$ を与える．
+	このとき $\xi_1$ から $\xi_2$ への\textbf{束写像} (bundle map) とは，ファイバー束の束写像（図式\ref{fig.bundlemap}）であって，以下の条件を充たすもののことを言う：
+	\tcblower
+	$\xi_1,\, \xi_2$ の任意の\hyperref[def.addmissible]{許容される\hyperref[def.fiber-1]{局所自明化}} $\varphi \colon \pi_1^{-1}(U) \to U \times F,\; \psi \colon \pi_2^{-1}(V) \to V \times F $ に対して，自明束の束写像 $\psi \circ \tilde{f} \circ \varphi^{-1} \colon (U \cap f^{-1}(V)) \times F \to V \times F$ （図式\ref{fig.G-bundlemap}の外周部）がある連続写像 $h \colon U \cap f^{-1}(V) \to \Diff F$ を用いて
+	\begin{align}
+		(\psi \circ \tilde{f})(b,\, f) = \bigl( \, f(b),\, h(b)(f)\, \bigr) 
+	\end{align}
+	と書かれるとき，$\Im h \subset G$ かつ $h$ が\cinfty 級である．
+\end{mydef}
+
+\begin{figure}[H]
+	\centering
+	\begin{tikzcd}
+			&U \times F \arrow[dr, "\mathrm{proj}_1"']
+				&\pi_1^{-1}(U) \arrow[l, "\varphi"'] \arrow[d, "\pi_1"'] \arrow[red]{r}[red]{\tilde{f}}
+				& \pi_2^{-1}(V) \arrow{d}{\pi_2} \arrow[r, "\psi"]
+			&V \times F \arrow[dl, "\mathrm{proj}_1"] \\
+			& &U \arrow[blue]{r}[blue]{f} &V &
+	\end{tikzcd}
+	\caption{$G$-束の束写像}
+	\label{fig.G-bundlemap}
+\end{figure}%
+
+\begin{mydef}[label=def.Gbundle_isomorphism]{$G$-束の同型}
+	ファイバー $F$ と底空間 $B$ を共有する二つの$G$-束 $\xi_i = (E_i,\, \pi_i,\, B,\, F,\, G)$ を与える．
+	このとき，$G$-束 $\xi_1$ と $\xi_2$ が\textbf{同型} (isomorphic) であるとは，
+	$f \colon B \to B$ が恒等写像となるような $G$-束の束写像 $\tilde{f} \colon E_1 \to E_2$ が存在することを言う．記号として $\xi_1 \simeq \xi_2$ とかく．
+\end{mydef}
+
+% \begin{figure}[H]
+% 	\centering
+% 	\begin{tikzcd}[column sep=small]
+% 			E_1 \arrow[dr, "\pi_1"'] \arrow[red]{rr}[red]{\tilde{f}} &	& E_2 \arrow{dl}{\pi_2} \\
+% 			& B &
+% 	\end{tikzcd}
+% 	\caption{$G$-束の同型}
+% 	\label{fig.G-bundle_homo}
+% \end{figure}%
+
+\begin{mydef}[label=reduce]{縮小}
+	$G$-束 $\xi = (E,\, \pi,\, B,\, F,\, G)$ を与える．
+	$H \subset G$ を $G$ の部分群とするとき，ある $\xi$ の座標束 $\bigl(E,\, \pi,\, B,\, F,\, G,\, \{U_\lambda\},\, \{\varphi_\lambda\}\bigr)$ 上の変換関数の族 $\{ t_{\alpha\beta} \colon U_\alpha \cap U_\beta \to G\}$ の像が $\Im t_{\alpha\beta} \subset H$ を充たすとき，$\bm{\xi}$ \emph{の構造群が} $\bm{H}$ \emph{に縮小} (reduce) すると言う．
+\end{mydef}
+
+命題\ref{prop.cocycle}と全く同様にして以下が示される：
+
+\begin{myprop}[label=prop.G-cocycle]{$G$-束の復元}
+	任意の \cinfty 多様体 $B,\, F$ を与える．
+
+	$B$ の開被覆 $\{U_\lambda\}$ と，\textbf{コサイクル条件}\eqref{eq.cocycle} (cocycle condition) を充たす\cinfty 級関数の族 $\{ t_{\alpha\beta} \colon U_\beta \cap U_\alpha \mapsto G \}$ が与えられたとき，$G$-束 $\xi = (E,\, \pi,\, B,\, F,\, G)$ であって，その変換関数が $\{t_{\alpha\beta}\}$ となるものが存在する．
+\end{myprop}
+
+\subsection{同伴束}
+
+命題\ref{prop.G-cocycle}より，変換関数 $t_{\alpha\beta}$ はファイバー $F$ の情報を何も持っていない．
+したがってLie群 $G$ が別の\cinfty 多様体 $F'$ にLie変換群として作用するならば，同じ変換関数だが異なるファイバーを持つ $G$-束 $\xi' = (E,\, \pi,\, B,\, F',\, G)$ を構成できる．
+
+\begin{mydef}[label=associatedbundle]{同伴束}
+	上記の設定のとき，$\xi$ と $\xi'$ は互いに他の\textbf{同伴束} (associated bundle) であると言う．
+\end{mydef}
+
+\subsection{誘導束}
+
+$G$-束 $\xi = (E,\, \pi,\, B,\, F,\, G)$ を与え，$\xi$ の代表元となる座標束 $(E,\, \pi,\, B,\, F,\, G,\, \{U_\lambda\},\, \{\varphi_\lambda\})$ および変換関数 $t_{\alpha\beta} \colon U_\alpha \cap U_\beta \to G$ をとる．
+
+ここで新しい\cinfty 多様体 $M$ を導入し，底空間 $B$ との間に \cinfty 写像 $f\colon M \to B$ が与えられたとする．命題\ref{prop.G-cocycle}を用いて $M$ を底空間とする $G$-束（座標束）を構成できる．
+
+\subsubsection*{$M$ の開被覆}
+
+まず，$M$ の開被覆を構成しよう．
+$f$ は連続写像だから（定義\ref{def.cinfty_mapping}）開集合 $U_\alpha \subset B$ の逆像 $f^{-1}(U_\alpha) \subset M$ は開集合である．$f^{-1}(\bigcup_\lambda U_\lambda) = \bigcup_\lambda f^{-1}(U_\lambda)$ なので，$\{f^{-1}(U_\lambda)\}$ が $M$ の開被覆であるとわかる．
+
+\subsubsection*{$M$ の変換関数}
+
+次に，変換関数 $t^*_{\alpha\beta} \colon f^{-1}(U_\alpha) \cap f^{-1}(U_\beta) \to G$ を構成しよう．
+試しに
+\begin{align}
+	t^*_{\alpha\beta} \coloneqq t_{\alpha\beta} \circ f
+\end{align}
+とおいてみると，$t^*_{\alpha\beta}$ は明らかに\cinfty 級である．また，$\forall p \in f^{-1}(U_\alpha) \cap f^{-1}(U_\beta) \cap f^{-1}(U_\gamma)$ に対して
+\begin{align}
+	t^*_{\alpha\gamma}(p) = t_{\alpha\gamma}(f(p)) = t_{\alpha\beta}(f(p)) \circ t_{\beta\gamma}(f(p)) = t^*_{\alpha\beta}(p) \circ t^*_{\beta\gamma}(p)
+\end{align}
+なのでcocycle条件\eqref{eq.cocycle}を充たす．
+
+\begin{tcolorbox}
+	以上の考察と命題\ref{prop.G-cocycle}から，$\{t_{\alpha\beta} \circ f\}$ を変換関数とする $M$ 上の $G$-束が存在するとわかる．
+	これを\textbf{誘導束} (induced bundle) と呼び，$f^*(\xi)$ と書く．
+\end{tcolorbox}
+
+具体的には，
+\begin{align}
+	f^*E \coloneqq \bigl\{ (p,\, u) \in M \times E \bigm| f(p) = \pi(u) \bigr\} 
+\end{align}
+とおけば $G$-束 $f^*(\xi) \coloneqq \bigl( f^*E,\, \mathrm{proj}_1,\, M,\, F,\, G \bigr)$ が誘導束になる．このとき $G$-束の束写像（定義\ref{def.G-bundlemap}）は $\mathrm{proj}_2 \colon (p,\, u) \mapsto u$ である：
+\begin{figure}[H]
+	\centering
+	\begin{tikzcd}
+				&f^*E \arrow[d, "\mathrm{proj}_1"'] \arrow[red]{r}[red]{\mathrm{proj}_2}
+				& E \arrow{d}{\pi} \\
+			&M \arrow[blue]{r}[blue]{f} &B
+	\end{tikzcd}
+	\caption{誘導束の束写像}
+	\label{fig.induced}
+\end{figure}%
+
+$\varphi \colon \pi^{-1}(U) \to U \times F$ を $\xi$ の\hyperref[def.fiber-1]{局所自明化}とすると，$f^*(\xi)$ の\hyperref[def.fiber-1]{局所自明化}は
+\begin{align}
+	\tilde{\varphi} \colon \mathrm{proj}^{-1}\bigl( f^{-1}(U) \bigr) \to f^{-1}(U) \times F,\; \bigl( p,\, u \bigr) \mapsto \bigl(p,\, \varphi(u)\bigr)
+\end{align}
+となる：
+\begin{figure}[H]
+	\centering
+	\begin{tikzcd}[row sep=large]
+			&f^{-1}(U) \times F \arrow[dr, "\mathrm{proj}_1"']
+				&\mathrm{proj}_1^{-1}\bigl( f^{-1}(U) \bigr) \arrow[l, "\tilde{\varphi}"'] \arrow[d, "\mathrm{proj}_1"'] \arrow[red]{r}[red]{\mathrm{proj}_2}
+				& \pi^{-1}(U) \arrow{d}{\pi} \arrow[r, "\varphi"]
+			&U \times F \arrow[dl, "\mathrm{proj}_1"] \\
+			& &f^{-1}(U) \arrow[blue]{r}[blue]{f} &U &
+	\end{tikzcd}
+	\caption{$f^*(\xi)$ の局所自明化}
+	\label{fig.induced_local}
+\end{figure}%
+
+\section{主束}
+
+\begin{mydef}[label=def.PFD]{主束}
+	$G$ をLie群とする．$G$-束 $\xi = (P,\, \pi,\, M,\, G,\, G)$ は，$G$ の $G$ 自身への作用が自然な\textbf{左作用}であるとき，\textbf{主束} (principal bundle) あるいは\textbf{主 $\bm{G}$-束} (principal $G$-bundle) と呼ばれる．
+\end{mydef}
+
+主束 $(P,\, \pi,\, M,\, G,\, G)$ は $(P,\, \pi,\, M,\, G)$ とか $P(M,\, G)$ と書かれることもある．
+
+\begin{myprop}[label=prop.PFD_right]{全空間への右作用}
+	$\xi = (P,\, \pi,\, M,\, G)$ を主 $G$-束とする．このとき，$G$ の全空間 $P$ への右作用が自然に定義される．
+	この作用は任意のファイバーをそれ自身の上にうつす\textbf{推移的かつ自由な作用}（定義\ref{def.orbit}）であり，その商空間は底空間 $M$ と一致する．
+\end{myprop}
+
+\begin{proof}
+	まず座標束 $(P,\, \pi,\, M,\, G,\, \{U_\lambda \},\, \{\varphi_\lambda \})$ をとり，関数の族
+	$\{t_{\alpha\beta} \colon U_\alpha \cap U_\beta \to G\}$ を座標束に対応する変換関数族とする．
+
+	$\forall u \in P,\, \forall g \in G$ をとる．$\pi(u) \in U_\alpha$ となる $\alpha$ を選び，対応する\hyperref[def.fiber-1]{局所自明化}が $\varphi_\alpha (u) = (p,\, h) \in U_\alpha \times G$ であるとする．このとき写像 $\phi \colon P \times G \to P$ を次のように定義する\footnote{$G$ の $G$ 自身への右作用は，$G$ の右からの積演算を選ぶ．この作用は推移的かつ効果的である．}：
+	\begin{align}
+		\label{eq.prop.9-3-1}
+		\phi(u,\, \textcolor{red}{g}) \coloneqq \varphi_\alpha^{-1}(p,\, h \cdot \textcolor{red}{g})
+	\end{align}
+	
+	\begin{description}
+		\item[\textbf{$\bm{\phi}$ のwell-definedness}]　
+		
+			$\beta \neq \alpha$ に対しても $\pi(u) \in U_\beta$ であるとする．このとき $\varphi_\beta(u) = (p,\, h') \in (U_\alpha \cap U_\beta) \times G$ と書けて，また変換関数の定義から
+			\begin{align}
+				h' = t_{\alpha\beta}(p) \cdot h \quad \bigl(\, t_{\alpha\beta}(p) \in G\, \bigr)
+			\end{align}
+			である．したがって
+			\begin{align}
+				\varphi_\beta^{-1}(p,\, h' \cdot g) = \varphi_\beta^{-1}\bigl(p,\, t_{\alpha\beta}(p) \cdot h \cdot g\bigr) = \varphi_\beta^{-1}\bigl(p,\, t_{\alpha\beta}(p) \cdot (h \cdot g) \bigr) = \varphi_\beta^{-1} \circ (\varphi_\beta \circ \varphi_\alpha^{-1})(p,\, h \cdot g) = \varphi_\alpha^{-1}(p,\, h \cdot g)
+			\end{align}
+			が分かり，式\eqref{eq.prop.9-3-1}の右辺は座標束の取り方によらない．
+		\item[\textbf{$\bm{\phi}$ は右作用}]　
+		
+			定義\ref{def.group_action}の2条件を充たしていることを確認する．
+			\begin{enumerate}
+				\item $\phi(u,\, 1_G) = \varphi_\alpha^{-1}(p,\, h \cdot 1_G) = \varphi_\alpha^{-1}(p,\, h) = u$ よりよい．
+				\item $\forall g_1,\, g_2 \in G$ をとる．
+				\begin{align}
+					\phi(u,\, g_1g_2) = \varphi_\alpha^{-1}\bigl(p,\, (h \cdot g_1) \cdot g_2 \bigr) = \phi\bigl(\varphi_\alpha^{-1}(p,\, h \cdot g_1),\, g_2\bigr) = \phi \bigl( \phi(u,\, g_1),\, g_2 \bigr) 
+				\end{align} 
+				よりよい．
+			\end{enumerate}
+		\item[\textbf{$\bm{\phi}$ は推移的かつ自由}]　
+		
+			$G$ の $G$ 自身への右作用が推移的なので $\phi \colon \pi^{-1}(p) \times G \to \pi^{-1}(p)$ も明らかに推移的．
+			また $\forall u \in \pi^{-1}(p)$ に対して，$\phi(u,\, g) = u$ ならば
+			\begin{align}
+				\phi(u,\, g) = \varphi_\alpha^{-1}(p,\, h \cdot g) = u = \varphi_\alpha^{-1}(p,\, h \cdot 1_G)
+			\end{align}
+			であり，$\varphi_\alpha$ が全単射であることから $g = 1_G$ である．i.e. 安定化群は $\forall u \in \pi^{-1}(p)$ に対して自明であるからこの作用は自由である．
+	\end{description}
+\end{proof}
+
+\begin{myprop}[]{}
+	主 $G$-束 $\xi = (P,\, \pi,\, M,\, G)$ が自明束になるための必要十分条件は，それが切断（定義\ref{def.section}）を持つことである．
+\end{myprop}
+
+\begin{proof}
+	\textbf{($\bm{\Longrightarrow}$)}　$\xi$ が自明束ならば切断をもつことは明らか．
+
+	\textbf{($\bm{\Longleftarrow}$)}　切断 $s \colon M \to P$ が存在するとする．命題\ref{prop.PFD_right}より $G$ は $P$ に右から自由に作用する．従って $p \in M$ のファイバー $\pi^{-1}(p)$ 上の任意の2点 $\forall u,\, v \in \pi^{-1}(p)$ に対して，ただ一つの $g \in G$ が存在して $v = u \cdot g$ となる．
+	
+	ここで，写像 $\tilde{f} \colon P \to M \times G$ を次のように定義する：
+
+	$u,\, s(\pi(u)) \in \pi^{-1}(\pi(u))$ だから
+	\begin{align}
+		\exists! g \in G,\, u = s(\pi(u)) \cdot g
+	\end{align}
+	であり，この $g$ を用いて
+	\begin{align}
+		\tilde{f}(u) \coloneqq \bigl( \pi(u),\, g \bigr)
+	\end{align}
+	とする．この $\tilde{f}$ が下図を可換図式にすることは明らかであり，$(P,\, \pi,\, M,\, G) \cong (M \times G,\, \mathrm{proj}_1,\, M,\, G)$ が示された．
+	\begin{figure}[H]
+		\centering
+		\begin{tikzcd}[column sep=small]
+				P \arrow[dr, "\pi_1"'] \arrow[red]{rr}[red]{\tilde{f}} &	& M \times G \arrow{dl}{\mathrm{proj}_1} \\
+				& M &
+		\end{tikzcd}
+		\caption{主 $G$-束の同型}
+	\end{figure}%
+\end{proof}
+
+
+\section{ベクトル束}
+
+\begin{mydef}[label=def.vectorbandle]{ベクトル束}
+	$M$ を $n$ 次元\cinfty 多様体とする．ファイバー束（定義\ref{def.fiber-1}） $\xi = (E,\, \pi,\, M,\, F)$ が $k$ 次元\textbf{ベクトル束} (vector bundle) であるとは，$F = \mathbb{R}^k$ であり，かつ $M$ の任意の開集合 $U$ および $\forall p \in U$ に対して $U$ 上の\emph{\hyperref[def.fiber-1]{局所自明化}の $\bm{\pi^{-1}(p)}$ への制限が線型同型写像}になっていることを言う．
+	
+	$F = \mathbb{C}^k$ のときは $\xi$ は $k$ 次元\textbf{複素ベクトル束}と呼ばれる．
+\end{mydef}
+
+$\xi$ は $E \xrightarrow{\pi} M$ と略記されることがある．
+また，$k$ を\textbf{ファイバー次元}と呼び，記号として $\dim E$ と書く．
+$E_p \coloneqq \pi^{-1}(p)$ を\textbf{点 $\bm{p} \in M$ におけるファイバー}と呼ぶことがある．
+
+$k$ 次元ベクトル束の変換関数は $\mathrm{GL}(k,\, \mathbb{R})$ の元である．
+
+\begin{marker}
+	ベクトル束の束写像および同型の概念はファイバー束の場合（定義\ref{def.bundlemap}, \ref{def.bundle_isomorphism}）とほぼ同様に定義されるが，束写像 $\tilde{f} \colon E_1 \to E_2$ が\cinfty 写像であるだけでなく，$\forall p \in M$ におけるファイバー $E_1{}_p$ への制限 $\tilde{f}|_{E_1{}_p} \colon E_1{}_p \to E_2{}_{f(p)}$ が\underline{線型同型写像}であるという点が異なる．
+\end{marker}
+
+\begin{mydef}[label=def.zero_section]{ゼロ切断}
+	$\xi = (E,\, \pi,\, M)$ の切断（定義\ref{def.section}）のうち以下の条件を充たすものを\textbf{ゼロ切断} (zero section) と呼ぶ：
+	\begin{align}
+		\forall p \in M,\; s(p) = \vb*{0} \in E_p
+	\end{align}
+\end{mydef}
+
+\begin{marker}
+	ゼロ切断の定義式を充たすように作った写像 $s_0 \colon M \to E$ は明らかに \cinfty 写像で，かつ $\pi\circ s_0 = \mathrm{id}_M$ を充たす．i.e. 任意のベクトル束には零切断が存在する．
+\end{marker}
+
+
+\subsection{局所フレーム}
+
+\begin{mydef}[label=def.VB_frame]{局所フレーム}
+	$k$ 次元ベクトル束 $E \xrightarrow{\pi} M$ および $M$ の開集合 $U$ を与える．$U$ 上の $E$ の\textbf{局所フレーム} (local frame) とは，順序付けられた $k$ 個の局所切断の組 $\{\, s_i \colon U \to E\, \}_{1\le i \le k}$ であって，$\forall p \in U$ に対して $\{\, s_i(p)\,\} $ が $\pi^{-1}(p)$ の基底を成すもののことを言う．
+\end{mydef}
+
+\begin{myprop}[label=prop.localtrivialization-frame]{局所自明化と局所フレーム}
+	$k$ 次元ベクトル束 $E \xrightarrow{\pi} M$ および $M$ の開集合 $U$ を与える．$U$ 上の\hyperref[def.fiber-1]{局所自明化}（図\ref{fig.fiber1}）を与えることと局所フレームを与えることは同値である．
+\end{myprop}
+
+\begin{proof}
+	$\bm{(\Longrightarrow)}$ 　\hyperref[def.fiber-1]{局所自明化} $\varphi \colon \pi^{-1}(U) \to U \times \mathbb{R}^k$ が与えられたとする．$\mathbb{R}^k$ の標準基底を $\hat{e}_i$ （第 $i$ 成分のみ $1$ の $k$ 次元数ベクトル）とおくと，$\forall p \in U$ に対して $\varphi|_{E_p} \colon E_p \to \{p\} \times \mathbb{R}^k$ が線型同型写像であることから $s_i (p) \coloneqq \varphi^{-1}(p,\, \hat{e}_i)$ が $E_p$ の基底を成す．
+
+	$\bm{(\Longleftarrow)}$ 　局所フレーム $\{\, s_i \colon U \to E\, \}_{1\le i \le k}$ が与えられたとする．このとき局所フレームの定義から，$\forall p \in U$ および $v_p \in E_p$ に対して
+	\begin{align}
+		\exists \,! (c_1,\, \dots ,\, c_k) \in \mathbb{R}^k,\; v_p = \sum_{i=1}^k c_i\, s_i(p)
+	\end{align}
+	が成り立つ．したがって，写像 $\varphi \colon \pi^{-1}(U) \to U \times \mathbb{R}^k$ を
+	\begin{align}
+		\varphi(p,\, v_p) \coloneqq (p;\; c_1,\, \dots ,\, c_k)
+	\end{align}
+	と定義すれば $\varphi$ は\hyperref[def.fiber-1]{局所自明化}になる．
+\end{proof}
+
+\begin{mycol}[]{}
+	ベクトル束 $E \xrightarrow{\pi} M$ が自明束になる必要十分条件は，$M$ 上の大域的なフレームが存在することである．
+\end{mycol}
+
+\begin{mycol}[]{}
+	ベクトル束 $E \xrightarrow{\pi} M$ が自明束になる必要十分条件は，$\forall p \in M$ において $s(p) \neq \vb*{0}$ となる $s \in \Gamma(E)$ が存在することである．このような $s$ を\textbf{ゼロにならない切断} (non-zero section) と呼ぶ．
+\end{mycol}
+
+\subsection{切断のなすベクトル空間}
+
+ベクトル束 $E \xrightarrow{\pi} M$ の切断全体の集合を $\Gamma (E,\, M)$ または $\Gamma(E)$ と書く．
+
+\begin{mydef}[label=def.section_vec]{$\Gamma(E)$ の演算}
+	$\Gamma(E)$ 上の和とスカラー倍を次のように定義すると，$\Gamma(E)$ は $\mathbb{K}$-ベクトル空間になる：
+	
+	$\forall s,\, s_1,\, s_2 \in \Gamma(E),\, \forall \lambda \in \mathbb{K}$ に対して
+	\begin{enumerate}
+		\item $(s_1 + s_2)(p) \coloneqq s_1(p) + s_2(p),\quad \forall p \in M$
+		\item $(\lambda s) \coloneqq \lambda s(p),\quad \forall p \in M$
+	\end{enumerate}
+	\tcblower
+	また，$\forall f \in \cinftyf{M}$ に対して
+	\begin{description}
+		\item[\textrm{(2')}] $(f s)(p) \coloneqq f(p) s(p),\quad \forall p \in M$
+	\end{description}
+	とおけば $\Gamma(E)$ は $\cinftyf{M}$-\hyperref[ax:module]{加群}になる．
+\end{mydef}
+
+\subsection{ベクトル束の計量}
+
+\begin{mydef}[label=def.metric-fiber]{ベクトル束のRiemann計量}
+	ベクトル束 $E \xrightarrow{\pi} M$ 上のRiemann計量は，$\forall p \in M$ における正定値内積 $g_p \colon E_p \times E_p \to \mathbb{R}$ であって，$p$ に関して\cinfty 級であるものをいう．
+	
+	i.e. $U$ を $M$ の開集合とし，$\{\, s_i \colon U \to E\, \}$ を $U$ 上の\hyperref[def.VB_frame]{局所フレーム}とするとき，$U$ 上の関数
+	\begin{align}
+		g_p \bigl( s_i(p),\, s_j(p) \bigr) \quad \forall p \in U
+	\end{align}
+	が \cinfty 関数となることである．
+
+	複素ベクトル束についてはHermite内積として定義する．
+\end{mydef}
+
+\begin{myprop}[]{}
+	任意のベクトル束には計量が存在する．
+\end{myprop}
+
+\section{ベクトル束の構成法}
+
+\subsection{部分束}
+
+\begin{mydef}[label=def.restriction]{制限}
+	ベクトル束 $E \xrightarrow{\pi} M$ を与える．$M$ の任意の部分多様体（定義\ref{def.submani}）$N$ に対して
+	\begin{align}
+		E|_N \coloneqq \pi^{-1}(N)
+	\end{align}
+	とおき，射影 $\pi_N \colon E|_N \to N$ を $\pi_N \coloneqq \pi|_{E|_N}$ によって定義すれば $E|_N \xrightarrow{\pi_N} N$ はベクトル束になる．これを $E$ の $N$ への\textbf{制限} (restriction) と呼ぶ． 
+\end{mydef}
+
+\begin{mydef}[label=def.subbundle]{部分束}
+	ベクトル束 $E \xrightarrow{\pi} M$ を与える．ベクトル束 $F \xrightarrow{\pi} M$ が $E$ の\textbf{部分束} (subbundle) であるとは，全空間 $F$ が $E$ の部分多様体であり，$\forall p \in M$ におけるファイバー $F_p$ が $E_p$ の部分ベクトル空間になっていることを言う．
+\end{mydef}
+
+$N$ を \cinfty 多様体 $M$ の部分多様体とすると，$TN$ は $TM|_N$ の部分束になる．
+
+\subsection{商束}
+
+% \begin{mydef}[label=def.quo-linear]{商ベクトル空間}
+% 	$V$ を $\mathbb{K}$-ベクトル空間， $W$ を $V$ の $\mathbb{K}$-部分ベクトル空間とする．$V$ は $+$ に関して可換群なので $W$ は $+$ に関して\hyperref[def.subgroup_normal]{正規部分群}である．
+% 	このとき，加法\hyperref[def.quotient_group]{剰余群}\footnote{演算が $+$ なので，$x \in V$ の剰余類は $x + W = \bigl\{\, y \in V \bigm| -x + y \in W \,\bigr\} $ と書かれる．} $V/W$ の上にスカラー倍を
+% 	\begin{align}
+% 		\lambda (x + W) \coloneqq (\lambda x) + W,\quad \forall \lambda \in \mathbb{K},\, \forall x \in V
+% 	\end{align}
+% 	で定義すると $V/W$ はベクトル空間になる．これを\textbf{商ベクトル空間} (quotient vector space) と呼ぶ．
+% \end{mydef}
+
+% \begin{proof}
+% 	スカラー倍のwell-definednessを確認する．$\forall y \in x + W$ はある $w \in W$ を用いて $y = x + w$ と書けるから
+% 	\begin{align}
+% 		\lambda y = \lambda x + \lambda w \in (\lambda x) + W
+% 	\end{align}
+% 	であり，剰余類 $x + W \in V/W$ の代表元の取り方によらない．
+% \end{proof}
+
+
+\begin{mydef}[label=def.quo-VB]{商束}
+	ベクトル束 $E \xrightarrow{\pi} M$ とその部分束 $F \xrightarrow{\pi} M$ が与えられたとする．
+	このとき $\forall p \in M$ において\hyperref[prop:quotient-vec]{商ベクトル空間} $E_p / F_p$ を考え，
+	\begin{align}
+		E/F \coloneqq \bigcup_{p \in M} E_p/F_p
+	\end{align}
+	とおくと，自然な射影 $\pi \colon E/F \to M,\; x_p + F_p \mapsto p$ はベクトル束を成す．この $E/F \xrightarrow{\pi} M$ を $E$ の $F$ による\textbf{商束} (quotient buncle) と呼ぶ．
+\end{mydef}
+
+\begin{proof}
+	
+\end{proof}
+
+$\dim E = n,\, \dim F = m$ とおくと $\dim E/F = n-m$ である．
+
+\begin{mydef}[label=def.normal-bundle]{法束}
+	$N$ を $M$ の\hyperref[def.submani]{\cinfty 部分多様体}とする．このとき接束 $TN$ は $TM|_N$ の部分束であるから，商束 $TM|_N / TN$ を定義できる．これを $N$ の $M$ における\textbf{法束} (normal bundle) と呼ぶ．
+\end{mydef}
+
+\cinfty 多様体 $M$ にRiemann計量を入れると，部分ベクトル空間 $T_pN \subset T_pM$ の直交法空間 $(T_pN)^{\bot}$ が定義できる．このとき
+\begin{align}
+	\bigcup_{p \in M} (T_pN)^\bot
+\end{align}
+は $TM|_N$ の部分束になる．一方，標準射影 $\mathrm{pr} \colon T_pM \to T_pM/T_pN,\; x \mapsto x + T_pN$ の  $(T_pN)^{\bot}$ への制限 $\mathrm{pr}|_{(T_pN)^{\bot}}$ は線型同型写像だからベクトル束の同型
+\begin{align}
+	\bigcup_{p \in M} (T_pN)^\bot \cong TM|_N/TN
+\end{align}
+がわかる．
+
+\subsection{Whitney和}
+
+\begin{mydef}[label=def.Whitney-sum]{Whitney和}
+	底空間 $M$ を共有する2つのベクトル束 $\pi_i \colon E_i \to M$ を与える．このとき
+	\begin{align}
+		E_1 \oplus E_2 \coloneqq \bigl\{\, (u_1,\, u_2) \in E_1 \times E_2 \bigm| \pi_1(u_1) = \pi_2(u_2)  \,\bigr\} 
+	\end{align}
+	とおいて
+	\begin{align}
+		\pi \colon E_1 \oplus E_2 \to M,\; (u_1,\, u_2) \mapsto \pi_1(u_1)\; \bigl(= \pi_2(u_2)\, \bigr)
+	\end{align}
+	と定義すると $\pi \colon E_1 \oplus E_2 \to M$ はベクトル束になる．これを\textbf{Whitney和} (Whitney sum) と呼ぶ．
+\end{mydef}
+
+射影 $\pi_1 \times \pi_2 \colon E_1 \times E_2 \to M\times M ,\; (u_1,\, u_2) \mapsto \bigl( \,\pi_1(u_1),\, \pi_2(u_2)\, \bigr)$ と定義すると，Whitney和は $f(p) \coloneqq (p,\, p)$ で定義される\cinfty 写像 $f \colon M \to M\times M$ による $E_1 \times E_2$ の引き戻し束である（図\ref{fig.Whitney}）．
+\begin{figure}[H]
+	\centering
+	\begin{tikzcd}
+			E_1 \oplus E_2 \arrow[d, "\pi_1"'] \arrow[red]{r}[red]{\pi_2}
+				& E_1 \times E_2 \arrow{d}{\pi_1 \times \pi_2} \\
+			M \arrow[blue]{r}[blue]{f}
+			&M \times M
+	\end{tikzcd}
+	\caption{Whitney和}
+	\label{fig.Whitney}
+\end{figure}%
+
+\subsection{双対束}
+
+\begin{mydef}[label=def.dual-bundle]{双対束}
+	ベクトル束 $\pi \colon E \to M$ を与える．このとき $\forall p \in M$ におけるベクトル空間 $E_p$ の双対ベクトル空間 $E^*_p$ を用いて
+	\begin{align}
+		E^* \coloneqq \bigcup_{p\in M} E_p^*
+	\end{align}
+	とおくと $\pi \colon E^* \to M$ はベクトル束になる．これを\textbf{双対束} (dual bundle) と呼ぶ．
+\end{mydef}
+
+\begin{marker}
+	実ベクトル束 $E$ の双対束は $E$ にRiemann計量を入れると自然に $E \cong E^*$ となるが，複素ベクトル束 $E$ の場合は必ずしもこの同型は成り立たない．
+\end{marker}
+
+特に $M$ の接束 $TM$ の双対束 $T^*M$ を\textbf{余接束} (cotangent bundle) と呼ぶ．
+
+\subsection{テンソル積束}
+
+\begin{mydef}[label=def.tensor-bundle]{テンソル積束}
+	ベクトル束 $\pi_i \colon E_i \to M$ を与える．このとき $\forall p \in M$ におけるベクトル空間 $E_i{}_p$ のテンソル積空間 $E_1 \otimes E_2$ を用いて
+	\begin{align}
+		E_1 \otimes E_2 \coloneqq \bigcup_{p\in M} E_1{}_p \otimes E_2{}_p
+	\end{align}
+	とおくと $\pi \colon E_1 \otimes E_2 \to M$ はベクトル束になる．これを\textbf{テンソル積束} (tensor product bundle) と呼ぶ．
+\end{mydef}
+
+\begin{mydef}[label=def.tensor-bundle]{外積束}
+	ベクトル束 $\pi \colon E \to M$ を与える．このとき $\forall p \in M$ におけるベクトル空間 $E_i{}_p$ の $r$ 次の\hyperref[def.ext]{外積代数} $\extp^r(E_p)$ を用いて
+	\begin{align}
+		\extp^r (E) \coloneqq \bigcup_{p\in M} \extp^r(E_p)
+	\end{align}
+	とおくと $\pi \colon \extp^r (E) \to M$ はベクトル束になる．
+\end{mydef}
+
+例えば\cinfty 多様体 $M$ 上の $k$ 次の微分形式全体の集合 $\Omega^k(M)$ は
+\begin{align}
+	\Omega^k(M) = \Gamma \left( \extp^k (T^*M) \right) 
+\end{align}
+と書かれる．
+
+\end{document}

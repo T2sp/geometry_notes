@@ -1,0 +1,2071 @@
+\documentclass[geometry_main]{subfiles}
+
+\begin{document}
+
+\setcounter{chapter}{2}
+
+
+\chapter{接空間・余接空間}
+
+多様体の接空間は，多様体上の\cinfty 関数に作用する写像として定義される．
+接空間はその定義から自然にベクトル空間になり，その双対ベクトル空間は余接空間と呼ばれる．
+さらに，適当な個数の接空間と余接空間のテンソル積をとることで任意の型のテンソル空間が構成される．
+
+この章の内容に関しては~\cite[Chapter3, 8, 11, 12]{Lee12}が詳しい．
+
+\section{代数的準備}
+
+この章から，幾何学的構造と代数的構造を並行して扱う場面が増える．
+本章に登場する代数系は，主に\hyperref[ax.vector]{ベクトル空間}と\hyperref[ax.alg]{多元環}である．
+
+\begin{myaxiom}[label=ax.vector, breakable]{ベクトル空間の公理}
+	\begin{itemize}
+		\item 集合 $V$ 
+		\item \textbf{加法}と呼ばれる写像
+		\begin{align}
+			+ \colon V \times V \lto V,\; (\bm{v},\, \bm{w}) \lmto \bm{v} + \bm{w}
+		\end{align}
+		
+		\item \textbf{スカラー乗法}と呼ばれる写像
+		\begin{align}
+			\cdot\; \colon \mathbb{K} \times V \lto V,\; (\lambda,\, \bm{v}) \lmto \lambda \bm{v}
+		\end{align}
+		
+	\end{itemize}
+	の組\footnote{実際には，加法とスカラー乗法の記号を明記せずに「ベクトル空間 $V$」と言うことが多い．} $(V,\, +,\, \cdot\;)$ が\textbf{体 $\mathbb{K}$ 上のベクトル空間}であるとは，$\forall \vb*{u},\, \vb*{v},\, \vb*{w} \in V$ と$ \forall \lambda,\, \mu \in \mathbb{K}$ に対して以下が成り立つことを言う
+	\footnote{$V$ の元の和をいちいち $+(\bm{v},\, \bm{w})$ と書くのは煩雑なので，全て $\bm{v} + \bm{w}$ のように略記している．スカラー乗法についても同様に $\lambda \bm{v} \coloneqq \cdot\; (\lambda,\, \bm{v})$ である．以降，ベクトル空間以外の代数系に関しても同じような略記を行う．}：
+	\begin{description}
+		\item[\textbf{(V1)}] $\vb*{u} + \vb*{v} = \vb*{v} + \vb*{u}.$
+		\item[\textbf{(V2)}] $(\vb*{u} + \vb*{v}) + \vb*{w} = \vb*{v} + (\vb*{u} + \vb*{w}).$
+		\item[\textbf{(V3)}] 記号として $\bm{0}$ と書かれる $V$ の元が存在して，$\vb*{u} + \vb*{0} = \vb*{u}$ が成り立つ．
+		\item[\textbf{(V4)}] 記号として $\vb*{-v}$ と書かれる $V$ の元が存在して，$\vb*{v} + (\vb*{-v}) = (\vb*{-v}) + \vb*{v} = \vb*{0}$ が成り立つ．
+		\item[\textbf{(V5)}] $\lambda (\vb*{u} + \vb*{v}) = \lambda \vb*{u} + \lambda \vb*{v}.$
+		\item[\textbf{(V6)}] $(\lambda + \mu) \vb*{u} = \lambda \vb*{u} + \mu \vb*{u}.$
+		\item[\textbf{(V7)}] $(\lambda\mu)\vb*{u} = \lambda (\mu \vb*{u}).$
+		\item[\textbf{(V8)}] $1 \vb*{u} = \vb*{u}.$
+	\end{description}
+\end{myaxiom}
+\textbf{\textsf{(V1)}}-\textbf{\textsf{(V4)}}は，組 $(V,\, +,\, \bm{0})$ が可換群であることを意味する．
+
+
+\subsection{ベクトル空間の圏}
+
+\hyperref[ax:ring]{体} $\mathbb{K}$ 上の\textbf{ベクトル空間の\hyperref[def:category]{圏}} $\VEC{\mathbb{K}}$ は，
+\begin{itemize}
+	\item $\mathbb{K}$ 上の\hyperref[ax.vector]{ベクトル空間}を対象とする
+	\item 線型写像を射とする
+	\item 合成は，線型写像の合成とする
+\end{itemize}
+ことで構成される．
+以下では，素材となる複数個のベクトル空間から新しいベクトル空間を構成する手法をいくつか紹介する．
+証明の詳細は付録Cの\hyperref[ax:module]{加群}の項目を参照．
+
+\begin{myprop}[label=prop:initial-terminal-vec]{零ベクトル空間}
+	1点集合 $\{\bm{0}\} \in \Obj{\VEC{\mathbb{K}}}$ は $\VEC{\mathbb{K}}$ の\hyperref[def:initial-terminal]{始対象かつ終対象}である（このような対象を\textbf{零対象}と呼ぶ）．i.e.
+	任意の\hyperref[ax:ring]{体} $\mathbb{K}$ 上のベクトル空間 $\textcolor{blue}{V} \in \Obj{\VEC{\mathbb{K}}}$ に対して，写像
+	\begin{align}
+		0 \colon \{\bm{0}\} \lto \textcolor{blue}{V},\; \bm{0} \lmto \bm{0}
+	\end{align}
+	および
+	\begin{align}
+		0 \colon \textcolor{blue}{V} \lto \{\bm{0}\},\; \bm{v} \lmto \bm{0}
+	\end{align}
+	は唯一の線型写像である．
+\end{myprop}
+
+\begin{myprop}[label=prop:product-vec, breakable]{直積ベクトル空間}
+	\hyperref[ax:ring]{体} $\mathbb{K}$ 上のベクトル空間 $V,\, W \in \Obj{\VEC{\mathbb{K}}}$ を与える．
+	\begin{itemize}
+		\item \hyperref[prop:product-sets]{直積集合} $V \times W$ の上に
+		\begin{align}
+			(\bm{v}_1,\,  \bm{v}_2) + (\bm{w}_1,\, \bm{w}_2) &\coloneqq (\bm{v}_1 + \bm{w}_1,\, \bm{v}_2 + \bm{w}_2), \\
+			\lambda (\bm{v},\,  \bm{w}) &\coloneqq (\lambda \bm{v},\, \lambda \bm{w})
+		\end{align}
+		として加法とスカラー乗法を定義することで得られるベクトル空間（\textbf{直積ベクトル空間}） $\bm{V \times W} \in \Obj{\VEC{\mathbb{K}}}$
+		\item \textbf{標準的射影}と呼ばれる2つの線型写像\footnote{実際はこれらが線型写像になることを証明する．}
+		\begin{align}
+			p_1 \colon V \times W &\lto V,\; (\bm{v},\, \bm{w}) \lmto \bm{v} \\
+			p_2 \colon V \times W &\lto V,\; (\bm{v},\, \bm{w}) \lmto \bm{w}
+		\end{align}
+	\end{itemize}
+	の組 $(V \times W,\, p_1,\, p_2)$ は（圏論的な）\hyperref[def:product]{積}である．i.e. 圏 $\VEC{\mathbb{K}}$ における\hyperref[cmtd:univ-product]{積の普遍性}を充たす．
+\end{myprop}
+
+% \begin{proof}
+% 	$p_1,\, p_2$ が線形写像であることを確認すれば良い．実際，$\forall (\bm{v}_1,\,  \bm{v}_2),\, (\bm{w}_1,\, \bm{w}_2) \in V \times V \forall \lambda \in \mathbb{K}$ に対して
+% 	\begin{align}
+% 		p_1 \bigl( (\bm{v}_1,\,  \bm{v}_2) + (\bm{w}_1,\, \bm{w}_2) \bigr) &= p_1 \bigl( (\bm{v}_1 + \bm{w}_1,\, \bm{v}_2 + \bm{w}_2) \bigr) \\ 
+% 		&= \bm{v}_1 + \bm{w}_1 \\ 
+% 		&= p_1 \bigl( (\bm{v}_1,\,  \bm{v}_2) \bigr) + p_1( (\bm{w}_1,\,  \bm{w}_2)), \\
+% 		p_1 \bigl( \lambda (\bm{v}_1,\,  \bm{v}_2) \bigr) &= p_1 \bigl((\lambda \bm{v}_1,\, \lambda \bm{v}_2)\bigr) \\
+% 		&= \lambda \bm{v}_1 \\ 
+% 		&= \lambda p_1 \bigl( (\bm{v}_1,\,  \bm{v}_2) \bigr)
+% 	\end{align}
+% 	なので $p_1$ は線型写像である．$p_2$ に関しても同様に示せる．
+% 	\hyperref[cmtd:univ-product]{積の普遍性}は\hyperref[prop:product-sets]{$\SETS$ の積の普遍性}から従う．
+% \end{proof}
+
+命題\ref{prop:product-vec}の構成は，直積するベクトル空間が有限個でなくても良い．
+
+\begin{myprop}[label=prop:product-vec-general]{直積ベクトル空間}
+	$A$ を任意の集合とし，$A$ で添字づけられた，体 $\mathbb{K}$ 上のベクトル空間の族 $\Familyset[\big]{V_\alpha \in \Obj{\VEC{\mathbb{K}}}}{\alpha \in A}$ を与える．
+	\begin{itemize}
+		\item \hyperref[prop:product-sets]{直積集合} $\prod_{\alpha \in A} V_\alpha$ の上に\footnote{直積集合の元は $(v_\alpha)_{\alpha \in A}$ の形をした記号で書かれる．}
+		\begin{align}
+			(v_\alpha)_{\alpha \in A} + (w_\alpha)_{\alpha \in A} &\coloneqq (v_\alpha + w_\alpha)_{\alpha \in A} \\
+			\lambda (v_\alpha) &\coloneqq (\lambda v_\alpha)_{\alpha \in A}
+		\end{align}
+		として加法とスカラー情報を定義することで得られるベクトル空間 $\bm{\prod_{\alpha \in A} V_\alpha}$ 
+		\item \textbf{標準的射影}と呼ばれる線型写像の族
+		\begin{align}
+			\Familyset[\Big]{p_\alpha \colon \prod_{\beta \in A} V_\beta \lto V_\alpha,\; (v_\beta)_{\beta \in A} \lmto v_\alpha}{\alpha \in A}
+		\end{align}
+	\end{itemize}
+	の組 $\bigl( \prod_{\alpha\in A} V_\alpha,\, \Familyset[\big]{p_\alpha}{\alpha \in A} \bigr)$ は（圏論的な）\hyperref[def:product]{積}である．i.e. 圏 $\VEC{\mathbb{K}}$ における\hyperref[cmtd:univ-product]{積の普遍性}を充たす．
+\end{myprop}
+
+\begin{myprop}[label=prop:sum-vect, breakable]{直和ベクトル空間}
+	$A$ を任意の集合とし，$A$ で添字づけられた，体 $\mathbb{K}$ 上のベクトル空間の族 $\Familyset[\big]{V_\alpha \in \Obj{\VEC{\mathbb{K}}}}{\alpha \in A}$ を与える．
+	\begin{itemize}
+		\item 直積集合 $\prod_{\alpha \in A} V_\alpha$ の部分集合
+		\begin{align}
+			\bm{\bigoplus_{\alpha \in A} V_\alpha} \coloneqq \left\{\, \Dpmember{x_\alpha}{\alpha \in A} \in \prod_{\alpha \in A} V_\alpha \relmiddle| \substack{\text{有限個の添字}\; i_1,\, \dots,\, i_n \in \Lambda \;\text{を除いた}\\\text{全ての添字}\; \alpha \in A\; \text{について} \; x_\alpha = 0}  \,\right\} 
+		\end{align}
+		の上に
+		\begin{align}
+			(v_\alpha)_{\alpha \in A} + (w_\alpha)_{\alpha \in A} &\coloneqq (v_\alpha + w_\alpha)_{\alpha \in A} \\
+			\lambda (v_\alpha) &\coloneqq (\lambda v_\alpha)_{\alpha \in A}
+		\end{align}
+		として加法とスカラー乗法を定義することで得られるベクトル空間 $\bm{\bigoplus_{\alpha \in A} V_\alpha}$ 
+		\item \textbf{標準的包含}と呼ばれる線型写像の族
+		\begin{align}
+			\Familyset[\Big]{i_\alpha \colon \lto V_\alpha \lto \prod_{\beta \in A} V_\beta ,\; v \lmto (w_\beta)_{\beta \in A}}{\alpha \in A} 
+		\end{align}
+		ただし
+		\begin{align}
+			w_\beta \coloneqq 
+			\begin{cases}
+				v, &\beta = \alpha \\
+				0, &\beta \neq \alpha
+			\end{cases}
+		\end{align}
+		とする．
+	\end{itemize}
+	の組 $\bigl( \bigoplus_{\alpha\in A} V_\alpha,\, \Familyset[\big]{i_\alpha}{\alpha \in A} \bigr)$ は（圏論的な）\hyperref[def:sum]{和}である．i.e. 圏 $\VEC{\mathbb{K}}$ における\hyperref[cmtd:univ-sum]{和の普遍性}を充たす．
+	\tcblower
+	与えられたベクトル空間の族が $\forall \alpha \in A$ について $V_\alpha = V$ のように共通している場合は $\bm{V^{\oplus A}}$ と略記する．
+\end{myprop}
+
+定義から明らかに，有限個のベクトル空間の直和は直積と同型になる．しかし，有限個でないときは必ずしも同型にならない．
+
+
+\begin{myprop}[label=prop:quotient-vec]{商ベクトル空間}
+	体 $\mathbb{K}$ 上のベクトル空間 $V \in \Obj{\VEC{\mathbb{K}}}$ と，その部分ベクトル空間 $W \subset V$ を与える．
+	$V$ 上の\hyperref[ax.eq]{同値関係} $\sim\; \subset V \times V$ を
+	\begin{align}
+		\bm{v} \sim \bm{w} \IFF \bm{v} - \bm{w} \in W
+	\end{align}
+	によって定義する．$\sim$ による $\bm{v} \in V$ の同値類を $\bm{v} + W$ と書き，商集合を $\bm{V/W}$ と書く．
+
+	$\forall \bm{v} + W,\, \bm{w} + W \in V/W,\, \forall \lambda \in \mathbb{K}$ に対して
+	\begin{align}
+		(\bm{v} + W) \textcolor{red}{+} (\bm{w} + W) &\coloneqq (\bm{v} + \bm{w}) + W \\
+		\lambda \cdot (\bm{v} + W) &\coloneqq (\lambda\bm{v}) + W
+	\end{align}
+	のように加法とスカラー乗法を定義すると，組 $(V/W,\, \textcolor{red}{+},\, \cdot \;)$ は体 $\mathbb{K}$ 上の\hyperref[ax.vector]{ベクトル空間}になる．
+	このベクトル空間のことを $V$ の $W$ による\textbf{商ベクトル空間}と呼ぶ．
+\end{myprop}
+
+\begin{proof}
+	$V/W$ がベクトル空間になることの証明は命題\ref{def:quotient-module}を参照．
+\end{proof}
+
+% 商写像を $p \colon V \lto V/W,\; v \lmto v + W$ と書く．
+% この構成は，$\VEC{\mathbb{K}}$ における\hyperref[def:coequalizer]{余等化子}として解釈できる．
+% 包含写像\footnote{これは明らかに線型写像である．圏論っぽく書くと $i \in \Hom{\VEC{\mathbb{K}}}(W,\, V)$ と言うことである．} 
+% $i \colon W \hookrightarrow V$ 
+% と\hyperref[prop:initial-terminal-vec]{零写像} $0 \colon W \xrightarrow{0} \{\bm{0}\} \hookrightarrow V$ を考えると
+% $\forall w \in W$ に対して $p \bigl( i(w) \bigr) = w + W = (0 + w) + W = 0 + W = p \bigl( 0(w) \bigr)$ が成り立つ．i.e. 
+% \begin{align}
+% 	p \circ i = p \circ 0
+% \end{align}
+% が成り立つ．
+% \hyperref[def:coequalizer]{余等化子}は，
+% \begin{center}
+% 	\begin{tikzcd}[row sep=large, column sep=large]
+% 		&W \ar[r,shift left=.75ex,"g"]\ar[r,shift right=.75ex,swap,"0"] &V\ar[r, "\bm{p}"] &\bm{V/W}
+% 	\end{tikzcd}
+% \end{center}
+% を可換にする，i.e. $p \circ i = p \circ 0$ が成り立つ
+\subsection{双対ベクトル空間}
+
+$\mathbb{K}$ 自身が持つ加法 $+$ と乗法 $\cdot$ をそれぞれ\hyperref[ax.vector]{ベクトル空間の加法とスカラー乗法}と見做すことで，$\mathbb{K}$ は $\mathbb{K}$ 上の\hyperref[ax.vector]{ベクトル空間}になる．
+
+\begin{mydef}[label=def.dualspace, breakable]{双対空間}
+	$V$ を体 $\mathbb{K}$ 上のベクトル空間とする．集合
+    \begin{align}
+        \bm{V^*} \coloneqq \{\, \omega \colon V \to \mathbb{K}\, |\; \omega\, \text{は線型写像}\,\} = \Hom{\VEC{\mathbb{K}}} (V,\, \mathbb{K})
+    \end{align}
+	の上の加法とスカラー乗法を，$\forall \omega,\, \sigma \in V^*, \; \forall a\in \mathbb{K}$ に対して
+	\begin{align}
+		(\omega + \sigma)(v) &:= \omega(v) + \sigma(v), \\
+		(a \omega)(v) &:= a \omega(v)
+	\end{align}
+	（$\forall v \in V$）と定義すると，$V^*$ はベクトル空間になる．
+	このベクトル空間を\textbf{双対ベクトル空間} (dual vector space) と呼び，$V^*$ の元を\textbf{余ベクトル} (covector) あるいは\textbf{1-形式} (1-form) と呼ぶ．
+\end{mydef}
+
+\begin{proof}
+	$\forall \omega,\, \omega_1,\, \omega_2 \in V^*$ および $\forall a,\, b \in \mathbb{K}$ に対してベクトル空間の公理\ref{ax.vector}を見たしていることを確認する．
+	\begin{description}
+		\item[\textbf{(V1)}] 自明
+		\item[\textbf{(V2)}] 自明
+		\item[\textbf{(V3)}] $0 = \vb*{0} \in V$（恒等的に $0$ を返す写像）とすればよい．
+		\item[\textbf{(V4)}] $\forall v \in V,\; (-\omega)(v) \coloneqq -\omega(v)$ とすればよい． 
+		\item[\textbf{(V5)}] $\bigl(a (\omega_1 + \omega_2)\bigr)(v) = a (\omega_1(v) + \omega_2(v)) = a\omega_1(v) + a \omega_2(v) = (a \omega_1)(v) + (a \omega_2)(v).$
+		\item[\textbf{(V6)}] $\bigl((a + b)\omega \bigr)(v) = (a+b)\omega(v) = a \omega(v) + b \omega(v) = (a \omega)(v) + (b \omega)(v) = (a \omega + b \omega)(v).$
+		\item[\textbf{(V7)}] $\bigl((ab)\omega\bigr)(v) = (ab)\omega(v) = a (b \omega(v)) = a \bigl((b \omega)(v)\bigr) = \bigl(a (b \omega)\bigr)(v).$
+		\item[\textbf{(V8)}] $(1 \omega)(v) = 1 \omega(v) = \omega(v).$
+	\end{description}
+\end{proof}
+
+
+% $V$ の基底 $\{\, e_i\, \}$ をとり，ベクトル $v = v^i e_i \in V$ を任意に取る．
+% ここで $\dim V$ 個の余ベクトル
+% \begin{align}
+% 	\label{eq.duality}
+% 	\tcbhighmath[]{e^i \colon V \to \mathbb{K},\; v \mapsto v^i \quad (i = 1,\, \dots,\, \dim V)}
+% \end{align}
+% を考える．$e_k = \delta^i_k e_i$ なので
+% \begin{align}
+% 	\tcbhighmath[]{e^i(e_k) = \delta^i_k}
+% \end{align}
+% である． 
+
+\begin{myprop}[label=def.basisforDVS]{有限次元ベクトル空間の双対空間の基底}
+	$V \in \Obj{\VEC{\mathbb{K}}}$ は\textbf{有限次元}であるとし，$V$ の基底 $\{\, e_i\, \}$ をとる．
+	このとき，
+	\begin{align}
+		e^i(e_k) = \delta^i_k
+	\end{align}
+	で定義される
+	$\dim V$ 個の余ベクトル
+	\begin{align}
+		\label{eq.duality}
+		e^i \colon V \to \mathbb{K},\; v = v^j e_j \mapsto v^i \quad (i = 1,\, \dots,\, \dim V)
+	\end{align}
+	の組 $\{\, e^i\, \}$ は $V^*$ の基底である．
+\end{myprop}
+
+\begin{proof}
+	$\omega \in V^*,\; v = v^i e_i \in V$ を任意にとる．このとき
+	\begin{align}
+		\omega(v) = \omega(v^i e_i) = v^i \omega(e_i) = \omega(e_i) e^i(v) = \bigl(\omega(e_i) e^i\bigr)(v).
+	\end{align}
+	i.e. $\{\, e^i \}$ はベクトル空間 $V^*$ を生成する．
+	
+	また，$a_1,\, \dots,\, a_{\dim V} \in \mathbb{K}$ に対して $a_i e^i = 0$ （\hyperref[prop:initial-terminal-vec]{零写像}）が成り立つならば
+	\begin{align}
+		a_k = a_i \delta^i_k = a_i e^i(e_k) = (a_i e^i)(e_k) = 0 \quad (1 \le \forall k \le \dim V)
+	\end{align}
+	である．i.e. $\dim V$ 個の余ベクトル $e^1,\, \dots,\, e^{\dim V} \in V^*$ は線型独立である．
+\end{proof}
+
+$\forall V,\, W \in \Obj{\VEC{\mathbb{K}}}$ および任意の線型写像 $f \colon V \lto W$ を与える．このとき，\textbf{双対線型写像} (dual linear map) を
+\begin{align}
+	\bm{f^*} \colon W^* &\lto V^*, \\
+	\omega &\lmto \bigl( v \lmto \omega \circ f(v) \bigr) 
+\end{align}
+と定義する\footnote{$f^* \colon W^* \lto V^*$ は線型写像に対して線型写像を返す写像なのでこのように書いた．}．
+
+\begin{myprop}[label=prop:dualspace-basic]{}
+	$\forall V,\, W,\, Z \in \Obj{\VEC{\mathbb{K}}}$ および任意の線型写像 $f \colon V \lto W,\; g \colon W \lto Z$ を与える．
+	このとき，以下が成り立つ：
+	\begin{enumerate}
+		\item $(\mathrm{id}_V)^* = \mathrm{id}_{V^*}$
+		\item $(g \circ f)^* = f^* \circ g^*$
+	\end{enumerate}
+\end{myprop}
+
+\begin{proof}
+	\begin{enumerate}
+		\item $\forall \omega \in V^*$ および $\forall v \in V$ に対して\footnote{引数が複数ある時は，左側から先に読む．今の場合，線型写像 $(\mathrm{id}_V)^* (\omega) \colon V \lto \mathbb{K}$ に引数 $v \in V$ を渡す，と読む．}
+		\begin{align}
+			(\mathrm{id}_V)^* (\omega)(v) = \omega \circ \mathrm{id_V} (v) = \omega(v)
+		\end{align}
+		なので $(\mathrm{id}_V)^*(\omega) = \omega$ である．i.e. $(\mathrm{id}_V)^* = \mathrm{id}_{V^*}$
+		\item $\forall \omega \in Z^*$ および $\forall v \in V$ に対して
+		\begin{align}
+			(f^* \circ g^*)(\omega)(v) = f^* (\omega \circ g) (v) = \omega \circ (g  \circ f) (v) = (g\circ f)^* (\omega)(v)
+		\end{align}
+		が成り立つので $(g \circ f)^* = f^* \circ g^*$ である．
+	\end{enumerate}
+\end{proof}
+
+命題\ref{prop:dualspace-basic}は
+\begin{itemize}
+	\item $V \in \Obj{\OP{\VEC{\mathbb{K}}}}$ を $V^* \in \Obj{\VEC{\mathbb{K}}}$ に
+	\item $f \in \Hom{\OP{\VEC{\mathbb{K}}}}(V,\, W)$ を $f^* \in \Hom{\VEC{\mathbb{K}}}(V^*,\, W^*)$ に
+\end{itemize}
+対応づける対応
+\begin{align}
+	(\mhyphen)^* \colon \OP{\VEC{\mathbb{K}}} \lto \VEC{\mathbb{K}}
+\end{align}
+が\hyperref[def:functor]{関手}である\footnote{同じことだが，$(\mhyphen)^* \colon \VEC{\mathbb{K}} \lto \VEC{\mathbb{K}}$ は\textbf{反変関手} (contravariant functor) であると言っても良い．}ことを意味する．
+
+$\forall V \in \Obj{\VEC{\mathbb{K}}}$ を与える．
+$v \in V$ に対して\textbf{評価写像} $\mathrm{ev}_v \colon V^* \lto \mathbb{R},\; \omega \lmto \omega (v)$ を考えると，
+\begin{align}
+	\label{eq:dualspace-natural}
+	\eta_V \colon V &\lto V^{**}, \\
+	v &\lmto \mathrm{ev}_v
+\end{align}
+は線型写像である．
+
+\begin{myprop}[label=prop:finvec-doubledual]{}
+	$V$ が\textbf{有限次元}ならば，$\eta_V \colon V \lto V^{**}$ はベクトル空間の同型写像である．
+\end{myprop}
+
+\begin{proof}
+	$\dim V < \infty$ なので，命題\ref{def.basisforDVS}より $\dim V = \dim V^{**}$ である．よって $\eta_V$ が単射であることを示せば良い\footnote{$\eta_V$ が単射 $\iff \Ker \eta_V = \{0\} \Longrightarrow \dim V = \dim (\Im \eta_V) \Longrightarrow V = \Im V$ }．
+	$v \notin \{0\}$ とする．$V$ の基底 $\{e^i\}$ であって $e^1 = v$ であるものをとり，その\hyperref[def.basisforDVS]{双対基底} $\{e^i\}$ をとると
+	\begin{align}
+		\eta_V(v)(e^1) = e^1(v) = 1
+	\end{align}
+	が成り立つので $\eta_V(v) \neq 0$，i.e. $v \notin \Ker \eta_V$ がわかった．
+	従って対偶から $\Ker \eta_V = \{0\}$ であり，$\eta_V$ は単射である．
+\end{proof}
+
+線型写像 $\eta_V \colon V \lto V^{**}$ は自然である．
+つまり，$\forall V,\, W \in \Obj{\VEC{\mathbb{K}}}$ および $\forall f \in \Hom{\VEC{\mathbb{K}}}(V,\, W)$ に対して，$\VEC{\mathbb{K}}$ の可換図式
+\begin{center}
+	\begin{tikzcd}[row sep=large, column sep=large]
+		&V \ar[d, "f"] \ar[r, "\eta_V"] &V^{**} \ar[d, "f^{**}"] \\
+		&W \ar[r, "\eta_W"] &W^{**}
+	\end{tikzcd}
+\end{center}
+が成り立つということである．
+実際，$\forall v \in V$ および $\forall \omega \in W^*$ に対して\footnote{$(f^{**} \circ \eta_V)(v) \in (W^*)^*$ が $\omega \in W^*$ に作用しているということである．}
+\begin{align}
+	(f^{**} \circ \eta_V)(v)(\omega) &= f^{**} (\mathrm{ev}_v)(\omega) \\
+	&= \mathrm{ev}_v \circ f^* (\omega) \\
+	&= \mathrm{ev}_v (\omega \circ f) \\
+	&= \omega \bigl(f(v)\bigr) \\
+	&= \mathrm{ev}_{f(v)}(\omega) \\
+	&= (\eta_W \circ f)(v)(\omega)
+\end{align}
+が成り立つ~\cite[p.159, Example 7.12.]{Awodey}．
+\begin{mydef}[label=def:natural, breakable]{自然変換}
+	任意の\hyperref[def:category]{圏} $\Cat{C},\, \Cat{D}$ および\hyperref[def:functor]{関手} $F,\, G \colon \mathcal{C} \lto \mathcal{D}$ を与える．\textbf{自然変換} (natural transformation) 
+	\begin{align}
+		\eta \colon F \Longrightarrow G
+	\end{align}
+	は，$\Cat{D}$ における射の族
+	\begin{align}
+		\Familyset[\big]{\eta_X \in \Hom{\Cat{D}} \bigl( F(X),\, G(X)\bigr) }{X \in \Obj{\Cat{C}}}
+	\end{align}
+	であって以下の性質を充たすもののことを言う：
+	\begin{description}
+		\item[\textbf{(自然性条件)}] 　$\forall \textcolor{blue}{f} \in \Hom{\Cat{C}} (X,\, Y)$ に対して図式\ref{cmtd:naturality}を可換にする．
+		\begin{figure}[H]
+			\centering
+			\begin{tikzcd}[row sep=large, column sep=large]
+				&F(X) \ar[r, "\eta_X"]\ar[d, "F(\textcolor{blue}{f})"] &G(X) \ar[d, "G(\textcolor{blue}{f})"] \\
+				&F(Y) \ar[r, "\eta_Y"] &G(Y)
+			\end{tikzcd}
+			\caption{自然変換}
+			\label{cmtd:naturality}
+		\end{figure}%
+	\end{description}
+\end{mydef}
+つまり，\eqref{eq:dualspace-natural}で定義される線型写像の族
+\begin{align}
+	\eta \coloneqq \Familyset[\big]{\eta_V \in \Hom{\VEC{\mathbb{K}}}(V,\, V^{**})}{V \in \Obj{\VEC{\mathbb{K}}}}
+\end{align}
+は\hyperref[def:natural]{自然変換}
+\begin{align}
+	\eta \colon 1_{\VEC{\mathbb{K}}} \Longrightarrow (\mhyphen)^{**}
+\end{align}
+であると言える．
+% \subsection{双対内積・双対写像}
+
+% $\forall \omega = \omega_i e^i \in V^*$ を $\forall v = v^i e_i \in V$ に作用させてみる：
+% \begin{align}
+% 	\omega[v] = \omega_i v^j e^i[e_j] = \omega_i v^i.
+% \end{align}
+% この写像 $\langle \;,\, \rangle \colon V^* \times V \to \mathbb{K}$ を\textbf{双対内積} (duality pairing)\footnote{この訳語はあまり普及していないように思う．しかし，\textbf{内積}という訳語をあててしまうと計量線型空間に付属している内積と混同されてややこしいので，このように呼ぶことにする．} と呼ぶ．
+
+
+
+% 2つの $\mathbb{K}$ 上のベクトル空間 $V,\, W$ を与える．$\Hom{\mathbb{K}} (V,\, W)$ で $V$ から $W$ への線型写像全体のなす集合を表すことにする．
+
+% $ f\in \Hom{\mathbb{K}}(V,\, W),\; g \in \Hom{\mathbb{K}}(W,\, \mathbb{K}) = W^*$ とする．このとき $h \coloneqq g \circ f \in \Hom{\mathbb{K}}(V,\, \mathbb{K})$ である．i.e. $h \in V^*$ が $f \colon V \to W$ によって誘導されたことになる．このことから，$f$ は通常の意味では $g \in W^*$ には作用しないところを，
+% \begin{align}
+% 	f^* \colon W^* \to V^*,\; g \mapsto h = f^*(g) = g \circ f
+% \end{align}
+% として作用させると言う考えが出てくる．この対応 $f^* \colon W^* \to V^*$ を\textbf{双対写像} (dual map) もしくは\textbf{転置写像} (transpose map) と呼び，写像 $h$ を $f^*$ による $g$ の\textbf{引き戻し} (pullback map) と呼ぶ．
+
+
+
+\subsection{ベクトル空間のテンソル積}
+
+本章を皮切りにしてさまざまなテンソル積空間が登場するが，それらは全て以下に述べる定義の特殊な場合である．
+% テンソル積が充して欲しい演算法則だけを見事に抽出したような定義になっている：
+
+$\mathbb{K}$ を\hyperref[ax.ring]{体}とする．
+$V,\, W,\, Z \in \Obj{\VEC{\mathbb{K}}}$ を勝手にとる．写像 $f \colon V \times W \lto Z$ が\textbf{双線型写像} (bilinear map) であるとは，
+$\forall \bm{v}_1,\, \bm{v}_2,\, \bm{v} \in V,\; \forall \bm{w}_1,\, \bm{w}_2,\, \bm{w} \in W,\; \forall \lambda \in \mathbb{K}$ に対して
+\begin{align}
+	f(\bm{v}_1 + \bm{v}_2,\, \bm{w}) &= f(\bm{v}_1,\, \bm{w}) + f(\bm{v}_2,\, \bm{w}), \\
+	f(\bm{v},\, \bm{w}_1 + \bm{w}_2) &= f(\bm{v},\, \bm{w}_1) + f(\bm{v},\, \bm{w}_2), \\
+	f(\lambda\bm{v},\, \bm{w}) &= \lambda f(\bm{v},\, \bm{w}), \\
+	f(\bm{v},\, \lambda\bm{w}) &= \lambda f(\bm{v},\, \bm{w})
+\end{align}
+が成り立つことを言う．2つの引数のそれぞれについて線型写像になっているということである．
+
+\begin{mydef}[label=def:univ-tensor-vec, breakable]{ベクトル空間のテンソル積}
+	体 $\mathbb{K}$ 上のベクトル空間 $V,\, W$ の\textbf{テンソル積} (tensor product) とは，
+	\begin{itemize}
+		\item 記号として $\bm{V \otimes W}$ と書かれる体 $\mathbb{K}$ 上のベクトル空間 
+		\item 双線型写像 $\bm{\Phi} \colon V \times W \lto \bm{V \otimes W}$
+	\end{itemize}
+	の組であって，以下の性質を充たすもののこと：
+	\begin{description}
+		\item[\textbf{(テンソル積の普遍性)}] \underline{任意の}ベクトル空間 $\textcolor{blue}{Z} \in \Obj{\VEC{\mathbb{K}}}$ と任意の双線型写像 $\textcolor{blue}{f} \colon V \times W \lto \textcolor{blue}{Z}$ に対して，線型写像 $\textcolor{red}{u} \colon \bm{V \otimes W} \lto \textcolor{blue}{Z}$ が\underline{一意的に}存在して図式\ref{cmtd:univ-tensor-vec}を可換にする：
+		\begin{figure}[H]
+			\centering
+			\begin{tikzcd}[row sep=large, column sep=large]
+				&V \times W \ar[d, "\bm{\Phi}"] \ar[r, blue, "f"] &\forall \textcolor{blue}{Z} \\
+				&\bm{V \otimes W} \ar[ur, red, dashed, "\exists! u"] &
+			\end{tikzcd}
+			\caption{テンソル積の普遍性}
+			\label{cmtd:univ-tensor-vec}
+		\end{figure}%
+	\end{description}
+\end{mydef}
+
+この定義を一般化すると加群のテンソル積になり，さらに一般化することでモノイダル圏の概念に到達するが，これ以上深入りしない．
+
+\begin{myprop}[label=prop:unique-tensor-vec]{テンソル積の一意性}
+	\hyperref[def:univ-tensor-vec]{テンソル積}は，存在すればベクトル空間の同型を除いて一意である．
+\end{myprop}
+
+\begin{proof}
+	$\mathbb{K}$ 上のベクトル空間 $V,\, W \in \Obj{\VEC{\mathbb{K}}}$ を与える．
+	体 $\mathbb{K}$ 上のベクトル空間と双線型写像の組 $(\bm{T},\, \bm{\Phi} \colon V \times W \lto \bm{T})$ および $(\bm{T},\, \bm{\Phi'} \colon V \times W \lto \bm{T'})$ がどちらも $V,\, W$ の\hyperref[def:univ-tensor-vec]{テンソル積}であるとする．
+	このとき\hyperref[cmtd:univ-tensor-vec]{テンソル積の普遍性}から $\VEC{\mathbb{K}}$ の\hyperref[def:commutative]{可換図式}
+	\begin{figure}[H]
+		\centering
+		\begin{subfigure}{0.4\columnwidth}
+			\centering
+			\begin{tikzcd}[row sep=large, column sep=large]
+				&V \times W \ar[d, "\bm{\Phi}"] \ar[r, blue, "\Phi'"] &\textcolor{blue}{T'} \\
+				&\bm{T} \ar[ur, red, dashed, "\exists! u"] &
+			\end{tikzcd}
+		\end{subfigure}
+		\hspace{5mm}
+		\begin{subfigure}{0.4\columnwidth}
+			\centering
+			\begin{tikzcd}[row sep=large, column sep=large]
+				&V \times W \ar[d, "\bm{\Phi'}"] \ar[r, blue, "\Phi"] &\textcolor{blue}{T} \\
+				&\bm{T'} \ar[ur, red, dashed, "\exists! u'"] &
+			\end{tikzcd}
+		\end{subfigure}
+	\end{figure}%
+	が成り立つので，これらの図式を併せた $\VEC{\mathbb{K}}$ の可換図式
+	\begin{center}
+		\begin{tikzcd}[row sep=large, column sep=large]
+			&\bm{T} & \\
+			&V \times W \ar[u, "\bm{\Phi}"]\ar[d, "\bm{\Phi}"] \ar[r, blue, "\Phi'"] &\textcolor{blue}{T'}\ar[ul, red, dashed, "\exists! u'"] \\
+			&\bm{T} \ar[ur, red, dashed, "\exists! u"] &
+		\end{tikzcd}
+	\end{center}
+	が存在する．然るに $\VEC{\mathbb{K}}$ の可換図式
+	\begin{center}
+		\begin{tikzcd}[row sep=large, column sep=large]
+			&V \times W \ar[d, "\bm{\Phi}"] \ar[r, "\bm{\Phi}"] &\bm{T'} \\
+				&\bm{T} \ar[ur, red, dashed, "\mathrm{id}_T"] &
+		\end{tikzcd}
+	\end{center}
+	も成り立ち，\hyperref[def:univ-tensor-vec]{テンソル積の普遍性}より赤点線で書いた線型写像は一意でなくてはならないので，
+	\begin{align}
+		\textcolor{red}{u'} \circ \textcolor{red}{u} = \mathrm{id}_T
+	\end{align}
+	がわかる．同様の議論から
+	\begin{align}
+		\textcolor{red}{u} \circ \textcolor{red}{u'} = \mathrm{id}_{T'}
+	\end{align}
+	も従うので，線型写像 $\textcolor{red}{u} \colon \bm{T} \lto \bm{T'},\; \textcolor{red}{u'} \colon \bm{T'} \lto \bm{T}$ は互いに逆写像，i.e. 同型写像である．
+\end{proof}
+
+
+命題\ref{prop:unique-tensor-vec}からテンソル積の一意性が言えたが，そもそもテンソル積が存在しなければ意味がない．
+そこで，\hyperref[ax.ring]{体} $\mathbb{K}$ 上の任意のベクトル空間 $V,\, W \in \Obj{\VEC{\mathbb{K}}}$ を素材にして\hyperref[def:univ-tensor-vec]{テンソル積} $(V \otimes W,\, \Phi \colon V \times W \lto V \otimes W)$ を具体的に構成してみよう．
+
+$\mathbb{K} \in \Obj{\VEC{\mathbb{K}}}$ なので，任意の集合 $S$ に対して\hyperref[prop:sum-vect]{ベクトル空間の直和}
+\begin{align}
+	\mathbb{K}^{\oplus S} \in \Obj{\VEC{\mathbb{K}}}
+\end{align}
+を考えることができる．$\mathbb{K}^{\oplus S}$ の元 $f$ とは，有限個の元 $x_1,\, \dots,\; x_n \in S$ を除いた全ての $x \in S$ に対して値 $0 \in \mathbb{K}$ を返すような $\mathbb{K}$ 値関数
+$f \colon S \lto \mathbb{K}$ のことである
+\footnote{これは集合論の記法である：ある集合 $\Lambda$ から集合 $A$ への写像 $a \colon \Lambda \lto A$ のことを $\Lambda$ によって\textbf{添字づけられた} $A$ の元の\textbf{族}と呼び，$\forall \lambda \in \Lambda$ に対して $a(\lambda) \in A$ のことを $\bm{a_\lambda}$ と書き，$\bm{a \colon \Lambda \lto A}$ \textbf{自身のこと}を $\bm{(a_\lambda)_{\lambda \in \Lambda}}$ と書くのである．
+なお，$\Familyset[\big]{a_\lambda}{\lambda \in \Lambda}$ と書いたときは $A$ の部分集合 $\bigl\{\, a(\lambda) \bigm| \lambda \in \Lambda \,\bigr\} \subset A$ のことを意味する．}．
+
+ところで，$\forall x \in S$ に対して次のような関数 $\delta_{x} \in \mathbb{K}^{\oplus S}$ が存在する：
+\begin{align}
+	\delta_{x} \bigl(y\bigr) =
+	\begin{cases}
+		1, &y = x \\
+		0, &y \neq x
+	\end{cases}
+\end{align}
+この $\delta_{x}$ を $x$ そのものと同一視してしまうことで，先述の $f \in \mathbb{K}^{\oplus (V \times W)}$ は
+\begin{align}
+	f = \sum_{i=1}^n \lambda_i x_i \quad \WHERE \lambda_i \coloneqq f (x_i) \in \mathbb{K}
+\end{align}
+の形に一意的に書ける．
+\footnote{
+	というのも，このように書けば $\forall y \in S$ に対して
+	\begin{align}
+		f (y)  &= \sum_{i=1}^n \lambda_i \delta_{x_i}(y) =
+		\begin{cases}
+			f (x_i), &y = x_i \\
+			0, &\text{otherwise}
+		\end{cases}
+	\end{align}
+	が言えるので．特に，この式の中辺は $\mathbb{K}$ の元の有限和なので意味を持つ．
+}
+この意味で，$\mathbb{K}^{\oplus (V \times W)}$ は $V \times W$ の元の\textbf{形式的な} $\bm{\mathbb{K}}$ \textbf{係数線形結合}全体がなす $\mathbb{K}$ ベクトル空間と言うことができ，集合 $V \times W$ 上の\textbf{自由ベクトル空間}と呼ばれる．
+\hyperref[def:free-mod]{自由加群}の特別な場合と言っても良い．自由ベクトル空間は次の普遍性によって特徴づけられる：
+
+\begin{mylem}[label=lem:univ-free-vec, breakable]{自由ベクトル空間の普遍性}
+	任意の集合 $S$ および任意の $\mathbb{K}$ ベクトル空間 $\textcolor{blue}{Z} \in \Obj{\VEC{\mathbb{K}}}$ を与える．
+	包含写像
+	\begin{align}
+		\iota \colon S \lto \mathbb{K}^{\oplus S},\; x \lmto \delta_x
+	\end{align}
+	を考える．
+	このとき，任意の写像 $\textcolor{blue}{f} \colon S \lto \textcolor{blue}{Z}$ に対して線型写像
+	$\textcolor{red}{u} \colon \mathbb{K}^{\oplus S} \lto \textcolor{blue}{Z}$ が一意的に存在して，図式\ref{cmtd:free-vec}を可換にする：
+	\begin{figure}[H]
+		\centering
+		\begin{tikzcd}[row sep=large, column sep=large]
+			&S \ar[r, blue, "f"]\ar[d, "\iota"] &\forall \textcolor{blue}{Z} \\
+			&\mathbb{K}^{\oplus S} \ar[ur, red, dashed, "\exists! u"] &
+		\end{tikzcd}
+		\caption{自由ベクトル空間の普遍性}
+		\label{cmtd:free-vec}
+	\end{figure}%
+\end{mylem}
+
+\begin{proof}
+	写像
+	\begin{align}
+		\textcolor{red}{u} \colon \mathbb{K}^{\oplus S} \lto \textcolor{blue}{Z},\; \sum_{i=1}^n \lambda_i \delta_{x_i} \lmto \sum_{i=1}^n \lambda_i \textcolor{blue}{f}(x_i)
+	\end{align}
+	は右辺が有限和なのでwell-definedであり，$\forall x \in S$ に対して $\textcolor{red}{u} \bigl( \iota(x) \bigr) = \textcolor{blue}{f}(x)$ を充たす．
+	
+	別の線型写像 $g \colon \mathbb{K}^{\oplus S} \lto \textcolor{blue}{Z}$ が $g \circ \iota = \textcolor{blue}{f}$ を充たすとする．このとき $\forall x \in S$ に対して $g(\delta_x) = \textcolor{blue}{f}(x)$ であるから，
+	$\forall v = \sum_{i=1}^n \lambda_i \delta_{x_i} \in \mathbb{K}^{\oplus S}$ に対して
+	\begin{align}
+		g(v) = g \left( \sum_{i=1}^n \lambda_i \delta_{x_i} \right) = \sum_{i=1}^n \lambda_i g(\delta_{x_i}) = \sum_{i=1}^n \lambda_i \textcolor{blue}{f}(x_i) = \textcolor{red}{u} (v)
+	\end{align}
+	が言える．よって $g = \textcolor{red}{u}$ である．
+\end{proof}
+
+さて，\hyperref[cmtd:free-vec]{自由加群の普遍性の図式}と\hyperref[cmtd:univ-tensor-vec]{テンソル積の普遍性の図式}はとても似ているので，$\bm{V \otimes W} \in \Obj{\VEC{\mathbb{K}}}$ の候補として $\mathbb{K}^{\oplus (V \times W)}$ を考えてみる．
+しかしそのままでは $\iota \colon V \times W \lto \mathbb{K}^{\oplus (V \times W)}$ が双線型写像になってくれる保証はない．
+そこで，
+\begin{align}
+	\iota(\lambda v,\, w) &\sim \lambda \iota(v,\, w), \\
+	\iota(v,\, \lambda w) &\sim \lambda \iota(v,\, w), \\
+	\iota(v_1 + v_2,\, w) &\sim \iota(v_1,\, w) + \iota(v_2,\, w), \\
+	\iota(v,\, w_1 + w_2) &\sim \iota(v,\, w_1) + \iota(v,\, w_2)
+\end{align}
+を充たすような上手い\hyperref[ax.eq]{同値関係}による\hyperref[prop:quotient-vec]{商ベクトル空間}を構成する．
+% そこで，$\iota (V \times W) \in \mathbb{K}^{\oplus (V \times W)}$ の上に適切な関係式を課してできる $\mathbb{K}^{\oplus (V \times W)}$ の部分集合が\hyperref[prop:gen-submodule]{生成する部分ベクトル空間}で $\mathbb{K}^{\oplus (V \times W)}$ の\hyperref[prop:quotient-vec]{商ベクトル空間}を作ることを試みる．
+% \hyperref[prop:universality-dp]{直和の普遍性}から $\forall \textcolor{blue}{V} \in \Obj{\VEC{\mathbb{K}}}$ に対して可換図式
+% \begin{center}
+% 	\begin{tikzcd}[row sep=large, column sep=large]
+% 		&V \times W \ar[d, "\bm{\Phi}"] \ar[r, blue, "f"] &\forall \textcolor{blue}{Z} \\
+% 		&\bm{V \otimes W} \ar[ur, red, dashed, "\exists! u"] &
+% 	\end{tikzcd}
+% \end{center}
+
+
+\begin{myprop}[label=prop:tensor-vec, breakable]{テンソル積}
+	$\mathbb{K}^{\oplus (V \times W)}$ の部分集合
+	\begin{align}
+		S_1 &\coloneqq \bigl\{\iota(\lambda v,\, w) - \lambda \iota(v,\, w) \bigm| \forall v \in V,\, \forall w \in W,\, \forall \lambda \in \mathbb{K} \bigr\} , \\
+		S_2 &\coloneqq \bigl\{\iota(v,\, \lambda w) - \lambda \iota(v,\, w) \bigm| \forall v \in V,\, \forall w \in W,\, \forall \lambda \in \mathbb{K} \bigr\}, \\
+		S_3 &\coloneqq \bigl\{\iota(v_1 + v_2,\, w) - \iota(v_1,\, w) - \iota(v_2,\, w) \bigm| \forall v_1,\, \forall v_2 \in V,\, \forall w \in W,\, \forall \lambda \in \mathbb{K} \bigr\}, \\
+		S_4 &\coloneqq \bigl\{\iota(v,\, w_1 + w_2) - \iota(v,\, w_1) - \iota(v,\, w_2) \bigm| \forall v \in V,\, \forall w_1,\, w_2 \in W,\, \forall \lambda \in \mathbb{K} \bigr\}
+	\end{align}
+	の和集合 $S_1 \cup S_2 \cup S_3 \cup S_4$ が\hyperref[prop:gen-submodule]{生成する} $\mathbb{K}$ ベクトル空間\footnote{これらの元の形式的な$\mathbb{K}$ 係数線型結合全体が成すベクトル空間のこと．}を $\mathcal{R}$ と書き，
+	\hyperref[prop:quotient-vec]{商ベクトル空間}
+	$\mathbb{K}^{\oplus (V \times W)} / \mathcal{R}$ 
+	の商写像を
+	\begin{align}
+		\pi \colon \mathbb{K}^{\oplus (V \times W)} \lto \mathbb{K}^{\oplus (V \times W)} / \mathcal{R},\; \sum_{i=1}^n \lambda_i \iota(v_i,\, w_i) \lmto \left( \sum_{i=1}^n \lambda_i \iota(v_i,\, w_i) \right) + \mathcal{R}
+	\end{align}
+	と書き，$\bm{v \otimes w} \coloneqq \pi \bigl( \iota (v,\, w) \bigr)$ とおく．
+	このとき，
+	\begin{itemize}
+		\item $\mathbb{K}$ ベクトル空間 $\bm{\mathbb{K}^{\oplus (V \times W)} / \mathcal{R}}$
+		\item 写像 $\bm{\Phi} = \pi \circ \iota \colon V \times W \lto \bm{\mathbb{K}^{\oplus (V \times W)} / \mathcal{R}},\; (v,\, w) \lmto v \otimes w$
+	\end{itemize}
+	の組は $V,\, W$ の\hyperref[def:univ-tensor-vec]{テンソル積}である．
+\end{myprop}
+
+\begin{proof}
+	まず，$\bm{\Phi}$ が双線型写像であることを示す．\hyperref[prop:quotient-vec]{商ベクトル空間}の和とスカラー乗法の定義から
+	\begin{align}
+		\Phi (\lambda v,\, w) &= \iota(v,\, w) + \mathcal{R} = \bigl( \lambda \iota(v,\, w) + \iota (\lambda v,\, w) - \lambda \iota (v,\, w) \bigr) + \mathcal{R} \\
+		&= \lambda \iota (v,\, w) + \mathcal{R} = \lambda \bigl( \iota(v,\, w) + \mathcal{R} \bigr) = \lambda \Phi(v,\, w) \\
+		\Phi (v_1 + v_2,\, w) &= \iota(v_1 + v_2,\, w) + \mathcal{R} = \bigl( \iota(v_1,\, w) + \iota (v_2,\, w) + \iota(v_1+v_2,\, w) - \iota (v_1,\, w) - \iota(v_2,\, w) \bigr) + \mathcal{R} \\
+		&= \bigl(\iota (v_1,\, w) + \iota (v_2,\, w) \bigr) + \mathcal{R} = \bigl( \iota(v_1,\, w) + \mathcal{R} \bigr) + \bigl( \iota(v_2,\, w) + \mathcal{R} \bigr) \\
+		&= \Phi(v_1,\, w) + \Phi(v_2,\, w)
+	\end{align}
+	が言える．第2引数に関しても同様であり，$\bm{\Phi}$ は双線型写像である．
+
+	次に，上述の構成が\hyperref[def:univ-tensor-vec]{テンソル積の普遍性}を充たすことを示す．$\forall  \textcolor{blue}{Z} \in \Obj{\VEC{\mathbb{K}}}$ と任意の双線型写像 $\textcolor{blue}{f} \colon V \times W \lto \textcolor{blue}{Z}$ を与える．
+	\hyperref[lem:univ-free-vec]{自由ベクトル空間の普遍性}から $\VEC{\mathbb{K}}$ の可換図式
+	\begin{center}
+		\begin{tikzcd}[row sep=large, column sep=large]
+			&V \times W \ar[r, blue, "f"]\ar[d, "\iota"'] &\forall \textcolor{blue}{Z} \\
+			&\mathbb{K}^{\oplus (V \times W)} \ar[ur, red, dashed, "\exists! \overline{f}"] &
+		\end{tikzcd}
+	\end{center}
+	が存在する．$\textcolor{blue}{f}$ が双線型なので，
+	\begin{align}
+		\textcolor{red}{\overline{f}} \bigl( \iota (\lambda v,\, w) \bigr) &= f (\lambda v,\, w) = \lambda f(v,\, w) \\ 
+		&= \lambda\textcolor{red}{\overline{f}} \bigl( \iota (v,\, w) \bigr) = \textcolor{red}{\overline{f}}\bigl( \lambda \iota(v,\, w) \bigr) , \\
+		\textcolor{red}{\overline{f}} \bigl( \iota (v_1 + v_2,\, w) \bigr) &= f (v_1 + v_2,\, w) = f(v_1,\, w) + f(v_2,\, w)\\
+		&= \textcolor{red}{\overline{f}} \bigl( \iota(v_1,\, w) \bigr) + \textcolor{red}{\overline{f}} \bigl(\iota(v_2,\, w) \bigr) = \textcolor{red}{\overline{f}} \bigl( \iota(v_1,\, w) + \iota(v_2,\, w)\bigr) 
+	\end{align}
+	が成り立つ．第2引数についても同様なので，$\mathcal{R} \subset \Ker \textcolor{red}{\overline{f}}$ である．よって\hyperref[thm.homo1]{準同型定理}から
+	$\VEC{\mathbb{K}}$ の可換図式
+	\begin{center}
+		\begin{tikzcd}[row sep=large, column sep=large]
+			&V \times W \ar[r, blue, "f"]\ar[d, "\iota"'] &\forall \textcolor{blue}{Z} \\
+			&\mathbb{K}^{\oplus (V \times W)} \ar[d, "\pi"']\ar[ur, red, dashed, "\exists! \overline{f}"] & \\
+			&\mathbb{K}^{\oplus (V \times W)} /\mathcal{R}\ar[uur, red, dashed, "\exists! u"] &
+		\end{tikzcd}
+	\end{center}
+	が存在する．この図式の外周部は\hyperref[cmtd:univ-tensor-vec]{テンソル積の普遍性の図式}である．
+\end{proof}
+
+\begin{myprop}[label=prop:basis-tensor]{テンソル積の基底}
+	$V,\, W$  をそれぞれ $n,\, m$ 次元の体 $\mathbb{K}$ 上のベクトル空間とし，$V,\, W$ の基底をそれぞれ $\{e_1,\, \dots,\, e_n\},\; \{f_1,\, \dots,\, f_m\}$ と書く．
+	このとき，集合
+	\begin{align}
+		\mathcal{E} \coloneqq \bigl\{\, e_i \otimes f_j \bigm| 1 \le i \le n,\, 1 \le j \le m \,\bigr\} 
+	\end{align}
+	は $V \otimes W$ の基底である．従って $\dim V \otimes W = nm$ である．
+\end{myprop}
+
+\begin{proof}
+	\hyperref[prop:tensor-vec]{テンソル積の構成}から，$\forall t \in V \otimes W$ は有限個の $(v_i,\, w_i) \in V \times W\; (i=1,\, \dots l)$ を使って
+	\begin{align}
+		t = \left(\sum_{i=1}^l t_{i} \iota(v_i,\, w_i)\right) = \sum_{i=1}^l t_i v_i \otimes w_i
+	\end{align}
+	と書ける．$v_i = v_i{}^\mu e_\mu,\; w_i = w_i{}^{\mu} f_\mu$ のように展開することで，
+	\begin{align}
+		t &= \sum_{i=1}^l t_i (v_i{}^\mu e_\mu) \otimes (w_i{}^\nu f_\nu) \\
+		&= \sum_{i=1}^l t_i v_i{}^\mu w_i{}^\nu e_{\mu} \otimes f_\nu
+	\end{align}
+	と書ける．ただし添字 $\mu,\, \nu$ に関してはEinsteinの規約を適用した．従って $\mathcal{E}$ は $V \otimes W$ を生成する．
+
+	$\mathcal{E}$ の元が線型独立であることを示す．
+	\begin{align}
+		t^{\mu\nu} e_\mu \otimes e_{\nu} = 0
+	\end{align}
+	を仮定する．$\{e_\mu\},\, \{f_\mu\}$ の\hyperref[def.basisforDVS]{双対基底}をそれぞれ $\{\varepsilon^\mu\},\, \{\eta^\nu\}$ と書き，
+	全ての添字の組み合わせ $(\mu,\, \nu) \in \{	1,\, \dots,\, n\} \times \{1,\, \dots,\, m\}$ に対して双線型写像
+	\begin{align}
+		\tau^{\mu\nu} \colon V \times W \lto \mathbb{R},\; (v,\, w) \lmto \varepsilon^\mu (v) \eta^\nu (w)
+	\end{align}
+	を定める．$\tau^{\mu\nu}$ は双線型なので\hyperref[cmtd:tensor-vec]{テンソル積の普遍性}から $\VEC{\mathbb{K}}$ の可換図式
+	\begin{center}
+		\begin{tikzcd}[row sep=large, column sep=large]
+			&V \times W \ar[d, "\pi \circ \iota"'] \ar[r,"\tau^{\mu\nu}"] &\mathbb{R} \\
+			&\bm{V \otimes W} \ar[ur, red, dashed, "\exists! \overline{\tau}^{\mu\nu}"'] &
+		\end{tikzcd}
+	\end{center}
+	が存在する．このことは，
+	\begin{align}
+		0 &= \textcolor{red}{\overline{\tau}^{\mu\nu}} (t^{\rho\sigma} e_{\rho} \otimes f_{\sigma}) \\
+		&= t^{\rho\sigma} (\textcolor{red}{\overline{\tau}^{\mu\nu}} \circ \pi \circ \iota) (e_\rho ,\,  f_\sigma) \\
+		&= t^{\rho\sigma} \tau^{\mu\nu}(e_\rho ,\,  f_\sigma) = t^{\mu\nu}
+	\end{align}
+	を意味する．従って$\mathcal{E}$ の元は線型独立である．
+\end{proof}
+
+これでもまだ直接の計算には向かない．より具体的な構成を探そう．
+
+与えられたベクトル空間 $V,\, W,\, Z \in \Obj{\VEC{\mathbb{K}}}$ に対して，集合
+\begin{align}
+	\bm{L(V,\, W;\, Z)} \coloneqq \bigl\{\, F \colon V \times W \lto Z \bigm| F\;\text{は双線型写像} \,\bigr\} 
+\end{align}
+を考える．$L(V,\, W;\, Z)$ の上の加法とスカラー乗法を $\forall v \in V,\, \forall w \in W,\, \forall \lambda \in \mathbb{K}$ に対して
+\begin{align}
+	(F + G)(v,\, w) &\coloneqq F(v,\, w) + G(v,\, w), \\
+	(\lambda F)(v,\, w) &\coloneqq \lambda \bigl(F(v,\, w)\bigr)
+\end{align}
+によって定義すると $L(V,\, W)$ は $\mathbb{K}$ ベクトル空間になる．
+そして $\forall \omega \in V^*,\; \forall \eta \in W^*$ に対して，$\bm{\omega \otimes \eta}$ と書かれる $L(V,\, W;\, \mathbb{K})$ の元を
+\begin{align}
+	\bm{\omega \otimes \eta} \colon V \times W \lto \mathbb{K},\; (v,\, w) \lmto \omega(v)\eta(w)
+\end{align}
+によって定義する（つまり，$\omega \otimes \eta$ は双線型写像である）．
+
+\begin{myprop}[label=prop:basis-L]{}
+	$V,\, W$（$\dim V = n,\, \dim W = m$）の基底をそれぞれ $\{e_\mu\},\, \{f_\nu\}$ と書き，その\hyperref[def.basisforDVS]{双対基底}をそれぞれ $\{\varepsilon^\mu\},\, \{\eta^\mu\}$ と書く．このとき，集合
+	\begin{align}
+		\mathcal{B} \coloneqq \bigl\{\, \varepsilon^\mu \otimes \eta^\nu \bigm| 1 \le \mu \le n,\, 1 \le \nu \le m \,\bigr\} 
+	\end{align}
+	は $L(V,\, W;\, \mathbb{K})$ の基底である．従って $\dim L(V,\, W;\, \mathbb{K}) = nm$ である．
+\end{myprop}
+
+\begin{proof}
+	$\forall F  \in L(V,\, W;\, \mathbb{K})$ を1つとり，全ての添字の組み合わせ $(\mu,\, \nu)$ に対して
+	\begin{align}
+		F_{\mu\nu} \coloneqq F(e_\mu,\, e_\nu)
+	\end{align}
+	とおく．$\forall (v,\, w) \in V,\, W$ を $v = v^\mu e_\mu,\; w = w^\nu f_\nu$ と展開すると，
+	\begin{align}
+		F_{\mu\nu} \varepsilon^\mu \otimes \eta^\nu (v,\, w) &= F_{\mu\nu} \varepsilon^{\mu}(v) \eta^\nu(w) \\
+		&= F_{\mu\nu} v^\mu w^\nu
+	\end{align}
+	が成り立つ．一方，双線型性から
+	\begin{align}
+		F(v,\, w) = v^\mu w^\nu F(e_\mu,\, e_\nu) = F_{\mu\nu} v^\mu w^\nu
+	\end{align}
+	も成り立つので $F = F_{\mu\nu} \varepsilon^\mu \otimes \eta^\nu$ が言えた．i.e. 集合 $\mathcal{B}$ は $L(V,\, W;\, \mathbb{R})$ を生成する．
+
+	次に，$\mathcal{B}$ の元が線型独立であることを示す．
+	\begin{align}
+		F_{\mu\nu} \varepsilon^\mu \otimes \eta^\nu = 0
+	\end{align}
+	を仮定する．全ての添字の組み合わせについて，$(e_\mu,\, f_\nu)$ に左辺を作用させることで，$F_{\mu\nu} = 0$ が従う．i.e. $\mathcal{B}$ の元は互いに線型独立である．
+\end{proof}
+
+
+\begin{myprop}[label=prop:tensor-multillinear]{テンソル積の構成その2}
+	\begin{align}
+		L(V,\, W;\, \mathbb{K}) \cong V^* \otimes W^*
+	\end{align}
+\end{myprop}
+
+\begin{proof}
+	写像
+	\begin{align}
+		\Phi \colon V^* \times W^* &\lto L(V,\, W;\, \mathbb{K}), \\
+		(\omega,\, \eta) &\lmto \bigl( (v,\, w) \lmto \omega(v) \eta(w) \bigr) 
+	\end{align}
+	は双線型写像なので
+	\hyperref[cmtd:tensor-vec]{テンソル積の普遍性}から $\VEC{\mathbb{K}}$ の可換図式
+	\begin{center}
+		\begin{tikzcd}[row sep=large, column sep=large]
+			&V^* \times W^* \ar[d, "\pi \circ \iota"'] \ar[r,"\Phi"] &L(V,\, W;,\, \mathbb{K}) \\
+			&\bm{V^* \otimes W^*} \ar[ur, red, dashed, "\exists! \overline{\Phi}"'] &
+		\end{tikzcd}
+	\end{center}
+	が存在する．
+	$V,\, W$（$\dim V = n,\, \dim W = m$）の基底をそれぞれ $\{e_\mu\},\, \{f_\nu\}$ と書き，その\hyperref[def.basisforDVS]{双対基底}をそれぞれ $\{\varepsilon^\mu\},\, \{\eta^\mu\}$ と書く．
+	命題\ref{prop:basis-tensor}より $V^* \otimes W^*$ の基底として
+	\begin{align}
+		\mathcal{E} \coloneqq \bigl\{\, \varepsilon^\mu \otimes \eta^\nu \bigm| 1 \le i \le n,\, 1 \le j \le m \,\bigr\} 
+	\end{align}
+	がとれ，命題\ref{prop:basis-L}より $L(V,\, W;\, \mathbb{K})$ の基底として
+	\begin{align}
+		\mathcal{B} \coloneqq \bigl\{\, \varepsilon^\mu \otimes \eta^\nu \bigm| 1 \le \mu \le n,\, 1 \le \nu \le m \,\bigr\} 
+	\end{align}
+	がとれる（記号が同じだが，違う定義である）．
+	このとき，$\forall (v,\, w) \in V \times W$ に対して
+	\begin{align}
+		\textcolor{red}{\overline{\Phi}}(\varepsilon_\mu \otimes \eta_\nu )(v,\, w) = \varepsilon_\mu (v) \eta_\nu (w) = \varepsilon^\mu \otimes \eta^\nu(v,\, w)
+	\end{align}
+	が成り立つ（ただし，左辺の $\otimes$ は命題\ref{prop:tensor-vec}，右辺は命題\ref{prop:tensor-multillinear}で定義したものである），ので
+	$\textcolor{red}{\overline{\Phi}}$ は $\mathcal{E}$ の元と $\mathcal{B}$ の元の1対1対応を与えるので同型写像である．
+\end{proof}
+
+\subsection{多元環}
+
+\begin{myaxiom}[label=ax.alg]{体上の多元環}
+	$\mathbb{K}$ を体とする．$\mathbb{K}$ 上の\hyperref[ax.vector]{ベクトル空間} $V \in \VEC{\mathbb{K}}$ の上に，加法とスカラー乗法の他にもう1つの
+	2項演算
+	\begin{align}
+		[\;,\,]\; \colon V \times V \to V,\; (v,\, w) \mapsto \comm{v}{w}
+	\end{align}
+	を与える．
+	
+	このとき，$V$ が $\mathbb{K}$ 上の\textbf{多元環} (algebra) \footnote{\textbf{代数}と訳されることもある．}であるとは，以下の2条件が充たされていることを言う：
+	\begin{itemize}
+		\item 組 $\bigl(V,\, +,\, [\;,\,]\bigr)$ が\hyperref[ax:ring]{\textbf{環}}
+		\item $\forall \lambda \in \mathbb{K},\; \forall v,\, w \in V$ に対して
+		\begin{align}
+			\lambda \comm{v}{w} = \comm{\lambda v}{w} = \comm{v}{\lambda w}
+		\end{align}
+	\end{itemize}
+\end{myaxiom}
+
+\begin{mydef}[label=op_cinfty]{$C^\infty (M)$ 上の演算}
+	\hyperref[def.cinfty]{$C^\infty (M)$} 上の和，積，スカラー乗法を以下のように定義すると，
+	$C^\infty(M)$ は $\mathbb{R}$ 上の\hyperref[ax.alg]{多元環}になる：
+
+	$\forall f,\, g \in C^\infty (M),\; \forall \lambda \in \mathbb{R}$ および $\forall p \in M$ に対して
+	\begin{align}
+		(f + g)(p) &\coloneqq f(p) + g(p) \\
+		(\comm{f}{g})(p) &\coloneqq f(p) g(p) \\
+		(\lambda f)(p) &\coloneqq \lambda f(p)
+	\end{align}
+\end{mydef}
+
+\begin{proof}
+	\hyperref[ax.alg]{多元環}の公理\ref{ax.alg}を充していることを確認する．$C^\infty (M)$ が和とスカラー乗法に関して $\mathbb{R}$ 上のベクトル空間であること，および和と積に関して環であることは明らかである．積に関しては，$\mathbb{R}$ が可換体であることから $\forall f,\, g \in C^\infty(M),\; \forall \lambda \in \mathbb{R}$ に対して
+	\begin{align}
+		\bigl(\lambda \comm{f}{g} \bigr)(p) &= \lambda \bigl(\comm{f}{g}(p)\bigr) \\
+		&= \lambda f(p) g(p)   \\
+		&= \bigl( \lambda f(p)  \bigr) g(p) = \comm{\lambda f}{g}(p) \\
+		&= f(p) \bigl( \lambda g(p) \bigr)  = \comm{f}{\lambda g}(p) \\
+	\end{align}
+	であるから示された．
+\end{proof}
+
+
+\section{接空間}
+
+% \cinfty 多様体 $M$ の点 $p \in M$ における接ベクトルは，次の2つの性質を持つベクトルとして定義される：
+
+% \begin{itemize}
+% 	\item $M$ 上の $C^\infty$ 関数の方向微分
+% 	\item $M$ 上の曲線の速度ベクトル
+% \end{itemize}
+$n$ 次元実数ベクトル，すなわち $n$ 個の実数の組 $v = (v^1,\, \dots ,\, v^n) \in \mathbb{R}^n$ の幾何学的な解釈とは，方向 $v/\abs{v}$ を向いた長さ $\abs{v}$ の「矢印」のことであり，「矢印」の始点はどこでも良かった．
+逆に始点がどこでも良いということは，Euclid空間 $\mathbb{R}^n$ の各点 $p \in \mathbb{R}^n$ の上に「矢印」全体がなすベクトル空間 $\mathbb{R}^n$ が棲んでいると捉えても良い．
+この意味で，点 $p \in \mathbb{R}^n$ における\textbf{幾何学的接空間}を $\bm{\mathbb{R}^n_p} \coloneqq \{p\} \times \mathbb{R}^n$ と書く．
+
+接ベクトルを幾何学的接空間の元として捉える描像においては，例えば $S^{n-1}$ の点 $p \in S^{n-1}$ における幾何学的接空間とは $\mathbb{R}^n_p$ の部分ベクトル空間
+\begin{align}
+	\bigl\{\, v \in \mathbb{R}_p^n \bigm| v \vdot p = 0 \,\bigr\} 
+\end{align}
+のこと\footnote{$\vdot$ はEuclid内積とする．}であり，直観的にも分かりやすい．
+しかし，全ての\hyperref[diffmani]{\cinfty 多様体} $M$ がEuclid空間の部分空間として実現されている\underline{わけではない}．
+\hyperref[diffmani]{\cinfty 多様体の定義}のみが与えられたときに使える情報は，\hyperref[def.cinfty]{\cinfty 関数}と\hyperref[def.cinfty_mapping]{\cinfty 写像}と\hyperref[diffmani]{\cinfty チャート}だけなので，接空間の定義を修正する必要がある．
+方針としては，例えば次の2つが考えられる：
+\begin{itemize}
+	\item 幾何学的接空間の元に，\cinfty 関数の方向微分としての役割を与える．
+	\item \cinfty 曲線の速度ベクトルを考える．
+\end{itemize}
+まずは1つ目の方法を考えよう．
+
+$\mathbb{R}^n$ の場合，$v \in \mathbb{R}^n_p$ による，点 $p$ における $f \in C^\infty (\mathbb{R}^n)$ の\textbf{方向微分}とは
+\begin{align}
+	\label{eq:directional}
+	\hat{D}_{v}|_p f \coloneqq \eval{\dv{}{t}() f(p + tv)}_{t=0}
+\end{align}
+で定義される写像 $\hat{D}_v|_p \colon C^\infty (M) \lto \mathbb{R}$ のことである．
+$\hat{D}_v|_p$ はLeibniz則
+\begin{align}
+	\hat{D}_v|_p (fg) = f(p)\, \hat{D}_v|_p g + g(p)\, \hat{D}_v|_p f
+\end{align}
+を充し，$\mathbb{R}^n$ の標準的な基底 $\{e_i\}$ を使って $v = v^\mu e_\mu$ と展開したときには，デカルト座標 $\chart{\mathbb{R}^n}{x^\mu}$ において
+\begin{align}
+	\hat{D}_v|_p f = v^\mu \pdv{f}{x^\mu}() (p) = \left( v^\mu \eval{\pdv{}{x^\mu}}_p \right) f
+\end{align}
+と書ける．つまり，$\forall v \in \mathbb{R}^n_p$ に対して，方向微分 $\hat{D}_v|_p$ は $\{\, \pdv*{}{x^\mu}|_p\, \}_{\mu = 1,\, \dots,\, n}$ を基底として展開できる．
+従って，$v$ と $\hat{D}_v|_p$ を同一視すると $\mathbb{R}^n_p$ のベクトル空間の構造も反映してくれそうである．
+
+以上の構成を念頭に置いて，まず $\mathbb{R}^n$ の接空間を構成する．
+
+\subsection{$\mathbb{R}^n$ の接空間}
+
+写像 $w \colon \cinftyf{\mathbb{R}^n} \lto \mathbb{R}$ が点 $p \in \mathbb{R}^n$ における\textbf{微分}であるとは，
+\begin{itemize}
+	\item $w$ は $\mathbb{R}$ 線型写像\footnote{定義\ref{op_cinfty}により $\cinftyf{\mathbb{R}^n}$ は\hyperref[ax.alg]{多元環}になる．}
+	\item $\forall f,\, g \in \cinftyf{\mathbb{R}^n}$ に対して\textbf{Leibnitz則}を充たす：
+	\begin{align}
+		w(fg) = f(p) w(g) + g(p) w(f)
+	\end{align}
+\end{itemize}
+ことを言う．点 $p$ における微分全体がなす集合を $\bm{T_p} \mathbb{R}^n$ とおいて，$T_p \mathbb{R}^n$ の上の和とスカラー乗法を
+\begin{align}
+	(w_1 + w_2)(f) &\coloneqq w_1(f) + w_2(f) \\
+	(\lambda w)(f) &\coloneqq \lambda w(f)
+\end{align}
+と定義することで $T_p \mathbb{R}^n$ は実\hyperref[ax.vector]{ベクトル空間}になる\footnote{$\mathbb{R}$ が\hyperref[ax.ring]{体}なのでほぼ自明である．}．
+
+\begin{mylem}[label=lem:tangentv-Rn]{}
+	$\forall p \in \mathbb{R}^n$ を与え，$\forall w \in T_p \mathbb{R}^n$ および $\forall f,\, g \in C^\infty(\mathbb{R}^n)$ をとる．
+	\begin{enumerate}
+		\item $f$ が定数写像ならば $w(f) = 0$
+		\item $f(p) = g(p) = 0$ ならば $w(fg) = 0$
+	\end{enumerate}
+\end{mylem}
+
+\begin{proof}
+	\begin{enumerate}
+		\item $f_1 \colon \mathbb{R}^n \lto \mathbb{R},\; y \lmto 1$ に対して
+		\begin{align}
+			w(f_1) = w(f_1f_1) = f_1(p) w(f_1) + f_1(p) w(f_1) = 2 w(f_1)
+		\end{align}
+		なので $w(f_1) = 0$ が言えた．一般の $\lambda \in \mathbb{R}$ を返す定数写像 $f$ については，$w$ が線型写像であることから $w(f) = w(\lambda f_1) = \lambda w(f_1) = 0$ となって従う．
+		\item $w$ のLeibniz則より明らか．
+	\end{enumerate}
+\end{proof}
+
+\begin{myprop}[label=prop:tangentv-Rn]{$\mathbb{R}^n_p$ と $T_p \mathbb{R}^n$}
+	$\forall p \in \mathbb{R}^n$ を1つ与える．
+	\begin{enumerate}
+		\item $\forall v \in \mathbb{R}_p^n$ に対して\eqref{eq:directional}で定義された\textbf{方向微分}は $\hat{D}_{v}|_p \in T_p \mathbb{R}^n$ を充たす．
+		\item 写像 $D|_p \colon \mathbb{R}^n_p \lto T_p \mathbb{R}^n,\; v \lmto \hat{D}_v|_p$ はベクトル空間の同型写像である．
+	\end{enumerate}
+\end{myprop}
+
+\begin{proof}
+	\begin{enumerate}
+		\item $\hat{D}_{v}|_p$ の線形性およびLeibniz則から明らか．
+		\item $\forall f \in \cinftyf{\mathbb{R}^n}$ を1つとる．線形性は明らかである．
+		\begin{description}
+			\item[\textbf{(単射性)}] $\forall v \in \Ker D|_p$ を1つとる．このとき $D|_p (v) = 0$ が成り立つ．
+			このとき $\mathbb{R}^n$ の標準的な基底 $\{e_\mu\}$ によって $v = v^\mu e_\mu$ と展開すると，デカルト座標 $\chart{\mathbb{R}^n}{x^\mu}$ において
+			\begin{align}
+				D|_p(v)(f) = v^\mu \pdv{f}{x^\mu} ()(p) = 0
+			\end{align}
+			が成り立つ．ここで $f$ として $x^\nu\in \cinftyf{\mathbb{R}^n}$ を選ぶと
+			\begin{align}
+				v^\mu \delta^\nu_\mu = v^\nu = 0
+			\end{align}
+			がわかるので，$v = 0$ である．i.e. $\Ker D|_p = \{0\}$ であり，$D|_p$ は単射である．
+			\item[\textbf{(全射性)}] 
+			$\forall w \in T_p \mathbb{R}^n$ を1つとる．$f$ は\cinfty 級なので，$\forall x \in \mathbb{R}^n$ に対して $\varepsilon(x) \coloneqq x-p$ とおくとTaylorの定理より
+			\begin{align}
+				f(x) = f(p) + \pdv{f}{x^\mu}()(p)\, \varepsilon^\mu (x) + \varepsilon^\mu (x) \varepsilon^\nu (x) \int_0^1 \dd{t} \pdv[2]{f}{x^\mu}{x^\nu}()(x + t \varepsilon)
+			\end{align}
+			が成り立つ．第3項は $x=p$ において $0$ になる関数2つの\cinfty 関数 $\varepsilon^\mu (x),\, \varepsilon^\nu(x)$ の積だから，補題\ref{lem:tangentv-Rn}-(2)より $w$ を作用させると消える．
+			従って補題\ref{lem:tangentv-Rn}-(1) および $w$ の線型性から
+			\begin{align}
+				w(f) 
+				&= w \bigl( f(p) \bigr) + w \left( \pdv{f}{x^\mu}()(p)\, \varepsilon^\mu \right) \\
+				&= \pdv{f}{x^\mu}()(p)\, w ( \varepsilon^\mu ) \\
+				&= \pdv{f}{x^\mu}()(p)\bigl(w(x^\mu) - w(p^\mu)\bigr) \\
+				&= w(x^\mu) \pdv{f}{x^\mu}()(p) \\
+				&= \hat{D}|_p \bigl( w(x^\mu)e_\mu \bigr) (f)
+			\end{align}
+			がわかる．i.e. $w = \hat{D}|_p \bigl( w(x^\mu)e_\mu \bigr) \in \Im \hat{D}|_p$ である．
+		\end{description}
+	\end{enumerate}
+\end{proof}
+
+\begin{mycol}[label=col:basis-tangentv-Rn]{$T_x\mathbb{R}^n$ の自然基底}
+	$\mu = 1,\, \dots,\, n$ に対して
+	\begin{align}
+		\eval{\pdv{}{x^\mu}}_p \colon \cinftyf{\mathbb{R}^n} \lto \mathbb{R},\; f \lmto \pdv{f}{x^\mu}()(p)
+	\end{align}
+	によって定義される線型写像の組
+	\begin{align}
+		\eval{\pdv{}{x^1}}_p,\, \dots,\, \eval{\pdv{}{x^n}}_p
+	\end{align}
+	は $T_p \mathbb{R}^n$ の基底をなす．
+\end{mycol}
+
+\subsection{\cinfty 多様体の接空間}
+
+$\mathbb{R}^n$ における構成を一般化する．
+\begin{mydef}[label=def.tangentv]{接空間}
+	$M$ を\hyperref[diffmani]{\cinfty 多様体}とし，\textbf{任意の点 $p \in M$ を一つとる．} 写像 
+	\begin{align}
+		v\colon C^\infty (M) \lto \mathbb{R}
+	\end{align} 
+	が $\forall f,\, g \in C^\infty (M)$ と $\forall \lambda \in \mathbb{R}$ に対して以下の2条件を充たすとき，$v$ は $M$ の\underline{点 $p$ における}\textbf{接ベクトル} (tangent vector)と呼ばれる：
+	\begin{description}
+		\item[\textbf{(線形性)}] 
+		\begin{align}
+			v(f + g) &= v(f) + v(g),\\
+			v(\lambda f) &= \lambda v(f)
+		\end{align}
+		\item[\textbf{(Leibnitz則)}] \begin{align}
+			v(fg) = v(f)\, g(p) + f(p)\, v(g)
+		\end{align}
+	\end{description}
+	$M$ の点 $p$ における接ベクトル全体がなす集合を $\bm{T_pM}$ と書き，$M$ の点 $p$ における\textbf{接空間} (tangent space) と呼ぶ．
+\end{mydef}
+
+\begin{mydef}[label=def.op_tangent]{接空間の演算}
+	$\forall v,\, w \in T_pM$ に以下のようにして和とスカラー乗法を定義することで，$T_pM$ はベクトル空間になる：
+	\begin{enumerate}
+		\item $(v+w)(f) \coloneqq v(f) + w(f)$
+		\item $(\lambda v)(f) \coloneqq \lambda v(f)$
+	\end{enumerate}
+	ただし，$f \in C^\infty(M)$ は任意とする．
+\end{mydef}
+\begin{proof}
+	ベクトル空間の公理\ref{ax.vector}を充していることを確認すればよい．
+	\begin{description}
+		\item[\textbf{(V1)}] 自明
+		\item[\textbf{(V2)}] 自明
+		\item[\textbf{(V3)}] $\vb*{0} = 0 \in T_pM$（恒等的に $0$ を返す写像）とすればよい．
+		\item[\textbf{(V4)}] $\forall f \in C^\infty (M),\; (-v)(f) = -v(f)$ とすればよい． 
+		\item[\textbf{(V5)}] $\lambda (u + v)(f) = \lambda (u(f) + v(f)) = \lambda u(f) + \lambda v(f) = (\lambda u)(f) + (\lambda v)(f).$
+		\item[\textbf{(V6)}] $\bigl((\lambda + \mu) u \bigr) (f) = (\lambda+\mu)u(f) = \lambda u(f) + \mu u(f) = (\lambda u)(f) + (\mu u)(f) = (\lambda u + \mu u)(f).$
+		\item[\textbf{(V7)}] $\bigl((\lambda\mu)u\bigr)(f) = (\lambda\mu)u(f) = \lambda (\mu u(f)) = \lambda \bigl((\mu u)(f)\bigr).$
+		\item[\textbf{(V8)}] $(1 u)(f) = 1 u(f) = u(f).$
+	\end{description}
+\end{proof}
+
+\begin{mylem}[label=lem:tangentv]{}
+	（境界なし/\hyperref[def:mani-with-boundary]{あり}）\hyperref[diffmani]{\cinfty 多様体} $M$ を与える． 
+	$\forall p \in M,\, \forall w \in T_p M$ および $\forall f,\, g \in C^\infty(\mathbb{R}^n)$ をとる．
+	\begin{enumerate}
+		\item $f$ が定数写像ならば $w(f) = 0$
+		\item $f(p) = g(p) = 0$ ならば $w(fg) = 0$
+	\end{enumerate}
+\end{mylem}
+
+\begin{proof}
+	\begin{enumerate}
+		\item $C^\infty$ 関数 $f_1 \colon M \lto \mathbb{R},\; x \lmto 1$ に対して
+		\begin{align}
+			w(f_1) = w(f_1f_1) = f_1(p) w(f_1) + f_1(p) w(f_1) = 2 w(f_1)
+		\end{align}
+		なので $w(f_1) = 0$ が言えた．一般の $\lambda \in \mathbb{R}$ を返す定数写像 $f$ については，$w$ が線型写像であることから $w(f) = w(\lambda f_1) = \lambda w(f_1) = 0$ となって従う．
+		\item $w$ のLeibniz則より明らか．
+	\end{enumerate}
+\end{proof}
+
+\hyperref[def.tangentv]{接ベクトルの定義}は局所的だが，それが作用する $C^\infty (M)$ の定義域は $M$ 全体であり，大域的である．読者はこのことに疑問を感じるかもしれない．しかし，\textbf{接ベクトルの} $\bm{C^\infty(M)}$ \textbf{への作用は1点の開近傍上（しかも，その開近傍は好きなように採れる！）のみで完全に決まる}．
+
+\begin{myprop}[label=prop:tangentv-local]{接ベクトルの局所性}
+	（境界なし/\hyperref[def:mani-with-boundary]{あり}）\cinfty 多様体 $M$ を与え，
+	$\forall p \in M$ と $\forall v \in T_pM$ を1つとる．
+
+	$f,\, g \in \cinftyf{M}$ が $p$ のある\hyperref[def:neighborhood]{開近傍} $p \in U \subset M$ 上で一致するならば $v(f) = v(g)$ である．
+\end{myprop}
+
+\begin{proof}
+	補題\ref{gen_cinfty}から，$p$ の開近傍 $p \in V \subset M$ であって $\overline{V} \subset U$ を充たすものの上では恒等的に $1$ であり，かつ $M \setminus U$ において $0$ になる\cinfty 関数 $\tilde{b}$ が存在する．
+	このとき $(f - g)\tilde{b} = 0 \; \textcolor{red}{\in C^\infty(M)}$ である．
+	従ってLeibniz則から
+	\begin{align}
+		0 = v\bigl( (f-g)\tilde{b} \bigr) = v(f-g) \tilde{b}(p) + (f-g)(p) v(\tilde{b})= v(f-g) = v(f) - v(g)
+	\end{align}
+	とわかる．i.e. $v(f) = v(g)$ である．
+\end{proof}
+
+\section{\cinfty 写像の微分}
+
+
+\begin{mydef}[label=def:functor-Tp]{\cinfty 写像の微分}
+	（境界なし/\hyperref[def:mani-with-boundary]{あり}）\hyperref[diffmani]{\cinfty 多様体} $M,\, N$ とそれらの間の\hyperref[def.cinfty_mapping]{\cinfty 写像}
+	\begin{align}
+		F \colon M \lto N
+	\end{align}
+	を与える．
+	\underline{点 $p \in M$ における} $F$ の\textbf{微分} (differential of $f$ at $p$) とは，\hyperref[def.tangentv]{接空間}の間の\textbf{線型写像}
+	\begin{align}
+		\bm{T_p F} \colon T_p M &\lto T_{F(p)} N \\
+		v &\lmto \bigl( f \lmto v(f \circ F) \bigr) 
+	\end{align}
+	のこと．
+\end{mydef}
+
+\begin{proof}
+	命題\ref{prop:cinfty_map-basic}-(3) より $f \circ F \in \cinftyf{M}$ なので $T_p F$ はwell-definedである．
+	$T_p F$ の線形性を確認する．実際，\hyperref[def.op_tangentv]{接空間上の加法とスカラー倍}の定義から $\forall v,\, w \in T_p M,\; \forall \lambda \in \mathbb{R}$ および $\forall f \in \cinftyf{N}$ に対して
+	\begin{align}
+		T_p F(v+w)(f) &= (v+w)(f \circ F) \\
+		&= v(f\circ F) + w(f\circ F) \\
+		&= T_p F(v)(f) + T_p F(w)(f) \\
+		&= \bigl( T_p F(v) + T_p F(w) \bigr) (f), \\
+		T_p F(\lambda v)(f) &= (\lambda v)(f \circ F) = \lambda v(f \circ F) = \lambda T_p F(v)(f)
+	\end{align}
+	が成り立つ．
+\end{proof}
+
+
+\begin{myprop}[label=prop:functor-Tp]{$T_p$ の関手性}
+	（境界なし/\hyperref[def:mani-with-boundary]{あり}）\hyperref[diffmani]{\cinfty 多様体} $M\, N,\, P$ とそれらの間の\hyperref[def.cinfty_mapping]{\cinfty 写像}
+	\begin{align}
+		F \colon M \lto N,\quad G \colon N \lto P
+	\end{align}
+	を与える．このとき $\forall p \in M$ に対して以下が成り立つ：
+	\begin{enumerate}
+		\item $T_p (\mathrm{id}_M) = \mathrm{id}_{T_p M}$
+		\item $T_p (G \circ F) = T_{F(p)} G \circ T_p F$
+		\item $F \colon M \lto N$ が\hyperref[def.diff]{微分同相写像}ならば $T_p F \colon T_p M \lto T_{F(p)} N$ はベクトル空間の同型写像である．
+	\end{enumerate}
+\end{myprop}
+
+\begin{proof}
+	$\forall v \in T_p M$ をとる．
+	\begin{enumerate}
+		\item $\forall f \in \cinftyf{M}$ に対して
+		\begin{align}
+			T_p (\mathrm{id}_M) (v)(f) = v (f \circ \mathrm{id}_M) = v(f)
+		\end{align}
+		が成り立つので $T_p (\mathrm{id}_M)(v) = v$，i.e. $T_p (\mathrm{id}_M) = \mathrm{id}_{T_p M}$ が示された．
+		\item $\forall f \in \cinftyf{P}$ に対して
+		\begin{align}
+			(T_{F(p)} G \circ T_p F)(v)(f) = T_p F(v)(f \circ G) = v (f \circ G \circ F) = T_p (G \circ F)(v)(f)
+		\end{align}
+		が成り立つ．
+		\item $F \colon M \lto N$ が\hyperref[def.diff]{微分同相写像}ならば\hyperref[def.cinfty_mapping]{\cinfty 写像} $F^{-1} \colon N \lto M$ が存在して
+		$F^{-1} \circ F = \mathrm{id}_M$ が成り立つ．
+		(1), (2) より
+		\begin{align}
+			T_p (F^{-1} \circ F) &= T_{F(p)} (F^{-1}) \circ T_{p} (F) \\
+			&= T_p(\mathrm{id}_M) = \mathrm{id}_{T_p M}, \\
+			T_{F(p)} (F\circ F^{-1}) &= T_{p} (F) \circ T_{F(p)} (F^{-1}) \\
+			&= T_{F(p)}(\mathrm{id}_N) = \mathrm{id}_{T_{F(p)} N} 
+		\end{align}
+		がわかる．$T_{F(p)} (F^{-1})$ は線型写像なので $T_{p} (F)$ は $T_{F(p)} (F^{-1})$ を逆に持つベクトル空間の同型写像である．
+	\end{enumerate}
+\end{proof}
+
+圏の言葉で整理すると，
+\begin{itemize}
+	\item $(M,\, p) \in \Obj{\DIFF_0}$ に対して，点 $p$ における\hyperref[def.tangentv]{接空間} $T_p M \in \Obj{\VEC{\mathbb{R}}}$ を，
+	\item $F \in \Hom{\DIFF_0} \bigl( (M,\, p),\, (N,\, q) \bigr)$ に対して\footnote{このように書いたときは $q = F(p)$ が暗に仮定される．}，$F$ の\hyperref[def:functor-Tp]{微分} $T_p F \in \Hom{\VEC{\mathbb{R}}}(T_p M,\, T_{q} N)$ を
+\end{itemize}
+対応づける対応
+\begin{align}
+	T_p \colon \DIFF_0 \lto \VEC{\mathbb{R}}
+\end{align}
+は\hyperref[def:functor]{関手}である（$\DIFF_0$ は $\DIFFb{}_0$ に置き換えても良い）．
+% \begin{marker}
+
+% 	　2つの関数 $f,\, g \in C^\infty(M)$ が点 $p$ のある開近傍 $V$ 上で一致しているとする．このとき，補題\ref{gen_cinfty}から，$p$ の近く（開集合 $U$ であって，$p \in U \subsetneq V$ を充たすものの上）では恒等的に $1$ であり $V$ の外側で $0$ になる\cinfty 関数 $\tilde{b}$ が存在する．このとき $(f - g)\tilde{b} = 0 \; \textcolor{red}{\in C^\infty(M)}$ （ $M$ 全域で恒等的に $0$ を返す関数）である．従って $\forall v \in T_p M$ をこの \cinfty 関数に作用させると
+% 	\begin{align}
+% 		0 = v\bigl[ (f-g)\tilde{b} \bigr] = v[f-g] \tilde{b}(p) + (f-g)(p) v[\tilde{b}]= v[f-g] = v(f) - v(g)
+% 	\end{align}
+% 	とわかる．i.e. $v(f) = v(g)$ である．
+
+% 	　この事実は，座標関数 $x^i \colon U \to \mathbb{R}$ に接ベクトルを作用させる際に自然に使っている．すなわち，本来定義域が $U \subset M$ であって $x^i \notin C^\infty(M)$ である座標関数に対して補題\ref{gen_cinfty}を適用し，定義域を $M$ に拡張した新しい関数 $\tilde{x}^i \in C^\infty(M)$ を用意する．このとき，$x^i$ への接ベクトル $v$ の作用（厳密には\textbf{未定義}）を $\tilde{x}^i$ に対する $v$ の作用と同一視しているのである．
+% \end{marker}
+
+\subsection{接空間の性質}
+
+\begin{myprop}[label=prop:iso-opensub-tangent]{接空間の局所性}
+	（境界なし/\hyperref[def:mani-with-boundary]{あり}）\cinfty 多様体 $M$ と $M$ の開集合 $U \subset M$ を与える．
+	$U$ を\exref{ex:open-submani}の方法で\cinfty 多様体と見做す．
+
+	このとき，$\forall p \in U$ における包含写像 $\iota \colon U \hookrightarrow M$ の\hyperref[def:functor-Tp]{微分} $T_p \iota \colon T_p U \lto T_p M$ はベクトル空間の同型写像である．
+\end{myprop}
+
+\begin{marker}
+	以降では命題\ref{prop:iso-opensub-tangent}により，なんの断りもなく $T_p M$ と $T_p U$ を同一視する場合がある．
+\end{marker}
+
+\begin{proof}
+	\begin{description}
+		\item[\textbf{(単射性)}] $\forall v \in \Ker (T_p \iota)$ をとる．このとき $\forall f \in \cinftyf{M}$ に対して $T_p \iota (v)(f) = v (f \circ \iota) = 0$ が成り立つ．
+		
+		$p$ の開近傍 $p \in V$ であって $\overline{V} \subset U$ を充たすものをとる．すると補題\ref{gen_cinfty}より，$\forall g \in \cinftyf{U}$ に対して $\tilde{g} \in \cinftyf{M}$ が存在して
+		$V$ 上至る所で $g = \tilde{g}$ が成り立つ．故に命題\ref{prop:tangentv-local}から
+		\begin{align}
+			v(g) = v(\tilde{g}|_U)  = v(\tilde{g} \circ \iota) = T_p \iota (v) (\tilde{g}) = 0
+		\end{align}
+		が従う．i.e. $\Ker (T_p\iota) = \{0\}$ であり，$T_p \iota$ は単射である．
+		\item[\textbf{(全射性)}] $\forall w \in T_p M$ を1つとる．補題\ref{gen_cinfty}を使って $v \in T_p U$ を
+		\begin{align}
+			v \colon \cinftyf{U} \lto \mathbb{R},\; g \lmto w(\tilde{g})
+		\end{align}
+		と定義すると，命題\ref{prop:tangentv-local}から $\forall f \in \cinftyf{M}$ に対して
+		\begin{align}
+			T_p \iota (v)(f) = v(f \circ \iota) = w (\widetilde{f|_U}) = w(f)
+		\end{align}
+		が言える．
+	\end{description}
+\end{proof}
+
+系\ref{col:basis-tangentv-Rn}から，境界の無い $n$ 次元\cinfty 多様体の接空間の次元は $n$ になることが予想される．
+実は，境界付き\cinfty 多様体の\hyperref[def:int-manifold-with-boundary]{境界点}における接空間も $n$ 次元である．
+
+\begin{myprop}[label=prop:dim-tangentv]{接空間の次元}
+	（境界なし/\hyperref[def:mani-with-boundary]{あり}）$n$ 次元\hyperref[diffmani]{\cinfty 多様体} $M$ の $\forall p \in M$ における\hyperref[def.tangentv]{接空間}は $n$ 次元である．
+\end{myprop}
+
+\begin{proof}
+	$\forall p \in M$ を1つとり，$p$ を含む任意の\hyperref[diffmani]{\cinfty チャート} $(U,\, \varphi)$ をとる．
+	\begin{description}
+		\item[\textbf{(境界がない場合)}] $\varphi \colon U \lto \mathbb{R}^n$ は\hyperref[def.diff]{微分同相写像}なので，命題\ref{prop:functor-Tp}-(3) より $T_p \varphi \colon T_p U \lto T_{\varphi(p)} \bigl(\varphi(U)\bigr)$ は同型写像である．
+		その上命題\ref{prop:iso-opensub-tangent}より $T_p U \cong T_p M,\; T_{\varphi(p)} \bigl( \varphi(U) \bigr) \cong T_{\varphi(p)} \mathbb{R}^n$ なので，
+		系\ref{col:basis-tangentv-Rn}から $\dim T_p M = \dim T_{\varphi(p)} \mathbb{R}^n = n$ だとわかる．
+		\item[\textbf{(境界付きの場合)}] 
+
+		\hrulefill
+		\begin{mylem}[label=lem:dim-tangentv-b]{}
+			包含写像 $\iota \colon \mathbb{H}^n \hookrightarrow \mathbb{R}^n$ を考える．
+			$\forall p \in \partial \mathbb{H}^n$ に対して $T_p \iota \colon T_p \mathbb{H}^n \lto T_p \mathbb{R}^n$ は同型写像である．
+		\end{mylem}
+		\begin{proof}
+			$\forall v \in \Ker T_p \iota$ をとる．
+			$\forall f \in \cinftyf{\mathbb{H}^n}$ に対して，補題\ref{gen_cinfty}を使って定義域を $\mathbb{R}^n$ に拡張した\cinfty 関数を $\tilde{f} \in C^\infty(\mathbb{R}^n)$ と書く．
+			すると
+			\begin{align}
+				v (f) = v (\tilde{f} \circ \iota) = T_p \iota (v) (\tilde{f}) = 0
+			\end{align}
+			が従う．i.e. $\Ker T_p \iota = \{0\}$ であり，$T_p \iota$ は単射である．
+
+			次に $T_p \iota$ の全射性を示す．
+			$\forall w \in T_p \mathbb{R}^n$ をとる．写像
+			\begin{align}
+				v \colon \cinftyf{\mathbb{H}^n} \lto \mathbb{R},\; f \lmto w(\tilde{f})
+			\end{align}
+			を定義する．
+			系\ref{col:basis-tangentv-Rn}により $w = w^\mu \pdv*{}{x^\mu}|_p$ と書けるが，これは $\forall f \in \cinftyf{\mathbb{H}^n}$ に対して
+			\begin{align}
+				v(f) = w^\mu \pdv{\tilde{f}}{x^\mu}()(p)
+			\end{align}
+			を意味する．$f$ の\cinfty 性から $\pdv*{\tilde{f}}{x^\mu}()(p)$ の値は $\mathbb{H}^n$ 側のみによって決まるので $v$ の定義は $f$ の定義域の拡張の仕方によらない．以上の考察から $v$ はwell-definedで，$v \in T_p \mathbb{H}^n$ だとわかる．
+			従って $\forall g \in \cinftyf{\mathbb{R}^n}$ に対して
+			\begin{align}
+				T_p \iota(v)(g) = v(g \circ \iota) = w(\widetilde{g|_{\mathbb{H}^n}}) = w(g)
+			\end{align}
+			が言える．i.e. $w \in \Im T_p \iota$ である．
+		\end{proof}
+		\hrulefill
+
+		　$p \in \Int M$ ならば，命題\ref{prop:iso-opensub-tangent}より $T_p (\Int M) \cong T_p M$ である．$\Int M$ は境界が空の $n$ 次元\cinfty 多様体なので $\dim T_p M = n$ が従う．
+		
+		　$p \in \partial M$ とする．$(U,\, \varphi)$ を $p$ を含む\hyperref[def:int-manifold-with-boundary]{境界チャート}とする．命題\ref{prop:functor-Tp}-(3) より $T_p U \cong T_{\varphi(p)}\bigl( \varphi(U) \bigr) $ が，
+		命題\ref{prop:iso-opensub-tangent}より $T_p M \cong T_p U,\; T_{\varphi(p)} \bigl( \varphi(U) \bigr) \cong T_{\varphi (p)} \mathbb{H}^n$ が従う．
+		補題\ref{lem:dim-tangentv-b}より $T_{\varphi(p)} \mathbb{H}^n \cong T_{\varphi(p)}\mathbb{R}^n$ であるから，
+		$T_p M \cong T_{\varphi(p)} \mathbb{R}^n$ がわかる．よって $\dim T_p M = n$ である．
+	\end{description}
+	
+\end{proof}
+
+\begin{myprop}[label=prop:product-tangentv]{積多様体の接空間}
+	$M,\, N$ を境界を持たない\cinfty 多様体とし，$\pi_1 \colon M \times N \lto M,\; \pi_2 \colon M \times N \lto N$ を第 $i$ 成分への射影とする．
+	
+	このとき $\forall (p,\, q) \in M \times N$ に対して，写像
+	\begin{align}
+		\alpha \colon T_{(p,\, q)} (M \times N) &\lto T_p M \oplus T_q N, \\
+		v &\lmto \bigl( T_{(p,\, q)} \pi_1 (v),\, T_{(p,\, q)} \pi_2 (v)  \bigr) 
+	\end{align}
+	はベクトル空間の同型写像である．
+\end{myprop}
+
+\begin{proof}
+	\hyperref[prop:product-vec]{直和ベクトル空間}の定義から $\alpha$ は線型写像である．
+	
+	\cinfty 写像
+	\begin{align}
+		\iota_1 \colon M \lto M \times N,\; x \lmto (x,\, q) \\
+		\iota_2 \colon N \lto M \times N,\; y \lmto (p,\, y)
+	\end{align}
+	を用いて線型写像
+	\begin{align}
+		\beta \colon T_p M \oplus T_q N \lto T_{(p,\, q)} (M \times N),\; (v,\, w) \lmto T_p \iota_1(v) + T_q \iota_2(w)
+	\end{align}
+	を定める．$\pi_1 \circ \iota_1 = \mathrm{id}_M,\; \pi_2 \circ \iota_2 = \mathrm{id}_N$ であり，かつ $\pi_1 \circ \iota_2,\; \pi_2 \circ \iota_1$ は定数写像なので補題\ref{lem:tangentv}-(1) より\hyperref[def:functor-Tp]{微分}すると消える． 
+	従って $\forall (v,\, w) \in T_p M \oplus T_q N $ に対して
+	\begin{align}
+		\alpha \circ \beta (v,\, w) &= \alpha \bigl( T_p \iota_1(v) + T_q \iota_2 (w) \bigr) \\
+		&= \bigl( T_{(p,\, q)} (\pi_1 \circ \iota_1)(v) + T_{(p,\, q)} (\pi_1 \circ \iota_2)(w),\, T_{(p,\, q)} (\pi_2 \circ \iota_1)(v) + T_{(p,\, q)} (\pi_2 \circ \iota_2)(w) \bigr) \\
+		&= (v,\, w)
+	\end{align}
+	が言えて，$\alpha$ が全射だとわかる．$\dim T_{(p,\, q)} (M \times N) = \dim \bigl( T_p M \oplus T_q N \bigr)$ なので $\alpha$ が同型写像であることが示された．
+\end{proof}
+
+
+\section{座標表示}
+
+これまでの議論は抽象的で，具体的な計算に向かない．そこで，\hyperref[def.localcoord]{チャート}による成分表示を求める
+
+\subsection{接ベクトルの表示}
+
+（境界なし）$n$ 次元\hyperref[diffmani]{\cinfty 多様体} $M$ と，その\hyperref[diffmani]{\cinfty チャート} $(U,\, \varphi) = \chart{U}{x^\mu}$ を与える．
+$\varphi$ は\hyperref[def.diff]{微分同相写像}なので，命題\ref{prop:functor-Tp}-(3) より $\varphi$ の\hyperref[def:functor-Tp]{点 $p \in U$ における微分}
+\begin{align}
+	\label{eq:iso-coord-1}
+	T_p \varphi \colon T_p M \lto T_{\varphi(p)} \mathbb{R}^n
+\end{align}
+は同型写像である\footnote{命題\ref{prop:iso-opensub-tangent}によって $T_p U$ と $T_p M$，$T_{\varphi(p)} \bigl( \varphi(U) \bigr)$ と $T_{\varphi(p)} \mathbb{R}^n$ を同一視した．}．
+
+系\ref{col:basis-tangentv-Rn}より，ベクトル空間 $T_{\varphi(p)} \mathbb{R}^n$ の基底として
+\begin{align}
+	\eval{\pdv{}{x^1}}_{\varphi(p)},\, \dots ,\, \eval{\pdv{}{x^n}}_{\varphi(p)}
+\end{align}
+をとることができる．これを\eqref{eq:iso-coord-1}の同型写像を使って $T_p M$ に戻したものを $T_p M$ の\textbf{自然基底}と呼ぶ\footnote{命題\ref{prop:functor-Tp}-(3) を使っている．}：
+\begin{align}
+	\label{eq:natural-basis}
+	\tcbhighmath[]{\eval{\pdv{}{x^\mu}}_{p}} \coloneqq (T_p \varphi)^{-1} \left( \eval{\pdv{}{x^\mu}}_{\varphi(p)} \right) = T_{\varphi (p)} (\varphi^{-1}) \left( \eval{\pdv{}{x^\mu}}_{\varphi(p)} \right)
+\end{align}
+実際に勝手な $f \in \cinftyf{U}$ に作用させてみると，系\ref{col:basis-tangentv-Rn}より
+\begin{align}
+	\eval{\pdv{}{x^\mu}}_{p} (f) &= T_{\varphi (p)} (\varphi^{-1}) \left( \eval{\pdv{}{x^\mu}}_{\varphi(p)} \right)(f) = \eval{\pdv{}{x^\mu}}_{\varphi(p)} (f \circ \varphi^{-1}) = \tcbhighmath[]{\pdv{(f\circ \varphi^{-1})}{x^\mu}()\bigl(\varphi (p)\bigr)}
+\end{align}
+だとわかった．最右辺を座標 $(x^\mu)$ を顕にして書くと
+\begin{align}
+	\eval{\pdv{}{x^\mu}}_{p} (f) = \pdv{f(x^1,\, \dots,\, x^n)}{x^\mu}() \bigl( p^1,\, \dots ,\, p^n \bigr)
+\end{align}
+と言うことである．ただし $(p^1,\, \dots,\, p^n) \coloneqq \varphi(p) = \bigl(x^1(p),\, \dots ,\, x^n(p) \bigr)$ とおいた．
+
+$M$ が\hyperref[def:mani-with-boundary]{境界付き}の場合でも，$p \in \Int M$ ならば何も変える必要はない．
+$p \in \partial M$ の場合に限って同型\eqref{eq:iso-coord-1}に登場する $\mathbb{R}^n$ を $\mathbb{H}^n$ に置き換える必要があるが，補題\ref{lem:dim-tangentv-b}の同型 $T_{\varphi(p)} \mathbb{H}^n \cong T_{\varphi(p)} \mathbb{R}^n$ を挟んでいると思って同じ $\pdv*{}{x^\mu}|_{\varphi(p)}$ の記号を使う．
+この場合，\eqref{eq:natural-basis}の第 $\mu < n$ 成分は境界なしの場合と全く同じだが，$n$ 成分
+\begin{align}
+	\eval{\pdv{}{x^n}}_{p}
+\end{align}
+だけは片側偏微分係数と解釈すべきである．
+
+\begin{myprop}[label=naturalbasis]{自然基底}
+	（境界なし/\hyperref[def:mani-with-boundary]{あり}）$n$次元\hyperref[diffmani]{\cinfty 多様体} $M$ の各点 $p \in M$ において，\hyperref[def.tangentv]{接空間} $T_p M$ は$n$ 次元ベクトル空間である．
+	$p$ を含む任意の\hyperref[diffmani]{\cinfty チャート} $(U,\, \varphi) = \chart{U}{x^\mu}$ に対して，\eqref{eq:natural-basis}で定義される\textbf{自然基底}
+	\begin{align}
+		\eval{\pdv{}{x^1}}_p,\, \dots ,\, \eval{\pdv{}{x^n}}_p
+	\end{align}
+	が $T_pM$ の基底となる．
+\end{myprop}
+
+\subsection{微分の座標表示}
+
+（境界なし/\hyperref[def:mani-with-boundary]{あり}）$m$ 次元\cinfty 多様体 $M$，$n$ 次元\cinfty 多様体 $N$，および\hyperref[def.cinfty_mapping]{\cinfty 写像}
+\begin{align}
+	F \colon M \lto N
+\end{align}
+を与える．$F$ の\hyperref[def:functor-Tp]{点 $p \in M$ における微分}は
+\begin{align}
+	T_p F \colon T_p M &\lto T_{F(p)} N, \\
+	v &\lmto \bigl( f \lmto v(f \circ F) \bigr) 
+\end{align}
+と定義された．$M$ の\hyperref[diffmani]{\cinfty チャート} $(U,\, \varphi) = \chart{U}{x^\mu}$ と $N$ の\cinfty チャート $(V,\, \psi) = \chart{V}{y^\mu}$ によって $T_p F$ を座標表示してみよう．
+そのためには\hyperref[naturalbasis]{自然基底}の行き先を調べれば良い．
+
+手始めに，Euclid空間の開集合 $M \subset \mathbb{R}^m,\, N \subset \mathbb{R}^n$ の場合を考える．
+チャートを $\chart{U}{x^\mu} = (M,\, \mathrm{id}_M),\; \chart{V}{y^\mu} = (N,\, \mathrm{id}_N)$ として
+\begin{align}
+	F(x^1,\, \dots,\, x^m) = \mqty(F^1(x^1,\, \dots,\, x^m) \\ \vdots \\ F^n (x^1,\, \dots,\, x^m))
+\end{align}
+と書くと，
+$\forall f \in \cinftyf{N}$ に対して
+\begin{align}
+	T_p F \left( \eval{\pdv{}{x^\mu}}_p  \right) (f) &= \eval{\pdv{}{x^\mu}}_p (f \circ F) \\
+	&= \pdv{f}{y^\nu}() \bigl(F(p)\bigr) \pdv{F^\nu}{x^\mu}()(p) \\
+	&= \left(\pdv{F^\nu}{x^\mu}()(p) \eval{\pdv{}{y^\nu}}_{F(p)}\right) (f)
+\end{align}
+が成り立つ．i.e.
+\begin{align}
+	\label{eq:coord-3}
+	\tcbhighmath[]{T_p F \left( \eval{\pdv{}{x^\mu}}_p  \right) = \pdv{F^\nu}{x^\mu}()(p) \eval{\pdv{}{y^\nu}}_{F(p)}}
+\end{align}
+である．
+% であり，$\forall v = v^\mu \pdv*{}{x^\mu}|_p \in T_p M$ を
+% \begin{align}
+% 	T_p F \left( v^\mu\eval{\pdv{}{x^\mu}}_p  \right) = \pdv{F^\nu}{x^\mu}()(p) v^\mu \eval{\pdv{}{y^\nu}}_{F(p)}
+% \end{align}
+% のように変換することがわかる．行列として表示すると
+% \begin{align}
+% 	T_p F \left( \mqty[v^1 \\ \vdots \\ v^n]\right) = \mqty[\pdv{F^1}{x^1}()(p) & \cdots & \pdv{F^1}{x^n}()(p) \\ \vdots & \ddots & \vdots \\ \pdv{F^m}{x^1}()(p) & \cdots & \pdv{F^m}{x^n}()(p)] \mqty[v^1 \\ \vdots \\ v^n]
+% \end{align}
+% ということである．
+
+次に一般の $M,\, N$ を考える．
+$\widehat{F} \coloneqq \psi \circ F \circ \varphi^{-1} \colon \varphi(U\cap F^{-1}(V)) \lto \psi(V)$ の実態は $m$ 変数の $\mathbb{R}^n$ 値関数なので，$(x^1,\, \dots,\, x^m) \in \varphi\bigl(U \cap F^{-1}(V)\bigr)$ に対して
+\begin{align}
+	\widehat{F}(x^1,\, \dots,\, x^m) = \mqty(\widehat{F}^1(x^1,\, \dots,\, x^m) \\ \vdots \\ \widehat{F}^n (x^1,\, \dots,\, x^m))
+\end{align}
+とおく．
+\begin{center}
+	\begin{tikzcd}[row sep=large, column sep=large]
+		&T_p M \ar[rr, "T_p F"]\ar[d, "T_p \varphi"] & &T_{F(p)} N \ar[d, "T_{F(p)} \psi"] \\
+		&\textcolor{red}{T_{\varphi(p)} \mathbb{R}^m}\ar[rr, "T_{\varphi(p)} (\textcolor{red}{\widehat{F}})"] & &\textcolor{red}{T_{\psi(F(p))} \mathbb{R}^n}
+	\end{tikzcd}
+\end{center}
+の構造\footnote{赤色をつけた部分に座標表示が棲んでいる．}を意識して辛抱強く計算すると
+\begin{align}
+	\label{eq:differential-coord}
+	\tcbhighmath[]{T_p  F \left( \eval{\pdv{}{x^\mu}}_p \right)} &=  T_p F \left( (T_p \varphi)^{-1} \left( \eval{\pdv{}{x^\mu}}_{\varphi(p)} \right)  \right) \\
+	&= T_{p} F \circ T_{\varphi(p)} (\varphi^{-1}) \left( \eval{\pdv{}{x^\mu}}_{\varphi(p)} \right)  \\
+	&= T_{\varphi(p)}(F \circ \varphi^{-1}) \left( \eval{\pdv{}{x^\mu}}_{\varphi(p)} \right) \\
+	&= T_{\psi(F(p))}(\psi^{-1}) \left(T_{\varphi(p)}\widehat{F} \left( \eval{\pdv{}{x^\mu}}_{\varphi(p)} \right) \right) \\
+	&= T_{\psi(F(p))}(\psi^{-1}) \left(\pdv{\widehat{F}^\nu}{x^\mu}()\bigl( \varphi(p) \bigr)  \eval{\pdv{}{y^\nu}}_{\widehat{F}(\varphi(p))} \right) \\
+	&= \tcbhighmath[]{\pdv{\widehat{F}^\nu}{x^\mu}()\bigl( \varphi(p) \bigr)  \eval{\pdv{}{y^\mu}}_{F(p)}}
+\end{align}
+とわかる．ただし最後の2つの等号に\eqref{eq:coord-3}を使った．
+
+この結果は味わい深い．$\forall v = v^\mu \pdv*{}{x^\mu}|_p \in T_p M$ への $T_p F$ の作用が
+\begin{align}
+	T_p F \left( v^\mu\eval{\pdv{}{x^\mu}}_p  \right) = \pdv{\widehat{F}^\nu}{x^\mu}()\bigl( \varphi(p) \bigr) v^\mu \eval{\pdv{}{y^\nu}}_{F(p)}
+\end{align}
+となると言うことなので，行列表示すると
+\begin{align}
+	T_p F \left( \mqty[v^1 \\ \vdots \\ v^n]\right) = \mqty[\pdv{\widehat{F}^1}{x^1}()(\varphi(p)) & \cdots & \pdv{\widehat{F}^1}{x^n}()(\varphi(p)) \\ \vdots & \ddots & \vdots \\ \pdv{\widehat{F}^m}{x^1}()(\varphi(p)) & \cdots & \pdv{\widehat{F}^m}{x^n}()(\varphi(p))] \mqty[v^1 \\ \vdots \\ v^n]
+\end{align}
+のようにJacobi行列が出現する！
+
+\subsection{座標変換の座標表示}
+
+\cinfty 多様体 $M$ の2つの\cinfty チャート $(U,\, \varphi) = \chart{U}{x^\mu},\; (V,\, \psi) = \chart{V}{x'{}^\mu}$ をとる．
+座標変換とは，\hyperref[def.diff]{微分同相写像}
+\begin{align}
+	\psi \circ \varphi^{-1} \colon \varphi(U\cap V) &\lto \psi(U\cap V), \\
+	\mqty(x^1 \\ \vdots \\ x^n) &\lmto \mqty(x'{}^1(x^1,\, \dots,\, x^n) \\ \vdots \\ x'{}^n (x^1,\, \dots ,\, x^n))
+\end{align}
+のことであった．このとき，点 $p \in U \cap V$ における\hyperref[naturalbasis]{自然基底} $\pdv*{}{x^\mu}|_p$ と $\pdv*{}{x'{}^\mu}|_p$ はどのような関係にあるのだろうか？
+命題\ref{prop:functor-Tp}から，\hyperref[def:functor-Tp]{点 $\varphi(p) \in \varphi(U \cap V)$ における座標変換の微分}は同型写像
+\begin{align}
+	T_{\varphi(p)} (\psi \circ \varphi^{-1}) \colon T_p \mathbb{R}^n \lto T_p \mathbb{R^n}
+\end{align}
+になる．
+これは \underline{$T_p \mathbb{R}^n$ の}\hyperref[naturalbasis]{自然基底}に
+\begin{align}
+	T_{\varphi(p)} (\psi \circ \varphi^{-1}) \left(\eval{\pdv{}{x^\mu}}_{\varphi(p)} \right) = \pdv{x'{}^\nu}{x^\mu} () \bigl(\varphi(p) \bigr) \eval{\pdv{}{x'{}^\nu}}_{\psi(p)}
+\end{align}
+なる変換を引き起こす．従って
+\begin{align}
+	\eval{\pdv{}{x^\mu}}_p &= T_{\varphi(p)} (\varphi^{-1}) \left( \eval{\pdv{}{x^\mu}}_{\varphi(p)} \right) \\
+	&= T_{\varphi(p)} (\psi^{-1}) \circ T_{\varphi(p)} (\psi \circ \varphi^{-1}) \left(\eval{\pdv{}{x^\mu}}_{\varphi(p)} \right) \\ 
+	&= \pdv{x'{}^\nu}{x^\mu} () \bigl(\varphi(p) \bigr) \eval{\pdv{}{x'{}^\nu}}_{p} \label{eq:trans-naturalbasis}
+\end{align}
+だとわかる．
+
+この $T_p M$ における基底の取り替えによって，接ベクトル $v = v^\mu \pdv*{}{x^\mu}|_p = v'{}^\mu \pdv*{}{x'{}^\mu}|_p \in T_p M$ の\underline{成分}は
+\begin{align}
+	\label{eq:transform-vector}
+	\tcbhighmath[]{v'{}^\nu = \pdv{x'{}^\nu}{x^\mu} ()(\varphi(p))\, v^\mu}
+\end{align}
+なる変換を受ける．つまり，一般相対論で反変ベクトルと呼ばれるものは，時空と言う4次元\cinfty 多様体 $M$ の上の1点 $p \in M$ における\hyperref[def.tangentv]{接ベクトル}のことに他ならない．
+
+
+% \begin{marker}
+% 	重箱の隅をつつくようだが，念の為このことを証明しておく：
+% \end{marker}
+
+% \begin{proof}
+% 	接ベクトルの定義\ref{def.tangentv}の2条件を充していることを確認すれば良い．
+% 	\begin{enumerate}
+% 		\item $C^\infty(M)$ 上の和の定義\ref{op_cinfty}から，$\forall p \in U,\; \forall f,\, g \in C^\infty (M) $ に対して
+% 		\begin{align}
+% 			&(f + g)(p) = \bigl((f + g) \circ \varphi^{-1}\bigr) \bigl( \varphi(p)\bigr) \\
+% 			=  &f(p) + g(p) = \bigl(f \circ\varphi^{-1}\bigr) \bigl( \varphi(p)\bigr) + \bigl(g \circ\varphi^{-1}\bigr) \bigl(\varphi(p)\bigr)
+% 		\end{align}
+% 		である．
+% 		$p$ は任意なので $\varphi(U)$ 上の写像の等式として $(f+g)\circ\varphi^{-1} = \bigl(f \circ\varphi^{-1}\bigr) + \bigl(g \circ\varphi^{-1}\bigr)$ が成り立つ．
+% 		よって
+% 		\begin{align}
+% 			\left( \pdv{}{x^i} \right)_p [f + g] &= \pdv{}{x^i} \bigl((f+g) \circ \varphi^{-1}\bigr)\bigl(\varphi(p)\bigr) \\ 
+% 			&= \pdv{}{x^i} \Bigl(\bigl(f \circ\varphi^{-1}\bigr) + \bigl(g \circ\varphi^{-1}\bigr) \Bigr) \bigl( \varphi(p)\bigr)  \\
+% 			&= \pdv{}{x^i} \bigl(f \circ\varphi^{-1}\bigr) \bigl( \varphi(p)\bigr) + \pdv{}{x^i}\bigl(g \circ\varphi^{-1}\bigr) \bigl(\varphi(p)\bigr) \\
+% 			&= \left( \pdv{}{x^i} \right)_p(f) + \left( \pdv{}{x^i} \right)_p (g).
+% 		\end{align}
+% 		$\displaystyle \left( \pdv{}{x^i} \right)_p [\lambda f] = \lambda \left( \pdv{}{x^i} \right)_p (f),\; \forall \lambda \in \mathbb{R}$ についても同様にして示される．
+% 		\item $C^\infty(M)$ 上の積の定義\ref{op_cinfty}から，$\forall p \in M $ に対して
+% 		\begin{align}
+% 			&(fg)(p) = \bigl((fg) \circ \varphi^{-1}\bigr) \bigl( \varphi(p)\bigr) \\
+% 			=  &f(p)g(p) = \bigl(f \circ\varphi^{-1}\bigr) \bigl( \varphi(p)\bigr) \bigl(g \circ\varphi^{-1}\bigr) \bigl(\varphi(p)\bigr)
+% 		\end{align}
+% 		である．$p$ は任意なので $\varphi(U)$ 上の写像の等式として $(fg) \circ \varphi^{-1} = (f \circ\varphi^{-1}) (g \circ\varphi^{-1})$ が成り立つ．
+% 		よって
+% 		\begin{align}
+% 			\left( \pdv{}{x^i} \right)_p (fg) &= \pdv{}{x^i} \bigl((fg) \circ \varphi^{-1}\bigr)\bigl(\varphi(p)\bigr) \\ 
+% 			&= \pdv{}{x^i} \bigl( (f \circ\varphi^{-1}) (g \circ\varphi^{-1}) \bigr) \bigl( \varphi(p)\bigr)  \\
+% 			&= \pdv{}{x^i} \bigl(f \circ\varphi^{-1}\bigr) \bigl( \varphi(p)\bigr)\, (g \circ\varphi^{-1})\bigl( \varphi(p)\bigr) + (f \circ\varphi^{-1}) \bigl( \varphi(p)\bigr)\,\pdv{}{x^i}\bigl(g \circ\varphi^{-1}\bigr) \bigl(\varphi(p)\bigr) \\
+% 			&= \left( \pdv{}{x^i} \right)_p(f)\, g(p) + f(p)\, \left( \pdv{}{x^i} \right)_p (g).
+% 		\end{align}
+% 	\end{enumerate}
+% \end{proof}
+
+% \begin{mytheo}[label=naturalbasis]{自然基底}
+% 	$n$ 個の接ベクトル $\displaystyle \left( \pdv{x^1} \right)_p, \, \dots,\, \left( \pdv{x^n} \right)_p \in T_pM$ は接空間 $T_pM$ の基底を成す．
+% \end{mytheo}
+% \begin{proof}
+% 	まず，これらのベクトルが線形独立であることを示す．$\displaystyle a^i \left( \pdv{x^i} \right)_p = 0 \quad (a^i \in \mathbb{R})$ とする\footnote{Einsteinの規約を用いる}． $f=x^j$ への作用を考えると $\displaystyle \left( \pdv{}{x^i} \right)_p(f) = \delta^j_i$ であるから $a^i = 0.$ よって示された．
+
+% 	次に $T_pM$ が上記の $n$ 個のベクトルで生成されることを示す．微分同相 $\varphi$ によって座標近傍 $U \subset M$ と $\varphi(U) \subset \mathbb{R}^n$ を同一視し，さらに $\varphi(p) = 0$ かつ $\varphi(U)$ が $\mathbb{R}^n$ の凸集合である\footnote{この仮定は，$\forall x \in \varphi(U),\, \forall t \in [0,\, 1]$ に対して $tx \in \varphi(U)$ であることを保証するものである．また，この仮定は一般性を損なわない．$\varphi(U)$ は $\mathbb{R}^n$ の開集合なので $\varphi(U)$ に含まれるような $p$ の $\varepsilon$ 近傍 $B_\varepsilon (p)$ をとることができるわけだが，接ベクトル $v \in T_p M$ の局所性から $f \circ \varphi^{-1}$ の $B_\varepsilon(p)$（明かに凸集合）への制限に対する $v$ の作用を考えれば十分なので．}とする．$\forall f \in C^\infty (M)$ に対し，$f$ の $U$ への制限 $\equiv{f}_U$ は $C^\infty$ 関数 $F \colon \varphi(U) \to \mathbb{R}$ により $F = f \circ \varphi^{-1}$ と表される．
+% 	このとき，$\forall x \in \varphi(U)$ に対して
+% 	\begin{align} 
+% 		F(x) - F(0) = \int_0^1 \dv{F}{t}() (tx) \dd{t} = \int_0^1 \pdv{F}{x^i}() (tx) \, \dv{(tx^i)}{t} \dd{t} = x^i \int_0^1 \pdv{F}{x^i}() (tx) \dd{x^i}
+% 	\end{align}
+% 	であるから，$\displaystyle g_i (x) \coloneqq \int_0^1 \pdv{F}{x^i}() (tx) \dd{t}$ は $C^\infty$ 関数であり
+% 	\begin{align}
+% 		F(x) = F(0) + x^i g_i(x)
+% 	\end{align}
+% 	となる．また，$\displaystyle g_i(0) = \pdv{F}{x^i}() (0)$ である．ここで $\forall v \in T_pM$ を $F$ に作用させると
+% 	\begin{align}
+% 		v(f) = v[F] = v[x^i] g_i(0) + 0 v[g_i] = v[x^i] \pdv{F}{x^i}() (0) = \left(v[x^i] \left(\pdv{}{x^i}\right)_p \right)(f)
+% 	\end{align}
+% 	$f$ は任意だったので $\displaystyle v = v[x^i] \left(\pdv{}{x^i}\right)_p$ である．
+% \end{proof}
+
+% \begin{myprop}[label=prop.trans]{自然基底の取り替え}
+% 	\cinfty 多様体 $M$ の点 $p$ 周りのチャート（座標関数表示）を $(U;\, x^i),\; (V;\, y^i)$ とする．このとき\footnote{赤色をつけた部分は厳密には，チャート $(U;\, x^i) = (U,\, \varphi)$ としたときの $\displaystyle \pdv{y^j}{x^i}() (p) = \pdv{}{x^i}\bigl(y^i \circ \varphi^{-1}\bigr) \bigl( \varphi(p) \bigr) \in \mathbb{R}$ の略記であり，\textbf{ただの数}である．よって，この変換はただの線形変換を表している．}
+% 	\begin{align}
+% 		\left(\pdv{}{x^i}\right)_p = \textcolor{red}{\pdv{y^j}{x^i}() (p)} \left(\pdv{}{y^j}\right)_p.
+% 	\end{align}
+% \end{myprop}
+
+% \begin{proof}
+% 	偏微分の連鎖律より明らか．
+% \end{proof}
+
+\subsection{曲線の速度ベクトルとしての接ベクトル}
+
+$\mathbb{R}$ の開区間から \cinfty 多様体 $M$ への \cinfty 写像のことを $M$ の\textbf{\cinfty 曲線}と呼ぶ．
+
+\cinfty 曲線
+\begin{align}
+	\gamma \colon (a,\, b) \to M
+\end{align}
+がある時刻 $t_0 \in (a,\, b)$ において点 $p = \gamma(t_0) \in M$ を通るとする．このとき，曲線 $\gamma$ の点 $p$ における\textbf{速度ベクトル} $\dot{\gamma}(t_0) \in T_p M$ が次のように定義される：
+\begin{align}
+	\label{def.curve}
+	\dot{\gamma}(t_0) \coloneqq T_{t_0} \gamma \left( \eval{\dv{}{t}}_{t_0} \right)
+\end{align}
+ここに，$\dv*{}{t}|_{t_0}$ は1次元\cinfty 多様体 $(a,\, b)$ の\hyperref[def.tangentv]{点 $t_0$ における接空間}の\hyperref[naturalbasis]{自然基底}である．
+速度ベクトルは $\forall f \in \cinftyf{M}$ に対して
+\begin{align}
+	\dot{\gamma}(t_0) (f) = T_{t_0} \gamma \left( \eval{\dv{}{t}}_{t_0} \right)(f) = \eval{\dv{}{t}}_{t_0} (f \circ \gamma) = \dv{(f \circ \gamma)}{t}()(t_0)
+\end{align}
+と作用する．
+
+点$p \,(= c(t_0))$ 周りのチャート $(U,\, \varphi) = \chart{U}{x^\mu}$ をとると，公式\eqref{eq:differential-coord}により
+\begin{align}
+	\label{eq:velocity}
+	\dot{\gamma} (t_0) = \dv{\gamma^\mu}{t}()(t_0) \eval{\pdv{}{x^\mu}}_{\gamma(t_0)}
+\end{align}
+である．ただし，
+\begin{align}
+	\gamma \circ \varphi^{-1} (t) = \bigl( \gamma^1(t),\, \dots ,\, \gamma^n(t) \bigr) 
+\end{align}
+とおいた．
+このことから，$\gamma$ を任意にとることで，接空間 $T_p M$ の任意の元を速度ベクトルとして表示できそうな気がしてくる．
+
+\begin{myprop}[label=prop:tangent-velocity]{速度ベクトルの集合としての接空間}
+	（境界なし/\hyperref[def:mani-with-boundary]{あり}）$n$ 次元\cinfty 多様体 $M$ を与える．
+	$\forall p \in M$ を1つとる．
+	このとき，$\forall v \in T_p M$ は何かしらの\cinfty 曲線の速度ベクトルである．
+\end{myprop}
+
+\begin{proof}
+	まず $p \in \Int M$ とする．$p$ を含む\cinfty チャート $(U,\, \varphi) = \chart{U}{x^\mu}$ をとり，$v \in T_p M$ を\hyperref[naturalbasis]{自然基底}で $v = v^\mu \pdv*{}{x^\mu}|_p$ のように展開する．
+	ここで十分小さい $\varepsilon > 0$ に対して\cinfty 曲線 $\gamma \colon (-\varepsilon,\, \varepsilon) \lto M$ を
+	\begin{align}
+		\label{eq:gamma}
+		\gamma(t) \coloneqq \varphi^{-1} (t v^1,\, \dots,\, tv^n)
+	\end{align}
+	によって定義すると，\eqref{eq:velocity}により
+	\begin{align}
+		\dot{\gamma}(0) = v^\mu \eval{\pdv{}{x^\mu}}_{\gamma(0)} = v
+	\end{align}
+	が成り立つ．
+
+	次に $p \in \partial M$ とする．$(U,\, \varphi) = \chart{U}{x^\mu}$を\cinfty 級の\hyperref[def:int-manifold-with-boundary]{境界チャート}とし，$v \in T_p M$ を\hyperref[naturalbasis]{自然基底}で $v = v^\mu \pdv*{}{x^\mu}|_p$ のように展開する．
+	このとき\eqref{eq:gamma}の $\gamma$ を使って
+	\begin{align}
+		\tilde{\gamma} \coloneqq
+		\begin{cases}
+			\gamma , &v^n = 0\\
+			\gamma|_{[0,\, \varepsilon)}, &v^n > 0 \\
+			\gamma|_{(-\varepsilon,\, 0]}, &v^n < 0 
+		\end{cases}
+	\end{align}
+	と定義した\cinfty 曲線 $\tilde{\gamma}$ は常に $\varphi\circ \tilde{\gamma}(t)$ の第 $n$ 成分が正なので $\mathbb{H}^n$ に属し，$\tilde{\gamma} (0) = p \AND \dot{\tilde{\gamma}}(0) = v$ を充たす．
+\end{proof}
+
+
+
+\begin{marker}
+	これまでは\cinfty 写像 $F \colon M \lto N$ の\hyperref[def:functor-Tp]{微分}を $\bm{T_p}F$ と書いた．この記法は定義域が明確になると言う利点があるが，やや煩雑である．
+	そこで，以降では誤解の恐れがない場合は
+	\begin{align}
+		\bm{F_*}\quad \bm{\mathrm{d}F_p}
+	\end{align}
+	などと略記することにする．
+\end{marker}
+
+% \subsection{写像の微分}
+
+% \cinfty 多様体 $M,\, N$ を与え，\cinfty 写像 $f \colon M \to N$ を与える．このとき $\forall p \in M$ に対して線型写像
+% \begin{align}
+% 	f_* \colon T_p M \to T_{f(p)} N
+% \end{align}
+% が次のように定義される：
+
+\section{接束}
+
+$n$ 次元\cinfty 多様体 $M$ の各点の上に $n$ 次元ベクトル空間が棲んでいると言うような描像を直接定式化しよう．
+
+\begin{mydef}[label=def:bundle-tangent]{接束} 
+	（境界なし/\hyperref[def:mani-with-boundary]{あり}）\cinfty 多様体 $M$ を与える．
+	\begin{itemize}
+		\item \hyperref[def:sum-sets]{disjoint union}
+		\begin{align} 
+			TM \coloneqq \coprod_{p \in M} T_pM
+		\end{align}
+		\item 写像（\textbf{射影}と呼ばれる）
+		\begin{align} 
+			&\pi \colon TM \lto M,\; (p,\, v) \lmto p
+		\end{align}
+	\end{itemize}
+	の組のことを $M$ の\textbf{接束} (tangent bandle) と呼ぶ．
+\end{mydef}
+
+$\dim M = n$ とする．接束はそれ自身が自然に\underline{ $2n$ 次元\cinfty 多様体}になり，射影 $\pi$ は \cinfty 写像になる．このことを確認するには，$M$ の位相と\cinfty アトラスのみを使って $TM$ に位相と\cinfty アトラスを入れることができることを見ればよい：
+
+$\mathcal{S}$ を $M$ のアトラスとする．一点 $p \in M$ を任意にとり，$p$ の周りのチャート $(U,\, \varphi) \in \mathcal{S}$ を一つとる．
+命題\ref{prop:functor-Tp}-(3) より，微分同相写像 $\varphi \colon U \lto \mathbb{R}^n$ は同型写像 $T_p \varphi \colon T_p M \to T_{\varphi(p)} \mathbb{R}^n$ を誘導する．
+これを $\forall v \in T_p M$ に対して
+\begin{align} 
+	T_p \varphi (v) = v^\mu \eval{\pdv{}{x^\mu}}_{\varphi(p)}
+\end{align}
+と書く．
+ここで，写像 $\tilde{\varphi}_U \colon \pi^{-1}(U) \lto \varphi(U) \times \mathbb{R}^n$ を
+\begin{align} 
+	\tilde{\varphi}_U(v) \coloneqq \bigl( x^1(p),\, \dots ,\, x^n(p);\; v^1,\, \dots ,\, v^n \bigr)
+\end{align}
+として定義すれば，$\tilde{\varphi}$ は全単射になる． 
+$TM$ の位相 $\mathscr{O}_{TM}$ は，各 $U$ に対して次の条件を充たすものとして定義する：
+\begin{enumerate} 
+	\item $\pi^{-1}(U) \in \mathscr{O}_{TM}$ 
+	\item $\tilde{\varphi}_U$ は同相写像である
+\end{enumerate}
+
+$TM$ のアトラスは，
+\begin{align} 
+	\tilde{\mathcal{S}} \coloneqq \Bigl\{ \bigl( \pi^{-1}(U),\, \tilde{\varphi}_U \bigr)  \Bigm| (U,\, \varphi) \in \mathcal{S} \Bigr\} 
+\end{align}
+とおけば良い．接ベクトルの変換則から $\tilde{\mathcal{S}}$ の座標変換は全て\cinfty 級である．
+
+
+\section{ベクトル場}
+
+\begin{myaxiom}[label=ax.module]{環上の加群}
+	$R$ を環とする．\textbf{左 $R$ 加群}とは，可換群（Abel群） $(M,\, +)$ と，$M$ 上の二項演算（スカラー乗法） $\cdot\; \colon R \times M \to M,\; (r, \, x) \mapsto rx$ の組で，以下の性質を充たすものである．以下，$x,\, y,\, z \in M$ かつ $a,\, b \in R$ とする：
+	\begin{description}
+		\item[\textbf{(M1)}] $a(b x) = (ab) x$
+		\item[\textbf{(M2)}] $(a+b)x = ax + bx$
+		\item[\textbf{(M3)}] $a(x + y) = ax + ay$
+		\item[\textbf{(M4)}] $1 x = x$ 
+	\end{description}
+\end{myaxiom}
+
+定義\ref{def.tangentv}は\cinfty 多様体の一点 $p \in M$ における接ベクトルを定義したものであった．次に定義するベクトル場は $p$ を $M$ 全域で動かして得られる構造である．
+
+\begin{mydef}[label=vectorfield]{ベクトル場}
+	\cinfty 多様体 $M$ を与える．$M$ 上の\cinfty \textbf{ベクトル場} $X$ は，各点 $p$ における接ベクトル $X_p \in T_pM$ を対応させ，$X_p$ が $p$ に関して\cinfty 級に動くもののことである．i.e. 点 $p$ を含むチャート $\chart{U}{x^i}$ を与えると，点 $p$ において $X$ は
+	\begin{align}
+		\label{eq.local}
+		X_p = X^\mu(p) \eval{\pdv{}{x^\mu}}_p \in T_pM
+	\end{align}
+	の\textbf{局所表示}を持つが，この各係数 $a^i(p)$ が \cinfty 関数になっていることを言う．
+	\tcblower	
+	$M$ 上のベクトル場全体の集合を $\bm{\mathfrak{X}(M)}$ と書く．
+\end{mydef}
+
+\begin{mydef}[label=def.totvecf]{}
+	$\mathfrak{X}(M)$ の和とスカラー乗法を次のように定義すると， $\mathfrak{X}(M)$ は $C^\infty(M)$ 上の加群になる：
+	\begin{enumerate}
+		\item $\forall X,\, Y \in \mathfrak{X}(M)$ に対して $(X+Y)_p \coloneqq X_p + Y_p$
+		\item $\forall f \in C^\infty (M)$ および $\forall X \in \mathfrak{X}(M)$ に対して $(fX)_p \coloneqq f(p) X_p$
+	\end{enumerate}
+\end{mydef}
+
+\begin{proof}
+	公理\ref{ax.module}を充していることを確認すればよい．
+\end{proof}
+
+定義\ref{vectorfield}は，\hyperref[def:bundle-tangent]{接束}の言葉を使っても定義できる．
+すなわち，\cinfty 多様体 $M$ 上の\textbf{ベクトル場} (vector field) $X$ とは，連続写像
+\begin{align}
+	X \colon M &\lto TM,\; p \lmto X_p
+\end{align}
+であって，条件
+\begin{align}
+	\pi \circ X = \mathrm{id}_M
+\end{align}
+を充たすもののことを言う．この条件は $X_p \in T_p M$ を含意している．
+\cinfty \textbf{ベクトル場} $X\colon M \lto TM$ とは，$TM$ に\cinfty 構造を入れたときに\cinfty 写像となるようなベクトル場のことである．
+
+\subsection{ベクトル場の微分としての特徴付け}
+
+接ベクトルは函数の方向微分を与えた．このことに着想を得て，$C^\infty (M)$ へのベクトル場の作用に新しい解釈を付与できる．i.e. 点 $p \in M$ におけるベクトル場 $X$ の $f \in C^\infty (M)$ への作用 $X_p(f)$ を
+\begin{align}
+	(Xf)(p) \coloneqq X_p(f) = \left(a^i(p) \left(\pdv{}{x^i}\right)_p\right)(f) = a^i(p)\, \pdv{}{x^i}\bigl(f \circ \varphi^{-1} \bigr)\bigl(\varphi(p)\bigr)
+\end{align}
+とおき，\underline{点 $p$ に $X_p(f) \in \mathbb{R}$ を対応付ける写像になっている}と見做す解釈である．
+このようにして $M$ 上の\cinfty 関数 $Xf$ が得られる．なお，紛らわしいが，$Xf$ のことを \textbf{ベクトル場 $X$ による $f$ の微分}と呼ぶ．
+
+上述の解釈から自然に定まる写像
+\begin{align}
+	\mathfrak{X}(M) \times \textcolor{red}{C^\infty (M)} \to \textcolor{red}{C^\infty(M)},\; (X,\, \textcolor{red}{f}) \mapsto \textcolor{red}{Xf}
+\end{align}
+は，$f$ に関しては以下の性質を持つ：
+
+\begin{myprop}[label=char_diff]{}
+	$f,\, g \in C^\infty (M),\; a,\, b \in \mathbb{R}$ に対して以下が成立する：
+	\begin{enumerate}
+		\item $X(af + bg) = a\, Xf + b\, Xg$
+		\item $X(fg) = (Xf) g + f (Xg)$
+	\end{enumerate}
+\end{myprop}
+
+\begin{mydef}[label=def.d]{ベクトル場による微分}
+	命題\ref{char_diff}の性質を充たす写像 $X \colon C^\infty (M) \to C^\infty (M),\; f \mapsto Xf$ を，一般に $\mathbb{R}$ 上の\hyperref[ax.alg]{多元環} $C^\infty (M)$ の\textbf{微分} (derivation) と呼ぶ．
+\end{mydef}
+
+% \section{双対ベクトル空間}
+
+% \subsection{双対空間}
+
+% まず，一般のベクトル空間 $V$ の\textbf{双対空間}を定義する．
+
+% \begin{mydef}[label=def.dualspace]{双対空間}
+% 	$V$ を体 $\mathbb{K}$ 上のベクトル空間とする．$V$ の双対空間 $V^*$ を，以下のように定義する．
+%     \begin{align}
+%         V^* := \{\, \omega \colon V \to \mathbb{K}\, |\; \omega\, \text{は線型写像}\,\}.
+%     \end{align}
+% \end{mydef}
+
+% \begin{mydef}[label=prop.dualspace]{}
+% 	$\forall v \in V,\; a \in \mathbb{K}$ とするとき，$V^*$ 上の和とスカラー乗法を次のように定義する：
+% 	\begin{align}
+% 		(\omega + \sigma)[v] &:= \omega[v] + \sigma[v], \\
+% 		(a \omega)[v] &:= a \omega[v], \quad \omega,\, \sigma \in V^*, \; a\in \mathbb{K}.
+% 	\end{align}
+% 	このとき，$V^*$ はベクトル空間になり，\textbf{双対ベクトル空間} (dual vector space) と呼ばれる．また，$V^*$ の元を\textbf{余ベクトル} (covector) あるいは\textbf{1-形式} (1-form) と呼ぶ．
+% \end{mydef}
+
+% \begin{proof}
+% 	$\forall \omega,\, \omega_1,\, \omega_2 \in V^*$ および $\forall a,\, b \in \mathbb{K}$ に対してベクトル空間の公理\ref{ax.vector}を見たしていることを確認する．
+% 	\begin{description}
+% 		\item[\textbf{(V1)}] 自明
+% 		\item[\textbf{(V2)}] 自明
+% 		\item[\textbf{(V3)}] $0 = \vb*{0} \in V$（恒等的に $0$ を返す写像）とすればよい．
+% 		\item[\textbf{(V4)}] $\forall v \in V,\; (-\omega)[v] \coloneqq -\omega[v]$ とすればよい． 
+% 		\item[\textbf{(V5)}] $\bigl(a (\omega_1 + \omega_2)\bigr)[v] = a (\omega_1[v] + \omega_2[v]) = a\omega_1[v] + a \omega_2[v] = (a \omega_1)[v] + (a \omega_2)[v].$
+% 		\item[\textbf{(V6)}] $\bigl((a + b)\omega \bigr)[v] = (a+b)\omega[v] = a \omega[v] + b \omega[v] = (a \omega)[v] + (b \omega)[v] = (a \omega + b \omega)[v].$
+% 		\item[\textbf{(V7)}] $\bigl((ab)\omega\bigr)(f) = (ab)\omega(f) = a (b \omega(f)) = a \bigl((b \omega)(f)\bigr) = \bigl(a (b \omega)\bigr)(f).$
+% 		\item[\textbf{(V8)}] $(1 \omega)[v] = 1 \omega[v] = \omega[v].$
+% 	\end{description}
+% \end{proof}
+
+% $V$ の基底 $\{\, e_i\, \}$ をとり，ベクトル $v = v^i e_i \in V$ を任意に取る．ここで，$n := \dim V < \infty$ 個の余ベクトル
+% \begin{align}
+% 	\label{eq.duality}
+% 	\tcbhighmath[]{e^i \colon V \to \mathbb{K},\; v \mapsto v^i \quad (i = 1,\, \dots,\, n)}
+% \end{align}
+% を考える．$e_k = \delta^i_k e_i$ であるから 
+% \begin{align}
+% 	\tcbhighmath[]{e^i[e_k] = \delta^i_k}
+% \end{align}
+% である． 
+
+% \begin{myprop}[label=def.basisforDVS]{}
+% 	$\{\, e^i\, \}$ は $V^*$ の基底である．
+% \end{myprop}
+
+% \begin{proof}
+% 	$\omega \in V^*,\; v = v^i e_i \in V$ を任意にとる．このとき
+% 	\begin{align}
+% 		\omega[v] = \omega[v^i e_i] = v^i \omega[e_i] = \omega[e_i] e^i[v] = \bigl(\omega[e_i] e^i\bigr)[v].
+% 	\end{align}
+% 	i.e. $\{\, e^i \}$ はベクトル空間 $V^*$ を生成する．
+	
+% 	また，$a_i e^i = 0, \quad a_i \in \mathbb{K}$ （零写像）ならば
+% 	\begin{align}
+% 		a_k = a_i \delta^i_k = a_i e^i[e_k] = (a_i e^i)[e_k] = 0 \quad (1 \le \forall k \le n).
+% 	\end{align}
+% 	すなわち $n$ 個の余ベクトル $e^1,\, \dots,\, e^n \in V^*$ は線型独立である．
+% \end{proof}
+
+% \subsection{双対内積・双対写像}
+
+% $\forall \omega = \omega_i e^i \in V^*$ を $\forall v = v^i e_i \in V$ に作用させてみる：
+% \begin{align}
+% 	\omega[v] = \omega_i v^j e^i[e_j] = \omega_i v^i.
+% \end{align}
+% この写像 $\langle \;,\, \rangle \colon V^* \times V \to \mathbb{K}$ を\textbf{双対内積} (duality pairing)\footnote{この訳語はあまり普及していないように思う．しかし，\textbf{内積}という訳語をあててしまうと計量線型空間に付属している内積と混同されてややこしいので，このように呼ぶことにする．} と呼ぶ．
+
+
+
+% 2つの $\mathbb{K}$ 上のベクトル空間 $V,\, W$ を与える．$\Hom{\mathbb{K}} (V,\, W)$ で $V$ から $W$ への線型写像全体のなす集合を表すことにする．
+
+% $ f\in \Hom{\mathbb{K}}(V,\, W),\; g \in \Hom{\mathbb{K}}(W,\, \mathbb{K}) = W^*$ とする．このとき $h \coloneqq g \circ f \in \Hom{\mathbb{K}}(V,\, \mathbb{K})$ である．i.e. $h \in V^*$ が $f \colon V \to W$ によって誘導されたことになる．このことから，$f$ は通常の意味では $g \in W^*$ には作用しないところを，
+% \begin{align}
+% 	f^* \colon W^* \to V^*,\; g \mapsto h = f^*(g) = g \circ f
+% \end{align}
+% として作用させると言う考えが出てくる．この対応 $f^* \colon W^* \to V^*$ を\textbf{双対写像} (dual map) もしくは\textbf{転置写像} (transpose map) と呼び，写像 $h$ を $f^*$ による $g$ の\textbf{引き戻し} (pullback map) と呼ぶ．
+
+\section{余接空間}
+
+定義\ref{def.tangentv}より，$T_pM$ はベクトル空間である．従って定義\ref{def.dualspace}による双対ベクトル空間 $T_p^* M$ を考えることができる．
+
+\begin{mydef}[label=def.cotangentv]{余接空間}
+	（境界なし/\hyperref[def:mani-with-boundary]{あり}）\cinfty 多様体 $M$ を与える．
+	\underline{一点 $p \in M$ における}接空間 $T_pM$ の\hyperref[def.dualspace]{双対ベクトル空間} $T^*_pM$ を点 $p \in M$ における\textbf{余接空間} (cotangent space) と呼ぶ．
+\end{mydef}
+
+\hyperref[def:bundle-tangent]{接束}の場合と同様に，\textbf{余接束}を考えることができる．
+すなわち（境界なし/\hyperref[def:mani-with-boundary]{あり}）\cinfty 多様体 $M$ の\textbf{余接束} (cotangent bundle) とは，
+\begin{itemize}
+	\item disjoint union 
+	\begin{align}
+		\bm{T^* M} \coloneqq \coprod_{p \in M} T_p^* M
+	\end{align}
+	\item 射影
+	\begin{align}
+		\pi \colon \bm{T^* M} \lto M,\; (p,\, \omega) \lmto p
+	\end{align}
+\end{itemize}
+の組のことである．
+\textbf{余ベクトル場}，もしくは\textbf{1-形式}とは，\cinfty 写像
+\begin{align}
+	\omega \colon M \lto T^* M,\; p \lmto \omega_p
+\end{align}
+であって，条件
+\begin{align}
+	\pi \circ \omega = \mathrm{id}_M
+\end{align}
+を充たすもののことを言う．
+
+% 余接空間の基底は\hyperref[naturalbasis]{自然基底}の\hyperref[def.basisforDVS]{双対基底}をとることができる．
+
+
+% \subsection{微分写像}
+
+% 2つの \cinfty 多様体 $M,\, N$ と \cinfty 写像 $f \colon M \to N$ を与える．また，点 $p \in M$ と $f(p) \in N$ における接空間 $T_p M,\; T_{f(p)}N$ は $\mathbb{R}$ 上のベクトル空間なので，$\Hom{\mathbb{R}}(T_p M,\, T_{f(p)}N)$ を考えることができる．
+
+% 実際 $f_* \in \Hom{\mathbb{R}}(T_p M,\, T_{f(p)}N)$ を $f$ から次のようにして構成できる：
+
+% \begin{enumerate} 
+% 	\item 作りたい $f_* \colon T_pM \to T_{f(p)}N$ によって写像される $v \in T_pM$ をとっておく．
+% 	\item $f_*(v) \in T_{f(p)}N$ によって写像される $\forall g \in \cinftyf{N}$ を一つとる．
+% 	\item $g \circ f \in \cinftyf{M}$ なので，(1) でとっておいた $v$ を作用させることができる：
+% 	\begin{align} 
+% 		\tcbhighmath[]{f_*(v)(g) \coloneqq v[g \circ f]} \label{def.differential_map}
+% 	\end{align}
+% \end{enumerate}
+
+% $f_* \in \Hom{\mathbb{R}}(T_p M,\, T_{f(p)}N)$ であることを確かめておく：
+
+% \begin{myprop}[label=prop.differential-L]{$f_*$ の線型性} 
+% 	上で定義した $f_*$ は線型写像である．
+% \end{myprop}
+% \begin{proof} 
+% 	$\forall v,\, w \in T_pM$ をとり，$\forall g \in \cinftyf{M},\; \forall \lambda \in \mathbb{R}$ をとる．
+% 	\begin{align} 
+% 		f_*(v + w)(g) &= (v + w)[g \circ f] = v[g \circ f] + w[g \circ f] = f_*(v)(g) + f_*(w)(g) = \bigl( f_*(v) + f_*(w) \bigr)(g), \\
+% 		f_*(\lambda v)(g) &= (\lambda v)[g \circ f] = \lambda v[g\circ f] = \lambda f_*(v)(g) = \bigl( \lambda f_*(v) \bigr)(g).
+% 	\end{align}
+% \end{proof}
+
+% % $f_* \in \Hom{\mathbb{R}}(T_p M,\, T_{f(p)}N)$ なので，\textbf{\underline{3.4.2}}節で定義した\textbf{誘導写像} $f^* \colon T^*_{f(p)} N \to T^*_p M$ および\textbf{引き戻し}を考えることができる：
+% % \begin{align} 
+	
+% % \end{align}
+
+
+% \subsection{$f_*$ の性質}
+
+% \begin{myprop}[label=prop.differential-D]{$f_*$ の微分としての性質} 
+% 	$\forall v \in T_pM$ に対して $f_*(v) \in T_{f(p)}N$ は線型性を持ち，Leibnitz則を充たす
+% \end{myprop}
+
+% \begin{proof} 
+% 	$\forall v\in T_pM$ をとり，$\forall g,\, h \in \cinftyf{N}$ をとる．$f_*(v)$ の線型性はほぼ自明である．
+
+% 	\hyperref[ax.alg]{多元環} $\cinftyf{N}$ 上の積の定義\ref{op_cinfty}から写像の等式として $(gh) \circ f = (g \circ f)(h \circ f)$ が成り立つから，
+% 	\begin{align}
+% 		f_*(v)[gh] &= v[(gh) \circ f] = v[(g \circ f)(h \circ f)] \\
+% 		&= v[g \circ f] (h \circ f)(p) + (g \circ f)(p) v[h \circ f] = f_*(v)(g) h\bigl(f(p)\bigr) + g\bigl(f(p)\bigr) f_*(v)[h].
+% 	\end{align}
+% \end{proof}
+
+% 性質\ref{prop.differential-D}から，$f_*$ は\textbf{微分写像}と呼ばれる．
+% \begin{marker} 
+% 	$f_*$ のことを $\dd{f}_p$ と書くこともある．
+% \end{marker}
+
+% \begin{mytheo}[label=thm.gousei]{合成写像への作用} 
+% 	2つの \cinfty 写像 $f \colon M \to N,\; g \colon N \to P$ を与える．このとき，以下が性質する：
+% 	\begin{align} 
+% 		(g \circ f)_* = g_* \circ f_*
+% 	\end{align}
+% \end{mytheo}
+% \begin{proof} 
+% 	$\forall v\in T_pM$ をとり，$\forall h \in \cinftyf{P}$ をとる．
+% 	\begin{align} 
+% 		(g_* \circ f_*)(v)[h] = f_*(v)[h \circ g] = v[(h \circ g) \circ f] = v[h \circ (g \circ f)] = (g \circ f)_*(v)[h].
+% 	\end{align}
+% \end{proof}
+
+% \begin{myprop}[label=prop.differential-R]{自然基底への作用}
+% 	\cinfty 多様体 $M,\, N$ と \cinfty 写像 $f \colon M \to N$ を与える．また，$M,\, N$ のチャート $(U;\, x^i),\; (V;\, y^i)$ をとる．このとき各点 $p \in M$ において以下が成立する：
+% 	\begin{align} 
+% 		f_*\left( \left(\pdv{}{x^i} \right)_p \right) = \pdv{y^j}{x^i}()\bigl(f(p)\bigr) \left(\pdv{}{y^j}\right)_{f(p)}
+% 	\end{align}
+% \end{myprop}
+
+% \begin{proof} 
+% 	$\forall g \in \cinftyf{N}$ に対して，
+% 	\begin{align} 
+% 		f_*\left( \left(\pdv{}{x^i} \right)_p\right)(g) &= \left(\pdv{}{x^i} \right)_p[g \circ f] 
+% 		= \pdv{}{x^i}() \bigl( (g \circ f) \circ \varphi^{-1} \bigr) \bigl( \varphi(p) \bigr)
+% 		= \pdv{}{x^i}() \bigl( (g \circ \psi^{-1}) \circ (\psi \circ f \circ \varphi^{-1}) \bigr) \bigl( \varphi(p) \bigr) \\
+% 		&= \pdv{}{y^j} \bigl( g \circ \psi^{-1} \bigr) \bigl( \psi(f(p)) \bigr)\, \pdv{}{x^i}() \bigl( y^j \circ f \circ \varphi^{-1} \bigr) \bigl( \varphi(p) \bigr)   \\
+% 		&= \pdv{y^j}{x^i}()\bigl(f(p)\bigr) \left(\pdv{}{y^j}\right)_{f(p)}(g).
+% 	\end{align}
+% \end{proof}
+
+% \begin{marker} 
+% 	命題\ref{prop.differential-R}は，微分写像 $f_* \in \Hom{\mathbb{R}}(T_p M,\, T_{f(p)}N)$ の表現行列がJacobi行列であることを意味する．
+% \end{marker}
+
+% \begin{mytheo}[label=thm.vector_gousei]{接ベクトルの合成写像への作用}
+% 	\cinfty 多様体 $M,\, N$ と \cinfty 写像 $f \colon M \to N$ を与える．点 $p \in M$ において，$\forall v \in T_p M,\; \forall h \in \cinftyf{N}$ に対して以下が成立する：
+% 	\begin{align} 
+% 		v[h \circ f] = f_*(v) [h]
+% 	\end{align}
+% \end{mytheo}
+
+% \begin{proof} 
+% 	$M,\, N$ のチャート $(U;\, x^i),\, (V;\, y^i)$ をとる．命題\ref{prop.differential-R}により
+% 	\begin{align} 
+% 		f_* \left(v^i \left(\pdv{}{x^i}\right)_p\right)[h] = \pdv{y^j}{x^i}()\bigl(f(p)\bigr) \left(\pdv{}{y^j}\right)_{f(p)}[h].
+% 	\end{align}
+% 	一方，
+% 	\begin{align} 
+% 		v[h \circ f] &= v^i \left(\pdv{}{x^i}\right)_p[h \circ f] = v^i \pdv{}{x^i}()\bigl(h \circ f \circ \varphi^{-1} \bigr) \bigl( \varphi(p) \bigr) \\
+% 		&= \pdv{}{y^j} \bigl( h \circ \psi^{-1} \bigr) \bigl( \psi(f(p)) \bigr)\, \pdv{}{x^i}() \bigl( y^j \circ f \circ \varphi^{-1} \bigr) \bigl( \varphi(p) \bigr) \\
+% 		&= \pdv{y^j}{x^i}()\bigl(f(p)\bigr) \left(\pdv{}{y^j}\right)_{f(p)}[h].
+% 	\end{align}
+% \end{proof}
+
+
+\subsection{余接空間の基底}
+
+% 余接空間の基底は\hyperref[naturalbasis]{自然基底}の\hyperref[def.basisforDVS]{双対基底}をとることができる．
+$f \in \cinftyf{M}$ を与えたとき，\textbf{$f$ の微分} (differential of $f$) と呼ばれる余ベクトル場 $\bm{\mathrm{d}f} \in T^* M$ を次のように定義する：
+\begin{align}
+	\dd{f}_p(v) \coloneqq v(f)\quad (v \in T_p M)
+\end{align}
+
+点 $p \in M$ を含むチャート $\chart{U}{x^\mu}$ をとり，\hyperref[naturalbasis]{自然基底} $\{\pdv*{}{x^\mu}|_p\}$ の\hyperref[def.basisforDVS]{双対基底}を $\{\lambda^\mu|_p\}$ とおく．
+\hyperref[def.localcoord]{座標関数} $x^\mu \colon U \lto \mathbb{R}$ は $\cinftyf{U}$ の元なので，$x^\mu$ の微分を考えることができる：
+\begin{align}
+	\dd{x^\mu}|_p \left( \eval{\pdv{}{x^\nu}}_p \right) = \eval{\pdv{}{x^\nu}}_p(x^\mu) = \delta^\mu_\nu
+\end{align}
+つまり，$\dd{x^\mu}|_p = \lambda^\mu|_p$ である．こうして，$T_p^* M$ の基底は
+\begin{align}
+	\bigl\{\, \dd{x^\mu}|_p \,\bigr\}
+\end{align}
+であることがわかった．
+% 関数 $f \in C^\infty (M)$ の微分 $\dd{f}$ は1-形式である．$\forall V = V^i  \left( \pdv{}{x^i} \right)_p \in T_pM$ に対する $\dd{f}$ の作用は次のように定義される：
+% \begin{align}
+% 	\dd{f}[V] = \langle \dd{f},\, V \rangle \coloneqq V(f) = V^i \left(\pdv{f}{x^i}\right)_p \in \mathbb{R}.
+% \end{align}
+% $f$ は任意だから $f = x^i$ としてみると
+% \begin{align}
+% 	\dd{x^i}\left[ \pdv{}{x^j} \right] = \pdv{x^i}{x^j} = \delta^i_j.
+% \end{align}
+% したがって $\{ \dd{x^i}\}$ を双対基底にとることができる．
+
+\subsection{座標表示}
+
+異なるチャート $\chart{U}{x^\mu},\; \chart{V}{x'{}^\mu}$ を採った時の，$U \cap V$ における $\omega \in T_p^*M$ の成分表示の変換則を見る．$\omega$ は座標によらないので $\omega = \omega_\mu \dd{x^\mu} = \omega'_\mu \dd{x'{}^\mu}$ であり，
+と書ける．公式\eqref{eq:trans-naturalbasis}を使うと
+\begin{align}
+	\label{eq:1-form}
+	\tcbhighmath[]{\omega_\mu} = \omega \left( \eval{\pdv{}{x^\mu}}_p \right) = \omega \left( \pdv{x'{}^\nu}{x^\mu}() \bigl( \varphi(p) \bigr) \eval{\pdv{}{x^\nu}}_{p}  \right) = \tcbhighmath[]{\pdv{x'{}^\nu}{x^\mu}() \bigl( \varphi(p) \bigr) \, \omega'_\nu}
+\end{align}
+とわかる．これは一般相対論で登場する共変ベクトルの変換則である．
+
+\section{\cinfty 多様体上のテンソル}
+
+
+
+命題\ref{prop:tensor-multillinear}による\hyperref[def:univ-tensor-vec]{テンソル積}の構成において，
+$V \in \VEC{\mathbb{K}}$ 上の\textbf{共変} $\bm{k}$-\textbf{テンソル}空間を
+\begin{align}
+	\bm{T_k (V)} \coloneqq \underbrace{V^* \otimes \cdots \otimes V^*}_{k} \cong L(\underbrace{V,\, \dots ,\, V}_k;\, \mathbb{K})
+\end{align}
+と定める．同様に\textbf{反変} $\bm{k}$-\textbf{テンソル}空間を
+\begin{align}
+	\bm{T^k (V)} \coloneqq \underbrace{V \otimes \cdots \otimes V}_{k} \cong L(\underbrace{V^*,\, \dots ,\, V^*}_k;\, \mathbb{K})
+\end{align}
+と定める．さらに $\bm{(r,\, s)}$ \textbf{型}の\textbf{混合テンソル}を
+\begin{align}
+	\bm{T^r_s(V)} &\coloneqq \underbrace{V \otimes \cdots \otimes V}_{r} \otimes \underbrace{V^* \otimes \cdots \otimes V^*}_s \\
+	&\cong L(\underbrace{V^*,\, \dots ,\, V^*}_r,\, \underbrace{V,\, \dots ,\, V}_s ;\, \mathbb{K})
+\end{align}
+と定める．
+各種のテンソル空間の基底は命題\ref{prop:basis-tensor}により構成できる．
+
+（境界なし/\hyperref[def:mani-with-boundary]{あり}）\cinfty 多様体 $M$ 上の\underline{点 $p \in M$ における} $(r,\, s)$ 型テンソルとは，テンソル空間 $\mathcal{T}^r_s(T_pM)$ の元のことを言う．
+$\forall T_p \in \mathcal{T}^r_s(T_pM)$ の，チャート $\chart{U}{x^i}$ における局所座標表示は
+\begin{align} 
+	T_p = T^{i_1 \dots i_r}_{j_1 \dots j_s} (p) \, \left(\pdv{}{x^{i_1}}\right)_p \otimes \cdots \otimes \left(\pdv{}{x^{i_r}}\right)_p \otimes (\dd{x^{j_1}})_p \otimes \cdots \otimes (\dd{x^{j_s}})_p
+\end{align}
+と書かれる．
+
+\subsection{テンソルの作用}
+
+$T_p \in T^r_s(T_p M)$ の $r$ 個の$1$-形式 $\alpha_a = \alpha_a{}_{\mu} (\dd{x^\mu})_p \in T^*_pM$ と $s$ 個の接ベクトル $\displaystyle w_b = w_b{}^\nu \left(\pdv{}{x^{\nu}}\right)_p \in V$ への作用を丁寧に見ると，
+\begin{align} 
+	&\quad T_p \left[ \alpha_1,\, \dots ,\, \alpha_r ;\; w_1,\, \dots ,\, w_s \right] \\
+	&= T^{i_1 \dots i_r}_{j_1 \dots j_s}(p)\, \left(\, \left(\pdv{}{x^{i_1}}\right)_p \otimes \cdots \otimes \left(\pdv{}{x^{i_r}}\right)_p \otimes (\dd{x^{j_1}})_p \otimes \cdots \otimes (\dd{x^{j_s}})_p \, \right)\left[ \alpha_a{}_{\mu} (\dd{x^\mu})_p;\;  w_b{}_\nu \left(\pdv{}{x^{\nu}}\right)_p \right] \\
+	&= \sum_{\substack{ i_1 \dots i_r;\\ j_1 \dots j_s}} T^{i_1 \dots i_r}_{j_1 \dots j_s}(p)\, \prod_{\substack{1 \le a \le r,\\ 1 \le b \le s}} \left( \sum_{\mu} \alpha_a{}_{\mu} (\dd{x^\mu})_p \right) \left[  \left(\pdv{}{x^{i_a}}\right)_p \right] (\dd{x^{j_b}})_p  \left[ \sum_{\nu} w_b{}^\nu \left(\pdv{}{x^{\nu}}\right)_p \right] \\
+	&= \sum_{i_1 \dots i_r;\, j_1 \dots j_s} T^{i_1 \dots i_r}_{j_1 \dots j_s}(p)\, \prod_{a,\, b}	\left( \sum_{\mu}\alpha_a{}_{\mu} (\dd{x^\mu})_p \left[  \left(\pdv{}{x^{i_a}}\right)_p \right]\right) \left( \sum_{\nu} w_b{}^\mu (\dd{x^{j_b}})_p  \left[ \left(\pdv{}{x^{\nu}}\right)_p \right]\right) \\
+	&= \sum_{i_1 \dots i_r;\, j_1 \dots j_s} T^{i_1 \dots i_r}_{j_1 \dots j_s}(p)\, \prod_{a,\, b} \left( \sum_{\mu}\alpha_a{}_{\mu}\delta_\mu^{i_a} \right) \left( \sum_{\nu} w_b{}^\mu \delta^{j_b}_{\nu} \right)\\
+	&= \sum_{i_1 \dots i_r;\, j_1 \dots j_s} T^{i_1 \dots i_r}_{j_1 \dots j_s}(p)\, \prod_{a,\, b} \alpha_a{}_{i_a}  w_b{}^{j_b} \\
+	&= T^{i_1 \dots i_r}_{j_1 \dots j_s}(p) \alpha_1{}_{i_1} \cdots \alpha_r{}_{i_r}  w_1{}^{j_1} \cdots w_s{}^{j_s}. \label{eq.31-1}
+\end{align}
+ただし，2行目と最終行にのみEinsteinの規約を用いた．
+
+\subsection{成分表示の変換則}
+
+テンソルの成分が座標変換の下でどのような変換を受けるかどうかを観察しよう．
+もう一つのチャート $\chart{V}{y^i}$ をとる．$T_p \left( \alpha_1,\, \dots ,\, \alpha_r ;\; w_1,\, \dots ,\, w_s \right)$ は局所座標によらないので，余ベクトルと接ベクトルの変換則を式\eqref{eq.31-1}に適用することで
+\begin{align} 
+	&T^{i_1 \dots i_r}_{j_1 \dots j_s}(p) \alpha_1{}_{i_1} \cdots \alpha_r{}_{i_r}  w_1{}^{j_1} \cdots w_s{}^{j_s} \\
+	=\; &T^{i_1 \dots i_r}_{j_1 \dots j_s}(p) \tilde{\alpha}_1{}_{k_1} \pdv{y^{k_1}}{x^{i_1}}()(p) \cdots \tilde{\alpha}_r{}_{k_r}\pdv{y^{k_r}}{x^{i_r}}()(p)  \tilde{w}_1{}^{l_1} \pdv{x^{j_1}}{y^{l_1}}()(p) \cdots \tilde{w}_s{}^{j_s} \pdv{x^{j_s}}{y^{l_s}}()(p) \\
+	=\; &T^{i_1 \dots i_r}_{j_1 \dots j_s}(p) \pdv{y^{k_1}}{x^{i_1}}()(p) \cdots \pdv{y^{k_r}}{x^{i_r}}()(p)  \pdv{x^{j_1}}{y^{l_1}}()(p)  \cdots \pdv{x^{j_s}}{y^{l_s}}()(p) \tilde{\alpha}_1{}_{k_1} \cdots \tilde{\alpha}_1{}_{k_r} \tilde{w}_1{}^{l_1} \cdots \tilde{w}_1{}^{l_s} \\
+	=\; &\tilde{T}^{k_1 \dots k_r}_{l_1 \dots l_s}(p) \tilde{\alpha}_1{}_{k_1} \cdots \tilde{\alpha}_1{}_{k_r} \tilde{w}_1{}^{l_1} \cdots \tilde{w}_1{}^{l_s} 
+\end{align}
+とわかる．従って
+\begin{align} 
+	\tilde{T}^{k_1 \dots k_r}_{l_1 \dots l_s}(p) = T^{i_1 \dots i_r}_{j_1 \dots j_s}(p) \pdv{y^{k_1}}{x^{i_1}}()(p) \cdots \pdv{y^{k_r}}{x^{i_r}}()(p)  \pdv{x^{j_1}}{y^{l_1}}()(p)  \cdots \pdv{x^{j_s}}{y^{l_s}}()(p)
+\end{align}
+である．一般相対性理論で使うテンソルの定義を再現している．
+
+\subsection{テンソル場}
+
+ベクトル場の定義\ref{vectorfield}と同様にして，テンソル場を定義できる
+\begin{mydef}[label=tensorfield]{テンソル場} 
+	\cinfty 多様体 $M$ 上の\textbf{テンソル場} $T$ とは，各点 $\forall p \in M$ に対してテンソル $T_p \in T^r_s(T_pM)$ を対応させ，局所座標表示
+	\begin{align} 
+		T_p =  T^{i_1 \dots i_r}_{j_1 \dots j_s} (p) \, \left(\pdv{}{x^{i_1}}\right)_p \otimes \cdots \otimes \left(\pdv{}{x^{i_r}}\right)_p \otimes (\dd{x^{j_1}})_p \otimes \cdots \otimes (\dd{x^{j_s}})_p \in \mathcal{T}^r_s(T_pM)
+	\end{align}
+	の全係数 $T^{i_1 \dots i_r}_{j_1 \dots j_s} (p)$ が \cinfty 関数になっているようなもののことを言う．
+\end{mydef}
+
+\hyperref[def:bundle-tangent]{接束}と同様の定義も可能である．すなわち，（境界なし/\hyperref[def:mani-with-boundary]{あり}）\cinfty 多様体 $M$ 上の
+\textbf{共変} $\bm{k}$-\textbf{テンソルの束}を
+\begin{align}
+	\bm{T_k (T^* M)} \coloneqq \coprod_{p \in M} T_k(T^*_p M)
+\end{align}
+と定める．同様に\textbf{反変} $\bm{k}$-\textbf{テンソルの束}を
+\begin{align}
+	\bm{T^k (TM)} \coloneqq \coprod_{p \in M} T^k(T_p M)
+\end{align}
+と定める．さらに $\bm{(r,\, s)}$ \textbf{型}の\textbf{混合テンソルの束}を
+\begin{align}
+	\bm{T^r_s(TM)} &\coprod_{p \in M} T^r_s (T_p M)
+\end{align}
+と定める．
+
+特に，$(r,\, s)$ 型の\textbf{テンソル場} $T$ とは，\cinfty 写像
+\begin{align}
+	T \colon M \lto T^r_s(TM)
+\end{align}
+であって，射影 $\pi \colon T^r_s(TM) \lto M$ について
+\begin{align}
+	\pi \circ T = \mathrm{id}_M
+\end{align}
+を充たすもののことである．
+
+\end{document}

@@ -1,0 +1,3284 @@
+\documentclass[algtopo_main]{subfiles}
+\mathchardef\mhyphen="2D
+
+\begin{document}
+
+\setcounter{chapter}{1}
+
+\chapter{ホモロジーの定義}
+
+\begin{mylem}[label=lem:quomod-univ]{商加群の普遍性}
+    $M,\, L$ を加群，$f \colon M \to L$ を準同型とする．
+    部分加群 $N \subset M$ が
+    \begin{align}
+        N \subset \Ker f
+    \end{align}
+    を充たすならば，準同型 $\bar{f} \colon M/N \to L$ であって標準射影
+    \begin{align}
+        p \colon M \to M/N,\; x \mapsto x + N
+    \end{align}
+    に対して
+    \begin{align}
+        f = \bar{f} \circ p
+    \end{align}
+    を充たす，i.e. 図式\ref{fig:quomod-univ}を可換にするようなものが\underline{一意に}存在する．このような準同型 $\bar{f} \colon M/N \to L$ を $f \colon M \to L$ によって $M/N$ 上に\textbf{誘導される準同型} (induced homomorphism) と呼ぶ．
+\end{mylem}
+\begin{figure}[H]
+    \centering
+    \begin{tikzcd}[row sep=large, column sep=large]
+        M \ar[d, "p"']\ar[r, "f"] &L \\
+        M/N \arrow[ur, red, dashed, "\exists!\bar{f}"']&
+    \end{tikzcd}
+    \caption{商加群の普遍性}
+    \label{fig:quomod-univ}
+\end{figure}%
+
+\begin{proof}
+    \exref{ex:univ-quomod}を参照．
+\end{proof}
+
+
+\section{チェイン複体の定義と代数的性質}
+
+まず，チェイン複体の定義をする．この節では一貫して $R$ を環とする．
+
+\begin{mydef}[label=def:CC, breakable]{チェイン複体}
+    左 $R$ 加群の族 $\Familyset[\big]{C_q}{q \in \mathbb{Z}}$ と左 $R$ 加群の準同型写像の族 $\Familyset[\big]{\partial_q \colon C_{q} \lto C_{q-1}}{q \in \mathbb{Z}}$  
+    が成す $\MOD{R}$ の\underline{図式}
+    \begin{align}
+        \label{diagram:CC}
+        \cdots \xrightarrow{\partial_{q+2}} C_{q+1} \xrightarrow{\partial_{q+1}} C_{q}  \xrightarrow{\partial_q} C_{q-1} \xrightarrow{\partial_{q-1}} \cdots
+    \end{align}
+    が\textbf{チェイン複体} (chain complex) であるとは，
+    $\forall q \ge 0$ に対して
+    \begin{align}
+        \partial_q \partial_{q+1} = 0
+    \end{align}
+    が成り立つことを言う．チェイン複体\eqref{diagram:CC}のことを $\bm{(C_\bullet,\, \partial_\bullet)}$ または単に $\bm{C_\bullet}$ と書く．
+    \tcblower
+    \begin{itemize}
+        \item $C_q$ の元を\textbf{$\bm{q}$-チェイン} ($q$-chain)，
+        \item $C_q$ の部分加群
+        \begin{align}
+            \Ker \bigl( \partial_q \colon C_q \to C_{q-1} \bigr) \subset C_q
+        \end{align}
+        を\textbf{第 $\bm{q}$ サイクル群}\footnote{記号としては $Z_q(C_\bullet)$ と書かれることが多い．}，その元を\textbf{$\bm{q}$-サイクル} ($q$-cycle)，
+        \item $C_q$ の部分加群
+        \begin{align}
+            \Im \bigl( \partial_{q+1} \colon C_{q+1} \to C_q \bigr) \subset C_q
+        \end{align}
+        を\textbf{第 $\bm{q}$ バウンダリー群}\footnote{記号としては $B_q(C_\bullet)$ と書かれることが多い．}，その元を\textbf{$\bm{q}$-バウンダリー} ($q$-boundary)
+    \end{itemize}
+    と呼ぶ．
+\end{mydef}
+
+$\partial_q \partial_{q+1} = 0$ から $\Im \partial_{q+1} \subset \Ker \partial_q$ が言える
+\footnote{
+    任意の $q$-バウンダリー $b \in \Im \partial_{q+1}$ を1つとる． 
+    このとき\hyperref[def:CC]{バウンダリー群の定義}から，$q+1$-チェイン $b' \in C_{q+1}$ が存在して $b = \partial_{q+1} (b')$ と書ける．
+    故に $\partial_q \partial_{q+1} = 0$ から $\partial_q (b) = \partial_{q+1} \bigl( \partial_q (b') \bigr) = 0$，i.e. $b \in \Ker \partial_q$ が成り立つ．
+}．
+従って $\forall q \ge 0$ に対して商加群
+\begin{align}
+    \label{def:homology-group}
+    \Ker \partial_q / \Im \partial_{q+1}
+\end{align}
+を定義することができる．
+
+\begin{mydef}[label=def:homology-group]{ホモロジー群}
+    式\eqref{def:homology-group}の商加群を\textbf{第 $\bm{q}$ ホモロジー群}と呼び，$\bm{H_q(C_\bullet)}$ と書く．
+\end{mydef}
+
+
+\subsection{チェイン写像}
+
+\begin{mydef}[label=def:chainmap, breakable]{チェイン写像}
+    2つの\hyperref[def:CC]{チェイン複体} $(C_\bullet,\, \partial_\bullet),\; (D_\bullet,\, \partial'_\bullet) $ 
+    および準同型写像の族 $f_\bullet \coloneqq \Familyset[\big]{f_q \colon C_q \lto D_q}{q\in \mathbb{Z}}$ 
+    を与える．
+
+    $f_\bullet$ がチェイン複体 $C_\bullet$ からチェイン複体 $D_\bullet$ への\textbf{チェイン写像} (chain map) であるとは，
+    $\forall q \in \mathbb{Z}$ に対して
+    \begin{align}
+        \partial'_q \circ f_q = f_{q-1} \circ \partial_q
+    \end{align}
+    が成り立つことを言う．i.e. 図式\ref{fig:chainmap}が可換になると言うこと．
+    チェイン写像 $f_\bullet$ のことを $\bm{f_\bullet \colon (C_\bullet,\, \partial_\bullet) \lto (D_\bullet,\, \partial'_\bullet)}$ や $\bm{f_\bullet \colon C_\bullet \lto D_\bullet}$ と書く．
+\end{mydef}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzcd}[row sep=large, column sep=large]
+		&\cdots \ar[r, "\partial_{q+2}"]  &C_{q+1} \ar[d, "f_{q+1}"]\ar[r, "\partial_{q+1}"]  &C_{q} \ar[d, "f_{q}"]\ar[r, "\partial_{q}"]  &C_{q-1} \ar[d, "f_{q-1}"]\ar[r, "\partial_{q-1}"] &\cdots \\
+		&\cdots \ar[r, "\partial'_{q+2}"] &D_{q+1}                  \ar[r, "\partial'_{q+1}"] &D_{q} 		        \ar[r, "\partial'_{q}"] &D_{q-1}                  \ar[r, "\partial'_{q-1}"] & \cdots
+	\end{tikzcd}
+    \caption{チェイン写像}
+    \label{fig:chainmap}
+\end{figure}%
+
+細かいことを言うと，\hyperref[def:CC]{チェイン複体}は左 $R$ 加群の圏 $\MOD{R}$ の図式として定義された．
+従って，チェイン写像 $f_\bullet \colon (C_\bullet,\, \partial_\bullet) \lto (D_\bullet,\, \partial'_\bullet)$ という記法は $\MOD{R}$ の可換図式\ref{fig:chainmap}そのものの略記
+\begin{center}
+    \begin{tikzcd}[row sep=large, column sep=large]
+		&\Bigl(\cdots \ar[r, "\partial_{q+2}"]  &C_{q+1} \ar[r, "\partial_{q+1}"]  &C_{q} \ar[d, red, "f_\bullet"]\ar[r, "\partial_{q}"]  &C_{q-1} \ar[r, "\partial_{q-1}"] &\cdots \Bigr)\\
+		&\Bigl(\cdots \ar[r, "\partial'_{q+2}"] &D_{q+1} \ar[r, "\partial'_{q+1}"] &D_{q} 		        \ar[r, "\partial'_{q}"] &D_{q-1}           \ar[r, "\partial'_{q-1}"] & \cdots \Bigr)
+	\end{tikzcd}
+\end{center}
+として理解できる．
+このとき
+\hyperref[def:chainmap]{チェイン写像}
+\begin{center}
+    \begin{tikzcd}[row sep=large, column sep=large]
+		&\Bigl(\cdots \ar[r, "\partial_{q+2}"]  &C_{q+1} \ar[r, "\partial_{q+1}"]  &C_{q} \ar[d, red, "f_\bullet"]\ar[r, "\partial_{q}"]  &C_{q-1} \ar[r, "\partial_{q-1}"] &\cdots \Bigr)\\
+		&\Bigl(\cdots \ar[r, "\partial'_{q+2}"] &D_{q+1} \ar[r, "\partial'_{q+1}"] &D_{q} 		        \ar[r, "\partial'_{q}"] &D_{q-1}           \ar[r, "\partial'_{q-1}"] & \cdots \Bigr)
+	\end{tikzcd}
+\end{center}
+と\hyperref[def:chainmap]{チェイン写像}
+\begin{center}
+    \begin{tikzcd}[row sep=large, column sep=large]
+		&\Bigl(\cdots \ar[r, "\partial'_{q+2}"] &D_{q+1} \ar[r, "\partial'_{q+1}"] &D_{q} \ar[d, red, "g_\bullet"]        \ar[r, "\partial'_{q}"] &D_{q-1}           \ar[r, "\partial'_{q-1}"] & \cdots \Bigr) \\
+		&\Bigl(\cdots \ar[r, "\partial''_{q+2}"] &E_{q+1} \ar[r, "\partial''_{q+1}"] &E_{q}\ar[r, "\partial''_{q}"] &E_{q-1}           \ar[r, "\partial''_{q-1}"] & \cdots \Bigr)
+	\end{tikzcd}
+\end{center}
+の\textbf{合成}
+\begin{center}
+    \begin{tikzcd}[row sep=large, column sep=large]
+		&\Bigl(\cdots \ar[r, "\partial_{q+2}"]  &C_{q+1} \ar[r, "\partial_{q+1}"]  &C_{q} \ar[d, red, "g_\bullet \circ f_\bullet"]\ar[r, "\partial_{q}"]  &C_{q-1} \ar[r, "\partial_{q-1}"] &\cdots \Bigr)\\
+		&\Bigl(\cdots \ar[r, "\partial''_{q+2}"] &E_{q+1} \ar[r, "\partial''_{q+1}"] &E_{q} 		        \ar[r, "\partial''_{q}"] &E_{q-1}           \ar[r, "\partial''_{q-1}"] & \cdots \Bigr)
+	\end{tikzcd}
+\end{center}
+% \begin{align}
+%     g_\bullet \circ f_\bullet \colon (C_\bullet,\, \partial_\bullet) \lto (E_\bullet,\, \partial''_\bullet)
+% \end{align}
+を，$\MOD{R}$ の可換図式\footnote{$\partial'_\bullet$ を顕に書いた図式の可換性から，この図式も可換である．}
+\begin{center}
+    \begin{tikzcd}[row sep=large, column sep=large]
+		&\cdots \ar[r, "\partial_{q+2}"]  &C_{q+1} \ar[d, "f_{q+1}"]\ar[r, "\partial_{q+1}"]  &C_{q} \ar[d, "f_{q}"]\ar[r, "\partial_{q}"]  &C_{q-1} \ar[d, "f_{q-1}"]\ar[r, "\partial_{q-1}"] &\cdots \\
+		&\cdots   &D_{q+1} \ar[d, "g_{q+1}"]  &D_{q} \ar[d, "g_{q}"]  &D_{q-1} \ar[d, "g_{q-1}"] &\cdots \\
+		&\cdots \ar[r, "\partial''_{q+2}"] &E_{q+1}                  \ar[r, "\partial''_{q+1}"] &E_{q} 		        \ar[r, "\partial''_{q}"] &E_{q-1}                  \ar[r, "\partial''_{q-1}"] & \cdots
+	\end{tikzcd}
+\end{center}
+によって定義する．
+すると\hyperref[def:chainmap]{チェイン写像} $1_{C_\bullet} \coloneqq \Familyset[\big]{1_{C_q} \colon C_q \lto C_q}{q \in \mathbb{Z}}$ が\hyperref[def:category]{恒等射}になり，
+もう1つの\hyperref[def:chainmap]{チェイン写像} $h_\bullet \colon(E_\bullet,\, \partial''_\bullet) \lto (F_\bullet,\, \partial'''_\bullet)$ を与えたとき明らかに\hyperref[def:category]{結合則}
+\begin{align}
+    (h_\bullet \circ g_\bullet) \circ f_\bullet = h_\bullet \circ (g_\bullet \circ f_\bullet)
+\end{align}
+が成り立つ．
+したがって $\MOD{R}$ 上の\textbf{チェイン複体の圏} $\CHAIN$ が
+\begin{itemize}
+    \item \hyperref[def:CC]{チェイン複体}を\hyperref[def:category]{対象}とする．
+    \item \hyperref[def:chainmap]{チェイン写像}を\hyperref[def:category]{射}とする．
+    \item \hyperref[def:category]{射の合成}を，上述の通りとする．
+\end{itemize}
+として構成された．
+
+
+
+\begin{mylem}[label=lem:chain1]{}
+    \hyperref[def:chainmap]{チェイン写像} $f_\bullet (C_\bullet,\, \partial_\bullet) \lto (D_\bullet,\, \partial'_\bullet)$ を与える．
+    このとき，$\forall q \in \mathbb{Z}$ について以下が成り立つ：
+    \begin{align}
+        f_q \bigl( \Ker \partial_q \bigr) &\subset \Ker \partial'_q \\
+        f_q \bigl( \Im \partial_{q+1} \bigr) &\subset \Im \partial'_{q+1}
+    \end{align}
+\end{mylem}
+
+\begin{proof}
+    一つ目は
+    \begin{align}
+        z \in \Ker \partial_q &\IFF \partial_q(z) = 0 \\
+        &\IMP \partial'_q \bigl( f_q(z) \bigr) = f_{q-1} \bigl( \partial_q(z) \bigr) = 0 \\
+        &\IFF f_q(z) \in \Ker \partial'_q
+    \end{align}
+    より従う．二つ目は
+    \begin{align}
+        b \in \Im \partial_{q+1} &\IFF \exists \beta \in C_{q+1},\; b = \partial_{q+1}(\beta)\\
+        &\IMP f_q(b) = \partial'_{q+1} \bigl( f_{q+1}(\beta) \bigr)  \in \Im \partial'_{q+1}
+    \end{align}
+    より従う．
+\end{proof}
+
+
+\hyperref[def:chainmap]{チェイン写像} $f_\bullet \colon (C_\bullet,\, \partial_\bullet) \lto (D_\bullet,\, \partial'_\bullet)$ を与える．
+標準的射影のことを
+\begin{align}
+    \pi_q &\colon \Ker \partial_q \lto H_q(C_\bullet),\; z \lmto z + \Im \partial_{q+1} \\
+    \varpi_q &\colon \Ker \partial'_q \lto H_q(D_\bullet),\; z \lmto z + \Im \partial'_{q+1}
+\end{align}
+とおくと，
+補題\ref{lem:chain1}から
+\begin{align}
+    (\varpi_q \circ f_{q+1})\bigl( \Im \partial_q \bigr) \subset \varpi_q \bigl( \Im \partial'_{q+1} \bigr) = \{0_{H_q(C_\bullet)} \}
+\end{align}
+が成り立つ．i.e. $\Im \partial_{q+1} \subset \Ker (\varpi_q\circ f_q)$ である．
+従って\hyperref[lem:quomod-univ]{商加群の普遍性}から，
+次のような可換図式を書くことができる：
+\begin{figure}[H]
+    \centering
+    \begin{tikzcd}[row sep=large, column sep=large]
+        \Ker \partial_q \ar[d, "\pi_q"]\ar[r, "f_q"] &\Ker \partial'_q \ar[r, "\varpi_q"]  &H_q(D_\bullet) \\
+        H_q(C_\bullet) \arrow[urr, dashed, red, "\exists!\overline{\varpi_q \circ f_q}"']  & &
+    \end{tikzcd}
+    \caption{誘導準同型}
+    \label{fig:induced}
+\end{figure}%
+
+\begin{mydef}[label=def:induced-chain]{チェイン写像による誘導準同型}
+    図式\ref{fig:induced}中に赤色で示したwell-definedな準同型
+    \begin{align}
+        \overline{\varpi_q \circ f_q} \colon \HC{q}{C} \lto \HC{q}{D},\; z + \Im \partial_{q+1} \lmto f_q(z) + \Im \partial'_{q+1}
+    \end{align}
+    のことを\hyperref[def:chainmap]{チェイン写像} $f_\bullet \colon (C_\bullet,\, \partial_\bullet) \lto (D_\bullet,\, \partial'_\bullet)$ による\textbf{誘導準同型} (induced homomorphism) と呼び，
+    $\bm{H_q (f_\bullet)}$ と書く．
+\end{mydef}
+
+\begin{marker}
+    代数トポロジーの教科書を読んでいると，しばしば誘導準同型 $H_q(f_\bullet)$ が $\bm{f_*}$ とか $\bm{f_\bullet}$ と略記されているのを目にする．
+    このような記法は眼に優しい一方で，\hyperref[def:chainmap]{チェイン写像}との区別が付きにくいという難点がある．
+\end{marker}
+
+\begin{myprop}[label=prop:Hq-functoriality]{$H_q$ の関手性}
+    \begin{enumerate}
+        \item $\forall (C_\bullet,\, \partial_\bullet) \in \Obj{\CHAIN}$ に対して
+        \begin{align}
+            H_q(1_\bullet) = 1_{H_q(C_\bullet)}
+        \end{align}
+        が成り立つ．
+        \item 
+        2つの\hyperref[def:chainmap]{チェイン写像} $f_\bullet \colon (C_\bullet,\, \partial_\bullet) \lto (D_\bullet,\, \partial'_\bullet),\; g_\bullet \colon (D_\bullet,\, \partial'_\bullet) \lto (E_\bullet,\, \partial''_\bullet)$ を与える．
+        
+        このとき，チェイン写像の合成
+        $g_\bullet \circ f_\bullet \colon (C_\bullet,\, \partial_\bullet) \lto (E_\bullet,\, \partial''_\bullet)$
+        および $\forall q \in \mathbb{Z}$ に対して
+        \begin{align}
+            H_q (g_\bullet \circ f_\bullet) = H_q(g_\bullet) \circ H_q(f_\bullet)
+        \end{align}
+        が成り立つ．
+    \end{enumerate}
+\end{myprop}
+
+\begin{proof}
+    \begin{enumerate}
+        \item 
+        チェイン写像 $1_{C_\bullet} \colon (C_\bullet,\, \partial_\bullet) \lto (C_\bullet,\, \partial_\bullet)$ の誘導する準同型は
+        \begin{align}
+            H_q(1_{C_\bullet}) \colon H_q(C_\bullet) \lto H_q(C_\bullet),\; z + \Im \partial_{q+1} \lmto 1_{C_q}(z) + \Im \partial_{q+1} = z + \Im \partial_{q+1}
+        \end{align}
+        である．i.e. $H_q(1_{C_\bullet} ) = 1_{H_q(C_\bullet)}$ である．
+        \item 
+        $g_\bullet \circ f_\bullet$ が\hyperref[def:induced-chain]{誘導する準同型}は可換図式
+        \footnote{$\Ker \partial_q \lto H_q(C_\bullet)$ と $\Ker \partial''_q \lto H_q(E_\bullet)$ は標準的射影．}
+        \begin{center}
+            \begin{tikzcd}[row sep=large, column sep=large]
+                \Ker \partial_q \ar[d]\ar[r, "f_q"] &\Ker \partial'_q \ar[r, "g_q"] &\Ker \partial''_q \ar[r] &H_q(E_\bullet) \\
+                H_q(C_\bullet) \arrow[urrr, dashed, red, "\exists! H_q(g_\bullet \circ f_\bullet)"']  & & &
+            \end{tikzcd}
+        \end{center}
+        によって特徴付けられる．
+        一方，誘導準同型の図式\ref{fig:induced}を組み合わせて可換図式\footnote{$\Ker \partial_q \lto H_q(C_\bullet)$ と $\Ker \partial'_q \lto H_q(D_\bullet)$ と $\Ker \partial''_q \lto H_q(E_\bullet)$ は標準的射影．}
+        \begin{center}
+            \begin{tikzcd}[row sep=large, column sep=large]
+                \Ker \partial_q \ar[d]\ar[r, "f_q"] &\Ker \partial'_q \ar[r, "g_q"]\ar[d]  &\Ker \partial''_q \ar[r] &H_q(E_\bullet) \\
+                H_q(C_\bullet) \arrow[r, red, dashed, "\exists! H_q(f_\bullet)"] &H_q(D_\bullet) \ar[urr, red, dashed, "\exists! H_q(g_\bullet)"] &
+            \end{tikzcd}
+        \end{center}
+        を書くこともできる．
+        ところが，\hyperref[lem:quomod-univ]{商加群の普遍性}より2つの可換図式中の赤い矢印は一意である．i.e.
+        \begin{align}
+            H_q (g_\bullet \circ f_\bullet) = H_q(g_\bullet) \circ H_q(f_\bullet)
+        \end{align}
+        が成り立つ．
+    \end{enumerate}
+\end{proof}
+命題\ref{prop:Hq-functoriality}より
+\begin{itemize}
+    \item \hyperref[def:CC]{チェイン複体} $C_\bullet \in \Obj{\CHAIN}$ を\hyperref[def:homology-group]{ホモロジー群} $H_q(C_\bullet) \in \Obj{\MOD{R}}$ に，
+    \item \hyperref[def:chainmap]{チェイン写像} $f_\bullet \in \Hom{\CHAIN} (C_\bullet,\, D_\bullet)$ を\hyperref[def:induced-chain]{誘導準同型} $H_q(f_\bullet) \in \Hom{\MOD{R}} \bigl( H_q(C_\bullet),\, H_q(D_\bullet) \bigr)$ に
+\end{itemize}
+対応づける対応
+\begin{align}
+    H_q \colon \CHAIN \lto \MOD{R}
+\end{align}
+が\hyperref[def:functor]{関手}であることが分かった．
+
+
+\subsection{チェイン・ホモトピー}
+
+チェイン・ホモトピーの定義をする：
+\begin{mydef}[label=def:chainHomotopy]{チェイン・ホモトピー}
+    2つの\hyperref[def:CC]{チェイン複体} $(C_\bullet,\, \partial_\bullet),\, (D_\bullet,\, \partial'_\bullet)$，および2つの\hyperref[def:chainmap]{チェイン写像} $f_\bullet,\, g_\bullet \colon (C_\bullet,\, \partial_\bullet) \longrightarrow (D_\bullet,\, \partial'_\bullet)$ を与える．
+
+    \begin{itemize}
+        \item 左 $R$ 加群の準同型写像の族 $\Phi_\bullet = \Familyset[\big]{\Phi_q\colon C_q \to D_{q+1}}{q \in \mathbb{Z}}$ が $f_\bullet$ を $g_\bullet$ に繋ぐ\textbf{チェイン・ホモトピー} (chain homotopy) であるとは，$\forall q \in \mathbb{Z}$ に対して以下が成り立つことを言う：
+        \begin{align}
+            \partial'_{q+1} \circ \Phi_q + \Phi_{q-1} \circ \partial_q = g_q - f_q
+        \end{align}
+        \item $f_\bullet$ を $g_\bullet$ に繋ぐチェイン・ホモトピーが存在するとき， $f_\bullet$ と $g_\bullet$ は\textbf{チェイン・ホモトピック} (chain homotopic) であるといい，$\bm{f_\bullet\simeq g_\bullet}$ と書く．
+    \end{itemize}
+\end{mydef}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzcd}[row sep=large, column sep=large]
+		&\cdots \ar[r, "\partial_{q+2}"] &C_{q+1} \ar[d]\ar[r, "\partial_{q+1}"]\ar[dl, red, "\Phi_{q+1}"']  &C_{q} \ar[d]\ar[r, "\partial_{q}"]\ar[dl, red, "\Phi_{q}"']  &C_{q-1} \ar[d]\ar[r, "\partial_{q-1}"]\ar[dl, red, "\Phi_{q-1}"'] &\cdots \ar[dl, red, "\Phi_{q-2}"'] \\
+		&\cdots \ar[r, "\partial'_{q+2}"]&D_{q+1}                  \ar[r, "\partial'_{q+1}"] &D_{q} 		        \ar[r, "\partial'_{q}"] &D_{q-1}                  \ar[r, "\partial'_{q-1}"] & \cdots
+	\end{tikzcd}
+    \caption{チェイン・ホモトピー}
+    \label{fig:chainHomotopy}
+\end{figure}%
+
+次の命題は\hyperref[def:chainHomotopy]{チェイン・ホモトピー}を考える強い動機となる．
+
+\begin{myprop}[label=prop:chainHomotopy-basic]{}
+    \hyperref[def:chainmap]{チェイン写像} $f_\bullet,\, g_\bullet \colon (C_\bullet,\, \partial_\bullet) \lto (D_\bullet,\, \partial'_\bullet)$ が\hyperref[def:chainHomotopy]{チェイン・ホモトピック}ならば，$\forall q \ge 0$ に対して
+    \begin{align}
+        H_q(f_\bullet) = H_q(g_\bullet) \colon \HC{q}{C} \longrightarrow \HC{q}{D}
+    \end{align}
+    が成り立つ．
+\end{myprop}
+
+\begin{proof}
+    $f_\bullet,\, g_\bullet$ を繋ぐ\hyperref[def:chainHomotopy]{チェイン・ホモトピー}$\Phi_\bullet$ が存在するとする．
+    このとき\hyperref[def:induced-chain]{誘導準同型の定義}より
+    $\forall u + \Im \partial_{q+1} \in H_q(C_\bullet)$ に対して
+    \begin{align}
+        \bigl(H_q(g_\bullet) - H_q(f_\bullet)\bigr)(u + \Im \partial_{q+1}) &= \bigl(g_q(u) + \Im \partial'_{q+1}\bigr) - \bigl( f_q(u) + \Im \partial'_{q+1} \bigr) \\
+        &= (g_q -f_q)(u) + \Im \partial'_{q+1} \\
+        &= \Bigl(\partial'_{q+1} \bigl( \Phi_q(u) \bigr) + \Phi_{q-1} \bigl( \partial_q(u) \bigr)  \Bigr) + \Im \partial'_{q+1} \\
+        &= \Phi_{q-1} \bigl( \partial_q(u) \bigr) + \Im \partial'_{q+1}
+    \end{align}
+    だが，\hyperref[def:homology-group]{ホモロジー群}の定義より $u \in \Ker \partial_q$ なので最右辺は $0_{H_q(D_\bullet)}$ である．i.e. $H_q(g_\bullet) - H_q(f_\bullet) = 0$ が言えた．
+\end{proof}
+
+% \subsection{チェイン複体の圏}
+
+% チェイン複体全体のクラスは，対象をチェイン複体 $C_\bullet = \Familyset[\big]{C_q,\, \partial_q}{q \ge 0}$，チェイン写像を射とする圏 $\CHAIN$ をなす．
+% $\forall q \ge 0$ に対して，第 $q$ ホモロジー群をとる対応
+% \begin{align}
+%     H_q \colon \CHAIN \longrightarrow \MOD{\mathbb{Z}}
+% \end{align}
+% は共変関手である．
+% $\Cat{C}$ を圏とし，共変関手
+% \begin{align}
+%     F_\bullet \colon \Cat{C} \longrightarrow \CHAIN
+% \end{align}
+% を与える．
+% $\forall X \in \Obj{\Cat{C}}$ に対して定まる\textbf{チェイン複体}を $F_\bullet(X) = \Familyset[\big]{F_q(X),\, \partial_q\colon F_q(X) \to F_{q-1}(X)}{q \ge 0}$ と書く．
+% このとき $\forall q \ge 0$ に対して対応 $F_q \colon \Cat{C} \longrightarrow \MOD{\mathbb{Z}}$ は\hyperref[def:covariant]{共変関手}で，対応 $\partial_q \colon F_q \longrightarrow F_{q-1}$ は\hyperref[def:nat]{自然変換}である．
+
+% さて，誘導準同型をとる操作はどのようなものか？
+% 二つの共変関手
+% \begin{align}
+%     F_\bullet,\, G_\bullet \colon \Cat{C} \longrightarrow \CHAIN
+% \end{align}
+% を与える．ここからさらに第 $q$ ホモロジー群をとることで，二つの共変関手
+% \begin{align}
+%     H_q \circ F_\bullet,\, H_q \circ G_\bullet \colon \Cat{C} \longrightarrow \MOD{\mathbb{Z}}
+% \end{align}
+% が得られる．このとき，さらに対応
+% \begin{align}
+%     H_q \colon \NAT(F_\bullet,\, G_\bullet) \longrightarrow \NAT (H_q \circ F_\bullet,\, H_q \circ G_\bullet),\; \varphi \longmapsto H_q(\varphi)
+% \end{align}
+% を考えることができ，これがまさにチェイン写像を与えるのである．
+% もう少しあからさまには，$\forall X \in \Obj{\Cat{C}}$ を一つ固定したとき，チェイン写像は
+% \begin{align}
+%     \varphi_X \in \Hom{\CHAIN} \bigl( F_\bullet(X),\, G_\bullet(X) \bigr)
+% \end{align}
+% と書ける．そしてチェイン写像が第 $q$ ホモロジー群に\hyperref[def:induced-chain]{誘導する準同型}は
+% \begin{align}
+%     H_q(\varphi)_X \coloneqq (\varphi_X)_q{}_* \in \Hom{\MOD{\mathbb{Z}}} \Bigl(H_q \bigl( F_\bullet(X) \bigr),\,  H_q \bigl( G_\bullet(X)\bigr)\Bigr)
+% \end{align}
+% のことである．
+
+% 定義\ref{def:chainHomotopy}を一般化して，2つの自然変換 $\varphi,\, \psi \in \NAT(F_\bullet,\, G_\bullet)$ の間の自然なチェイン・ホモトピーを考えることができる：
+
+% \begin{mydef}[label=def:Nat-chainHomotopy]{チェイン・ホモトピー}
+%     自然変換の族 $\Phi_\bullet \coloneqq \Familyset[\big]{\Phi_q \colon F_q \longrightarrow G_{q+1}}{q \ge 0}$ が $\varphi$ を $\psi$ に繋ぐ\textbf{チェイン・ホモトピー}であるとは，
+%     $\forall q\ge 0$ および $\forall X \in \Obj{\Cat{C}}$ に対して
+%     \begin{align}
+%         (\partial_{q+1})_X \circ (\Phi_q)_X + (\Phi_{q-1})_X \circ (\partial_q)_X = \psi_X - \varphi_X \in \Hom{\CHAIN} \bigl( F_q(X),\, G_q(X) \bigr) 
+%     \end{align}
+%     が成り立つことを言う．ただし $(\Phi_{-1})_{X} = 0$ とする．
+
+%     自然変換 $\varphi$ を $\psi$ に繋ぐチェイン・ホモトピーが存在するとき $\varphi \simeq \psi$ と書き，$\varphi$ は $\psi$ に\textbf{チェイン・ホモトピック}であると言う．
+% \end{mydef}
+
+% チェイン・ホモトピックは同値関係である．
+% 補題\ref{prop:chainHomotopy-basic}より
+% \begin{align}
+%     H_q(\varphi) = H_q(\psi) \in \NAT (H_q \circ F_\bullet,\, H_q \circ G_\bullet)
+% \end{align}
+% が成り立つ．
+
+% \subsection{非輪状モデル定理}
+
+% 関手 $F_\bullet \colon \Cat{C} \longrightarrow \CHAIN$ を考える．
+
+% \begin{mydef}[label=def:functor-acyclic]{非輪状}
+%     $\Obj{\Cat{C}}$ の一部分からなる集合 $\mathcal{M}$ を与える．$\forall M \in \mathcal{M}$ と $\forall q \ge \textcolor{red}{1}$ に対して
+%     \begin{align}
+%         H_q \bigl( F_\bullet(M) \bigr) = 0
+%     \end{align}
+%     を充たすとき，関手 $F_\bullet$ は集合 $\mathcal{M}$ について\textbf{非輪状} (acyclic) であるという．
+% \end{mydef}
+
+% \begin{mydef}[label=def:functor-free]{自由}
+%     $\Obj{\Cat{C}}$ の一部分からなる集合 $\mathcal{M}$ を与える．$\forall q \ge 0$ に対して
+%     \begin{align}
+%         \exists J_q \subset \bigl\{\, (M,\, \mu) \bigm| M \in \mathcal{M},\, \mu \in F_q(M) \,\bigr\} 
+%     \end{align}
+%     であり\footnote{ややこしいが，$\mu$ は $\mathbb{Z}$ 加群の元である．}，$\forall X \in \Obj{\Cat{C}}$ について集合
+%     \begin{align}
+%         \bigl\{\, F_q(f)(\mu) \bigm| (M,\, \mu) \in J_q,\, f \in \Hom{\Cat{C}}(M,\, X) \,\bigr\} \subset F_q(X)
+%     \end{align}
+%     の元が互いに異なり，かつ $\mathbb{Z}$ 加群 $F_q(X)$ の自由基底を与えるとき，関手 $F_\bullet$ は集合 $\mathcal{M}$ について\textbf{自由} (free) であると言う．
+% \end{mydef}
+
+% \begin{mytheo}[label=thm:acyclicModel]{非輪状モデル定理}
+%     共変関手 $F_\bullet,\, G_\bullet \colon \mathcal{C} \longrightarrow \CHAIN$ を与える．$F_\bullet$ が集合 $\mathcal{M}$ について\hyperref[def:functor-free]{自由}で，かつ $G_\bullet$ が集合 $\mathcal{M}$ \hyperref[def:functor-acyclic]{非輪状}であるとする．このとき，全単射
+%     \begin{align}
+%         H_0 \colon \NAT(F_\bullet,\, G_\bullet) / \mathord{\simeq} \xrightarrow{\simeq} \NAT \bigl( H_0 \circ F_\bullet,\, H_0 \circ G_\bullet \bigr) 
+%     \end{align}
+%     が成り立つ．
+% \end{mytheo}
+
+% 非輪状モデル定理を言い換えると，次の二つが成り立つ：
+%     \begin{description}
+%         \item[\textbf{(全射性)}] 
+%         \begin{align}
+%             \forall \bar{\varphi} \in \NAT \bigl( H_0 \circ F_\bullet,\, H_0 \circ G_\bullet \bigr),\; \exists \varphi \colon F_\bullet \longrightarrow G_\bullet,\quad \bar{\varphi} = H_0([\varphi])
+%         \end{align}
+%         \item[\textbf{(単射性)}] $\forall \varphi,\, \psi \in \NAT(F_\bullet,\, G_\bullet)$ に対して
+%         \begin{align}
+%             H_0(\varphi) = H_0(\psi) \IMP \varphi \simeq \psi
+%         \end{align}
+%         特に補題\ref{prop:chainHomotopy-basic}から
+%         \begin{align}
+%             H_0(\varphi) = H_0(\psi) \IFF \varphi \simeq \psi
+%         \end{align}
+%         である．
+%     \end{description}
+
+\subsection{連結準同型とホモロジー長完全列}
+
+3つの\hyperref[def:CC]{チェイン複体} $(A_\bullet \partial_\bullet),\, (B_\bullet,\, \partial'_\bullet),\, (C_\bullet,\, \partial''_\bullet)$
+および二つの\hyperref[def:chainmap]{チェイン写像} $i_\bullet \colon (A_\bullet \partial_\bullet) \lto (B_\bullet,\, \partial'_\bullet),\; p_\bullet \colon (B_\bullet \partial'_\bullet) \lto (C_\bullet,\, \partial''_\bullet)$ を与える．
+可換図式\footnote{$0 \lto A_\bullet$ の部分は包含写像 $0 \lmto 0$ で，$C_\bullet \lto 0$ の部分は零写像 $u \lmto 0$ であり，どちらも $R$ 加群の準同型写像である．}
+\begin{figure}[H]
+    \centering
+    \begin{tikzcd}[row sep=large, column sep=large]
+                &\vdots  \ar[d, "\partial_{q+2}"]                    &\vdots \ar[d, "\partial'_{q+2}"]                   &\vdots \ar[d, "\partial''_{q+2}"] & \\
+        0\ar[r] &A_{q+1} \ar[r, "i_{q+1}"]\ar[d, "\partial_{q+1}"]   &B_{q+1} \ar[r, "p_{q+1}"]\ar[d, "\partial'_{q+1}"] &C_{q+1} \ar[r]\ar[d, "\partial''_{q+1}"] &0 \\
+        0\ar[r] &A_q     \ar[r, "i_q"]    \ar[d, "\partial_{q}"]     &B_q \ar[r, "p_q"]\ar[d, "\partial'_{q}"]           &C_q \ar[r]\ar[d, "\partial''_{q}"] &0 \\
+        0\ar[r] &A_{q-1} \ar[r, "i_{q-1}"]\ar[d, "\partial_{q-1}"]   &B_{q-1} \ar[r, "p_{q-1}"]\ar[d, "\partial'_{q-1}"] &C_{q-1} \ar[r]\ar[d, "\partial''_{q-1}"] &0 \\
+                &\vdots                                              &\vdots                                            &\vdots
+    \end{tikzcd}
+    \caption{}
+    \label{fig:cnct1}
+\end{figure}
+において各列
+\begin{align}
+    \label{eq:ES1}
+    0 \lto A_q \xrightarrow{i_q} B_q \xrightarrow{p_q} C_q \lto 0
+\end{align}
+が完全であると仮定する．
+
+\begin{mydef}[label=def:chain-exact]{チェイン複体の短完全列}
+    上述の仮定が成り立つとき，圏 $\CHAIN$ の図式
+    \begin{align}
+        0 \lto (A_\bullet,\, \partial_\bullet) \xrightarrow{i_\bullet} (B_\bullet,\, \partial'_\bullet) \xrightarrow{p_\bullet} (C_\bullet,\, \partial''_\bullet) \lto 0
+    \end{align}
+    は\textbf{チェイン複体の短完全列}であると言われる．
+\end{mydef}
+
+
+\begin{myprop}[label=prop:HES, breakable]{ホモロジー長完全列 (zig-zag lemma)}
+    \hyperref[def:chain-exact]{チェイン複体の短完全列}
+    \begin{align}
+        0 \lto A_q \xrightarrow{i_q} B_q \xrightarrow{p_q} C_q \lto 0
+    \end{align}
+    を与える．
+
+    このとき $\forall q \in \mathbb{Z}$ に対して\textbf{連結準同型} (connecting homomorphism) と呼ばれる準同型写像
+    \begin{align}
+        \label{eq:connecting}
+        \delta_q \colon H_q(C_\bullet) \lto H_{q-1}(A_\bullet)
+    \end{align}
+    が定まり，$\MOD{R}$ の図式
+    \begin{align}
+        \label{eq:HES}
+        \cdots \textcolor{red}{\xrightarrow{\delta_{q+1}}} &H_q(A_\bullet) \xrightarrow{H_q(i_\bullet)} H_q(B_\bullet) \xrightarrow{H_q(p_\bullet)} H_q(C_\bullet) \\
+        \textcolor{red}{\xrightarrow{\delta_q}} &H_{q-1}(A_\bullet) \xrightarrow{H_{q-1}(i_\bullet)} H_{q-1}(B_\bullet) \xrightarrow{H_{q-1}(p_\bullet)} H_{q-1}(C_\bullet)
+        \textcolor{red}{\xrightarrow{\delta_{q-1}}} \cdots
+    \end{align}
+    は完全列になる．
+    \eqref{eq:HES}のことを\textbf{ホモロジー長完全列} (homology long exact sequence) と呼ぶ．
+\end{myprop}
+
+\begin{proof}
+    \hyperref[def:chain-exact]{チェイン複体の短完全列の定義}より\eqref{eq:ES1}が完全なので，$\forall q \in \mathbb{Z}$ に対して $i_q$ は単射，$p_q$ は全射で，かつ $\Ker p_q = \Im i_q$ が成り立つ．
+
+    \subsubsection{連結準同型の構成}
+
+    $\forall q \in \mathbb{Z}$ を1つ固定する．手始めに $\forall c \in \Ker \partial''_q$ の行き先 $a \in \Ker \partial_{q-1}$ を見繕う．
+    \begin{description}
+        \item[\textbf{手順 (1)}]\label{pro:1}  $p_q$ は全射なので，ある $b \in B_q$ が存在して 
+        $c = p_{q}(b)$ と書ける：
+
+        \begin{center}
+            \begin{tikzcd}[row sep=large, column sep=large]
+                \exists b \ar[r, "p_q"] &c \ar[d, "\partial''_q"] \\
+                                        &0
+            \end{tikzcd}
+        \end{center}
+
+        \item[\textbf{手順 (2)}]\label{pro:2} 図式\ref{fig:cnct1}が可換なので
+        \begin{align}
+            p_{q-1} \bigl(\partial'_q b\bigr) = \partial''_q \bigl( p_q (b) \bigr) = \partial''_q c = 0 \IFF \bm{\partial'_q b \in \Ker p_{q-1}}
+        \end{align}
+        が成り立つ：
+
+        \begin{center}
+            \begin{tikzcd}[row sep=large, column sep=large]
+                &\exists b \ar[r, "p_q"]\ar[d, "\partial'_q"] &c \ar[d, "\partial''_q"] \\
+                &\partial'_q b \ar[r, "p_{q-1}"] &0
+            \end{tikzcd}  
+        \end{center}
+
+
+        \item[\textbf{手順 (3)}]\label{pro:3} $\Ker p_{q-1} = \Im i_{q-1}$ かつ $i_{q-1}$ は単射なので，ある $a_b \in A_q$ が一意的に存在して
+        $\partial'_q b = i_{q-1} (a_b)$ と書ける：
+
+        \begin{center}
+            \begin{tikzcd}[row sep=large, column sep=large]
+                &\exists b \ar[r, "p_q"]\ar[d, "\partial'_q"] &c \ar[d, "\partial''_q"] \\
+                \exists! a_b \ar[r, "i_{q-1}"]&\partial'_q b \ar[r, "p_{q-1}"]   &0
+            \end{tikzcd}
+        \end{center}
+
+        \item[\textbf{手順 (4)}]\label{pro:4} 図式\ref{fig:cnct1}が可換なので
+        \begin{align}
+            i_{q-2} \bigl(\partial_{q-1} a\bigr) = \partial'_{q-1} \bigl( i_{q-1} a \bigr) = \partial'_{q-1} \partial'_q b = 0
+        \end{align}
+        が成り立つ．さらに $i_{q-2}$ は単射，i.e. $\Ker i_{q-2} = \{0\}$ なので
+        \begin{align}
+            \partial_{q-1} a_b = 0 \IFF \bm{a_b \in \Ker \partial_{q-1}}
+        \end{align}
+        である：
+
+        \begin{center}
+            \begin{tikzcd}[row sep=large, column sep=large]
+                &                                                      &\exists b \ar[r, "p_q"]\ar[d, "\partial'_q"]  &c \ar[d, "\partial''_q"] \\
+                &\exists! a_b \ar[r, "i_{q-1}"] \ar[d, "\partial_{q-1}"] &\partial'_q b  \ar[d, "\partial'_{q-1}"]  \ar[r, "p_{q-1}"]   &0  \\
+                &\partial_{q-1} a_b \ar[r, "i_{q-1}"]                    &0
+            \end{tikzcd}
+        \end{center}
+    \end{description}
+
+    \hrulefill
+
+    \begin{mylem}[label=lem:def:connecting]{連結準同型の定義}
+        写像
+        \begin{align}
+            \delta_q \colon H_q(C_\bullet) \lto H_{q-1} (A_\bullet),\; c + \Im \partial''_{q+1} \lmto a_b + \Im \partial_{q}
+        \end{align}
+        はwell-definedな準同型写像である．
+    \end{mylem}
+
+    \begin{proof}
+        まず写像
+            \begin{align}
+                \label{eq:preconne}
+                \psi_q \colon \Ker \partial''_q \lto H_{q-1}(A_\bullet),\; c \lmto a_b + \Im \partial_q
+            \end{align}
+        がwell-definedな準同型写像であることを示す．
+        \begin{description}
+            \item[\textbf{(well-definedness)}]　
+            
+            　\hyperref[pro:3]{\textbf{手順 (3)}}より $b \in p_q^{-1}(\{c\})$ が与えられると $a_b \in \Ker \partial_{q-1}$ が一意に定まるから，
+            $a_b + \Im \partial_q$ が $b \in p_q^{-1}(\{c\})$ の取り方によらずに定まることを示せば良い．
+
+            　別の $b' \in p_q^{-1}(\{c\})$ をとる．このとき
+            \begin{align}
+                p_q(b') = p_q(b) \IFF p_q (b' -b) = 0 \IFF b' - b \in \Ker p_q = \Im i_q
+            \end{align}
+            が言えるので，
+            ある $\alpha \in A_q$ が存在して $b' - b = i_q(\alpha)$ と書ける．さらに図式\ref{fig:cnct1}の可換性から
+            \begin{align}
+                \label{eq:cnct2}
+                i_{q-1} \bigl(\partial_q(\alpha)\bigr) = \partial'_q (i_q(a')) = \partial'_q (b' - b)
+            \end{align}
+            が成り立つ．
+            一方，\hyperref[pro:3]{\textbf{手順 (3)}}, \hyperref[pro:4]{\textbf{(4)}}より $\partial'_q b' = i_{q-1}(a_{b'})$ を充たす $a_{b'} \in \Ker \partial_{q-1}$ が一意的に存在する．このとき式\eqref{eq:cnct2}から
+            \begin{align}
+                i_{q-1}(a_{b'}) = \partial'_q b' = \partial'_q b + \partial'_q(b'-b) = i_{q-1}\bigl(a_b + \partial_q(\alpha)\bigr)
+            \end{align}
+            が成り立つが，$i_{q-1}$ が単射なので
+            \begin{align}
+                a_{b'} + \Im \partial_q = \bigl(a_b + \partial_q(\alpha)\bigr) = a_b + \Im \partial_q
+            \end{align}
+            が示された．
+
+            \item[\textbf{(準同型写像であること)}] 　
+
+            　$\forall c_1,\, c_2 \in \Ker \partial''_q$ に対して $b_i \in p_q^{-1}(\{c_i\})\quad ({}^{\mathrm{w}/}\; i = 1,\, 2)$ をとり，
+            \hyperref[pro:3]{\textbf{手順 (3)}}, \hyperref[pro:4]{\textbf{(4)}} に従って
+            $a_{b_i} \in \Ker \partial_{q-1}$ をとる．
+            このとき $b_1 + b_2 \in p_q^{-1}(\{ c_1 + c_2 \})$ である．
+            また，$\partial'_q(b_1 + b_2) = i_{q-1}(a_{b_1} + a_{b_2})$ 
+            かつ $a_{b_1} + a_{b_2} \in \Ker \partial_{q-1}$ が成り立つ\footnote{$p_q,\, i_{q-1},\, \partial'_q$ は全て左 $R$ 加群の準同型写像なので．}ので
+            $a_{b_1} + a_{b_2} = a_{b_1+b_2}$ である．
+            従って
+            \begin{align}
+                \psi_q (c_1 + c_2) &= a_{b_1 + b_2} + \Im \partial_q \\
+                &= (a_{b_1} + a_{b_2}) + \Im \partial_q \\
+                &= (a_1 + \Im \partial_q) + (a_2 + \Im \partial_q) \\
+                &= \psi_q(c_1) + \psi_q(c_2)
+            \end{align}
+            が言えて加法についての証明が完了する．
+            スカラー乗法に関しても同様である．
+        \end{description}
+
+        次に $\Im \partial''_{q+1} \subset \Ker \psi_q$ を示す．
+        $\forall \partial''_{q+1}(c) \in \Im \partial''_{q+1}$ を1つとる．
+        $p_{q+1}$ は全射なので $b \in p_{q+1}^{-1}(\{c\})$ をとることができ，図式\ref{fig:cnct1}の可換性から 
+        \begin{align}
+            \label{eq:preconne-2}
+            p_q \bigl( \partial'_{q+1}(b) \bigr) = \partial''_{q+1} \bigl( p_{q+1}(b) \bigr) = \partial''_{q+1} c \in C_q
+        \end{align}
+        が成り立つ．
+        ところで $\partial''_q \partial''_{q+1} = 0$ より
+        $\partial''_{q+1}(c) \in \Im \partial''_{q+1} \subset \Ker \partial''_q$ であるから，$\partial''_{q+1}(c)$ に対して\hyperref[pro:1]{手順 (1)}-\hyperref[pro:4]{(4)} を適用できる．特に\eqref{eq:preconne-2}より\hyperref[pro:1]{手順 (1)} の $b$ として $\partial'_{q+1}(b)$ を選ぶことができ，
+        \hyperref[pro:3]{手順 (3)}, \hyperref[pro:4]{(4)}より $i_{q-1}(a_{\partial'_{q+1}(b)}) = \partial'_q \partial'_{q+1}(b) = 0$ を充たす $a_{\partial'_{q+1}(b)} \in \Ker \partial_{q-1}$ が一意的に存在する．
+        ここで $i_{q-1}$ は単射なので $a_{\partial'_{q+1}(b)} = 0$ であり，
+        \begin{align}
+            \psi_q (\partial''_{q+1} c) = a_{\partial'_{q+1}(b)} + \Im \partial_q = \Im \partial_q = 0_{H_{q-1}(A_\bullet)} \IFF \partial''_{q+1} c \in \Ker \psi_q
+        \end{align}
+        が示された．
+        
+        以上の議論より\hyperref[lem:quomod-univ]{商加群の普遍性}が使えて，
+        可換図式\footnote{$\Ker \partial''_q \lto H_q(C_\bullet)$ は標準的射影であり，$c \lmto c + \Im \partial''_{q+1}$ である．}
+        \begin{center}
+            \begin{tikzcd}[row sep=large, column sep=large]
+                \Ker \partial''_q \ar[d]\ar[r, "\psi_q"] &L \\
+                H_q(C_\bullet) \arrow[ur, red, dashed, "\exists!\delta_q"']&
+            \end{tikzcd}
+        \end{center}
+        が成り立つ．i.e. $\psi_q$ が $\delta_q$ を一意的に誘導する．
+    \end{proof}
+
+\hrulefill
+
+\subsubsection{完全性}
+
+次に $\forall q \in \mathbb{Z}$ を1つ固定し，
+\begin{align}
+    H_q(A_\bullet) \xrightarrow{H_q(i_\bullet)} H_q(B_\bullet) \xrightarrow{H_q(p_\bullet)} H_q(C_\bullet)
+    \textcolor{red}{\xrightarrow{\delta_q}} &H_{q-1}(C_\bullet) \xrightarrow{H_{q-1}(i_\bullet)} H_{q-1}(B_\bullet)
+\end{align}
+が完全であることを示す．
+
+\begin{description}
+    \item[$\bm{H_q(A_\bullet) \xrightarrow{H_q(i_\bullet)} H_q(B_\bullet) \xrightarrow{H_q(p_\bullet)} H_q(C_\bullet) \quad (\text{exact})}$] 　
+    
+    　\hyperref[def:chain-exact]{チェイン複体の短完全列の定義}より $p_q \circ i_q = 0$ なので，\hyperref[prop:Hq-functoriality]{$H_q$ の関手性}より $H_q(p_\bullet) \circ H_q(i_\bullet) = 0$，i.e. $\Im  H_q(i_\bullet) \subset \Ker H_q(p_\bullet)$ が言える．
+
+    　次に $\Im  H_q(i_\bullet) \supset \Ker H_q(p_\bullet)$ を示す．
+    $\forall b + \Im \partial'_{q+1} \in \Ker H_q(p_\bullet)$ を1つとる．このとき $H_q(p_\bullet)(b + \Im \partial'_{q+1}) = p_q(b) + \Im \partial''_{q+1} = 0_{H_q(C_\bullet)}$ なので $p_q(b) \in \Im \partial''_{q+1}$ である．
+    $p_{q+1}$ の全射性も考慮するとある $b' \in B_{q+1}$ が存在して $p_q(b) = \partial_{q+1}''\bigl( p_{q+1}(b')\bigr)$ と書ける．
+    ここで図式\ref{fig:cnct1}の可換性から
+    \begin{align}
+        0 = p_q(b) - \partial_{q+1}''\bigl( p_{q+1}(b')\bigr) = p_q ( b - \partial'_{q+1} b' ) \IFF b - \partial'_{q+1} b' \in \Ker p_q = \Im i_q
+    \end{align}
+    が言える．故に $i_q$ の単射性からある $a \in A_q$ が一意的に存在して $b - \partial'_{q+1} b' = i_q(a)$ が成り立つ．
+    従って
+    \begin{align}
+        b + \Im \partial'_{q+1} = \bigl(i_q(a) + \partial'_{q+1} b'\bigr) + \Im \partial'_{q+1} = i_q(a) + \Im \partial'_{q+1} = H_q(i_\bullet) (a + \Im \partial_{q+1}) \in \Im H_q(i_\bullet)
+    \end{align}
+    が示された．
+    
+    \item[$\bm{H_q(B_\bullet) \xrightarrow{H_q(p_\bullet)} H_q(C_\bullet) \xrightarrow{\delta_q} H_{q-1}(A_\bullet) \quad (\text{exact})}$]　
+    
+    　まず $\Im H_q(p_\bullet) \subset \Ker \delta_q$ を示す．$\forall H_q(p_\bullet)(b + \Im \partial'_{q+1}) = p_q(b) + \Im \partial''_{q+1} \in \Im H_q(p_\bullet)$ を1つとる．このとき $p_q(b) \in \Ker \partial''_q\; (\WHERE b \in \Ker \partial'_q)$ に\hyperref[pro:1]{手順 (1)}-\hyperref[pro:4]{(4)}を適用して得られる $a_b \in \Ker \partial_{q-1}$ は $0 = \partial'_q b = i_{q-1}(a_b)$ を充たすが，
+    $i_{q-1}$ は単射なので $a = 0$ が言える．従って
+    \begin{align}
+        \delta_q \bigl( H_q(p_\bullet)(b + \Im \partial'_{q+1}) \bigr)  = a_b + \Im \partial_q = \Im \partial_q = 0_{H_{q-1}(A_\bullet)} \iff H_q(p_\bullet)(b + \Im \partial'_{q+1}) \in \Ker \delta_q
+    \end{align}
+    が示された．
+
+    　次に $\Im H_q(p_\bullet) \supset \Ker \delta_q$ を示す．$\forall c + \Im \partial''_{q+1} \in \Ker \delta_q$ を1つとる．
+    $c \in \Ker \partial''_q$ に対して\hyperref[pro:1]{手順 (1)} を適用して $b \in B_q$ が得られ，この $b$ に\hyperref[pro:3]{手順 (3)}-\hyperref[pro:4]{(4)} を適用して $a_b \in \Ker \partial_{q-1}$ が得られたとする．
+    すると\hyperref[lem:def:connecting]{連結準同型の定義}から $\delta_q(c + \Im \partial''_{q+1}) = a_b + \Im \partial_q = 0_{H_q(A_\bullet)}$ なので $a_b \in \Im \partial_q$ が成り立つ．
+    i.e. ある $a' \in A_{q}$ が存在して $a_b = \partial_q(a')$ と書ける．
+    ここで，\hyperref[pro:3]{手順 (3)} および図式\ref{fig:cnct1}の可換性から
+    \begin{align}
+        \partial'_q b = i_{q-1}(a_b) = i_{q-1} (\partial_q(a')) = \partial'_q \bigl( i_q(a') \bigr) \IFF b - i_q(a') \in \Ker \partial'_q
+    \end{align}
+    が言える．従って $\bigl( b + i_q(a') \bigr) + \Im \partial'_{q+1} \in H_q(B_\bullet)$ であり，\hyperref[pro:1]{手順 (1)} および $p_q \circ i_q = 0$ から
+    \begin{align}
+        c + \Im \partial''_{q+1} = p_q(b) + \Im \partial''_{q+1} = p_q\bigl( b + i_q(a') \bigr) + \Im \partial''_{q+1} = H_q (p_\bullet)\Bigl( \bigl( b + i_q(a') \bigr) \Bigr)
+    \end{align}
+    i.e. $c + \Im \partial''_{q+1} \in \Im H_q(p_\bullet)$ が示された．
+
+    \item[$\bm{H_q(C_\bullet) \xrightarrow{\delta_q} H_q(A_\bullet) \xrightarrow{H_{q-1}(i_\bullet)} H_{q-1}(B_\bullet) \quad (\text{exact})}$]　
+    
+    　まず $\Im \delta_q \subset \Ker H_{q-1}(i_\bullet)$ を示す．$\forall \delta_q(c + \Im \partial''_{q+1}) = a_b + \Im \partial_q \in \Im \delta_q$ を1つとる．ただし $a_b \in \Ker \partial_{q-1}$ は，ある $b \in p_{q}^{-1}(\{c\})$ に\hyperref[pro:3]{手順 (3)}, \hyperref[pro:4]{(4)} を施して得られる．
+    このとき
+    \begin{align}
+        H_{q-1}(i_\bullet) ( a_b + \Im \partial_q ) = i_{q-1}(a_b) + \Im \partial'_q = \partial'_q b + \Im \partial'_q = \Im \partial'_q = 0_{H_{q-1}(B_\bullet)}
+    \end{align}
+    が言える．
+
+    　次に $\Im \delta_q \supset \Ker H_{q-1}(i_\bullet)$ を示す．$\forall a + \Im \partial_q \in \Ker H_{q-1}(i_\bullet)$ を1つとる．このとき $i_{q-1}(a) \in \Im \partial'_q$ だからある $b \in B_q$ が存在して $\partial'_q b = i_{q-1}(a)$ を充たす．
+    $c \coloneqq p_q(b)$ とおくと，図式\ref{fig:cnct1}の可換性より $\partial''_q c = p_{q-1} ( \partial'_q b) = p_{q-1} \bigl( i_{q-1}(a) \bigr) = 0 \iff c \in \Ker \partial''_q$ がわかる．
+    従って $c + \Im \partial''_{q+1} \in H_q (C_\bullet)$ であり，\hyperref[pro:1]{手順 (1)}-\hyperref[pro:4]{(4)} の定義より
+    \begin{align}
+        a + \Im \partial_q = \delta_q (c + \Im \partial''_{q+1}) \in \Im \delta_q
+    \end{align}
+    が示された．
+\end{description}
+$q$ は任意だったので，図式\eqref{eq:ES1}が完全であることが示された．
+\end{proof}
+
+2つの\hyperref[def:chain-exact]{チェイン複体の短完全列}
+\begin{align}
+    0 &\lto (A_1{}_\bullet,\, \partial_1{}_\bullet) \xrightarrow{i_1{}_\bullet} (B_1{}_\bullet,\, \partial'_1{}_\bullet) \xrightarrow{p_1{}_\bullet} (C_1{}_\bullet,\, \partial''_1{}_\bullet) \lto 0\quad (\text{exact}) \\
+    0 &\lto (A_2{}_\bullet,\, \partial_2{}_\bullet) \xrightarrow{i_2{}_\bullet} (B_2{}_\bullet,\, \partial'_2{}_\bullet) \xrightarrow{p_2{}_\bullet} (C_2{}_\bullet,\, \partial''_2{}_\bullet) \lto 0\quad (\text{exact})
+\end{align}
+が与えられたとき，\hyperref[def:chainmap]{チェイン写像}の3つ組
+\begin{align}
+    \textcolor{red}{\alpha_\bullet} &\colon (A_1{}_\bullet,\, \partial_1{}_\bullet) \lto (A_2{}_\bullet,\, \partial_2{}_\bullet), \\
+    \textcolor{red}{\beta_\bullet }&\colon (B_1{}_\bullet,\, \partial'_1{}_\bullet) \lto (B_2{}_\bullet,\, \partial'_2{}_\bullet), \\
+    \textcolor{red}{\gamma_\bullet} &\colon (C_1{}_\bullet,\, \partial''_1{}_\bullet) \lto (C_2{}_\bullet,\, \partial''_2{}_\bullet)
+\end{align}
+であって $\MOD{R}$ の図式
+\begin{center}
+    \begin{tikzcd}[row sep=large, column sep=large]
+        &0\ar[r] &(A_1{}_\bullet,\, \partial_1{}_\bullet) \ar[r, "i_1{}_\bullet"]\ar[d, red, "\alpha_\bullet"] &(B_1{}_\bullet,\, \partial'_1{}_\bullet) \ar[r, "p_1{}_\bullet"]\ar[d, red, "\beta_\bullet"] &(C_1{}_\bullet,\, \partial''_1{}_\bullet) \ar[r]\ar[d, red, "\gamma_\bullet"] &0 \quad (\text{exact})\\
+        &0\ar[r] &(A_2{}_\bullet,\, \partial_2{}_\bullet) \ar[r, "i_2{}_\bullet"] &(B_2{}_\bullet,\, \partial'_2{}_\bullet) \ar[r, "p_2{}_\bullet"] &(C_2{}_\bullet,\, \partial''_2{}_\bullet) \ar[r] &0\quad (\text{exact})
+    \end{tikzcd}
+\end{center}
+を可換にするようなものを射と見做すことで，全ての\hyperref[def:chain-exact]{チェイン複体の短完全列}の集まりは\hyperref[def:category]{圏} $\SES{\CHAIN}$ を成す．
+$\SES{\CHAIN}$ の射をあからさまに書くと，3次元的な可換図式
+\begin{center}
+    \begin{tikzcd}[row sep=large, column sep=large]
+            &\vdots  \ar[d, "\partial_1{}_{q+2}"]                    &\vdots \ar[d, "\partial'_1{}_{q+2}"]                   &\vdots \ar[d, "\partial''_1{}_{q+2}"] & &\\
+    0\ar[r] &A_1{}_{q+1} \ar[d, "\partial_1{}_{q+1}"]\ar[r, "i_1{}_{q+1}"]   &B_1{}_{q+1} \ar[r, "p_1{}_{q+1}"]\ar[d, "\partial'_1{}_{q+1}"] &C_1{}_{q+1} \ar[r]\ar[d, "\partial''_1{}_{q+1}"] &0\quad (\text{exact}) &\\
+    0\ar[r] &A_1{}_q     \ar[ddddr, red, "\alpha_{q}"]\ar[r, "i_1{}_q"]    \ar[d, "\partial_1{}_{q}"]     &B_1{}_q \ar[ddddr, red, "\beta_{q}"]\ar[r, "p_1{}_q"]\ar[d, "\partial'_1{}_{q}"]           &C_1{}_q \ar[ddddr, red, "\gamma_{q}"]\ar[r]\ar[d, "\partial''_1{}_{q}"] &0\quad (\text{exact}) &\\
+            &\vdots                                              &\vdots                                            &\vdots & \\
+    &                &\vdots  \ar[d, "\partial_2{}_{q+2}"]                    &\vdots \ar[d, "\partial'_2{}_{q+2}"]                   &\vdots \ar[d, "\partial''_2{}_{q+2}"] & \\
+    &        0\ar[r] &A_2{}_{q+1} \ar[from=uuuul, crossing over, red, "\alpha_{q+1}"]\ar[r, "i_1{}_{q+1}"]\ar[r, "i_2{}_{q+1}"]\ar[d, "\partial_2{}_{q+1}"]   &B_2{}_{q+1} \ar[from=uuuul, crossing over, red, "\beta_{q+1}"]\ar[r, "p_2{}_{q+1}"]\ar[d, "\partial'_2{}_{q+1}"] &C_2{}_{q+1} \ar[from=uuuul, crossing over, red, "\gamma_{q+1}"]\ar[r]\ar[d, "\partial''_2{}_{q+1}"] &0\quad (\text{exact}) \\
+    &        0\ar[r] &A_2{}_q     \ar[r, "i_2{}_q"]    \ar[d, "\partial_2{}_{q}"]     &B_2{}_q \ar[r, "p_2{}_q"]\ar[d, "\partial'_2{}_{q}"]           &C_2{}_q \ar[r]\ar[d, "\partial''_2{}_{q}"] &0\quad (\text{exact}) \\
+    &                &\vdots                                              &\vdots                                            &\vdots
+    \end{tikzcd}
+\end{center}
+になる．
+
+同じように考えると，$\MOD{R}$ の完全列全体の集まりは圏 $\ES{\MOD{R}}$ を成す．
+つまり $\forall (M_\bullet,\, f_\bullet),\; (N_\bullet,\, g_\bullet) \in \Obj{\ES{\MOD{R}}}$ の間の射とは，
+左 $R$ 加群の準同型写像の族 $\textcolor{red}{\varphi_\bullet} \coloneqq \Familyset[\big]{\varphi_q \colon M_q \lto N_q}{q}$ であって図式
+\begin{center}
+    \begin{tikzcd}[row sep=large, column sep=large]
+        &\cdots \ar[r, "f_{q+2}"] &M_{q+1} \ar[r, "f_{q+1}"]\ar[dr, red, "\varphi_{q+1}"] &M_{q} \ar[r, "f_q"]\ar[dr, red, "\varphi_{q}"] &M_{q-1} \ar[r, "f_{q-1}"]\ar[dr, red, "\varphi_{q-1}"] &\cdots \quad (\text{exact}) & \\
+        & &\cdots \ar[r, "f_{q+2}"] &N_{q+1} \ar[r, "f_{q+1}"] &N_{q} \ar[r, "f_q"] &N_{q-1} \ar[r, "f_{q-1}"] &\cdots \quad (\text{exact})
+    \end{tikzcd}
+\end{center}
+を可換にするようなもののことである．
+
+\begin{mycol}[label=col:HES-naturality, breakable]{ホモロジー長完全列の自然性}
+    \hyperref[prop:HES]{ホモロジー長完全列}は\textbf{自然}である．i.e. $\SES{\CHAIN}$ の任意の2つの対象
+    \begin{align}
+        \mathcal{C}_1 \coloneqq \Bigl( 0 &\lto (A_1{}_\bullet,\, \partial_1{}_\bullet) \xrightarrow{i_1{}_\bullet} (B_1{}_\bullet,\, \partial'_1{}_\bullet) \xrightarrow{p_1{}_\bullet} (C_1{}_\bullet,\, \partial''_1{}_\bullet) \lto 0\quad (\text{exact})\Bigr) \\
+        \mathcal{C}_2 \coloneqq \Bigl(0 &\lto (A_2{}_\bullet,\, \partial_2{}_\bullet) \xrightarrow{i_2{}_\bullet} (B_2{}_\bullet,\, \partial'_2{}_\bullet) \xrightarrow{p_2{}_\bullet} (C_2{}_\bullet,\, \partial''_2{}_\bullet) \lto 0\quad (\text{exact})\Bigr)
+    \end{align}
+    とこれらを結ぶ任意の射 $(\alpha_\bullet,\, \beta_\bullet,\, \gamma_\bullet) \in \Hom{\SES{\CHAIN}}(\mathcal{C}_1,\, \mathcal{C}_2) $ が与えられたとき，
+    $\forall q \in \mathbb{Z}$ に対して図式\ref{cmtd:HES-naturality}が可換になる．
+
+    特に，\hyperref[def:chain-exact]{チェイン複体の短完全列}から\hyperref[prop:HES]{ホモロジー長完全列}を作る操作は\hyperref[def:functor]{関手} $\SES{\CHAIN} \lto \ES{\MOD{R}}$ を定める．
+\end{mycol}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzcd}[row sep=large, column sep=large]
+    &H_{q}(A_1{}_{\bullet}) \ar[r, "H_q(i_1{}_{\bullet})"]   &H_{q}(B_1{}_\bullet) \ar[r, "H_{q}(p_1{}_{\bullet})"] &H_{q}(C_1{}_{\bullet}) \ar[dll, "\delta_1{}_q"] &&\\
+    &H_{q-1}(A_1{}_{\bullet})     \ar[ddr, red, "H_{q-1}(\alpha_{\bullet})"']\ar[r, "H_{q-1}(i_1{}_\bullet)"']         &H_{q-1}(B_1{}_\bullet) \ar[ddr, red, "H_{q-1}(\beta_{\bullet})"']\ar[r, "H_{q-1}(p_1{}_\bullet)"']               &H_{q-1}(C_1{}_\bullet) \ar[ddr, red, "H_{q-1}(\gamma_{\bullet})"']&(\text{exact}) &\\
+    &&H_{q}(A_2{}_{\bullet}) \ar[from=uul, red, crossing over, "H_{q}(\alpha_{\bullet})"]\ar[r, crossing over, "H_q(i_2{}_{\bullet})"]   &H_{q}(B_2{}_\bullet) \ar[from=uul, red, crossing over, "H_{q}(\beta_{\bullet})"]\ar[r, crossing over, "H_{q}(p_2{}_{\bullet})"] &H_{q}(C_2{}_{\bullet}) \ar[from=uul, red, "H_{q}(\gamma_{\bullet})"]\ar[dll, crossing over, "\delta_2{}_q"]& \\
+    &&H_{q-1}(A_2{}_{\bullet})     \ar[r, "H_{q-1}(i_2{}_\bullet)"']         &H_{q-1}(B_2{}_\bullet) \ar[r, "H_{q-1}(p_2{}_\bullet)"']               &H_{q-1}(C_2{}_\bullet)  &(\text{exact})
+    \end{tikzcd}
+    \caption{ホモロジー長完全列の自然性}
+    \label{cmtd:HES-naturality}
+\end{figure}%
+
+\begin{proof}
+    $\SES{\CHAIN}$ の射の可換性および \hyperref[prop:Hq-functoriality]{$H_q$ の関手性}から，図式
+    \begin{center}
+        \begin{tikzcd}[row sep=large, column sep=large]
+            &H_{q}(A_1{}_{\bullet}) \ar[d, red, crossing over, "H_{q}(\alpha_{\bullet})"]\ar[r, "H_q(i_1{}_{\bullet})"]   &H_{q}(B_1{}_\bullet) \ar[d, red, crossing over, "H_{q}(\beta_{\bullet})"]\ar[r, "H_{q}(p_1{}_{\bullet})"] &H_{q}(C_1{}_{\bullet}) \ar[d, red, "H_q(\gamma_\bullet)"] \\
+            &H_{q}(A_2{}_{\bullet}) \ar[r, "H_q(i_2{}_{\bullet})"]   &H_{q}(B_2{}_\bullet) \ar[r, "H_{q}(p_2{}_{\bullet})"] &H_{q}(C_2{}_{\bullet})
+        \end{tikzcd}
+    \end{center}
+    が可換であることは明らか．
+    よって図式
+    \begin{center}
+        \begin{tikzcd}[row sep=large, column sep=large]
+            &H_{q}(C_1{}_{\bullet}) \ar[d, red, crossing over, "H_{q}(\gamma_{\bullet})"]\ar[r, "\delta_1{}_{q}"]   &H_{q-1}(A_1{}_\bullet) \ar[d, red, crossing over, "H_{q-1}(\alpha_{\bullet})"] \\
+            &H_{q}(C_2{}_{\bullet}) \ar[r, "\delta_2{}_{q}"]   &H_{q-1}(A_2{}_\bullet) 
+        \end{tikzcd}
+    \end{center}
+    が可換であることを示せばよい．
+
+    $\forall c + \Im \partial''_1{}_{q+1} \in H_q(C_1{}_\bullet)$ を1つとる．$c \in \Ker \partial''_1{}_{q}$ に対して $b \in p_1{}_q^{-1}(\{c\})$ をとり，\hyperref[pro:3]{手順 (3)}, \hyperref[pro:4]{(4)} を通して $a_b \in \Ker \partial_1{}_{q-1}$ を得たとする．このとき
+    \begin{align}
+        c &= p_1{}_q(b), \\
+        \partial'_1{}_q b &= i_1{}_{q-1}(a_b), \\
+        H_{q-1}(\alpha_{\bullet}) \bigl( \delta_1{}_q  ( c + \Im \partial''_1{}_{q+1})\bigr) &= \alpha_{q-1} (a_b) + \Im \partial_2{}_{q}
+    \end{align}
+    が成り立つ．ところで，$\SES{\CHAIN}$ の射の可換性より
+    \begin{align}
+        \gamma_q(c) &= \gamma_q \bigl( p_1{}_q(b) \bigr) = p_2{}_q \bigl( \beta_q(b) \bigr), \\
+        i_2{}_{q-1}\bigl(\alpha_{q-1}(a_b)\bigr) &= \beta_{q-1} \bigl( i_1{}_{q-1}(a_b) \bigr) = \beta_{q-1} (\partial'_1{}_q(b)) = \partial'_2{}_q (\beta_q(b))
+    \end{align}
+    が成り立つから，\hyperref[pro:1]{手順 (1)}-\hyperref[pro:4]{(4)} の定義より
+    \begin{align}
+        \delta_2{}_q \bigl( H_q(\gamma_\bullet) (c + \Im \partial''_1{}_{q+1}) \bigr) &= \delta_2{}_q \bigl( \gamma_q(c) + \Im \partial''_2{}_{q+1} \bigr) \\
+        &= \alpha_{q-1}(a_b) + \Im \partial_2{}_q \\
+        &= H_{q-1}(\alpha_{\bullet}) \bigl( \delta_1{}_q  ( c + \Im \partial''_1{}_{q+1})\bigr)
+    \end{align}
+    が示された．
+\end{proof}
+
+% これまでの議論は純粋に代数的なものであった．実は，これらは\textbf{蛇の補題} (snake lemma) に集約される．
+
+% \begin{myprop}[label=prop:snake]{蛇の補題}
+%     2つの行が完全であるような次の左 $R$ 加群の可換図式\ref{fig:snake}を考える．
+%     このとき，次の完全列が存在する：
+%     \begin{align}
+%         \Ker h_1 \xrightarrow{\bar{f}_1} \Ker h_2 \xrightarrow{\bar{f}_2} \Ker h_3 \xrightarrow{\partial} \Coker h_1 \xrightarrow{\bar{g}_1} \Coker h_2 \xrightarrow{\bar{g}_2} \Coker h_3
+%     \end{align}
+%     ただし，$f_1$ が単射ならば $\bar{f}_1$ も単射，$g_2$ が全射ならば $\bar{g}_2$ も全射である．
+% \end{myprop}
+
+% \begin{figure}[H]
+%     \centering
+%     \begin{tikzcd}[row sep=large, column sep=large]
+%         &M_1 \ar[d, "h_1"]\ar[r, "f_1"] &M_2 \ar[d, "h_2"]\ar[r, "f_2"] &M_3 \ar[d, "h_3"]\ar[r] &0 \\
+%         0 \ar[r] &N_1 \ar[r, "g_1"] &N_2 \ar[r, "g_2"] &N_3 &
+%     \end{tikzcd}
+%     \caption{}
+%     \label{fig:snake}
+% \end{figure}%
+
+% \begin{proof}
+%     付録に証明を載せた．
+% \end{proof}
+
+
+\section{整数係数特異ホモロジー}
+
+ここまでの議論は純粋に代数的なものであった．\hyperref[def:CC]{チェイン複体}の理論を用いて位相空間の構造を調べるには，なんらかの\hyperref[def:functor]{関手}
+\begin{align}
+    F_\bullet \colon \TOP \lto \CHAIN
+\end{align}
+を構成する必要がある．この節ではこのような関手の具体例として\underline{整数係数}特異ホモロジーを定義する．
+
+\begin{mydef}[label=def:CC-nn]{非負なチェイン複体}
+    $(C_\bullet,\, \partial_\bullet) \in \Obj{\CHAIN}$ は $\forall q < 0$ に対して $C_q = 0$ であるとき\textbf{非負} (nonnegative) と呼ばれる．
+\end{mydef}
+
+\subsection{標準 $q$ 単体による構成}
+
+\begin{mydef}[label=def:stdsimplex]{標準 $q$-単体}
+    \textbf{標準 $\bm{q}$ 単体} (standard $q$-simplex) $\Delta^q$ を次のように定義する：
+    \begin{align}
+        \Delta^q \coloneqq \Biggl\{\, (x_0,\, x_1,\, \dots,\, x_q) \in \mathbb{R}^{q+1} \Biggm| \sum_{i=0}^q x_i = 1,\; x_i \ge 0\;(0\le \forall i \le q) \,\Biggr\} 
+    \end{align}
+\end{mydef}
+
+$\mathbb{R}^{q+1}$ の基底 $\Familyset[\big]{e^q_k}{k=0,\, \dots,\, q}$ を
+\begin{align}
+    e^q_k \coloneqq \bigl( 0,\, \dots,\, 0,\, \underbrace{1}_{k},\, 0,\, \dots,\, 0 \bigr) 
+\end{align}
+で定義すると，$e^q_k \in \Delta^q$ である
+\footnote{
+    さらに，$\Delta^q$ は  $\Familyset[\big]{e^q_k}{k=0,\, \dots,\, q}$ を含む最小の凸集合でもある．
+    凸集合 $V \subset \mathbb{R}^{q+1}$ が $\Familyset[\big]{e^q_k}{k=0,\, \dots,\, q} \subset V$ を充たすならば，凸集合の性質から $e^q_0,\, \dots,\, e^q_q$ の凸結合もまた $V$ に属するからである．
+}
+
+\begin{mydef}[label=def:facemap, breakable]{face map}
+    $0 \le i \le q$ に対して，線型写像 $f_i^{q} \colon \mathbb{R}^q \to \mathbb{R}^{q+1}$ を
+    \begin{align}
+        f_i^{q} (e_k^{q-1}) \coloneqq 
+        \begin{cases}
+            e_k^q, &k<i \\
+            e_{k+1}^q &k \ge i
+        \end{cases}
+    \end{align}
+    で定義する．このとき $f_i^{q}(\Delta^{q-1}) \subset \Delta^q$ が成立するから，連続写像
+    \begin{align}
+        \Rstr[\big]{f_i^{q}}{\Delta^{q-1}} \colon \Delta^{q-1} \longrightarrow \Delta^q
+    \end{align}
+    が構成できたことになる．
+    $\Rstr[\big]{f_i^{q}}{\Delta^{q-1}}$ は\textbf{面写像} (face map) と呼ばれる．
+\end{mydef}
+明かに
+\begin{align}
+    f_i^{q}\bigl( (x_0,\, x_1,\, \dots,\, x_{q-1}) \bigr) = (x_0,\, x_1,\, \dots,\, x_{i-1},\, 0,\, x_{i},\, \dots,\, x_{q-1}) \in \mathbb{R}^{q+1}
+\end{align}
+である．
+
+\begin{mydef}[label=def:singularsimplex, breakable]{($\mathbb{Z}$ 係数) 特異 $q$ 単体}
+    位相空間 $X$ を与える．
+    \begin{itemize}
+        \item 集合 $\Hom{\TOP}(\Delta^q,\, X)$ を $X$ の\textbf{特異 $\bm{q}$ 単体} (sigular $q$-simplex) と呼ぶ．
+        \item $X$ の $\mathbb{Z}$ 係数\textbf{特異 $\bm{q}$-チェイン} (singular $q$ chain) $S_q(X)$ とは，特異 $q$ 単体の生成する自由 $\mathbb{Z}$ 加群のこと．記号として
+        \begin{align}
+            \bm{S_q(X)} \coloneqq \mathbb{Z}^{\oplus \Hom{\TOP}(\Delta^q,\, X)}
+        \end{align}
+        と書く．
+        \item \textbf{境界写像} (boundary map)
+        $\partial_q \colon S_q(X) \longrightarrow S_{q-1}(X)$
+        を次のように定義する：
+        \begin{align}
+            \partial_q(\sigma) \coloneqq \sum_{i=0}^q (-1)^i \bigl( \sigma \circ f^q_i \bigr) 
+        \end{align}
+    \end{itemize}
+\end{mydef}
+
+\begin{mylem}[label=lem:SC-nilpo]{}
+    \begin{align}
+        \partial_q\partial_{q+1} = 0
+    \end{align}
+\end{mylem}
+
+\begin{proof}
+    $\Hom{\TOP}(\Delta^{q+1},\, X)$ の元は $S_{q+1}(X)$ の基底を成すので，$\forall \sigma \in \Hom{\TOP}(\Delta^{q+1},\, X)$ に対して $\partial_q \partial_{q+1} \sigma = 0$ が成り立つことを示せば良い．
+    まず， $i > j$ のとき
+    \begin{align}
+        \bigl(f_i^{q+1} \circ f_j^q\bigr)(e_k^{q-1}) &= 
+        \begin{cases}
+            f_i^{q+1}(e_k^q), & k < j \\
+            f_i^{q+1}(e_{k+1}^q), & k \ge j
+        \end{cases}
+        = 
+        \begin{cases}
+            e_k^{q+1}, & k < j < i \\
+            e_{k+1}^{q+1}, & k \ge j \AND k+1 < i \\
+            e_{k+2}^{q+1}, & j < i \le k+1
+        \end{cases} \\
+        \bigl(f_j^{q+1} \circ f_{i-1}^q\bigr)(e_k^{q-1}) &= 
+        \begin{cases}
+            f_j^{q+1}(e_k^q), & k < i-1 \\
+            f_j^{q+1}(e_{k+1}^q), & k \ge i-1
+        \end{cases}
+        = 
+        \begin{cases}
+            e_k^{q+1}, & k < j \le i-1 \\
+            e_{k+1}^{q+1}, & k < i-1 \AND k+1 \ge j \\
+            e_{k+2}^{q+1}, & j \le i-1 \le k
+        \end{cases} 
+    \end{align}
+    なので $f_i^{q+1} \circ f_j^q =f_j^{q+1} \circ f_{i-1}^q$ である．従って
+    \begin{align}
+        &\partial_q \partial_{q+1} \sigma = \sum_{i=0}^{q+1} \sum_{j=0}^q (-1)^{i+j} \bigl(\sigma \circ f^{q+1}_i \circ f^q_j\bigr)\\
+        =\;& \sum_{0\le j<i\le q+1} (-1)^{i+j} \bigl(\sigma \circ f_i^{q+1} \circ f^{q}_j\bigr) + \sum_{0\le i \le j\le q} (-1)^{i+j} \bigl(\sigma \circ f_i^{q+1} \circ f^{q}_j\bigr) \\
+        =\;& \sum_{0\le j<i\le q+1} (-1)^{i+j} \bigl(\sigma \circ f_j^{q+1} \circ f^{q}_{i-1}\bigr) + \sum_{0\le i \le j\le q} (-1)^{i+j} \bigl(\sigma \circ f_i^{q+1} \circ f^{q}_j\bigr) \\
+        =\;&0.
+    \end{align}
+\end{proof}
+
+補題\ref{lem:SC-nilpo}より，定義\ref{def:singularsimplex}で作った加群と準同型の組
+\begin{align}
+    \bigl(S_\bullet(X),\, \partial_\bullet\bigr) \coloneqq \Familyset[\big]{S_q(X),\; \partial_q}{q \in \mathbb{Z}}
+\end{align}
+は $\MOD{\mathbb{Z}}$ 上の\hyperref[def:CC-nn]{非負}な\hyperref[def:CC]{チェイン複体}になる．
+
+\begin{mydef}[label=def:SCC]{($\mathbb{Z}$ 係数) 特異チェイン複体}
+    $\bigl(S_\bullet(X),\, \partial_\bullet\bigr) \in \Obj{\CHAIN}$ のことを $\mathbb{Z}$ 係数\textbf{特異チェイン複体} (singular chain complex) と呼ぶ．
+\end{mydef}
+
+\begin{mylem}[label=lem:SC-chain]{特異チェイン群が誘導するチェイン写像}
+    連続写像 $f \in \Hom{\TOP}(X,\, Y)$ を任意に与える．
+    % $\forall q \ge 0$ に対して
+    % \begin{align}
+    %     \label{def:cov-SS}
+    %     f_q(\sigma) \coloneqq f \circ \sigma\quad (\forall \sigma \in X^{\Delta^q})
+    % \end{align}
+    % により定まる写像の族 $f_{\bullet} \coloneqq  \Familyset[\big]{f_q \colon X^{\Delta^\bullet} \to Y^{\Delta^\bullet}}{q \ge 0}$ は
+    
+    このとき $f$ は $\mathbb{Z}$ 加群の準同型の族 $S_\bullet (f) \coloneqq \Familyset[\big]{S_q(f) \colon S_q(X) \to S_q(Y)}{q \ge 0}$ を次のようにして誘導する：
+    \begin{align}
+        S_q(f) \colon S_q(X) \to S_q(Y),\; \sum_l a_l \sigma_l \mapsto \sum_l a_l (f \circ \sigma_l)
+    \end{align}
+    特に $S_\bullet (f)$ は\hyperref[def:chainmap]{チェイン写像} $S_\bullet (f) \colon \bigl( S_\bullet (X),\, \partial^X_\bullet \bigr) \lto \bigl( S_\bullet (Y),\, \partial^Y_\bullet \bigr)$ である．
+\end{mylem}
+
+\begin{proof}
+    $\forall  q \ge 0$ を1つとる．
+    $\forall \sigma \in \Hom{\TOP} (\Delta^q,\, X)$ に対して $f \circ \sigma \in \Hom{\TOP} (\Delta^q,\, Y)$ なので\footnote{連続写像の合成は連続}，
+    $S_q(f) \colon S_q(X) \to S_q(Y)$ はwell-definedな準同型写像である．
+    また，
+    \begin{align}
+        \bigl(\partial^Y_q \circ S_q(f)\bigr)(\sigma) &= \sum_{i=0}^q (-1)^i (f \circ \sigma \circ f_i^q) \\
+        &= S_{q-1}(f) \left( \sum_{i=0}^q (-1)^i (\sigma \circ f_i^q) \right) \\
+        &= \bigl(S_{q-1}(f) \circ \partial^X_q\bigr)(\sigma)
+    \end{align}
+    が成り立つので $S_\bullet(f)$ はチェイン写像である．
+\end{proof}
+
+\begin{mytheo}[label=thm:cov-SS, breakable]{$S_\bullet$ の関手性}
+    \begin{itemize}
+        \item 位相空間 $X \in \Obj{\TOP}$ を\textbf{特異チェイン複体} $S_\bullet(X) \in \Obj{\CHAIN}$ に，
+        \item 連続写像 $f \in \Hom{\TOP}(X,\, Y)$ を補題\ref{lem:SC-chain}の\hyperref[def:chainmap]{チェイン写像} $S_\bullet(f) \in \Hom{\CHAIN} \bigl( S_\bullet(X),\, S_\bullet (Y) \bigr)$ に
+    \end{itemize}
+    対応づける対応
+    \begin{align}
+        S_\bullet \colon \TOP \lto \CHAIN
+    \end{align}
+    は\hyperref[def:functor]{関手}である．
+    i.e. $\forall X,\, Y,\, Z \in \Obj{\TOP}$ と $\forall q \in \mathbb{Z}$ に対して以下が成り立つ：
+    \begin{enumerate}
+        \item 恒等写像 $\mathrm{id}_X \in \Hom{\TOP}(X,\, X)$ について
+        \begin{align}
+            S_q(\mathrm{id}_X) = 1_{S_q(X)} \in \Hom{\MOD{\mathbb{Z}}}\bigl( S_q(X),\, S_q(X) \bigr) 
+        \end{align}
+        \item 任意の連続写像 $f \in \Hom{\TOP}(X,\, Y),\; g \in \Hom{\TOP}(Y,\, Z)$ について
+        \begin{align}
+            S_q(g\circ f)= S_q(g) \circ S_q(f) \in \Hom{\MOD{\mathbb{Z}}}\bigl( S_q(X),\, S_q(Z) \bigr) 
+        \end{align}
+    \end{enumerate}
+\end{mytheo}
+
+\begin{proof}
+    $\Hom{\TOP}(\Delta^q,\, X)$ は自由 $\mathbb{Z}$ 加群 $S_q(X)$ の基底を成すので，$\forall \sigma \in \Hom{\TOP}(\Delta^q,\, X)$ について示せば十分である．
+    \begin{enumerate}
+        \item 恒等写像 $\mathrm{id}_X \colon X \to X$ に対して
+        \begin{align}
+            S_q(\mathrm{id}_X)(\sigma) = \mathrm{id}_X \circ \sigma = \sigma = 1_{S_q(X)}(\sigma).
+        \end{align}
+        \item $\TOP$ における射の結合則より
+        \begin{align}
+            S_q(g \circ f) (\sigma) = g \circ f \circ \sigma = g \circ (f \circ \sigma) = \bigl( S_q(g) \circ S_q(f)\bigr)(\sigma).
+        \end{align}
+    \end{enumerate}
+\end{proof}
+
+これで当初の目標が達成された．ここからさらに\hyperref[prop:Hq-functoriality]{ホモロジー群をとる関手}を作用させることで
+関手
+\begin{align}
+    H_q \circ S_\bullet \colon \TOP \lto \CHAIN \lto \MOD{\mathbb{Z}}
+\end{align}
+が構成される．
+
+\begin{mydef}[label=def:SCC]{($\mathbb{Z}$ 係数) 特異ホモロジー}
+    位相空間 $X \in \Obj{\TOP}$ および $\forall q \ge 0$ に対して定まる $\mathbb{Z}$ 加群
+    \begin{align}
+        H_q \bigl( S_\bullet(X) \bigr) = \frac{\Ker \bigl( \partial_q \colon S_q(X) \to S_{q-1}(X) \bigr) }{\Im \bigl( \partial_{q+1}\colon S_{q+1}(X) \to S_{q}(X) \bigr) }
+    \end{align}
+    を $X$ の第 $q$ $\mathbb{Z}$ 係数 \textbf{特異ホモロジー群} (singular homology group) と呼ぶ．
+\end{mydef}
+
+\begin{marker}
+    $H_q \bigl( S_\bullet(X) \bigr)$ はよく $\bm{H_q(X)}$ と略記される．この章の以降でも，誤解の恐れがないときはこの略記を行う．
+    また，記号の濫用だが，\hyperref[def:def:chainmap]{チェイン写像} $S_\bullet(f)$ のことを $\bm{f_\bullet}$ と略記し，
+    $H_q \bigl( S_\bullet(f) \bigr)$ のことを $\bm{f_q}$ と略記する場合がある．
+\end{marker}
+
+% \subsection{関手性}
+
+% \begin{myprop}[label=prop:property1]{ホモロジーの関手性}
+%     $H_q$ は補題\ref{lem:SC-chain}および定義\ref{def:induced-chain}を組み合わせた対応によって位相空間の圏 $\TOP$ から $\mathbb{Z}$ 加群の圏 $\MOD{\mathbb{Z}}$ への共変関手となる．
+%     i.e. $\forall X,\, Y,\, Z \in \Obj{\TOP}$ と $\forall q \ge 0$ に対して以下が成り立つ：
+%     \begin{enumerate}
+%         \item 恒等写像 $1_X \in \Hom{\TOP}(X,\, X)$ について
+%         \begin{align}
+%             (1_X)_q{}_* = 1_{H_q(X)} \in \Hom{\MOD{\mathbb{Z}}}\bigl( H_q(X),\, H_q(X) \bigr) 
+%         \end{align}
+%         \item 連続写像 $f \in \Hom{\TOP}(X,\, Y),\; g \in \Hom{\TOP}(Y,\, Z)$ について
+%         \begin{align}
+%             (g\circ f)_q{}_* = g_q{}_* \circ f_q{}_* \in \Hom{\MOD{\mathbb{Z}}}\bigl( H_q(X),\, H_q(Z) \bigr) 
+%         \end{align}
+%     \end{enumerate}
+% \end{myprop}
+
+% \begin{proof}
+%     $\forall z \in Z_q(X) = \Ker \bigl(\partial_q \colon S_q(X) \to S_{q-1}(X) \bigr)$ をとる．
+%     補題\ref{lem:SC-chain}の対応 $\mhyphen_q \colon \Hom{\TOP}(X,\, Y) \to \Hom{\MOD{\mathbb{Z}}} \bigl( S_q(X),\, S_q(Y) \bigr)$ 
+%     により定まる\hyperref[def:chainmap]{チェイン写像}の\hyperref[def:induced-chain]{誘導準同型}を考えることで
+%     \begin{align}
+%         (1_X)_q{}_*([z]) &= [(1_X)_q(z)] = [z] = 1_{H_q(X)}([z]), \\
+%         (g \circ f)_q{}_*([z]) &= [(g\circ f)_q(z)] = [(g_q \circ f_q)(z)] = (g_q{}_* \circ f_q{}_*) ([z]).
+%     \end{align}
+% \end{proof}
+
+% 誘導準同型をいちいち $f_{q*}$ と書くのは煩雑なので，以降ではチェイン写像を
+% \begin{align}
+%     f_* \colon S_q(X) \to S_q(Y)
+% \end{align}
+% とし，チェイン写像の誘導準同型を
+% \begin{align}
+%     f_* \colon \HC{q}{C} \to \HC{q}{D}
+% \end{align}
+% として同じ記号を用いる．
+
+\subsection{一点のホモロジー}
+
+\begin{myprop}[label=prop:property2]{一点のホモロジーは $\mathbb{Z}$}
+    一点からなる位相空間 $* = \{*\}$ に対して以下が成り立つ：
+    \begin{align}
+        H_q(*) = 
+        \begin{cases}
+            0, & q \neq 0 \\
+            \mathbb{Z}, & q=0
+        \end{cases}
+    \end{align}
+\end{myprop}
+
+\begin{proof}
+    任意の $q \ge 0$ に対して $\Hom{\TOP}(\Delta^q,\, *)$ は一点集合であり，その元は定数写像である．それを $\sigma_q \colon \Delta^q \to *$ と書くと
+    \begin{align}
+        S_q(*) = \mathbb{Z} \{\sigma_q\} \cong \mathbb{Z}
+    \end{align}
+    が成り立つ．境界写像は，$\sigma_q \circ f^q_i = \sigma_{q-1}$ に注意すると
+    \begin{align}
+        \partial_q(\sigma_q) = \sum_{i=0}^q (-1)^i \sigma_{q-1} =
+        \begin{cases}
+            \sigma_{q-1}, &q\; \text{is even} \\
+            0, &q\; \text{is odd}
+        \end{cases}
+    \end{align}
+    である．i.e. 位相空間 $*$ の整数係数特異チェイン複体は完全列\footnote{$\Ker\partial_q = \Im\partial_{q+1}$ であることは明らかであろう．}
+    \begin{align}
+        \cdots \xrightarrow{1} \mathbb{Z} \xrightarrow{0} \mathbb{Z} \xrightarrow{1} \cdots \xrightarrow{0} \mathbb{Z}
+    \end{align}
+    になる．故に
+    \begin{align}
+        H_{q \ge 1}(*) &= \Ker \partial_q / \Im \partial_{q+1} = 0, \\
+        H_0(*) &= \Ker \partial_0/\Im\partial_1 = \mathbb{Z} / \{0\} = \mathbb{Z}.
+    \end{align}
+\end{proof}
+
+\subsection{ホモトピー不変性}
+
+2つの位相空間 $X,\, Y \in \Obj{\TOP}$ をとり，その間の連続写像全体の集合 $\Hom{\TOP}(X,\, Y)$ を考える．
+
+\begin{mydef}[label=def:homotopic, breakable]{ホモトピック}
+    \begin{itemize}
+        \item 2つの連続写像 $f_0,\, f_1 \in \Hom{\TOP}(X,\, Y)$ が\textbf{ホモトピック} (homotopic) であるとは，連続写像 $F \in \Hom{\TOP}\bigl( X \times [0,\, 1],\,  Y \bigr)$ が存在して
+        \begin{align}
+            F|_{X \times \{0\}} &= f_0, \\
+            F|_{X \times \{1\}} &= f_1
+        \end{align}
+        を充たすことを言い，$\bm{f_0 \simeq f_1}$ と書く．
+        $F$ のことを $f_0$ と $f_1$ を繋ぐ\textbf{ホモトピー} (homotopy) と呼ぶ．
+        \item 連続写像の組 $f \in \Hom{\TOP}(X,\, Y),\; g \in \Hom{\TOP}(Y,\, X)$ が\textbf{ホモトピー同値写像} (homotopy equivalence) であるとは，
+        \begin{align}
+            g \circ f&\simeq \mathrm{id}_X \in \Hom{\TOP}(X,\, X), \\
+            f \circ g&\simeq \mathrm{id}_Y \in \Hom{\TOP}(Y,\, Y)
+        \end{align}
+        が成り立つことを言う\footnote{$g$ は $f$ の\textbf{ホモトピー逆写像} (homotopy inverse) であると言う．逆もまた然り．$f$ または $g$ のどちらか一方だけを指してホモトピー同値写像であると言った場合は，ホモトピー逆写像が存在することを意味する．}．
+        位相空間 $X,\, Y$ の間にホモトピー同値写像が存在するとき，$X$ と $Y$ は同じ\textbf{ホモトピー型} (homotopy type) である\footnote{\textbf{ホモトピー同値} (homotopy equivalent) であると言うこともある．}と言う．
+        \item 位相空間 $X$ が\textbf{可縮} (contractible) であるとは，$X$ が一点からなる位相空間 $\{\mathrm{pt}\} \in \Obj{\TOP}$ と同じホモトピー型であること．
+    \end{itemize}
+\end{mydef}
+
+$\simeq\;\subset \Hom{\TOP}(X,\, Y) \times \Hom{\TOP}(X,\, Y) $ は集合 $\Hom{\TOP}(X,\, Y)$ 上の同値関係である．
+
+次の命題は，$\TOP$ における\hyperref[def:homotopic]{ホモトピー}と $\CHAIN$ における\hyperref[def:chainHomotopy]{チェイン・ホモトピー}の間に対応があることを主張する．
+証明には，$\Delta^q \times [0,\, 1]$ の三角形分割を利用して実際に\hyperref[def:chainHomotopy]{チェイン・ホモトピー}を構成する．このような構成法を\textbf{プリズム分解}と呼ぶ．
+
+\begin{myprop}[label=prop:homotopyInvariance]{ホモトピックはチェイン・ホモトピック}
+    連続写像 $f,\, g \colon X \lto Y$ が互いに\hyperref[def:homotopic]{ホモトピック}ならば，\hyperref[def:chainmap]{チェイン写像}$S_\bullet(f),\, S_\bullet(g) \colon \bigl( S_\bullet(X),\, \partial_\bullet^X \bigr) \lto \bigl( S_\bullet (Y),\, \partial_\bullet^Y \bigr)$ は互いに\hyperref[def:chainHomotopy]{チェイン・ホモトピック}である．
+\end{myprop}
+
+\begin{proof}
+    $I \coloneqq [0,\, 1]$ とおく．
+    % 連続写像
+    % \begin{align}
+    %     i_0 &\colon X \lto X \times I,\; x \lmto (x,\, 0), \\
+    %     i_1 &\colon X \lto X \times I,\; x \lmto (x,\, 1)
+    % \end{align}
+    % を考える．
+    任意の $f,\, g \in \Hom{\TOP}(X,\, Y)$ および任意の\hyperref[def:singularsimplex]{特異 $q$-単体} $\sigma \in \Hom{\TOP}(\Delta^q,\, X)$ を与える．
+    $f,\, g$ が互いに\hyperref[def:homotopic]{ホモトピック}だとすると，連続写像 $F \colon X \times I \lto Y$ であって $F|_{X \times \{0\}} = f \AND F|_{Y \times \{1\}} = g$ を充たすものが存在する．
+    \textbf{プリズム} $\Delta^q \times I$ を定義域に持つような合成
+    \begin{align}
+        F \circ (\sigma \times \mathrm{id}_I) \colon \Delta^q \times I \lto X \times I \lto Y
+    \end{align}
+    を考える．
+
+    次にプリズムの三角形分割を構成する．
+    $\forall q \ge 0$ に対して $\mathbb{R}^{q+1}$ の基底 $\Familyset[\big]{e_i^q}{i = 0,\, \dots ,\, q}$ を
+    \begin{align}
+        e^q_i \coloneqq (0,\, \dots ,\, 0 ,\, \underbrace{1}_i ,\, 0 ,\,  \dots ,\, 0)
+    \end{align}
+    にとる．
+    そして $q+1$ 個の線型写像 $s_i^{q+1} \colon \mathbb{R}^{q+2} \lto \mathbb{R}^{q+1} \times \mathbb{R}$ を
+    \begin{align}
+        s_i^{q+1}(e^{q+1}_k) &\coloneqq
+        \begin{cases}
+            (e_k^q,\, 0), &k \le i \\
+            (e_{k-1}^q,\, 1), &k > i
+        \end{cases}
+    \end{align}
+    と定義する．
+    すると 
+    \begin{align}
+        s_i^{q+1} \bigl( x_0,\, \dots ,\, x_{q+1} \bigr) = \Bigl( (x_0,\, \dots,\, x_{i-1},\, x_i + x_{i+1},\, x_{i+2},\, \dots,\, x_{q+1}),\, \sum_{k=i+1}^{q+1} x_k \Bigr) 
+    \end{align}
+    が成り立つので $s_i^{q+1}(\Delta^{q+1}) \subset \Delta^{q} \times I$ である．
+    
+    ここで $\forall q\ge 0$ に対する（第 $q$）\textbf{プリズム演算子} (prism operators) $P_q \colon S_q(X) \lto S_{q+1} (Y)$ を，
+    \begin{align}
+        \label{eq:prism-homomorphism}
+        P_q (\sigma) \coloneqq \sum_{i=0}^q (-1)^i F \circ (\sigma \times \mathrm{id}_{I}) \circ s_i^{q+1}|_{\Delta^{q+1}} \in \Hom{\TOP} (\Delta^{q+1},\, Y)
+    \end{align}
+    を充たすものとして定義する．以降では，プリズム演算子が\hyperref[def:chainmap]{チェイン写像} $S_\bullet(f),\, S_\bullet (g)$ を繋ぐ\hyperref[def:chainHomotopy]{チェイン・ホモトピー}であることを示す．
+    
+    \hrulefill
+
+    % \begin{mylem}[label=lem:prism-1]{準同型 $P_q$ の自然性}
+    %     $\forall  X,\, Y \in \Obj{\TOP}$ および $\forall f \in \Hom{\TOP}(X,\, Y)$ に対して，$\MOD{\mathbb{Z}}$ の可換図式\ref{cmtd:prism-1}
+    %     が成り立つ．
+        
+    %     i.e. 準同型写像の族 $P_q \coloneqq \Familyset[\big]{P_q^X \colon S_q(X) \lto S_{q+1}(X \times I)}{X \in \Obj{\TOP}}$ は\hyperref[def:nat]{自然変換} $P_q \colon S_q \lto S_{q+1} (\mhyphen \times I)$ である．
+    % \end{mylem}
+
+    % \begin{figure}[H]
+    %     \centering
+    %     \begin{tikzcd}[row sep=large, column sep=large]
+    %         &S_q(X) \ar[r, "S_q(f)"]\ar[d, "P_q^X"'] &S_q(Y) \ar[d, "P_q^Y"] \\
+    %         &S_{q+1}(X \times I) \ar[r, "S_{q+1}(f \times \mathrm{id}_I)"] &S_{q+1}(Y \times I)
+    %     \end{tikzcd}
+    %     \caption{$P_q^X$ の自然性}
+    %     \label{cmtd:prism-1}
+    % \end{figure}%
+
+    % \begin{proof}
+    %     $\forall \sigma \in \Hom{\TOP}(\Delta^q,\, X)$ に対して
+    %     \begin{align}
+    %         S_{q+1}(f \times \mathrm{id}_I) \circ P_q^X (\sigma) &= \sum_{i=0}^q (f \times \mathrm{id}_I) \circ (\sigma \times \mathrm{id}_I) \circ s_{i^{q+1}}|_{\Delta^{q+1}} \\
+    %         &= \sum_{i=0}^q \bigl( (f \circ \sigma) \times \mathrm{id}_I\bigr) \circ s_{i^{q+1}}|_{\Delta^{q+1}}
+    %     \end{align}
+    %     が成り立つ．一方
+    %     \begin{align}
+    %         P_q^Y \circ S_q(Y) (\sigma) &= P_q^Y (f \circ \sigma) \\
+    %         &= \sum_{i=0}^q \bigl( (f \circ \sigma) \times \mathrm{id}_I\bigr) \circ s_{i^{q+1}}|_{\Delta^{q+1}}
+    %     \end{align}
+    %     なので示された．
+    % \end{proof}
+
+    \begin{mylem}[label=lem:prism-2, breakable]{}
+        2つの包含写像を
+        \begin{align}
+            i_0 &\colon \Delta^q \lto \Delta^q \times I,\; x \lmto (x,\, 0), \\
+            i_1 &\colon \Delta^q \lto \Delta^q \times I,\; x \lmto (x,\, 1)
+        \end{align}
+        と定義する．
+        このとき，$\Hom{\TOP}(\Delta^q,\, \Delta^q \times I)$ の元として以下の等式が成り立つ：
+        \begin{enumerate}
+            \item 
+            \begin{flalign}
+                &s_i^{q+1} \circ f_j^{q+1}|_{\Delta^q} = 
+                \begin{cases}
+                    (f_{j-1}^{q}|_{\Delta^{q-1}} \times \mathrm{id}_I) \circ s_i^q, &i < j-1 \\
+                    (f_{j}^{q}|_{\Delta^{q-1}} \times \mathrm{id}_I) \circ s_{i-1}^q, &i > j
+                \end{cases} &
+            \end{flalign}
+            \item $s_{j-1}^{q+1} \circ f_j^{q+1}|_{\Delta^q} = s_j^{q+1} \circ f_j^{q+1}|_{\Delta^q}$
+            \item $s_q^{q+1} \circ f_{q+1}^{q+1}|_{\Delta^q} = i_0$
+            \item $s_0^{q+1} \circ f_{0}^{q+1}|_{\Delta^q} = i_1$
+        \end{enumerate}
+        ただし，$f_j^{q+1}|_{\Delta^q} \colon \Delta^{q} \lto \Delta^{q+1}$ は\hyperref[def:facemap]{面写像}である．
+    \end{mylem}
+    
+    \begin{proof}
+        \hyperref[def:facemap]{面写像}の制限の記号 $|_{\Delta^q}$ を省略する．$\mathbb{R}^{q+1}$ の基底 $\Familyset[\big]{e_k^q}{k = 0,\, \dots ,\, q}$ を写像した先が一致していることを示す．
+        \begin{enumerate}
+            \item \begin{description}
+                \item[\textbf{$\bm{i < j-1}$}] 
+                \begin{align}
+                    s_i^{q+1} \circ f_j^{q+1} (e_k^q) &=
+                    \begin{cases}
+                        s_i^{q+1}(e_k^{q+1}), &k < j \\
+                        s_i^{q+1}(e_{k+1}^{q+1}), &k \ge j
+                    \end{cases}
+                    =
+                    \begin{cases}
+                        (e_k^q,\, 0), &k \le i \\
+                        (e_{k-1}^q,\, 1), &i < k < j \\
+                        (e_{k}^q,\, 1), &k \ge j
+                    \end{cases}
+                \end{align}
+                である．一方，
+                \begin{align}
+                    (f_{j-1}^{q} \times \mathrm{id}_I) \circ s_i^q(e_k^q) &= 
+                    \begin{cases}
+                        (f_{j-1}^{q} \times \mathrm{id}_I)(e_k^{q-1},\, 0), &k \le i \\
+                        (f_{j-1}^{q} \times \mathrm{id}_I)(e_{k-1}^{q-1},\, 1), &k > i
+                    \end{cases}
+                    =
+                    \begin{cases}
+                        (e_k^q,\, 0), &k \le i \\
+                        (e_{k-1}^q,\, 1), &i < k < j \\
+                        (e_k^q,\, 1), &k \ge j
+                    \end{cases}
+                \end{align}
+                なので示された．
+                \item[\textbf{$\bm{i > j}$}] 
+                \begin{align}
+                    s_i^{q+1} \circ f_j^{q+1} (e_k^q) &=
+                    \begin{cases}
+                        s_i^{q+1}(e_k^{q+1}), &k < j \\
+                        s_i^{q+1}(e_{k+1}^{q+1}), &k \ge j
+                    \end{cases}
+                    =
+                    \begin{cases}
+                        (e_k^q,\, 0), &k < j \\
+                        (e_{k+1}^q,\, 1), &j \le k \le i-1 \\
+                        (e_{k}^q,\, 1), &k > i-1
+                    \end{cases}
+                \end{align}
+                である．一方，
+                \begin{align}
+                    (f_{j}^{q} \times \mathrm{id}_I) \circ s_{i-1}^q(e_k^q) &= 
+                    \begin{cases}
+                        (f_{j}^{q} \times \mathrm{id}_I)(e_k^{q-1},\, 0), &k \le i-1 \\
+                        (f_{j}^{q} \times \mathrm{id}_I)(e_{k-1}^{q-1},\, 1), &k > i-1
+                    \end{cases}
+                    =
+                    \begin{cases}
+                        (e_k^q,\, 0), &k < j \\
+                        (e_{k+1}^q,\, 1), &j \le k \le i-1 \\
+                        (e_{k}^q,\, 1), &k > i-1
+                    \end{cases}
+                \end{align}
+                なので示された．
+            \end{description}
+            \item \begin{align}
+                s_{j-1}^{q+1} \circ f_j^{q+1} (e_k^q) &=
+                \begin{cases}
+                    s_{j-1}^{q+1}(e_k^{q+1}), &k < j \\
+                    s_{j-1}^{q+1}(e_{k+1}^{q+1}), &k \ge j
+                \end{cases}
+                =
+                \begin{cases}
+                    (e_k^{q},\, 0), &k < j \\
+                    (e_{k}^{q},\, 1), &k \ge j
+                \end{cases}
+            \end{align}
+            で，
+            \begin{align}
+                s_{j}^{q+1} \circ f_j^{q+1} (e_k^q) &=
+                \begin{cases}
+                    s_{j}^{q+1}(e_k^{q+1}), &k < j \\
+                    s_{j}^{q+1}(e_{k+1}^{q+1}), &k \ge j
+                \end{cases}
+                =
+                \begin{cases}
+                    (e_k^{q},\, 0), &k < j \\
+                    (e_{k}^{q},\, 1), &k \ge j
+                \end{cases}
+            \end{align}
+            なので示された．
+            \item 添字 $k$ は $0 \le k \le q$ の範囲を動くので
+            \begin{align}
+                s_q^{q+1} \circ f_{q+1}^{q+1} (e_k^q) = s_q^{q+1} (e_k^{q+1}) = (e_k^q,\, 0) = i_0(e_k^q).
+            \end{align}
+            \item (3) と同様に考えて
+            \begin{align}
+                s_0^{q+1} \circ f_0^{q+1} (e_k^q) = s_0^{q+1} (e^{q+1}_{k+1}) = (e_k^q,\, 1) = i_1(e_k^q).
+            \end{align}
+        \end{enumerate}
+    \end{proof}
+    
+    \hrulefill
+
+    引き続き制限の記号 $|_{\Delta^q}$ を省略する．
+    プリズム演算子の定義\eqref{eq:prism-homomorphism}より
+    \begin{align}
+        \partial^{Y}_{q+1} \circ P_q(\sigma) &= \sum_{j=0}^{q+1}\sum_{i=0}^q (-1)^{j+i} F\circ (\sigma \times \mathrm{id}_I) \circ s_i^{q+1} \circ f_j^{q+1} \\
+        &= \sum_{0 \le i < j \le q+1} (-1)^{i+j} F \circ (\sigma \times \mathrm{id}_I) \circ s_i^{q+1} \circ f_j^{q+1} \\
+        &\quad + \sum_{0 \le j \le i \le q} (-1)^{i+j} F \circ (\sigma \times \mathrm{id}_I) \circ s_i^{q+1} \circ f_j^{q+1}
+    \end{align}
+    が成り立つ．$1 \le \forall i \le q$ に対しては最右辺の第1項から $i=j-1$ の項が，第2項から $i=j$ の項が出現するが，補題\ref{lem:prism-2}-(2) よりこれらは互いに打ち消しあって $0$ になる．
+    $(i,\, j) = (0,\, 0),\, (q,\, q+1)$ の2項は，補題\ref{lem:prism-2}-(3), (4) よりそれぞれ
+    $S_q(f)(\sigma),\, -S_q(g)(\sigma)$ になる．従って残りの項は，補題\ref{lem:prism-2}-(1) より
+    \begin{align}
+        \partial^{Y}_{q+1} \circ P_q(\sigma) - S_q(f)(\sigma) + S_q(g)(\sigma) &= \sum_{0\le i < j-1 \le q} (-1)^{i+j} F \circ (\sigma \times \mathrm{id}_I) \circ s_i^{q+1} \circ f_j^{q+1} \\
+        &\quad + \sum_{0\le j < i \le q} (-1)^{i+j} F \circ (\sigma \times \mathrm{id}_I) \circ s_i^{q+1} \circ f_j^{q+1} \\
+        &= \sum_{0\le i < j-1 \le q} (-1)^{i+j} F \circ \bigl((\sigma \circ f_{j-1}^q) \times \mathrm{id}_I\bigr) \circ s_i^q \\
+        &\quad + \sum_{0\le j < i \le q} (-1)^{i+j} F \circ \bigl((\sigma \circ f_j^q)\times \mathrm{id}_I\bigr) \circ s_{i-1}^q \\
+        &= \sum_{0\le i < j' \le q} (-1)^{i+j'+1} F \circ \bigl((\sigma \circ f_{j'}^q) \times \mathrm{id}_I\bigr) \circ s_i^q \\
+        &\quad + \sum_{0\le j \le i' \le q-1} (-1)^{i'+j+1} F \circ \bigl((\sigma \circ f_j^q)\times \mathrm{id}_I\bigr) \circ s_{i'}^q \\
+        &= -P_{q-1} \left( \sum_{j=0}^{q} (-1)^j\sigma \circ f_j^q \right) \\
+        &= -P_{q-1} \circ \partial^X_q (\sigma)
+    \end{align}
+    と分かる．i.e. $P_q$ は\hyperref[def:chainHomotopy]{チェイン・ホモトピー}である．
+    % と書ける．$q=0$ のときは補題\ref{lem:prism-2}-(2) より
+    % \begin{align}
+    %     \partial^{X \times I}_{1} \circ P_0^X(\sigma) &= \sum_{j=0}^{1}(-1)^j (\sigma \times \mathrm{id}_I) \circ s_0^{1} \circ f_j^{1} = 0
+    % \end{align}
+    % が従う．$q > 0$ のとき，
+    % \begin{align}
+    %     \partial^{X \times I}_{q+1} \circ P_q^X(\sigma)
+    %     &= \sum_{j=1}^{q}\left(\sum_{i=0}^{j-1} (-1)^{i+j}  (\sigma \times \mathrm{id}_I) \circ  (s_i^{q+1} \circ f_j^{q+1}) + \sum_{i=j}^{q} (-1)^{i+j}  (\sigma \times \mathrm{id}_I) \circ  (s_i^{q+1} \circ f_j^{q+1}) \right) \\
+    %     &\quad + \sum_{i=0}^q (-1)^i (\sigma \times \mathrm{id}_I) \circ s_i^{q+1} \circ f_0^{q+1} +  \sum_{i=0}^q (-1)^{i+q+1} (\sigma \times \mathrm{id}_I) \circ s_i^{q+1} \circ f_{q+1}^{q+1} \\
+    %     &= 
+    % \end{align}
+    
+\end{proof}
+
+\begin{mycol}[label=col:homotopyInvariance]{ホモロジー群のホモトピー不変性}
+    \begin{itemize}
+        \item 連続写像 $f,\, g \colon X \lto Y$ が互いに\hyperref[def:homotopic]{ホモトピック}ならば，$\forall q \ge 0$ に対して $H_q\bigl(S_\bullet(f)\bigr) = H_q\bigl(S_\bullet(g)\bigr) \colon H_q(X) \lto H_q(Y)$ が成り立つ．
+        \item 位相空間 $X,\, Y$ が\hyperref[def:homotopic]{同じホモトピー型}ならば $\forall q \ge 0$ に対して $H_q(X) \cong H_q(Y)$ である．
+    \end{itemize}
+\end{mycol}
+
+\begin{proof}
+    定理\ref{prop:homotopyInvariance}と命題\ref{prop:chainHomotopy-basic}と\hyperref[prop:Hq-functoriality]{$H_q$ の関手性}より従う．
+\end{proof}
+
+5章で解説する非輪状モデル定理を使うと，定理\ref{prop:homotopyInvariance}をより一般的な文脈で証明することもできる．
+
+% \begin{mydef}[label=def:CC-free-acyclic]{自由・非輪状・チェイン可縮なチェイン複体}
+%     \hyperref[def:CC]{チェイン複体} $(C_\bullet,\, \partial_\bullet) \in \Obj{\CHAIN}$ を与える．
+%     \begin{itemize}
+%         \item $(C_\bullet,\, \partial_\bullet)$ が\textbf{自由なチェイン複体} (free chain complex) であるとは，$\forall q \in \mathbb{Z}$ に対して $C_q$ が自由 $\mathbb{Z}$ 加群であること．
+%         \item $(C_\bullet,\, \partial_\bullet)$ が\textbf{非輪状なチェイン複体} (acyclic chain complex) であるとは，$\forall q \in \mathbb{Z}$ に対して $H_q(C_\bullet) = 0$ となること\footnote{つまり $\Ker \partial_q = \Im \partial_{q+1}$ であると言うこと．さらには，図式 $\cdots \xrightarrow{\partial_{q+1}} C_q \xrightarrow{\partial_q} \cdots$ が完全列になると言うこと．}
+%         \item $(C_\bullet,\, \partial_\bullet)$ が\textbf{チェイン可縮} (chain contractible) であるとは，$1_{C_\bullet} \in \Hom{\CHAIN}(C_\bullet,\, C_\bullet)$ と $0_{C_\bullet} \in \Hom{\CHAIN}(C_\bullet,\, C_\bullet)$ が\hyperref[def:chainHomotopy]{チェイン・ホモトピック}であることを言う．
+%     \end{itemize}
+% \end{mydef}
+
+% \begin{myprop}[]{}
+%     \hyperref[def:CC]{チェイン複体} $(C_\bullet,\, \partial_\bullet) \in \Obj{\CHAIN}$ は\hyperref[def:CC-free-acyclic]{チェイン可縮}ならば\hyperref[def:CC-free-acyclic]{非輪状}である．
+% \end{myprop}
+
+% \begin{proof}
+%     $(C_\bullet,\, \partial_\bullet) \in \Obj{\CHAIN}$ がチェイン可縮であるとき，命題\ref{prop:chainHomotopy-basic}より $\forall q \in \mathbb{Z}$ に対して
+%     $H_q(1_{C_\bullet}) = H_q(0_{C_\bullet})$ が成り立つ．しかるに $H_q(1_{C_\bullet}) = 1_{H_q(C_\bullet)} \AND H_q(0_{C_\bullet}) = 0_{H_q(C_\bullet)}$ なので，これらが一致するには $H_q(C_\bullet) = \{0_{H_q(C_\bullet)}\}$ でなければならない．
+% \end{proof}
+
+% \begin{myprop}[label=prop:CC-acyclic-iff]{}
+%     \hyperref[def:CC-free-acyclic]{自由なチェイン複体} $(C_\bullet,\, \partial_\bullet) \in \Obj{\CHAIN}$ が\hyperref[def:CC-free-acyclic]{チェイン可縮} $\iff$ \hyperref[def:CC-free-acyclic]{非輪状}
+% \end{myprop}
+
+% \begin{proof}
+%     $\Longleftarrow$ を示す．
+%     $\mathbb{Z}$ は\hyperref[def:PID]{単項イデアル整域}だから，4章の命題\ref{prop:freemod-PID}を先取りすると
+%     自由 $\mathbb{Z}$ 加群 $C_{q-1}$ の部分加群 $\Ker \partial_{q-1} = \Im \partial_{q}$ もまた自由 $\mathbb{Z}$ 加群であり，従って系\ref{col:free-proj}より\hyperref[def:proj-mod]{射影的加群}である．
+%     $\partial_q \colon C_q \lto \Im \partial_q$ は全射準同型写像だから，射影的加群の定義より可換図式
+%     \begin{center}
+%         \begin{tikzcd}[row sep=large, column sep=large]
+%             & &\Im \partial_q \ar[d, "1_{\Im \partial_q}"]\ar[dl, red, dashed, "\exists s_{q-1}"'] \\
+%             &C_q \ar[r, "\partial_q"] &\Im \partial_q
+%         \end{tikzcd}
+%     \end{center}
+%     がある．
+
+%     ここで準同型写像の族 $\Phi_\bullet \coloneqq \Familyset[\big]{\Phi_q \colon C_q \lto C_{q+1}}{q \in \mathbb{Z}}$ を
+%     \begin{align}
+%         \Phi_q \coloneqq s_q \circ (1_{C_q} - s_{q-1} \circ \partial_q)\quad (\forall q \in \mathbb{Z})
+%     \end{align}
+%     と定める．すると $\forall q \in \mathbb{Z}$ に対して
+%     \begin{align}
+%         \partial_{q+1} \circ \Phi_q + \Phi_{q+1} \circ \partial_q &= (1_{C_q} - s_{q-1} \circ \partial_q) + s_{q-1} \circ (1_{C_{q-1}} - s_{q-2} \circ \partial_{q-1}) \circ \partial_q
+%         = 1_{C_q}
+%     \end{align}
+%     が成り立つ．i.e. $\Phi_\bullet$ は $1_{C_\bullet}$ と $0_{C_\bullet}$ を繋ぐ\hyperref[def:chainHomotopy]{チェイン・ホモトピー}である．
+% \end{proof}
+
+% 命題\ref{prop:CC-acyclic-iff}の証明を一般化することを考える．
+% 圏 $\Cat{C}$ と $\Obj{\Cat{C}}$ の一部分からなる集合 $\Cat{M}$ の組を\textbf{モデルを持つ圏} (category with models) と呼ぶ．
+
+% \begin{mydef}[label=def:functor-free, breakable]{自由な関手}
+%     圏 $\Cat{C}$ はモデル $\Cat{M}$ を持つとする．
+%     関手 $F \colon \Cat{C} \lto \MOD{R}$ を与える．
+%     \begin{itemize}
+%         \item 関手 $F$ の\textbf{基底} (basis) とは，ある族 $\Familyset[\big]{M_\lambda}{\lambda \in \Lambda} \subset \mathcal{M}$ に対して定まる族 $\Familyset[\big]{e_\lambda \in F(M_\lambda)}{\lambda \in \Lambda}$ であって，$\forall X \in \Obj{\Cat{C}}$ に対して
+%         \begin{align}
+%             \Familyset[\big]{F(f)(e_\lambda)}{f \in \Hom{\Cat{C}}(M_\lambda,\, X),\; \lambda \in \Lambda}
+%         \end{align}
+%         が左 $R$ 加群 $F(X)$ の基底となるようなもののこと．
+%         \item 関手 $F$ が基底を持つとき，$F$ は\textbf{自由} (free) であると言われる．
+%     \end{itemize}
+%     \tcblower
+%     関手 $F \colon \Cat{C} \lto \CHAIN$ を与える．
+%     関手 $F$ が\textbf{自由} (free) であるとは，$\forall q \in \mathbb{Z}$ に対して関手 $F_q \colon \Cat{C} \lto \MOD{\mathbb{R}}$ が
+%     \footnote{$\forall X \in \Obj{\Cat{C}}$ に対して定まる\hyperref[def:CC]{チェイン複体} $F(X)$ の第 $q$ 項を $F_q(X)$ と書き，
+%     $\forall f \in \Hom{\Cat{C}}(X,\, Y)$ に対して定まる\hyperref[def:chainmap]{チェイン写像} $F(f) \in \Hom{\CHAIN}\bigl(F_\bullet(X),\, F_\bullet(Y)\bigr)$ の第 $q$ 成分を $F_q(f) \in \Hom{\MOD{R}} \bigl( F_q(X),\, F_q(Y) \bigr)$ とかくと，
+%     対応 $F_q \colon \Cat{C} \lto \MOD{R}$ は関手である．}
+%     自由であることを言う．
+% \end{mydef}
+
+% 定義\ref{def:free-functor}は複雑だが，\hyperref[def:SCC]{特異チェイン複体}をとる関手 $S_\bullet \colon \TOP \lto \CHAIN$ を念頭に置くと分かりやすい．
+% $\TOP$ のモデルとして\hyperref[def:singularsimplex]{特異 $q$ 単体}の族 
+% $\Familyset[\big]{\Delta^q}{q \ge 0}$ を考える．\hyperref[def:singularsimplex]{特異 $q$ チェインの定義}を思い出すと
+% \begin{align}
+%     S_q(X) = \mathbb{Z}^{\oplus \Hom{\TOP}(\Delta^q,\, X)}
+% \end{align}
+% だから，1点集合 $\{ q\}$ で添字づけられた族
+% \begin{align}
+%     \bigl\{\mathrm{id}_{\Delta^i} \in S_q(\Delta^i)\bigr\}_{i \in \{q\}}
+% \end{align}
+% が関手 $S_q \colon \TOP \lto \MOD{\mathbb{Z}}$ の\hyperref[def:free-functor]{基底}となる．実際，
+% \begin{align}
+%     \Familyset[\big]{S_q(f)(\mathrm{id}_{\Delta^i})}{f \in \Hom{\TOP}(\Delta^q,\, X),\, i \in \{q\}} &= \Familyset[\big]{f \circ \mathrm{id}_{\Delta^q}}{f \in \Hom{\TOP}(\Delta^q,\, X)} = \Hom{\TOP}(\Delta^q,\, X)
+% \end{align}
+% なので自由 $\mathbb{Z}$ 加群 $S_q(X)$ の基底になっている．
+
+% \begin{mydef}[label=def:functor-acyclic]{非輪状な関手}
+%     圏 $\Cat{C}$ はモデル $\Cat{M}$ を持つとする．
+%     関手 $F \colon \Cat{C} \lto \CHAIN$ が\textbf{非輪状} (acyclic) であるとは，
+%     $\forall  M \in \mathcal{M}$ および $\forall q \ge \textcolor{red}{1}$ に対して
+%     \begin{align}
+%         H_q \bigl( F(M) \bigr) = 0 \in \Obj{\MOD{R}}
+%     \end{align}
+%     が成り立つこと．
+% \end{mydef}
+
+% \begin{mytheo}[label=thm:acyclicModel]{非輪状モデル定理}
+%     圏 $\Cat{C}$ はモデル $\mathcal{M}$ を持つとする．
+%     \begin{itemize}
+%         \item \hyperref[def:functor-free]{自由}かつ\hyperref[def:CC-nn]{非負}な関手 $F \colon \Cat{C} \lto \CHAIN$
+%         \item \hyperref[def:functor-acyclic]{非輪状}な関手 $G \colon \Cat{C} \lto \CHAIN$
+%     \end{itemize}
+%     を与える．このとき以下が成り立つ：
+%     \begin{enumerate}
+%         \item 任意の\hyperref[def:nat]{自然変換} $\overline{\tau} \colon H_0 \circ F \lto H_0 \circ G$ に対して，ある自然変換 $\tau \colon F \lto G$ が存在して $\overline{\tau} = H_0 \circ \tau$ を充たす．
+%         \item 2つの自然変換 $\tau,\, \tau' \colon F \lto G$ が $H_0 \circ \tau = H_0 \circ \tau'$ を充たすならば，
+%         $\tau$ と $\tau'$ は\underline{自然に}\hyperref[def:chainHomotopy]{チェイン・ホモトピック}である．
+%         % i.e. $\forall X \in \Obj{\Cat{C}}$ に対して，\hyperref[def:chainmap]{チェイン写像}
+%         % $\tau_X,\, \tau'_X \in \Hom{\CHAIN} \bigl( F(X),\, G(X) \bigr)$ は互いにチェイン・ホモトピックである．
+%     \end{enumerate}
+% \end{mytheo}
+
+% \begin{proof}
+%     \hyperref[def:nat]{自然変換} $\tau \colon F \lto G$ とは，\hyperref[def:chainmap]{チェイン写像}の族
+%     \begin{align}
+%         \tau = \Familyset[\big]{\tau_X \colon F(X) \lto G(X)}{X \in \Obj{\Cat{C}}}
+%     \end{align}
+%     であって，$\forall X,\, Y \in \Obj{\Cat{C}}$ および $\forall f \in \Hom{\Cat{C}}(X,\, Y)$ に対して図式
+%     \begin{center}
+%         \begin{tikzcd}[row sep=large, column sep=large]
+%             &F(X) \ar[d,red, "\tau_X"] \ar[r, "F(f)"] &F(Y) \ar[d,red, "\tau_Y"] \\
+%             &G(X) \ar[r, "G(f)"] &G(Y)
+%         \end{tikzcd}
+%     \end{center}
+%     を可換にするもののことを言うのだった．
+%     チェイン写像の各成分を顕に書くと，図式
+%     \begin{center}
+%         \begin{tikzcd}[row sep=large, column sep=large]
+%         \Bigl(\cdots \ar[r, "\partial_{q+1}"] &F_{q+1}(X) \ar[r, "\partial_q"]\ar[d, red, "(\tau_X)_{q+1}"']   &F_{q}(X) \ar[r, "\partial_q"]\ar[d, red, "(\tau_X)_q"'] &F_{q-1}(X) \ar[r, "\partial_{q-1}"]\ar[d, red, "(\tau_X)_{q-1}"'] &\cdots \Bigr) &\\
+%         \Bigl(\cdots \ar[r, "\partial_{q+1}"'] &G_{q+1}(X) \ar[ddr, "G_{q+1}(f)"]\ar[r, "\partial_q"']                                &G_q(X) \ar[ddr, "G_{q}(f)"]\ar[r, "\partial_q"']                            &G_{q-1}(X) \ar[ddr, "G_{q-1}(f)"]\ar[r, "\partial_{q-1}"']                              &\cdots \Bigr) &\\
+%         &\Bigl(\cdots \ar[r, crossing over, "\partial_{q+1}"'] &F_{q+1}(Y) \ar[from=uul, crossing over, "F_{q+1}(f)"]\ar[r, crossing over, "\partial_q"']\ar[d, red, "(\tau_Y)_{q+1}"]   &F_{q}(Y) \ar[from=uul, crossing over, "F_{q}(f)"]\ar[r, crossing over, "\partial_q"']\ar[d, red, "(\tau_Y)_q"] &F_{q-1}(Y)  \ar[from=uul, crossing over, "F_{q-1}(f)"]\ar[r, crossing over, "\partial_{q-1}"']\ar[d, red, "(\tau_Y)_{q-1}"] &\cdots \Bigr) \\
+%         &\Bigl(\cdots \ar[r, "\partial_{q+1}"'] &G_{q+1}(Y) \ar[r, "\partial_q"']                                &G_q(Y)   \ar[r, "\partial_q"']                          &G_{q-1}(Y) \ar[r, "\partial_{q-1}"']                              &\cdots \Bigr) 
+%         \end{tikzcd}
+%     \end{center}
+%     が可換になると言うことである．
+%     自然変換 $\tau,\, \tau' \colon F \lto G$ が\underline{自然に}\hyperref[def:chainHomotopy]{チェイン・ホモトピック}であると言うのは，
+%     $\forall X \in \Obj{\Cat{C}}$ に対して\hyperref[def:chainmap]{チェイン写像} $\tau_X $ と $\tau'_X$ を繋ぐ\hyperref[def:chainHomotopy]{チェイン・ホモトピー}
+%     \begin{align}
+%         \Phi_X \coloneqq \Familyset[\big]{(\Phi_X)_q \colon F_q(X) \lto G_{q+1}(X)}{q \in \mathbb{Z}}
+%     \end{align}
+%     が存在して，図式
+%     \begin{center}
+%         \begin{tikzcd}[row sep=large, column sep=large]
+%         &\Bigl(\cdots \ar[r, "\partial_{q+1}"] &F_{q+1}(X) \ar[r, "\partial_q"]\ar[dl, red, "(\Phi_X)_{q+1}"]   &F_{q}(X) \ar[r, "\partial_q"]\ar[dl, red, "(\Phi_X)_q"] &F_{q-1}(X) \ar[r, "\partial_{q-1}"]\ar[dl, red, "(\Phi_X)_{q-1}"] &\cdots \ar[dl, red, "(\Phi_X)_{q-2}"] \Bigr) &\\
+%         &\Bigl(\cdots \ar[r, "\partial_{q+1}"'] &G_{q+1}(X) \ar[ddr, "G_{q+1}(f)"]\ar[r, "\partial_q"']                                &G_q(X) \ar[ddr, "G_{q}(f)"]\ar[r, "\partial_q"']                            &G_{q-1}(X) \ar[ddr, "G_{q-1}(f)"]\ar[r, "\partial_{q-1}"']                              &\cdots \Bigr) &\\
+%         &&\Bigl(\cdots \ar[r, crossing over, "\partial_{q+1}"'] &F_{q+1}(Y) \ar[from=uul, crossing over, "F_{q+1}(f)"]\ar[r, crossing over, "\partial_q"']\ar[dl, crossing over, red, "(\Phi_Y)_{q+1}"]   &F_{q}(Y) \ar[from=uul, crossing over, "F_{q}(f)"]\ar[r, crossing over, "\partial_q"']\ar[dl, crossing over, red, "(\Phi_Y)_q"] &F_{q-1}(Y) \ar[from=uul, crossing over, "F_{q-1}(f)"]\ar[r, crossing over, "\partial_{q-1}"']\ar[dl, crossing over, red, "(\Phi_Y)_{q-1}"] &\cdots \ar[dl, crossing over, red, "(\Phi_X)_{q-2}"] \Bigr) \\
+%         &&\Bigl(\cdots \ar[r, "\partial_{q+1}"'] &G_{q+1}(Y) \ar[r, "\partial_q"']                                &G_q(Y)   \ar[r, "\partial_q"]                          &G_{q-1}(Y) \ar[r, "\partial_{q-1}"]                              &\cdots \Bigr) 
+%         \end{tikzcd}
+%     \end{center}
+%     の
+%     \begin{center}
+%         \begin{tikzcd}[row sep=large, column sep=large]
+%             &F_q(X) \ar[r, "F_q(f)"]\ar[d, red, "(\Phi_X)_q"] &F_q(Y) \ar[d, red, "(\Phi_Y)_q"] \\
+%             &G_{q+1}(X) \ar[r, "G_{q+1}(f)"] &G_{q+1}(Y)
+%         \end{tikzcd}
+%     \end{center}
+%     の部分が可換になると言うことである．
+
+%     $\forall  X \in \Obj{\Cat{C}}$ を1つ固定し，$\forall x \in F_q(X)$ を1つとる．
+%     $\forall q \ge 0$ に対して関手 $F_q \colon \Cat{C} \lto \MOD{R}$ の\hyperref[def:functor-free]{基底}
+%     $\Familyset[\big]{e_\lambda \in F_q(M_\lambda)}{\lambda \in \Lambda_q} \WHERE \Familyset[\big]{M_\lambda}{\lambda \in \Lambda_q} \subset \mathcal{M}$ をとると，
+%     左 $R$ 加群 $F_q(X)$ に対して
+%     \begin{align}
+%         F_q(X) \cong R^{\oplus\Familyset[\big]{F_q(f)(e_\lambda)}{f \in \Hom{\Cat{C}}(M_\lambda,\, X),\, \lambda \in \Lambda_q}}
+%     \end{align}
+%     が成り立つ．従って $x$ は有限集合 $I_q \subset \Lambda_q$ を用いて
+%     \begin{align}
+%         x = \sum_{i \in I_q} \sum_{j = 1}^m x_{ij} F_q(f_{ij})(e_i) \quad \WHERE x_{ij} \in R,\, f_{ij} \in \Hom{\Cat{C}} (M_i,\, X)
+%     \end{align}
+%     と書ける．
+    
+%     \hyperref[def:chainmap]{チェイン写像} $\tau_X \coloneqq \Familyset[\big]{(\tau_X)_q \colon F_q(X) \lto G_q(X)}{q \ge 0}$ は
+%     \begin{align}
+%         (\tau_X)_q(x) &= \sum_{i \in I_q} \sum_{j = 1}^m x_{ij} (\tau_X)_q \circ F_q(f_{ij}) (e_i) \\
+%         &= \sum_{i \in I_q} \sum_{j = 1}^m x_{ij} G_q(f_{ij}) \circ (\tau_{M_i})_q(e_i) \label{eq:AM-nat-1}
+%     \end{align}
+%     と作用するから，$\tau_X$ による $x$ の行き先を決めるには $\forall q \ge 0$ に対して $\Familyset[\big]{(\tau_{M_i})_q (e_i)}{i \in I_q}$ を定めれば良い．
+%     同様に $\tau_X,\, \tau'_X$ を繋ぐ自然な\hyperref[def:chainHomotopy]{チェイン・ホモトピー} $\Phi_X$ は
+%     \begin{align}
+%         (\Phi_X)_q(x) &= \sum_{i \in I_q} \sum_{j = 1}^m x_{ij} (\Phi_X)_q \circ F_q(f_{ij}) (e_i) \\
+%         &= \sum_{i \in I_q} \sum_{j = 1}^m x_{ij} G_{q+1}(f_{ij}) \circ (\Phi_{M_i})_q (e_i) \label{eq:AM-ch-1}
+%     \end{align}
+%     と作用するから，$\Phi_X$ による $x$ の行き先を決めるには $\forall q \ge 0$ に対して $\Familyset[\big]{(\Phi_{M_i})_q (e_i)}{i \in I_q}$ を定めれば良い．
+%     \hyperref[def:nat]{自然変換}の定義と\hyperref[def:chainHomotopy]{チェイン・ホモトピーの定義}から
+%     \begin{align}
+%         \partial_q \circ (\tau_X)_q &= (\tau_X)_{q-1} \circ \partial_{q}, \\
+%         \partial_q \circ (\Phi_X)_q &= (\tau_X)_q - (\tau'_X)_q - (\Phi_X)_{q-1} \circ \partial_{q}
+%     \end{align}
+%     が成り立たねばならないが，実際には $\forall i \in I_q$ に対して
+%     \begin{align}
+%         \partial_q \circ (\tau_{M_i})_q(e_i) &= (\tau_{M_i})_{q-1}(\partial_q e_i), \label{eq:cond-nat} \\
+%         \partial_q \circ (\Phi_{M_i})_q(e_i) &= (\tau_{M_i})_q(e_i) - (\tau'_{M_i})_q(e_i) - (\Phi_{M_i})_{q-1}(\partial_{q} e_i) \label{eq:cond-ch}
+%     \end{align}
+%     を充たせば十分である．
+
+%     証明に入る前に，標準的射影 $\varpi_X \colon  F_0(X) \lto H_0 \bigl( F(X) \bigr)$ および $\varpi \colon  G_0(X) \lto H_0 \bigl( G(X) \bigr)$ が\hyperref[def:nat]{自然変換}であることを説明する：
+%     $\forall X,\, Y \in \Obj{\Cat{C}},\; \forall f \in \Hom{\Cat{C}}(X,\, Y)$ に対して可換図式
+%     \begin{center}
+%         \begin{tikzcd}[row sep=large, column sep=large]
+%             &F_0(X) \ar[d, "\varpi_X"]\ar[r, "F_0(f)"] &F_0(Y) \ar[d, "\varpi_Y"] \\
+%             &H_0 \bigl( G(X) \bigr) \ar[r, "H_0\bigl(G(f)\bigr)"] &H_0\bigl(G(Y)\bigr)
+%         \end{tikzcd}
+%     \end{center}
+%     および
+%     \begin{center}
+%         \begin{tikzcd}[row sep=large, column sep=large]
+%             &G_0(X) \ar[d, "\varpi_X"]\ar[r, "G_0(f)"] &G_0(Y) \ar[d, "\varpi_Y"] \\
+%             &H_0 \bigl( G(X) \bigr) \ar[r, "H_0\bigl(G(f)\bigr)"] &H_0\bigl(G(Y)\bigr)
+%         \end{tikzcd}
+%     \end{center}
+%     が成り立つので 
+%     $\varpi  \coloneqq \Familyset[\big]{\varpi_X \colon F_0(X) \lto H_0 \bigl( F(X) \bigr) }{X \in \Obj{\Cat{C}}}$
+%     は $\varpi \colon F_0 \lto H_0 \circ F$ なる自然変換で，
+%     $\varpi  \coloneqq \Familyset[\big]{\varpi_X \colon G_0(X) \lto H_0 \bigl( G(X) \bigr) }{X \in \Obj{\Cat{C}}}$
+%     は $\varpi \colon G_0 \lto H_0 \circ G$ なる自然変換である．
+    
+%     \begin{enumerate}
+%         \item 関手 $G$ が\hyperref[def:functor-acyclic]{非輪状}であると言う仮定から，$\forall i \in I_q$ に対して
+%         \begin{align}
+%             \cdots &\xrightarrow{\partial^{G(M_i)}_{q+1}} G_q(M_i) \xrightarrow{\partial^{G(M_i)}_q} G_{q-1} (M_i) \xrightarrow{\partial^{G(M_i)}_{q-1}} \cdots \\
+%             &\xrightarrow{\partial_1^{G(M_i)}} G_0(M_i) \xrightarrow{\varpi_{M_i}} H_0 \bigl( G(M_i) \bigr) \lto 0 \label{eq:G-exact}
+%         \end{align}
+%         は完全である．
+
+%         　任意の自然変換 $\overline{\tau} \colon H_0 \circ F \lto H_0 \circ G$ を与える．
+%         このとき $\overline{\tau} = H_0 \circ \tau$ を充たす自然変換 $\tau \colon F \lto G$ を構成する．
+%         そのためには $\forall X \in \Obj{\Cat{C}}$ に対してチェイン写像 $\tau_X = \Familyset[\big]{(\tau_X)_q \colon F_q(X) \lto G_q(X)}{q \ge 0}$ を $q \ge 0$ に関する数学的帰納法により構成すれば良い．
+
+%         　$q=0$ のとき，$\forall i \in I_0$ に対して $\varpi_{M_i}$ は全射だから，
+%         $(\tau_{M_i})_0 (e_i) \in G_0(M_i)$ を
+%         \begin{align}
+%             \varpi_{M_i} \bigl((\tau_{M_i})_0 (e_i) \bigr) = \overline{\tau}_{M_i} \bigl( \varpi_{M_i} (e_i) \bigr)  \in H_0 \bigl(G(M_i)\bigr)
+%         \end{align}
+%         を充たすようにとることができる．
+%         式\eqref{eq:AM-ch-1}を使うと，$\forall X \in \Obj{\Cat{C}}$ の $\forall x \in F_0(X)$ に対して
+%         \begin{align}
+%             \varpi_X \circ (\tau_X)_0 (x)
+%             &= \left(\sum_{i \in I_0} \sum_{j=1}^m x_{ij} G_0(f_{ij}) \bigl( (\tau_{M_i})_0(e_i)  \bigr)\right) + \Im \partial^{G(X)}_1 \\
+%             &= \sum_{i \in I_0} \sum_{j=1}^m x_{ij}\Bigl( G_0(f_{ij}) \bigl( (\tau_{M_i})_0(e_i)  \bigr) + \Im \partial^{G(X)}_1 \Bigr) \\
+%             &= \sum_{i \in I_0} \sum_{j=1}^m x_{ij}\Bigl(  H_0 \circ G_0(f_{ij}) \bigl( (\tau_{M_i})_0(e_i) + \Im \partial_1^{G(M_i)}\bigr) \Bigr) \\
+%             &= \sum_{i \in I_0} \sum_{j=1}^m x_{ij}\bigl(  H_0 \circ G_0(f_{ij}) \circ \overline{\tau}_{M_i} (e_i + \Im \partial_1^{F(M_i)}) \bigr) \\
+%             &= \sum_{i \in I_0} \sum_{j=1}^m x_{ij}\bigl(  \overline{\tau}_{X} \circ H_0 \circ F_0(f_{ij})  (e_i + \Im \partial_1^{F(M_i)}) \bigr) \\
+%             &= \overline{\tau}_{X} \Bigl(\left( \sum_{i \in I_0} \sum_{j=1}^m x_{ij} F_0(f_{ij})(e_i)  \right) + \Im \partial_1^{F(X)} \Bigr) \\
+%             &= \overline{\tau}_{X} \circ \varpi_X (x)
+%         \end{align}
+%         が成り立つ．
+        
+%         特に $\forall i\in I_1$ に対して，\eqref{eq:cond-ch}より
+%         \begin{align}
+%             (\tau_{M_i})_0 (\partial_1 e_i) =
+%         \end{align}
+        
+%     \end{enumerate}
+    
+% \end{proof}
+
+
+% \footnote{$\Hom{\TOP}(X,\, Y)$ にコンパクト開位相を入れて $\Hom{\TOP}(X,\, Y) \in \Obj{\TOP}$ と見做す．この時，$X$ が局所コンパクトHausdorff空間のとき $\comm{X}{Y} = \pi_0 \bigl( \Hom{\TOP}(X,\, Y) \bigr)$ となる．}．従って，商集合
+% \begin{align}
+%     [X,\, Y] \coloneqq \Hom{\TOP}(X,\, Y)/ \mathord{\simeq}
+% \end{align}
+% を考えることができる．商集合 $[X,\, Y]$ のことを，$X$ から $Y$ への連続写像の\textbf{ホモトピー集合} (homotopy set) と呼び，連続写像 $f \in \Hom{\TOP}(X,\, Y)$ が属する同値類のことを $f$ のホモトピー類 (homotopy class) と呼んで $[f] \in \comm{X}{Y}$ と書く．
+
+% $f,\, f' \in \Hom{\TOP}(X,\, Y)$ と $g,\, g' \in \Hom{\TOP}(Y,\, Z)$ に対して
+% \begin{align}
+%     f \simeq f' \AND g \simeq g' \IMP g \circ f \simeq g' \circ f' \in \Hom{\TOP}(X,\, Z)
+% \end{align}
+% が成り立つので，写像
+% \begin{align}
+%     \label{def:homotopy-comp}
+%     \circ \colon \comm{X}{Y} \times \comm{Y}{Z} \longrightarrow \comm{X}{Z},\; ([f],\, [g]) \longmapsto [g \circ f]
+% \end{align}
+% はwell-definedである．従って，位相空間を対象とし，その間の連続写像のホモトピー類を射\footnote{つまり，$\Hom{\hTOP}(X,\, Y) = \comm{X}{Y}$ ということ．}，合成を写像\eqref{def:homotopy-comp}とするものの集まり $\hTOP$ は圏をなす．この圏 $\hTOP$ のことを\textbf{ホモトピー圏} (homotopy category) と呼ぶ．
+% 次の命題は，関手 $H_q \circ S_\bullet$ の作用の下では，$\TOP$ におけるホモトピー同値の違いが完全に同一視されることを意味する．
+
+% \begin{mytheo}[label=thm:homotopyInvariance]{ホモロジー群のホモトピー不変性}
+%     $\forall f,\, g \in \Hom{\TOP}(X,\, Y)$ を与える．
+%     このとき $\forall q \ge 0$ について
+%     \begin{align}
+%         f \simeq g \IMP H_q \bigl( S_\bullet(f) \bigr)  = H_q \bigl( S_\bullet(g) \bigr)
+%     \end{align}
+%     が成り立つ．
+% \end{mytheo}
+
+% \begin{proof}
+%     $I \coloneqq [0,\, 1]$ とおく．
+%     $f \simeq g$ ならば，$f$ と $g$ を繋ぐホモトピー $F \colon X \times I \lto Y$ が存在する．
+
+%     % 定理\ref{thm:homotopyInvariance}を非輪状モデル定理により証明する．
+%     ここで2つの連続写像を
+%     \begin{align}
+%         i_0 &\colon X \longrightarrow X \times I,\; x \longmapsto (x,\, 0) \\
+%         i_1 &\colon X \longrightarrow X \times I,\; x \longmapsto (x,\, 1)
+%     \end{align}
+%     で定義すると，ホモトピーの定義から
+%     \begin{align}
+%         F \circ i_0 = f \AND F \circ i_1 = g
+%     \end{align}
+%     が成り立つ．従って\hyperref[prop:Hq-functoriality]{$H_q$ の関手性}より示すべきは
+%     \begin{align}
+%         &H_q \bigl( S_\bullet(f) \bigr)  = H_q \bigl( S_\bullet(g) \bigr) \\
+%         \IFF &H_q \bigl( S_\bullet(F) \bigr) \circ H_q \bigl( S_\bullet(i_0) \bigr)   = H_q \bigl( S_\bullet(F) \bigr) \circ H_q \bigl( S_\bullet(i_1) \bigr)
+%     \end{align}
+%     となるから
+%     \begin{align}
+%         H_q \bigl( S_\bullet(i_1) \bigr) = H_q \bigl( S_\bullet(i_1) \bigr) \in \Hom{\MOD{\mathbb{Z}}} \bigl( H_q(X),\, H_q(X \times I) \bigr) 
+%     \end{align}
+%     が成立することを示せば十分である．
+%     さらに\hyperref[prop:chainHomotopy-basic]{チェイン・ホモトピーの性質}より，
+%     \begin{align}
+%         S_\bullet(i_0) \simeq S_\bullet(i_1) \in \Hom{\CHAIN} \bigl( S_\bullet(X),\, S_\bullet(X \times I) \bigr) 
+%     \end{align}
+%     （\hyperref[def:chainHomotopy]{チェイン・ホモトピック}）を示せば十分であるとわかる．
+
+%     % \begin{myprop}[label=prop:homotopyInvariance]{}
+%     %     任意の位相空間 $X$ に対して，準同型の族 $\Phi_\bullet = \Familyset[\big]{\Phi_q \colon S_q(X) \to S_{q+1}(X \times [0,\, 1])}{q \ge 0}$ が存在して以下を充たす：
+%     %     \begin{align}
+%     %         \partial_{q+1} \Phi_q + \Phi_{q-1} \partial_q = i_1{}_* - i_0{}_*
+%     %     \end{align}
+%     % \end{myprop}
+
+%     % を示せば十分である．これは\hyperref[thm:acyclicModel]{非輪状モデル定理}によって達成される．
+
+%     集合 $\mathcal{M} \coloneqq \Familyset[\big]{\Delta^q}{q\ge 0} \subset \Obj{\TOP}$ を考えよう．共変関手 $S_\bullet \colon \TOP \longrightarrow \CHAIN$ は集合 $\mathcal{M}$ について\hyperref[def:functor-free]{自由}である．
+%     また，次の補題から $S_\bullet$ は集合 $\mathcal{M}$ について\hyperref[def:functor-acyclic]{非輪状}である：
+%     \begin{mylem}[label=lem:2-2-10]{}
+%         位相空間 $X$ は一点 $x_0 \in X$ からなる部分集合 $\{x_0\}$ を変位レトラクトに持つならば，$q = 0$ を除いて $H_q (X) = 0$ である．
+%     \end{mylem}
+
+%     もうひとつの共変関手
+%     \begin{align}
+%         A_\bullet \colon \TOP \longrightarrow \CHAIN
+%     \end{align}
+%     を次のように構成する：
+%     \begin{align}
+%         A_\bullet (X) &\coloneqq S_\bullet (X \times I)\quad (\forall X \in \Obj{\TOP}) \\
+%         A_\bullet(f) &\coloneqq S_\bullet(f \times \mathrm{id}_{I}) \in \Hom{\CHAIN} \bigl( S_\bullet(X\times I),\, S_\bullet (Y\times I) \bigr) \quad  (\forall f \in \Hom{\TOP}(X,\, Y))
+%     \end{align}
+%     このとき $\forall q \ge 0$ について $\Delta^q \times I \approx D^{q+1}$ であることを使うと，補題\ref{lem:2-2-10}から $A_\bullet$ は集合 $\mathcal{M}$ について\hyperref[def:functor-acyclic]{非輪状}である．
+
+%     以上の考察から，共変関手 $S_\bullet \colon \TOP \longrightarrow \CHAIN$ は集合 $\mathcal{M}$ について自由かつ非輪状であり，かつ共変関手 $A_\bullet \colon \TOP \longrightarrow \CHAIN$ は集合 $\mathcal{M}$ について非輪状である．
+%     したがって\hyperref[thm:acyclicModel]{非輪状モデル定理}から
+%     \begin{align}
+%         S_\bullet(i_0) \simeq S_\bullet (i_1)
+%     \end{align}
+%     が示された．
+% \end{proof}
+
+\section{Mayer-Vietoris完全列}
+
+位相空間 $X$ の部分空間 $A \subset X$ の $X$ における内部を $A^\circ$ と書く．
+
+\begin{mytheo}[label=thm:MV, breakable]{Mayer-Vietoris完全列}
+    $X$ を位相空間，$U,\, V \subset X$ を部分集合で，
+    \begin{align}
+        U^\circ \cup V^\circ = X
+    \end{align}
+    を充たすものとする．このとき$\forall q \ge 0$ について連結準同型
+    \begin{align}
+        \partial_\bullet \colon H_q(X) \longrightarrow H_{q-1}(U \cap V)
+    \end{align}
+    が存在して，完全列
+    \begin{align}
+        \cdots &\xrightarrow{i} H_q(U) \oplus H_q(V) \xrightarrow{j} H_q(X) \xrightarrow{\partial_\bullet} H_{q-1}(U \cap V) \\
+        &\xrightarrow{i} H_{q-1}(U) \oplus H_{q-1}(V) \xrightarrow{j} H_{q-1}(X) \xrightarrow{\partial_\bullet} H_{q-2}(U \cap V) \\
+        &\xrightarrow{i} \cdots \xrightarrow{i} H_0(U) \oplus H_0(V) \xrightarrow{j} H_0(X) \to 0
+    \end{align}
+    が成り立つ．ただし，準同型 $i,\, j$ は包含写像
+    \begin{align}
+        &i_U \colon U\cap V \hookrightarrow U,&&i_V \colon U\cap V \hookrightarrow V,\\ 
+        &j_U \colon U \hookrightarrow X,&&j_V \colon V \hookrightarrow X
+    \end{align}
+    の\hyperref[def:SCC]{誘導準同型}によって\footnote{つまり，$(i_U)_q \coloneqq \bm{H_q \bigl( S_\bullet (i_U) \bigr)} \colon H_q(U\cap V) \lto H_q(U)$ などとした．}
+    \begin{align}
+        i(w) &\coloneqq \Bigl(\, (i_U)_q(w),\, -(i_V)_q(w) \,\Bigr), \\
+        j(u,\, v) &\coloneqq (j_U)_q(u) + (j_V)_q(v)
+    \end{align}
+    と定義される．ただし $w \in H_q(U\cap V),\; u \in H_q(U),\; v \in H_q(V)$ である．
+    \tcblower
+    位相空間 $X,\, Y$，および部分空間 $U,\, V \subset X,\; U',\, V' \subset Y$ と，連続写像 $f \colon X \longrightarrow Y$ であって以下の条件を充たすものが与えられたとき，
+    連結準同型は図式\ref{fig:connecting-MV}を可換にする：
+    \begin{itemize}
+        \item $U^\circ \cup V^\circ = X \AND U'{}^\circ \cup V'{}^\circ = Y$
+        \item $f(U) \subset U' \AND f(V) \subset V'$
+    \end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzcd}[row sep=large, column sep=large]
+        &H_q(X) \arrow[d, "f_q"] \arrow[r, "\partial_*"] &H_{q+1}(U \cap V) \arrow[d, "f_q"] \\
+        &H_q(Y) \arrow[r, "\partial*"]                 &H_{q+1}(U' \cap V')
+    \end{tikzcd}
+    \caption{連結準同型の自然性}
+    \label{fig:connecting-MV}
+\end{figure}%
+\end{mytheo}
+
+この定理は次の命題から導かれる：
+\begin{myprop}[label=prop:MV]{特異チャイン複体の切除対}
+    $U,\, V \subset X$ が定理\ref{thm:MV}の条件
+    \begin{align}
+        U^\circ \cup V^\circ = X
+    \end{align}
+    を充たすとき，包含写像 $\iota\colon  S_\bullet(U) + S_\bullet(V) \hookrightarrow S_\bullet(X)$ は $\forall q \ge 0$ についてホモロジー群の同型
+    \begin{align}
+        H_q \bigl( S_\bullet(U) + S_\bullet(V) \bigr) \xrightarrow{\cong} H_q(X)
+    \end{align}
+    を誘導する．
+\end{myprop}
+
+\begin{proof}
+    ~\cite[定理2.4.2]{Nariya}を参照
+\end{proof}
+
+
+命題\ref{prop:MV}を仮定して定理\ref{thm:MV}を証明する．
+
+\begin{proof}
+    系列
+    \begin{align}
+        0 \to S_q(U \cap V) \xrightarrow{i} S_q(U) \oplus S_q(V) \xrightarrow{j} S_q(U) + S_q(V) \to 0
+    \end{align}
+    は完全である．これのホモロジー完全列をとると
+    \begin{align}
+        \cdots \xrightarrow{i} H_q(U) \oplus H_q(V) \xrightarrow{j} H_q \bigl( S_\bullet(U) + S_\bullet (V) \bigr) \xrightarrow{\partial_*} H_{q-1}(U\cap V) \xrightarrow{i} \cdots
+    \end{align}
+    が得られる．さらに命題\ref{prop:MV}を使うことで
+    \begin{align}
+        \cdots \xrightarrow{i} H_q(U) \oplus H_q(V) \xrightarrow{j} H_q (X) \xrightarrow{\partial_*} H_{q-1}(U\cap V) \xrightarrow{i} \cdots
+    \end{align}
+    が得られる．
+
+    $f$ が\hyperref[lem:chain1]{誘導するチェイン写像} $f_* \colon S_\bullet(X) \longrightarrow S_\bullet(Y)$ によって
+    \begin{figure}[H]
+        \centering
+        \begin{tikzcd}[row sep=large, column sep=large]
+            &0 \arrow[r] &S_q(U \cap V) \arrow[d, "f_*"] \arrow[r, "i_*"] &S_q(U) \oplus S_q(V)\arrow[d, "f_*"] \arrow[r, "j_*"] &S_q(U) + S_q(V) \ar[d, "f_*"] \arrow[r] & 0 \\
+            &0 \arrow[r] &S_q(U' \cap V') \arrow[r, "i_*"]               &S_q(U') \oplus S_q(V')\arrow[r, "j_*"]                 &S_q(U') + S_q(V') \arrow[r] & 0
+        \end{tikzcd}
+    \end{figure}%
+    が成り立つ．ここから連結準同型とホモロジー完全列の自然性を使うことで定理\ref{thm:MV}の後半も示された．
+\end{proof}
+
+% \section{Seifert-van Kampenの定理}
+
+% 融合積 (amalgamated product) の定義をする．
+
+% \begin{mydef}[label=def:amalg]{融合積}
+%     群 $G,\, H, K$ と準同型 $\psi_1 \colon K \to G,\; \psi_2 \colon K \to H$  が与えられたとき，
+%     新たな群 $\bm{G *_K H}$ と準同型 $l_1 \colon G \to G *_K H,\; l_2 \colon H \to G *_K H$ であって図式\ref{fig:comm-amalg}を可換にし，次の普遍性を充たすもののことを，群 $G,\, H$ の $K$ についての\textbf{融合積} (amalgamated product) と呼ぶ：
+%     \begin{description}
+%         \item[\textbf{普遍性}] 群 $L$ および準同型 $q_1 \colon G \lto L,\, q_2 \colon H \lto L$ が図式\ref{subfig:univ-amalg-1}を可換にするとき，可換図式\ref{subfig:univ-amalg-2}が成り立つ．
+%     \end{description}
+% \end{mydef}
+
+
+% \begin{figure}[H]
+%     \centering
+%     \begin{tikzcd}[row sep=large, column sep=large]
+%         &G *_K H  &H \ar[l, "l_2"] \\
+%         &G \ar[u, "l_1"] &K \ar[l, "\psi_1"]\ar[u, "\psi_2"]
+%     \end{tikzcd}
+%     \caption{融合積の可換性}
+%     \label{fig:comm-amalg}
+% \end{figure}%
+
+
+% \begin{figure}[H]
+%     \centering
+%     \begin{subfigure}{0.4\columnwidth}
+%         \centering
+%         \begin{tikzcd}[row sep=large, column sep=large]
+%             &L  &H \ar[l, "q_2"] \\
+%             &G \ar[u, "q_1"] &K \ar[l, "\psi_1"]\ar[u, "\psi_2"]
+%         \end{tikzcd}
+%         \caption{}
+%         \label{subfig:univ-amalg-1}
+%     \end{subfigure}
+%     \hspace{5mm}
+%     \begin{subfigure}{0.4\columnwidth}
+%         \centering
+%         \begin{tikzcd}
+%             L
+%                 &   & \\
+%                 &G *_Z H \ar[ul, red, dashrightarrow, "\exists ! \widehat{q}"]
+%                     &H \ar[l, "l_2"] \arrow[ull, bend right, "q_2"]
+%                     \\
+%                 &G \arrow[u, "l_1"] \arrow[uul, bend left, "q_1"]
+%                     &K \ar[l, "\psi_1"] \ar[u, "\psi_2"]
+%         \end{tikzcd}
+%         \caption{}
+%         \label{subfig:univ-amalg-2}
+%     \end{subfigure}
+%     \caption{融合積の普遍性}
+%     \label{fig:univ-amalg}
+% \end{figure}%
+
+
+% 融合積は，\underline{もし存在すれば}同型を除いて一意に定まる．以下では実際に融合積を構成する．
+
+\section{空間対の特異ホモロジー}
+
+位相空間 $X$ とその部分空間 $A \subset X$ の組 $(X,\, A)$ のことを\textbf{空間対} (pair) と呼ぶ．
+包含写像 $i \colon A \hookrightarrow X$ が\hyperref[lem:SC-chain]{誘導するチェイン写像} $i_\bullet \colon S_\bullet (A) \longrightarrow S_\bullet (X)$ を用いて，$\forall q \ge 0$ に対して $\mathbb{Z}$ 加群
+\begin{align}
+    S_q(X,\, A) \coloneqq \frac{S_q(X)}{\Im \bigl(i_q \colon S_q (A) \lto S_q(X)\bigr)}= \Coker\bigl( i_q\colon S_q(A) \longrightarrow S_q(X) \bigr)
+\end{align}
+を考える．剰余類への標準的射影を
+\begin{align}
+    p_q \colon S_q(X) \longrightarrow S_q(X,\, A),\; u \longmapsto u + \Im i_q
+\end{align}
+と書く．
+
+\begin{mylem}[label=lem:pair-partial]{}
+    \begin{itemize}
+        \item 
+        \hyperref[def:SCC]{境界写像} $\partial_q \colon S_q(X) \longrightarrow S_{q-1}(X)$ はwell-definedな準同型写像
+        \begin{align}
+            \overline{\partial}_q \colon S_q(X,\, A) \longrightarrow S_{q-1}(X,\, A),\; u + \Im i_q \longmapsto \partial_q u + \Im i_{q-1}
+        \end{align}
+        を一意的に誘導する．
+        \item 
+        準同型 $\overline{\partial}_q \colon S_q(X,\, A) \longrightarrow S_{q-1}(X,\, A)$ は
+        \begin{align}
+            \overline{\partial}_{q-1}\overline{\partial}_q = 0
+        \end{align}
+        を充たす．
+    \end{itemize}
+\end{mylem}
+
+\begin{proof}
+    $\partial_q \bigl(\Im i_q\bigr) \subset \Im i_{q-1}$ なので
+    \begin{align}
+        u \in \Im i_q &\IMP \partial_q u \in \Im i_{q-1} \IMP (p_{q-1} \circ \partial_q)(u) = 0_{S_{q-1}(X,\, A)}
+    \end{align}
+    i.e. $\Im i_q \subset \Ker(p_{q-1} \circ \partial_q)$ が言える．したがって\hyperref[lem:quomod-univ]{商加群の普遍性}が使えて
+    以下の可換図式が成り立つ：
+    \begin{figure}[H]
+        \centering
+        \begin{tikzcd}[row sep=large, column sep=large]
+            S_q(X) \ar[d, "p_*"']\ar[r, "\partial_q"] &S_{q-1}(X) \ar[r, "p_{q-1}"]  &S_{q-1}(X,\, A)\\
+            S_q(X,\, A) \arrow[urr, dashed, red, "\exists! \overline{\partial}_q"']  & &
+        \end{tikzcd}
+        % \caption{誘導準同型}
+        % \label{fig:induced}
+    \end{figure}%
+    
+    後半は $\overline{\partial}_{q-1}\overline{\partial}_q (u + \Im i_q) = \partial_{q-1}\partial_{q} u + \Im i_{q-2} = 0_{S_{q-2}(X,\, A)}$ より従う．
+\end{proof}
+
+以上の考察から，加群と準同型の族
+\begin{align}
+    S_\bullet(X,\, A) \coloneqq \Familyset[\big]{S_q(X,\, A),\, \overline{\partial}_q}{q \ge 0}
+\end{align}
+はチェイン複体を成す．
+
+\begin{mydef}[label=def:pairSH]{空間対のホモロジー群}
+    チェイン複体 $S_\bullet (X,\, A)$ のホモロジー群を\textbf{空間対 $(\bm{S,\, A})$ の第 $\bm{q}$ のホモロジー群}と呼び，
+    \begin{align}
+        H_q(X,\, A) \coloneqq \frac{\Ker \bigl( \partial_q \colon S_q(X,\, A) \to S_{q-1}(X,\, A) \bigr) }{\Im \bigl( \partial_{q+1}\colon S_{q+1}(X,\, A) \to S_q(X,\, A) \bigr) }
+    \end{align}
+    と書く．
+\end{mydef}
+
+\subsection{空間対のホモロジー長完全列}
+
+包含準同型 $i_q \colon S_q(A) \longrightarrow S_q(X)$ は単射で，かつ標準的射影 $p_q \colon S_q(X) \longrightarrow S_q(X,\, A)$ は全射だから，系列
+\begin{align}
+    0 \to S_\bullet(A) \xrightarrow{i_\bullet} S_\bullet(X) \xrightarrow{p_\bullet} S_\bullet (X,\, A) \to 0        
+\end{align}
+は短完全列を成す．ここに短完全列の\hyperref[lem:preLES-homology]{ホモロジー長完全列}を適用して，$\forall q \ge 1$ に\hyperref[lem:preconne]{連結準同型}
+\begin{align}
+    \partial_\bullet \colon H_q(X,\, A) \longrightarrow H_{q-1}(A)
+\end{align}
+および\textbf{空間対 $\bm{(X,\, A)}$ のホモロジー長完全列}
+\begin{align}
+    \cdots &\xrightarrow{i_q} H_q(X) \xrightarrow{p_q} H_q(X,\, A) \xrightarrow{\partial_\bullet} H_{q-1}(A) \\
+    &\xrightarrow{i_{q-1}} H_{q-1}(X) \xrightarrow{p_{q-1}} H_{q-1}(X,\, A) \xrightarrow{\partial_\bullet} H_{q-2}(A) \\
+    &\xrightarrow{i_{q-2}} \cdots \xrightarrow{i_0} H_0(X) \xrightarrow{p_0} H_0(X,\, A) \to 0
+\end{align}
+が得られる．
+
+\subsection{誘導準同型}
+
+空間対 $(X,\, A),\; (Y,\, B)$ の間の連続写像とは，連続写像 $f \colon X \lto Y$ であって $f(A) \subset B$ を充たすもののことを言う．このとき 
+$f_q \bigl( S_q(A) \bigr)  \subset S_q(B)$ が成り立つ\footnote{
+    $\forall \sum_l a_l \sigma_l \in S_\bullet (A)$ について
+    \begin{align}
+        f_q \left( \sum_l a_l \sigma_l \right) = f_q \left( i_q \left( \sum_l a_l \sigma_l \right)  \right) = \sum_l a_l (f \circ i \circ \sigma_l)
+    \end{align}
+    だが，$\forall l$ について $\sigma_l \in \Hom{\TOP}(\Delta^q,\, A)$ なので $\Im \sigma_l \subset A$ であり，従って $\Im (f \circ i \circ \sigma_l) = f ( \Im \sigma_l ) \subset f(A) \subset B$ が言える．
+    i.e.
+    $f \circ i \circ \sigma_l \in \Hom{\TOP} (\Delta^q,\, B)$ である．
+}
+ので
+$\forall q \ge 0$ に対して準同型写像
+\begin{align}
+    \overline{f}_q \colon S_q(X,\, A) \lto S_q(Y,\, B),\; u + S_q(A) \lmto f_q(u) + S_q (B)
+\end{align}
+はwell-definedである．
+故に補題\ref{lem:pair-partial}で定義した境界写像 $\overline{\partial}_q \colon S_q(X,\, A) \lto S_{q-1} (X,\, A),\; \overline{\partial}'_q \colon S_q(Y,\, B) \lto S_{q-1} (Y,\, B)$ を使ってwell-definedな準同型
+\begin{align}
+    \label{eq:induced-rel}
+    \overline{f}_q \colon H_q(X,\, A) \lto H_q(Y,\, B),\; \bigl(u + S_q(A) \bigr) + \Im \overline{\partial}_{q+1} \lmto \bigl( f_q(u) + S_q (B) \bigr) + \Im \overline{\partial}'_{q+1}
+\end{align}
+を定義できる\footnote{記号の濫用だが...}．これを\textbf{誘導準同型}と呼ぶ．
+
+\subsection{切除同型}
+
+\begin{mytheo}[label=thm:exc]{切除定理}
+    位相空間 $X$ と部分空間 $U,\, A \subset X$ が
+    \begin{align}
+        \label{cond:exc}
+        U \subset X \AND \overline{U} \subset A^\circ
+    \end{align}
+    を充たすとする．
+    
+    このとき $\forall q \ge 0$ に対して
+    包含写像\footnote{これは空間対 $(X\setminus U,\, A \setminus U),\, (X,\, A)$ の間の連続写像と見做せるので，前小節の構成を適用できる．} $i \colon X \setminus U \lto X$ の誘導準同型は同型である：
+    \begin{align}
+        \overline{i}_q \colon H_q (X\setminus U,\, A \setminus U) \xrightarrow{\cong} H_q(X,\, A)
+    \end{align}
+\end{mytheo}
+
+\begin{proof}
+    $B \coloneqq X \setminus U$ とおく．$A \cap B = A \setminus U$ であるから $S_q(A) \cap S_q(B) = S_q (A \cap B) = S_q(A \setminus U)$ が成り立つ．
+    従って
+    \begin{align}
+        S_q(X\setminus U,\, A \setminus U) = S_q(B,\, A \cap B) = \frac{S_q (B)}{S_q(A) \cap S_q(B)}
+    \end{align}
+    だが，第二同型定理により
+    \begin{align}
+        S_q(X\setminus U,\, A \setminus U) \cong \frac{S_q(A) + S_q(B)}{S_q(A)}
+    \end{align}
+    がわかる．
+
+    ここで仮定より $X \setminus A^\circ \subset X \setminus \overline{U} = (X \setminus U)^\circ = B^\circ$ だから
+    \begin{align}
+        \label{eq:exc}
+        X = A^\circ \cup \bigl(X \setminus A^\circ\bigr) \subset A^\circ \cup B^\circ
+    \end{align}
+    したがって $X = A^\circ \cup B^\circ$ が成り立つ．よって命題\ref{prop:MV}が使えて，包含準同型 $\iota_q \colon S_q (A) + S_q(B) \hookrightarrow S_q(X)$ はチェイン・ホモトピー同値写像である．
+    このとき2つの短完全列
+    \begin{align}
+        0 &\lto S_\bullet (A) \xrightarrow{i_*} S_\bullet (A) + S_\bullet(B) \xrightarrow{p_*} \frac{S_\bullet (A) + S_\bullet(B)}{S_\bullet (A)} \lto 0 \\
+        0 &\lto S_\bullet (A) \xrightarrow{i_*} S_\bullet (X) \xrightarrow{p_*} S_\bullet (X,\, A) \lto 0
+    \end{align}
+    の間の可換図式
+    \begin{center}
+        \begin{tikzcd}[row sep=large, column sep=large]
+            0 \ar[r] &S_\bullet (A) \ar[r]\ar[d, "="] &S_\bullet (A) + S_\bullet(B) \ar[r]\ar[d, "\iota_\bullet"] &\frac{S_\bullet (A) + S_\bullet(B)}{S_\bullet (A)} \ar[r]\ar[d, red, "\overline{i}_\bullet"] &0 \quad (\text{exact}) \\
+            0 \ar[r] &S_\bullet (A) \ar[r] &S_\bullet (X) \ar[r] &S_\bullet (X,\, A) \ar[r]& 0 \quad (\text{exact})
+        \end{tikzcd}
+    \end{center}
+    の横2列を\hyperref[prop:HES]{ホモロジー長完全列}で繋ぎ\hyperref[thm:five-lemma]{5項補題}を適用すれば，赤色をつけた部分から
+    \begin{align}
+        H_q\left(\frac{S_q(A) + S_q(B)}{S_q(A)}\right) \cong H_q(X,\, A)
+    \end{align}
+    が従う．
+\end{proof}
+
+\subsection{空間対のMayer-Vietoris完全列}
+
+\begin{mytheo}[label=thm:MV-rel, breakable]{空間対のMayer-Vietoris完全列}
+    空間の3対\footnote{つまり，$A_i \subset X_i \subset X$} $(X,\, X_1,\, A_1),\; (X,\, X_2,\, A_2)$ が条件
+    \begin{align}
+        A_1^\circ \cup A_2^\circ = A_1 \cup A_2,\quad X_1^\circ \cup X_2^\circ = X_1 \cup X_2
+    \end{align}
+    を充たすとする．このとき $\forall q \ge \textcolor{red}{1}$ に対して\textbf{連結準同型}
+    \begin{align}
+        \partial_\bullet \colon H_q(X_1 \cup X_2,\, A_1 \cup A_2) \lto H_q(X_1 \cap X_2,\, A_1 \cap A_2)
+    \end{align}
+    が存在して，完全列
+    \begin{align}
+        \cdots &\xrightarrow{i} H_q(X_1,\, A_1) \oplus H_q(X_2,\, A_2) \xrightarrow{j} H_q (X_1 \cup X_2,\, A_1 \cup A_2) \\
+        &\xrightarrow{\partial_\bullet} H_{q-1}(X_1 \cap X_2,\, A_1 \cap A_2) \\
+        &\xrightarrow{i} H_q(X_1,\, A_1) \oplus H_q(X_2,\, A_2) \xrightarrow{j} H_q (X_1 \cup X_2,\, A_1 \cup A_2) \\
+        &\xrightarrow{\partial_\bullet} \cdots \\
+        &\xrightarrow{i} H_0(X_1,\, A_1) \oplus H_0(X_2,\, A_2) \xrightarrow{j} H_0 (X_1 \cup X_2,\, A_1 \cup A_2) \lto 0
+    \end{align}
+    が成り立つ．ただし，空間対の包含写像
+    \begin{align}
+        i_1 &\colon (X_1 \cap X_2,\, A_1 \cap A_2) \hookrightarrow (X_1,\, A_1), \\
+        i_2 &\colon (X_1 \cap X_2,\, A_1 \cap A_2) \hookrightarrow (X_2,\, A_2), \\
+        j_1 &\colon (X_1,\, A_1) \hookrightarrow (X_1 \cup X_2,\, A_1 \cup A_2), \\
+        j_2 &\colon (X_2,\, A_2) \hookrightarrow (X_1 \cup X_2,\, A_1 \cup A_2) 
+    \end{align}
+    の\hyperref[eq:induced-rel]{誘導準同型}によって
+    \begin{align}
+        i(w) &\coloneqq \Bigl( \, (i_1)_q(w),\, -(i_2)_q(w) \Bigr), \\
+        j(u,\, v) &\coloneqq (j_1)_q(u) + (j_2)_q(v)
+    \end{align}
+    と定義する．ただし $w \in H_q(X_1\cap X_2,\, A_1 \cap A_1),\; u \in H_q(X_1,\, A_1),\; v \in H_q(X_2,\, A_2)$ である．
+    これらは\hyperref[def:nat]{自然}である．
+\end{mytheo}
+
+\begin{proof}
+    矢印が包含写像からなる可換図式
+    \begin{center}
+        \begin{tikzcd}
+            &0 \ar[d] &0 \ar[d] &0 \ar[d] & \\
+            0 \ar[r] &S_q(A_1 \cap A_2) \ar[d]\ar[r] &S_q(X_1 \cap X_2) \ar[d]\ar[r] &S_q(X_1 \cap X_2,\, A_1 \cap A_2) \ar[d]\ar[r]&0 \\
+            0 \ar[r] &S_q(A_1) \oplus S_q(A_2) \ar[d]\ar[r] &S_q(X_1) \oplus S_q(X_2) \ar[d]\ar[r] &S_q(X_1,\, A_1) \oplus S_q(X_2,\, A_2) \ar[d]\ar[r]&0 \\
+            0 \ar[r] &S_q(A_1) + S_q(A_2) \ar[d]\ar[r] &S_q(X_1) + S_q(X_2) \ar[d]\ar[r] &\frac{S_q(X_1) + S_q(X_2)}{S_q(A_1) + S_q(A_2)} \ar[d]\ar[r]&0 \\
+            &0 &0 &0 &
+        \end{tikzcd}
+    \end{center}
+    を考える．この図式は横3行が全て完全で，縦3列のうち左側の2列も完全である．従って\hyperref[thm:nine-lemma]{9項補題}により右の縦列も完全になる．
+
+    こうして\hyperref[def:chain-exact]{チェイン複体の短完全列}
+    \begin{align}
+        0 \lto S_\bullet (X_1 \cap X_2,\, A_1 \cap A_2) &\lto S_\bullet(X_1,\, A_1) \oplus S_\bullet (X_2,\, A_2) \\
+        \lto \frac{S_\bullet(X_1) + S_\bullet(X_2)}{S_\bullet(A_1) + S_\bullet(A_2)} \lto 0
+    \end{align}
+    が得られ，\hyperref[prop:HES]{ホモロジー長完全列}
+    \begin{align}
+        \cdots &\xrightarrow{i} H_q(X_1,\, A_1) \oplus H_q(X_2,\, A_2) \xrightarrow{j} H_q \left(  \frac{S_\bullet(X_1) + S_\bullet(X_2)}{S_\bullet(A_1) + S_\bullet(A_2)} \right) \\
+        &\xrightarrow{\partial_\bullet} H_{q-1}(X_1 \cap X_2,\, A_1 \cap A_2) \\
+        &\xrightarrow{i} H_q(X_1,\, A_1) \oplus H_q(X_2,\, A_2) \xrightarrow{j} H_q \left(  \frac{S_\bullet(X_1) + S_\bullet(X_2)}{S_\bullet(A_1) + S_\bullet(A_2)} \right) \\
+        &\xrightarrow{\partial_\bullet} \cdots \\
+        &\xrightarrow{i} H_0(X_1,\, A_1) \oplus H_0(X_2,\, A_2) \xrightarrow{j} H_0 (X_1 \cup X_2,\, A_1 \cup A_2) \lto 0 \label{eq:preMV}
+    \end{align}
+    が得られる．
+    ここで，縦の矢印が包含準同型であるような\hyperref[def:chain-exact]{チェイン複体の短完全列}の射
+    \begin{center}
+        \begin{tikzcd}[row sep=large, column sep=large]
+            0 \ar[r] &S_\bullet (A_1) + S_\bullet (A_2) \ar[d]\ar[r] &S_\bullet (X_1) + S_\bullet (X_2) \ar[d]\ar[r] &\frac{S_\bullet(X_1) + S_\bullet(X_2)}{S_\bullet(A_1) + S_\bullet(A_2)} \ar[d, red]\ar[r] &0 \\
+            0 \ar[r] &S_\bullet (A_1\cup A_2)\ar[r] &S_\bullet (X_1\cup X_2) \ar[r] &S_\bullet (X_1 \cup X_2,\, A_1 \cup A_2)\ar[r] &0 
+        \end{tikzcd}
+    \end{center}
+    が存在する．仮定と命題\ref{prop:MV}より縦の左2列は同型であり，\hyperref[prop:HES]{ホモロジー長完全列}と\hyperref[thm:five-lemma]{5項補題}から赤色の矢印が同型だとわかる：
+    \begin{align}
+        H_q\left(\frac{S_\bullet(X_1) + S_\bullet(X_2)}{S_\bullet(A_1) + S_\bullet(A_2)}\right) \cong H_q (X_1 \cup X_2,\, A_1 \cup A_2)
+    \end{align}
+    これを式\eqref{eq:preMV}に代入することでMayer-Vietoris完全列が得られる．
+\end{proof}
+
+
+\section{位相多様体への応用}
+
+特異ホモロジーの理論の応用として，位相多様体の向き付けを議論する．この節の内容は~\cite[第4章]{Nariya}および~\cite[Appendix A]{Milnor}に大きく依存している．
+
+\subsection{写像度}
+
+\begin{mydef}[label=def:degree, breakable]{写像度}
+    ある $n \ge \textcolor{red}{1}$ を固定する．$X,\, Y \in \Obj{\TOP}$ が以下の条件を充たすとする：
+    \begin{description}
+        \item[\textbf{(deg-1)}] $X$ はHausdorff空間．
+        \item[\textbf{(deg-2)}] $H_n(X) \cong \mathbb{Z}$
+        \item[\textbf{(deg-3)}] $\forall p \in X$ について，
+        空間対 $(X,\, \emptyset)$ から $(X,\, X \setminus \{p\})$ への包含写像\footnote{集合論の約束より空集合の像は空集合だから $j_p(\emptyset) = \emptyset \subset X \setminus \{p\}$．}
+        \begin{align}
+            j_p \colon (X,\, \emptyset) \lto (X,\, X \setminus \{p\}),\; x \lmto x
+        \end{align}
+        が誘導する準同型 
+        \begin{align}
+            (j_p)_n \colon H_n(X) \lto H_n(X,\, X\setminus \{p\})
+        \end{align}
+        は同型．
+    \end{description}
+    \textsf{\textbf{(deg-2)}}より $H_n(X)$ の生成元は $\pm 1$ の2つである．
+    $X,\, Y$ についてそれぞれどちらか一方を選び，それを $[X],\, [Y]$ とおく．
+    \tcblower
+    連続写像 $f \in \Hom{\TOP}(X,\, Y)$ の\textbf{写像度} (mapping degree) とは，誘導準同型 $f_n \colon H_n(X) \lto H_n(Y)$ による生成元の像
+    \begin{align}
+        f_n([X]) = d[Y] 
+    \end{align}
+    によって一意に定まる $d \in \mathbb{Z}$ のこと．記号として $\bm{\deg (f)} \coloneqq d$ と書く．
+\end{mydef}
+
+\begin{mylem}[label=lem:condition-deg-compact]{}
+    \hyperref[def:degree]{条件 \textbf{\textsf{(deg-1)}}-\textbf{\textsf{(deg-3)}}}を充たす位相空間はコンパクト空間である．
+\end{mylem}
+
+\begin{proof}
+    \hyperref[def:degree]{条件 \textbf{\textsf{(deg-1)}}-\textbf{\textsf{(deg-3)}}}を充たす位相空間 $X$ と，$H_n(X)$ の生成元 $[X] \in \{\pm 1\}$ を与える．
+    $[X]$ の任意の代表元 $\sum_{i=1}^m a_i \sigma_i$ を1つとる．$\Delta^n$ はコンパクトで\hyperref[def:singularsimplex]{特異 $n$ 単体}の元 $\sigma_i$ は連続写像だから $\bigcup_{i=1}^m \sigma_i(\Delta^n)$ もコンパクトである．
+    
+    もし $\exists p \in X \setminus \left(\bigcup_{i=1}^m \sigma_i (\Delta^n)\right)$ ならば，$1\le \forall i \le m,\; \Im \sigma_i \subset X \setminus \{p\}$ なので $[X] = [\sum_{i=1}^m a_i \sigma_i] \in H_n(X \setminus \{p\}) = \Ker (j_p)_n$ が成り立つ．
+    ところがこのとき $(j_p)_n([X]) = 0 \notin \{\pm 1\}$ が $H_n(X,\, X \setminus \{p\}) \cong \mathbb{Z}$ の生成元ということになり矛盾．
+    従って $X = \bigcup_{i=1}^m \sigma_i (\Delta^n)$ であり，$X$ はコンパクトである．
+\end{proof}
+
+
+
+\begin{myprop}[label=lem:degree-basic]{}
+    \hyperref[def:degree]{条件 \textbf{\textsf{(deg-1)}}-\textbf{\textsf{(deg-3)}}}を充たす $X,\, Y,\, Z \in \Obj{\TOP}$ をとり，それぞれの生成元 $[X],\, [Y],\, [Z]$ を与える．
+    このとき連続写像 $f,\, f_1,\, f_2 \in \Hom{\TOP}(X,\, Y),\,  g \in \Hom{\TOP}(Y,\, Z)$ について以下が成り立つ：
+    \begin{enumerate}
+        \item $\deg(\mathrm{id}_X) = 1$
+        \item $\deg(g \circ f) = \deg(g)\deg(f)$
+        \item $f_1 \simeq f_2 \IMP \deg(f_1) = \deg(f_2)$
+        \item $f$ がホモトピー同値写像 $\IMP \deg(f) = \pm 1$
+        \item $\deg(f) \neq 0 \IMP f$ は全射
+    \end{enumerate}
+\end{myprop}
+
+\begin{proof}
+    \begin{enumerate}
+        \item $S_\bullet$ および $H_\bullet$ が関手なので
+        \begin{align}
+            (\mathrm{id}_X)_n = H_n \bigl( S_\bullet (\mathrm{id}_X) \bigr) = 1_{H_n(X)}
+        \end{align}
+        が成り立つ．よって $(\mathrm{id}_X)_n([X]) = [X]$．
+        \item $S_\bullet$ および $H_\bullet$ が関手なので
+        \begin{align}
+            (g\circ f)_n = H_n \bigl( S_\bullet (g\circ f) \bigr) = H_n \bigl( S_\bullet (g) \bigr) \circ H_n \bigl( S_\bullet (f) \bigr) = g_n \circ f_n
+        \end{align}
+        が成り立つ．よって $(g\circ f)_n ([X]) = g_n \bigl( f_n([X]) \bigr) = \deg(g)\deg(f)[Z]$．
+        \item $H_n$ のホモトピー不変性より
+        \begin{align}
+            f_1{}_n = H_n \bigl( S_\bullet (f_1) \bigr) =  H_n \bigl( S_\bullet (f_2) \bigr) = f_2{}_n
+        \end{align}
+        が成り立つ．
+        \item $g \in \Hom{\TOP}(Y,\, X)$ をホモトピー逆写像とする．すると (1)-(3) より
+        \begin{align}
+            1 = \deg(\mathrm{id}_X) = \deg(g \circ f) = \deg(g)\deg(f)
+        \end{align}
+        かつ定義から $\deg(f),\, \deg (g) \in \mathbb{Z}$ なので $\deg(f) = \pm 1$．
+        \item $f$ が全射でないとする．このとき $p \in Y\setminus \Im f$ が存在する．
+        従って包含写像 $i_p \colon Y \setminus \{p\} \hookrightarrow Y$ とおくと $f = i_p \circ f$ だから
+        \begin{align}
+            \deg(f)[Y] = f_n([X]) = (i_p)_n \circ f_n ([X])
+        \end{align}
+        となる．ところが完全列
+        \begin{align}
+            H_n(Y \setminus \{p\}) \xrightarrow{(i_p)_n} H_n(Y) \xrightarrow{(j_p)_n} H_n(Y,\, Y\setminus\{p\})
+        \end{align}
+        があるので $(j_p)_n \bigl( \deg(f)[Y] \bigr) = (j_p)_n \circ (i_p)_n \bigl( f_n ([X]) \bigr) = 0$ となる．条件\textbf{\textsf{(deg-3)}}より $(j_p)_n$ は同型だから $\deg(f) = 0$ が言えた．
+    \end{enumerate}
+\end{proof}
+
+\begin{mylem}[label=lem:exc-Hausdorff]{一点を除く切除同型}
+    $X$ を\underline{Hausdorff空間}とする．
+    点 $p \in X$ および $p$ の開近傍 $p \in U \subset X$ を与える．
+
+    このとき，包含写像 $\iota_{U,\, p} \colon (U,\, U \setminus \{p\}) \hookrightarrow (X,\, X\setminus\{p\})$ は同型
+    \begin{align}
+        (\iota_{U,\, p})_\bullet \colon H_\bullet (U,\, U\setminus\{p\}) \xrightarrow{\congexc} H_\bullet (X,\, X \setminus \{p\})
+    \end{align}
+    を誘導する．
+\end{mylem}
+
+\begin{proof}
+    $X\setminus U$ は閉集合だから $\overline{X\setminus U} = X \setminus U \subset X \setminus \{p\}$ が成り立つ．
+    ところで1点集合 $\{p\} \subset X$ は $X$ の\hyperref[def:compact]{コンパクト}集合だが，仮定より $X$ はHausdorff空間なので，補題\ref{lem:Hausdorff-sub-compact}-(1) から閉集合でもある．
+    従って $X \setminus \{p\}$ は開集合となり $(X \setminus \{p\})^\circ = X \setminus \{p\}$ が成り立つ．
+    以上の議論より $X \setminus U \subset X \AND \overline{X \setminus U} \subset (X \setminus \{p\})^\circ$ が成り立つので\hyperref[thm:exc]{切除定理}が使えて証明が終わる．
+\end{proof}
+
+
+\begin{mydef}[label=def:loc-degree, breakable]{向き・局所的写像度}
+    \hyperref[def:degree]{条件\textbf{\textsf{(deg-1)}}-\textbf{\textsf{(deg-3)}}}を充たす $X,\, Y \in \Obj{\TOP}$ と，それぞれの生成元 $[X] \in H_n(X),\, [Y] \in H_n(Y)$ を与える．
+    \begin{itemize}
+        \item 点 $p \in X$ における $X$ の\textbf{向き} (orientation) とは，
+        \begin{align}
+            \bm{[X]_p} \coloneqq (j_p)_n([X]) \in H_n(X,\, X\setminus\{p\})
+        \end{align}
+        のこと\footnote{\textbf{\textsf{(deg-3)}}より $[X]_p$ は $H_n(X,\, X\setminus\{p\})$ の生成元である．}．
+        \item 連続写像 $f \in \Hom{\TOP}(X,\, Y)$ がある点 $p \in X$ において以下の条件を充たすとする：
+        \begin{description}
+            \item[\textbf{(局所同相的)}] 　
+            
+            点 $p$ の開近傍 $p \in U \subset X$ であって，制限 $f|_U \colon U \lto f(U)$ が同相写像となるようなものが存在する．
+        \end{description}
+        点 $p \in X$ における $X$ の\textbf{局所的写像度} (local mapping degree) とは，
+        \begin{align}
+            (\iota_{f(U),\, f(p)})_n \circ \overline{f}_n \circ (\iota_{U,\, p})^{-1}_n([X]_p) = \deg_p(f)[Y]_{f(p)} \in H_n(Y,\, Y\setminus\{f(p)\})
+        \end{align}
+        により一意に定まる $\bm{\deg_p(f)} \in \{\pm 1\}$ のこと
+        % \footnote{
+        %     $(\iota_{V,\, f(p)})_n \circ f_n \circ (\iota_{U,\, f(p)})^{-1}_n$ は同型写像なので $\deg_p(f)[Y]_{f(p)}$ は $H_n(Y,\, Y\setminus\{f(p)\})$ の生成元である．従って開近傍 $U,\, V$ の取り方によらない．
+        % }
+        ．ただし補題\ref{lem:exc-Hausdorff}の記号を使った．
+    \end{itemize}
+\end{mydef}
+
+\begin{myprop}[label=lem:loc-degree-basic]{}
+    \hyperref[def:degree]{条件 \textbf{\textsf{(deg-1)}}-\textbf{\textsf{(deg-3)}}}を充たす $X,\, Y,\, Z \in \Obj{\TOP}$ をとり，それぞれの生成元 $[X],\, [Y],\, [Z]$ を与える．
+    連続写像 $f \in \Hom{\TOP}(X,\, Y),\,  g \in \Hom{\TOP}(Y,\, Z)$ はそれぞれ点 $p,\, f(p)$ において\hyperref[def:loc-degree]{局所同相的}であるとする．
+    
+    このとき $g \circ f$ は $p$ において\hyperref[def:loc-degree]{局所同相的}で，
+    \begin{align}
+        \deg_p(g \circ f) = \deg_{f(p)}(g) \deg_p (f)
+    \end{align}
+    が成り立つ．
+\end{myprop}
+
+\begin{proof}
+    仮定より開近傍 $p \in U \subset X,\; f(p) \in V \subset Y$ が存在して $f|_U \colon U \lto f(U),\; g|_V \colon V \lto g(V)$ が同相写像となる．
+    このとき $U' \coloneqq f^{-1} \bigl( f(U) \cap V \bigr),\, V' \coloneqq f(U) \cap V,\; W' \coloneqq g \bigl( f(U) \cap V \bigr)$ とおくとこれらはそれぞれ $p,\, f(p),\, g \bigl( f(p) \bigr) $ の開近傍で，かつ制限 $g \circ f |_{U'} \colon U' \lto W'$ は同相写像である．
+    i.e. $g \circ f$ は局所同相的である．
+    $S_\bullet$ および $H_n$ の関手性から $(g \circ f)_n = g_n \circ f_n$ が成り立つので
+    \begin{align}
+        &(\iota_{W',\, g(f(p))})_n \circ (g\circ f)_n \circ (\iota_{U',\, p})_n^{-1} ([X]_p) \\
+        &= (\iota_{W',\, g(f(p))})_n \circ g_n \circ (\iota_{V',\, f(p)})^{-1} \circ (\iota_{V',\, f(p)}) \circ f_n \circ (\iota_{U',\, p})_n^{-1} ([X]_p) \\
+        &= (\iota_{W',\, g(f(p))})_n \circ g_n \circ (\iota_{V',\, f(p)})^{-1} \bigl( \deg_p(f) [Y]_{f(p)} \bigr) \\
+        &= \deg_{f(p)}(g) \deg_p(f) [Z]_{g(f(p))}
+    \end{align}
+    が言える．
+\end{proof}
+
+
+\begin{mytheo}[label=thm:loc-degree]{写像度の局所化}
+    \hyperref[def:degree]{条件 \textbf{\textsf{(deg-1)}}-\textbf{\textsf{(deg-3)}}}を充たす $X,\, Y,\, Z \in \Obj{\TOP}$ をとり，それぞれの生成元 $[X],\, [Y],\, [Z]$ と
+    連続写像 $f \in \Hom{\TOP}(X,\, Y),\,  g \in \Hom{\TOP}(Y,\, Z)$ を与える．
+    ある点 $q \in Y$ が存在して，$\forall p \in f^{-1}(\{q\})$ について $f$ が\hyperref[def:loc-degree]{局所同相的}であるとする．
+
+    このとき $f^{-1}(\{q\})$ は有限集合であり，
+    \begin{align}
+        \deg (f) = \sum_{p \in f^{-1}(\{q\})} \deg_p(f)
+    \end{align}
+    が成り立つ．
+\end{mytheo}
+
+\begin{proof}
+    条件\textbf{\textsf{(deg-1)}}より $X,\, Y$ はHausdorff空間なので，補題\ref{lem:Hausdorff-sub-compact}-(1) よりコンパクト集合 $\{q\} \subset Y$ は $Y$ の閉集合である．
+    したがって $f$ の連続性から $f^{-1}(\{q\})$ は $X$ の閉集合である．
+    さらに補題\ref{lem:condition-deg-compact}より $X$ は\hyperref[def:compact]{コンパクト}Hausdorff空間なので，補題\ref{lem:Hausdorff-sub-compact}-(2) より閉部分集合 $f^{-1}(\{q\}) \subset X$ はコンパクトである．
+
+    ところで，仮定より $\forall p \in f^{-1}(\{q\})$ に対して $p$ の開近傍 $p \in U_p \subset X$ が存在して制限 $f|_{U_p} \colon U_p \lto f(U_p)$ が同相写像になる．
+    i.e. $f|_{U_p}$ は全単射なので $U_p \cap f^{-1}(\{q\}) = (f|_{U_p})^{-1}(\{q\}) = \{p\}$ が成り立つ．このとき
+    $f^{-1}(\{q\}) \subset \bigcup_{p \in f^{-1}\{q\}} U_p$ だが $f^{-1}(\{q\})$ はコンパクトなので $\exists p_1,\, \dots ,\, p_m \in f^{-1}(\{q\}),\; f^{-1}(\{q\}) \subset \bigcup_{i=1}^m U_{p_i}$ 
+    が言える．よって
+    \begin{align}
+        f^{-1}(\{q\}) = \left(\bigcup_{i=1}^m U_p \right) \cap f^{-1}(\{q\}) = \bigcup_{i=1}^m \bigl( U_{p_i} \cap f^{-1}(\{q\}) \bigr) = \bigcup_{i=1}^m \{p_i\} = \{p_1,\, \dots ,\, p_m \}
+    \end{align}
+    であり，$f^{-1}(\{q\})$ が有限集合であることが示された．
+    
+    後半の証明をする．
+    上述の記号を $U_i \coloneqq U_{p_i}\; (i=1,\, \dots,\, m)$ と再定義する．また，$q$ の開近傍 $q \in V \subset Y$ を $f(U_i) \subset V\; (1 \le \forall i \le m)$ を充たすようにとる．
+    $X$ はHausdorff空間なので $i \neq j\IMP U_{i} \cap U_{j} = \emptyset$ を充たすようにできる．
+    このとき $U \coloneqq \bigcup_{i=1}^m U_i$ は非交和になるため，
+    \begin{align}
+        S_\bullet \bigl( U,\, U \setminus \{p_1,\, \dots ,\, p_m\} \bigr) &= \frac{S_\bullet \Bigl( \coprod_{i=1}^m U_i \Bigr) }{S_\bullet \Bigl( \coprod_{i=1}^m (U_i \setminus \{p_i\}) \Bigr) } \\
+        &= \frac{\bigoplus_{i=1}^m S_\bullet (U_i)}{\bigoplus_{i=1}^m S_\bullet (U_i \setminus \{p_i\})} \\
+        &\cong \bigoplus_{i=1}^m \frac{S_\bullet (U_i)}{S_\bullet (U_i \setminus \{p_i\})} \\ 
+        &= \bigoplus_{i=1}^m S_\bullet (U_i,\, U_i \setminus \{p_i\})
+    \end{align}
+    が成り立ち
+    \footnote{
+        $\Delta^q$ は弧状連結なので連続写像によって $U$ の弧状連結成分に移される．故に $\forall q \ge 0$ に対して $\Hom{\TOP}(\Delta^q,\, \coprod_{i=1}^m U_i) = \coprod_{i=1}^m \Hom{\TOP} (\Delta^q,\, U_i)$ が成り立ち，$S_q (\coprod_{i=1}^m U_i) = \mathbb{Z}^{\bigoplus \coprod_{i=1}^m \Hom{\TOP} (\Delta^q,\, U_i)} = \bigoplus_{i=1}^m \mathbb{Z}^{\bigoplus \Hom{\TOP} (\Delta^q,\, U_i)} = \bigoplus_{i=1}^m S_q(U_i)$ がわかる．
+        同様の議論で $S_q \bigl( \coprod_{i=1}^m (U_i \setminus \{p_i\}) \bigr) = \bigoplus_{i=1}^m S_q(U_i \setminus \{p_i\})$ も従う．
+        3行目の同型は，全射準同型 $\psi \colon \bigoplus_{i=1}^m S_\bullet (U_i) \lto \bigoplus_{i=1}^m \frac{S_\bullet (U_i)}{S_\bullet (U_i \setminus \{p_i\})},\; (u_1,\, \dots ,\, u_m) \lmto \bigl( u_1 + S_\bullet (U_1 \setminus \{p_1\}),\, \dots,\, u_m + S_\bullet (U_m \setminus \{p_m\}) \bigr)$ について $\Ker \psi = \bigoplus_{i=1}^m S_\bullet (U_i \setminus \{p_i\})$ なので準同型定理を適用すれば従う． 
+    }，これの第 $n$ ホモロジーをとることで
+    \begin{align}
+        H_n \bigl( U,\, U \setminus  \{p_1,\, \dots ,\, p_m\} \bigr) \cong \bigoplus_{i=1}^m H_n (U_i,\, U_i \setminus \{p_i\})
+    \end{align}
+    がわかる．補題\ref{lem:exc-Hausdorff}より
+    \begin{align}
+        \label{cmtd:loc-deg-1}
+        (\iota_{U_i,\, p_i}) \colon H_n (U_i,\, U_i \setminus \{p_i\}) \xrightarrow{\cong} H_n (X,\, X \setminus \{p_i\}) \cong \mathbb{Z}
+    \end{align}
+    だから $H_n \bigl( U,\, U \setminus  \{p_1,\, \dots ,\, p_m\} \bigr) \cong \mathbb{Z}^{\oplus m}$ である．
+    また，$U$ はHausdorff空間 $X$ の開集合なので
+    $X \setminus U = \overline{X \setminus U} \subset X \setminus \{p_1,\, \dots ,\, p_m\} = \bigl( X \setminus \{p_1,\, \dots ,\, p_m\} \bigr)^\circ$
+    が成り立つ．
+    よって\hyperref[thm:exc]{切除定理}を使うことができて
+    \begin{align}
+        \label{cmtd:loc-deg-2}
+        H_n\bigl(U,\, U \setminus \{ p_1,\, \dots ,\, p_m \}\bigr) \cong H_n\bigl(X,\, X \setminus \{ p_1,\, \dots ,\, p_m \}\bigr) \cong \mathbb{Z}^{\oplus m}
+    \end{align}
+    が成り立つ．
+
+    ところで，2つの包含写像
+    \begin{align}
+        k_i &\colon U_i \hookrightarrow X,\; x \lmto x, \\
+        \pi_i &\colon X \hookrightarrow X,\; x \lmto x
+    \end{align}
+    はそれぞれ $k_i(U_i \setminus \{p_i\}) \subset X \setminus \{p_1,\, \dots ,\, p_m\}$ および $\pi_i(X \setminus \{p_1,\, \dots ,\, p_m\}) \subset X \setminus \{p_i\}$ を充たす．
+    従って誘導準同型
+    \begin{align}
+        \label{cmtd:loc-deg-3}
+        (\overline{k_i})_n \colon H_n (U_i,\, U_i \setminus \{p_i\}) &\lto H_n (X,\,X\setminus \{p_1,\, \dots ,\, p_m\}) \cong \mathbb{Z}^{\oplus m},\\
+        u &\lmto \bigl(0,\, \dots,\, \underbrace{(\iota_{U_i,\, p_i})_n(u)}_{i},\, \dots ,\, 0\bigr)
+    \end{align}
+    および
+    \begin{align}
+        \label{cmtd:loc-deg-4}
+        (\overline{\pi_i})_n \colon H_n (X,\, X \setminus \{p_1,\, \dots ,\, p_m\}) \cong \mathbb{Z}^{\oplus m} &\lto H_n (X,\,X\setminus \{p_i\}),\\
+        (u_1,\, \dots ,\, u_m) &\lmto u_i
+    \end{align}
+    を考えることができる．
+    % 脚注よりこの同型は
+    % \begin{align}
+    %     \bigl( (u_1,\, \dots,\, u_m) + S_n(U\setminus P) \bigr) + \Im \overline{\partial}_{n+1}\lmto \bigl( u_1 + S_n (U_1 \setminus \{p_1\}),\, \dots,\, u_m + S_n (U_m \setminus \{p_m\}) \bigr) + \Im \overline{\partial}_{n+1}
+    % \end{align}
+    % のように働く．
+    さらに
+    包含写像 
+    \begin{align}
+        j \colon (X,\, \emptyset) \hookrightarrow \bigl(X,\, X \setminus P\bigr),\; x \lmto x
+    \end{align}
+    の誘導準同型
+    \begin{align}
+        \label{cmtd:loc-deg-5}
+        \overline{j}_n \colon H_n(X) \lto H_n (X,\, X \setminus P)
+    \end{align}
+    を考えることができる．
+    \eqref{cmtd:loc-deg-1}, \eqref{cmtd:loc-deg-2}, \eqref{cmtd:loc-deg-3}, \eqref{cmtd:loc-deg-4}, \eqref{cmtd:loc-deg-5}を併せると
+    以下の可換図式\footnote{連続写像の段階で可換なので，関手 $S_\bullet,\, H_n$ を作用させても可換である．}が成り立つ\footnote{$(\iota_{W,\, w})_n$ や $(j_{x})_n$ の矢印は同型である．}：
+    \begin{center}
+        \begin{tikzcd}[row sep=large, column sep=large]
+            & &H_n(X) \ar[dl, "(j_{p_i})_n"']\ar[r, "f_n"]\ar[d, "\overline{j}_n"'] &H_n(Y) \ar[d, "(j_q)_n"] \\
+            &H_n(X,\, X \setminus \{p_i\}) &H_n(X,\, X \setminus P) \ar[l, "(\overline{\pi_i})_n"]\ar[r, "\overline{f}_n"] &H_n(Y,\, Y \setminus \{q\}) \\
+            & &H_n (U_i,\, U_i \setminus \{p_i\}) \ar[ul, "(\iota_{U_i,\, p_i})_n"]\ar[u, "(\overline{k_i})_n"]\ar[r, "\overline{f}_n"] &H_n(V,\, V \setminus \{q\}) \ar[u, "(\iota_{V,\, q})_n"']
+        \end{tikzcd}
+    \end{center}
+    
+    
+    図式中の $H_n(X)$ から出発して $[X] \in H_n(X)$ の行き先を考える．\hyperref[def:degree]{写像度の定義}と\hyperref[def:loc-degree]{局所的写像度の定義}より
+    \begin{align}
+        (j_q)_n \circ f_n ([X]) = \deg (f) [Y]_{f(q)}
+    \end{align}
+    である．一方，左上の三角形の可換性から
+    \begin{align}
+        [X]_{p_i} = (\overline{\pi_i})_n \circ \overline{j}_n ([X])\quad (1 \le \forall i \le m)
+    \end{align}
+    が得られる．故に\eqref{cmtd:loc-deg-3}, \eqref{cmtd:loc-deg-4}より
+    \begin{align}
+        \overline{j}_n ([X]) = \bigl( [X]_{p_1},\, [X]_{p_2},\, \dots ,\, [X]_{p_m} \bigr) = \sum_{i=1}^m (\overline{k_i})_n \circ (\iota_{U_i,\, p_i})^{-1}_n ([X]_{p_i})
+    \end{align}
+    が言える．さらに右下の四角形の可換性から
+    \begin{align}
+        \overline{f}_n \circ (\overline{k_i})_n\circ (\iota_{U_i,\, p_I})^{-1}_n ([X]_{p_i}) &= (\iota_{V,\, q})_n \circ \overline{f}_n \circ (\iota_{U_i,\, p_i})^{-1}_n ([X]_{p_i}) \\ 
+        &= \deg_{p_i}(f) [Y]_{f(p_i)} \\
+        &= \deg_{p_i}(f) [Y]_q
+    \end{align}
+    が分かる．従って右上の四角形の可換性から
+    \begin{align}
+        &(j_q)_n \circ f_n ([X]) = \overline{f}_n \circ \overline{j}_n ([X]) \\
+        \IFF &\deg (f) [Y]_{f(q)} = \sum_{i=1}^m \overline{f}_n \circ (\overline{k_i})_n \circ (\iota_{U_i,\, p_I})^{-1}_n ([X]_{p_i}) = \left(\sum_{i=1}^m \deg_{p_i}(f)\right) [Y]_{q}
+    \end{align}
+    が成り立つ．
+    $[Y]_q$ は $H_n(Y,\, Y \setminus \{q\})$ の生成元であり，示された．
+    % $f^{-1}(\{q\})$ は離散集合である\footnote{相対位相の定義より $U_p \cap f^{-1}(\{q\})$ は $f^{-1}(\{q\})$ の開集合である．$\forall p \in f^{-1}(\{q\})$ に対して $\{p\}$ が開集合であることが示されたので $f^{-1}(\{q\})$ の位相は離散位相である．}
+    % $f^{-1}(\{q\}) = \{p_1,\, \dots ,\, p_m\}$ とおく．$X$ 
+\end{proof}
+
+
+\begin{mytheo}[label=thm:degree-Jacobi]{Jacobi行列との関係}
+    $U_1,\, U_2 \subset \mathbb{R}^n$ を開集合とし，$C^\infty$ 微分同相写像 $f \colon U_1 \lto U_2$ を与える．
+
+    このとき $\forall x \in U_1$ に対して
+    \begin{align}
+        \deg_x f = \frac{\det(Jf)_x}{\abs{\det(Jf)_x}}
+    \end{align}
+    が成り立つ．ただし $(Jf)_x$ は $f$ の点 $x$ におけるJacobi行列である．
+\end{mytheo}
+
+
+\subsection{位相多様体の境界と向き付け}
+
+まず，位相多様体の境界と向き付けについて述べる．
+
+$\mathbb{R}^n$ の\textbf{閉じた上半空間} (closed upper half space) およびその境界を $n > 0$ のとき
+\begin{align}
+	\mathbb{H}^n &\coloneqq \bigl\{\, (x^1,\, \dots ,\, x^n) \in \mathbb{R}^n \bigm| x^n \ge 0 \,\bigr\} \\
+	\partial \mathbb{H}^n &\coloneqq \bigl\{\, (x^1,\, \dots ,\, x^n) \in \mathbb{R}^n \bigm| x^n = 0 \,\bigr\} 
+\end{align}
+と定義し，$n=0$ のとき
+\begin{align}
+	\mathbb{H}^0 &\coloneqq \{ 0 \} \\
+	\partial \mathbb{H}^0 &\coloneqq \emptyset
+\end{align}
+と定義する．
+\begin{mydef}[label=def:mani-with-boundary]{境界付き位相多様体}
+	\begin{itemize}
+        \item Hausdorff空間 $(M,\, \mathscr{O})$ は，その上の任意の点が $\mathbb{R}^n$ または $\mathbb{H}^n$ と同相になるような開近傍を持つとき，$n$ 次元\textbf{境界付き位相多様体} (topological manifold with boundary) と呼ばれる．
+        \item 境界付き位相多様体 $(M,\, \mathscr{O})$ の開集合 $U \in \mathscr{O}$ であって，$\mathbb{R}^n$ または $\mathbb{H}^n$ の開集合 $V$ との同相写像 $\varphi \colon U \to V$ が存在するとき，組 $(U,\, \varphi)$ を $M$ の\textbf{チャート} (chart) と呼ぶ． 
+    \end{itemize}
+\end{mydef}
+
+必要ならば，境界付き位相多様体 $M$ のチャート $(U,\, \varphi)$ のうち，$\varphi(U)$ が $\mathbb{R}^n$ と同相なものを\textbf{内部チャート} (interior chart)，$\varphi(U)$ が $\mathbb{H}^n$ の開集合と同相で，かつ $\varphi(U) \cap \partial \mathbb{H}^n \neq \emptyset$ を充たすものを\textbf{境界チャート} (boundary chart) と呼ぶことにしよう．
+
+\begin{mydef}[label=def:int-manifold-with-boundary]{内部・境界}
+	$(M,\, \mathscr{O})$ を境界付き位相多様体とし，$\forall p \in M$ を一つとる．
+	\begin{enumerate}
+		\item $p$ が $M$ の\textbf{内点} (interior point) であるとは，ある\underline{内部チャート} $(U,\, \varphi)$ が存在して $p \in U$ となること．
+		\item $p$ が $M$ の\textbf{境界点} (boundary point) であるとは，ある\underline{境界チャート} $(U,\, \varphi)$ が存在して $\varphi(p) \in \partial \mathbb{H}^n$ となること．
+	\end{enumerate}
+	$M$ の内点全体の集合を\textbf{境界付き位相多様体} $\bm{M}$ の\textbf{内部} (interior) と呼び，$\bm{\Int M}$ と書く．
+	$M$ の境界点全体の集合を\textbf{境界付き位相多様体} $\bm{M}$ の\textbf{境界} (boundary) と呼び，$\bm{\partial M}$ と書く．
+\end{mydef}
+
+定義から明らかなように，$\forall p \in M$ は内点または境界点である．
+というのも，$p \in M$ が境界点でないならば， $p$ は内点であるか，または境界チャート $(U,\, \varphi)$ に対して $p \in U$ かつ $\varphi(p) \notin \partial \mathbb{H}^n$ を充たす．後者の場合 $\varphi$ の $U \cap \varphi^{-1}\bigl(\mathrm{Int}\mathop{} \mathbb{H}^n\bigr)$ への制限は内部チャートになり，かつ $p \in U \cap \varphi^{-1}\bigl(\mathrm{Int}\mathop{} \mathbb{H}^n\bigr)$ を充たすので，$p$ は $M$ の内点なのである．
+
+しかしながら，あるチャートに関しては内点だが，別のチャートに関しては境界点であるような点 $p \in M$ が存在しないことは非自明である．
+この問題はホモロジーによって解決できる．
+
+\begin{myprop}[label=prop:mani-boundary-homopogy]{ホモロジーによる位相多様体の境界の特徴付け}
+    $n$次元\hyperref[def:mani-with-boundary]{境界付き位相多様体} $M$ に対して以下が成り立つ：
+    \begin{align}
+        \Int M &= \bigl\{\, p \in M \bigm| H_n(M,\, M\setminus \{p\}) = \mathbb{Z} \,\bigr\} \\
+        \partial M &= \bigl\{\, p \in M \bigm| H_n(M,\, M\setminus \{p\}) = 0 \,\bigr\} 
+    \end{align}
+\end{myprop}
+
+\begin{proof}
+    任意の点 $p \in M$ と $p$ を含むチャート $(\varphi,\, U)$ をとる．
+    補題\ref{lem:exc-Hausdorff}より切除同型
+    \begin{align}
+        \label{eq:exc-manifold}
+        H_n(M,\, M\setminus \{p\}) \underset{\mathrm{exc}}{\cong} H_n (U,\, U \setminus \{p\}) \cong H_n (\varphi(U),\, \varphi(U) \setminus \{\varphi(p)\})
+    \end{align}
+    が成り立つ．
+
+    $p \in \Int M$ ならば，式\eqref{eq:exc-manifold}において $(U,\, \varphi)$ を内部チャートとして
+    \begin{align}
+        H_n(M,\, M\setminus \{p\}) \underset{\mathrm{exc}}{\cong} H_n (\mathbb{R}^n,\, \mathbb{R}^n \setminus \{\varphi(p)\}) = \mathbb{Z}
+    \end{align}
+    が成り立つ．逆に $H_n(M,\, M\setminus \{p\}) = \mathbb{Z} \cong H_n (\mathbb{R}^n,\, \mathbb{R}^n \setminus \{\varphi(p)\})$ ならば $p$ を含む内部チャートが存在する．
+    従って $p \in \Int M \iff H_n(M,\, M\setminus \{p\}) = \mathbb{Z}$ である．
+
+    $p \in \partial M$ ならば，式\eqref{eq:exc-manifold}において $(U,\, \varphi)$ を境界チャートとして
+    \begin{align}
+        H_n(M,\, M\setminus \{p\}) \underset{\mathrm{exc}}{\cong} H_n (\mathbb{H}^n,\, \mathbb{H}^n \setminus \{\varphi(p)\}) = 0
+    \end{align}
+    が成り立つ．逆に $H_n(M,\, M\setminus \{p\}) = 0 \cong H_n (\mathbb{H}^n,\, \mathbb{H}^n \setminus \{\varphi(p)\})$ ならば $p$ を含む境界チャートが存在する．
+    従って $p \in \partial M \iff H_n(M,\, M\setminus \{p\}) = 0$ である．
+\end{proof}
+
+\begin{mycol}[]{多様体の境界の性質}
+	\hyperref[def:mani-with-boundary]{境界付き位相多様体} $M$ に対して以下が成り立つ：
+	\begin{enumerate}
+        \item $M = \Int M \sqcup \partial M$
+        \item $\partial (\partial M) = \emptyset$
+    \end{enumerate}
+\end{mycol}
+
+\begin{proof}
+    \begin{enumerate}
+        \item 命題\ref{prop:mani-boundary-homopogy}と $\mathbb{Z} \not\cong 0$ より従う．
+        \item $\forall p \in \partial M$ に対して，ある境界チャート $(U,\, \varphi)$ が存在して $\varphi(p) \in \partial \mathbb{H}^n = \mathbb{R}^{n-1} \times \{0\}$ を充たす．
+        このとき $\varphi(U) \cap \partial \mathbb{H}^n = \varphi(U) \cap (\mathbb{R}^{n-1} \times \{0\})$ は $\mathbb{R}^{n-1}$ における $\varphi (p)$ の開近傍であり，
+        局所座標の制限 $\varphi|_{\varphi^{-1}\bigl( \varphi(U) \cap  (\mathbb{R}^{n-1} \times \{0\})\bigr)}$ は同相写像である．
+        従って
+        \begin{align}
+            H_{n-1}(\partial M,\, \partial M \setminus \{p\}) &\congexc H_{n-1} \bigl( \varphi(U) \cap  (\mathbb{R}^{n-1} \times \{0\}),\, \varphi(U) \cap  (\mathbb{R}^{n-1} \times \{0\}) \setminus \{\varphi(p)\}  \bigr) \\ 
+            &\cong H_{n-1} \bigl( \mathbb{H}^n \cap  (\mathbb{R}^{n-1} \times \{0\}),\, \mathbb{H}^n \cap  (\mathbb{R}^{n-1} \times \{0\}) \setminus \{\varphi(p)\}  \bigr) \\ 
+            &= H_{n-1} (\mathbb{R}^{n-1},\, \mathbb{R}^{n-1} \setminus \{\varphi(p)\}) \\
+            &\cong \mathbb{Z}
+        \end{align}
+        であり，命題\ref{prop:mani-boundary-homopogy}から $\partial M = \Int (\partial M)$ が従う．(1) よりこのことは $\partial(\partial M) =\emptyset$ を意味する．
+    \end{enumerate}
+\end{proof}
+
+\begin{marker}
+    位相空間 $X$ の部分空間 $A \subset X$ の境界を $\bd(A)$ と書くと，\underline{必ずしも $\bd \bigl(\bd (A)\bigr) = \emptyset$ は成り立たない}．このことから，\underline{\hyperref[def:int-manifold-with-boundary]{位相多様体の境界}と部分空間の境界は別物}であるとわかる．
+\end{marker}
+
+次に，位相多様体の向きを定義する．
+
+\begin{mydef}[label=def:orientable]{位相多様体の向き付け}
+    境界付き位相多様体 $M$ とそのアトラス $\Familyset[\big]{(U_\lambda,\, \varphi_\lambda)}{\lambda \in \Lambda}$ を与える．
+\begin{itemize}
+    \item 
+    $M$ が\textbf{向き付けられている} (oriented) とは，$\forall \alpha,\, \beta \in \Lambda$ 
+    および $\forall p \in U_\alpha \cap U_\beta \cap \bm{\Int M}$
+    に対して，座標変換 $\varphi_\beta \circ \varphi_\alpha^{-1}$ の $p$ における\hyperref[def:loc-degree]{局所的写像度}が
+    \begin{align}
+        \deg_{\varphi_\alpha(p)} (\varphi_\beta \circ \varphi_\alpha^{-1}) = +1
+    \end{align}
+    を充たすこと．
+    \item  チャート $(U,\, \varphi)$ が\textbf{正の} (positive) （resp. \textbf{負の} (negative)）チャートであるとは，$\forall \lambda \in \Lambda$ および $\forall p \in U \cap U_\alpha \cap \bm{\Int M}$ に対して $\deg_{\varphi_\alpha(p)} (\varphi_\beta \circ \varphi^{-1}) = +1$（resp. $-1$）が成り立つこと\footnote{$\forall p \in U$ に対してある $\lambda \in \Lambda$ が存在して $p \in U_\lambda \AND \deg_{\varphi(p)} (\varphi_\lambda \circ \varphi^{-1}) = +1$（resp. $-1$）が成り立つことと同値．}
+\end{itemize}
+\end{mydef}
+
+基準となる $H_n(\mathbb{R}^n,\, \mathbb{R}^n\setminus \{0\}) \cong \mathbb{Z}$ の生成元を決めよう．
+まず $H_n(\Delta^n,\, \partial \Delta^n)$ の生成元を求める．
+% として恒等写像のホモロジー類 $[\mathrm{id}_{\Delta^n}]$ が取れることに注意する．
+
+\begin{mylem}[label=lem:generator-simplex]{}
+    恒等写像のホモロジー類 $[\mathrm{id}_{\Delta^n}]$ は $H_n(\Delta^n,\, \partial \Delta^n) \cong \mathbb{Z}$ の生成元である．
+\end{mylem}
+
+\begin{proof}
+    ~\cite[定理4.1.10]{Nariya}を参照
+    % $\mathrm{id}_{\Delta^n} \in \Hom{\TOP}(\Delta^n,\, \Delta^n)$ だから $\mathrm{id}_{\Delta^n} \in S_n(\Delta^n)$ である．\hyperref[def:singularsimplex]{境界写像の定義}から
+    % \begin{align}
+    %     \partial_n (\mathrm{id}_{\Delta^n}) = \sum_{i=0}^n (-1)^i f_i^n
+    % \end{align}
+    % である（$f_i^n$ は\hyperref[def:facemap]{面写像}）．ところで
+    % \begin{align}
+    %     \partial \Delta^n = \bigl\{\, (x^0,\, \dots ,\, x^n) \in \Delta^n \bigm| 0\le \exists i\le n,\; x_i = 0 \,\bigr\} 
+    % \end{align}
+    % である\footnote{これは\hyperref[def:int-manifold-with-boundary]{位相多様体の境界}である．}から $f_i^n \in \Hom{\TOP}(\Delta^{n-1},\, \partial\Delta^n) \subset S_{n-1}(\partial \Delta^n)$ が言えて，
+    % $\partial_n (\mathrm{id}_{\Delta^n}) \in S_{n-1} (\partial \Delta^n )$ がわかる．すなわち
+    % \begin{align}
+    %     \mathrm{id}_{\Delta^n} + S_{n-1} (\partial \Delta^n) \in \Ker \bigl( \overline{\partial}_n \colon S_n(\Delta^n,\, \partial \Delta^n) \lto S_{n-1}(\Delta^n,\, \partial \Delta^n) \bigr) 
+    % \end{align}
+    % であり，ホモロジー類 $[\mathrm{id}_{\Delta^n}] \in H_n (\Delta^n,\, \partial \Delta^n)$ はwell-definedである．
+
+    % $[\mathrm{id}_{\Delta^n}]$ が生成元であることを $n$ に関する数学的帰納法により示す．
+    % % $\Delta^1 = \bigl\{\, (x^0,\, x^1) \in \mathbb{R}^2 \bigm| x^0,\, x^1 \ge 0,\; x^0 + x^1 = 1 \,\bigr\},\; \partial\Delta^1 = \bigl\{ (1,\, 0),\; (0,\, 1) \bigr\} \subset \mathbb{R}^2,\; \Delta^0 = \{1\} \subset \mathbb{R}$ である．
+\end{proof}
+
+
+次に $\Delta^n \subset \mathbb{R}^{n+1}$ の $\mathbb{R}^n$ への埋め込み
+\begin{align}
+    \iota_n \colon \Delta^n \hookrightarrow \mathbb{R}^n,\, (x^0,\, x^1,\, \dots,\, x^n) \lmto (x^1-x^0,\, x^2-x^0,\, \dots,\, x^n-x^0)
+\end{align}
+を考える．点
+\begin{align}
+    p_0 \coloneqq \frac{1}{n+1} \mqty[1 \\ \vdots \\ 1] \in \Delta^n
+\end{align}
+は $\iota_n(p_0) = 0 \in \mathbb{R}^n$ を充たすから，\hyperref[lem:exc-Hausdorff]{切除同型}
+\begin{align}
+    (\iota_n)_n \colon H_n(\Delta^n,\, \Delta^n\setminus \{p_0\}) \xrightarrow{\cong} H_n(\mathbb{R}^n,\, \mathbb{R}\setminus \{0\})
+\end{align}
+がある．さらに同型 $H_n(\Delta^n,\, \Delta^n\setminus \{p_0\}) \cong H_n(\Delta^n,\, \partial\Delta^n)$ を合成することで
+\begin{align}
+    \bm{\mu_0} \coloneqq (\iota_n)_n([\mathrm{id}_{\Delta^n}]) = [\iota_n]\in H_n(\mathbb{R}^n,\, \mathbb{R}^n\setminus \{0\})
+\end{align}
+が生成元となる．
+
+\begin{mylem}[label=lem:generator-translate]{生成元の基点の平行移動}
+    $\forall x \in \mathbb{R}^n$ に関する同型写像
+    \begin{align}
+        H_n(\mathbb{R}^n,\, \mathbb{R}^n\setminus \{0\}) \xrightarrow{\cong}  H_n(\mathbb{R}^n,\, \mathbb{R}^n\setminus \{x\})
+    \end{align}
+    が成り立つ．
+\end{mylem}
+
+\begin{proof}
+    $x \in B_r (0)$ となるように正数 $r > 0$ をとる．$\mathbb{R}^n$ はHausdorff空間なのでコンパクト部分空間 $\{x\} \subset \mathbb{R}^n$ は閉集合であり，$\overline{\bigl(\mathbb{R}^n \setminus \overline{B}_r(0)\bigr)} = \mathbb{R}^n \setminus B_r(0) \subset \mathbb{R}^n \setminus \{x\} = (\mathbb{R}^n \setminus \{x\})^\circ$ が成り立つ．故に\hyperref[thm:exc]{切除定理}が使えて，包含写像 $\bigl(\mathbb{R}^n,\, \mathbb{R}^n \setminus \overline{B}_r(0)\bigr) \hookrightarrow \bigl( \mathbb{R}^n,\, \mathbb{R}^n \setminus \{x\} \bigr)$ が誘導する準同型
+    は同型になる．
+    従って図式
+    \begin{align}
+        H_n(\mathbb{R}^n,\, \mathbb{R}^n\setminus \{0\}) \xleftarrow{\congexc} H_n \bigl(\mathbb{R}^n,\, \mathbb{R}^n \setminus \overline{B}_r(0)\bigr) \xrightarrow{\congexc}  H_n(\mathbb{R}^n,\, \mathbb{R}^n\setminus \{x\})
+    \end{align}
+    から所望の同型が得られる．
+\end{proof}
+補題\ref{lem:generator-translate}の同型による $\mu_0$ の像を $\bm{\mu_x}$ と書くことにする．
+
+$\partial M$ に自然に向きが定まることを示す．
+$\widehat{D}^n \coloneqq D^{n-1} \times [0,\, 1]$ とおく．
+$\widehat{D}^n$ は $n$ 次元\hyperref[def:mani-with-boundary]{境界付き位相多様体}で，
+$\partial \widehat{D}^n = D^{n-1} \times \{0,\, 1\} \cup S^{n-2} \times [0,\, 1]$ である．
+% 包含写像
+% \begin{align}
+%     j \colon \partial \widehat{D}^n \hookrightarrow \widehat{D} \setminus \{p\}
+% \end{align}
+% の誘導準同型
+\begin{mylem}[label=lem:induced-orientation-1]{}
+    $n \ge 2$  とし，$p \in (\widehat{D}^n)^\circ,\, q \in (D^{n-1})^\circ$ を任意にとる．
+
+    \hyperref[lem:preconne]{連結準同型} $\partial_\bullet \colon H_n (\widehat{D}^n,\, \widehat{D}^n \setminus \{p\}) \lto H_{n-1} (\widehat{D}^n)$ を用いた図式
+    \begin{align}
+        H_n (\widehat{D}^n,\, \widehat{D}^n \setminus \{p\})  &\xrightarrow{\partial_\bullet} H_{n-1} (\widehat{D}^n \setminus \{p\}) \\
+        &\xrightarrow{\cong} H_{n-1}(\partial \widehat{D}^n) \\
+        &\xrightarrow{\congexc}  H_{n-1} \bigl( \partial \widehat{D}^n,\, \partial \widehat{D}^n \setminus \{(q,\, 0)\} \bigr) \cong H_{n-1} (D^{n-1},\, D^{n-1} \setminus \{q\})
+    \end{align}
+    がある．
+    特に，生成元 $\mu_p \in H_n (\widehat{D}^n,\, \widehat{D}^n \setminus \{p\})$ は
+    $(-1)^n \mu_q \in H_{n-1} (D^{n-1},\, D^{n-1}\setminus \{q\})$ に写像される．
+\end{mylem}
+
+\begin{proof}
+    $p$ と $\partial \widehat{D}^n$ を結ぶ線分を用いてホモトピーを構成することで，
+    部分空間 $\partial \widehat{D}^n \subset \widehat{D^n} \setminus \{p\}$ はレトラクション $r \colon \widehat{D}^n \setminus \{p\} \lto \partial \widehat{D}^n$ によって $\widehat{D^n} \setminus \{p\}$ の変位レトラクトになる．
+    従って $r$ の誘導準同型は同型 $H_{n-1} (\widehat{D}^n \setminus \{p\}) \xrightarrow{\cong} H_{n-1}(\partial \widehat{D}^n)$ を与える
+    \footnote{
+        位相空間 $X$ の部分空間 $A \subset X$ を与える．連続写像 $r \colon X \lto A$ がレトラクションであるとは，包含写像を $i \colon A \hookrightarrow X$ と書いたときに $r \circ i = \mathrm{id}_A$ が成り立つことを言う．
+        $A \subset X$ が $X$ の変位レトラクトであるとは，あるレトラクション $r \colon X \lto A$ が存在して
+        $i \circ r$ と $r$ がホモトピックになることを言う．このとき $A$ と $X$ は同じホモトピー型であり，レトラクション $r$ と包含写像 $i$ がホモトピー同値写像となる．
+    }．
+
+    $p = \bigl( 0,\, \dots ,\, 0,\, \frac{1}{n+1} \bigr),\; q = 0$ として良い．
+    連続写像
+    \begin{align}
+        h_n \colon \Delta^n \lto \widehat{D}^n,\; (x^0,\, \dots ,\, x^{n-1},\, x^n) \lmto (x^1 - x^0,\, \dots,\, x^{n-1} - x^0,\, x^n)
+    \end{align}
+    を考えると，連続写像
+    \begin{align}
+        H \colon \Delta^n \times I \lto \mathbb{R}^n,\; \bigl((x^0,\, \dots ,\, x^{n-1},\, x^n),\, t \bigr) \lmto (x^1 - x^0,\, \dots,\, x^{n-1} - x^0,\, x^n - tx^0)
+    \end{align}
+    が $h_n$ と $\iota_n$ を繋ぐホモトピーになる．i.e. $[h_n] = [\iota_n] = \mu_p \in H_n (\mathbb{R}^n,\, \mathbb{R}^n \setminus \{p\}) \congexc H_n (\widehat{D}^n ,\, \widehat{D}^n \setminus \{p\})$ は生成元である．
+    このとき
+    \begin{align}
+        \partial_\bullet (\mu_p) = \partial_\bullet ([h_n]) = \left[ \sum_{i=0}^n (-1)^i h_n \circ f_i^{n-1} \right] 
+    \end{align}
+    だが，$i < n$ のとき $r \circ h_n \circ f_i^{n-1} (\Delta^{n-1}) \subset \partial \widehat{D}^n \setminus \{(q,\, 0)\}$ なので
+    \begin{align}
+        \partial_\bullet (\mu_p) = (-1)^n [r \circ h_n \circ d_n^{n-1}] = (-1)^n [\iota_{n-1}] = (-1)^n \mu_q \in H_{n-1} (D^{n-1},\, D^{n-1}\setminus \{q\})
+    \end{align}
+    が成り立つ．
+\end{proof}
+
+\begin{mylem}[label=lem:induced-orientation-2]{}
+    開集合 $U_1,\, U_2 \subset \mathbb{H}^n$ と同相写像 $f \colon U_1 \xrightarrow{\cong} U_2$ を与える．
+
+    制限 $f|_{\Int U_1} \colon \Int U_1 \lto \Int U_2$ が\hyperref[def:loc-degree]{向き}を保つならば，$f|_{\partial U_1} \colon \partial U_1 \lto \partial U_2$ も向きを保つ．
+\end{mylem}
+
+\begin{proof}
+    命題\ref{prop:homotopyInvariance}により $f(\Int U_1) = f(\Int U_2),\; f(\partial U_1) = \partial U_2$ が成り立つ．
+    $\forall q_1 \in \partial U_1$ に対して $q_2 \coloneqq f(q_1) \in \partial U_2$ とおき，$f_n (\mu_{q_1}) = \mu_{q_2}$ であることを示す．
+
+    円板 $q_2 \in D_2^{n-1} \times \{0\} \subset \partial U_2$ をとり，$\varepsilon_2 > 0$ を $\widehat{D}_2^{n} \coloneqq D_2^{n-1} \times [0,\, \varepsilon_2] \subset U_2$ を充たすようにとり，
+    円板 $q_1 \in D_1^{n-1} \times \{0\} \subset \partial U_1$ および $\varepsilon_1 > 0$ を $\widehat{D}_1^{n} \coloneqq D_1^{n-1} \times [0,\, \varepsilon_1] \subset f^{-1}(\widehat{D}_2^n)$ を充たすようにとる．
+    そして $p_1 \coloneqq (q_1,\, \rho_1 / 2) \in \Int \widehat{D}_1^n,\; p_2 \coloneqq f(p_1) \in \Int \widehat{D}_2^n$ とおく．
+
+    $p_2$ と $\partial \widehat{D}_2$ の点を結ぶ線分を使って変位レトラクション $r \colon \widehat{D}_2^n \setminus \{p_2\} \lto \partial\widehat{D}_2$ をとる．
+    このとき横2行が補題\ref{lem:induced-orientation-1}の図式と同じであるような可換図式
+    \begin{center}
+        \begin{tikzcd}
+            &H_n (\widehat{D}_1^n,\, \widehat{D_1}^n \setminus \{p_1\}) \ar[r, "\partial_\bullet"]\ar[d, "\overline{f}_n"] &H_{n-1} (\widehat{D}^n_1 \setminus \{p_1\}) \ar[d, "f_n"] &H_{n-1}(\partial \widehat{D}^n_1) \ar[d, "(r \circ f)_{n-1}" ] \ar[l, "\cong"']\ar[r, "\congexc"] &H_{n-1} (\partial \widehat{D}^n_1,\, \partial \widehat{D}_1^n \setminus \{q_1\}) \ar[d, "\overline{f}_{n-1}"] \\
+            &H_n (\widehat{D}_2^n,\, \widehat{D_2}^n \setminus \{p_2\}) \ar[r, "\partial_\bullet"] &H_{n-1} (\widehat{D}^n_2 \setminus \{p_1\}) \ar[r, "r_{n-1}"] &H_{n-1}(\partial \widehat{D}^n_2) \ar[r, "\congexc"] &H_{n-1} (\partial \widehat{D}^n_2,\, \partial \widehat{D}_2^n \setminus \{q_2\})
+        \end{tikzcd}
+    \end{center}
+    がある．補題\ref{lem:induced-orientation-1}より，生成元 $\mu_{p_i} \in H_n (\widehat{D}_i^n,\, \widehat{D}_i^n)\quad (i = 1,\, 2)$ はそれぞれ $(-1)^n \mu_{q_i} \in H_{n-1} (\partial \widehat{D}^n_i,\, \partial \widehat{D}_i^n \setminus \{q_i\})$ に写像される．
+    仮定より $f_n (\mu_{p_1}) = \mu_{p_2}$ であるから，
+    図式を左上の $H_n (\widehat{D}_1^n,\, \widehat{D_1}^n \setminus \{p_1\})$ から右下の $H_{n-1} (\partial \widehat{D}^n_2,\, \partial \widehat{D}_2^n \setminus \{q_2\})$ にかけて追跡することで
+    \begin{align}
+        f_n(\mu_{q_1}) = \mu_{q_2}
+    \end{align}
+    がわかる．
+\end{proof}
+
+\begin{myprop}[label=prop:induced-orientation]{幾何学的に誘導された向き}
+    $n$ 次元\hyperref[def:mani-with-boundary]{境界付き位相多様体} $M$ がアトラス $\Familyset[\big]{(U_\lambda,\, \varphi_\lambda)}{\lambda \in \Lambda}$ によって\hyperref[def:orientable]{向き付けられている}とする．
+    
+    このとき\hyperref[def:int-manifold-with-boundary]{境界} $\partial M$ は向き付け可能である．
+\end{myprop}
+
+\begin{proof}
+    仮定より $\forall \alpha,\, \beta \in \Lambda$ および $\forall p \in U_\alpha  \cap U_\beta \cap \Int M$ に対して
+    $\deg_{\varphi_\alpha(p)} (\varphi_\beta \circ \varphi_\alpha^{-1}) = +1$ が成り立つ．
+    i.e. $\mathbb{R}^n$ の開集合 $\varphi_{\alpha}(U_\alpha \cap U_\beta),\, \varphi_{\beta}(U_\alpha \cap U_\beta)$ の上の同相写像 $\varphi_\beta \circ \varphi_\alpha^{-1} \colon \varphi_{\alpha}(U_\alpha \cap U_\beta) \lto \varphi_{\beta}(U_\alpha \cap U_\beta)$ の制限
+    $\varphi_\beta \circ \varphi_\alpha^{-1}|_{\Int \bigl( \varphi_{\alpha}(U_\alpha \cap U_\beta) \bigr)  } \colon \varphi_{\alpha}(U_\alpha \cap U_\beta \cap \Int M) \lto \varphi_{\beta}(U_\alpha \cap U_\beta \cap \Int M)$ は向きを保つ．
+    すると補題\ref{lem:induced-orientation-2}より
+    制限 $\varphi_\beta \circ \varphi_\alpha^{-1}|_{\partial \bigl( \varphi_{\alpha}(U_\alpha \cap U_\beta) \bigr)  } \colon \varphi_{\alpha}(U_\alpha \cap U_\beta \cap \partial M) \lto \varphi_{\beta}(U_\alpha \cap U_\beta \cap \partial M)$ も向きを保つ．
+\end{proof}
+
+
+
+\subsection{基本類}
+
+部分空間 $K \subset L \subset X$ に関して，包含写像 $(X,\, X \setminus L) \lto (X,\, X\setminus K)$ を $\bm{j_K^L}$ または単に $\bm{j_K}$ と書く．
+特に $K = \{p\}$（1点からなる空間）のときは $\bm{j}_p^L$ と略記する．
+
+部分空間の減少列 $K \subset L \subset H \subset X$ が与えられたとき，包含写像の段階で
+\begin{align}
+    j_K^L \circ j_L^H = j_K^H \colon (X,\, X\setminus H) \lto (X,\, X \setminus K)
+\end{align}
+が成り立つので，
+\hyperref[thm:cov-SS]{$S_\bullet$}，\hyperref[prop:Hq-functoriality]{$H_q$}が関手であることから
+\begin{align}
+    (j_K^L)_q \circ (j_L^H)_q = (j_K^L \circ j_L^H)_q = (j_K^H)_q \colon H_q  (X,\, X\setminus H) \lto H_q (X,\, X\setminus K)
+\end{align}
+が成り立つことに注意する．
+
+また，空間対 $(X,\, A)$ に関して，特に断らない限り $H_q (X,\, A)$ の元を $[u]$ と書く．つまり $u \in \Ker \bigl(\overline{\partial}_{q} \colon S_{q}(X) / S_{q}(A) \lto S_{q-1}(X) / S_{q-1}(A)\bigr)$ で，$[u] \coloneqq u + \Im \overline{\partial}_{q+1}$ とする．
+\begin{mylem}[label=lem:fundamental-class-1]{}
+    $n$ 次元\hyperref[def:mani-with-boundary]{境界付き位相多様体} $M$ と，$M$ の任意のコンパクト集合 $K \subset \textcolor{red}{\Int M}$ を与える．
+    このとき以下が成り立つ：
+    \begin{enumerate}
+        \item $q > n$ ならば $H_q(M,\, M \setminus K) = 0$
+        \item $q=n$ のとき，$\forall [u] \in H_q(M,\, M \setminus K)$ に対して\footnote{つまり，$\forall p \in K$ に対して $\Ker (j_p)_n = \{0\}$，i.e. $(j_p)_n$ は単射である．}
+        \begin{align}
+            [u] = 0 \IFF \forall p \in K,\; (j^K_{p})_q ([u]) = 0 \in H_q (M,\, M \setminus \{p\})
+        \end{align}
+    \end{enumerate}
+\end{mylem}
+
+\begin{proof}
+    \begin{description}
+        \item[\textbf{(case-1):\hyperref[thm:MV-rel]{Mayer-Vietoris完全列}による貼り合わせ}]　
+        
+        　$M$ を任意の $n$ 次元\hyperref[def:mani-with-boundary]{境界付き位相多様体}とし，コンパクト集合 $K_1,\, K_2 \subset \Int M$ を与える．
+        このとき $K_1,\, K_2,\, K_1 \cap K_2$ について(1), (2)が成り立つならば $K_1 \cup K_2$ についても(1), (2)が成り立つことを示す．
+
+        \begin{description}
+            \item[\textbf{(1)}] 
+            $M$ はHausdorff空間なので $K_i\; (i=1,\, 2)$ は閉集合．
+            故に $M \setminus K_i$ は開集合であり，$(M \setminus K_i)^\circ = M \setminus K_i \subset M$ が成り立つ．
+            従って
+            \begin{align}
+                (M \setminus K_1)^\circ \cup (M \setminus K_2)^\circ &= (M\setminus K_1) \cup (M\setminus K_2) = M \setminus (K_1 \cap K_2) \\
+                M^\circ \cup M^\circ &= M \cup M = M
+            \end{align}
+            であり，\hyperref[thm:MV-rel]{空間対のMayer-Vietoris完全列}の条件が充たされいるので
+            $\forall q \ge 0$ に対して
+            完全列
+            \begin{align}
+                \label{eq:lem-fundamental-class-MV}
+                H_{q+1} \bigl(M,\, M \setminus (K_1 \cap K_2)\bigr) \xrightarrow{\overline{\partial}_\bullet} &H_q \bigl( M,\, M \setminus (K_1 \cup K_2) \bigr) \\
+                \xrightarrow{\Bigl(\, (j_{K_1}^{K_1 \cup K_2})_q,\, -(j_{K_2}^{K_1 \cup K_2})_q\,\Bigr)} &H_q (M,\, M \setminus K_1) \oplus H_q(M,\, M \setminus K_2)
+            \end{align}
+            が成り立つ．$q > n$ ならば，(1) の仮定よりこの完全列は
+            \begin{align}
+                0 \lto H_q \bigl( M,\, M \setminus (K_1 \cup K_2) \bigr)
+                \lto 0
+            \end{align}
+            となるので $H_q \bigl( M,\, M \setminus (K_1 \cup K_2) \bigr) = 0$ が言える．i.e. $K_1 \cup K_2$ について (1) が言えた．    
+            \item[\textbf{(2)}] 
+            ホモロジー類 $[u] \in H_n\bigl(M,\, M \setminus (K_1 \cup K_2)\bigr)$ が $\forall p \in K_1 \cup K_2$ に対して $(j^{K_1 \cup K_2}_{p})_n ([u]) = 0$ を充しているとする．
+            このとき $\forall p \in K_i\; (i=1,\, 2)$  に対して
+            \begin{align}
+                (j_{p}^{K_i})_n \circ (j_{K_i}^{K_1 \cup K_2})_n ([u]) = (j_p^{K_1 \cup K_2})_n ([u]) = 0 \in H_n(M,\, M \setminus \{p\})
+            \end{align}
+            が成り立つので，$K_i$ に関する (2) の仮定より $(j_{K_i}^{K_1 \cup K_2})_n ([u]) = 0$ が言える．
+            故に\eqref{eq:lem-fundamental-class-MV}の完全列から
+            \begin{align}
+                [u] \in \Ker \Bigl(\, (j_{K_1}^{K_1 \cup K_2})_q,\, -(j_{K_2}^{K_1 \cup K_2})_q\,\Bigr) = \Im \overline{\partial}_\bullet
+            \end{align}
+            が言えるが，$K_1 \cap K_2$ に関する (1) の仮定より $H_{n+1} (M,\, M \setminus (K_1\cap K_2)) = 0$ なので $[u] = 0$ が言えた．
+            逆は明らかなので $K_1 \cup K_2$ に関して (2) が示された．
+        \end{description}
+        
+        \item[\textbf{(case-2):$\bm{M = \mathbb{R}^n}$ で $\bm{K}$ がコンパクト凸集合の場合}]　
+        
+        　$\forall p \in K$ を1つとる．このとき $K$ は有界閉集合だから\footnote{$\mathbb{R}^n$ のコンパクト集合は有界閉集合．}，十分大きな $r > 0$ に対して開球 $B_r (p)$ は $K$ を含む．
+        連続写像
+        \begin{align}
+            R \colon M \setminus \{p\} \lto \partial \overline{B}_r(p),\; x \lmto p + r\frac{x-p}{\norm{x-p}}
+        \end{align}
+        はレトラクションで，ホモトピー
+        \begin{align}
+            F \colon (M \setminus \{p\}) \times [0,\, 1] \lto M \setminus \{p\},\; (x,\,t) \lmto (1-t)x + t R(x)
+        \end{align}
+        が $\mathrm{id}_X$ と $i \circ R$ を繋ぐ\footnote{$i \colon \partial \overline{B}_r (p) \hookrightarrow M \setminus \{p\}$ は包含写像．}．i.e. 部分空間 $ \partial \overline{B}_r(p) \subset M \setminus \{p\}$ は $M \setminus \{p\}$ の変位レトラクトである．
+        一方，$K$ の凸性から $\forall (x,\, t) \in (M \setminus K) \times [0,\, 1]$ に対して
+        $F(x,\, t) \in M \setminus K$ が言える．よってホモトピー $F$ の制限 $F|_{(X \setminus K) \times [0,\, 1]}$ が $\mathrm{id}_X$ と $i \circ R|_{X \setminus K}$ を繋ぐ．i.e. 部分空間 $ \partial \overline{B}_r(p) \subset M \setminus K$ は $M \setminus K$ の変位レトラクトである．
+        以上より，包含写像 $M \setminus K \hookrightarrow M \setminus \{p\}$ はホモトピー同値写像である．
+        横2列が短完全列であるような図式\footnote{$S_\bullet (M \setminus K) \lto S_\bullet (M)$ は包含準同型で，$S_\bullet (M) \lto S_\bullet (M,\, M \setminus K) = \frac{S_\bullet (M)}{S_\bullet (M \setminus K)}$ は標準的射影である．}
+        \begin{center}
+            \begin{tikzcd}
+                &0 \ar[r] &S_\bullet (M \setminus K) \ar[d, hookrightarrow, "\simeq"]\ar[r] &S_\bullet (M) \ar[d, "="] \ar[r] &S_\bullet (M,\, M \setminus K) \ar[d, red, "(j_p^K)_\bullet"] \ar[r] &0\quad (\text{exact}) \\
+                &0 \ar[r] &S_\bullet (M \setminus \{0\}) \ar[r] &S_\bullet (M) \ar[r] &S_\bullet (M,\, M \setminus \{p\}) \ar[r] &0\quad (\text{exact})
+            \end{tikzcd}
+        \end{center}
+        を\hyperref[prop:HES]{ホモロジー長完全列}を使って横に繋ぐと
+        $\forall q \ge 0$ に対して\footnote{$q=0$ のときは $0 \xrightarrow{=} 0$ を右側に2つ並べれば良い．}
+        \begin{center}
+            \begin{tikzcd}
+                &H_{q} (M \setminus K) \ar[d, "\cong"]\ar[r] &H_{q} (M) \ar[d, "="] \ar[r] &H_{q} (M,\, M \setminus K) \ar[d, red, "(j_p^K)_q"] \ar[r] &H_{q-1}(M \setminus K) \ar[r] \ar[d, "\cong"] &H_{q-1}(M) \ar[d, "="]\quad (\text{exact}) \\
+                &H_{q} (M \setminus \{p\}) \ar[r] &H_{q} (M) \ar[r] &H_{q} (M,\, M \setminus \{p\}) \ar[r] &H_{q-1} (M \setminus \{p\}) \ar[r] &H_{q-1}(M)\quad (\text{exact})
+            \end{tikzcd}
+        \end{center}
+        なる可換図式が得られる．これに
+        \hyperref[thm:five-lemma]{5項補題}を用いると，赤色をつけた部分から $\forall q \ge 0$ に関する同型 
+        \begin{align}
+            \label{eq:fc-1-case2-1}
+            (j_p^K)_n \colon H_q (M,\, M \setminus K) \xrightarrow{\cong} H_q(M,\, M \setminus \{p\})
+        \end{align}
+        が得られるが，点 $p$ は任意だったので (2) が示された．特に $q > n$ のとき
+        \begin{align}
+            H_q(M,\, M \setminus K) \cong H_q (M,\, M \setminus K) \cong H_q (D^n,\, D^n \setminus \{0\}) \cong 0
+        \end{align}
+        なので (1) も示された．
+
+        \item[\textbf{(case-3):$\bm{M = \mathbb{R}^n}$ の場合}]　
+        \begin{description}
+            \item[\textbf{$\bm{K}$ が有限個のコンパクト凸集合の和集合として書ける場合}]　
+            
+            　まず，$N$ 個のコンパクト凸集合 $K_1,\, \dots ,\, K_N$ を使って $K = \bigcup_{i=1}^N K_i$ と書ける場合に (1), (2) が成り立つことを $N$ に関する数学的帰納法により示す．
+            $N = 1$ の場合は \textbf{\textsf{(case-2)}}で示した．
+            $K$ が $N-1$ 個のコンパクト集合の和集合として書ける場合に (1), (2) が成立しているとする．このとき $K_1 \cap \left( \bigcup_{i=2}^N K_i \right) = \bigcup_{i=2}^N (K_1 \cap K_i)$ であって，$2 \le \forall i \le N$ について $K_1 \cap K_i$ はコンパクトだから，
+            帰納法の仮定より $K_1 \cap \left( \bigcup_{i=2}^N K_i \right) $ について補題が成り立つ．故に\textbf{\textsf{(case-1)}}から $K_1 \cup \left( \bigcup_{i=2}^N K_i \right) = \bigcup_{i=1}^N K_i$ についても補題が成立する．
+            帰納法が完了し，$K = \bigcup_{i=1}^N K_i$ の場合に (1), (2) が成り立つことが言えた．
+
+            \item[\textbf{$\bm{K}$ が任意のコンパクト集合の場合}]　
+            
+            　次に，$K$ が任意のコンパクト集合である場合を示す．$\forall [u] \in H_q(\mathbb{R}^n,\, \mathbb{R}^n \setminus K)$ を1つ固定し，
+            $u = \gamma + S_q(\mathbb{R}^n \setminus K)$ を充たす\hyperref[def:singularsimplex]{特異 $q$-チェイン} $\gamma \in S_q(\mathbb{R}^n)$ を1つとる．$u \in \Ker \overline{\partial}_\bullet$ なので
+            \begin{align}
+                \overline{\partial}_q \bigl(\gamma + S_{q-1}(\mathbb{R}^n\setminus K)\bigr) = \partial_q \gamma + S_{q-1}(\mathbb{R}^n\setminus K) = 0_{S_{q-1}(\mathbb{R}^n)/S_{q-1}(\mathbb{R}^n\setminus K)} = S_{q-1}(\mathbb{R}^n \setminus K),
+            \end{align}
+            i.e. $\partial_q \gamma \in S_{q-1}(\mathbb{R}^n \setminus K)$ が言える．
+            一方，\hyperref[def:singularsimplex]{特異 $q$-チェインの定義}より $m$ 個の連続写像 $\sigma_i \colon \Delta^{q-1} \lto \mathbb{R}^n$ を用いて $\partial_q \gamma = \sum_{i=1}^m a_i \sigma_i$ と書ける．
+            
+            　ここで $A \coloneqq \bigcup_{i=1}^m \sigma_i(\Delta^{q-1})$ とおくと，$\Delta^{q-1}$ はコンパクトなので\footnote{$\mathbb{R}^n$ の有界閉集合はコンパクト集合．} $A \subset \mathbb{R}^n$ もコンパクト．
+            かつ $\partial_q\gamma \in S_q(\mathbb{R}^n \setminus K)$ より $A \subset \mathbb{R}^n \setminus K$，i.e. $K \cap A = \emptyset$ が言える．
+            故に\ref{lem:Hausdorff-compact-separation}-(1) から，$\forall p \in K$ に対してある正数 $r_p > 0$ および $\mathbb{R}^n$ の開集合 $U_p \subset \mathbb{R}^n$ が存在して $A \subset U_p \AND B_{r_p}(p) \cap U_p = \emptyset$ を充たす．
+            このとき $B_{r_p}(p) \subset \mathbb{R}^n \setminus U_p \subset \mathbb{R}^n \setminus A$ が成り立つが，$\mathbb{R}^n \setminus U_p$ は $\mathbb{R}^n$ の閉集合なので $\overline{B}_{r_p}(p) \subset \mathbb{R}^n \setminus U_p \subset \mathbb{R}^n \setminus A$ が言える．
+            従って
+            \begin{align}
+                K \subset \bigcup_{p \in K} \overline{B}_{r_p}(p) \subset \mathbb{R}^n \setminus A
+            \end{align}
+            が成り立つが，
+            $K$ はコンパクトなので
+            \begin{align}
+                \exists p_1,\, \dots ,\, p_N \in K,\; K \subset \bigcup_{i=1}^N \overline{B}_{r_{p_i}}(p_i) \subset \mathbb{R}^n \setminus A
+            \end{align}
+            が成り立つ．$L \coloneqq \bigcup_{i=1}^N \overline{B}_{r_{p_i}}(p_i)$ とおくと
+            $A \subset \mathbb{R}^n \setminus L$ だから 
+            $\partial_q \gamma \in S_{q-1}\left(\mathbb{R}^n \setminus L\right)$ である．
+            i.e. $u' \coloneqq \gamma + S_q(\mathbb{R}^n \setminus L)$ とおくと
+            これは\hyperref[def:CC]{チェイン複体} $S_\bullet (\mathbb{R}^n,\, \mathbb{R}^n \setminus L)$ のサイクルである．
+            従って
+            \begin{align}
+                \label{eq:lem-fundamental-class-cycle}
+                [u] = (j^L_K)_q ([u'])
+            \end{align}
+            が成り立つ．
+
+            　ところで，$\overline{B}_{r_{p_i}}(p_i)\; (1 \le \forall i \le N)$ は $\mathbb{R}^n$ のコンパクト凸集合だから\textbf{\textsf{(case-3)}}の前半より $L = \bigcup_{i=1}^N \overline{B}_{r_{p_i}}(p_i)$ に対して (1), (2) が成り立つ．
+            従って $q > n$ ならば $[u'] \in H_q \left(\mathbb{R}^n,\, \mathbb{R}^n \setminus L \right) = 0$ であり，\eqref{eq:lem-fundamental-class-cycle}から $[u] = 0$ が示された．
+
+            　次に $q = n$ として (2) を示す．
+            $\forall p \in K$ に対して $(j_p^K)_n ([u]) = 0$ であるとする．
+            このとき
+            \begin{align}
+                (j_p^L)_n([u']) = (j_p^K)_n \circ (j_K^L)_n([u']) = (j_p^K)_n([u]) = 0
+            \end{align}
+            が成り立つ．
+            特に $p_i \in K$ だから，$1 \le \forall i \le N$ に対して
+            \begin{align}
+                (j_{p_i}^L)_n ([u']) = (j_{p_i}^{\overline{B}_{r_{p_i}}(p_i)})_n \circ (j_{\overline{B}_{r_{p_i}}(p_i)}^L) ([u']) = 0
+            \end{align}
+            が言える．
+            さらに\eqref{eq:fc-1-case2-1}より $(j_{p_i}^{\overline{B}_{r_{p_i}}(p_i)})_n \colon H_n \bigl( \mathbb{R}^n,\, \mathbb{R}^n \setminus \overline{B}_{r_{p_i}}(p_i) \bigr)  \xrightarrow{\cong} H_n (\mathbb{R}^n,\, \mathbb{R}^n \setminus \{p_i\})$ は同型だから，
+            $(j_{\overline{B}_{r_{p_i}}(p_i)}^L) ([u']) = 0$ が分かり，
+            $\forall p \in L$ に対して
+            \begin{align}
+                (j_p)_n([u']) = (j_p^{\overline{B}_{r_{p_i}}(p_i)})_n \circ (j_{\overline{B}_{r_{p_i}}(p_i)}^L)([u']) = 0 \quad \WHERE p \in \overline{B}_{r_{p_i}}(p_i)
+            \end{align}
+            が言える．\textbf{\textsf{(case-3)}}の前半より $L$ に対して (2) が成り立つから $[u'] = 0$ が言えて，式\eqref{eq:lem-fundamental-class-cycle}から $[u] = 0$ が示された．
+        
+        \end{description}
+    
+        \item[\textbf{(case-4):$\bm{M}$ が任意の位相多様体の場合}]　
+        
+        　仮定より $K \subset \Int M$ であるから，$\overline{\partial M} = \partial M \subset M \setminus K = (M \setminus K)^\circ$ が成り立つ\footnote{$\partial M$ は閉集合で，$M$ がHausdorff空間なのでコンパクト集合 $K$ は閉集合．}．従って\hyperref[thm:exc]{切除定理}から
+        \begin{align}
+            H_q (M,\, M \setminus K) \congexc H_q\bigl(M \setminus \partial M,\, (M \setminus K) \setminus \partial M\bigr) = H_q(\Int M ,\, \Int M \setminus K)
+        \end{align}
+        が成り立つ．故に $\partial M = \emptyset$ としても一般性を損なわない．このとき任意のチャートは\hyperref[def:int-manifold-with-boundary]{内部チャート}になる．
+        \begin{description}
+            \item[\textbf{$\bm{K}$ がある1つのチャートに含まれる場合}]　
+            
+            　まず，あるチャート $(U,\, \varphi)$ が存在して $K \subset U$ となる場合に示す．
+            このとき
+            $\overline{M\setminus U} = M\setminus U \subset M\setminus K = (M\setminus K)^\circ$ なので
+            \hyperref[thm:exc]{切除定理}が使えて，
+            \begin{align}
+                H_q(M,\, M\setminus K) \congexc H_q (U,\, U \setminus K) \underset{\varphi_q}{\cong} H_q \bigl( \varphi(U),\, \varphi(U) \setminus \varphi(K) \bigr) \congexc H_q \bigl( \mathbb{R}^n,\, \mathbb{R}^n \setminus \varphi(K) \bigr) 
+            \end{align}
+            が成り立つ．故に\textbf{\textsf{(case-3)}}より
+            $q > n$ のとき $H_q(M,\, M\setminus K) = 0$ が成り立つ．
+            $q=n$ のとき，$[u] \in H_q (M,\, M \setminus K)$ が $\forall p \in K$ について $(j_p^K)_n ([u]) = 0$ を充たすとする．
+            このとき $S_\bullet,\, H_q$ の関手性から，$\forall x \in \varphi(K)$ について
+            \begin{align}
+                (j_x^{\varphi(K)})_n \bigl( \varphi_n ([u])\bigr) &= (j_x^{\varphi(K)} \circ \varphi)_n ([u]) \\
+                &= (\varphi \circ j_{\varphi^{-1}(x)}^K)_n ([u]) \\
+                &= (\varphi)_n\circ (j_{\varphi^{-1}(x)}^K)_n([u]) \\
+                &= 0
+            \end{align}
+            が成り立つので，コンパクト集合 $\varphi(K) \subset \mathbb{R}^n$ に関する\textbf{\textsf{(case-3)}}から $\varphi_n([u]) = 0$ がわかる．
+            $\varphi_n$ は同型なので $[u]=0$ が従う．
+
+            \item[\textbf{$\bm{K}$ が1つのチャートに含まれるコンパクト集合の有限個の和集合で書ける場合}] 　
+            
+            　次に，各々があるチャートに含まれるような $N$ 個のコンパクト集合 $K_1,\,  \dots ,\, K_N$ を用いて $K = \bigcup_{i=1}^N K_i$ と書ける場合を $N$ に関する数学的帰納法により示す．$N=1$ の場合は1段落前で示した．
+            $N-1$ まで示されているとする．このとき $K_1 \cap \left( \bigcup_{i=2}^N K_i \right) = \bigcup_{i=1}^N (K_1 \cap K_i)$ だが $K_1 \cap K_i$ はチャート $(U_i,\, \varphi_i)$ に含まれるから
+            帰納法の仮定により $K_1 \cap \left( \bigcup_{i=2}^N K_i \right) = \bigcup_{i=2}^N (K_1 \cap K_i)$ に対して (1),\, (2) が成り立つ．故に\textbf{\textsf{(case-1)}}より $\bigcup_{i=1}^N K_i$ についても (1), (2) が成り立ち，帰納法が完了する．
+
+            \item[\textbf{$\bm{K}$ が任意のコンパクト集合の場合}]　
+            
+            　最後に，$K$ が任意のコンパクト集合の場合に示す．
+            $K$ はコンパクトだから $M$ の有限個のチャート $(U_1,\, \varphi_1),\, \dots ,\, (U_N,\, \varphi_N)$ が存在して $K \subset \bigcup_{i=1}^N U_i$ を充たす．
+            $K$ はコンパクトHausdorff空間だから $K$ の有限開被覆 $\{U_1,\, \dots ,\, U_N\}$ に対して補題\ref{lem:Hausdorff-compact-separation}-(3)を使うことができて，
+            $K$ の開被覆 $\{V_1,\, \dots ,\, V_N\}$ であって $\overline{V_i} \subset U_i\; (1 \le \forall i \le N)$ を充たすものが存在する．
+            補題\ref{lem:Hausdorff-sub-compact}-(2) より $K_i \coloneqq \overline{V_i} \cap K \subset U_i \; (1 \le \forall i \le N)$ は $K$ のコンパクト集合で，
+            $K = \bigcup_{i=1}^N K_i$ を充たす．従って前段落の議論から (1), (2) が成り立つ．
+        \end{description}
+    \end{description}
+    
+\end{proof}
+
+
+\begin{mytheo}[label=thm:collar]{カラー近傍の存在}
+    $M$ を，$\partial M \neq \emptyset$ なる $n$ 次元\underline{コンパクト}\hyperref[def:mani-with-boundary]{境界付き位相多様体}とする．
+
+    このとき $\partial M$ の開近傍 $\partial M \subset O \subset M$ と同相写像
+    \begin{align}
+        F \colon \partial M \times [0,\, 1) \xrightarrow{\cong} O
+    \end{align}
+    が存在して，
+    \begin{align}
+        F|_{\partial M \times \{0\}} = \mathrm{id}_{\partial M}
+    \end{align}
+    を充たす．
+\end{mytheo}
+
+\begin{proof}
+    ~\cite[定理4.5.8]{Nariya}を参照．
+\end{proof}
+
+
+\begin{mycol}[label=col:collar]{}
+    $n$ 次元コンパクト位相多様体 $M$ は $\Int M$ と\hyperref[def:homotopic]{同じホモトピー型}である．
+\end{mycol}
+
+\begin{proof}
+    定理\ref{thm:collar}によりカラー近傍 $F \colon \partial M \times [0,\, 1) \xrightarrow{\approx} U$ をとる．
+    このとき $X \setminus F\bigl(\partial M \times [0,\, \frac{1}{2})\bigr)$ は $M,\, \Int M$ の変位レトラクトである．
+\end{proof}
+
+\begin{myprop}[label=prop:pre-fundamental-class]{}
+    $M$ を\hyperref[def:orientable]{向き付けられた} $n$ 次元\hyperref[def:mani-with-boundary]{境界付き位相多様体}とする．
+
+    このとき $\Int M$ の任意のコンパクト集合 $K \subset \Int M$ に対して
+    以下を充たすホモロジー類 $\mu_K \in H_n(M,\, M \setminus K)$ が一意的に存在する：
+    \begin{align}
+        \label{eq:prop-fc-1}
+        \forall p \in K,\; (j_p^K)_n (\mu_K) = \mu_p \in H_n(M,\, M \setminus \{p\})
+    \end{align}
+\end{myprop}
+
+\begin{proof}
+    \hyperref[thm:exc]{切除同型} $H_q (M,\, M \setminus K) \congexc H_q(\Int M,\, \Int M\setminus K)$ により $M = \Int M$ を仮定しても一般性を失わない．
+    補題\ref{lem:fundamental-class-1}-(2)より $(j_p^K)_n \colon H_n(M,\, M \setminus K) \lto H_n(M,\, M \setminus \{p\})$ は単射だから，\eqref{eq:prop-fc-1}を充たす $\mu_K \in H_n(M,\, M \setminus K)$ はもし存在すれば一意である．
+
+    \begin{description}
+        \item[\textbf{(case-1)}] 2つのコンパクト集合 $K_1,\, K_2 \subset M$ において $\mu_{K_1},\, \mu_{K_2}$ が存在するならば $K_1 \cup K_2$ においても $\mu_{K_1 \cup K_2}$ が存在することを示す．
+            \hyperref[thm:MV-rel]{Mayer-Vietoris完全列}
+            \begin{align}
+                \label{eq:lem-fundamental-class-MV-2}
+                &H_q \bigl( M,\, M \setminus (K_1 \cup K_2) \bigr) \\
+                \xrightarrow{\bigl((j_{K_1}^{K_1\cup K_2})_q,\, -(j_{K_2}^{K_1\cup K_2})_q\bigr)} &H_q (M,\, M \setminus K_1) \oplus H_q(M,\, M \setminus K_2) \\
+                \xrightarrow{(j_{K_1 \cap K_2}^{K_1})_q + (j_{K_1 \cap K_2}^{K_2})_q} &H_q \bigl(M,\, M \setminus (K_1 \cap K_2)\bigr)
+            \end{align}
+            を使う．$(\mu_{K_1},\, - \mu_{K_2}) \in H_q (M,\, M \setminus K_1) \oplus H_q(M,\, M \setminus K_2)$ について
+            \begin{align}
+                (j_p^{K_1 \cap K_2})_n \circ \bigl( (j_{K_1 \cap K_2}^{K_1})_n + (j_{K_1 \cap K_2}^{K_2})_n \bigr) (\mu_{K_1},\, - \mu_{K_2}) &= (j_p^{K_1 \cap K_2})_n \bigl((j_{K_1 \cap K_2}^{K_1})_n(\mu_{K_1}) - (j_{K_1 \cap K_2}^{K_2})_n(\mu_{K_2})\bigr) \\
+                &= (j_p^{K_1})(\mu_{K_1}) - (j_p^{K_2})(\mu_{K_2}) \\
+                &= \mu_p - \mu_p = 0
+            \end{align}
+            でかつ $(j_p^{K_1 \cap K_2})_n$ は単射なので，$(j_{K_1 \cap K_2}^{K_1})_n(\mu_{K_1}) - (j_{K_1 \cap K_2}^{K_2})_n(\mu_{K_2}) = 0$，
+            i.e. $(\mu_{K_1},\, - \mu_{K_2}) \in \Ker \bigl( (j_{K_1 \cap K_2}^{K_1})_n + (j_{K_1 \cap K_2}^{K_2})_n \bigr) = \Im \bigl((j_{K_1}^{K_1\cup K_2})_q,\, -(j_{K_2}^{K_1\cup K_2})_q\bigr)$ が言える．
+            よってある $\mu_{K_1 \cup K_2} \in H_q \bigl( M,\, M \setminus (K_1 \cup K_2) \bigr)$ が存在して
+            \begin{align}
+                (j_{K_1}^{K_1\cup K_2})_n (\mu_{K_1 \cup K_2}) &= \mu_{K_1} \AND
+                -(j_{K_2}^{K_1\cup K_2})_n (\mu_{K_1 \cup K_2}) = -\mu_{K_2}
+            \end{align}
+            を充たす．
+            
+            \item[\textbf{(case-2)}] $M = \mathbb{R}^n$ とする．コンパクト集合 $K \subset \mathbb{R}^n$ は有界閉集合だから，十分大きい $R > 0$ に対して $K \subset \overline{B}_R(0)$ を充たす．
+            
+            ここで $\mu_K \coloneqq (j_K^{\overline{B}_R(0)})_q (\mu_{\overline{B}_R(0)})$ とおくと $\forall p \in K \subset \overline{B}_R(0)$ に対して 
+            \begin{align}
+                (j_p^K)_q(\mu_K) = (j_p^K)_q \circ  (j_K^{\overline{B}_R(0)})_q (\mu_{\overline{B}_R(0)}) = (j_p^{\overline{B}_R(0)})(\mu_{\overline{B}_R(0)}) = \mu_p
+            \end{align}
+            
+            が成り立つ．
+
+            \item[\textbf{(case-3)}] $M$ が任意の位相多様体であり，ある\hyperref[def:orientable]{正のチャート} $(U,\, \varphi)$ であって $K \subset U$ を充たすものが存在する場合を考える．
+            
+            \hyperref[thm:exc]{切除同型} $H_n \bigl( \varphi(U),\, \varphi(U) \setminus \varphi(K) \bigr) \congexc H_n \bigl(\mathbb{R}^n,\, \mathbb{R}^n \setminus \varphi(K)\bigr)$ によって \textbf{\textsf{(case-2)}} の $\mu_{\varphi(K)}$ を $H_n \bigl( \varphi(U),\, \varphi(U) \setminus \varphi(K) \bigr)$ へ写像した上で
+            $\mu_K \coloneqq (\varphi^{-1})_q (\mu_{\varphi(K)}) \in H_n(U,\, U \setminus K)$ とおくと，$H_n(U,\, U \setminus K) \congexc H_n (M,\, M \setminus K)$ により $\mu_K$ が所望のホモロジー類である．
+
+            \item[\textbf{(case-4)}] $K = \bigcup_{i=1}^N K_i$ で $1 \le \forall i \le N$ に対してる\hyperref[def:orientable]{正のチャート} $(U_i,\, \varphi_i)$ が存在して $K_i \subset U_i$ を充たす場合を考える．
+            このとき各 $i$ について \textbf{\textsf{(case-3)}} より $\mu_{K_i}$ が存在するから，\textbf{\textsf{(case-1)}} によって $N$ についての数学的帰納法を進めることができて証明が完了する．
+
+            \item[\textbf{(case-5)}] $M$ が任意の位相多様体であり，コンパクト集合 $K \subset M$ も任意の場合を考える．
+            $K$ はコンパクトなので，\textbf{\textsf{(case-4)}} の条件を充たす有限個のコンパクト集合 $K_1,\, \dots ,\, K_N$ が存在して $K \subset \bigcup_{i=1}^N K_i$ となる．
+            このとき
+            \begin{align}
+                \mu_K \coloneqq (j_K^{\bigcup_{i=1}^N K_i})_n (\mu_{\bigcup_{i=1}^N K_i})
+            \end{align}
+            とおけば良い．
+    \end{description}
+\end{proof}
+
+\begin{mytheo}[label=thm:fundamental-class]{基本類の存在}
+    \hyperref[def:orientable]{向き付けられた}，\underline{コンパクト}で\underline{連結}な $n$ 次元\hyperref[def:mani-with-boundary]{境界付き位相多様体} $M$ を与える．
+
+    このとき $M$ は
+    \begin{align}
+        H_n(M,\, \partial M) \cong \mathbb{Z}
+    \end{align}
+    を充し，
+    生成元 $\bm{[M]} \in H_n(M,\, \partial M)$ であって以下を充たすものが存在する：
+    \begin{align}
+        \forall p \in \Int M,\quad (j_p^{\Int M})_n ([M]) = \mu_p \in H_n (M,\, M \setminus \{p\})
+    \end{align}
+
+    特に，$\forall p \in \Int M$ について，包含準同型
+    \begin{align}
+        (j_p^{\Int M})_n \colon H_n (M,\, \partial M) \lto H_n (M,\, M \setminus\{p\})
+    \end{align}
+    は同型である．
+\end{mytheo}
+
+\begin{proof}
+    \hyperref[thm:collar]{カラー近傍} $F \colon \partial M \times [0,\, 1) \xrightarrow{\cong} U$ をとる．系\ref{col:collar}より $M$ は $\Int M$ と\hyperref[def:homotopic]{同じホモトピー型}であり，連結である．
+
+    $\delta \in (0,\, 1)$ に対して $K_\delta \coloneqq X \setminus F \bigl( \partial M \times [0,\, \delta) \bigr)$ とおく．
+    $K_\delta$ はコンパクト空間 $M$ の閉部分集合なので，補題\ref{lem:Hausdorff-sub-compact}よりコンパクト集合である．
+    % $\forall p \in \Int M$ は十分小さい $\delta \in (0,\, 1)$ に対して $p \in K_\delta$ を充たす．
+    よって $K_\delta$ に命題\ref{prop:pre-fundamental-class}を適用してホモロジー類 $\mu_{K_\delta} \in H_n (\Int M,\, \Int M \setminus K_\delta)$ をとる．
+    ところで $M \setminus K_\delta = F \bigl( \partial M \times [0,\, \delta) \bigr) \simeq \partial M$ だから，包含準同型による図式
+    \begin{align}
+        H_n (\Int M,\, \Int M \setminus K_\delta) \xrightarrow{\congexc} H_n (M,\, M \setminus K_\delta) \xrightarrow{\cong} H_n (M,\, \partial M)
+    \end{align}
+    がある．この図式による $\mu_{K_\delta} \in H_n (\Int M,\, \Int M \setminus K_\delta)$ の行き先を $[M] \in H_n (M,\, \partial M)$ と定義する．
+    
+    $[X]$ が $\delta \in (0,\, 1)$ の取り方によらないことを示す．
+    $0 < \delta < \delta' < 1$ とする．$\mu_{K_{\delta}}$ の定義から $\forall  p \in K_{\delta'} \subset K_\delta$ について
+    \begin{align}
+        \mu_p = (j_p^{K_\delta})_n (\mu_{K_\delta}) = (j_p^{K_{\delta'}})_n \circ (j_{K_{\delta'}}^{K_\delta})(\mu_{K_\delta})
+    \end{align}
+    が成り立つが，$\mu_{K_\delta'}$ の一意性から
+    $(j_{K_{\delta'}}^{K_\delta})_n (\mu_{K_\delta}) = \mu_{K_{\delta'}}$ でなくてはならない．
+    この考察から $\forall p \in \Int M$ に対して $(j_p^{\Int M})_n ([M]) = \mu_p \in H_n (M,\, M \setminus \{p\})$ も言える．
+
+    最後に $\forall p \in \Int M$ について，包含準同型
+    \begin{align}
+        (j_p^{\Int M})_n \colon H_n (M,\, \partial M) \lto H_n (M,\, M \setminus\{p\})
+    \end{align}
+    が同型写像になることを示す．
+\end{proof}
+
+\begin{mytheo}[label=thm:fundamental-class-2]{}
+    連結な $n$ 次元\hyperref[def:mani-with-boundary]{境界付き位相多様体} $M$ を与える．このとき以下が成り立つ：
+    \begin{enumerate}
+        \item $H_n(M) = 0 \OR \mathbb{Z}$ である．特に
+        \begin{align}
+            H_n(M) = \mathbb{Z} \IFF M\; \text{はコンパクトかつ向き付け可能かつ}\; \partial M = \emptyset
+        \end{align}
+        である．
+        \item $H_n(M,\, \partial M) = 0 \OR \mathbb{Z}$ である．特に
+        \begin{align}
+            H_n(M,\, \partial M) = \mathbb{Z} \IFF M\; \text{はコンパクトかつ向き付け可能}
+        \end{align}
+        である．
+    \end{enumerate}
+\end{mytheo}
+
+
+
+\section{チェイン複体上のテンソルと $\mathrm{Hom}$ 関手}
+
+この節は\textbf{普遍係数定理}への布石である．
+$R$ 加群のチェイン複体 $\Familyset[\big]{C_q,\, \partial_q}{q}$ を与える．ここで，$q$ チェインが自由加群であることは仮定しないものとする．
+
+特異ホモロジーは二つの共変関手の合成であったことに注意する：
+\begin{align}
+    &S_\bullet \colon \TOP \longrightarrow \CHAIN \\
+    &H_\bullet \colon \CHAIN \longrightarrow  \MOD{R}
+\end{align}
+ここで，新しい\underline{代数的}対応
+\begin{align}
+    \CHAIN \longrightarrow \CHAIN
+\end{align}
+を $S_\bullet$ と $H_\bullet$ の間に挟んでみよう．
+
+\subsection{チェイン複体と $R$ 加群のテンソル積}
+
+$R$ 加群 $M$ をとり，対応
+\begin{align}
+    \Familyset[\big]{C_q,\, \partial_q}{q} \longrightarrow \Familyset[\big]{C_q \otimes M,\, \partial_q \otimes \mathrm{id}_M}{q}
+\end{align}
+を考える．ただし
+\begin{align}
+    (\partial_\bullet \otimes \mathrm{id}_M) \left( \sum_i c_i \otimes m_i \right) \coloneqq \sum_i \partial_\bullet(c_i) \otimes m_i
+\end{align}
+である．$(\partial \otimes \mathrm{id})^2 = 0$ なので $\Familyset[\big]{C_q \otimes M,\, \partial_q \otimes \mathrm{id}_M}{q}$ はチェイン複体である．
+この操作はホモロジー群の係数を取り替える操作に対応する．
+
+\begin{mylem}[]{}
+    この対応は共変関手である．
+\end{mylem}
+
+\begin{mydef}[]{$M$ 係数ホモロジー}
+    チェイン複体 $C_\bullet \otimes M$ のホモロジー群は\textbf{係数 $\bm{M}$ のホモロジー群}を作る：
+    \begin{align}
+        H_q(C_\bullet;\, M) \coloneqq \frac{\Ker \partial_q\bigl( C_q \otimes M \to C_{q-1} \otimes M\bigr) }{\Im \partial_{q+1}\bigl( C_{q+1}\otimes M \to C_{q} \otimes M\bigr)}
+    \end{align}
+\end{mydef}
+
+
+\subsection{$\Hom{R} (C_\bullet,\, M)$}
+
+\begin{align}
+    \Familyset[\big]{C_q,\, \partial_q}{q} \longrightarrow \Familyset[\big]{\Hom{R}(C_q\, M),\, \delta_q}{q}
+\end{align}
+なる対応は関手である．ただし準同型 $\delta$ は $\partial$ の双対である．あからさまには次の通り：
+\begin{align}
+    \delta &\colon \Hom{R}{C_\bullet,\, M} \to \Hom{R}(C_\bullet,\, M),\\
+    (\delta f)(c) &\coloneqq f(\partial c)\quad \forall f \in \Hom{R}(C_\bullet,\, M),\; \forall c \in C_\bullet
+\end{align}
+このとき，
+\begin{align}
+    (\delta^2 f)(c) = f(\partial^2 c) = f(0) = 0
+\end{align}
+なので，$\delta$ もまた複体である．しかし，次の2点に注意：
+\begin{enumerate}
+    \item $\delta$ は添字を増加させる方向に作用する．i.e.
+    \begin{align}
+        \delta \colon \Hom{R}(C_q,\, M) \longrightarrow \Hom{R}(C_{q+1},\, M)
+    \end{align}
+    \item この対応は\textbf{反変関手}である．$\forall M \in \Obj{\MOD{R}}$ に対して $\mathrm{Hom}(\mhyphen,\, M) \colon \Obj{\MOD{R}}^{\mathrm{op}} \to \Obj{\MOD{R}}$ なる関手が反変関手だからである．
+\end{enumerate}
+詳細は次章に譲るが，コホモロジーの定義はここから生じる．
+\begin{mydef}[label=def:cohomology1]{コホモロジー}
+    \begin{align}
+        H^q(C_\bullet;\, M) \coloneqq \frac{\Ker \bigl( \delta \colon \Hom{R}(C_q,\, M) \to \Hom{R}(C_{q+1},\, M) \bigr) }{\Im \bigl( \delta \colon \Hom{R}(C_{q-1},\, M) \to \Hom{R}(C_{q},\, M) \bigr) }
+    \end{align}
+    は係数 $\bm{M}$ を持つ\textbf{$(C_\bullet,\, \partial)$ のコホモロジー}と呼ばれる．
+\end{mydef}
+
+\section{Eilenberg-Steenrod公理系}
+
+\begin{myaxiom}[label=ax:homology]{ホモロジーのEilenberg-Steenrod公理系}
+    \textbf{ホモロジー理論}は
+    \begin{align}
+        H_\bullet \colon \{\text{pairs, ct. maps}\} \longrightarrow \{\text{graded}\; R\; \text{modules},\; \text{homomorphisms}\}
+    \end{align}
+    なる共変関手であって，以下の公理を充たすものである：
+    \begin{description}
+        \item[\textbf{(ES-h1)}] 任意の空間対 $(X,\, A)$ および非負整数 $q \ge 0$ に対して\textbf{自然な}準同型
+        \begin{align}
+            \partial \colon H_q(X,\, A) \longrightarrow H_{q-1}(A)
+        \end{align}
+        が存在して，包含写像 $i \colon A \hookrightarrow X,\; j \colon X \hookrightarrow (X,\, A)$ を用いて次のホモロジー長完全列が誘導される：
+        \begin{align}
+            \cdots \to H_q(A) \xrightarrow{i_*} H_q(X) \xrightarrow{j_*} H_q(X,\, A) \xrightarrow{\partial} H_{q-1}(A) \to \cdots 
+        \end{align}
+        \item[\textbf{(ES-h2)}] 2つの連続写像 $f,\, g \colon (X,\, A) \to (Y,\, B)$ がホモトピックならば，誘導準同型 $f_*,\, g_* \colon H_q(X,\, A) \to H_q(Y,\, B)$ は
+        \begin{align}
+            f_* = g_*
+        \end{align}
+        となる．
+        \item[\textbf{(ES-h3)}]  $U \subset X \AND \overline{U} \subset \Int(A)$ ならば，包含写像 $i \colon (X \setminus U,\, A \setminus U) \longrightarrow (X,\, A)$ が誘導する準同型
+        \begin{align}
+            i_* \colon H_q(X \setminus U,\, A \setminus U) \longrightarrow H_q(X,\, A)
+        \end{align}
+        は$\forall q \ge 0$ に対して同型となる．
+        \item[\textbf{(ES-h4)}] $q \neq 0$ ならば $H_q(*) = 0$．
+    \end{description}
+\end{myaxiom}
+
+
+
+\end{document}

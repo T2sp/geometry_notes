@@ -1,0 +1,28 @@
+\begin{mydef}[label=def.ext]{外積代数}
+\begin{mydef}[label=basisforext]{外積代数の基底}
+\begin{mydef}[label=def.anticom]{交代形式}
+\begin{mytheo}[label=alghom]{外積代数と交代形式の同型}
+\begin{mycol}[label=lem.op]{交代形式の外積}
+		&= \sum_{\sigma \in \mathfrak{S}_{k+l}} \sgn{\sigma} \iota_k(e^{\textcolor{red}{i_1}} \wedge \cdots \wedge e^{\textcolor{red}{i_k}})[e_{\sigma\tau(\textcolor{red}{i_1})},\, \dots ,\, e_{\sigma\tau(\textcolor{red}{i_{k}})}]\, \iota_l (e^{\textcolor{blue}{j_1}} \wedge \cdots \wedge e^{\textcolor{blue}{j_{l}}})\eta[e_{\sigma\tau(\textcolor{blue}{j_{1}})},\, \dots ,\, e_{\sigma\tau(\textcolor{blue}{j_{l}})}] \label{eq.33-1}\\
+\begin{mydef}[label=def.form]{微分形式}
+\begin{mytheo}[label=k-form_homo]{$k$ 形式の同型}
+		\label{eq.thm4-3-1}
+\begin{myprop}[label=extp_1]{外積の性質}
+\begin{mydef}[label=extdiff_1]{外微分（局所表示）} 
+\begin{mytheo}[label=extdiff_2]{外微分（内在的）}
+\begin{mytheo}[label=extdiff_3]{外微分の性質}
+	&\tcbhighmath[]{f^*(\omega)(X_1,\, \dots ,\, X_k) \coloneqq \omega\bigl(f_*(X_1),\, \dots ,\, f_*(X_k)\bigr)} \label{def.k-form_pullback}
+\begin{myprop}[label=prop.pullback]{引き戻しの性質} 
+\begin{mydef}[label=int_prod]{内部積}
+\begin{myprop}[label=prop.int_prod]{内部積の性質}
+\begin{mydef}[label=Lie_diff]{Lie微分}
+\begin{mytheo}[label=thm.Cartan]{Cartanの公式}
+\begin{mytheo}[label=thm.Lie_1]{Lie微分の性質}
+			\label{eq.prop4-7_ass}
+			\Liedv{\comm{X}{Y}} \iunit_Z = \iunit_Z \Liedv{\comm{X}{Y}} + \iunit_{\comm{\comm{X}{Y}}{Z}} \label{eq.prop4-7_3}
+			&= \iunit_Z \Liedv{X} \Liedv{Y} + \iunit_{\comm{X}{Z}} \Liedv{Y} + \iunit_{\comm{Y}{Z}} \Liedv{X} + \iunit_{\comm{X}{\comm{Y}{Z}}}, \label{eq.prop4-7_1}\\
+			&= \iunit_Z \Liedv{Y} \Liedv{X} + \iunit_{\comm{Y}{Z}} \Liedv{X} + \iunit_{\comm{X}{Z}} \Liedv{Y} + \iunit_{\comm{Y}{\comm{X}{Z}}} \label{eq.prop4-7_2}
+\begin{mydef}[label=def:locally-finite]{局所有限}
+\begin{mydef}[label=partition_unity]{1の分割}
+\begin{mydef}[label=def.orientable]{向き付け可能} 
+\begin{mydef}[label=def.int-n]{$n$-形式の積分} 

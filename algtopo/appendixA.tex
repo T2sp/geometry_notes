@@ -1,0 +1,2092 @@
+\documentclass[algtopo_main]{subfiles}
+
+\begin{document}
+
+\setcounter{chapter}{0}
+
+\chapter{ホモロジー代数に入門するための下準備}
+
+この章では，ホモロジー代数について基本的なことをまとめる．
+
+\section{図式}
+
+ここでの諸定義は~\cite[1.2節]{Shiho}による．
+
+\begin{mydef}[label=def:DG]{有向グラフ}
+	\textbf{有向グラフ} (directed graph) とは，以下の2つ組 $(V,\, E)$ のことを言う：
+	\begin{itemize}
+		\item 頂点集合 $V$
+		\item 頂点の2つ組全体の集合 $V \times V$ によって添字付けられた集合族 $E \coloneqq \Familyset[\big]{J(v,\, w)}{(v,\, w) \in V \times V}$
+	\end{itemize}
+	$V$ の元のことを\textbf{頂点} (vertex)，\textbf{集合} $J(v,\, w) \in E$ の元のことを頂点 $v$ から頂点 $w$ へ向かう\textbf{辺} (edge) と呼ぶ．
+\end{mydef}
+
+\begin{mydef}[label=def:diagram]{環上の加群の図式}
+	$R$ を環，$\mathcal{I} \coloneqq \bigl(I,\; \Familyset[\big]{J(i,\, j)}{(i,\, j) \in I \times I}\bigr)$ を有向グラフとする．$\mathcal{I}$ 上の左 $R$ 加群の\textbf{図式} (diagram) とは次の2つ組のことを言う：
+	\begin{itemize}
+		\item 左 $R$ 加群の族 $\Familyset[\big]{M_i}{i \in I}$
+		\item 左 $R$ 加群の準同型写像の族\footnote{2頂点 $i,\, j \in I$ を選んできたとき，$J(i,\, j)$ は $i$ から $j$ へ向かう辺全体の\textbf{集合}である．最も一般的なグラフを考えているので，$i$ から $j$ へ向かう辺が複数存在しうるのである．なので，念のため族の添字を入れ子にした．なお，$J(i,\, j) = \emptyset$ の場合，図式上では $M_i,\, M_j$ が準同型写像で結ばれないと言うことになる．}
+		\begin{align}
+			\Familyset[\Big]{\Familyset[\big]{f_\varphi \colon M_i \to M_j}{\varphi \in J(i,\, j)}}{(i,\, j) \in I \times I}
+		\end{align}
+	\end{itemize}
+\end{mydef}
+
+いちいち断るのは面倒なので，以降ではある有向グラフ上の左 $R$ 加群の図式のことを単に左 $R$ 加群の図式と呼ぶ．
+
+\subsection{可換図式}
+
+定義\ref{def:diagram}のように図式の概念を形式化することで，図式の\textbf{可換性}を定式化できる．
+有向グラフ $\mathcal{I} \coloneqq \bigl(I,\; \Familyset[\big]{J(i,\, j)}{(i,\, j) \in I \times I}\bigr)$ 上の図式
+$\Bigl( \Familyset[\big]{M_i}{i \in I},\; \Familyset[\Big]{\Familyset[\big]{f_\varphi \colon M_i \to M_j}{\varphi \in J(i,\, j)}}{(i,\, j) \in I \times I} \Bigr) $ が与えられたとする．このとき，ある頂点 $\textcolor{red}{i}$ から有向グラフの辺を辿って $\textcolor{blue}{j}$ へ行く経路全体の集合は
+\begin{align}
+	\tilde{J}(\textcolor{red}{i},\, \textcolor{blue}{j}) \coloneqq \coprod_{n = 0}^\infty \underbrace{\coprod_{\substack{i_0,\, \dots ,\, i_{n} \in I \\ i_0 = \textcolor{red}{i},\, i_n = \textcolor{blue}{j}}} \bigl[ \, J(i_{n-1},\, \textcolor{blue}{i_n}) \times \cdots \times J(i_1,\, i_2) \times J(\textcolor{red}{i_0},\, i_1) \bigr]}_{=: \tilde{J}(\textcolor{red}{i},\, \textcolor{blue}{j})_n\; \text{と書く．} n-1\;\text{個の頂点を経由する経路全体の集合．}}
+\end{align}
+と書けることに注意する\footnote{$n=0$ の場合もこれで良い．始点 $\textcolor{red}{i}$ と終点 $\textcolor{blue}{j}$ が一致しているならば，これは空集合からの写像 $J$ （ただ一つ存在）を $i_0 = \textcolor{red}{i} = \textcolor{blue}{j}$ なる添字について直和したものなので一元集合 $\{\mathrm{id}_i\}$ となり，始点と終点が一致しない場合は空集合からの写像を空なる添字について直和したものなので空集合になるからである．}．
+また，$n-1$ 点を経由する任意の経路はこの記法だと
+\begin{align}
+	(\varphi_n,\, \dots,\, \varphi_1) \in \tilde{J}(\textcolor{red}{i},\, \textcolor{blue}{j})_n
+\end{align}
+と書かれるわけだが，これに対応する準同型写像の「たどり方」を
+\begin{align}
+	f_{(\varphi_n,\, \dots,\, \varphi_1)} \coloneqq f_{\varphi_n} \circ \cdots \circ f_{\varphi_1}
+\end{align}
+と書くことにする\footnote{$\tilde{J}(\textcolor{red}{i},\, \textcolor{blue}{j})_n$ の定義で添字が減少する方向に直積をとったのは，このように写像の合成と整合させるためであった．}．
+ただし $f_{\mathrm{id}_i} \coloneqq 1_{M_i}$ と約束する．
+
+\begin{mydef}[label=def:commutative]{可換図式}
+	図式 $\Bigl( \Familyset[\big]{M_i}{i \in I},\; \Familyset[\Big]{\Familyset[\big]{f_\varphi \colon M_i \to M_j}{\varphi \in J(i,\, j)}}{(i,\, j) \in I \times I} \Bigr) $ が\textbf{可換図式} (commutative diagram) であるとは，任意の始点 $\textcolor{red}{i} \in I$ と終点 $\textcolor{blue}{j} \in I$ に対して
+	\begin{align}
+		f_\varphi \colon M_{\textcolor{red}{i}} \lto M_{\textcolor{blue}{j}}\quad \WHERE \varphi \in \tilde{J}(\textcolor{red}{i},\, \textcolor{blue}{j})
+	\end{align}
+	が，全ての経路の取り方 $\forall \varphi \in \tilde{J}(\textcolor{red}{i},\, \textcolor{blue}{j})$ について等しくなることを言う．
+\end{mydef}
+
+\subsection{図式の圏}
+
+有向グラフ
+\begin{align}
+	\mathcal{I} = \bigl(I,\; \Familyset[\big]{J(i,\, j)}{(i,\, j) \in I \times I}\bigr)
+\end{align}
+を素材にして，大きな有向グラフ
+\begin{align}
+	\label{def:bigDG}
+	\bigl(I,\; \Familyset[\big]{\tilde{J}(i,\, j)}{(i,\, j) \in I \times I}\bigr)
+\end{align}
+を構成できる．ここで
+\begin{enumerate}
+	\item 頂点を対象とする：
+	\begin{align}
+		\Obj{\Cat{I}} \coloneqq I
+	\end{align}
+	\item 任意の頂点（対象）$i,\, j \in I$ に対して，$i$ を始点，$j$ を終点とする経路を射とする：
+	\begin{align}
+		\Hom{\Cat{I}}(i,\, j) \coloneqq \tilde{J}(i,\, j)
+	\end{align}
+	\item $\forall i,\, j,\, k \in I$ に対して定まる写像
+	\begin{align}
+		\circ\mathop{} \colon \tilde{J}(j,\, k) \times \tilde{J}(i,\, j) &\lto \tilde{J}(i,\, k),\\
+		\bigl( (\varphi_n,\, \dots,\, \varphi_1),\; (\psi_m,\, \dots,\, \psi_1) \bigr) &\lmto (\varphi_n,\, \dots,\, \varphi_1,\, \psi_m,\, \dots,\, \psi_1)
+	\end{align}
+	を合成とする．
+\end{enumerate}
+このようにして\hyperref[def:category]{圏} $\Cat{I}$ （さらに言うと\hyperref[small-monoid]{モノイド}）を定義できる．
+実際，恒等射は先程脚注で述べた $\mathrm{id}_{i} \in \Hom{\Cat{I}}(i,\, i)$ とすればよく，合成の結合則は自明である．
+
+有向グラフ $\mathcal{I}$ を圏と見做したとき，$\Cat{I}$ 上の左 $R$ 加群の図式
+\begin{align}
+	\mathcal{M} \coloneqq \Bigl( \Familyset[\big]{M_i}{i \in I},\; \Familyset[\Big]{\Familyset[\big]{f_\varphi \colon M_i \to M_j}{\varphi \in J(i,\, j)}}{(i,\, j) \in I \times I} \Bigr)
+\end{align}
+は圏 $\Cat{I}$ から左 $R$ 加群の圏 $\MOD{R}$ への\hyperref[def:covariant]{共変関手}と言うことになる：
+\begin{enumerate}
+	\item 各頂点 $i \in \Obj{\Cat{I}} = I$ に対して，左 $R$ 加群 $M_i$ を対応づける：
+	\begin{align}
+		\mathcal{M}(i) \coloneqq M_i
+	\end{align}
+	\item $\forall i,\, j \in \Obj{\Cat{I}} = I$ に対して，経路 $\varphi \in \tilde{J}(i,\, j)$ に左 $R$ 加群の準同型写像 $f_\varphi \colon M_i \to M_j$ を対応付ける：
+	\begin{align}
+		\mathcal{M} \colon \Hom{\Cat{I}}(i,\, j) \lto \Hom{\MOD{R}}(M_i,\, M_j),\; \varphi \lmto \mathcal{M}(\varphi) \coloneqq f_\varphi
+	\end{align}
+\end{enumerate}
+であって，$\forall i,\, j,\, k \in \Obj{\Cat{I}} = I$ および $\forall \varphi \in \tilde{J}(i,\, j),\; \forall \psi \in \tilde{J}(j,\, k)$ に対して
+\begin{align}
+	f_{\mathrm{id}_i} = 1_{M_i},\quad f_{\psi \circ \varphi} = f_{\psi} \circ f_{\varphi}
+\end{align}
+が成立するからである．
+
+\subsection{フィルタードな圏}
+
+\begin{mydef}[label=def:filtered]{フィルタード}
+	圏 $\Cat{I} = \bigl( I,\, \Familyset[\big]{J(i,\, j)}{(i,\, j) \in I \times I} \bigr) $ が\textbf{フィルタード} (filtered) であるとは，以下の3条件を充たすことをいう：
+	\begin{enumerate}
+		\item $I \neq \emptyset$
+		\item $\forall i,\, i' \in I$ に対してある $j \in I$ が存在し，
+		\begin{align}
+			J(i,\, j) \neq \emptyset \AND J(i',\, j) \neq \emptyset
+		\end{align}
+		を充たす．i.e. 図式\ref{cmtd:filtered-2}を書くことができる．
+		\item $\forall i,\, i' \in I$ および $\forall \varphi,\, \psi \in J(i,\, i')$ に対して，ある $j \in I$ および $\mu \in J(i',\, j)$ が存在して
+		\begin{align}
+			\mu \circ \varphi = \mu \circ \psi
+		\end{align}
+		を充たす．i.e. 図式\ref{cmtd:filtered-3}が\hyperref[def:commutative]{可換図式}になる．
+	\end{enumerate}
+\end{mydef}
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}{0.4\columnwidth}
+		\centering
+		\begin{tikzcd}[row sep=large, column sep=large]
+				\forall i \ar[dr] & \\
+						&\exists j \\
+				\forall i' \ar[ur] & \\
+		\end{tikzcd}
+		\caption{条件 (2)}
+		\label{cmtd:filtered-2}
+	\end{subfigure}
+	\hspace{5mm}
+	\begin{subfigure}{0.4\columnwidth}
+		\centering
+		\begin{tikzcd}[row sep=large, column sep=large]
+				\forall i \ar[r, bend right, "\forall \varphi"'] \ar[r, bend left, "\forall \psi"] &\forall i' \ar[r, "\exists \mu"] &\exists j
+		\end{tikzcd}
+		\caption{条件 (3)}
+		\label{cmtd:filtered-3}
+	\end{subfigure}
+	\caption{フィルタードな圏}
+\end{figure}%
+
+
+特に，$I \neq \emptyset$ が\textbf{有向集合} (directed set) ならば圏 $\Cat{I}$ はフィルタードな圏となる．
+
+\begin{mydef}[label=def:directedSet]{有向集合}
+	空でない\textbf{順序集合} $(I,\, \le)$ が\textbf{有向集合} (directed set) であるとは，$\forall i,\, i' \in I$ に対してある $j \in I$ が存在し，
+	\begin{align}
+		i \le j \AND i' \le j
+	\end{align}
+	を充たすことを言う．
+\end{mydef}
+
+
+\section{完全列と蛇の補題}
+
+$R$ を環とする．左 $R$ 加群の準同型 $f \colon M \lto N$ に対して
+\begin{align}
+	\Ker f &\coloneq  \bigl\{\, x \in M \bigm| f(x) = 0 \,\bigr\}, \\
+	\Im f  &\coloneqq \bigl\{\, y \in N \bigm| \exists x \in M,\; y = f(x) \,\bigr\}, \\
+	\Coker f &\coloneqq N/\Im f, \\
+	\Coim f &\coloneqq M/\Ker f
+\end{align}
+と定義する．これらはすべて\textbf{部分左 $\bm{R}$ 加群をなす}．
+これらの部分加群に関わる標準的包含，標準的射影を次の記号で書く：
+\begin{align}
+	\ker f &\colon \Ker f \hookrightarrow M,\; x \mapsto x \\
+	\im f &\colon \Im f \hookrightarrow N,\; y \mapsto y \\
+	\coker f &\colon N \twoheadrightarrow \Coker f,\; y \mapsto y + \Im f \\
+	\coim f &\colon M \twoheadrightarrow \Coim f,\; x \mapsto x + \Ker f
+\end{align}
+定義より明らかに $\ker f,\, \im f$ は単射，$\coker f,\, \coim f$ は全射である．
+
+\begin{figure}[H]
+	\centering
+	\begin{tikzcd}[row sep=large, column sep=large]
+		\Ker f \ar[dr, "\ker f"]	& 								&						&\Coker f \\
+									&M\ar[r, "f"]\ar[dl, "\coim f"]\ar[dl, red, shift right=1.5ex, "\coker(\ker f)"'] &N\ar[ur, "\coker f"]   &\\
+		\Coim f 					&								&						&\Im f\ar[ul, "\im f"]\ar[ul, shift right=1.5ex, red, "\ker (\coker f)"']
+	\end{tikzcd}
+	\caption{左 $R$ 加群の圏 $\MOD{R}$ における核，像，余核，余像の定義}
+	\label{cmtd:ker-im-coker-coim}
+\end{figure}%
+
+\begin{marker}
+	像については
+	\begin{align}
+		\Im f = \Ker (\coker f),\quad \im f = \ker (\coker f)
+	\end{align}
+	が，\textbf{余像} (coimage) については
+	\begin{align}
+		\Coim f = \Coker (\ker f),\quad \coim f = \coker (\ker f)
+	\end{align}
+	が成り立つ．これは一般のアーベル圏における像，余像の定義になる．
+\end{marker}
+
+
+\begin{mylem}[]{}
+	\begin{itemize}
+		\item $f$ が単射 $\IFF$ $\Ker f = 0$
+		\item $f$ が全射 $\IFF$ $\Im f = N$ $\IFF$ $\Coker f = 0$
+	\end{itemize}
+\end{mylem}
+
+
+\begin{mydef}[label=def:exactsq]{完全列}
+	\begin{itemize}
+		\item 左 $R$ 加群 $M_1,\, M,\, M_2$ および左 $R$ 加群の準同型 $f_1 \colon M_1 \lto M,\; f_2 \colon M \lto M_2$ を与える．
+		このとき系列
+		\begin{align}
+			M_1 \xrightarrow{f_1} M \xrightarrow{f_2} M_2
+		\end{align}
+		が $M$ において\textbf{完全} (exact) であるとは，$\Im f_1 = \Ker f_2$ が成り立つこと．これは $\Ker f_2 \subset \Im f_1$ かつ $f_2 \circ f_1 = 0$ と同値である．
+
+		\item 左 $R$ 加群の図式
+		\begin{align}
+			\cdots \xrightarrow{f_{n-1}} M_n \xrightarrow{f_n} M_{n+1} \xrightarrow{f_{n+1}} \cdots
+		\end{align}
+		が\textbf{完全}であるとは，$\forall i$ に対して系列 $M_{i} \xrightarrow{f_i} M_{i+1} \xrightarrow{f_{i+1}} M_{i+2}$ が完全であること．
+	\end{itemize}
+\end{mydef}
+
+次の命題は基本的である：
+
+\begin{myprop}[label=prop:ES-basic]{}
+	\begin{enumerate}
+		\item 
+		\begin{enumerate}
+			\item $0 \lto M \xrightarrow{f} N$ が完全 $\IFF$ $f$ は単射．
+			\item $M \xrightarrow{f} N \lto 0$ が完全 $\IFF$ $f$ は全射．
+		\end{enumerate}
+		\item 
+		\begin{enumerate}
+			\item $0 \lto L \xrightarrow{f} M \xrightarrow{g} N$ が完全 $\IFF$ $f$ により $L \cong \Ker g$
+			\item $L \xrightarrow{f} M \xrightarrow{g} N \lto 0$ が完全 $\IFF$ $g$ により $\Coker f \cong N$
+		\end{enumerate}
+		\item 任意の左 $R$ 加群の準同型写像 $f \colon M \lto N$ に対して，以下の3つの図式は完全列になる（図式\ref{cmtd:ker-im-coker-coim-SES}）：
+		\begin{align}
+			0 &\lto \Ker f \xrightarrow{\ker f} M \xrightarrow{\coim f} \Coim f \lto 0, \\
+			0 &\lto \Im f \xrightarrow{\im f} N \xrightarrow{\coker f} \Coker f \lto 0, \\
+			0 &\lto \Ker f \xrightarrow{\ker f} M \xrightarrow{f} N \xrightarrow{\coker f} \Coker f \lto 0
+		\end{align}
+	\end{enumerate}
+\end{myprop}
+
+\begin{figure}[H]
+	\centering
+	\begin{tikzcd}[row sep=large, column sep=large]
+		0\ar[r, red]&\Ker f \ar[dr, "\ker f", red]	& 								&						&\Coker f\ar[r, blue] &0\\
+		&							&M\ar[r, "f"]\ar[dl, "\coim f", red] &N\ar[ur, "\coker f", blue]   &&\\
+		0&\Coim f\ar[l, red] 					&								&						&\Im f\ar[ul, "\im f", blue]&0\ar[l, blue]
+	\end{tikzcd}
+	\caption{準同型写像 $f \colon M \lto N$ に伴う短完全列}
+	\label{cmtd:ker-im-coker-coim-SES}
+\end{figure}%
+
+\begin{proof}
+	\begin{enumerate}
+		\item 
+		\begin{enumerate}
+			\item $0 \lto M \xrightarrow{f} N$ が完全 $\IFF$ $\Ker f = \Im 0 = 0$ $\IFF$ $f$ は単射．
+			\item $M \xrightarrow{f} N \lto 0$ が完全 $\IFF$ $ N = \Ker 0 = \Im f$ $\IFF$ $f$ は全射．
+		\end{enumerate}
+		\item 
+		\begin{enumerate}
+			\item $0 \lto L \xrightarrow{f} M \xrightarrow{g} N$ が完全 
+			$\IFF$ $f$ が単射かつ $\Ker g = \Im f$．
+			$\IFF$ $L \lto \Ker g,\; x \lmto f(x)$ がwell-definedな同型写像
+			\begin{figure}[H]
+				\centering
+				\begin{tikzcd}[row sep=large, column sep=large]
+							&\Ker g \ar[dr, "\ker g"] &			  & \\
+					0\ar[r]	&L\ar[r, "f"]\ar[u, red, "\cong"]	  &M\ar[r, "g"]  &L
+				\end{tikzcd}
+			\end{figure}%
+			\item $L \xrightarrow{f} M \xrightarrow{g} N \lto 0$ が完全 
+			$\IFF$ $\Ker g = \Im f$ かつ $g$ が全射
+			$\IFF$ $\Coker f \lto N,\; x + \Im f \lmto g(x)$ がwell-definedな同型写像\footnote{$g(x) \in \Ker (\Coker f \lto N) \IFF x \in \Ker g$ より $\Ker (\Coker f \lto N) = \Ker g = \Im f$ なので単射．}．
+			\begin{figure}[H]
+				\centering
+				\begin{tikzcd}[row sep=large, column sep=large]
+									&											 &\Coker f\ar[d, red, "\cong"] & \\
+					L\ar[r, "f"]	&M\ar[r, "g"]\ar[ur, "\coker f"]			 &N\ar[r]  &0
+				\end{tikzcd}
+			\end{figure}%
+		\end{enumerate}
+		\item 　定義から $\ker f$ は単射かつ $\coim f$ は全射であり，また $\coim f$ の定義から $\Ker (\coim f) = \Ker f = \Im(\ker f)$ なので1つ目の図式は完全である．
+		
+		　定義から $\im f$ は単射かつ $\coker f$ は全射であり，また $\coker f$ の定義から $\Ker (\coker f) = \Im f = \Ker (\coker f)$ なので2つ目の図式も完全．
+		
+		　さらに $\ker f$ は単射かつ $\coker f$ は全射であり，$\Ker f = \Im (\ker f),\; \Ker (\coker f) = \Im f$ であることから3つ目の図式も完全である．
+	\end{enumerate}
+\end{proof}
+
+\begin{myprop}[label=prop:ES-basic2]{}
+	左 $R$ 加群の可換図式\ref{cmtd:ESbasic-1}が与えられたとき，
+	自然に可換図式\ref{cmtd:ESbasic-2}が誘導され，2つの行が完全列となる．
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}{0.8\columnwidth}
+		\centering
+		\begin{tikzcd}[row sep=large, column sep=large]
+			M\ar[d, "h_1"]\ar[r, "f"] &N\ar[d, "h_2"] \\
+			M'\ar[r, "f'"] &N'
+		\end{tikzcd}
+		\caption{}
+		\label{cmtd:ESbasic-1}
+	\end{subfigure}
+	\begin{subfigure}{0.8\columnwidth}
+		\centering
+		\begin{tikzcd}[row sep=large, column sep=large]
+			0\ar[r] &\Ker f\ar[d, "\overline{h_1}"]\ar[r,"\ker f"] &M\ar[d, "h_1"]\ar[r, "f"] &N\ar[d, "h_2"]\ar[r, "\coker f"] &\Coker f\ar[r]\ar[d, "\overline{h_2}"] &0 &(\text{exact}) \\
+			0\ar[r] &\Ker f'\ar[r,"\ker f'"] &M'\ar[r, "f'"] &N' \ar[r, "\coker f'"] &\Coker f'\ar[r] &0 &(\text{exact})
+		\end{tikzcd}
+		\caption{}
+		\label{cmtd:ESbasic-2}
+	\end{subfigure}
+	\caption{自然に誘導される可換図式}
+	\label{cmtd:ESbasic}
+\end{figure}%
+\end{myprop}
+
+
+\begin{proof}
+	まず $\overline{h_1}$ を定義する．与えられた図式\ref{cmtd:ESbasic-1}の可換性から $\forall x \in \Ker f$ に対して $f' \bigl( h_1(x) \bigr) = h_2 \bigl( f(x) \bigr) = 0$ が成立する．i.e. $\Im h_1 |_{\Ker f} \subset \Ker f'$ なので，
+	写像
+	\begin{align}
+		\overline{h_1} \colon \Ker f \lto \Ker f',\; x \lmto h_1(x)
+	\end{align}
+	はwell-definedな準同型写像である．このとき $\forall x \in \Ker f$ に対して
+	\begin{align}
+		(\ker f') \bigl( \overline{h_1}(x) \bigr) = (\ker f') \bigl( h_1(x) \bigr) = h_1(x) = h_1 \bigl( (\ker f)(x) \bigr) 
+	\end{align}
+	が成り立つので図式\ref{cmtd:ESbasic-2}の左半分は可換．
+
+	次に $\overline{h_2}$ を定義する．$\forall y \in x + \Im f$ は $y = x + f(z)$ の形で書けるが，図式\ref{cmtd:ESbasic-1}の可換性から $h_2(y) = h_2(x) + f' \bigl( g(z) \bigr) \in h_2(x) + \Im f'$ が成り立つ．
+	従って写像
+	\begin{align}
+		\overline{h_2} \colon \Coker f \lto \Coker f',\; x + \Im f \lmto h_2(x) + \Im f'
+	\end{align}
+	はwell-definedな準同型写像である．このとき $\forall x \in N$ に対して
+	\begin{align}
+		\overline{h_2} \bigl( (\coker f)(x) \bigr) = h_2(x) + \Im f' = (\coker f') \bigl( h_2(x) \bigr) 
+	\end{align}
+	が成り立つので図式\ref{cmtd:ESbasic-2}の右半分も可換．
+	
+	各行の完全性は命題\ref{prop:ES-basic}-(3)より従うので，題意が示された．
+\end{proof}
+
+\begin{mytheo}[label=thm:snake, breakable]{蛇の補題}
+	2つの行が完全であるような左 $R$ 加群の可換図式
+	\begin{figure}[H]
+		\centering
+		\begin{tikzcd}[row sep=large, column sep=large]
+			&M_1\ar[r, "f_1"]\ar[d, "h_1"] &M_2\ar[r, "f_2"]\ar[d, "h_2"] &M_3\ar[r]\ar[d, "h_3"] &0 &(\text{exact})\\
+			0\ar[r]&N_1\ar[r, "g_1"] &N_2\ar[r, "g_2"] &N_3 & &(\text{exact}) \\
+		\end{tikzcd}
+		\caption{蛇の補題の仮定}
+		\label{cmtd:snake}
+	\end{figure}%
+	を考える．このとき，以下の完全列が存在する：
+	\begin{align}
+		\Ker h_1 \xrightarrow{\overline{f_1}} \Ker h_2 \xrightarrow{\overline{f_2}} \Ker h_3 
+		\xrightarrow{\textcolor{red}{\delta}} \Coker h_1 \xrightarrow{\overline{g_1}} \Coker h_2 \xrightarrow{\overline{g_2}} \Coker h_3
+	\end{align}
+	ただし，命題\ref{prop:ES-basic2}と同様に
+	\begin{align}
+		\overline{f_i} &\colon \Ker h_i \lto \Ker h_{i+1},\; x \lmto f_i(x), \\
+		\overline{g_i} &\colon \Coker h_i \lto \Coker h_{i+1},\; x + \Im h_i \lmto g_i(x) + \Im h_{i+1}
+	\end{align}
+	$(i = 1,\, 2)$ と定める．
+\end{mytheo}
+
+\begin{proof}
+	　図式\ref{cmtd:snake}の行の完全性から $f_2 \circ f_1 = 0,\; g_2 \circ g_1 = 0$ なので $\overline{f_2} \circ \overline{f_1} = 0,\; \overline{g_2} \circ \overline{g_1} = 0$ がわかる．i.e. $\Im \overline{f_1} \subset \Ker \overline{f_2},\; \Im \overline{g_1} \subset \Ker \overline{g_2}$．
+	\begin{description}
+		\item[\textbf{$\bm{\Ker h_1 \xrightarrow{\overline{f_1}} \Ker h_2 \xrightarrow{\overline{f_2}} \Ker h_3\quad (\text{exact})}$}]　
+		
+		　$\Im \overline{f_1} \supset \Ker \overline{f_2}$ を示せばよい．
+		$\forall x \in \Ker \overline{f_2}$ を1つとると，$\overline{f_2}(x) = f_2(x) = 0$ なので $x \in \Ker f_2 = \Im f_1$ でもある．i.e. ある $y \in M_1$ が存在して $x  = f_1(y)$ と書ける．
+		
+		　一方，$\overline{f_2}$ の定義から $x \in \Ker h_2$ である．ここで図式\ref{cmtd:snake}の可換性を使うと
+		\begin{align}
+			0 = h_2(x) = h_2 \bigl( f_1(y) \bigr) = g_1 \bigl( h_1(y) \bigr) 
+		\end{align}
+		がわかるが，図式\ref{cmtd:snake}の行の完全性から $g_1$ は単射なので $h_1(y) = 0 \IFF y \in \Ker h_1$ がわかる．
+		故に $\overline{f_1}(y) = x$ の左辺が定義できて $x \in \Im \overline{f_1}$ が示された．
+
+		\begin{figure}[H]
+			\centering
+			\begin{tikzcd}[row sep=large, column sep=large]
+				&y\ar[r, "f", mapsto]\ar[d, "h_1", mapsto] &x\ar[d, "h_2", mapsto] \\
+				&h_1(y) \ar[r, "g_1", mapsto] &0
+			\end{tikzcd}
+		\end{figure}%
+
+		\item[\textbf{$\bm{\Coker h_1 \xrightarrow{\overline{g_1}} \Coker h_2 \xrightarrow{\overline{g_2}} \Coker h_3 \quad (\text{exact})}$}]　
+		
+		　$\Im \overline{g_1} \supset \Ker \overline{g_2}$ を示せばよい．
+		$\forall x + \Im h_2 \in \Ker \overline{g_2}$ を1つとると，$\overline{g_2}(x + \Im h_2) = g_2(x) + \Im h_3 = \Im h_3$ なので $g_2(x) \in \Im h_3$．i.e. ある $y \in M_3$ が存在して $g_3(x) = h_3(y)$ と書ける．
+		さらに図式\ref{cmtd:snake}の行の完全性から $f_2$ は全射だから，ある $z \in M_2$ が存在して $y = f_2(z)$ と書ける．
+		ここで図式\ref{cmtd:snake}の可換性を使うと
+		\begin{align}
+			&g_2 \bigl( x - h_2(z) \bigr) = g_2(x) - g_2 \bigl( h_2(z) \bigr) = g_2(x) - h_3 \bigl( f_2(z) \bigr) = g_2 (x) - g_2(x) = 0 \\
+			\IFF &x - h_2(z) \in \Ker g_2 = \Im g_1
+		\end{align}
+		従ってある $w \in M_1$ が存在して $g_1(w) = g_1\bigl(x - h_2(z)\bigr) \in g_1(x) + \Im h_2$ を充たす．
+		故に $\overline{g_1}(w + \Im h_1) = g_1(w) + \Im h_2 = x + \Im h_2$ であり，$x + \Im h_2 \in \Im \overline{g_1}$ が示された．
+
+		\item[\textbf{$\bm{\delta \colon \Ker h_3 \lto \Coker h_1}$ の構成}]　
+		
+		　図式\ref{cmtd:snake}の行の完全性から $\forall x \in \Ker h_3,\, \exists y \in M_2,\; f_2(y) = x$ が成り立つ．
+		このとき図式\ref{cmtd:snake}の可換性より
+		\begin{align}
+			&g_2 \bigl( h_2(y) \bigr)  = h_3 \bigl( f_2(y) \bigr) = h_3(x) = 0 \\
+			\IFF &h_2(y) \in \Ker g_2 = \Im g_1 \\
+			\IFF &\exists z \in N_1,\; g_1(z) = h_2(y). \label{eq:snake-1}
+		\end{align}
+		
+		　ここで，$z + \Im h_1 \in \Coker h_1$ が $y \in M_2,\, z \in N_1$ のとり方によらずに定まることを示す．
+		$y' \in M_2,\, z' \in N_1$ を $f_2(y') = x,\; h_2(y') = g_1(z')$ を充たすようにとる．このとき
+		\begin{align}
+			f_2(y' - y) = 0 \IFF y' -y \in \Ker f_2 = \Im f_1
+		\end{align}
+		だから，ある $v \in M_1$ が存在して $y' -y = f_1(v)$ とかける．すると図式\ref{cmtd:snake}の可換性より
+		\begin{align}
+			g_1(z' - z) = h_2(y' - y) = h_2 \bigl( f_1(v) \bigr) = g_1 \bigl( h_1(v) \bigr) 
+		\end{align}
+		が成り立つが，図式\ref{cmtd:snake}の行の完全性から $g_1$ は単射なので $z' - z = h_1(v) \in \Im h_1$ がわかった．
+
+		　以上の考察から，写像
+		\begin{align}
+			\label{eq:snake-2}
+			\delta \colon \Ker h_3 \lto \Coker h_1,\; x \lmto z + \Im h_1
+		\end{align}
+		はwell-definedな準同型である．
+
+		\item[\textbf{$\bm{\Ker h_2 \xrightarrow{\overline{f_2}} \Ker h_3 \xrightarrow{\delta} \Coker h_1 \quad (\text{exact})}$}]　
+		
+		　まず $\Im \overline{f_2} \subset \Ker \delta$ を示す．$\forall x \in \Im \overline{f_2}$ を1つとると，$\overline{f_2}$ の定義から
+		\begin{align}
+			\exists y \in \Ker h_2,\; f_2 (y) = \overline{f_2}(y) = x
+		\end{align}
+		と書ける．従って \eqref{eq:snake-1}で定義される $z$ は $g_1(z) = h_2(y) = 0$ を充たすが，図式\ref{cmtd:snake}の行の完全性から $g_1$ は単射なので $z = 0$．故に $\delta$ の定義\eqref{eq:snake-2}から $\delta(x) = 0 + \Im h_1$ であり，$x \in \Ker \delta$ が言えた．
+
+		　次に $\Im \overline{f_2} \supset \Ker \delta$ を示す．$\forall x \in \Ker \delta$ を1つとると，\eqref{eq:snake-1}で定義される $z$ は $z \in \Im h_1$ を充たす．従って
+		\begin{align}
+			\exists w \in M_1,\; h_1(w) = z
+		\end{align}
+		であり，図式\ref{cmtd:snake}の可換性から $x = f_2(y),\, g_1(z) = h_2(y)$ なる $y \in M_2$ に対して
+		\begin{align}
+			&h_2\bigl(y - f_1(w)\bigr) = g_1(z) - g_1(z) = 0, \\
+			&f_2\bigl(y - f_1(w)\bigr) = x
+		\end{align}
+		が成り立つ．i.e. $x = \overline{f_2}\bigl(y - f_1(w)\bigr) \in \Im \overline{f_2}$ が言えた．
+
+		\item[\textbf{$\bm{\Ker h_3 \xrightarrow{\delta} \Coker h_1 \xrightarrow{\overline{g_1}} \Coker h_2 \quad (\text{exact})}$}]　
+		
+		　まず $\Im \delta \subset \Ker \overline{g_1}$ を示す．$\forall \delta(x) = z + \Im h_1 \in \Im \delta$ を1つとると，\eqref{eq:snake-1}の $z$ の定義から
+		\begin{align}
+			\overline{g_1}(z + \Im h_1) =  g_1(z) + \Im h_2 = h_2(y) + \Im h_2 = \Im h_2. \IMP z + \Im h_1 \in \Ker \overline{g_1}.
+		\end{align}
+		
+		　次に $\Im \delta \supset \Ker \overline{g_1}$ を示す．$\forall x + \Im h_1 \in \Ker \overline{g_1}$ を1つとると $g_1(x) \in \Im h_2$ が成り立つ．従って
+		\begin{align}
+			\exists w \in M_2,\; h_2(w) = g_1(x)
+		\end{align}
+		である．一方，図式\ref{cmtd:snake}の行の完全性および可換性から
+		\begin{align}
+			&0 = g_2 \bigl( g_1(x) \bigr) = g_2 \bigl( h_2(w) \bigr) = h_3 \bigl( f_2(w) \bigr) \\
+			\IFF &f_2(w) \in \Ker h_3.
+		\end{align}
+		$\delta$ の定義\eqref{eq:snake-2}から $\delta \bigl( f_2(w) \bigr) = x$ であり，$x \in \Im \delta$ が言えた．
+	\end{description}
+\end{proof}
+
+\begin{mytheo}[label=thm:five-lemma]{5項補題}
+	$2$ つの行が完全であるような左 $R$ 加群の図式
+	\begin{center}
+		\begin{tikzcd}[row sep=large, column sep=large]
+			&M_1 \ar[r, "f_1"]\ar[d, "h_1"] &M_2 \ar[r, "f_2"]\ar[d, "h_2"] &M_3 \ar[r, "f_3"]\ar[d, "h_3"] &M_4 \ar[r, "f_4"]\ar[d, "h_4"] &M_5 \ar[d, "h_5"]\\
+			&N_1 \ar[r, "g_1"] &N_2 \ar[r, "g_2"] &N_3 \ar[r, "g_3"] &N_4 \ar[r, "g_4"] &N_5
+		\end{tikzcd}
+	\end{center}
+	を与える．
+	このとき，$h_1,\, h_2,\, h_4,\, h_5$ が同型ならば $h_3$ も同型である．
+\end{mytheo}
+
+\begin{proof}
+	\begin{description}
+		\item[\textbf{(全射性)}] 　
+		
+		　$\forall y_3 \in N_3$ をとる．$h_4$ は全射なので $g_3(y_3) = h_4(x_4)$ を充たす $x_4 \in M_4$ がある．
+		ここで $h_5\circ f_4 (x_4) = g_4 \circ h_4(x_4) = g_4 \circ g_3 (y_3) = 0$ だが，仮定より $h_5$ は単射なので $f_4(x_4) = 0$ ，i.e. $x_4 \in \Ker f_4 = \Im f_3$ である．
+		よって $x_4 = f_3(x'_3)$ を充たす $x_3' \in M_3$ がある．
+		さて，
+		\begin{align}
+			g_3\bigl(y_3 - h_3(x'_3)\bigr) = h_4(x_4) - h_4 \bigl( f_3(x'_3) \bigr) = 0
+		\end{align}
+		だから $y_3 - h_3(x'_3) \in \Ker g_3 = \Im g_2$ である．i.e. $y_3 - h_3(x'_3) = g_2(y_2)$ を充たす $y_2 \in N_2$ が存在する．$h_2$ が全射なので $y_2 = h_2(x_2)$ を充たす $x_2 \in M_2$ が存在する．故に
+		\begin{align}
+			h_3 \bigl( f_2(x_2) + x'_3 \bigr) &= g_2 \bigl( h_2(x_2) \bigr) + h_3(x'_3) \\
+			&= g_2(y_2) + h_3(x'_3) \\
+			&= y_3  - h_3(x'_3) + h_3(x'_3) = y_3
+		\end{align}
+		が成り立つ．
+		\item[\textbf{(単射性)}] 　
+		
+		$\forall x_3 \in \Ker h_3$ をとる．この時 $h_4 \circ f_3(x_3) = g_3 \circ h_3 (x_3) = 0$ だが $h_4$ は単射なので $f_3(x_3) = 0$，i.e. $x_3 \in \Ker f_3 = \Im f_2$ が言える．
+		よって $x_2 \in M_2$ が存在して $f_2(x_2) = x_3$ が成り立つ．
+		ここで $x_3 \in \Ker h_3$ より $g_2 \circ h_2(x_2) = h_3 \circ f_2(x_2) = h_3(x_3) = 0$，i.e. $h_2(x_2) \in \Ker g_2 = \Im g_1$  である．よってある $y_1 \in N_1$ が存在して $h_2 (x_2) = g_1(y_1)$ を充たす．$h_2$ は単射かつ $h_2 \bigl( f_1(x_1) - x_2 \bigr) = g_1 \circ h_1(x_1) - g_1(y_1) = 0$ なので $f_1(x_1) - x_2 = 0 \iff x_2 = f_1(x_1)$ ．
+		よって $x_3 = f_2(x_2) = f_2 \circ f_1(x_1) = 0$ が言えた．i.e. $\Ker h_3 = 0$ であり，$h_3$ は単射である．
+	\end{description}
+	
+\end{proof}
+
+\begin{mytheo}[label=thm:nine-lemma]{9項補題}
+	左 $R$ 加群の可換図式
+	\begin{center}
+		\begin{tikzcd}[row sep=large, column sep=large]
+			&0 \ar[d] &0 \ar[d] &0 \ar[d] & \\
+			0 \ar[r] &A_1 \ar[r]\ar[d] &B_1 \ar[r]\ar[d] &C_1 \ar[r]\ar[d] &0 \\
+			0 \ar[r] &A_2 \ar[r]\ar[d] &B_2 \ar[r]\ar[d] &C_2 \ar[r]\ar[d] &0 \\
+			0 \ar[r] &A_3 \ar[r]\ar[d] &B_3 \ar[r]\ar[d] &C_3 \ar[r]\ar[d] &0 \\
+			&0 &0 &0 &
+		\end{tikzcd}
+	\end{center}
+	の縦横6本の列が\hyperref[def:CC]{チェイン複体}であり，うち5本の列が完全であるとする．
+	このとき残りの1本も完全である．
+\end{mytheo}
+
+\begin{proof}
+	必要なら図式の縦横を入れ替えることで，横向きの列が全て完全であると仮定しても一般性を損なわない．縦のチェイン複体をそれぞれ $A_\bullet,\, B_\bullet,\, C_\bullet$ と書く．
+	このとき与えられた図式は\hyperref[def:exact-chain]{チェイン複体の短完全列}
+	\begin{align}
+		0 \lto A_\bullet\lto B_\bullet \lto C_\bullet \lto 0
+	\end{align}
+	と見做すことができるので，\hyperref[thm:LES]{ホモロジー長完全列}をとることで完全列
+	\begin{align}
+		0 &\lto H_2(A_\bullet) \lto H_2(B_\bullet) \lto H_2(C_\bullet) \\
+		&\lto H_1(A_\bullet) \lto H_1(B_\bullet) \lto H_1(C_\bullet) \\
+		&\lto H_0(A_\bullet) \lto H_0(B_\bullet) \lto H_0(C_\bullet) \lto 0
+	\end{align}
+	が得られる．仮定より $H_*(A_\bullet),\, H_*(B_\bullet),\, H_*(C_\bullet)$ のうち2つは $0$ なので，残りの1つも完全列 $0 \lto H_q(X_\bullet) \lto 0$ によって $0$ だとわかる．
+	i.e. 残りの列も完全列である．
+\end{proof}
+
+
+\section{普遍性による諸定義}
+
+$R$ を環とする．
+
+\subsection{核・余核}
+
+\begin{myprop}[label=prop:univ-ker]{核・余核の普遍性}
+	左 $R$ 加群の準同型写像 $f\colon M \lto M'$ を与える．また $i \colon \Ker f \hookrightarrow M,\; x \mapsto x$ を標準的包含，$p \colon M' \twoheadrightarrow \Coker f,\; x \mapsto x + \Coker f$ を標準的射影とする．
+	このとき以下が成り立つ：
+	\begin{description}
+		\item[\textbf{(核の普遍性)}] 任意の左 $R$ 加群 $N$ に対して，写像
+		\begin{align}
+			i_* \colon \Hom{R}(N,\, \Ker f) \lto \bigl\{\, g \in \Hom{R}(N,\, M) \bigm| f \circ g = 0 \,\bigr\},\; h \lmto i \circ h
+		\end{align}
+		はwell-definedな全単射である．
+		特に $\forall g \in \Hom{R}(N,\, M) \ST f\circ g = 0$ に対して $\exists ! h \in \Hom{R}(N,\, \Ker f) \ST i \circ h = g$（図式\ref{fig:univ-ker}）．
+		\item[\textbf{(余核の普遍性)}] 任意の左 $R$ 加群 $N$ に対して，写像
+		\begin{align}
+			p^* \colon \Hom{R}(\Coker f,\, N) \lto \bigl\{\, g \in \Hom{R}(M',\, N) \bigm| g \circ f = 0 \,\bigr\},\; h \lmto h \circ p
+		\end{align}
+		はwell-definedな全単射である．特に $\forall g \in \Hom{R}(M',\, N) \ST g\circ f = 0$ に対して $\exists ! h \in \Hom{R}(\Coker f,\, N) \ST h \circ p = g$（図式\ref{fig:univ-coker}）．
+	\end{description}
+\end{myprop}
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}{0.4\columnwidth}
+		\centering
+		\begin{tikzcd}[row sep=large, column sep=large]
+			\Ker f \ar[r, "i"] &M \ar[r, yshift=.5ex, "f"]\ar[r, yshift=-.5ex, "0"'] &M' \\
+			\textcolor{blue}{N}\ar[u, red, dashed, "\exists! h"] \ar[ur, blue, "g"] & &
+		\end{tikzcd}
+		\caption{核の普遍性}
+		\label{fig:univ-ker}
+	\end{subfigure}
+	\hspace{5mm}
+	\begin{subfigure}{0.4\columnwidth}
+		\centering
+		\begin{tikzcd}[row sep=large, column sep=large]
+			M \ar[r, yshift=.5ex, "f"]\ar[r, yshift=-.5ex, "0"'] &M' \ar[r, "p"]\ar[dr, blue, "g"] &\Coker f \ar[d, red, dashed, "\exists! h"] \\
+										& &\textcolor{blue}{N}
+		\end{tikzcd}
+		\caption{余核の普遍性}
+		\label{fig:univ-coker}
+	\end{subfigure}
+\end{figure}%
+
+\begin{proof}
+	\begin{enumerate}
+		\item \begin{description}
+			\item[\textbf{well-definedness}] 核の定義により $f \circ i = 0$ だから，$\forall h \in \Hom{R}(N,\, \Ker f),\; f \circ \bigl(i_*(h)\bigr) = (f \circ i) \circ h = 0$．
+			\item[\textbf{全単射であること}] $\forall g\in \bigl\{\, g \in \Hom{R}(N,\, M) \bigm| f \circ g = 0 \,\bigr\}$ をとる．
+			このとき $\forall x \in N$ に対して $f \bigl( g(x) \bigr) = 0 \IFF g(x) \in \Ker f$ なので，写像
+			\begin{align}
+				h \colon N \lto \Ker f,\; x \lmto g(x)
+			\end{align}
+			はwell-definedかつ $g = i \circ h \in \Im i_*$ が成り立つ．i.e. $i_*$ は全射．
+
+			また，$h,\, h' \in \Hom{R}(N,\, \Ker f)$ に対して
+			\begin{align}
+				i_*(h) = i_*(h') \IFF i \circ h = i \circ h' \IMP \forall x \in N,\; i \bigl( h(x) \bigr) = i \bigl( h'(x) \bigr)
+			\end{align}
+			だが，$i$ は単射なので $\forall x \in N,\; h(x) = h'(x) \IFF h = h'$ が成り立つ．i.e. $i_*$ は単射．
+		\end{description}
+		\item \begin{description}
+			\item[\textbf{well-definedness}] 余核の定義により $p \circ f  = 0$ だから，$\forall h \in \Hom{R}(\Coker f,\, N),\; p^*(h) \circ f = h \circ (p \circ f) = 0$．
+			\item[\textbf{全単射であること}] $\forall g \in \bigl\{\, g \in \Hom{R}(M',\, N) \bigm| g \circ f = 0 \,\bigr\} $ をとる．
+			このとき $\forall x' \in x + \Coker f$ はある $y \in M$ を用いて $x' = x + f(y)$ と書けるから
+			\begin{align}
+				g(x') = g(x) + (g \circ f)(y) = g(x) \in N
+			\end{align}
+			が成り立つ．したがって写像
+			\begin{align}
+				h \colon \Coker f \lto N,\; x + \Im f \lmto g(x)
+			\end{align}
+			はwell-definedであり，かつ $g = h \circ p \in \Im p^*$ が成り立つ．i.e. $p^*$ は全射．
+
+			また，$h,\, h' \in \Hom{R}(\Coker f,\, N)$ に対して
+			\begin{align}
+				p^*(h) = p^*(h') \IMP h \circ p = h' \circ p
+			\end{align}
+			が成り立つが，$p$ は全射なので $h = h'$ が言える．i.e. $p^*$ は単射．
+		\end{description}
+	\end{enumerate}
+\end{proof}
+
+別の左 $R$ 加群 $\textcolor{DarkGreen}{K}$ と準同型写像 $\textcolor{DarkGreen}{i'} \colon K \lto M$ が\hyperref[prop:univ-ker]{核の普遍性}を充していて，次のような可換図式を書ける場合を考える．
+\begin{figure}[H]
+	\centering
+	\begin{tikzcd}[row sep=large, column sep=large]
+		\textcolor{DarkGreen}{K} \ar[r, DarkGreen, "i'"] &M \ar[r, yshift=.5ex, "f"]\ar[r, yshift=-.5ex, "0"'] &M' \\
+		\forall \textcolor{blue}{N}\ar[u, dashed, "\exists! h'"] \ar[ur, blue, "g"] & &
+	\end{tikzcd}
+\end{figure}%
+このとき，次のような可換図式を充たす\textbf{同型写像} $\textcolor{red}{\widehat{h}} \colon \Ker f \xrightarrow{\cong} K$ が\textbf{一意的に}存在する：
+\begin{figure}[H]
+	\centering
+	\begin{tikzcd}[row sep=large, column sep=large]
+		\textcolor{DarkGreen}{K} \ar[drr, bend left, DarkGreen, "i'"] & & & \\
+		&\Ker f \ar[r, "i"] \ar[ul, red, "\exists! \widehat{h}"] &M \ar[r, yshift=.5ex, "f"]\ar[r, yshift=-.5ex, "0"'] &M' \\
+		&\forall \textcolor{blue}{N}\ar[u, dashed, "\exists! h"] \ar[uul, dashed, bend left, "\exists! h"] \ar[ur, blue, "g"] & &
+	\end{tikzcd}
+\end{figure}%
+
+\begin{proof}
+	実際，$\textcolor{blue}{N} = \Ker f$ とすると $R$ 加群の準同型 $\widehat{h} \colon \Ker f \lto K$ であって $i' \circ \widehat{h} = i$ を充たすものが一意に存在することがわかり，
+	$\textcolor{blue}{N} = K$ とすると  $R$ 加群の準同型 $\widehat{h}' \colon K \lto \Ker f$ であって $i \circ \widehat{h}' = i'$ を充たすものが一意に存在することがわかる．このとき
+	\begin{align}
+		i_* (\widehat{h}' \circ \widehat{h}) &= (i \circ \widehat{h}') \circ \widehat{h} = i = i_* (\mathrm{id}_{\Ker f}) \\
+		i'_* (\widehat{h} \circ \widehat{h}')&= (i' \circ \widehat{h}) \circ \widehat{h}' = i' = i'_* (\mathrm{id}_{K})
+	\end{align}
+	だが，\hyperref[prop:univ-ker]{核の普遍性}より $i_*,\, i'_*$ は単射なので 
+	\begin{align}
+		\widehat{h}' \circ \widehat{h} &= \mathrm{id}_{\Ker f} \\
+		\widehat{h} \circ \widehat{h}' &= \mathrm{id}_{K}
+	\end{align}
+	が従う．i.e. $\widehat{h}$ は同型写像である．
+\end{proof}
+
+同様の議論は余核に対しても成り立つ：
+
+別の左 $R$ 加群 $\textcolor{DarkGreen}{C}$ と準同型写像 $\textcolor{DarkGreen}{p'} \colon M' \lto \textcolor{DarkGreen}{C}$ が\hyperref[prop:univ-ker]{余核の普遍性}を充していて，次のような可換図式を書ける場合を考える．
+\begin{figure}[H]
+	\centering
+	\begin{tikzcd}[row sep=large, column sep=large]
+		M \ar[r, yshift=.5ex, "f"]\ar[r, yshift=-.5ex, "0"'] &M' \ar[r, DarkGreen, "p'"]\ar[dr, blue, "g"] &\textcolor{DarkGreen}{C} \ar[d, dashed, "\exists! h'"] \\
+									& &\forall \textcolor{blue}{N}
+	\end{tikzcd}
+\end{figure}%
+このとき，次のような可換図式を充たす\textbf{同型写像} $\textcolor{red}{\widehat{h}} \colon \Ker f \xrightarrow{\cong} K$ が\textbf{一意的に}存在する：
+\begin{figure}[H]
+	\centering
+	\begin{tikzcd}[row sep=large, column sep=large]
+		& & &\textcolor{DarkGreen}{C} \ar[ddl, dashed, bend left, "\exists! h'"] \\
+		M \ar[r, yshift=.5ex, "f"]\ar[r, yshift=-.5ex, "0"'] &M' \ar[r, "p"]\ar[dr, blue, "g"] \ar[urr, DarkGreen, bend left, "p'"] &\Coker f \ar[ur, red, "\exists! \widehat{h}"] \ar[d, dashed, "\exists! h"] & \\
+									& &\forall \textcolor{blue}{N} &
+	\end{tikzcd}
+\end{figure}%
+
+\begin{proof}
+	実際，$\textcolor{blue}{N} = \Coker f$ とすると $R$ 加群の準同型 $\widehat{h}' \colon C \lto \Coker f$ であって $\widehat{h}' \circ p' = p$ を充たすものが一意に存在することがわかり，
+	$\textcolor{blue}{N} = C$ とすると  $R$ 加群の準同型 $\widehat{h} \colon \Coker f \lto C$ であって $\widehat{h} \circ p = p'$ を充たすものが一意に存在することがわかる．このとき
+	\begin{align}
+		p^* (\widehat{h}' \circ \widehat{h}) &= \widehat{h}' \circ (\widehat{h} \circ p) = p = p^* (\mathrm{id}_{\Coker f}) \\
+		p'{}^* (\widehat{h} \circ \widehat{h}')&= \widehat{h} \circ (\widehat{h}' \circ p') = p' = p'{}^* (\mathrm{id}_{C})
+	\end{align}
+	だが，\hyperref[prop:univ-ker]{余核の普遍性}より $p^*,\, p'{}^*$ は単射なので 
+	\begin{align}
+		\widehat{h}' \circ \widehat{h} &= \mathrm{id}_{\Coker f} \\
+		\widehat{h} \circ \widehat{h}' &= \mathrm{id}_{C}
+	\end{align}
+	が従う．i.e. $\widehat{h}$ は同型写像である．
+\end{proof}
+
+\begin{myexample}[label=ex:univ-quomod]{商加群の普遍性}
+	$R$ 加群 $M$ と，その任意の部分加群 $N \subset M$ を与える．包含準同型 $i \colon N \lto M,\, x \lmto x$ の\hyperref[fig:univ-coker]{余核の普遍性の図式}は
+	\begin{center}
+		\begin{tikzcd}[row sep=large, column sep=large]
+			N \ar[r, yshift=.5ex, "i"]\ar[r, yshift=-.5ex, "0"'] &M' \ar[r, "p"]\ar[dr, blue, "f"'] &\Coker i = M/N \ar[d,red, dashed, "\exists! \overline{f}"] & \\
+									& &\forall \textcolor{blue}{N} &
+		\end{tikzcd}
+	\end{center}
+	のようになる．
+	すなわち，任意の左 $R$ 加群 $\textcolor{blue}{N}$ と，$\textcolor{blue}{f} \circ i = 0$ を充たす任意の準同型写像 $\textcolor{blue}{f} \colon M \lto \textcolor{blue}{N}$ に対して，ある $\textcolor{red}{\overline{f}} \colon M/N \lto \textcolor{blue}{N}$ が一意的に存在して可換図式
+	\begin{center}
+		\begin{tikzcd}[row sep=large, column sep=large]
+			M \ar[d, "p"']\ar[r, blue, "f"] &\textcolor{blue}{N} \\
+			M/N \arrow[ur, red, dashed, "\exists!\bar{f}"']&
+		\end{tikzcd}
+	\end{center}
+	を充たすということである．$\textcolor{blue}{f} \circ i = 0$ は $N \subset \Ker \textcolor{blue}{f}$ と同値なので，\hyperref[prop:univ-quomod]{商加群の普遍性}が示されたことになる．
+\end{myexample}
+
+
+\subsection{直和・直積}
+
+$R$ を環，$\Lambda$ を任意の添字集合とする．$\forall \lambda \in \Lambda$ に対応して $R$ 加群 $M_\lambda$ が与えられているとする．
+$R$ 加群の族 $\Familyset[\big]{(M_\lambda,\, +,\, \cdot\mathrel{})}{\lambda \in \Lambda}$ の集合としての\hyperref[def:dp]{直積}は
+\begin{align}
+	\prod_{\lambda \in \Lambda} M_\lambda = \bigl\{\, \Dpmember{x_\lambda}{\lambda\in\Lambda} \bigm| \forall \lambda \in \Lambda,\; x_\lambda \in M_\lambda \,\bigr\} 
+\end{align}
+と書かれるのだった．
+
+\begin{mydef}[label=def:dp-mod,breakable]{加群の直積・直和}
+	$\Lambda,\, \Familyset[\big]{(M_\lambda,\, +,\,\cdot\mathrel{})}{\lambda \in \Lambda}$ を上述の通りにとる．
+	\begin{enumerate}
+		\item 集合 $\displaystyle\prod_{\lambda \in \Lambda} M_\lambda$ の上の加法 $+$ およびスカラー乗法 $\cdot$ を次のように定めると，
+		組 $\left(\displaystyle\prod_{\lambda \in \Lambda} M_\lambda,\, +,\,  \cdot\mathrel{}\right)$ は\hyperref[ax:module]{左 $R$ 加群}になる．これを加群の族 $\Familyset[\big]{(M_\lambda,\, +,\, \cdot\mathrel{})}{\lambda \in \Lambda}$ の\textbf{直積} (direct product) と呼ぶ：
+		\begin{align}
+			+ &\colon \prod_{\lambda \in \Lambda} M_\lambda \times \prod_{\lambda \in \Lambda} M_\lambda \to \prod_{\lambda \in \Lambda} M_\lambda,\; \bigl(\, \textcolor{blue}{(}\textcolor{red}{ x_\lambda}\textcolor{blue}{)_{\lambda \in \Lambda}},\, \textcolor{blue}{(}\textcolor{red}{ y_\lambda}\textcolor{blue}{)_{\lambda \in \Lambda}}\, \bigr) \mapsto \textcolor{blue}{(}\textcolor{red}{ x_\lambda + y_\lambda}\textcolor{blue}{)_{\lambda \in \Lambda}} \\
+			\cdot\mathrel{} &\colon R \times \prod_{\lambda \in \Lambda} M_\lambda \to \prod_{\lambda \in \Lambda} M_\lambda,\; \bigl( \, \textcolor{red}{a},\, \textcolor{blue}{(}\textcolor{red}{ x_\lambda}\textcolor{blue}{)_{\lambda \in \Lambda}}\, \bigr) \mapsto \textcolor{blue}{(}\textcolor{red}{ a \cdot x_\lambda}\textcolor{blue}{)_{\lambda \in \Lambda}}
+		\end{align}
+		添字集合 $\Lambda$ が有限集合 $\{1,\, \dots ,\, n\}$ であるときは
+		\begin{align}
+			M_1 \times M_2 \times \cdots \times M_n
+		\end{align}
+		とも書く．
+		\item 加群の直積 $\left(\displaystyle\prod_{\lambda \in \Lambda} M_\lambda,\, +,\, \cdot\mathrel{}\right)$ を与えると，
+		次のように定義される部分集合 $\displaystyle\bigoplus_{\lambda \in \Lambda} M_\lambda$ は部分 $R$ 加群をなす．これを加群の族 $\Familyset[\big]{(M_\lambda,\, +,\, \cdot\mathrel{})}{\lambda \in \Lambda}$ の\textbf{直和} (direct sum) と呼ぶ：
+		\begin{align}
+			\bigoplus_{\lambda \in \Lambda} M_\lambda \coloneqq \left\{\, \Dpmember{x_\lambda}{\lambda\in\Lambda} \in \prod_{\lambda \in \Lambda} M_\lambda \relmiddle| \substack{\text{有限個の添字}\; i_1,\, \dots,\, i_n \in \Lambda \;\text{を除いた}\\\text{全ての添字}\; \lambda \in \Lambda\; \text{について} \; x_\lambda = 0}  \,\right\} 
+		\end{align}
+		添字集合 $\Lambda$ が有限集合 $\{1,\, \dots ,\, n\}$ であるときは
+		\begin{align}
+			M_1 \oplus M_2 \oplus \cdots \oplus M_n
+		\end{align}
+		とも書く．
+	\end{enumerate}
+\end{mydef}
+
+\begin{marker}
+	添字集合 $\Lambda$ が有限のときは $R$ 加群として $\displaystyle\prod_{\lambda \in \Lambda} M_\lambda \cong \bigoplus_{\lambda \in \Lambda} M_\lambda$ である．
+	$\Lambda$ が無限集合の時は，包含写像 $\displaystyle\bigoplus_{\lambda \in \Lambda} M_\lambda \hookrightarrow \prod_{\lambda \in \Lambda} M_\lambda$ によって準同型であるが，同型とは限らない．
+\end{marker}
+
+\begin{mydef}[label=def:inj-proj]{標準射影，標準包含}
+	加群の族 $\Familyset[\big]{(M_\lambda,\, +,\, \cdot\mathrel{})}{\lambda \in \Lambda}$ を与える．
+	\begin{enumerate}
+		\item 各添字 $\mu \in \Lambda$ に対して，次のように定義される写像 $\pi_\mu \colon \displaystyle\prod_{\lambda \in \Lambda} M_\lambda \to M_\mu$ のことを\textbf{標準射影} (canonical projection) と呼ぶ：
+		\begin{align}
+			\pi_\mu \bigl( \Dpmember{x_\lambda}{\lambda \in \Lambda} \bigr) \coloneqq x_\mu
+		\end{align}
+		\item 各添字 $\mu \in \Lambda$ に対して，次のように定義される写像 $\iota_\mu \colon M_\mu \hookrightarrow \displaystyle\bigoplus_{\lambda \in \Lambda} M_\lambda$ のことを\textbf{標準包含} (canonical inclusion) と呼ぶ：
+		\begin{align}
+			\iota_\mu (x) \coloneqq \Dpmember{y_\lambda}{\lambda \in \Lambda},\quad 
+			\WHERE y_\lambda \coloneqq 
+			\begin{cases}
+				x, &\colon \lambda = \mu \\
+				0. &\colon \mathrm{otherwise}
+			\end{cases}
+		\end{align}
+	\end{enumerate}
+\end{mydef}
+
+加群の族をいちいち $\Familyset[\big]{(M_\lambda,\, +,\, \cdot\mathrel{})}{\lambda \in \Lambda}$ と書くと煩雑なので，以降では省略して $\Familyset[\big]{M_\lambda}{\lambda\in\Lambda}$ と書くことにする．
+
+\begin{myprop}[label=prop:univ-dp,breakable]{直積・直和の普遍性}
+	任意の添字集合 $\Lambda$，および加群の族 $\Familyset[\big]{M_\lambda}{\lambda\in \Lambda}$ を与える．添字 $\mu \in \Lambda$ に対する\hyperref[def:inj-proj]{標準射影，標準包含}をそれぞれ $\pi_\mu,\, \iota_\mu$ と書く．
+	\begin{description}
+		\item[\textbf{(直積の普遍性)}]  任意の左 $R$ 加群 $N$ に対して，写像
+		\begin{align}
+			\begin{array}{ccc}
+				\Hom{R} \biggl( N,\, \displaystyle\prod_{\lambda \in \Lambda} M_\lambda \biggr) &\longrightarrow &\displaystyle\prod_{\lambda\in\Lambda} \Hom{R}(N,\, M_\lambda) \\
+				\rotatebox{90}{\in} & & \rotatebox{90}{\in} \\
+				f & \longmapsto & \Familyset[\big]{\,\pi_\lambda \circ f\,}{\lambda \in \Lambda}
+			\end{array}
+		\end{align}
+		は全単射である．i.e. 任意の左 $R$ 加群 $N$ ，および任意の左 $R$ 加群の準同型写像の族 $\Familyset[\big]{\, f_\lambda \colon N \to M_\lambda\,}{\lambda\in\Lambda}$ に対して，$\forall \lambda\in\Lambda,\; \pi_\mu \circ f = f_\lambda$ を充たす準同型写像 $f \colon N \to \displaystyle \prod_{\lambda\in\Lambda} M_\lambda$ が一意的に存在する（図式\ref{fig:DP}）． 
+		\item[\textbf{(直和の普遍性)}]  任意の左 $R$ 加群 $N$ に対して，写像
+		\begin{align}
+			\begin{array}{ccc}
+				\Hom{R} \biggl(\displaystyle \bigoplus_{\lambda\in\Lambda}M_\lambda ,\, N \biggr) &\longrightarrow &\displaystyle\prod_{\lambda\in\Lambda} \Hom{R}(M_\lambda,\, N) \\
+				\rotatebox{90}{\in} & & \rotatebox{90}{\in} \\
+				f & \longmapsto & \Familyset[\big]{\,f \circ \iota_\lambda\,}{\lambda \in \Lambda}
+			\end{array}
+		\end{align}
+		は全単射である．i.e. 任意の左 $R$ 加群 $N$ ，および任意の左 $R$ 加群の準同型写像の族 $\Familyset[\big]{\, f_\lambda \colon M_\lambda \to N\,}{\lambda\in\Lambda}$ に対して，$\forall \lambda\in\Lambda,\; f\circ \iota_\lambda = f_\lambda$ を充たす準同型写像 $f \colon \displaystyle \bigoplus_{\lambda\in\Lambda} M_\lambda  \to N$ が一意的に存在する（図式\ref{fig:DS}）． 
+	\end{description}
+\end{myprop}
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}{0.4\columnwidth}
+		\centering
+		\begin{tikzcd}[column sep=huge,row sep=large]
+			\textcolor{blue}{N} \arrow[r, "\exists! f",red,dashrightarrow] \arrow[dr, blue, "f_\lambda"']
+			& \displaystyle\prod_{\lambda \in \Lambda} M_\lambda \arrow[d, "\pi_\lambda"] \\
+			&M_\lambda
+		\end{tikzcd}
+		\caption{直積の普遍性}
+		\label{fig:DP}
+	\end{subfigure}
+	\hspace{5mm}
+	\begin{subfigure}{0.4\columnwidth}
+		\centering
+		\begin{tikzcd}[column sep=huge,row sep=large]
+			M_\lambda \arrow[r, "\iota_\lambda"] \arrow[dr, blue, "f_\lambda"']
+			& \displaystyle\bigoplus_{\lambda \in \Lambda} M_\lambda \arrow[d, "\exists! f", dashrightarrow, red] \\
+			&\textcolor{blue}{N}
+		\end{tikzcd}
+		\caption{直和の普遍性}
+		\label{fig:DS}
+	\end{subfigure}
+\end{figure}%
+
+\begin{proof}
+	\begin{enumerate}
+		\item 
+		\begin{description}
+			\item[\textbf{存在}]　左 $R$ 加群の準同型写像の族 $\Familyset[\big]{\, f_\lambda \colon N \to M_\lambda\,}{\lambda\in\Lambda}$ が与えられたとき，写像 $f$ を
+			\begin{align}
+				f \colon N \to \prod_{\lambda\in\Lambda}M_\lambda,\; x \mapsto \Dpmember[\big]{f_\lambda(x)}{\lambda\in\Lambda}
+			\end{align}
+			と定義する．このとき $\forall \mu \in \Lambda,\,\forall x \in N$ に対して
+			\begin{align}
+				(\pi_\mu \circ f)(x) = f_\mu(x)
+			\end{align}
+			なので図\ref{fig:DP}は可換図式になる．
+			\item[\textbf{一意性}]　図\ref{fig:DP}を可換図式にする別の準同型写像 $g \colon N \to \displaystyle \prod_{\lambda\in\Lambda}M_\lambda$ が存在したとする．このとき $\forall x \in N,\,\forall \lambda \in \Lambda$ に対して
+			\begin{align}
+				\pi_\lambda \bigl( g(x) \bigr) = f_\lambda(x) = \pi_\lambda \bigl( f(x) \bigr) 
+			\end{align}
+			なので $f(x) = g(x)$ となる．i.e. $f$ は一意である．
+		\end{description}
+		\item 
+		\begin{description}
+			\item[\textbf{存在}]　左 $R$ 加群の準同型写像の族 $\Familyset[\big]{\, f_\lambda \colon M_\lambda \to N\,}{\lambda\in\Lambda}$ が与えられたとき，写像 $f$ を
+			\begin{align}
+				f \colon \bigoplus_{\lambda\in\Lambda} M_\lambda \to N,\; \Dpmember{x_\lambda}{\lambda\in\Lambda} \mapsto \sum_{\lambda \in \Lambda} f_\lambda(x_\lambda)
+			\end{align}
+			と定義する．右辺は有限和なので意味を持つ．
+
+			このとき $\forall \mu \in \Lambda,\,\forall x \in M_\mu$ に対して
+			\begin{align}
+				f \bigl( \iota_\mu(x) \bigr) = f_\mu(x_\mu) + \sum_{\lambda \neq \mu} f_\lambda(0) = f_\mu(x_\mu)
+			\end{align}
+			なので図\ref{fig:DS}は可換図式になる．
+			\item[\textbf{一意性}]　図\ref{fig:DS}を可換図式にする別の準同型写像 $g \colon \displaystyle \bigoplus_{\lambda\in\Lambda}M_\lambda \to N$ が存在したとする．このとき $\forall \Dpmember{x_\lambda}{\lambda\in\Lambda} \in \bigoplus_{\lambda\in\Lambda}$ に対して
+			\begin{align}
+				g \bigl( \Dpmember{x_\lambda}{\lambda\in\Lambda} \bigr) = g \left(\sum_{\lambda\in\Lambda} \iota_\lambda (x_\lambda)\right) = \sum_{\lambda\in\Lambda} g \bigl( \iota_\lambda(x_\lambda) \bigr) = \sum_{\lambda\in\Lambda} f_\lambda(x_\lambda) = f \bigl( \Dpmember{x_\lambda}{\lambda\in\Lambda} \bigr) 
+			\end{align}
+			なので $f = g$ となる．i.e. $f$ は一意である．
+		\end{description}
+	\end{enumerate}
+\end{proof}
+
+別の左 $R$ 加群 $\textcolor{DarkGreen}{P}$ と準同型写像の族 $\Familyset[\big]{\textcolor{DarkGreen}{\pi'_\lambda} \colon \textcolor{DarkGreen}{P} \to M_\lambda}{\lambda \in \Lambda}$ が\hyperref[prop:univ-dp]{直積の普遍性}を充していて，次のような可換図式を書ける場合を考える：
+\begin{figure}[H]
+	\centering
+	\begin{tikzcd}[column sep=huge,row sep=large]
+		\forall \textcolor{blue}{N} \arrow[r, "\exists! f'",dashrightarrow] \arrow[dr, blue, "f_\lambda"']
+		& \textcolor{DarkGreen}{P} \arrow[d, DarkGreen, "\pi'_\lambda"] \\
+		&M_\lambda
+	\end{tikzcd}
+\end{figure}%
+このとき，次のような可換図式を充たす\textbf{同型写像} $\textcolor{red}{\widehat{f}} \colon \displaystyle \prod_{\lambda \in \Lambda} M_\lambda \lto \textcolor{DarkGreen}{P}$ が\textbf{一意に}存在する：
+\begin{figure}[H]
+	\centering
+	\begin{tikzcd}[column sep=huge,row sep=large]
+		& & \textcolor{DarkGreen}{P} \ar[ddl, bend left, DarkGreen, "\pi'_\lambda"] \\
+		\forall \textcolor{blue}{N} \arrow[r, "\exists! f",dashrightarrow] \ar[urr, bend left, "\exists! f'", dashed] \arrow[dr, blue, "f_\lambda"'] & \displaystyle\prod_{\lambda \in \Lambda} M_\lambda \arrow[d, "\pi_\lambda"] \ar[ur, red, "\exists! \widehat{f}"] & \\
+		&M_\lambda &
+	\end{tikzcd}
+\end{figure}%
+
+直和の普遍性に関しても同様である：別の左 $R$ 加群 $\textcolor{DarkGreen}{S}$ と準同型写像の族 $\Familyset[\big]{\textcolor{DarkGreen}{\iota'_\lambda} \colon M_\lambda \to \textcolor{DarkGreen}{S}}{\lambda \in \Lambda}$ が\hyperref[prop:univ-dp]{直和の普遍性}を充していて，次のような可換図式を書ける場合を考える：
+\begin{figure}[H]
+	\centering
+	\begin{tikzcd}[column sep=huge,row sep=large]
+		M_\lambda \arrow[r, DarkGreen, "\iota'_\lambda"] \arrow[dr, blue, "f_\lambda"']
+		& \textcolor{DarkGreen}{S} \arrow[d, "\exists! f'", dashrightarrow] \\
+		&\forall \textcolor{blue}{N}
+	\end{tikzcd}
+\end{figure}%
+このとき，次のような可換図式を充たす\textbf{同型写像} $\textcolor{red}{\widehat{f}} \colon \displaystyle \bigoplus_{\lambda \in \Lambda} M_\lambda \lto \textcolor{DarkGreen}{S}$ が\textbf{一意に}存在する：
+\begin{figure}[H]
+	\centering
+	\begin{tikzcd}[column sep=huge,row sep=large]
+		& & \textcolor{DarkGreen}{S} \ar[ddl, bend left, dashed, "\exists! f'"]\\
+		M_\lambda \arrow[urr, DarkGreen, bend left, "\iota'_\lambda"] \ar[r, "\iota_\lambda"]\arrow[dr, blue, "f_\lambda"'] 
+		& \displaystyle \bigoplus_{\lambda \in \Lambda} M_\lambda \ar[ur, red, "\exists! \widehat{f}"] \arrow[d, "\exists! f'", dashrightarrow] & \\
+		&\forall \textcolor{blue}{N} &
+	\end{tikzcd}
+\end{figure}%
+
+\subsection{テンソル積}
+
+$M$ を左 $R$ 加群， $\Lambda$ を任意の添字集合として，$M$ の部分集合 $S \coloneqq \Familyset[\big]{m_\lambda}{\lambda \in \Lambda} \subset M$ を考える．このとき $S$ の生成する部分加群とは
+\begin{align}
+	\left\{\, \sum_{\lambda \in \Lambda} a_\lambda m_\lambda \relmiddle| a_\lambda \in R,\, m_\lambda \in S,\; \substack{\text{有限個の添字}\; i_1,\, \dots ,\, i_n\; \text{を除いた} \\ \text{全ての添字}\; \lambda \in \Lambda \; \text{について}\; a_\lambda = 0}\,\right\} 
+\end{align}
+のことである．
+
+\begin{mydef}[label=def:tensor,breakable]{テンソル積}
+	\textbf{右 $\bm{R}$ 加群} $M$ および\textbf{左 $\bm{R}$ 加群} $N$ を与える．
+	$M$ と $N$ の $R$ 上の\textbf{テンソル積} (tensor product) $\bm{M \otimes_{R} N}$ とは，次のようにして定義される\textbf{剰余加群}のことである：
+	\begin{enumerate}
+		\item まず $\mathbb{Z}$ 加群
+		\begin{align}
+			F(M,\, N) \coloneqq \mathbb{Z}^{\oplus (M \times N)}
+		\end{align}
+		を定める\footnote{つまり，$F(M,\, N)$ は $M \times N$ を\textbf{添字集合とする} $\mathbb{Z}$ 加群の族 $\Familyset[\big]{\mathbb{Z}}{(m,\, n) \in M \times N}$ の直和である．}．
+		\item $\forall (m,\, n) \in M\times N$ に対して，第 $(m,\, n)$ 成分からの\hyperref[def:inj-proj]{標準的包含}
+		\begin{align}
+			\iota_{(m,\, n)} &\colon \mathbb{Z} \hookrightarrow F(M,\, N),\; x \lmto \Dpmember[\big]{y_{\lambda}}{\lambda \in M \times N} \\
+			\WHERE y_{\lambda} &= 
+			\begin{cases}
+				x, & \lambda = (m,\, n) \\
+				0, & \lambda \neq (m,\, n)
+			\end{cases}
+		\end{align}
+		による $1$ の像を $[m,\, n]$ と書く．i.e.
+		\begin{align}
+			[m,\, n] \coloneqq \iota_{(m,\, n)}(1)
+		\end{align}
+		\item 部分加群 $G(M,\, N) \subset F(M,\, N)$ を
+		\begin{align}
+			&[m_1 + m_2,\, n] - [m_1,\, n] - [m_2,\, n] \\
+			&[m,\, n_1 + n_2] - [m,\, n_1] - [m,\, n_2] \\
+			&[ma,\, n] - [m,\, an]
+		\end{align}
+		の形をした $F(M,\, N)$ の元全体の集合によって生成される部分加群として定める．
+		\item $F(M,\, N)$ の $G(M,\, N)$ による剰余加群をとる：
+		\begin{align}
+			M \otimes_R N \coloneqq F(M,\, N) / G(M,\, N)
+		\end{align}
+	\end{enumerate}
+	また，$[m,\, n]$ の $M \otimes_R N$ における剰余類を $m\otimes n$ と書く．
+\end{mydef}
+
+\begin{mylem}[label=lem:tensor1]{テンソル積の性質}
+	右 $R$ 加群 $M$，左 $R$ 加群 $N$ を与える．このとき $\forall m,\, m_1,\, m_2 \in M,\; \forall n,\, n_1,\, n_2 \in N,\; \forall a \in R$ に対して以下が成り立つ：
+	\begin{enumerate}
+		\item 
+		\begin{align}
+			(m_1 + m_2) \otimes n &= m_1 \otimes n + m_2 \otimes n, \\
+			n \otimes (n_1 + n_2) &= m \otimes n_1 + m \otimes n_2, \\
+			(ma) \otimes n &= m \otimes (an)
+		\end{align}
+		\item 
+		\begin{align}
+			0_{M \otimes_R N} = 0_M \otimes n = m \otimes 0_N
+		\end{align}
+	\end{enumerate}
+\end{mylem}
+
+\begin{proof}
+	混乱を避けるため，この証明では剰余加群が持つ加法を赤字で $\textcolor{red}{+}$ と書くことにする．
+	\begin{enumerate}
+		\item テンソル積の定義より
+		\begin{align}
+			(m_1 + m_2) \otimes n &= [m_1 + m_2,\, n] + G(M,\, N) \\
+			&= \bigl([m_1,\, n] + [m_2,\, n]\bigr) + G(M,\, N) \\
+			&= \bigl( [m_1,\, n] + G(M,\, N) \bigr)\mathop{}\textcolor{red}{+}\mathop{} \bigl( [m_2,\, n] + G(M,\, N) \bigr) \\
+			&= m_1 \otimes n \mathop{}\textcolor{red}{+}\mathop{} m_2 \otimes n
+		\end{align}
+		が成り立つ\footnote{少しややこしいが，剰余加群 $F(M,\, N)/G(M,\, N)$ の元は $x \in F(M,\, N)$ を用いて $x + G(M,\, N)$ と書かれる．}．
+		ただし，2番目の等号において
+		\begin{align}
+			[m_1 + m_2,\, n] &= \bigl([m_1,\, n] + [m_2,\, n]\bigr) + \bigl([m_1 + m_2,\, n] - [m_1,\, n] - [m_2,\, n]\bigr) \\
+			&\in \bigl([m_1,\, n] + [m_2,\, n]\bigr) + G(M,\, N)
+		\end{align}
+		を用いた．同様にして他の2つも示される：
+		\begin{align}
+			m \otimes (n_1 + n_2) &= [m,\, n_1 + n_2] + G(M,\, N) \\
+			&= \bigl([m,\, n_1] + [m,\, n_2]\bigr) + G(M,\, N) \\
+			&= \bigl( [m,\, n_1] + G(M,\, N) \bigr) \mathop{}\textcolor{red}{+}\mathop{} \bigl( [m,\, n_2] + G(M,\, N) \bigr) \\
+			&= m \otimes n_1 \mathop{}\textcolor{red}{+}\mathop{} m \otimes n_2, \\
+			ma \otimes n &= [ma,\, n] + G(M,\, N) \\
+			&= [m,\, an] + G(M,\, N) \\
+			&= m \otimes an
+		\end{align}
+		\item (1) より
+		\begin{align}
+			0_M \otimes n &= (0_M + 0_M) \otimes n = 0_M \otimes n  \mathop{}\textcolor{red}{+}\mathop{}  0_M \otimes n \\
+			m \otimes 0_N &= m \otimes (0_N + 0_N) = m \otimes 0_N  \mathop{}\textcolor{red}{+}\mathop{}  m \otimes 0_N
+		\end{align}
+		なので
+		\begin{align}
+			0_M \otimes n = m \otimes 0_N = 0_{M \otimes_R N}
+		\end{align}
+		とわかる．
+	\end{enumerate}
+\end{proof}
+
+$F(M,\, N)$ の勝手な元は\underline{有限の}添字集合 $I$ に対する集合族 $\Familyset[\big]{m'_i}{i \in I} \subset M,\; \Familyset[\big]{n_i}{i \in I} \subset N$ によって
+\begin{align}
+	\sum_{i \in I} (\pm [m'_i,\, n_i])
+\end{align}
+の形で書けるが，補題\ref{lem:tensor1}から
+\begin{align}
+	0_{M \otimes_R N} = 0_M \otimes n_i = (m'_i - m'_i) \otimes n_i = m'_i \otimes n_i \mathop{}\textcolor{red}{+}\mathop{} (-m'_i) \otimes n_i
+\end{align}
+なので
+\begin{align}
+	- (m'_i \otimes n_i) = (-m'_i) \otimes n_i
+\end{align}
+とわかる．従って\footnote{剰余加群において定義される加法を赤字で $\textcolor{red}{\sum_{i \in I}}$ と書いた．}
+\begin{align}
+	\left( \sum_{i \in I} (\pm [m'_i,\, n_i]) \right) + G(M,\, N) 
+	&= \textcolor{red}{\sum_{i \in I}} \bigl( (\pm [m'_i,\, n_i]) + G(M,\, N) \bigr) \\
+	&= \textcolor{red}{\sum_{i \in I}}  \textcolor{red}{\pm} \bigl([m'_i,\, n_i] + G(M,\, N) \bigr) \\
+	&= \textcolor{red}{\sum_{i \in I}} \textcolor{red}{\pm} \bigl(m'_i \otimes n_i \bigr) \\
+	&= \textcolor{red}{\sum_{i \in I}}  (\pm m'_i) \otimes n_i
+\end{align}
+とわかる．i.e. $M \otimes_R N$ の勝手な元は
+\begin{align}
+	\textcolor{red}{\sum_{i \in I}}\mathop{} m_i \otimes n_i
+\end{align}
+の形で書ける．しかし，この表示は一意\textbf{ではない}．
+
+\begin{mydef}[label=def:R-balance]{$R$-バランス写像}
+	右 $R$ 加群 $M$，左 $R$ 加群 $N$，$\mathbb{Z}$ 加群 $L$ を与える．
+	
+	このとき写像 $f \colon M \times N \lto L$ が\textbf{$\bm{R}$ バランス写像} ($R$-balanced map) であるとは，
+	\begin{align}
+		f(m_1 + m_2,\, n) &= f(m_1,\, n) + f(m_2,\, n) \\
+		f(m,\, n_1 + n_2) &= f(m,\, n_1) + f(m,\, n_2) \\
+		f(ma,\, n) &= f(m,\, an)\\
+	\end{align}
+	を充たすことを言う．
+\end{mydef}
+
+補題\ref{lem:tensor1}から，写像
+\begin{align}
+	\Phi \colon M \times N \lto M \otimes_R N,\; (m,\, n) \lmto m \otimes n
+\end{align}
+は $R$ バランス写像となる．
+
+\begin{myprop}[label=prop:univ-tensor]{テンソル積の普遍性}
+	右 $R$ 加群 $M$，左 $R$ 加群 $N$ を与える．このとき，以下が成り立つ：
+	\begin{description}
+		\item[\textbf{(テンソル積の普遍性)}] 任意の $\bm{\mathbb{Z}}$ \textbf{加群} $L$ と任意の $R$ バランス写像 $f \colon M \times N \lto L$ に対して，$\mathbb{Z}$ 加群の準同型 $g \colon M \otimes_R N \lto L$ であって $g \circ \Phi = f$ を充たすものが\textbf{一意的に}存在する． 
+	\end{description}
+\end{myprop}
+
+\begin{figure}[H]
+	\centering
+	\begin{tikzcd}[row sep=large, column sep=large]
+		M \times N \ar[d, "\Phi"']\ar[r, blue, "f"] &\textcolor{blue}{L} \\
+		M \otimes_R N \arrow[ur, red, dashed, "\exists! g"']&
+	\end{tikzcd}
+	\caption{テンソル積の普遍性}
+	\label{fig:univ-tensor}
+\end{figure}%
+
+\begin{proof}
+	集合 $M \times N$ で添字付けられた $\mathbb{Z}$ 加群の準同型の族  $\Familyset[\big]{g_{(m,\, n)} \colon \mathbb{Z} \to L}{(m,\, n) \in M\times N}$ を，$g_{(m,\,n)}(x) \coloneqq x f(m,\, n)$ として定める．
+	すると\hyperref[prop:univ-dp]{直和の普遍性}から，$\forall (m,\, n) \in M \times N$ に対して次のような可換図式が書ける：
+	\begin{figure}[H]
+		\centering
+		\begin{tikzcd}[row sep=large, column sep=large]
+			\mathbb{Z} \ar[dr, "g_{(m,\, n)}"']\ar[r, "\iota_{(m,\, n)}"] &F(M,\, N) = \mathbb{Z}^{\oplus (M \times N)} \ar[d, red, "\exists! \tilde{g}"] \\
+			&L
+		\end{tikzcd}
+	\end{figure}%
+	i.e. $\mathbb{Z}$ 加群の準同型 $\tilde{g} \colon F(M,\, N) \lto L$ はただ一つ存在し，
+	\begin{align}
+		\tilde{g}([m,\, n]) = (\tilde{g} \circ \iota_{(m,\, n)})(1) = f(m,\, n)
+	\end{align}
+	を充たす．このとき\hyperref[def:R-balance]{バランス写像の定義}から
+	\begin{align}
+		&\tilde{g}([m_1 + m_2,\, n] - [m_1,\, n] - [m_2,\, n]) = f(m_1 + m_2,\, n) - f(m_1,\, n) - f(m_2,\, n) = 0, \\
+		&\tilde{g}([m,\, n_1 + n_2] - [m,\, n_1] - [m,\, n_1]) = f(m,\, n_1 + n_2) - f(m,\, n_1) - f(m,\, n_2) = 0, \\
+		&\tilde{g}([ma,\, n] - [m,\, an]) = f(ma,\, n) - f(m,\, an) = 0, \\
+	\end{align}
+	が成り立つから，標準的包含 $i \colon G(M,\, N) \hookrightarrow F(M,\, N)$ について
+	\begin{align}
+		(\tilde{g} \circ i) \bigl( G(M,\, N) \bigr) = 0
+	\end{align}
+	が成り立つ．故に\hyperref[prop:univ-ker]{余核の普遍性}から次の可換図式が書ける：
+	\begin{figure}[H]
+		\centering
+		\begin{tikzcd}[row sep=large, column sep=large]
+			G(M,\, N) \ar[r, yshift=.5ex, "i"]\ar[r, yshift=-.5ex, "0"'] &F(M,\, N) \ar[dr, "\tilde{g}"] \ar[r, "p"] &\Coker i = M \otimes_R N \ar[d, red, dashed, "\exists! g"] \\
+			& &L
+		\end{tikzcd}
+	\end{figure}%
+	このように構成された $\mathbb{Z}$ 加群の準同型 $g \colon M \otimes_R N \lto L$ は一意に定まり，$\forall (m,\, n) \in M\times N$ に対して
+	\begin{align}
+		(g \circ \Phi)(m,\, n) = g(m \otimes n) = (g \circ p)([m,\, n]) = \tilde{g}([m,\, n]) = f(m,\, n)
+	\end{align}
+	を充たす．i.e. $g \circ \Phi = f$．
+\end{proof}
+
+\begin{marker}
+	図式\ref{fig:univ-tensor}で $M,\, N,\, L$ を固定したとき，$R$ バランス写像 $f \colon M \times N \lto L$ 全体のなす集合のことを\textbf{テンソル空間}と呼ぶことが多いような気がする．
+\end{marker}
+
+
+別の $\mathbb{Z}$ 加群 $\textcolor{DarkGreen}{T}$ と $R$ バランス写像 $\textcolor{DarkGreen}{\varphi} \colon M\times N \lto \textcolor{DarkGreen}{T}$ が\hyperref[prop:univ-tensor]{テンソル積の普遍性}を充たしていて，次のような可換図式を書ける場合を考える：
+\begin{figure}[H]
+	\centering
+	\begin{tikzcd}[row sep=large, column sep=large]
+		M \times N \ar[d, DarkGreen, "\varphi"']\ar[r, blue, "f"] & \forall \textcolor{blue}{L} \\
+		\textcolor{DarkGreen}{T} \arrow[ur, dashed, "\exists!g'"']&
+	\end{tikzcd}
+\end{figure}%
+このとき，次のような可換図式を充たす\textbf{同型写像} $\textcolor{red}{\widehat{g}} \colon M \otimes_R N \xrightarrow{\cong} \textcolor{DarkGreen}{T}$ が\textbf{一意に定まる}：
+\begin{figure}[H]
+	\centering
+	\begin{tikzcd}[row sep=large, column sep=large]
+		&M \times N \ar[ddl, DarkGreen, bend right, "\varphi"']\ar[d, "\Phi"]\ar[r, blue, "f"] & \forall \textcolor{blue}{L} \\
+		&M \otimes_R N \ar[dl, red, "\exists! \widehat{g}"']\arrow[ur, dashed, "\exists!g"']& \\
+		\textcolor{DarkGreen}{T} \ar[uurr, bend right, dashed, "\exists! g'"']& &
+	\end{tikzcd}
+\end{figure}%
+
+\begin{mycol}[label=col:univ-tensor1, breakable]{テンソル積の準同型}
+	右 $R$ 加群の準同型写像 $f \colon M_1 \lto M_2$ と，左 $R$ 加群の準同型写像 $g \colon N_1 \lto N_2$ を与える．このとき，以下が成り立つ：
+	\begin{enumerate}
+		\item $\mathbb{Z}$ 加群の準同型写像
+		\begin{align}
+			f \otimes g \colon M_1 \otimes_R N_1\lto M_2 \otimes_R N_2
+		\end{align}
+		であって，
+		$\forall m \in M_1,\, \forall n \in N_1$ に対して
+		\begin{align}
+			(f \otimes g)(m \otimes n) = f(m) \otimes g(n)
+		\end{align}
+		を充たすものが\textbf{一意的に}存在する．
+		\item 別の右 $R$ 加群の準同型写像 $f' \colon M_1 \lto M_2$ と，左 $R$ 加群の準同型写像 $g' \colon N_1 \lto N_2$ を与えると
+		\begin{align}
+			(f + f') \otimes g &= f \otimes g + f' \otimes g, \\
+			f \otimes (g + g') &= f \otimes g + f \otimes g'
+		\end{align}
+		が成り立つ．
+		\item さらに右 $R$ 加群の準同型写像 $f'' \colon M_2 \lto M_3$ と，左 $R$ 加群の準同型写像 $g'' \colon N_2 \lto N_3$ を与えると
+		\begin{align}
+			(f'' \otimes g'') \circ (f \otimes g) = (f'' \circ f) \otimes (g'' \circ g)
+		\end{align}
+		が成り立つ．
+	\end{enumerate}
+\end{mycol}
+
+\begin{proof}
+	\begin{enumerate}
+		\item 補題\ref{lem:tensor1}より，写像
+		\begin{align}
+			\varphi \colon M_1 \times N_1 \lto M_2 \otimes N_2,\; (m,\, n) \lmto f(m) \otimes g(n)
+		\end{align}
+		は $R$ \hyperref[def:R-balance]{バランス写像}になる．従って\hyperref[prop:univ-tensor]{テンソル積の普遍性}から，題意を充たす準同型写像 $f \otimes g$ が一意に存在する：
+		\begin{figure}[H]
+			\centering
+			\begin{tikzcd}[row sep=large, column sep=large]
+				M_1 \times N_1 \ar[d, "\Phi"']\ar[r, "\varphi"] &M_2 \otimes N_2 \\
+				M_1 \otimes N_1 \arrow[ur, red, dashed, "\exists! f\otimes g"']&
+			\end{tikzcd}
+		\end{figure}%
+		一意性は $M_1 \times N_1$ が $m \otimes n$ の形の元によって生成されることから従う．
+		\item 補題\ref{lem:tensor1}より，$\forall (m,\, n) \in M_1 \times N_1$ に対して
+		\begin{align}
+			\bigl( (f + f') \otimes g \bigr)(m \otimes n) &= \bigl( f(m) + f'(m) \bigr) \otimes g(n) = f(m) \otimes g(n) + f'(m) \otimes g(n), \\
+			\bigl( f \otimes g + f' \otimes g \bigr) (m\otimes n) &= (f \otimes g)(m \otimes n) + (f' \otimes g)(m \otimes n) = f(m) \otimes g(n) + f'(m) \otimes g(n)
+		\end{align}
+		だから $(f + f') \otimes g  = f \otimes g + f' \otimes g$．もう一方も同様．
+		\item \begin{align}
+			\bigl((f'' \otimes g'') \otimes (f \otimes g)\bigr)(m \otimes n) &= (f'' \otimes g'') \bigl( f(m) \otimes g(n) \bigr) = f'' \bigl( f(m) \bigr) \otimes g'' \bigl( g(n) \bigr), \\
+			\bigl((f'' \circ f) \otimes (g'' \circ g)\bigr)(m \otimes n) &= = f'' \bigl( f(m) \bigr) \otimes g'' \bigl( g(n) \bigr)
+		\end{align}
+		だから $(f'' \otimes g'') \otimes (f \otimes g) = (f'' \circ f) \otimes (g'' \circ g)$．
+	\end{enumerate}
+	
+\end{proof}
+
+\begin{mycol}[label=col:tensor-R]{$R$ 加群としてのテンソル積}
+	$R,\, S$ を環とする．
+	\begin{enumerate}
+		\item $M$ を $(\bm{S},\, \bm{R})$ 両側加群，$N$ を左 $R$ 加群とする．
+		このとき $M \otimes_R N$ の $S$ による\textbf{左乗法}であって，$\forall s \in S$ に対して
+		\begin{align}
+			s (m \otimes n) = (sm) \otimes n
+		\end{align}
+		を充たすものが一意的に定まり，この左乗法によって $M \otimes_R N$ は左 $S$ 加群となる．
+		\item $M$ を右 $R$ 加群，$N$ を $(\bm{R},\, \bm{S})$ 両側加群とする．
+		このとき $M \otimes_R N$ の $S$ による\textbf{右乗法}であって，$\forall s \in S$ に対して
+		\begin{align}
+			(m \otimes n) s = m \otimes (ns)
+		\end{align}
+		を充たすものが一意的に定まり，この右乗法によって $M \otimes_R N$ は右 $S$ 加群となる．
+		\item $R$ が\textbf{可換環}で $M,\, N$ が $R$ 加群のとき，$S = R$ として (1), (2) の方法を適用することで $M \otimes_R N$ は自然に $R$ 加群になり，かつそれら2つは等しい．
+	\end{enumerate}
+	
+\end{mycol}
+
+\begin{proof}
+	\begin{enumerate}
+		\item $\forall s \in S$ を一つとる．このとき写像 $L_s \colon M \lto M,\; m \lmto sm$ は右 $R$ 加群の準同型写像であるから，系\ref{col:univ-tensor1}-(1) より準同型写像
+		\begin{align}
+			L_s \otimes \mathrm{id}_N \colon M \otimes_R N \lto M \otimes_R N
+		\end{align}
+		であって $(L_s \otimes \mathrm{id}_N)(m \otimes n) = L_s(m) \otimes n = (sm) \otimes n$ を充たすものが一意的に存在する．これを $s \in S$ による左乗法と定義すればよい．
+		\item 写像 $R_s \colon N \lto N,\; n \lmto ns$ は左 $R$ 加群の準同型写像なので系\ref{col:univ-tensor1}-(1) から準同型写像
+		\begin{align}
+			\mathrm{id}_M \otimes R_s \colon M \otimes_R N \lto M \otimes_R N
+		\end{align}
+		であって $(\mathrm{id}_M \otimes R_s)(m \otimes n) = m \otimes (ns)$ を充たすものが一意的に存在する．これを $s \in S$ による右乗法と定義すればよい．
+		\item $R$ が可換環のとき，(1) による $R$ 加群の構造は $r(m\otimes n) = (rm) \otimes n$，(2) による $R$ 加群の構造は $r(m \otimes n) = m \otimes (rn)$ となるが，補題\ref{lem:tensor1}よりこれらは等しい．
+	\end{enumerate}
+\end{proof}
+
+\subsection{帰納極限と射影極限}
+
+まず，圏 $\MOD{R}$ の一般の（\hyperref[def:filtered]{フィルタード}とは限らない）図式をもとにして帰納極限，射影極限を具体的に構成する．つまり，左 $R$ 加群の圏における任意の図式には帰納極限，射影極限が存在する．
+
+\hyperref[def:DG]{有向グラフ}または圏 $\Cat{I} = \bigl( I,\, \Familyset[\big]{J(i,\, j)}{(i,\, j) \in I\times I} \bigr)$ を与え，$\Cat{I}$ 上の左 $R$ 加群の図式
+\begin{align}
+	\mathcal{M} = \Bigl( \Familyset[\big]{M_i}{i \in I},\; \Familyset[\Big]{\Familyset[\big]{f_\varphi \colon M_i \to M_j}{\varphi \in J(i,\, j)}}{(i,\, j) \in I \times I} \Bigr)
+\end{align}
+を考える．勝手な2頂点 $i,\, j \in I$ を固定し，$i$ から $j$ に向かう\hyperref[def:DG]{辺} $\varphi \in J(\textcolor{red}{i},\, \textcolor{blue}{j})$ を一つとる．$\varphi$ を引数にして\textbf{始点}と\textbf{終点}を返す写像は
+\begin{align}
+	\mathrm{s} &\colon J(\textcolor{red}{i},\, j) \lto I,\; \varphi \lmto \mathrm{s}(\varphi) \coloneqq \textcolor{red}{i} \\
+	\mathrm{t} &\colon J(i,\, \textcolor{blue}{j}) \lto I,\; \varphi \lmto \mathrm{t}(\varphi) \coloneqq \textcolor{blue}{j}
+\end{align}
+のように定義される．また，$\Cat{I}$ の辺全体の集合を
+\begin{align}
+	E \coloneqq \coprod_{(i,\, j) \in I\times I} J(i,\, j)
+\end{align}
+とおく．
+
+ここで次の二つの\hyperref[def:dp-mod]{加群の直和}を考える：
+\begin{align}
+	X \coloneqq \bigoplus_{\varphi \in E} M_{\mathrm{s}(\varphi)},\quad Y \coloneqq \bigoplus_{i \in I} M_i
+\end{align}
+いわば，$X$ は「図式の矢印の始点となる全ての $M_i$ を直和したもの」となっている．
+直和における\hyperref[def:inj-proj]{標準的包含}を
+\begin{align}
+	\iota'_\varphi \colon M_{\mathrm{s}(\varphi)} \hookrightarrow X,
+	\quad\iota''_i \colon M_i \hookrightarrow Y
+\end{align}
+と書く．$X$ の添字集合は $E$ なので\hyperref[def:inj-proj]{標準的包含}も辺 $\varphi \in E$ を成分の添字にもつ．
+\hyperref[prop:univ-dp]{直和の普遍性}から $\forall \varphi \in E$ に対して次のような可換図式が書ける：
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}{0.4\columnwidth}
+		\centering
+		\begin{tikzcd}[column sep=huge,row sep=large]
+			M_{\textcolor{red}{\mathrm{s}}(\varphi)} \arrow[r, "\iota'_\varphi"] \arrow[dr, "\iota''_{\mathrm{\textcolor{red}{s}}(\varphi)}"']
+			&X \ar[d, "\exists! \irm{f}{\textcolor{red}{\mathrm{s}}}"] \\
+			&Y
+		\end{tikzcd}
+		\caption{$\irm{f}{\textcolor{red}{\mathrm{s}}}$ の定義}
+		\label{fig:ind-s}
+	\end{subfigure}
+	\hspace{5mm}
+	\begin{subfigure}{0.4\columnwidth}
+		\centering
+		\begin{tikzcd}[column sep=huge,row sep=large]
+			M_{\textcolor{red}{s}(\varphi)} \arrow[r, "\iota'_\varphi"] \arrow[dr, "\iota''_{\mathrm{\textcolor{blue}{t}}(\varphi)} \circ f_\varphi"']
+			&X \ar[d, "\exists! \irm{f}{\textcolor{blue}{\mathrm{t}}}"] \\
+			&Y
+		\end{tikzcd}
+		\caption{$\irm{f}{\textcolor{blue}{\mathrm{t}}}$ の定義}
+		\label{fig:ind-t}
+	\end{subfigure}
+\end{figure}%
+一意に定まる準同型 $\irm{f}{\textcolor{red}{s}},\, \irm{f}{\textcolor{blue}{t}} \colon X \lto Y$ は $\forall \Dpmember[\big]{x_\varphi}{\varphi \in E} \in X$ に次のように作用する：
+\begin{align}
+	\irm{f}{\textcolor{red}{s}} \bigl( \Dpmember{x_\varphi}{\varphi \in E} \bigr) = \sum_{\varphi \in E} \iota_{\mathrm{\textcolor{red}{s}}(\varphi)}'' (x_\varphi),\quad 
+	\irm{f}{\textcolor{blue}{t}} \bigl( \Dpmember{x_\varphi}{\varphi \in E} \bigr) = \sum_{\varphi \in E} \iota_{\mathrm{\textcolor{blue}{t}}(\varphi)}'' \bigl(f_\varphi(x_\varphi)\bigr)
+\end{align}
+
+\begin{mydef}[label=def:indlim]{$\MOD{R}$ における帰納極限}
+	左 $R$ 加群の図式 $\mathcal{M}$ の\textbf{帰納極限} (inductive limit) を次のように定義する：
+	\begin{align}
+		\varinjlim_{i \in I} M_i \coloneqq \Coker (\irm{f}{\textcolor{blue}{t}} - \irm{f}{\textcolor{red}{s}})
+	\end{align}
+	\textbf{順極限}と呼ぶこともある．また，$\forall i \in I$ に対して写像
+	\begin{align}
+		\iota_i \colon M_i \lto \varinjlim_{i \in I} M_i,\; x \lmto (p \circ \iota_i'')(x)
+	\end{align}
+	を\textbf{標準的包含}と呼ぶ\footnote{$p \colon Y \lto \varinjlim_{i \in I} M_i$ は標準的射影である．なお，$\iota_i$ はその名前に反して\textbf{単射とは限らない}．}．
+\end{mydef}
+
+$\forall i,\, j \in I$ をとり，$\forall x \in M_i,\, \forall \varphi \in J(i,\, j)$ を考える．このとき図式\ref{fig:ind-s}, \ref{fig:ind-t}を参照すると，$\mathrm{s}(\varphi) = i,\,\mathrm{t}(\varphi) = j$ に注意して
+\begin{align}
+	\iota''_j \bigl( f_\varphi (x) \bigr) = \irm{f}{t} \bigl( \iota'_\varphi(x) \bigr) = \irm{f}{s}\bigl( \iota'_\varphi(x) \bigr) + (\irm{f}{t} - \irm{f}{s}) \bigl( \iota'_\varphi(x) \bigr) = \iota''_{i}(x) + (\irm{f}{t} - \irm{f}{s}) \bigl( \iota'_\varphi(x) \bigr)
+\end{align}
+とわかる．両辺に\hyperref[def:inj-proj]{標準射影} $p \colon Y \lto \varinjlim_{i \in I} M_i = \Coker (\irm{f}{t} - \irm{f}{s})$ を作用させることで
+\begin{align}
+	\iota_j \bigl( f_\varphi(x) \bigr)  = (p \circ \iota''_j)\bigl( f_\varphi (x) \bigr)  = (p \circ \iota''_i)\bigl(x\bigr) = \iota_i(x)
+\end{align}
+i.e. $\iota_j \circ f_{\varphi} = \iota_i$ が成り立つ．
+
+
+同様にして図式 $\mathcal{M}$ の射影極限が定義される．
+今度は\hyperref[def:opcategory]{\textbf{反対圏}} $\Cat{I}^{\mathrm{op}}$ 上の左 $R$ 加群の図式
+\begin{align}
+	\mathcal{M}^{\mathrm{op}} = \Bigl( \Familyset[\big]{M_i}{i \in I},\; \Familyset[\Big]{\Familyset[\big]{f_\varphi \colon \textcolor{red}{M_j \to M_i}}{\varphi \in J(i,\, j)}}{(i,\, j) \in I \times I} \Bigr)
+\end{align}
+を考える．
+
+次の二つの\hyperref[def:dp-mod]{加群の直積}を考える：
+\begin{align}
+	X \coloneqq \prod_{i \in I} M_i,\quad Y \coloneqq \prod_{\varphi \in E} M_{\mathrm{s}(\varphi)}
+\end{align}
+$X$ と $Y$ で先程と添字集合が逆になっていることに注意．
+いわば，$Y$ は「図式の矢印の始点となる全ての $M_i$ を直積したもの」となっている．
+直積における\hyperref[def:inj-proj]{標準的射影}を
+\begin{align}
+	p'_i \colon X \lto M_i, \quad
+	p''_\varphi \colon Y \lto M_{\mathrm{s}(\varphi)}
+\end{align}
+と書く．
+\hyperref[prop:univ-dp]{直積の普遍性}から $\forall \varphi \in E$ に対して次のような可換図式が書ける：
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}{0.4\columnwidth}
+		\centering
+		\begin{tikzcd}[column sep=huge,row sep=large]
+			X \arrow[r, "\exists! \irm{f}{\textcolor{red}{s}}"] \arrow[dr, "p'_{\mathrm{\textcolor{red}{s}}(\varphi)}"']
+			&Y \ar[d, "p''_{\varphi}"] \\
+			&M_{\textcolor{red}{s}(\varphi)}
+		\end{tikzcd}
+		\caption{$\irm{f}{\textcolor{red}{\mathrm{s}}}$ の定義}
+		\label{fig:proj-s}
+	\end{subfigure}
+	\hspace{5mm}
+	\begin{subfigure}{0.4\columnwidth}
+		\centering
+		\begin{tikzcd}[column sep=huge,row sep=large]
+			X \arrow[r, "\exists! \irm{f}{\textcolor{blue}{t}}"] \arrow[dr, "f_\varphi \circ p'_{\mathrm{\textcolor{blue}{t}}(\varphi)}"']
+			&Y \ar[d, "p''_{\varphi}"] \\
+			&M_{\textcolor{red}{s}(\varphi)}
+		\end{tikzcd}
+		\caption{$\irm{f}{\textcolor{blue}{\mathrm{t}}}$ の定義}
+		\label{fig:proj-t}
+	\end{subfigure}
+\end{figure}%
+一意に定まる準同型 $\irm{f}{\textcolor{red}{s}},\, \irm{f}{\textcolor{blue}{t}} \colon X \lto Y$ は $\forall \Dpmember[\big]{x_i}{i \in I} \in X$ に次のように作用する：
+\begin{align}
+	\irm{f}{\textcolor{red}{s}} \bigl( \Dpmember{x_i}{i \in I} \bigr) = \Dpmember[\big]{x_{\mathrm{\textcolor{red}{s}}(\varphi)}}{\varphi \in E},\quad
+	\irm{f}{\textcolor{blue}{t}} \bigl( \Dpmember{x_i}{i \in I} \bigr) = \Dpmember[\big]{f_\varphi \bigl(x_{\mathrm{\textcolor{blue}{t}}(\varphi)}\bigr)}{\varphi \in E}
+\end{align}
+
+\begin{mydef}[label=def:projlim]{$\MOD{R}$ における射影極限}
+	左 $R$ 加群の図式 $\mathcal{M}^{\mathrm{op}}$ の\textbf{射影極限} (projective limit) を次のように定義する：
+	\begin{align}
+		\varprojlim_{i \in I} M_i \coloneqq \Ker (\irm{f}{\textcolor{blue}{t}} - \irm{f}{\textcolor{red}{s}})
+	\end{align}
+	\textbf{逆極限}と呼ぶこともある．また，$\forall i \in I$ に対して写像
+	\begin{align}
+		p_i \colon \varprojlim_{i \in I} M_i \lto M_i,\; x \lmto (p'_i \circ \iota)(x)
+	\end{align}
+	を\textbf{標準的射影}と呼ぶ\footnote{$\iota \colon \varprojlim_{i \in I}M_i \lto X$ は標準的包含である．なお，$p_i$ はその名前に反して\textbf{全射とは限らない}．}．
+\end{mydef}
+
+\begin{myprop}[label=prop:univ-indpropjlim, breakable]{帰納極限・射影極限の普遍性}
+	\begin{description}
+		\item[\textbf{(帰納極限の普遍性)}]  記号は定義\ref{def:indlim}の通りとする．任意の左 $R$ 加群 $\textcolor{blue}{N}$ に対して，写像
+		\begin{align}
+			\label{eq:univ-indlim}
+			\begin{array}{ccc}
+				\Hom{R} \biggl( \varinjlim_{i \in I}M_i,\, \textcolor{blue}{N} \biggr) &\longrightarrow & \biggl\{\, \Dpmember[\big]{g_i}{i \in I} \in \prod_{i \in I} \Hom{R}(M_i,\, \textcolor{blue}{N}) \biggm| \substack{\forall i,\, j \in I,\, \forall \varphi \in J(i,\, j),\\ g_j \circ f_\varphi = g_i} \,\biggr\} \\
+				\rotatebox{90}{\in} & & \rotatebox{90}{\in} \\
+				g & \longmapsto & \Familyset[\big]{\,g \circ \iota_i\,}{i \in I}
+			\end{array}
+		\end{align}
+		はwell-definedな全単射である．
+		i.e. 
+		\begin{itemize}
+			\item 任意の左 $R$ 加群 $\textcolor{blue}{N}$
+			\item 任意の左 $R$ 加群の準同型写像の族 $\Familyset[\big]{\,\textcolor{blue}{g_i} \colon M_i \to \textcolor{blue}{N}\,}{i \in I}$
+			であって，任意の2頂点 $i,\, j \in I$ と $i$ から $j$ へ向かう任意の辺 $\varphi \in J(i,\, j)$ に対して $g_j \circ f_\varphi = g_i$ を充たすもの
+		\end{itemize}
+		が与えられたとき，準同型写像 $g \colon \varinjlim_{i \in I} M_i \lto \textcolor{blue}{N}$ が\textbf{一意的に}存在して
+		\begin{align}
+			\forall i \in I,\; g \circ \iota_i = g_i
+		\end{align}
+		を充たす（図式\ref{fig:indlim}）．
+		\item[\textbf{(射影極限の普遍性)}]  記号は定義\ref{def:projlim}の通りとする．任意の左 $R$ 加群 $\textcolor{blue}{N}$ に対して，写像
+		\begin{align}
+			\label{eq:univ-projlim}
+			\begin{array}{ccc}
+				\Hom{R} \biggl( \textcolor{blue}{N} ,\, \varprojlim_{i \in I}M_i\biggr) &\longrightarrow & \biggl\{\, \Dpmember[\big]{g_i}{i \in I} \in \prod_{i \in I} \Hom{R}(\textcolor{blue}{N},\, M_i) \biggm| \substack{\forall i,\, j \in I,\, \forall \varphi \in J(i,\, j),\\ f_\varphi \circ g_j = g_i} \,\biggr\} \\
+				\rotatebox{90}{\in} & & \rotatebox{90}{\in} \\
+				g & \longmapsto & \Familyset[\big]{\,p_i \circ g\,}{i \in I}
+			\end{array}
+		\end{align}
+		はwell-definedな全単射である．i.e. 
+		\begin{itemize}
+			\item 任意の左 $R$ 加群 $\textcolor{blue}{N}$
+			\item 任意の左 $R$ 加群の準同型写像の族 $\Familyset[\big]{\,\textcolor{blue}{g_i} \colon \textcolor{blue}{N} \lto M_i \,}{i \in I}$
+			であって，任意の2頂点 $i,\, j \in I$ と $i$ から $j$ へ向かう任意の辺 $\varphi \in J(i,\, j)$ に対して $f_\varphi \circ g_j = g_i$ を充たすもの
+		\end{itemize}
+		が与えられたとき，準同型写像 $g \colon \textcolor{blue}{N} \lto \varprojlim_{i \in I} M_i$ であって
+		\begin{align}
+			\forall i \in I,\; p_i \circ g = g_i
+		\end{align}
+		を充たすものが\textbf{一意的に}存在する（図式\ref{fig:projlim}）．
+	\end{description}
+\end{myprop}
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}{0.4\columnwidth}
+		\centering
+		\begin{tikzcd}
+			&M_i \ar[rr, "f_\varphi"]\ar[dr, "\iota_i"']\ar[ddr, bend right, blue, "g_i"'] & &M_j \ar[dl, "\iota_j"] \ar[ddl, bend left, blue, "g_j"] \\
+			& &\varinjlim_{i \in I} M_i \ar[d, red, dashed, "\exists ! g"] & \\
+			& &\forall \textcolor{blue}{N} &
+		\end{tikzcd}
+		\caption{帰納極限の普遍性}
+		\label{fig:indlim}
+	\end{subfigure}
+	\hspace{5mm}
+	\begin{subfigure}{0.4\columnwidth}
+		\centering
+		\begin{tikzcd}
+			& &\forall \textcolor{blue}{N} \ar[ddl, blue, bend right, "g_i"']\ar[d, dashed, red, "\exists ! g"]\ar[ddr, bend left, blue, "g_j"] \\
+			& &\varprojlim_{i \in I} M_i \ar[dl, "p_i"']\ar[dr, "p_j"] & \\
+			&M_i & &M_j\ar[ll, "f_\varphi"] 
+		\end{tikzcd}
+		\caption{射影極限の普遍性}
+		\label{fig:projlim}
+	\end{subfigure}
+\end{figure}%
+
+\begin{proof}
+	\begin{enumerate}
+		\item 図式\ref{fig:ind-s}, \ref{fig:ind-t}より
+		\begin{align}
+			\label{eq:indproj-1}
+			\iota''_{\mathrm{s}(\varphi)} = \irm{f}{s} \circ \iota'_\varphi,\quad \iota''_{\mathrm{t}(\varphi)} = \irm{f}{t} \circ \iota'_\varphi
+		\end{align}
+		が成り立つ．
+		
+		\hyperref[prop:univ-ker]{余核の普遍性}から次のような可換図式が書ける：
+		\begin{figure}[H]
+			\centering
+			\begin{tikzcd}[row sep=large, column sep=large]
+				X \ar[r, yshift=.5ex, "\irm{f}{t} - \irm{f}{s}"]\ar[r, yshift=-.5ex, "0"'] &Y \ar[r, "p"]\ar[dr, blue, "g"] &\varinjlim_{i \in I} M_i \ar[d, dashed, "\exists! h"] \\
+				& & \forall \textcolor{blue}{N}
+			\end{tikzcd}
+		\end{figure}%
+		i.e. 写像
+		\begin{align}
+			\Hom{R} \biggl( \varinjlim_{i \in I}M_i,\, \textcolor{blue}{N} \biggr) &\lto \bigl\{\, g \in \Hom{R}(Y,\, \textcolor{blue}{N}) \bigm| g \circ \irm{f}{t} = g \circ \irm{f}{s} \,\bigr\} \\
+			h &\lmto g \circ p
+		\end{align}
+		は全単射である．
+		さらに\hyperref[prop:univ-dp]{直和の普遍性}より，
+		\begin{figure}[H]
+			\centering
+			\begin{tikzcd}[row sep=large, column sep=large]
+				M_i \ar[r, "\iota_i''"] \ar[dr, "g_i"] &Y \ar[d, dashed, "\exists! g"] \\
+				&\forall \textcolor{blue}{N}
+			\end{tikzcd}
+		\end{figure}%
+		もわかる．このとき式\eqref{eq:indproj-1}より
+		\begin{align}
+			g \circ \irm{f}{t} = g \circ \irm{f}{s} &\IFF \forall \varphi \in E,\; g \circ \irm{f}{t} \circ \iota'_\varphi = g\circ \irm{f}{s} \circ \iota'_\varphi \\
+			&\IFF \forall \varphi \in E,\; g_{\mathrm{s}(\varphi)} = g \circ \iota \iota''_{\mathrm{s}(\varphi)} = (g \circ \iota''_{\mathrm{t}(\varphi)}) \circ f_\varphi
+		\end{align}
+		が成り立つことから，
+		写像
+		\begin{align}
+			\Hom{R} \biggl( \varinjlim_{i \in I}M_i,\, \textcolor{blue}{N} \biggr) &\lto \biggl\{\, \Dpmember[\big]{g_i}{i \in I} \in \prod_{i \in I} \Hom{R}(M_i,\, \textcolor{blue}{N}) \biggm| \forall \varphi \in E,\; g_{\mathrm{s}(\varphi)} = g_{\mathrm{t}(\varphi)} \circ f_{\varphi} \,\biggr\} \\
+			h & \longmapsto \Familyset[\big]{\,h \circ p \circ \iota_i\,}{i \in I}
+		\end{align}
+		が全単射であることがわかる．
+		\item 図式\ref{fig:proj-s}, \ref{fig:proj-t}より
+		\begin{align}
+			\label{eq:indproj-2}
+			p''_\varphi \circ \irm{f}{s} = p'_{\mathrm{s}(\varphi)},\quad p''_\varphi \circ \irm{f}{t} = p'_{\mathrm{t}(\varphi)}
+		\end{align}
+		が成り立つ．
+		\hyperref[prop:univ-ker]{核の普遍性}および\hyperref[prop:univ-dp]{直積の普遍性}より，写像
+		\begin{align}
+			\begin{array}{ccc}
+				\Hom{R} \biggl( \textcolor{blue}{N} ,\, \varprojlim_{i \in I}M_i\biggr) &\longrightarrow & \biggl\{\, \Dpmember[\big]{g_i}{i \in I} \in \prod_{i \in I} \Hom{R}(\textcolor{blue}{N},\, M_i) \biggm| \forall \varphi \in E,\; f_\varphi\circ g_{\mathrm{t}(\varphi)} = g_{\mathrm{s}(\varphi)} \,\biggr\} \\
+				\rotatebox{90}{\in} & & \rotatebox{90}{\in} \\
+				h & \longmapsto & \Familyset[\big]{\,p_i' \circ \iota \circ h\,}{i \in I}
+			\end{array}
+		\end{align}
+		は全単射である．
+	\end{enumerate}
+\end{proof}
+
+図式が\hyperref[def:filtered]{フィルタード}な圏 $\Cat{I}$ 上のものである場合，帰納極限は別の表示を持つ：
+
+\begin{myprop}[label=prop:indlim-f, breakable]{フィルタードな圏上の帰納極限}
+	$\Cat{I} = \bigl( I,\, \Familyset[\big]{J(i,\, j)}{(i,\, j) \in I \times I} \bigr) $ を\hyperref[def:filtered]{フィルタード}な圏，
+	\begin{align}
+		\mathcal{M} = \Bigl( \Familyset[\big]{M_i}{i \in I},\; \Familyset[\Big]{\Familyset[\big]{f_\varphi \colon M_i \to M_j}{\varphi \in J(i,\, j)}}{(i,\, j) \in I \times I} \Bigr)
+	\end{align}
+	を $\Cat{I}$ 上の左 $R$ 加群の図式とする．
+	\begin{enumerate}
+		\item disjoint union $\coprod_{i \in I} M_i$ において
+		\begin{align}
+			\sim \; \coloneqq \Bigl\{\, (x,\, x') \in \coprod_{i \in I} M_i \times \coprod_{i \in I} M_i \Bigm| x \in M_{\textcolor{red}{i}},\; x' \in M_{\textcolor{blue}{i'}}\; \Rightarrow\; \substack{\exists j \in I,\,\exists \varphi \in J(\textcolor{red}{i},\, j),\, \exists \varphi' \in J(\textcolor{blue}{i'},\, j),\\ f_\varphi(x) = f_{\varphi'}(x')} \,\Bigr\} 
+		\end{align}
+		と定義した二項関係 $\sim$ は同値関係である\footnote{標語的に言うと，「図式を追跡して十分遠方で一致する元を同一視する」ということ}．
+		\item 商集合
+		\begin{align}
+			\coprod_{i \in I} M_i \Bigm/ {\sim}
+		\end{align}
+		における $x \in \coprod_{i \in I} M_i$ の同値類を $[x]$ と書くことにする．
+		$x \in M_i,\; x' \in M_{i'}$ ならば，頂点 $j \in I$ であって $J(i,\, j) \neq \emptyset,\; J(i',\, j) \neq \emptyset$ を充たすものをとり\footnote{\hyperref[def:filtered]{フィルタードな圏}の定義より，このような $j$ は少なくとも一つ存在する．}，辺 $\varphi \in J(i,\, j),\; \varphi' \in J(i',\, j)$ をとってくる．
+
+		上述の準備の後，商集合 $\coprod_{i \in I} M_i \Bigm/ {\sim}$ 上の加法と左乗法を次のように定義すると，これらはwell-definedな写像になる：
+		\begin{align}
+			[x] + [x'] & \coloneqq [f_\varphi(x) + f_{\varphi'}(x')] \\
+			a[x] &\coloneqq [ax]
+		\end{align}
+		さらに，組
+		\begin{align}
+			\left( \coprod_{i \in I} M_i \Bigm/ \mathord{\sim},\, +,\, \cdot\mathrel{} \right) 
+		\end{align}
+		は左 $R$ 加群となる．\textbf{特に}
+		\begin{align}
+			\bm{\varinjlim_{i \in I} M_i \cong \coprod_{i \in I} M_i \Bigm/ {\sim}}
+		\end{align}
+		である．
+	\end{enumerate}
+\end{myprop}
+
+\begin{proof}
+	\begin{enumerate}
+		\item 反射律と対称律は自明なので，推移律のみ示す．$x \in M_i,\, x' \in M_{i'},\, x'' \in M_{i''},\;x \sim x' \AND x' \sim x''$ とすると
+		\begin{align}
+			&\exists j \in I,\, \exists \varphi \in J(i,\, j),\, \exists \varphi' \in J(i',\, j),\; f_{\varphi} (x) = f_{\varphi'}(x'), \\
+			&\exists j' \in I,\, \exists \psi \in J(i',\, j'),\, \exists \psi' \in J(i'',\, j'),\; f_{\varphi'} (x) = f_{\varphi''}(x'')
+		\end{align}
+		が成り立つ．圏 $\Cat{I}$ が\hyperref[def:filtered]{フィルタード}であることから，ある頂点 $k \in I$ が存在して $\exists \mu \in J(j,\, k),\; \exists \mu' \in J(j',\, k)$ を充たす．
+		さらに，\hyperref[def:filtered]{フィルタードの定義}-(3) より辺 $\mu \circ \varphi',\; \mu' \circ \psi' \in J(i',\, j)$ に対して $\exists k' \in I,\, \exists \nu \in J(k,\, k'),\; \nu \circ (\mu \circ \varphi') = \nu \circ ( \mu' \circ \psi')$ が成立するから，$k = k',\; \mu = \nu \circ \mu,\, \mu' = \nu \circ \mu'$ と取り替えることができる．このとき
+		\begin{align}
+			f_{\mu \circ \varphi}(x) &= f_\mu \circ f_{\varphi} (x) = f_\mu \circ f_{\varphi'}(x') = f_{\mu \circ \varphi'}(x') = f_{\mu' \circ \psi'}(x') \\
+			&= f_{\mu' \circ \psi'}(x') = f_{\mu' \circ \psi''} (x'') = f_{\mu' \circ \psi''}(x'')
+		\end{align}
+		i.e. $x \sim x''$ である．
+		\item \begin{description}
+			\item[\textbf{well-definedness}] スカラー乗法のwell-definednessは明らかである．
+			和のwell-definednessを示す．
+
+			　同値関係 $\sim$ の定義より，同値類 $[x]$ の勝手な元 $y \in M_k$ に対してある頂点 $l \in I$ および
+			辺 $\mu \in J(i,\, l),\; \mu' \in J(k,\, l)$ が存在して $f_{\mu}(x) = f_{\mu'}(y)$ を充たす．
+			同値類 $[x']$ の勝手な元 $y' \in M_{k'}$ に対しても同様にある頂点 $l' \in I$ および辺 $\nu \in J(i',\, l'),\; \nu' \in J(k',\, l')$ が存在して $f_{\nu}(x') = f_{\nu'}(y')$ を充たす．
+			圏 $\Cat{I}$ は\hyperref[def:filtered]{フィルタード}なので，頂点 $j' \in I$ であって $\exists \varphi \in J(k,\, j'),\; \exists \varphi' \in J(k',\, j')$ を充たすものが取れる．
+
+			　ここで圏 $\Cat{I}$ が\hyperref[def:filtered]{フィルタード}であることから
+			頂点 $i',\, j,\, l'$ に関して次のような $\Cat{I}$ 上の図式が存在して
+			\begin{align}
+				\alpha \circ (\lambda \circ \varphi') = \alpha \circ (\lambda' \circ \nu)
+			\end{align}
+			を充たす：
+			\begin{figure}[H]
+				\centering
+				\begin{tikzcd}[row sep=large, column sep=large]
+					& &i' \ar[dl, "\varphi"] \ar[dr, "\nu"] & \\
+					&j \ar[dr, red, "\lambda"] & &l' \ar[dl, red, "\lambda'"] \\
+					& &m \ar[d, blue, "\alpha"]& \\
+					& &n&
+				\end{tikzcd}
+			\end{figure}%
+			ただし赤色をつけた辺は\hyperref[def:filtered]{フィルタードの定義}-(2) を，青色をつけた辺は\hyperref[def:filtered]{フィルタードの定義}-(3) を使った．
+			この図式に関手 $\mathcal{M}$ を作用させて
+			\begin{align}
+				f_{\alpha \circ \lambda \circ \varphi'}(x')  = f_{\alpha \circ \lambda' \circ \nu}(x')
+			\end{align}
+			を得るが，仮定より $y' \sim x'$ なので $f_\nu(x') = f_{\nu'} (y')$ が成り立ち，
+			\begin{align}
+				\label{eq:filind-1}
+				f_{\alpha \circ \lambda}\bigl(f_{\varphi'}(x')\bigr)  = f_{\alpha \circ \lambda' \circ \nu'} (y')
+			\end{align}
+			がわかる．
+			同様に圏 $\Cat{I}$ が\hyperref[def:filtered]{フィルタード}であることから
+			頂点 $j',\, k,\, l$ に関して次のような $\Cat{I}$ 上の図式が存在して
+			\begin{align}
+				\alpha' \circ (\rho \circ \mu') = \alpha' \circ (\rho' \circ \psi)
+			\end{align}
+			を充たす：
+			\begin{figure}[H]
+				\centering
+				\begin{tikzcd}[row sep=large, column sep=large]
+					& &k \ar[dl, "\mu'"] \ar[dr, "\psi"] & \\
+					&l \ar[dr, red, "\rho"] & &j' \ar[dl, red, "\rho'"] \\
+					& &m' \ar[d, blue, "\alpha'"]& \\
+					& &n'&
+				\end{tikzcd}
+			\end{figure}%
+			この図式から関係式
+			\begin{align}
+				\label{eq:filind-2}
+				f_{\alpha' \circ \rho'} \bigl(f_{\psi}(y)\bigr) = f_{\alpha' \circ \rho \circ \mu}(x)
+			\end{align}
+			が得られる．さらに，上記の2つの図式により得られた頂点 $n,\, n'$ に対して\hyperref[def:filtered]{フィルタードの定義}-(2), (3) を使うと，次のような図式が存在する：
+			\begin{figure}[H]
+				\centering
+				\begin{tikzcd}[row sep=large, column sep=large]
+					&n \ar[dr, red, "\beta"] & &n' \ar[dl, red, "\beta'"] \\
+					& &p \ar[d, blue, "\delta"]& \\
+					& &q \ar[d, blue, "\delta"]& \\
+					& &r&
+				\end{tikzcd}
+			\end{figure}%
+			ただし，辺 $p \xrightarrow{\textcolor{blue}{\gamma}} q$ は $i \lto p$ の2通りの経路
+			\begin{figure}[H]
+				\centering
+				\begin{tikzcd}[row sep=large, column sep=large]
+					& &l \ar[r, red, "\rho"] &m' \ar[r, blue, "\alpha'"] &n' \ar[dr, red, "\beta'"] &\\
+					&i \ar[ur, "\mu"] \ar[dr, "\varphi"] & & & &p \\
+					& &j \ar[r, red, "\lambda"] &m \ar[r, blue, "\alpha"] &n \ar[ur, red, "\beta"] &
+				\end{tikzcd}
+			\end{figure}%
+			に対して\hyperref[def:filtered]{フィルタードの定義}-(3) を使うことで得られるものであり，関係式
+			\begin{align}
+				\label{eq:filind-3}
+				\gamma \circ (\beta \circ \alpha \circ \lambda \circ \varphi) = \gamma \circ (\beta' \circ \alpha' \circ \rho \circ \mu)
+			\end{align}
+			が成り立つ．また，辺 $q \xrightarrow{\textcolor{blue}{\delta}} r$ は $k' \lto q$ の2通りの経路
+			\begin{figure}[H]
+				\centering
+				\begin{tikzcd}[row sep=large, column sep=large]
+					& &j' \ar[r, red, "\rho'"] &m' \ar[r, blue, "\alpha'"] &n' \ar[r, red, "\beta'"] &p \ar[dr, blue, "\gamma"] &\\
+					&k' \ar[ur, "\psi'"] \ar[dr, "\nu'"] & & & & &q \\
+					& &l' \ar[r, red, "\lambda'"] &m \ar[r, blue, "\alpha"] &n \ar[r, red, "\beta"] &p \ar[ur, blue, "\gamma"] &
+				\end{tikzcd}
+			\end{figure}%
+			に対して\hyperref[def:filtered]{フィルタードの定義}-(3) を使うことで得られるものであり，関係式
+			\begin{align}
+				\label{eq:filind-4}
+				\delta \circ (\gamma \circ \beta \circ \alpha \circ \lambda' \circ \nu') = \delta \circ (\gamma \circ \beta' \circ \alpha' \circ \rho' \circ \psi')
+			\end{align}
+			が成り立つ．
+			従って関係式\eqref{eq:filind-2}, \eqref{eq:filind-3}および\eqref{eq:filind-1}, \eqref{eq:filind-4}からそれぞれ
+			\begin{align}
+				f_{\gamma \circ (\beta \circ \alpha \circ \lambda)} \bigl( f_\varphi(x) \bigr) &= f_{\gamma \circ (\beta' \circ \alpha' \circ \rho \circ \mu)} (x) = f_{\gamma \circ \beta' \circ \alpha' \circ \rho'} \bigl( f_\psi(y) \bigr) \\
+				f_{\delta \circ (\gamma \circ \beta' \circ \alpha' \circ \rho')} \bigl( f_{\psi'}(y') \bigr) &= f_{\delta \circ (\gamma \circ \beta \circ \alpha \circ \lambda' \circ \nu')} (y') = f_{\delta \circ \gamma \circ \beta \circ \alpha \circ \lambda} \bigl( f_{\varphi'}(x') \bigr)
+			\end{align}
+			が従い，
+			\begin{align}
+				f_{\delta \circ \gamma \circ \beta \circ \alpha \circ \lambda} \bigl( f_\varphi (x) + f_{\varphi'} (x') \bigr) = f_{\delta \circ \gamma \circ \beta' \circ \alpha' \circ \rho'} \bigl( f_{\psi} (y) + f_{\psi'}(y') \bigr) 
+			\end{align}
+			i.e. $ f_{\psi} (y) + f_{\psi'}(y')  \sim f_\varphi (x) + f_{\varphi'} (x')$ が言えた．
+			\item[\textbf{同型であること}] $\MOD{R}$ 上の\hyperref[def:indlim]{帰納極限}の定義から，$\bigoplus_{i \in I}M_i$ の部分加群 $N \coloneqq \Im (\irm{f}{t} - \irm{f}{s})$ は集合\footnote{$\iota_i \colon M_i \lto \bigoplus_{i \in I} M_i$ は標準的包含}
+			\begin{align}
+				\Familyset[\big]{\iota_{\mathrm{t}(\varphi)} \bigl( f_\varphi(x) \bigr) - \iota_{\mathrm{s}(\varphi)}(x)}{\varphi \in E,\, x \in M_{\mathrm{s}(\varphi)}} \subset \bigoplus_{i \in I} M_i
+			\end{align}
+			により生成される．よって
+			\begin{align}
+				\left( \bigoplus_{i \in I} M_i \right)\Bigm/ N \cong \coprod_{i \in I} M_i \Bigm/ {\sim}
+			\end{align}
+			を示せば良い．
+
+			　$\forall x \in \coprod_{i \in I} M_i$ に対して $\exists ! i \in I,\; x \in M_i$ である．よって $\abs{x} \coloneqq i$ とおくと写像
+			\begin{align}
+				\coprod_{i \in I} M_i \lto \bigoplus_{i \in I} M_i,\; x \lmto \iota_{\abs{x}} (x)
+			\end{align}
+			はwell-definedな写像であり，これと商写像の合成
+			\begin{align}
+				g \colon \coprod_{i \in I} M_i \lto \bigoplus_{ i \in I} M_i \twoheadrightarrow \left( \bigoplus_{i \in I} M_i \right)\Bigm/ N,\; x \lmto \iota_{\abs{x}} (x) + N
+			\end{align}
+			を考える．$x \in M_i,\; x' \in M_{i'}$ が $x \sim x'$ のとき，ある頂点 $j \in I$ および辺 $\varphi \in J(i,\, j),\; \varphi' \in J(i',\, j)$ が存在して $f_{\varphi}(x) = f_{\varphi'}(x')$ を充たす．
+			このとき
+			\begin{align}
+				\iota_{\abs{x'}} (x') - \iota_{\abs{x}} (x) &= \iota_j \bigl( f_{\varphi'} (x') \bigr) - \iota_j \bigl( f_\varphi (x) \bigr) - \Bigl( \iota_{j} \bigl( f_{\varphi'} (x') \bigr) - \iota_{i'} (x')\Bigr) + \Bigl( \iota_{j} \bigl( f_{\varphi} (x) \bigr) - \iota_{i} (x)\Bigr) \\
+				&= 0 - \Bigl( \iota_{\mathrm{t}(\varphi')} \bigl( f_{\varphi'} (x') \bigr) - \iota_{\mathrm{s}(\varphi')} (x')\Bigr) + \Bigl( \iota_{\mathrm{t}(\varphi)} \bigl( f_{\varphi} (x) \bigr) - \iota_{\mathrm{s}(\varphi)} (x)\Bigr) \in N
+			\end{align}
+			が成り立つので，$g$ が誘導する写像
+			\begin{align}
+				\bar{g} \colon \coprod_{i \in I} M_i \Bigm/ {\sim} \lto \left( \bigoplus_{i \in I} M_i \right)\Bigm/ N,\; [x] \lmto g(x)
+			\end{align}
+			はwell-definedである．そして (2) の記号を使うと
+			\begin{align}
+				\bar{g} ([x] + [x']) &= \bar{g} \bigl( [f_\varphi (x) + f_{\varphi'} (x')] \bigr) = \iota_j \bigl( f_\varphi (x) + f_{\varphi'} (x') \bigr) + N \\
+				&= \Bigl( \iota_j \bigl( f_\varphi (x) \bigr) + \iota_j \bigl( f_{\varphi'} (x') \bigr) \Bigr) + N \\
+				&= \Bigl( \iota_j \bigl( f_\varphi (x) \bigr) + N \Bigr) + \Bigl( \iota_j \bigl( f_{\varphi'} (x') \bigr) + N \Bigr)  \\
+				&= \bigl( \iota_i (x) + N \bigr) + \bigl( \iota_{i'}(x') + N \bigr) = \bar{g} ([x]) + \bar{g}([x']), \\
+				\bar{g} (a[x]) &= \bar{g} ([ax]) = \iota_i (ax) + N = a \bigl(\iota_i (ax) + N\bigr) = a \bar{g} ([x])
+			\end{align}
+			が成り立つので $\bar{g}$ は左 $R$ 加群の準同型である．
+
+			　ところで，写像
+			\begin{align}
+				h \colon \bigoplus_{i \in I} M_i \lto \coprod_{i \in I} M_i \Bigm/ {\sim},\; \Dpmember[\big]{x_i}{i \in I} \lmto \sum_{i \in I} [x_i]
+			\end{align}
+			は，$\forall (x_i)_{i\in I},\,  (x'_i)_{i \in I} \in \bigoplus_{i \in I} M_i,\;  \forall a \in R$ に対して
+			\begin{align}
+				h \bigl( (x_i)_{i\in I} + (x'_i)_{i \in I} \bigr) &= h \bigl( (x_i +  x'_i)_{i \in I} \bigr) = \sum_{i \in I} [x_i + x'_i]
+				= \sum_{i \in I} ([x_i] + [x'_i]) \\
+				&= \sum_{i \in I} [x_i] + \sum_{i \in I} [x'_i] \\
+				&= h \bigl( (x_i)_{i\in I} \bigr) + h\bigl( (x'_i)_{i \in I} \bigr), \\
+				h \bigl( a (x_i)_{i\in I} \bigr) &= h \bigl( (ax_i)_{i \in I} \bigr) = \sum_{i \in I} [ax_i]
+				= \sum_{i \in I} a[x_i] \\
+				&= a \left( \sum_{i \in I} [x_i] \right) \\
+				&= a h \bigl( (x_i)_{i\in I} \bigr)
+			\end{align}
+			が成り立つので $h$ は左 $R$ 加群の準同型である．また，$\forall \varphi \in E,\;\forall x \in M_{\mathrm{s}(\varphi)}$ に対して
+			\begin{align}
+				h \Bigl( \iota_{\mathrm{t}(\varphi)} \bigl( f_\varphi (x) \bigr) - \iota_{\mathrm{s}(\varphi)} (x) \Bigr) = [f_\varphi(x)] - [x] = 0
+			\end{align}
+			が成り立つ\footnote{明らかに $f_{\varphi}(x) \sim x$ である．}ので $h$ が誘導する写像
+			\begin{align}
+				\bar{h} \colon \left(\bigoplus_{i \in I} M_i \right) \Bigm/ N \lto \coprod_{i \in I} M_i \Bigm/ {\sim},\; \Dpmember[\big]{x_i}{i \in I} + N \lmto \sum_i [x_i]
+			\end{align}
+			はwell-definedな準同型である．
+			そして $\bar{h} \circ \bar{g} = 1,\; \bar{g} \circ \bar{h} = 1$ が成り立つので $\bar{g},\, \bar{h}$ は同型写像であり，
+			\begin{align}
+				\varinjlim_{i \in I} M_i  = \bigoplus_{i \in I} M_i \Bigm/ N \cong \coprod_{i \in I} M_i \Bigm/ {\sim}
+			\end{align}
+			が示された．
+		\end{description}
+	\end{enumerate}
+\end{proof}
+
+
+
+\section{帰納極限と射影極限の性質}
+
+
+
+
+帰納極限・射影極限は，様々な部分加群を内包する概念である．
+
+\begin{myexample}[]{直和と直積}
+	\hyperref[def:DG]{有向グラフ}
+	\begin{align}
+		\mathcal{I} \coloneqq \boxdiagram{\overset{1}{\bullet} \& \overset{2}{\bullet}}
+	\end{align}
+	を考える．$\mathcal{I}$ 上の左 $\mathbb{R}$ 加群の図式 $M \colon \mathcal{I} \lto \MOD{R}$ の上に\hyperref[prop:univ-indpropjlim]{帰納極限の普遍性}の図式を書くと
+	\begin{center}
+		\begin{tikzcd}[row sep=large, column sep=large]
+			M_1 \ar[ddr, bend right, blue, "g_1"']\ar[dr, "\iota_1"'] & &M_2 \ar[ddl, bend left, blue, "g_2"]\ar[dl, "\iota_2"] \\
+			&\varinjlim_{i \in \{1,\, 2\}}M_i \ar[d, red, dashed, "\exists! g"] & \\
+			&\forall \textcolor{blue}{N}
+		\end{tikzcd}
+	\end{center}
+	となる\footnote{関手 $M$ の作用は $M_i \coloneqq M(i)$ とおいた．}．これは\hyperref[def:dp-mod]{直和の普遍性の図式}であり，
+	\begin{align}
+		\varinjlim_{i \in \{1,\, 2\}} M_i\cong M_1 \oplus M_2
+	\end{align}
+	がわかる．
+
+	同じ$M \colon \mathcal{I} \lto \MOD{R}$ の上に\hyperref[prop:univ-indpropjlim]{射影極限の普遍性}の図式を書くと
+	\begin{center}
+		\begin{tikzcd}[row sep=large, column sep=large]
+			M_1 \ar[from=ddr, bend left, blue, "g_1"']\ar[from=dr, "\iota_1"'] & &M_2 \ar[from=ddl, bend right, blue, "g_2"]\ar[from=dl, "\iota_2"] \\
+			&\varprojlim_{i \in \{1,\, 2\}}M_i \ar[from=d, red, dashed, "\exists! g"] & \\
+			&\forall \textcolor{blue}{N}
+		\end{tikzcd}
+	\end{center}
+	となる．これは\hyperref[def:dp-mod]{直積の普遍性の図式}であり，
+	\begin{align}
+		\varprojlim_{i \in \{1,\, 2\}} M_i \cong M_1 \times M_2
+	\end{align}
+	がわかる．
+	
+	以上の構成は，有向グラフの頂点集合が任意であっても成り立つ．
+\end{myexample}
+
+
+\begin{myexample}[]{核と余核}
+	\hyperref[def:DG]{有向グラフ}
+	\begin{align}
+		\mathcal{I} \coloneqq \boxdiagram{\overset{1}{\bullet} \ar[r, yshift=.5ex, "f"]\ar[r, yshift=-.5ex, "g"'] \& \overset{2}{\bullet}}
+	\end{align}
+	を考える．$\mathcal{I}$ 上の左 $\mathbb{R}$ 加群の図式 $M \colon \mathcal{I} \lto \MOD{R}$ の上に\hyperref[prop:univ-indpropjlim]{帰納極限の普遍性}の図式を書くと，可換図式
+	\begin{center}
+		\begin{tikzcd}[row sep=large, column sep=large]
+			M_1 \ar[rr, yshift=.5ex, "M(f)"]\ar[rr, yshift=-.5ex, "M(g)"'] \ar[ddr, bend right, blue, "g_1"']\ar[dr, "\iota_1"'] & &M_2 \ar[ddl, bend left, blue, "g_2"]\ar[dl, "\iota_2"] \\
+			&\varinjlim_{i \in \{1,\, 2\}}M_i \ar[d, red, dashed, "\exists! g"] & \\
+			&\forall \textcolor{blue}{N}
+		\end{tikzcd}
+	\end{center}
+	が得られる．図式の\hyperref[def:commutative]{可換性}から
+	\begin{align}
+		\label{eq:coequalizer}
+		\iota_2 \circ M(f) = \iota_2 \circ M(g) = \iota_1
+	\end{align}
+	が成り立つので，冗長な $\iota_1$ や $\textcolor{blue}{g_1}$ を省略して
+	\begin{center}
+		\begin{tikzcd}[row sep=large, column sep=large]
+			M_1 \ar[r, yshift=.5ex, "M(f)"]\ar[r, yshift=-.5ex, "M(g)"'] &M_2 \ar[r, bend left, blue, "g_2"]\ar[dr, "\iota_2"] &\forall \textcolor{blue}{N}\\
+			& &\varinjlim_{i \in \{1,\, 2\}}M_i \ar[u, red, dashed, "\exists! g"]
+		\end{tikzcd}
+	\end{center}
+	を得る．$M(f),\, M(g)$ は左 $R$ 加群の準同型なので\eqref{eq:coequalizer}から
+	$\iota_2 \circ \bigl(M(f) - M(g)\bigr) = 0$ であり，これは\hyperref[fig:univ-coker]{余核の普遍性}と等しい．i.e.
+	\begin{align}
+		\varinjlim_{i \in \{1,\, 2\}} M \cong \Coker \bigl( M(f) - M(g) \bigr) 
+	\end{align}
+	がわかった．
+
+	同じ$M \colon \mathcal{I} \lto \MOD{R}$ の上に\hyperref[prop:univ-indpropjlim]{射影極限の普遍性}の図式を書くと可換図式
+	\begin{center}
+		\begin{tikzcd}[row sep=large, column sep=large]
+			M_1 \ar[rr, yshift=.5ex, "M(f)"]\ar[rr, yshift=-.5ex, "M(g)"']\ar[from=ddr, bend left, blue, "g_1"']\ar[from=dr, "\iota_1"'] & &M_2 \ar[from=ddl, bend right, blue, "g_2"]\ar[from=dl, "\iota_2"] \\
+			&\varprojlim_{i \in \{1,\, 2\}} \ar[from=d, red, dashed, "\exists! g"] & \\
+			&\forall \textcolor{blue}{N}
+		\end{tikzcd}
+	\end{center}
+	となる．可換性から
+	\begin{align}
+		\label{eq:equaliser}
+		M(f) \circ \iota_1 = M(g) \circ \iota_1 = \iota_2
+	\end{align}
+	がわかるので，冗長な $\iota_2$ を無視すると
+	\begin{center}
+		\begin{tikzcd}[row sep=large, column sep=large]
+			&\forall  \textcolor{blue}{N} \ar[r, bend left, "g_1"] &M_1 \ar[r, yshift=.5ex, "M(f)"]\ar[r, yshift=-.5ex, "M(g)"'] &M_2 \\
+			&\varprojlim_{i \in \{1,\, 2\}} M_i \ar[from=u, red, dashed, "\exists! g"] \ar[ur, "\iota_1"] & &
+		\end{tikzcd}
+	\end{center}
+	が得られる．\eqref{eq:equaliser}は $\bigl( M(f) - M(g) \bigr) \circ \iota_1 = 0$ と同値なので，これは\hyperref[fig:univ-ker]{核の普遍性}の図式であり，
+	\begin{align}
+		\varprojlim_{i \in \{1,\, 2\}} M \cong \Ker \bigl( M(f) - M(g) \bigr)
+	\end{align}
+	がわかった．
+\end{myexample}
+
+% \begin{mylem}[]{}
+% 	\hyperref[def:DG]{有向グラフ} $\Cat{I} = \bigl( I,\, \Familyset[\big]{J(i,\, j)}{(i,\, j) \in I\times I} \bigr)$  が $\forall i,\, j \in I$ に対して $J(i,\, j) = \emptyset$ であるとき，$\Cat{I}$ 上の左 $R$ 加群の図式
+% 	\begin{align}
+% 		\mathcal{M} = \Bigl( \Familyset[\big]{M_i}{i \in I},\; \Familyset[\Big]{\Familyset[\big]{f_\varphi \colon M_i \to M_j}{\varphi \in J(i,\, j)}}{(i,\, j) \in I \times I} \Bigr)
+% 	\end{align}
+% 	に対して
+% 	\begin{align}
+% 		\varinjlim_{i \in I} M_i &= \bigoplus_{i \in I} M_i, \\
+% 		\varprojlim_{i \in I} M_i &= \prod_{i \in I} M_i
+% 	\end{align}
+% 	が成り立つ．
+% \end{mylem}
+
+% % \begin{proof}
+% % 	\begin{align}
+% % 		\mathcal{M} = \Bigl( \Familyset[\big]{M_i}{i \in I},\; \emptyset \Bigr)
+% % 	\end{align}
+% % 	なので，\hyperref[def:indlim]{帰納極限}・\hyperref[def:projlim]{射影極限}の定義から明らか．
+% % \end{proof}
+
+% \begin{mylem}[]{}
+% 	\hyperref[def:DG]{有向グラフ} $\Cat{I} = \bigl( I,\, \Familyset[\big]{J(i,\, j)}{(i,\, j) \in I\times I} \bigr)$ として
+% 	\begin{align}
+% 		I = \{1,\, 2\},\quad
+% 		J(i,\, j) =
+% 		\begin{cases}
+% 			\{1,\, 2\}, & (i,\ j) = (1,\, 2) \\
+% 			\emptyset, & \text{otherwise}
+% 		\end{cases}
+% 	\end{align}
+% 	を与える．$\Cat{I}$ 上の左 $R$ 加群の図式 $\mathcal{M},\, \mathcal{M}^{\mathrm{op}}$ に対して，それぞれ
+% 	\begin{align}
+% 		\varinjlim_{i \in I} M_i &= \Coker (f_1 - f_2), \\
+% 		\varprojlim_{i \in I} M_i &= \Ker(f_1 - f_2)
+% 	\end{align}
+% 	が成り立つ．
+% \end{mylem}
+
+命題\ref{prop:univ-indpropjlim}を観察すると，次の重大な結果が得られる：
+
+$N$ を左 $R$ 加群とする．
+\hyperref[def:DG]{有向グラフ}または圏 $\Cat{I} = \bigl( I,\, \Familyset[\big]{J(i,\, j)}{(i,\, j) \in I\times I} \bigr)$ を与え，
+$\Cat{I}$ 上の左 $R$ 加群の図式
+\begin{align}
+	\mathcal{M} = \Bigl( \Familyset[\big]{M_i}{i \in I},\; \Familyset[\Big]{\Familyset[\big]{f_\varphi \colon M_i \to M_j}{\varphi \in J(i,\, j)}}{(i,\, j) \in I \times I} \Bigr)
+\end{align}
+に対応して $\Cat{I}^{\mathrm{op}}$ 上の $\mathbb{Z}$ 加群の図式
+\begin{align}
+	\Bigl( \Familyset[\big]{\Hom{R}(M_i,\, N)}{i \in I},\; \Familyset[\Big]{\Familyset[\big]{f^*_\varphi}{\varphi \in J(i,\, j)}}{(i,\, j) \in I \times I} \Bigr)
+\end{align}
+を考えよう．ただし，$\varphi \in J(i,\, j)$ に対して
+\begin{align}
+	f_\varphi^* \colon \Hom{R}(M_j,\, N) \lto \Hom{R}(M_i,\, N),\; h \lmto h \circ f_\varphi
+\end{align}
+とする．このとき式\eqref{eq:univ-indlim}の右辺を少し書き換えると
+\begin{align}
+	\biggl\{\, \Dpmember[\big]{g_i}{i \in I} \in \prod_{i \in I} \Hom{R}(M_i,\, \textcolor{blue}{N}) \biggm| \forall \varphi \in E,\; f_\varphi^* \bigl( g_{\mathrm{t}(\varphi)} \bigr) = g_{\mathrm{s}(\varphi)} \,\biggr\}
+\end{align}
+となるが，図式\ref{fig:proj-s}, \ref{fig:proj-t}に照らし合わせるとこれは $\Ker (\irm{f^*}{t} - \irm{f^*}{s})$ に等しいことがわかる．
+
+同様に $\Cat{I}^{\mathrm{op}}$ 上の左 $R$ 加群の図式
+\begin{align}
+	\mathcal{M}^{\mathrm{op}} = \Bigl( \Familyset[\big]{M_i}{i \in I},\; \Familyset[\Big]{\Familyset[\big]{f_\varphi \colon \textcolor{red}{M_j \to M_i}}{\varphi \in J(i,\, j)}}{(i,\, j) \in I \times I} \Bigr)
+\end{align}
+に対応して $\Cat{I}$ 上の $\mathbb{Z}$ 加群の図式
+\begin{align}
+	\Bigl( \Familyset[\big]{\Hom{R}(N,\, M_i)}{i \in I},\; \Familyset[\Big]{\Familyset[\big]{f^*_\varphi}{\varphi \in J(i,\, j)}}{(i,\, j) \in I \times I} \Bigr)
+\end{align}
+を考える．ただし，$\varphi \in J(i,\, j)$ に対して
+\begin{align}
+	f_\varphi{}_* \colon \Hom{R}(N,\, M_i) \lto \Hom{R}(N,\, M_j),\; h \lmto f_\varphi \circ h
+\end{align}
+とする．このとき式\eqref{eq:univ-indlim}の右辺を少し書き換えると
+\begin{align}
+	\biggl\{\, \Dpmember[\big]{g_i}{i \in I} \in \prod_{i \in I} \Hom{R}(\textcolor{blue}{N},\, M_i) \biggm| \forall \varphi \in E,\; f_\varphi{}_* \bigl( g_{\mathrm{t}(\varphi)} \bigr) = g_{\mathrm{s}(\varphi)} \,\biggr\}
+\end{align}
+となるが，図式\ref{fig:ind-s}, \ref{fig:ind-t}に照らし合わせるとこれは $\Ker (\irm{f_*}{t} - \irm{f_*}{s})$ に等しいことがわかる．
+
+以上の考察と命題\ref{prop:univ-indpropjlim}の主張から次のことがわかった：
+
+\begin{myprop}[label=prop:comm-lim2Hom]{$\mathrm{Hom}$ と帰納・射影極限の交換}
+	自然な $\mathbb{Z}$ 加群の同型
+	\begin{align}
+		\Hom{R} \bigl( \varinjlim_{i \in I} M_i,\, N \bigr) &\cong \varprojlim_{i \in I} \Hom{R} (M_i,\, N) \\
+		\Hom{R} \bigl(N,\, \varprojlim_{i \in I} M_i\bigr) &\cong \varprojlim_{i \in I} \Hom{R} (N,\, M_i)
+	\end{align}
+	が成り立つ．
+\end{myprop}
+
+命題\ref{prop:comm-lim2Hom}から即座に $\Hom{R}$ の左右の完全性が従う：
+\begin{mycol}[]{$\Hom{R}$ の右・左完全性（再掲）}
+	\begin{enumerate}
+        \item $0 \lto M_1 \xrightarrow{f} M_2 \xrightarrow{g} M_3$ を左 $R$ 加群の完全列，$N$ を左 $R$ 加群とすると，$\mathbb{Z}$ 加群\footnote{i.e. 和について可換群}の完全列
+        \begin{align}
+            0 \lto \Hom{R}(N,\, M_1) \xrightarrow{f_*} \Hom{R}(N,\, M_2) \xrightarrow{g_*} \Hom{R}(N,\, M_3)
+        \end{align}
+        が成り立つ．
+        \item $M_1 \xrightarrow{f} M_2 \xrightarrow{g} M_3 \lto 0$ を左 $R$ 加群の完全列，$N$ を左 $R$ 加群とすると，$\mathbb{Z}$ 加群の完全列
+        \begin{align}
+            0 \lto \Hom{R}(M_3,\, N) \xrightarrow{g^*} \Hom{R}(M_2,\, N) \xrightarrow{f^*} \Hom{R}(M_3,\, N)
+        \end{align}
+        が成り立つ．
+        \item $0 \lto M_1 \xrightarrow{f} M_2 \xrightarrow{g} M_3 \lto 0$ を\textbf{分裂する}左 $R$ 加群の完全列，$N$ を左 $R$ 加群とすると，$\mathbb{Z}$ 加群の完全列
+        \begin{align}
+            &0 \lto \Hom{R}(N,\, M_1) \xrightarrow{f_*} \Hom{R}(N,\, M_2) \xrightarrow{g_*} \Hom{R}(N,\, M_3) \lto 0\\
+            &0 \lto \Hom{R}(M_3,\, N) \xrightarrow{g^*} \Hom{R}(M_2,\, N) \xrightarrow{f^*} \Hom{R}(M_1,\, N) \lto 0
+        \end{align}
+        が成り立つ．
+    \end{enumerate}
+\end{mycol}
+
+\begin{proof}
+	\begin{enumerate}
+		\item 命題\ref{prop:ES-basic}より $M_1 \cong \Ker g$ である．命題\ref{prop:comm-lim2Hom}および $\Ker$ が射影極限であることから
+		\begin{align}
+			\Hom{R}(N,\, M_1) \cong \Hom{R}(N,\, \Ker g) \cong \Ker g_*
+		\end{align}
+		が従うので，命題\ref{prop:ES-basic}より $0 \lto \Hom{R}(N,\, M_1) \xrightarrow{f_*} \Hom{R}(N,\, M_2) \xrightarrow{g_*} \Hom{R}(N,\, M_3)$ は完全列である．
+		\item 命題\ref{prop:ES-basic}より $M_3 \cong \Coker f$ である．命題\ref{prop:comm-lim2Hom}および $\Coker$ が帰納極限であることから
+		\begin{align}
+			\Hom{R}(M_3,\, N) \cong \Hom{R}(\Coker f,\, N) \cong \Ker f^*
+		\end{align}
+		が従うので，命題\ref{prop:ES-basic}より $0 \lto \Hom{R}(M_3,\, N) \xrightarrow{g^*} \Hom{R}(M_2,\, N) \xrightarrow{f^*} \Hom{R}(M_3,\, N)$ は完全列である．
+		\item (1), (2) より従う．以前にも示したので略．
+	\end{enumerate}
+\end{proof}
+
+帰納極限とテンソル積も可換である．この事実からテンソル積の左完全性が従う．
+
+\begin{myprop}[label=prop:comm-lim2tensor]{帰納極限とテンソル積の交換}
+	$R$ を環，$\Cat{I} = \bigl( I,\, \Familyset[\big]{J(i,\, j)}{(i,\, j) \in I\times I} \bigr) $ を有向グラフまたは圏とする．$\Cat{I}$ 上の\textbf{右} $R$ 加群の図式
+	\begin{align}
+		\mathcal{M} = \Bigl( \Familyset[\big]{M_i}{i \in I},\; \Familyset[\Big]{\Familyset[\big]{f_\varphi \colon M_i \to M_j}{\varphi \in J(i,\, j)}}{(i,\, j) \in I \times I} \Bigr)
+	\end{align}
+	および\textbf{左} $R$ 加群 $N$ に対して，自然な $\mathbb{Z}$ 加群の同型
+	\begin{align}
+		\varinjlim_{i \in I} \bigl( M_i \otimes_R N \bigr) \cong \bigl( \varinjlim_{i \in I} M_i \bigr) \otimes_R N
+	\end{align}
+	が成り立つ．
+\end{myprop}
+
+\begin{proof}
+	\hyperref[def:indlim]{帰納極限の標準的包含} $\iota_i \colon M_i \lto \varinjlim_{i \in I}M_i$ に対して
+	\begin{align}
+		\iota_i \otimes 1_N \colon M_i \otimes_R \lto \bigl( \varinjlim_{i \in I} M_i \bigr) \otimes_R N
+	\end{align}
+	は $i \in I$ で添字付けられた $\mathbb{Z}$ 加群の準同型の族であり，かつ $\forall i,\, j \in I,\, \forall \varphi \in J(i,\, j)$ に対して
+	\begin{align}
+		(\iota_{j} \otimes_R 1_N ) \circ (f_\varphi \otimes_R 1_N ) = \iota_{i} \otimes_R 1_N
+	\end{align}
+	を充たす．故に\hyperref[prop:univ-indpropjlim]{帰納極限の普遍性}により
+	\begin{align}
+		\Phi \colon \varinjlim_{i \in I} \bigl( M_i \otimes_R N \bigr) \lto \bigl( \varinjlim_{i \in I} M_i \bigr) \otimes_R N
+	\end{align}
+	であって $\forall i\in I,\, \forall m \in M_i,\, \forall n \in N$ に対して
+	\begin{align}
+		\Phi \bigl( (\iota_i \otimes 1_N)(m \otimes n) \bigr) = \iota_i(m) \otimes n
+	\end{align}
+	を充たすものが一意的に存在する．
+
+	一方，写像
+	\begin{align}
+		\phi \colon \bigl( \varinjlim_{i\in I} M_i \bigr) \times N \lto \varinjlim_{i \in I} \bigl( M_i \otimes_R N \bigr) ,\; \bigl( \iota_i(m),\, n \bigr) \lmto (\iota_i \otimes 1_N)(m \otimes n)
+	\end{align}
+	は\hyperref[def:R-balance]{バランス写像}になる．故に\hyperref[prop:univ-tensor]{テンソル積の普遍性}からこれは
+	\begin{align}
+		\Psi \colon \bigl( \varinjlim_{i\in I} M_i \bigr) \otimes_R N \lto \varinjlim_{i \in I} \bigl( M_i \otimes_R N \bigr) 
+	\end{align}
+	であって，$\forall i \in I,\, \forall m \in M_i,\, \forall n \in N$ に対して
+	\begin{align}
+		\Psi \bigl( \iota_i(m) \otimes n \bigr) = (\iota_i \otimes 1_N)(m \otimes n)
+	\end{align}
+	を充たすものが一意に定まる．従って
+	\begin{align}
+		\Psi \bigl(\Phi((\iota_i \otimes 1_N)(m \otimes n))  \bigr) &= (\iota_i \otimes 1_N)(m\otimes n), \\
+		\Phi \bigl(\Psi(\iota_i(m) \otimes n)  \bigr) &= \iota_i (m)\otimes n, \\
+	\end{align}
+	が成り立つが，\hyperref[def:tensor]{テンソル積の定義}から $(\iota_i \otimes 1_N)(m \otimes n)$ の形の元は $\varinjlim_{i \in I} \bigl( M_i \otimes_R N \bigr)$ を，$\iota_i (m)\otimes n$ の形の元は $\bigl( \varinjlim_{i \in I}M_i \bigr) \otimes_R N$ を生成するので
+	\begin{align}
+		\Psi \circ \Phi = 1,\quad \Phi \circ \Psi = 1
+	\end{align}
+	i.e. $\Psi,\, \Phi$ が同型写像であることがわかった．
+\end{proof}
+
+\begin{mycol}[label=col:RES-tensor]{テンソル積の右完全性}
+	\begin{enumerate}
+		\item 任意の\textbf{右} $R$ 加群の完全列
+		\begin{align}
+			M_1 \xrightarrow{f} M_2 \xrightarrow{g} M_3 \lto 0
+		\end{align}
+		および任意の\textbf{左} $R$ 加群 $N$ を与える．このとき図式
+		\begin{align}
+			M_1 \otimes_R N \xrightarrow{f \otimes 1_N} M_2 \otimes_R N \xrightarrow{g \otimes 1_N} M_3 \otimes_R N \lto 0
+		\end{align}
+		は完全列である．
+		\item \hyperref[def:split]{分裂}する任意の\textbf{右} $R$ 加群の完全列
+		\begin{align}
+			0 \lto M_1 \xrightarrow{f} M_2 \xrightarrow{g} M_3 \lto 0
+		\end{align}
+		および任意の\textbf{左} $R$ 加群 $N$ を与える．このとき図式
+		\begin{align}
+			0 \lto M_1 \otimes_R N \xrightarrow{f \otimes 1_N} M_2 \otimes_R N \xrightarrow{g \otimes 1_N} M_3 \otimes_R N \lto 0
+		\end{align}
+		は完全列である．
+	\end{enumerate}
+\end{mycol}
+
+\begin{proof}
+	\begin{enumerate}
+		\item 命題\ref{prop:ES-basic}から $M_3 \cong \Coker f$ である．$\Coker$ が帰納極限であることと命題\ref{prop:comm-lim2tensor}より
+		\begin{align}
+			M_3 \otimes_R N \cong (\Coker f) \otimes_R N \cong \Coker \bigl( f \otimes 1_N \bigr) 
+		\end{align}
+		が言え，命題\ref{prop:ES-basic}から題意が示された．
+		\item 
+		仮定より，準同型写像 $t \colon M_2 \lto M_1$ であって $t \circ f = 1_{M_1}$ を充たすものが取れる．このとき
+		\begin{align}
+			(t \otimes 1_N) \circ (f \otimes 1_N) = 1_{M_1 \otimes_R N}
+		\end{align}
+		だから $f \otimes 1_N$ は単射である．$f \otimes 1_N$ の単射性以外は (1) から従う．
+	\end{enumerate}
+	
+\end{proof}
+
+
+% \begin{proof}
+% 	\hyperref[def:indlim]{帰納極限}・\hyperref[def:projlim]{射影極限}の定義から明らか．
+% \end{proof}
+
+% 特に $\Cat{I}$ が\hyperref[def:filtered]{フィルタード}なとき，次の命題が成り立つ
+
+% \begin{myprop}[]{フィルタードな帰納極限と有限な射影極限の交換}
+	
+% \end{myprop}
+
+\end{document}

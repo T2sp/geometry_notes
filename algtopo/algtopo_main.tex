@@ -1,0 +1,327 @@
+\documentclass{ltjsreport}
+
+%%%%%%%%%%packages%%%%%%%%%%
+%% colors and links
+\usepackage[svgnames]{xcolor}
+\usepackage[colorlinks,citecolor=DarkGreen,linkcolor=DeepPink,linktocpage,unicode]{hyperref} 
+
+%% equations
+%%%% math
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage{mathrsfs}
+\usepackage{bm}
+\usepackage{cancel}
+%%%% physics
+\usepackage{siunitx}
+\usepackage{physics}
+%%%% chemistry
+\usepackage[version=3]{mhchem}
+
+%% positioning
+\usepackage{array}
+\usepackage{float}
+
+%% table
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{hhline}
+\usepackage{subcaption}
+
+%% figure
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{intersections,calc,patterns,through,positioning,arrows,backgrounds,cd}
+\usepackage{pgfplots}
+\usepgfplotslibrary{patchplots}
+\pgfplotsset{compat=1.15}
+
+%% decorations
+\usepackage{titlesec}
+\usepackage{picture}
+
+%% framing
+\usepackage{fancybox}
+\usepackage{boites}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,theorems,breakable}
+
+%% citation
+\usepackage{cite}
+
+%% miscellaneous
+%%%% comment
+\usepackage{comment}
+%%%% Japanese
+\usepackage{ascmac}
+\usepackage{listings} %日本語のコメントアウトをする場合jlisting（もしくはjvlisting）が必要
+\lstset{
+    basicstyle={\ttfamily},
+    identifierstyle={\small},
+    commentstyle={\smallitshape},
+    keywordstyle={\small\bfseries},
+    ndkeywordstyle={\small},
+    stringstyle={\small	tfamily},
+    frame={tb},
+    breaklines=true,
+    columns=[l]{fullflexible},
+    numbers=left,
+    xrightmargin=0pt,
+    xleftmargin=27pt,
+    numberstyle={\scriptsize},
+    stepnumber=1,
+    lineskip=-0.5ex
+}
+
+%%macros
+\usepackage{mylogics}
+\usepackage{myalgebra}
+\usepackage{mygeometry}
+
+%%%%%%%%%%optional settings%%%%%%%%%%
+
+%%%%%図表並列%%%%%
+\makeatletter
+\newcommand{\figcaption}[1]{\def\@captype{figure}\caption{#1}}
+\newcommand{\tblcaption}[1]{\def\@captype{table}\caption{#1}}
+\makeatother
+
+%%%%%itemization%%%%%
+\renewcommand{\labelenumi}{\theenumi}
+\renewcommand{\theenumi}{(\arabic{enumi})} % 箇条書きをローマ数字に
+
+%%%%%%theorem environments%%%%%
+\newtheoremstyle{mystyle}%   % スタイル名
+    {}%                      % 上部スペース
+    {}%                      % 下部スペース
+    {\normalfont}%          % 本文フォント
+    {}%                      % インデント量
+    {\bf}%                  % 見出しフォント
+    {.}%                      % 見出し後の句読点
+    {\newline}%                     % 見出し後のスペース
+    {\underline{\thmname{#1}\thmnumber{#2}\thmnote{（#3）}}}%
+    % 見出しの書式 (can be left empty, meaning `normal')
+\theoremstyle{mystyle} % スタイルの適用
+
+\newtheorem{theorem}{定理}[section]
+\newtheorem{definition}{定義}[section]
+\newtheorem{proposition}[definition]{命題}
+\newtheorem{corollary}[theorem]{系}
+\renewcommand{\proofname}{証明}
+
+%proof
+\makeatletter % use at mark
+\renewcommand{\qedsymbol}{$\blacksquare$}
+\renewenvironment{proof}[1][\proofname]{\par
+    \pushQED{\qed}%
+    \normalfont \topsep6\p@\@plus6\p@\relax
+    \trivlist
+    \item[\hskip\labelsep
+        \itshape
+    \textbf{\underline{#1}}]\ignorespaces
+    % {\bf\underline{#1}\@addpunct{.}}]\ignorespaces % ピリオドあり
+}{%
+    \popQED\endtrivlist\@endpefalse
+}
+\makeatother % end at mark
+
+%%%%%%mathtools%%%%%
+\mathtoolsset{showonlyrefs=true} % 被参照数式のみ数式番号割り振り
+\numberwithin{equation}{section}
+
+\makeatletter
+\@addtoreset{equation}{section}
+\makeatother
+
+%%%%%%framing%%%%%
+\newtcolorbox[auto counter,number within=chapter]{myaxiom}[2][]{%
+colback=red!5!white,colframe=red!75!black,fonttitle=\bfseries,
+title=公理~\thetcbcounter: #2,#1}
+
+\newtcolorbox[auto counter,number within=chapter]{mytheo}[2][]{%
+colback=blue!5!white,colframe=blue!75!black,fonttitle=\bfseries,
+title=定理~\thetcbcounter: #2,#1}
+
+\newtcolorbox[auto counter,number within=chapter]{myprop}[2][]{%
+colback=blue!5!white,colframe=blue!75!black,fonttitle=\bfseries,
+title=命題~\thetcbcounter: #2,#1}
+
+\newtcolorbox[auto counter,number within=chapter]{mylem}[2][]{%
+colback=blue!5!white,colframe=blue!75!black,fonttitle=\bfseries,
+title=補題~\thetcbcounter: #2,#1}
+
+\newtcolorbox[auto counter,number within=chapter]{mydef}[2][]{%
+colback=green!5!white,colframe=green!75!black,fonttitle=\bfseries,
+title=定義~\thetcbcounter: #2,#1}
+
+\newtcolorbox[use counter from=mytheo]{mycol}[2][]{%
+fonttitle=\bfseries,enhanced,
+attach boxed title to top left=
+{xshift=-2mm,yshift=-2mm},
+title=系~\thetcbcounter: #2,#1}
+
+\newtcolorbox{marker}[1][]{enhanced,
+  	before skip=2mm,after skip=3mm,
+  	boxrule=0.4pt,left=5mm,right=2mm,top=1mm,bottom=1mm,
+  	colback=yellow!50,
+  	colframe=yellow!20!black,
+  	sharp corners,rounded corners=southeast,arc is angular,arc=3mm,
+  	underlay={%
+  	  	\path[fill=tcbcolback!80!black] ([yshift=3mm]interior.south east)--++(-0.4,-0.1)--++(0.1,-0.2);
+  	  	\path[draw=tcbcolframe,shorten <=-0.05mm,shorten >=-0.05mm] ([yshift=3mm]interior.south east)--++(-0.4,-0.1)--++(0.1,-0.2);
+  	  	\path[fill=yellow!50!black,draw=none] (interior.south west) rectangle node[white]{\Huge\bfseries !} ([xshift=4mm]interior.north west);
+  	  	},
+  	drop fuzzy shadow,#1}
+
+% example
+\newtcolorbox[auto counter, number within=section]{myexample}[2][]{
+    breakable,
+    empty,
+    outer arc=0pt,
+    arc=0pt,
+    attach boxed title to top left,
+    boxed title style={
+        empty,
+        left=-2mm,
+        right=-2mm
+    },
+    coltitle=black,
+    colframe=black,
+    colback=white,
+    fonttitle=\bfseries,
+    title=【例~\thetcbcounter】#2,#1,
+}
+\newcommand{\exref}[1]{\textbf{【例\ref{#1}】}}
+
+
+%%%%%title decorations%%%%%
+
+% section
+\titleformat{\section}[block]
+{}{}{0pt}
+{
+    \colorbox{blue}{\begin{picture}(0,10)\end{picture}}
+    \hspace{0pt}
+    \normalfont \Large\bfseries \thesection
+    \hspace{0.5em}
+}
+[
+\begin{picture}(100,0)
+    \put(3,18){\color{blue}\line(1,0){300}}
+\end{picture}
+\\
+\vspace{-30pt}
+]
+
+% subsection
+\titleformat{\subsection}[block]
+{}{}{0pt}
+{
+    \normalfont \large\bfseries \thesubsection
+    \hspace{0.5em}
+}
+[
+\begin{picture}(100,0)
+    \put(3,15){\color{black}\line(1,0){200}}
+\end{picture}
+\\
+\vspace{-25pt}
+]
+
+%%%%%%%%%%macros%%%%%%%%%%
+
+% \makeatletter
+% \newcommand{\extp}{\@ifnextchar^\@extp{\@extp^{\,}}}
+% \def\@extp^#1{\mathop{\bigwedge\nolimits^{\!#1}}}
+% \makeatother
+
+% \newcommand{\vecfield}[1]{\mathfrak{X}(#1)}
+% \newcommand{\cinfty}{$C^\infty$}
+% \newcommand{\cinftyf}[1]{C^\infty(#1)}
+% \newcommand{\edlogic}{$\varepsilon$-$\delta$}
+% \newcommand{\phase}[1]{(#1,\, \mathscr{O}_{#1})}
+
+% % long zigzag arrow
+% \usepackage[cmtip,all]{xy}
+% \newcommand{\longsquiggly}{\xymatrix{{}\ar@{~>}[r]&{}}}
+
+\mathchardef\mhyphen="2D
+\newcommand{\lto}{\longrightarrow}
+\newcommand{\lmto}{\longmapsto}
+\newcommand{\boxdiagram}[1]{
+    \tcboxmath[colback=white, colframe=black, arc=0pt, boxrule=0.8pt]{
+        \begin{tikzcd}[row sep=large, column sep=large, ampersand replacement=\&]
+            #1
+        \end{tikzcd}
+    }
+}
+%% file division
+\usepackage{subfiles}
+
+\begin{document}
+
+\title{代数トポロジー ノート}
+\author{高間俊至}
+\date{\today}
+\maketitle
+
+\section*{前書き}
+
+本資料は，2022年11月-2023年3月にPhysics Lab. 2023 数理物理班内部で行った~\cite{DK}の輪読ゼミの記録である．
+数理物理班の他の解説記事に現れる代数トポロジーの用語の辞書として使えると思う．
+
+本文中の\hyperref[def:category]{圏}\footnote{なお，本文中の\textcolor{DeepPink}{この色}の箇所は相互参照が付けられており，クリックすることで該当する定義，定理などにジャンプすることができる．}の扱いは，主に思考の整理の道具としてである．圏論については~\cite{Shiho}, ~\cite{Awodey}, ~\cite{Brendan}を大いに参考にした．
+
+理論物理学において代数トポロジーが平然と登場するようになって久しい一方で，初学者にとってとっつきやすくかつ適度に系統的な教科書が中々見つからない．本資料執筆の動機はこのギャップを埋めることだったが，時間と筆者の実力の不足によって，2023年5月の時点では中途半端な内容になってしまった．
+現時点で完結していない要素は主に
+\begin{itemize}
+    \item 第2, 3章でCW複体に触れる時間的余裕がなかったこと，
+    \item 第4章のスペクトル系列の解説が未完であること，
+    \item 第5章でPoincar\'{e}双対定理を紹介するにとどまったこと，
+    \item 第6章以降の重要な命題がところどころ証明が不十分であること．
+    特に相対ホモトピー群とHurewiczの定理の解説が間に合わなかったこと．
+\end{itemize}
+である．これらについては後日補完したいと考えている．
+
+また，できるだけ正確な記述を試みたが，専門家の検閲を介しておらず重大な誤りが含まれている可能性があるのでご了承いただきたい．
+
+
+\setcounter{tocdepth}{2}
+\tableofcontents
+
+\subfile{chap1}
+
+\subfile{chap2}
+
+\subfile{chap3}
+
+\subfile{chap4}
+
+\subfile{chap5}
+
+\subfile{chap6}
+
+\subfile{chap7}
+
+% \subfile{chap8}
+
+% \subfile{chap9}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Appendix %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\appendix
+
+\subfile{appendixA}
+
+\subfile{appendixB}
+
+\subfile{appendixC}
+
+\subfile{appendixD}
+
+
+%参考文献のスタイル（style.bstを参照）
+\bibliographystyle{jplain}
+%参考文献（reference.bibを参照）
+\bibliography{reference}
+
+\end{document}

@@ -1,0 +1,2456 @@
+\documentclass[geometry_main]{subfiles}
+
+\begin{document}
+
+\setcounter{chapter}{2}
+
+
+\chapter{代数学のあれこれ}
+
+この章では，主に代数学に関する内容を雑多にまとめる．詳細は~\cite{Yukie}や，加群については~\cite{Shiho}を参照されるのが良いと思う．
+
+まず，部分群の定義と判定法を書いておく：
+
+\begin{mydef}[label=def.subgroup]{部分群}
+	$(G,\, \cdot\mathrel{},\, 1_G)$ を群とする．部分集合 $H \subset G$ が $G$ の\textbf{部分群} (subgroup) であるとは，$H$ が演算 $\cdot$ によって群になることを言う．
+\end{mydef}
+
+\begin{myprop}[label=prop.det_subgroup]{部分群であることの判定法}
+	群 $G$ の部分集合 $H$ が $G$ の部分群になるための必要十分条件は，以下の3条件が満たされることである：
+	\begin{description}
+		\item[\textbf{(SG1)}] $1_G \in H$
+		\item[\textbf{(SG2)}] $x,\, y \in H \; \Longrightarrow \; x \cdot y \in H$ 
+		\item[\textbf{(SG3)}] $x \in H \; \Longrightarrow \; x^{-1} \in H$
+	\end{description}
+\end{myprop}
+
+群の生成を定義しておく：
+
+\begin{mydef}[label=def:group-word]{word}
+	$(G,\, \cdot \mathrel{},\, 1_G)$ を群，$S \subset G$ を部分集合とする．
+
+	$S$ の有限部分集合 $\{x_1 ,\, \dots ,\, x_n\} \subset S$ によって
+	\begin{align}
+		x_1^{\pm 1} \cdot x_2^{\pm 1} \cdots x_n^{\pm 1} \quad \WHERE x_i^{\pm 1}\; \text{は}\; x_i\; \text{か}\; x_i^{-1}\; \text{のどちらでも良い}
+	\end{align}
+	と書かれる $G$ の元を $\bm{S}$ \textbf{の元による語} (word) と呼ぶ．ただし $n=0$ のときは単位元 $1_G$ を表すものとする．
+\end{mydef}
+
+\begin{myprop}[label=prop:group-word]{部分加群の生成}
+	$S$ の元によるword全体の集合を $\expval{S}$ と書く．
+	\begin{enumerate}
+		\item $\expval{S}$ は $G$ の部分群である．これを\textbf{$\bm{S}$ によって生成された部分群}と呼び，$S$ のことを\textbf{生成系} (generator)，$S$ の元を\textbf{生成元}と呼ぶ．
+		\item $G$ の部分群 $H$ が $S \subset H$ を充たすならば $\expval{S} \subset H$ である．i.e. $\expval{S}$ は $S$ を含む最小の部分群である．
+	\end{enumerate}
+\end{myprop}
+\begin{proof}
+	\begin{enumerate}
+		\item 命題\ref{prop.det_subgroup}の3条件を充していることを確認する．$x_1,\, \dots ,\, x_n,\; y_1 ,\, \dots ,\, y_m \in S$ とする．
+		\begin{description}
+			\item[\textbf{(SG1)}] $n=0$ の場合から $1_G \in \expval{S}$
+			\item[\textbf{(SG2)}] $x_1,\, \dots ,\, x_n,\; y_1 ,\, \dots ,\, y_m \in S$ とする．
+			\begin{align}
+				(x_1^{\pm 1} \cdots x_n^{\pm 1}) \cdot (y_1^{\pm 1} \cdots y_m^{\pm 1}) = x_1^{\pm 1} \cdots x_n^{\pm 1}\cdot y_1^{\pm 1} \cdots y_m^{\pm 1} \in \expval{S}
+			\end{align}
+			\item[\textbf{(SG3)}] 複号同順で
+			\begin{align}
+				(x_1^{\pm 1} \cdots x_n^{\pm 1}) \cdot (x_n^{\mp 1} \cdots x_1^{\mp 1}) = 1_G
+			\end{align}
+			かつ $x_n^{\mp 1} \cdots x_1^{\mp 1} \in \expval{S}$ なので良い．
+		\end{description}
+		\item $1_G \in H$ なので $n=0$ のときは良い．
+		$n > 0$ として $x_1, \, \dots ,\, x_n \in S$ を任意にとると，仮定より $x_1,\, \dots ,\, x_n \in H$ である．故に命題\ref{prop.det_subgroup}から $x_1^{\pm 1},\, \dots ,\, x_n^{\pm 1} \in H$ であり，$H$ が席について閉じていることから $x_1^{\pm 1} \cdots x_n^{\pm 1} \in H$ である．i.e. $\expval{S} \subset H.$
+	\end{enumerate}
+\end{proof}
+
+\begin{mydef}[label=def:group-cyclic]{巡回群}
+	$G$ を群とする．一つの元 $x \in G$ で生成される群 $\expval{x}$ を\textbf{巡回群} (cyclic group) と言う．$G$ の部分群であって，巡回群でもあるものを\textbf{巡回部分群}と呼ぶ．
+\end{mydef}
+
+
+\section{群の準同型}
+
+\subsection{定義}
+
+\begin{mydef}[label=def.hom_group]{群準同型}
+	$\bigl(G_1,\, \cdot\mathrel{},\, 1_{G_1}\bigr),\; \bigl(G_2,\, *\;,\, 1_{G_2} \bigr)$ を群とする．写像 $\phi \colon G_1 \to G_2$ が（群の）\textbf{準同型写像} (homomorphism) であるとは，
+	\begin{align}
+		\phi(x \cdot y) = \phi(x) * \phi(y),\quad \forall x,\, y \in G_1
+	\end{align}
+	が成り立つことを言う．
+
+	$\phi$ が準同型写像であって逆写像 $\phi^{-1}$ を持ち，かつ $\phi^{-1}$ もまた準同型写像であるとき，$\phi$ は\textbf{同型写像} (isomorphism) と呼ばれる．このとき $G_1,\, G_2$ は同型 (isomorphic) であるといい，\emph{$G_1 \cong G_2$} と書く．
+\end{mydef}
+
+いちいち群の演算を明記するのは大変なので，以降では余程紛らわしくない限り省略する．
+
+\begin{myprop}[label=prop.hom_group-1]{}
+	$\phi \colon G_1 \to G_2$ を群の準同型とするとき，以下が成立する：
+	\begin{enumerate}
+		\item $\phi(1_{G_1}) = 1_{G_2}$
+		\item $\phi(x^{-1}) = \phi(x)^{-1},\quad \forall x \in G_1$
+	\end{enumerate}
+\end{myprop}
+
+\begin{proof}
+	\begin{enumerate}
+		\item $\phi(1_{G_1}) = \phi(1_{G_1} 1_{G_1}) = \phi(1_{G_1}) \phi(1_{G_1})$ より $\phi(1_{G_1}) = 1_{G_2}$
+		\item (1) より $\phi(1_{G_1}) = \phi(x^{-1} x) = \phi(x^{-1}) \phi(x) = 1_{G_2}$
+	\end{enumerate}
+\end{proof}
+
+標語的には「準同型写像 $\phi \colon G_1 \to G_2$ は群の演算，単位元，逆元の全てを保つ」ということになる．特に $\phi$ が全単射である，i.e. 同型写像であるならば，$G_1$ と $G_2$ の群論的な性質は同じである．この意味で $G_1$ と $G_2$ は同一視できる．
+
+\subsection{核と像}
+
+\begin{mydef}[label=def.ker_group]{準同型の核・像}
+	$G_1,\, G_2$ を群，$\phi \colon G_1 \to G_2$ を準同型写像とする．
+	\begin{enumerate}
+		\item $\phi$ の\textbf{核} (kernel) $\Ker \phi \; \textcolor{red}{\subset G_1}$ を次のように定義する：
+		\begin{align}
+			\Ker \phi \coloneqq \bigl\{ x \in G_1 \bigm| \phi(x) = 1_{G_2} \bigr\} 
+		\end{align}
+		\item $\phi$ の\textbf{像} (image) $\Im \phi \; \textcolor{blue}{\subset G_2}$ を次のように定義する：
+		\begin{align}
+			\Im \phi \coloneqq \bigl\{ \phi(x) \bigm| x \in G_1 \bigr\} 
+		\end{align}
+	\end{enumerate}
+\end{mydef}
+
+\begin{myprop}[label=prop.ker_group-1]{}
+	$G_1,\, G_2$ を群，$\phi \colon G_1 \to G_2$ を準同型写像とする．このとき $\Ker \phi,\; \Im \phi$ はそれぞれ $G_1,\, G_2$ の部分群である．
+\end{myprop}
+\begin{proof}
+	命題\ref{prop.det_subgroup}の3条件を充していることを確認すれば良い．
+	\begin{description}
+		\item[\textbf{(SG1)}] 命題\ref{prop.hom_group-1}-(1) より $1_{G_1} \in \Ker \phi,\; 1_{G_2} \in \Im \phi$
+		\item[\textbf{(SG2)}] $\Ker \phi$ に関しては
+		\begin{align}
+			x,\, y \in \Ker \phi \quad &\Longrightarrow \quad \phi(xy) = \phi(x)\phi(y) = 1_{G_2} 1_{G_2} = 1_{G_2} \\
+			&\Longrightarrow \quad xy \in \Ker \phi
+		\end{align}
+		よりよい．
+
+		$\Im \phi$ に関しては $\phi$ が準同型であることから自明．
+		\item[\textbf{(SG3)}] $\Ker \phi$ に関しては命題\ref{prop.hom_group-1}-(2) から
+		\begin{align}
+			x \in \Ker \phi \quad &\Longrightarrow \quad \phi(x^{-1}) = \phi(x)^{-1} = 1_{G_2}^{-1} = 1_{G_2} \\
+			&\Longrightarrow \quad x^{-1} \in \Ker \phi
+		\end{align}
+		よりよい．
+
+		$\Im \phi$ に関しても命題\ref{prop.hom_group-1}-(2) から
+		\begin{align}
+			y \in \Im \phi \quad &\Longrightarrow \quad \exists x \in G_1,\; y = \phi(x) \\
+			&\Longrightarrow \quad y^{-1} = \phi(x)^{-1} = \phi(x^{-1}) \\
+			&\Longrightarrow \quad y^{-1} \in \Im \phi
+		\end{align}
+		ただし，3行目で $G_1$ が群であるために $x \in G_1 \; \Longrightarrow \; x^{-1} \in G_1$ であることを使った．
+	\end{description}
+\end{proof}
+
+命題\ref{prop.ker_group-1}より，$\Ker \phi$ や $\Im \phi$ による剰余類を考えることができる．
+
+\begin{myprop}[label=prop.hom_group-2]{準同型の単射性判定}
+	準同型写像 $\phi \colon G_1 \to G_2$ に対して以下が成立する：
+	\begin{align}
+		\phi\; \text{が単射} \quad \Longleftrightarrow \quad \Ker \phi = \{1_{G_1}\}
+	\end{align}
+\end{myprop}
+
+\begin{proof}
+	($\Longrightarrow$)　$\phi$ は単射と仮定する．命題\ref{prop.hom_group-1}-(1) より $1_{G_1} \in \Ker \phi$ である．このとき $\forall x \in G_1$ に対して
+	\begin{align}
+		x \in \Ker \phi \quad \Longrightarrow \quad \phi(x) = 1_{G_2} = \phi(1_{G_1})
+	\end{align}
+	であり，仮定から $x = 1_{G_1}$ とわかる．
+	
+	($\Longleftarrow$)　$\Ker \phi = \{1_{G_1}\}$ と仮定する．このとき $\forall x,\, y \in G_1$ に対して 
+	\begin{align}
+		\phi(x) = \phi(y) \quad &\Longrightarrow \quad \phi(xy^{-1}) = \phi(x) \phi(y)^{-1} = \phi(x) \phi(x)^{-1} = 1_{G_2} \\
+		&\Longrightarrow \quad  xy^{-1} \in \Ker \phi
+	\end{align}
+	が成立し，仮定より $xy^{-1} = 1_{G_1}$ とわかる．故に $x = y$ であり，$\phi(x) = \phi(y) \; \Longrightarrow \; x = y$ が示された．
+\end{proof}
+
+\subsection{剰余類}
+
+群 $G$ の部分群 $H$ は $G$ 上の同値関係を誘導する：
+
+\begin{myprop}[]{部分群による同値関係}
+	群 $(G,\, \cdot\mathrel{},\, 1_G)$ の部分群 $(H,\, \cdot\mathrel{},\, 1_H)$ を与える．このとき，次のようにして定義される集合 $\irm{\mathord{\sim}}{L},\, \irm{\mathord{\sim}}{R}\; \subset G \times G$ は同値関係である\footnote{群 $G$ は可換とは限らない!}：
+	\begin{align}
+		\irm{\mathord{\sim}}{L} \; &\coloneqq \bigl\{ (x,\, y) \in G \times G \bigm| x^{-1} y \in H \bigr\} \\
+		\irm{\mathord{\sim}}{R} \; &\coloneqq \bigl\{ (x,\, y) \in G \times G \bigm| y x^{-1} \in H \bigr\}
+	\end{align}
+\end{myprop}
+
+\begin{proof}
+	同値関係の公理\ref{ax.equiv}を充していることを確認すればよい．ほぼ同じ議論なので，$\irm{\mathord{\sim}}{L}$ についてのみ示す．
+	\begin{enumerate}
+		\item 命題\ref{prop.det_subgroup}-(1) より $x^{-1}x = 1_G = 1_H \in H$ であるから $x \irm{\sim}{L} x$．
+		\item 命題\ref{prop.det_subgroup}-(3) より部分群 $H$ は逆元をとる操作について閉じている．故に
+		\begin{align}
+			x \irm{\sim}{L} y \quad &\Longrightarrow \quad x^{-1}y \in H \\
+			&\Longrightarrow \quad y^{-1}x = (x^{-1}y)^{-1} \in H \\
+			&\Longrightarrow \quad y \irm{\sim}{L} x.
+		\end{align}
+		\item 命題\ref{prop.det_subgroup}-(2) より部分群 $H$ は演算 $\cdot$ について閉じている．故に
+		\begin{align}
+			x \irm{\sim}{L} y\quad \text{かつ}\quad y \irm{\sim}{L} z \quad &\Longrightarrow \quad x^{-1}y \in H\quad \text{かつ}\quad y^{-1}z \in H \\
+			&\Longrightarrow \quad x^{-1}z = x^{-1}(yy^{-1})z = (x^{-1}y)(y^{-1}z) \in H \\
+			&\Longrightarrow \quad x \irm{\sim}{L} z.
+		\end{align}
+	\end{enumerate}
+\end{proof}
+つまり，同値関係 $\irm{\mathord{\sim}}{L},\, \irm{\mathord{\sim}}{R}$ の気持ちは
+\begin{itemize}
+	\item 反射律 $\quad \leftrightarrow \quad$ 単位元
+	\item 対称律 $\quad \leftrightarrow \quad$ 逆元をとる操作
+	\item 推移律 $\quad \leftrightarrow \quad$ 群の演算
+\end{itemize}
+という対応を定式化したものと言える．
+
+さて，集合 $G$ の上に同値関係ができたので同値類を考えることができる：
+
+\begin{mydef}[label=def.class_residue]{剰余類}
+	群 $(G,\, \cdot\mathrel{},\, 1_G)$ の部分群 $(H,\, \cdot\mathrel{},\, 1_H)$ を与える．
+	\begin{enumerate}
+		\item  $G$ 上の同値関係 $\irm{\mathord{\sim}}{L}$ による $x \in G$ の同値類を\textbf{左剰余類} (left coset) と呼び，$xH$ と書く．あからさまには以下の通り：
+		\begin{align}
+			\textcolor{red}{x}H \coloneqq \bigl\{ y \in G \bigm| \textcolor{red}{x}^{-1}y \in H \bigr\} 
+		\end{align}
+		\emph{同値関係 $\irm{\mathord{\sim}}{L}$ による $G$ の商集合を $\vb*{G/H}$ と書く}：
+		\begin{align}
+			\vb*{G/H} \coloneqq G/\irm{\mathord{\sim}}{L}\; = \bigl\{ xH \bigm| x \in G \bigr\} 
+		\end{align}
+		\item  $G$ 上の同値関係 $\irm{\mathord{\sim}}{R}$ による $x \in G$ の同値類を\textbf{右剰余類} (right coset) と呼び，$Hx$ と書く．あからさまには以下の通り：
+		\begin{align}
+			H\textcolor{red}{x} \coloneqq \bigl\{ y \in G \bigm| y\textcolor{red}{x}^{-1} \in H \bigr\} 
+		\end{align}
+		\emph{同値関係 $\irm{\mathord{\sim}}{R}$ による $G$ の商集合を $\vb*{H \backslash G}$ と書く}：
+		\begin{align}
+			\vb*{H \backslash G} \coloneqq G/\irm{\mathord{\sim}}{R}\; = \bigl\{ Hx \bigm| x \in G \bigr\} 
+		\end{align}
+	\end{enumerate}
+\end{mydef}
+左/右剰余類は $H$ が $G$ の部分群ならば\emph{必ず}作ことができる．
+
+\begin{myprop}[label=prop.class_residual-1]{剰余類の位数}
+	$H$ が $G$ の部分群ならば以下が成り立つ（位数は $\infty$ でも良い）：
+	\begin{enumerate}
+		\item $\abs{G/H} = \abs{H \backslash G}$
+		\item $\abs{xH} = \abs{Hx} = \abs{H},\quad \forall  x \in G$
+	\end{enumerate}
+\end{myprop}
+
+\begin{proof}
+	\begin{enumerate}
+		\item 集合の濃度が等しいことを示すには，$G/H$ から $H \backslash G$ への全単射が存在することを示せば良い．
+		
+		　写像 $\alpha \colon G/H \to H \backslash G$ を $\alpha(xH) \coloneqq Hx^{-1}$ と定義する．$\alpha$ がwell-definedであることを示す．
+		実際，$\forall x \in G$ を一つ固定したとき $xH$ の勝手な元は $xh\;(h \in H)$ と書かれるが，$(xh)^{-1} = h^{-1} x^{-1} \in Hx^{-1}$ なので，写像 $\alpha$ の $xH$ への作用は $xH$ の代表元の取り方によらない．i.e. $\alpha$ はwell-definedである．
+
+		　同様な議論から，写像$\beta \colon H \backslash G \to G/H$ を $\beta(Hx) \coloneqq x^{-1}H$ として定義すると $\beta$ もwell-definedであることがわかる．
+		このとき $(\beta \circ \alpha)(xH) = \beta(Hx^{-1}) = xH,\; (\alpha \circ \beta)(Hx) = Hx$ が成立するので $\beta \circ \alpha = \mathrm{id}_{G/H},\; \alpha \circ \beta = \mathrm{id}_{H \backslash G}$ であり，$\alpha,\, \beta$ は両方とも全単射である．
+
+		\item 写像 $\phi \colon H \to xH$ を $\phi(h) \coloneqq xh$ と定義する．このとき，$\forall h_1,\, h_2 \in H$ に対して 
+		\begin{align}
+			\phi(h_1) = \phi(h_2) \quad \Longrightarrow \quad xh_1 = xh_2 \quad \Longrightarrow \quad  h_1 = x^{-1}xh_1 = x^{-1}x h_2 = h_2
+		\end{align}
+		が成立するので $\phi$ は単射である．$\phi$ が全射であることは明らかなので全単射である．故に $\abs{xH} = \abs{H}$．
+		$\abs{Hg} = \abs{H}$ も同様に示される．
+	\end{enumerate}
+\end{proof}
+
+同値類全体の集合は商集合を非交和 (disjoint union) に分割することを考えると，次の定理が即座に従う：
+
+\begin{mytheo}[label=thm.Lagrange]{Lagrangeの定理}
+	集合 $G/H,\; H \backslash G$ の濃度を $\vb*{(G : H)}$ と書く\footnote{$G$ における $H$ の\textbf{指数} (index) と呼ぶ．}と，
+	\begin{align}
+		\abs{G} = (G:H) \abs{H}.
+	\end{align}
+\end{mytheo}
+
+\subsection{両側剰余類}
+
+\begin{myprop}[label=prop:double-coset]{}
+	群 $(G,\, \cdot\mathrel{} ,\, 1_G)$ およびその部分群 $(H,\, \cdot\mathrel{},\, 1_H),\, (K,\, \cdot\mathrel{}\, 1_K)$ を与える．このとき，次のようにして定義される集合 $\mathord{\sim}_{\mathrm{D}} \subset G \times G$ は同値関係である：
+	\begin{align}
+		\mathord{\sim}_{\mathrm{D}} \coloneqq \bigl\{\, (x,\, y) \bigm| \exists h \in H,\, \exists k \in K,\; x = h \cdot y \cdot k \,\bigr\} 
+	\end{align}
+\end{myprop}
+\begin{proof}
+	同値関係の公理\ref{ax.equiv}を充していることを確認すればよい．ほぼ同じ議論なので，$\irm{\mathord{\sim}}{L}$ についてのみ示す．
+	\begin{enumerate}
+		\item 命題\ref{prop.det_subgroup}-(1) より $1_G = 1_H = 1_K$ であるから $x = 1_H x 1_K$．
+		\item 命題\ref{prop.det_subgroup}-(3) より部分群は逆元をとる操作について閉じている．故に
+		\begin{align}
+			x \irm{\sim}{D} y \quad &\Longrightarrow \exists h \in H,\, \exists k \in K,\; x = hyk \\
+			&\Longrightarrow \quad y= h^{-1}xk^{-1}\\
+			&\Longrightarrow \quad y \irm{\sim}{D} x.
+		\end{align}
+		\item 命題\ref{prop.det_subgroup}-(2) より部分群は演算 $\cdot$ について閉じている．故に
+		\begin{align}
+			x \irm{\sim}{D} y\quad \text{かつ}\quad y \irm{\sim}{D} z \quad &\Longrightarrow \exists h_1,\, h_2 \in H,\, \exists k_1,\, k_2 \in K,\; x = h_1yk_1 \AND y = h_2zk_2 \\
+			&\Longrightarrow \quad x = (h_1h_2)z(k_2k_1) \\
+			&\Longrightarrow \quad x \irm{\sim}{D} z.
+		\end{align}
+	\end{enumerate}
+\end{proof}
+
+\begin{mydef}[label=def:double-coset]{両側剰余類}
+	命題\ref{prop:double-coset}において，同値関係 $\mathord{\sim}_{\mathrm{D}}$ による $G$ の商集合 $G / \mathord{\sim}_{\mathrm{D}}$ を $\bm{H\backslash G / K}$ と書く．$H\backslash G / K$ の元を $H,\, K$ による\textbf{両側剰余類} (double coset) と呼ぶ．
+	$\textcolor{red}{x} \in G$ の両側剰余類をあからさまに書くと以下の通り：
+	\begin{align}
+		H\textcolor{red}{x}K = \bigl\{\, h\textcolor{red}{x}k \bigm| h \in H,\, k \in K \,\bigr\} 
+	\end{align}
+\end{mydef}
+
+\subsection{正規部分群}
+
+定義\ref{def.class_residue}において右剰余類と左剰余類を定義したが，補題\ref{lem.subgroup_normal}より部分群 $H$ が正規部分群ならば両者は一致する．そしてこのとき商集合 $G/H$ と $H \backslash G$ が同一視され，自然に群構造が入る．
+
+\begin{mydef}[label=def.subgroup_normal]{正規部分群}
+	$H$ を $G$ の部分群とする．$H$ が $G$ の\textbf{正規部分群} (normal subgroup) であるとは，$\forall g \in G,\, \forall h \in H$ に対して $ghg^{-1} \in H$ であることを言い\footnote{このことを $H$ は\textbf{内部自己同型} (inner automorphism) の下で不変だ，とか言う}，記号として $H \vartriangleleft G$，あるいは $G \vartriangleright H$ と書く．
+\end{mydef}
+
+\begin{myprop}[label=prop.kernel1]{$\Ker$ は正規部分群}
+	$G_1,\, G_2$ を群，$\phi \colon G_1 \to G_2$ を準同型写像とすると，$\Ker \phi \vartriangleleft G_1$ である．
+\end{myprop}
+\begin{proof}
+	$\forall g\in G_1,\; h \in \Ker \phi$ に対して
+	\begin{align}
+		\phi(ghg^{-1}) = \phi(g)\phi(h)\phi(g^{-1}) = \phi(g)\phi(g)^{-1} = 1_{G_2}
+	\end{align}
+	なので $ghg^{-1} \in \Ker \phi$ である．i.e. $\Ker \phi \vartriangleleft G_1$ である．
+\end{proof}
+
+\begin{mylem}[label=lem.subgroup_normal]{}
+	群 $G$ およびその部分群 $N$ を与える．このとき以下が成り立つ：
+	\begin{align}
+		N \vartriangleleft G \quad \Longleftrightarrow \quad \forall g \in G,\; gN = Ng
+	\end{align}
+\end{mylem}
+\begin{proof}
+	$(\Longrightarrow)$　
+	\begin{itemize}
+		\item $(\subset)$ 　$\forall x \in gN$ を一つとると，ある $n \in N$ が存在して $x = gn$ と書ける．仮定より $N \vartriangleleft G$ だから $gng^{-1} \in N$ である．ゆえに
+		\begin{align}
+			x = gn = gn(g^{-1}g) = (gng^{-1})g \in Ng．
+		\end{align}
+		$x \in gN$ は任意だったから $gN \subset Ng.$
+
+		\item $(\supset)$ 　$g$ を $g^{-1}$ に置き換えて同じ議論をすれば良い．
+	\end{itemize}
+
+	$(\Longleftarrow)$　
+	$\forall g \in G,\; \forall n \in N$ をとる．仮定より $\exists n' \in N,\; gn = n'g$ が言える．従って
+	\begin{align}
+		gng^{-1} = n'gg^{-1} = n' \in N.
+	\end{align}
+\end{proof}
+
+\begin{mytheo}[label=def.quotient_group]{剰余群}
+	群 $G$ とその\underline{正規部分群} $N$ を与える．このとき，\underline{左剰余類による}商集合（定義\ref{def.class_residue}） $G/N$ 上の二項演算 $\cdot\mathrel{} \colon G/N \times G/N \to G/N$ を
+	\begin{align}
+		\label{eq.def-quotient}
+		gN \cdot hN \coloneqq (gh)N
+	\end{align}
+	と定義するとこれはwell-definedであり，かつ\emph{ $\vb*{\bigl( G/N,\, \cdot\mathrel{},\, N \bigr)}$ は群を成す}．この群を $G$ の $N$ による\textbf{剰余群} (quotient group) と呼ぶ．
+\end{mytheo}
+
+\begin{proof}
+	\begin{description}
+		\item[\textbf{well-definedness}]　
+		
+		　要するに式\eqref{eq.def-quotient}の右辺が引数 $gN,\, hN$ の代表元の取り方によらずに定まることを示せば良い．
+
+		$\forall g,\, h \in G$ を固定する．このとき左剰余類 $gN,\, hN$ の勝手な元 $x \in gN,\, y \in hN$ は $x = gn,\; y = hn'\; (n,\, n' \in N)$ と書ける．
+		故に
+		\begin{align}
+			xy = (gn)(hn') = g(hh^{-1})nhn' = (gh)(h^{-1}nh)n'
+		\end{align}
+		だが，\textcolor{red}{\emph{$\vb*{N}$ が $G$ の正規部分群であることにより}} $h^{-1}nh \in N$ が言える．よって $xy \in (gh)N$ であり，式\eqref{eq.def-quotient}の右辺が $gN,\, hN$ の代表元の取り方によらないことが示された．
+
+		\item[\textbf{群であること}]　
+		
+		　演算 $\cdot$ のwell-definednessが示されたので，後は群の公理を充していることを確認すれば良い．
+		\begin{description}
+			\item[\textbf{単位元}] $G/N$ の任意の元は $gN$ の形をしている．このとき
+			\begin{align}
+				gN \cdot N = N \cdot gN = (g 1_G) N = gN
+			\end{align}
+			なので $1_{G/N} = N$ である．
+			\item[\textbf{結合則}] $G/N$ の任意の元を3つとってきて，それらを $gN,\, hN,\, kN\; (g,\, h,\, k \in G)$ と書く．このとき
+			\begin{align}
+				gN \cdot (hN \cdot kN) = gN \cdot (hk)N = (ghk) N = \bigl( (gh)k \bigr) N = (gh)N \cdot kN = (gN \cdot hN) \cdot kN
+			\end{align}
+			なので良い．
+			\item[\textbf{逆元}] $G/N$ の任意の元を1つとってきてそれを $gN\; (g \in G)$ と書く．このとき $g^{-1} \in G$ なので $g^{-1}N \in G/N$ であり，
+			\begin{align}
+				gN \cdot g^{-1}N = (gg^{-1}) N = N = 1_{G/N}
+			\end{align}
+			とわかる．i.e. $(gN)^{-1} = g^{-1}N$ である．
+		\end{description}
+	\end{description}
+\end{proof}
+
+\begin{mycol}[label=natural-homo]{標準射影と剰余群}
+	群 $G$ とその正規部分群 $N$ を与える．このとき標準射影（定義\ref{def.quo-proj}）$\pi \colon G \to G/N,\; g \mapsto gN$ は\emph{ $\vb*{G/N}$ を剰余群だと思うと全射準同型写像になる}．また，$\Ker \pi = N$ である．
+\end{mycol}
+
+\begin{proof}
+	$\Im \pi = G/N$ は $\pi$ の定義から明らか．
+	
+	剰余群 $G/N$ の積の定義\eqref{eq.def-quotient}より
+	\begin{align}
+		\pi(gh) = (gh)N = gN \cdot hN = \pi(g) \cdot \pi(h)
+	\end{align}
+	であり，$\pi$ は準同型である．
+
+	剰余群 $G/N$ の単位元は $N$ なので，$\forall g \in G$ に対して $\pi(g) = gN = 1_{G/N} \; \Longleftrightarrow \; g \in N$． 
+\end{proof}
+
+\begin{marker}
+	系\ref{natural-homo}より，標準射影 $\pi \colon G \twoheadrightarrow G/N$ のことを\textbf{自然な全射準同型}と呼ぶ場合がある．
+\end{marker}
+
+\subsection{直積・半直積}
+
+部分群の「割り算」を定義できたので，ついでに「積」も定義しておこう．まず群 $G$ の\textbf{部分集合}の積が自然に定まることを見る．以下の定義\ref{def:prod-group-subset}は\textbf{部分群を作っているわけではないので注意}．
+\begin{mydef}[label=def:prod-group-subset]{群 $G$ の部分集合の積}
+	$S_1,\, S_2$ を群 $(G,\, \cdot \mathrel{},\, 1_G)$ の部分集合とする\footnote{部分群ではない！}．集合
+	\begin{align}
+		S_1 S_2 \coloneqq \bigl\{\, x \cdot y \bigm| x \in S_1,\, y \in S_2 \,\bigr\} 
+	\end{align}
+	を部分集合の\textbf{積}と呼ぶ．
+\end{mydef}
+
+\begin{myprop}[label=prop:prod-group]{部分集合の積が部分群になる必要十分条件}
+	群 $(G,\, \cdot \mathrel{},\, 1_G)$ とその\underline{部分群} $H_1,\, H_2$ を与える．このとき，以下が成り立つ：
+	\begin{enumerate}
+		\item $H_1H_2 \subset G$ が $G$ の部分群 $\IFF H_1H_2 = H_2 H_1$ 
+		\item $H_1 \vartriangleleft G \AND H_2 \vartriangleleft G \IMP H_1H_2 \vartriangleleft G$
+	\end{enumerate}
+\end{myprop}
+
+\begin{proof}
+	\begin{enumerate}
+		\item $(\Longrightarrow)$ $H_1H_2$ が $G$ の部分群であると仮定する．$H_1H_2$ の勝手な元は $x = h_1 h_2\; (h_i \in H_i)$ と書ける．このとき仮定より $x^{-1} \in H_1H_2$ だが，$H_i$ が部分群なので
+		\begin{align}
+			x^{-1} = h_2^{-1} h_1^{-1} \in H_2H_1
+		\end{align}
+		でもある．よって $H_1H_2 = H_2H_1.$
+
+		$(\Longleftarrow)$ $H_1H_2 = H_2H_1$ と仮定する．命題\ref{prop.det_subgroup}の2条件を充していることを確認する．
+		\begin{description}
+			\item[\textbf{(SG1)}] $H_i$ が部分群なので $1_G = 1_G1_G \in H_1H_2.$
+			\item[\textbf{(SG2)}] $H_1H_2$ の勝手な2つの元は $h_1 h_2,\, k_1 k_2\; (h_i,\, k_i \in H_i)$ と書ける．
+			仮定より $\exists h'_1 \in H_1,\, \exists k'_2 \in H_2,\; h_2k_1 = h'_1 k'_2$ が成立するから，
+			\begin{align}
+				(h_1h_2)(k_1k_2) = h_1(h_2k_1)k_2 = (h_1h'_1)(k'_2k_2) \in H_1H_2.
+			\end{align}
+			\item[\textbf{(SG3)}] $h_1h_2 \in H_1H_2$ を任意にとる．仮定から $\exists k'_1 \in H_1,\, \exists k'_2 \in H_2,\; h_2^{-1}h_1^{-1} = k'_1 k'_2$ が成立するから
+			\begin{align}
+				(h_1h_2)^{-1} = h'_1 h'_2 \in H_1H_2.
+			\end{align}
+		\end{description}
+		\item 仮定と補題\ref{lem.subgroup_normal}より $\forall g \in G$ に対して $gH_2 = H_2g$ である．故に
+		\begin{align}
+			H_1H_2 = \bigcup_{h_1 \in H_1} h_1H_2 = \bigcup_{h_1 \in H_1} H_2 h_1 = H_2H_1.
+		\end{align}
+		よって (1) から $H_1H_2$ は $G$ の部分群である．
+		
+		$h_1h_2 \in H_1H_2$ を任意にとる．仮定より $\forall g \in G$ に対して $gh_ig^{-1} \in H_i$ である．
+		\begin{align}
+			g(h_1h_2)g^{-1} = (gh_1g^{-1})(gh_2g^{-1}) \in H_1H_2.
+		\end{align}
+		i.e. $H_1H_2 \vartriangleleft G.$
+	\end{enumerate}
+\end{proof}
+
+次に，群の直積集合を群にする方法を定める．
+\begin{mydef}[label=def:prod-group]{群の直積}
+	\begin{itemize}
+		\item $G_1,\, G_2$ を群とする．直積集合 $G_1 \times G_2$ に以下のように二項演算 $\cdot \mathrel{} \colon G_1 \times G_2 \to G_1 \times G_2$ を定義すれば，$\bigl( G_1 \times G_2,\, \cdot \mathrel{},\, (1_{G_1},\, 1_{G_2}) \bigr)$ は群になる：
+		\begin{align}
+			(g_1,\, g_2) \cdot (h_1,\, h_2) \coloneqq (g_1h_1,\, g_2h_2)
+		\end{align}
+		\item 
+	\end{itemize}
+\end{mydef}
+\begin{proof}
+	\begin{description}
+		\item[\textbf{結合律}] $G_1,\, G_2$ それぞれの結合則から明らか．
+		\item[\textbf{単位元}] $\forall (g_1,\, g_2) \in G_1 \times G_2$ に対して
+		\begin{align}
+			(g_1,\, g_2) \cdot (1_{G_1},\, 1_{G_2}) = (g_1,\, g_2) =  (1_{G_1},\, 1_{G_2})\cdot (g_1,\, g_2)
+		\end{align}
+		\item[\textbf{逆元}] $\forall (g_1,\, g_2) \in G_1 \times G_2$ に対して
+		\begin{align}
+			(g_1,\, g_2) \cdot (g_1^{-1},\, g_2^{-1}) = (1_{G_1},\, 1_{G_2}) = 1_{G_1 \times G_2}
+		\end{align}
+		i.e. $(g_1,\, g_2)^{-1} = (g_1^{-1},\, g_2^{-1})$ である．
+	\end{description}
+\end{proof}
+
+\begin{myprop}[label=prop:prod-group]{群の直積の特徴付け}
+	\begin{enumerate}
+		\item $G_1,\, G_2$ を群とし，包含写像 $\iota_i \colon G_i \hookrightarrow G_1 \times G_2\quad (i = 1,\, 2)$ を
+		\begin{align}
+			\iota_1(g_1) \coloneqq (g_1,\, 1_{G_2}),\quad \iota_2(g_2) \coloneqq (1_{G_1},\, g_2)
+		\end{align}
+		と定義する．
+		このとき $\iota_1(G_1)$ の元と $\iota_2(G_2)$ の元は互いに可換であり，$\iota_i(G_i) \vartriangleleft G_1 \times G_2$ が成り立つ．
+		\item $G$ を群，$H,\, K \subset G$ を部分群とする．
+		このとき $H \vartriangleleft G \AND K \vartriangleleft G \AND H \cap K = \{1_G\} \AND HK = G$ ならば $G \cong H \times K$ である．
+	\end{enumerate}
+\end{myprop}
+\begin{proof}
+	\begin{enumerate}
+		\item 
+		可換であることは
+		\begin{align}
+			(g_1,\, 1_{G_2})(1_{G_1},\, g_2) = (g_1,\, g_2) = (1_{G_1},\, g_2)(g_1,\, 1_{G_2})
+		\end{align}
+		より従う．
+
+		$\forall g_1 \in G_1,\; \forall (h_1,\, h_2) \in G_1 \times G_2$ をとる．
+		\begin{align}
+			(h_1,\, h_2)\iota_1(g_1) (h_1,\, h_2)^{-1} = (h_1g_1h_1^{-1},\, 1_{G_2}) \in \iota_1(G_1)
+		\end{align}
+		なので $\iota_1(G_1) \vartriangleleft G_1 \times G_2$ である．全く同様にして $\iota_2(G_2) \vartriangleleft G_1 \times G_2$ もわかる．
+		\item 
+		写像 $\phi \colon H \times K \to G$ を
+		\begin{align}
+			\phi\bigl(\,(h,\, k)\, \bigr) \coloneqq hk
+		\end{align}
+		と定義する．仮定より $G = HK$ だから（\hyperref[def:prod-group-subset]{部分集合の積}） $\phi$ は全射．
+	
+		まず $\forall h \in H,\,  \forall k \in K$ に対して $hk = kh$ であることを示す．
+		\begin{align}
+			hk(kh)^{-1} = (\textcolor{red}{ h}k \textcolor{red}{ h^{-1}})k^{-1} = h(\textcolor{blue}{k}h^{-1}\textcolor{blue}{k^{-1}})
+		\end{align}
+		だが，仮定より $K,\, H \vartriangleleft G$ なので $\textcolor{red}{ h}k \textcolor{red}{ h^{-1}} \in K,\; \textcolor{blue}{k}h^{-1}\textcolor{blue}{k^{-1}} \in H$ であり，$hk(kh)^{-1} \in K \cap H = \{1_G\}$ が言える．i.e. $hk = kh.$
+		
+		従って $\forall (h,\, k),\, (h',\, k') \in H\times K$ に対して
+		\begin{align}
+			\phi\bigl(\,(h,\, k)\,\bigr)\phi\bigl(\,(h',\, k')\,\bigr) = h(kh')k' = h(h'k)k' = (hh')(kk') = \phi\bigl(\, (h,\, k) \cdot (h',\, k')\,\bigr)
+		\end{align}
+		が成り立つから $\phi$ は群の準同型である．
+		また，
+		\begin{align}
+			(h,\, k) \in \Ker \phi \IMP hk = 1_G \IMP h = k^{-1} \in H \cap K = \{1_G\}
+		\end{align}
+		だから $\Ker \phi = \{1_G\}$ であり，命題\ref{prop.hom_group-2}から $\phi$ は単射．よって $\phi$ は同型写像である．
+	\end{enumerate}
+\end{proof}
+
+最後に群の半直積を定義しておこう．
+% 半直積は，命題\ref{prop:prod-group}-(2) において $H,\, K \subset G$ のどちらか一方が必ずしも正規部分群でないものとして定義される：
+
+% \begin{mydef}[label=def:semiprod-group]{内部半直積}
+% 	$G$ を群，$H,\, N \subset G$ を部分群とする．\textbf{ただし $\bm{N \vartriangleleft G}$ である．}このとき，以下の条件は同値になる：
+% 	\begin{enumerate}
+% 		\item $HN = G \AND H\cap N = \{1_G\}$
+% 		\item $\forall g \in G,\, \exists! n\in N,\, \exists! h \in H,\; g = nh$
+% 		\item 写像 $\psi \colon H \to G/N,\; h \mapsto hN$ は同型写像である．
+% 		\item 以下の群の完全系列が存在する：
+% 		\begin{align}
+% 			1_G \to N \to G \to H \to 1_G
+% 		\end{align}
+% 	\end{enumerate}
+% 	これらの条件のうちどれか一つが充たされているとき，$G$ は $H,\, N$ の（内部）\textbf{半直積} (semidirect product) であるといい，$\bm{G = H \ltimes N}$ または $\bm{G = N \rtimes H}$ と書く\footnote{正規部分群でない $H$ の方が直積の記号 $\times$ との違いを生んでいる，と言うこと．}．
+% \end{mydef}
+
+\begin{mydef}[label=def:semiprod-group-inner]{外部半直積}
+	$N,\, H$ を群とし，$\phi \colon H \to \Aut N,\; h \mapsto \phi_h$ を準同型写像とする\footnote{$\Aut N$ は，$N$ から $N$ 自身への同型写像全体の集合に，写像の合成を群の演算として群構造を入れたもので，\textbf{自己同型群} (automorphism group) と呼ばれる．}．
+	このとき，集合 $N \times H$ は次の二項演算 $\cdot \mathrel{} \colon N\times H \to N\times H$ に関して群を成す：
+	\begin{align}
+		(n_1,\, h_1) \cdot (n_2,\, h_2) \coloneqq \bigl( n_1 \phi_{\textcolor{red}{h_1}}(n_2),\, h_1h_2 \bigr) 
+	\end{align}
+	この群 $\bigl( N \times H,\, \cdot \mathrel{},\, (1_N,\, 1_H) \bigr)$ のことを $N,\, H$ の（外部）\textbf{半直積} (semidirect product) と呼び，$\bm{H \ltimes_\phi N}$ または $\bm{N \rtimes_\phi H}$ と書く．
+\end{mydef}
+
+\begin{proof}
+	\begin{description}
+		\item[\textbf{結合律}] $\phi\colon H \to \Aut N$ は準同型写像であるから $\phi_{h_1h_2} = \phi(h_1h_2) = \phi(h_1) \circ \phi(h_2) = \phi_{h_1} \circ \phi_{h_2}$ である．
+		\begin{align}
+			\bigl((n_1,\, h_1) \cdot (n_2,\, h_2)\bigr) \cdot (n_3,\, h_3) &= \Bigl( n_1 \phi_{h_1}(n_2)  \phi_{h_1h_2}(n_3),\, h_1h_2h_3 \Bigr) \\
+			&= \Bigl( n_1 \textcolor{red}{\phi_{h_1}}(n_2)  \textcolor{red}{\phi_{h_1}}\bigl(\phi_{h_2}(n_3)\bigr),\, h_1h_2h_3 \Bigr) \\
+			&= \Bigl( n_1 \textcolor{red}{\phi_{h_1}}\bigl(n_2\phi_{h_2}(n_3)\bigr),\, h_1(h_2h_3) \Bigr) \\
+			&= (n_1,\, h_1) \cdot \bigl( n_2\phi_{h_2}(n_3),\, h_2h_3 \bigr) \\
+			&= (n_1,\, h_1) \cdot \Bigl( (n_2,\, h_2) \cdot (n_3,\, h_3) \Bigr) 
+		\end{align}
+		\item[\textbf{単位元}] $\phi\colon H \to \Aut N$ は準同型写像であるから $\phi_{1_H} = \Identity{N}$ である．故に $\forall n \in N,\, \forall h \in H$ に対して
+		\begin{align}
+			(n,\, h) \cdot (1_N,\, 1_H) = (n\phi_h(1_N),\, h1_H) = (n,\, h) = (1_N \phi_{1_H}(n),\, 1_H h) = (1_N,\, 1_H) \cdot (n,\, h)
+		\end{align}
+		\item[\textbf{逆元}]  $\phi\colon H \to \Aut N$ は準同型写像であるから，命題\ref{def.hom_group}より $\phi_{h^{-1}} = \phi(h^{-1}) = \phi(h)^{-1} = \phi_{h}^{-1}$ である．故に $\forall n \in N,\, \forall h \in H$ に対して
+		\begin{align}
+			(n,\, h) \cdot \bigl(\phi_{h^{-1}}(n^{-1}),\, h^{-1}\bigr) &= \Bigl(n\phi_h\bigl(\phi_{h^{-1}}(n^{-1})\bigr),\, 1_H\Bigr) = (nn^{-1},\, 1_H) = 1_{N \rtimes_\phi H} \\
+			\bigl(\phi_{h^{-1}}(n^{-1}),\, h^{-1}\bigr)\cdot (n,\, h) &= \Bigl(\phi_{h^{-1}}(n^{-1}) \phi_{h^{-1}}(n),\, 1_H\Bigr) = (\phi_{h^{-1}}(n)^{-1}\phi_{h^{-1}}(n),\, 1_H) = 1_{N \rtimes_\phi H}
+		\end{align}
+		i.e. $\bm{(n,\, h)^{-1} = \bigl(\phi_{h^{-1}}(n^{-1}),\, h^{-1}\bigr)}.$ 
+	\end{description}
+\end{proof}
+
+
+\subsection{準同型定理}
+
+群の準同型写像 $\phi \colon G \to H$ が与えられると，命題\ref{prop.kernel1}より $\Ker \phi \vartriangleleft G$ であるから $G/\Ker \phi$ は剰余群\ref{def.quotient_group}になる．そして系\ref{natural-homo}により，$G$ と $G /\Ker \phi$ は自然に全射準同型 $\pi$ で結ばれることもわかる．
+では，群 $G/\Ker \phi$ と群 $H$ の関係はどうなっているのだろうか？
+
+\begin{mytheo}[label=thm.homo1]{準同型定理(第一同型定理)}
+	群の準同型写像 $\phi \colon G \to H$ を与える．$\pi \colon G \to G/\Ker \phi$ を自然な準同型とする．このとき，図\ref{fig.homo1}が可換図式となるような準同型 $\psi \colon G/\Ker \phi \to H$ がただ一つ存在し，$\psi \colon G/\Ker \phi \to \Im \phi$ は同型写像になる．
+\end{mytheo}
+
+\begin{figure}[H]
+	\centering
+	\begin{tikzcd}
+		G \arrow[twoheadrightarrow]{d}{\pi} \arrow{r}{\phi} & H \\
+		G/\Ker \phi \arrow[ur, red, dashrightarrow, "\exists! \psi"'] &
+	\end{tikzcd}
+	\caption{準同型定理}
+	\label{fig.homo1}
+\end{figure}%
+
+\begin{proof}
+	$N = \Ker \phi$ とおく．$\forall g \in G$ に対して
+	\begin{align}
+		\label{eq.thm-B4-1}
+		\psi(gN) \coloneqq \phi(g)
+	\end{align}
+	と定義する．
+	
+	$\forall x \in gN$ はある $n \in N = \textcolor{red}{\Ker \phi}$ を使って $x = gn$ と書くことができるから
+	\begin{align}
+		\psi(xN) = \phi(x) = \phi(gn) = \phi(g) \phi(n) = \phi(g) 1_G = \psi(gN)
+	\end{align}
+	が成立する．i.e. \eqref{eq.thm-B4-1}によって定義される写像 $\psi \colon G/N \to H$ はwell-definedである．
+
+	\begin{description}
+		\item[\textbf{$\vb*{\psi}$ は準同型写像で，図\ref{fig.homo1}は可換図式である}]　
+		
+		$\forall g,\, h \in G$ に対して
+		\begin{align}
+			\psi \bigl( (gN)(hN) \bigr) = \psi \bigl( (gh)N \bigr) = \phi(gh) = \phi(g)\phi(h) = \psi(gN)\psi(hN)
+		\end{align}
+		であるから $\psi$ は準同型写像．
+
+		また，定義\eqref{eq.thm-B4-1}から明らかに写像の等式として $\psi \circ \pi = \phi$ が成り立つ．i.e. 図\ref{fig.homo1}は可換図式である．
+		
+		\item[\textbf{$\vb*{\psi}$ は単射である}]　
+		
+		$\forall g \in G$ に対して
+		\begin{align}
+			\psi (gN) = 1_H \quad \Longrightarrow \quad \phi(g) = 1_H
+			\quad \Longleftrightarrow \quad g \in \Ker \phi = N
+		\end{align}
+		なので $\Ker \psi = \{ N \}$ とわかる．$N = 1_{G/N}$ なので，命題\ref{prop.ker_group-1}から $\psi$ は単射である．
+
+		\item[\emph{$\bm{\mathrm{Im}}\, \bm{\psi} = \bm{\mathrm{Im}}\, \bm{\phi}$ である}]　
+		
+		$\forall g \in G$ に対して $\phi(g) = \psi(gN)$ なので $\Im \phi \subset \Im \psi$．$G/N$ の勝手な元は $gN\quad (g \in G)$ の形をしているので $\psi(gN) = \phi(g)$ であり， $\Im \psi \subset \Im \phi$ とわかる．よって $\Im \psi = \Im \phi$ である．
+		$\psi$ は単射だから $\psi \colon G/N \to \Im \phi$ は全単射であり，$G/N \cong \Im \phi$ が言える．
+
+		\item[\textbf{$\vb*{\psi}$ は一意的に定まる}]　
+		
+		図\ref{fig.homo1}が可換図式であるとき，i.e. $\psi \circ \pi = \phi$ が成り立つとき，$\forall x = gN \in G/N$ に対して $\psi(x) = \psi(gN) = (\psi \circ \pi)(g) = \phi(g)$ として値が定まり，定義\eqref{eq.thm-B4-1}と一致する．従って $\psi$ は一意に定まる．
+	\end{description}
+\end{proof}
+
+\begin{mytheo}[label=thm.homo2]{準同型定理(第二同型定理)}
+	$G$ を群，$H$ を $G$ の部分群，$N$ を $G$ の\hyperref[def.subgroup_normal]{正規部分群}とするとき，次が成り立つ：
+	\begin{enumerate}
+		\item $H \cap N \vartriangleleft H$
+		\item $\bm{HN/N \cong H/H\cap N}$
+	\end{enumerate}
+\end{mytheo}
+
+\begin{proof}
+	写像 $\phi \colon H \to HN/N,\; h \mapsto hN/N$ は\hyperref[natural-homo]{剰余群への自然な全射準同型}と同様にwell-definedな準同型写像である．
+	
+	$\forall y \in HN/N$ に対して
+	\begin{align}
+		\exists h \in H,\, \exists n \in N,\; y= (hn)N = hN = \phi(h)
+	\end{align}
+	が成立するから $\Im \phi = HN/N$ である．
+	また，$h \in H$ に対して
+	\begin{align}
+		\phi(h) = 1_{HN/N} \IFF hN = N \IMP h \in H \cap N
+	\end{align}
+	だから $\Ker \phi = H \cap N$ である．
+	\begin{enumerate}
+		\item 命題 $prop.ker_group-1$ より $H \cap N \vartriangleleft H$ である．
+		\item 準同型定理（第一同型定理）\ref{thm.homo1}より，$\phi$ によって $HN/N \cong H/H\cap N$ である．
+	\end{enumerate}
+\end{proof}
+
+\begin{mytheo}[label=thm.homo3]{準同型定理(第三同型定理)}
+	$G$ を群，$N \subset M$ を $G$ の\hyperref[def.subgroup_normal]{正規部分群}とするとき，次が成り立つ：
+	\begin{align}
+		\bm{(G/N)/(M/N) \cong G/M}
+	\end{align}
+\end{mytheo}
+
+\begin{proof}
+	$\forall x \in G,\, \forall y \in N$ をとる．$N \subset M$ なので $(xy) M = xM$ である．従って，写像 $\phi \colon G/N \to G/M$ を
+	\begin{align}
+		\phi(xN) \coloneqq xM
+	\end{align}
+	とおくと $\phi$ はwell-definedな準同型写像である．
+
+	また，$x \in G$ に対して
+	\begin{align}
+		\phi (xN) = 1_{G/M} \IFF xM = M \IMP x \in M
+	\end{align}
+	だから $\Ker \phi = M/N$ である．
+	よって準同型定理（第一同型定理）\ref{thm.homo1}を使うことで $(G/N)/(M/N) \cong G/M$ がわかる．
+\end{proof}
+
+\section{群の作用}
+
+\begin{mydef}[label=def.group_action]{群の作用}
+	$G$ を群，$X$ を集合とする．
+	\begin{itemize}
+		\item  $G$ の $X$ への\textbf{左作用} (left action) とは写像
+		\begin{align}
+			\phi \colon G \times X \to X,\; (g,\, x) \mapsto \phi(g,\, x)
+		\end{align}
+		であって以下の性質を充たすものを言う：
+		\begin{enumerate}
+			\item $\phi(1_G,\, x) = x$
+			\item $\phi\bigl(g,\, \phi(h,\, x)\bigr) = \phi(\textcolor{red}{gh},\, x)$
+		\end{enumerate}
+		\item $G$ の $X$ への\textbf{右作用} (right action) とは写像
+		\begin{align}
+			\phi \colon X \times G \to X,\; (x,\, g) \mapsto \phi(x,\, g)
+		\end{align}
+		であって以下の性質を充たすものを言う：
+		\begin{enumerate}
+			\item $\phi(x,\, 1_G) = x$
+			\item $\phi\bigl(\phi(x,\, h),\, g\bigr) = \phi(\textcolor{red}{hg},\, x)$
+		\end{enumerate}
+	\end{itemize}
+\end{mydef}
+
+\begin{marker}
+	よく左作用 $\phi$ は $g \cdot x,\; gx \coloneqq \phi(g,\, x)$ と略記される．
+	右作用 $\phi$ は $x \cdot g,\; xg,\; x^g \coloneqq \phi(g,\, x)$ などと略記される．
+\end{marker}
+
+\begin{myprop}[]{}
+	群 $G$ が集合 $X$ に左（右）から作用するとする．$\forall g \in G$ を一つ固定すると，写像
+	\begin{align}
+		\alpha \colon X \to X,\; x \mapsto g \cdot x
+	\end{align}
+	は全単射になる．
+\end{myprop}
+
+\begin{proof}
+	\begin{description}
+		\item[\textbf{左作用}] $\forall x \in X$ に対して $y \coloneqq g \cdot x$ とおく．
+		\begin{align}
+			g^{-1} \cdot (g \cdot x) = (g^{-1}g) \cdot x = 1_G \cdot x = x = g^{-1} \cdot y
+		\end{align}
+		なので写像 $\beta \colon X \to X,\; x \mapsto g^{-1} \cdot x$ が $\alpha$ の逆写像である．
+		\item[\textbf{右作用}] 左作用のときとほぼ同様に $y \coloneqq x \cdot g$ とおくと，
+		\begin{align}
+			(x \cdot g) \cdot g^{-1} = x \cdot (gg^{-1}) = x \cdot 1_G = y \cdot g^{-1}
+		\end{align}
+		であることから，$\alpha^{-1}$ の逆写像の存在が示される．
+	\end{description}
+\end{proof}
+
+\subsection{種々の作用}
+
+\begin{mydef}[label=def.natural_action]{剰余群への自然な作用}
+	$H$ を群 $G$ の部分群とする．このとき $\forall g,\, \forall xH \in G/H$ に対して
+	\begin{align}
+		\label{eq.def.natural_action}
+		g \cdot (xH) \coloneqq (gx) H
+	\end{align}
+	と定義すれば $G$ の $G/H$ への左作用が得られる．これを\textbf{$\bm{G}$ の $\bm{G/H}$ への自然な作用}と呼ぶ．
+	
+	同様に $\forall g,\, \forall Hx \in H\backslash G$ に対して
+	\begin{align}
+		(Hx) \cdot g \coloneqq H(xg)
+	\end{align}
+	と定義すれば $G$ の $H\backslash G$ への右作用が得られる．これも自然な作用と呼ぶ．
+\end{mydef}
+
+\begin{proof}
+	well-definednessを確認する．実際 $xH$ の勝手な元 $y$ は $h \in H$ を使って $y = xh$ と書かれるから
+	\begin{align}
+		gy = gxh \in (gx) H
+	\end{align}
+	であり，式\eqref{eq.def.natural_action}の右辺は剰余類 $xH$ の代表元の取り方によらない．
+	右作用に関しても同様である．
+\end{proof}
+
+\begin{mydef}[label=def.adjoint_action]{随伴作用}
+	$G$ を群とし，$\forall g \in G$ をとる．このとき，写像 $\mathrm{Ad}(g) \colon G \to G$ を 
+	\begin{align}
+		\mathrm{Ad}(g)(h) \coloneqq ghg^{-1},\quad \forall h \in G
+	\end{align}
+	と定義すれば，$\mathrm{Ad} \colon G\times G \to G$ は $G$ の $G$ 自身への\underline{左作用}になる．これを\textbf{随伴作用}\footnote{\textbf{共役作用} (conjugation) とも言う．} (adjoint action) と呼ぶ．
+\end{mydef}
+
+\begin{proof}
+	定義\ref{def.group_action}の2条件を充していることを確認する．
+	\begin{enumerate}
+		\item $\mathrm{Ad}(1_G)(h) = h$ より明らか．
+		\item $\forall g_1,\, g_2 \in G$ に対して
+		\begin{align}
+			\mathrm{Ad}(g_1g_2)(h) = (g_1g_2)h(g_1g_2)^{-1} = g_1(g_2hg_2^{-1})g_1^{-1} = \mathrm{Ad}\bigl(g_1\bigr)\bigl( \mathrm{Ad}(g_2)(h) \bigr) 
+		\end{align}
+		よりよい．
+	\end{enumerate}
+\end{proof}
+
+
+\subsection{群の作用に関する諸定義}
+
+以下，断らなければ作用は左作用であるとする．
+\begin{mydef}[label=def.orbit]{軌道，等質空間，安定化群}
+	群 $G$ が集合 $X$ に作用するとする．
+	\begin{enumerate}
+		\item $x \in X$ に対して，集合 $\bm{G \cdot x} \coloneqq \bigl\{\, g\cdot x \bigm| g \in G \,\bigr\} $ を $x$ の $G$ による\textbf{軌道} (orbit) と呼ぶ．
+		\item $x \in X$ に対して，集合 $\bm{G_x} \coloneqq \bigl\{\, g \in G \bigm| g \cdot x = x \,\bigr\} $ を $x$ の\textbf{安定化群} (stabilizer subgroup) と呼ぶ．
+		\item $\exists x \in X,\; G\cdot x = X$ であるとき，この作用は\textbf{推移的}\footnote{\textbf{可移}と言うこともある．} (transitive) であると言う．このとき $X$ は $G$ の\textbf{等質空間} (homogeneous space) であると言う． 
+		\item $\forall x \in X,\; G_x = \{1_G\}$ であるとき，この作用は\textbf{自由}\footnote{\textbf{半正則} (semiregular) とも言う．} (free) であると言う．
+		\item $\exists x \in X,\; G_x = \{1_G\}$ であるとき，この作用は\textbf{効果的}\footnote{\textbf{忠実} (faithful) とも言う．} (effective) であると言う．
+	\end{enumerate}
+\end{mydef}
+
+\begin{myprop}[]{}
+	群 $G$ が $X$ に作用するとする．$\forall x \in X$ を一つ固定する．
+	このとき写像
+	\begin{align}
+		\alpha \colon G/G_x \to G \cdot x,\; gG_x \mapsto g\cdot x
+	\end{align}
+	は全単射である．従って
+	\begin{align}
+		\abs{G \cdot x} = (G:G_x).
+	\end{align}
+\end{myprop}
+
+\begin{proof}
+	$gG_x$ の勝手な元 $h$ は $g_1 \in G_x$ を用いて $h = gg_1$ と書かれるから $h \cdot x = (gg_1) \cdot x = g \cdot (g_1 \cdot x) = g \cdot x$ であり，$\alpha$ はwell-definedである．
+
+	$\forall g_1,\, g_2 \in G$ をとる．
+	\begin{align}
+		g_1 \cdot x = g_2  \cdot x \quad &\Longleftrightarrow \quad (g_2^{-1} g_1 ) \cdot x = x \\
+		&\Longleftrightarrow \quad g_2^{-1} g_1  \in G_x \\
+		&\Longleftrightarrow \quad g_1 \in g_2 G_x \\
+		&\Longrightarrow \quad g_1 G_x = g_2 G_x
+	\end{align}
+	だから $\alpha$ は単射である．全射性は明らか．
+\end{proof}
+
+\begin{mydef}[label=def.center]{正規化群，中心化群}
+	$H$ を群 $G$ の部分群とする．
+	\begin{enumerate}
+		\item $G$ の部分群 $\mathrm{N}_G(H) \coloneqq \bigl\{\, g\in G \bigm| gHg^{-1} = H \,\bigr\} $ を $H$ の\textbf{正規化群} (normalizer) と呼ぶ．
+		\item $G$ の部分群 $\mathrm{Z}_G(H) \coloneqq \bigl\{\, g\in G \bigm| \forall h \in H,\; gh = hg \,\bigr\} $ を $H$ の\textbf{中心化群} (centralizer) と呼ぶ．
+		\item $\mathrm{Z}(G) \coloneqq \mathrm{Z}_G(G)$ を $G$ の\textbf{中心} (center) と呼ぶ．
+	\end{enumerate}
+\end{mydef}
+
+\begin{mydef}[label=def.conjugation]{共役類}
+	群 $G$ の元 $x,\, y$ に対して
+	\begin{align}
+		\exists g \in G,\; y = gxg^{-1}
+	\end{align}
+	が成り立つとき，$x$ と $y$ は\textbf{共役}であると言う\footnote{共役は明らかに同値関係である．}．$x$ と共役である元全体の集合を $C(x)$ と書き，\textbf{共役類} (conjugacy class) と呼ぶ．
+\end{mydef}
+
+\section{環}
+
+\begin{myaxiom}[label=ax:ring]{環の公理}
+	\begin{itemize}
+		\item $R$ を集合とする．\textbf{環} (ring) とは，$R$ と写像
+		\begin{align}
+			+&\colon R\times R \to R,\; (a,\, b) \mapsto a+b \\
+			\cdot\mathrel{}&\colon R\times R \to R,\; (a,\, b) \mapsto a\cdot b
+		\end{align}
+		の組 $(R,\, +,\,\cdot\mathrel{})$ であって，$\forall a,\, b,\, c \in R$ に対して以下を充たすもののことを言う：
+		\begin{description}
+			\item[\textbf{(R1)}] $(R,\, +\;,\, 0)$ は可換群である
+			\item[\textbf{(R2)}] $(a\cdot b)\cdot c = a\cdot (b\cdot c)$
+			\item[\textbf{(R3)}] $a \cdot (b+c) = a \cdot b + a \cdot c,\quad (a+b)\cdot c = a\cdot c + b\cdot c$
+			\item[\textbf{(R4)}] $\exists 1 \in R,\; a\cdot 1 = 1 \cdot a = a$
+		\end{description}
+		\textbf{(R2)}-\textbf{(R4)} は，$R$ が乗法 $\cdot$ に関してモノイドであることを意味する．
+		
+		\item 環 $(R,\, +,\, \cdot\mathrel{})$ が以下の条件を充たすとき，$R$ を\textbf{可換環} (commutative ring) という：
+		\begin{description}
+			\item[\textbf{(R5)}] $a\cdot b= b\cdot a$
+		\end{description}
+		\item \underline{可換環} $(R,\, +,\, \cdot \mathrel{})$ において，$\forall a \in R\setminus \{0\}$ が乗法 $\cdot$ に関して逆元を持つとき，$R$ は\textbf{体} (field) と呼ばれる．
+	\end{itemize}
+\end{myaxiom}
+
+\begin{mydef}[label=def:zero-ring]{単元}
+	環 $(R,\, +,\, \cdot\mathrel{})$ を与える．
+	\begin{itemize}
+		\item $a \in R$ が乗法 $\cdot$ に関して逆元を持つとき，$a$ は\textbf{可逆元}または\textbf{単元}と呼ばれる．
+		\item $R$ の単元全体の集合を $\bm{R^\times}$ と書く．組 $(R^\times,\, \cdot,\, 1_R)$ を $R$ の\textbf{乗法群}という．
+	\end{itemize}
+\end{mydef}
+
+\begin{marker}
+	　\textbf{(R4)} を除いたものを環と呼ぶ流儀もある．このときは，\textbf{(R1)}-\textbf{(R4)} を充たすものを\textbf{単位元を持つ環} (unital ring, ring with unity) と呼ぶ．
+
+	　さらに珍しい（古い？）が，\textbf{(R1)}, \textbf{(R3)} のみを環の公理とする場合もある．これがLie「環」と呼ばれる所以である．
+\end{marker}
+
+\begin{mydef}[label=def:homo-ring]{環の準同型・同型}
+	$(R_1,\, +,\, \cdot\mathrel{}),\; (R_2,\, +,\, *\mathrel{})$ を環とする．
+	\begin{itemize}
+		\item 写像 $\phi \colon R_1 \to R_2$ が以下の条件を充たすとき，$\phi$ は環の\textbf{準同型写像} (homomorphism) と呼ばれる：
+		\begin{enumerate}
+			\item $\phi(x + y) = \phi(x) + \phi(y)$
+			\item $\phi(x \cdot y) = \phi(x) * \phi(y)$
+			\item $\phi(1_{R_1}) = 1_{R_2}$
+		\end{enumerate}
+		\item $\phi \colon R_1 \to R_2$ が環の準同型写像で逆写像 $\phi^{-1}$ を持ち，$\phi^{-1}$ もまた環の準同型写像であるとき，$\phi$ は\textbf{同型写像} (isomorphism) であると言う．このことを記号として $\bm{R_1 \cong R_2}$ と書く．
+	\end{itemize}
+\end{mydef}
+いちいち $(R,\, +,\, \cdot\mathrel{})$ と書くのは面倒なので，以下では環 $R$ と略記する．
+
+\begin{mydef}[label=def:domain]{整域・零因子}
+	$R$ を零環でない\textbf{可換環}とする．
+	\begin{enumerate}
+		\item $R$ が\textbf{整域} (domain) であるとは，次が成立することを言う：
+		\begin{align}
+			\forall a,\, b \in R\setminus \{0\},\; ab \neq 0
+		\end{align}
+		\item $a \in R$ が以下の条件を充たすとき，$a$ は\textbf{零因子} (zero-divisor) であると言う：
+		\begin{align}
+			\exists b \in R\setminus \{0\},\; ab = 0
+		\end{align}
+		i.e. $R$ が整域であるとは，零因子が $0$ のみであること． 
+	\end{enumerate}
+\end{mydef}
+
+\subsection{部分環}
+
+\begin{mydef}[label=def:subring]{部分環}
+	$R$ を環とする．$R$ の部分集合 $S$ が $R$ の加法と乗法により環になり，かつ $1_R\in S$ ならば，$S$ を $R$ の\textbf{部分環} (subring)，$R$ を $S$ の\textbf{拡大環}と呼ぶ．
+\end{mydef}
+
+\begin{myprop}[label=prop:subring]{部分環の判定}
+	$R$ を環，$S \subset R$ を部分集合とする．
+	$S$ が部分環であるための必要十分条件は，次の条件が成り立つことである：
+	\begin{description}
+		\item[\textbf{(SR1)}] $S$ は加法に関して\hyperref[def.subgroup]{部分群}である
+		\item[\textbf{(SR2)}] $a,\, b \in S \IMP ab \in S$
+		\item[\textbf{(SR3)}] $1_R \in S$
+	\end{description}
+\end{myprop}
+
+\begin{myprop}[]{整域の部分環は整域}
+	$R$ が整域，$S$ が $R$ の部分環ならば，$S$ も整域である．
+\end{myprop}
+\begin{proof}
+	$a,\, b \in S\setminus \{0\}$ ならば $a,\, b$ は $R$ の元としても $0$ でない．故に $R$ は整域だから $R$ の元として $ab \neq 0$ である．部分環 $S$ は $R$ と加法逆元 $0$ および乗法を共有するから，$S$ の元としても $ab \neq 0$ である．i.e. $S$ は整域である．
+\end{proof}
+
+\begin{mydef}[label=def:ker-ring]{核・像}
+	$\phi \colon R_1 \to R_2$ を環の準同型写像とする．
+	\begin{enumerate}
+		\item $\phi$ の\textbf{核} (kernel) を次のように定義する：
+		\begin{align}
+			\Ker \phi \coloneqq \bigl\{\, x \in R_1 \bigm| \phi(x) = 0_{R_2} \,\bigr\} \subset R_1
+		\end{align}
+		$\Ker \phi$ は $R_1$ の\underline{\hyperref[def:ideal]{イデアル}}であり，かつ $\Ker \phi \neq A$ である．
+		\item $\phi$ の\textbf{像} (image) を次のように定義する：
+		\begin{align}
+			\Im \phi \coloneqq \bigl\{\, \phi(x) \bigm| x \in R_1 \,\bigr\} \subset R_2
+		\end{align}
+		$\Im \phi$ は $R_2$ の\underline{\hyperref[def:subring]{部分環}}である．
+	\end{enumerate}
+\end{mydef}
+
+\begin{proof}
+	\begin{enumerate}
+		\item $\phi$ は加法準同型なので，命題\ref{prop.ker_group-1}から $\Ker\phi$ は $R_1$ の加法部分群である．
+		
+		ここで $a \in R,\, x \in \Ker \phi$ を任意にとると
+		\begin{align}
+			\phi(ax) = \phi(a) \phi(x) = \phi(a) 0_{R_2} = 0_{R_2}
+		\end{align}
+		なので $ax \in \Ker \phi$ である．以上より $\Ker \phi$ は $R_1$ の\hyperref[def:ideal]{イデアル}である．
+
+		また，$\phi(1_{R_1}) = 1_{R_2} \neq 0_{R_2}$ なので $1_{R_1} \notin \Ker \phi$ である．よって $\Ker \phi \neq A$．
+		\item 命題\ref{prop:subring}の3条件を確認する．
+		\begin{description}
+			\item[\textbf{(SR1)}] $\phi$ は加法準同型なので，命題\ref{prop.ker_group-1}から $\Im\phi$ は加法部分群．
+			\item[\textbf{(SR2)}] \begin{align}
+				a,\, b \in \Im\phi \IMP \exists x,\, y\in R_1,\; a=\phi(x),\, b=\phi(y) \IMP ab = \phi(x) \phi(y) = \phi(xy) \in \Im\phi
+			\end{align}
+			\item[\textbf{(SR3)}] $\phi$ の\hyperref[def:homo-ring]{定義}から明らか．
+		\end{description}
+	\end{enumerate}
+\end{proof}
+
+\begin{myprop}[]{環準同型の単射性判定}
+	環準同型写像 $\phi \colon R_1 \to R_2$ に対して以下が成立する：
+	\begin{align}
+		\phi\; \text{が単射} \IFF \Ker \phi = \{0_{R_1}\}
+	\end{align}
+\end{myprop}
+\begin{proof}
+	$(\Longrightarrow)$ 　$\phi$ が単射であるとする．命題\ref{prop.hom_group-1}-(1) より $0_{R_1} \in \Ker \phi$ だから，仮定より
+	\begin{align}
+		x \in \Ker\phi \IMP \phi(x) = \phi(0_{R_1}) = 0_{R_2} \IMP x = 0_{R_1}
+	\end{align}
+	
+	$(\Longleftarrow)$ 　$\Ker \phi = \{0_{R_1}\}$ とする．このとき命題\ref{prop.hom_group-1}-(2) より，$\forall x,\, y \in R_1$ に対して
+	\begin{align}
+		\phi(x) = \phi(y) &\IMP \phi(x) - \phi(y) = \phi(x) + \phi(-y) = \phi(x-y) = 0_{R_2} \\
+		&\IMP x-y \in \Ker\phi \IMP x = y
+	\end{align}
+	i.e. $\phi$ は単射．
+\end{proof}
+
+\subsection{イデアル}
+
+環において\hyperref[def.subgroup_normal]{正規部分群}に対応するものがイデアルである．
+
+\begin{mydef}[label=def:ideal]{イデアル}
+	$R$ を環，$I$ を $R$ の部分集合とする． 
+	\begin{enumerate}
+		\item $I$ が以下を充たすとき，$I$ は\textbf{左イデアル} (left ideal) と呼ばれる：
+		\begin{enumerate}
+			\item $I$ は $R$ の加法部分群
+			\item $\forall a \in R,\, \forall x \in I,\; \textcolor{red}{ax} \in I$
+		\end{enumerate}
+		\item $I$ が以下を充たすとき，$I$ は\textbf{右イデアル} (right ideal) と呼ばれる：
+		\begin{enumerate}
+			\item $I$ は $R$ の加法部分群
+			\item $\forall a \in R,\, \forall x \in I,\; \textcolor{red}{xa} \in I$
+		\end{enumerate}
+	\end{enumerate}
+	$I$ が左イデアルかつ右イデアルのとき，\textbf{両側イデアル} (two-sided ideal) と言う． 
+	$R$ が可換環のときは左右の区別はなく，単に\textbf{イデアル} (ideal) と言う．
+\end{mydef}
+
+$\{0\},\, R$ は明らかに両側イデアルである．これらを\textbf{自明なイデアル}と呼ぶ．
+
+\begin{mydef}[label=def:gen-ideal,breakable]{イデアルの生成}
+	$R$ を環とする．
+	\begin{itemize}
+		\item 任意の添字集合 $\Lambda$ を与える．部分集合 $S \coloneqq \Familyset[\big]{s_\lambda}{\lambda\in\Lambda} \subset R$ を含む最小の\underline{左イデアル}
+		\begin{align}
+			\left\{ \sum_{\lambda\in\Lambda} a_\lambda s_\lambda \relmiddle| a_\lambda \in R,\; \substack{\text{有限個の添字}\; i_1,\, \dots ,\, i_n\;\text{を除いた} \\ \text{全ての添字}\; \lambda\in\Lambda \; \text{について}\; a_\lambda = 0}\right\} 
+		\end{align}
+		は\textbf{$\bm{S}$ で生成された $\bm{R}$ の左イデアル}と呼ばれ，記号として
+		$\displaystyle\sum_{\lambda\in\Lambda} Rs_\lambda$ と書かれる．
+		\item $S$ を含む最小の\underline{右イデアル}
+		\begin{align}
+			\left\{ \sum_{\lambda\in\Lambda} s_\lambda a_\lambda\relmiddle| a_\lambda \in R,\; \substack{\text{有限個の添字}\; i_1,\, \dots ,\, i_n\;\text{を除いた} \\ \text{全ての添字}\; \lambda\in\Lambda \; \text{について}\; a_\lambda = 0}\right\} 
+		\end{align}
+		は\textbf{$\bm{S}$ で生成された $\bm{R}$ の右イデアル}と呼ばれ，記号として
+		$\displaystyle\sum_{\lambda\in\Lambda} s_\lambda R$ と書かれる．
+		\item $S$ を含む最小の\underline{両側イデアル}
+		\begin{align}
+			\left\{ \sum_{\lambda\in\Lambda}a_\lambda s_\lambda b_\lambda\relmiddle| a_\lambda,\, b_\lambda \in R,\; \substack{\text{有限個の添字}\; i_1,\, \dots ,\, i_n\;\text{を除いた} \\ \text{全ての添字}\; \lambda\in\Lambda \; \text{について}\; a_\lambda = 0}\right\} 
+		\end{align}
+		は\textbf{$\bm{S}$ で生成された $\bm{R}$ の両側イデアル}と呼ばれ，記号として
+		$\displaystyle\sum_{\lambda\in\Lambda} R s_\lambda R$ と書かれる．
+		\item $\Lambda = \{1,\, \dots ,\, n\}$ のとき，$S$ の生成する最小の左（resp. 右，両側）イデアルは $\bm{Rs_1 + \cdots + Rs_n}\; \bigl(\mathrm{resp.}\; \bm{s_1R + \cdots + s_n R},\,\bm{({s_1,\, \dots ,\, s_n})} \bigr)$ と書かれる．特に $R$ が可換環の場合，これは\footnote{もちろん，$R$ が可換環ならば左・右・両側イデアルの定義は互いに同値である．この場合，有限生成なイデアルの記号として $(s_1,\, \dots ,\, s_n)$ を使うことが多いように思う．}\textbf{有限生成なイデアル} (finitly generated ideal) と呼ばれる．
+		\item 1つの元 $s \in R$ で生成される\underline{可換環} $R$ のイデアルを\textbf{単項イデアル} (principal ideal) と言い，$\bm{(s)}$ と書く．
+	\end{itemize}
+\end{mydef}
+
+\begin{mydef}[label=def:subtract-prod-ideal]{イデアルの和・積}
+	$R$ を環，$I,\, J \subset R$ を左（右）イデアルとする．
+	\begin{enumerate}
+		\item $I,\, J$ の\textbf{和}を次のように定義する：
+		\begin{align}
+			I + J \coloneqq \bigl\{\, x+y \bigm| x\in I,\, y \in J \,\bigr\} 
+		\end{align}
+		$I+J$ は左（右）イデアルである．
+		\item $I,\, J$ の\textbf{積}を次のように定義する：
+		\begin{align}
+			IJ \coloneqq \bigl\{\, x_1y_1 + \cdots + x_ny_n \bigm| n \in \mathbb{N},\; x_i\in I,\, y_i \in J \,\bigr\} 
+		\end{align}
+		$IJ$ は左（右）イデアルである．
+	\end{enumerate}
+\end{mydef}
+
+\begin{mytheo}[label=def:quotient-ring]{剰余環}
+	環 $R$ とその\underline{自明でない\hyperref[def:ideal]{両側イデアル}} $I$ を与える．このとき，加法に関する\hyperref[def.class_residue]{剰余類}\footnote{$+$ に関して可換群なので，左・右剰余類の区別はない．}全体の集合 $R/I$ の上の2つの二項演算 $+,\, \cdot \colon R/I \times R/I \to R/I$ を
+	\begin{align}
+		(x+I) + (y+I) &\coloneqq (x+y) + I \\
+		(x+I) \cdot (y+I) &\coloneqq (xy) + I
+	\end{align}
+	と定義するとこれらはwell-definedであり，かつ $\bm{(R/I,\, +,\, \cdot\mathrel{})}$ \textbf{は環を成す．}この環を $R$ の $I$ による\textbf{剰余環} (quotient ring) と言う．
+\end{mytheo}
+
+\begin{marker}
+	$R$ が可換環ならば，その剰余環も可換環になる．
+\end{marker}
+
+\begin{proof}
+	加法に関するwell-definednessおよび可換群であることは，定理\ref{def.quotient_group}より即座に従う．
+	\begin{description}
+		\item[\textbf{well-definedness}] 
+		
+		　乗法に関して示す．
+
+		\hyperref[def.class_residue]{剰余類}剰余類 $x+I,\, y+I$ の勝手な元は $x' = x+a,\,, y' = y+b\; (a,\, b \in I)$ とかける．故に
+		\begin{align}
+			x'y' = (x+a)(y+b) = xy + xb + ay + ab
+		\end{align}
+		であるが，\textcolor{red}{$I$ が $R$ の両側イデアルであることにより} $xb,\, ay,\, ab \in I$ が言える．従って $x'y' \in (xy) + I$ であり，乗法の定義は剰余類の代表元の取り方に依らない．
+		\item[環であること] 
+		
+		　\hyperref[ax:ring]{環の公理}を充していることを確認すれば良い．
+		\begin{description}
+			\item[\textbf{(R1)}] 定理\ref{def.quotient_group}より従う．零元 $0_{R/I} = I$ である．
+			\item[\textbf{(R2)}] $R$ の結合律より従う．
+			\item[\textbf{(R3)}] $R$ の分配律より従う．
+			\item[\textbf{(R4)}] 乗法単位元は $1_{R/I} = 1+I$ である．
+		\end{description}
+	\end{description}
+\end{proof}
+
+\begin{mycol}[label=natural-homo-ring]{剰余環への自然な全射準同型}
+	環 $R$ とその両側イデアル $I$ を与える．このとき標準射影（定義\ref{def.quo-proj}）$\pi \colon R \to R/I,\; x \mapsto x+I$ は\emph{ $\vb*{R/I}$ を剰余環と見做すと全射準同型写像になる}．また，$\Ker \pi = I$ である．
+	$\pi$ のことを\textbf{自然な全射準同型}と呼ぶ．
+\end{mycol}
+
+\begin{proof}
+	加法 $+$ に関しては\hyperref[natural-homo]{剰余群の全射準同型の場合}と同様．後は定義\ref{def:homo-ring}-(2), (3) の成立を確かめれば良い．
+
+	\hyperref[def:quotient-ring]{剰余環の乗法の定義より}，$\forall x,\, y \in R$ に対して
+	\begin{align}
+		\pi(xy) = (xy) + I = (x+I) \cdot (y+I) = \pi(x) \cdot \pi(y)
+	\end{align}
+	だから乗法を保存する．乗法単位元に関しては
+	\begin{align}
+		\pi(1_R) = 1_R + I = 1_{R/I}.
+	\end{align}
+	従って $\pi$ は環の準同型である．
+\end{proof}
+
+\begin{mydef}[label=def:PID]{単項イデアル整域}
+	任意のイデアルが単項イデアルである\hyperref[def:domain]{整域}を\textbf{単項イデアル整域} (principal ideal domain; PID) と呼ぶ．
+\end{mydef}
+
+\subsection{準同型定理}
+
+\begin{mytheo}[label=thm.homo-ring1]{環の準同型定理(第一同型定理)}
+	環の準同型写像 $\phi \colon R \to S$ を与える．$\pi \colon R \to R/\Ker \phi$ を自然な準同型とする．このとき，図\ref{fig.homo1}が可換図式となるような準同型 $\psi \colon R/\Ker \phi \to S$ がただ一つ存在し，$\psi \colon R/\Ker \phi \to \Im \phi$ は同型写像になる．
+\end{mytheo}
+
+\begin{figure}[H]
+	\centering
+	\begin{tikzcd}
+		R \arrow[twoheadrightarrow]{d}{\pi} \arrow{r}{\phi} & S \\
+		R/\Ker \phi \arrow[ur, red, dashrightarrow, "\exists! \psi"'] &
+	\end{tikzcd}
+	\caption{環の準同型定理}
+	\label{fig.homo-ring1}
+\end{figure}%
+
+\begin{proof}
+	\hyperref[thm.homo1]{群の準同型定理}により，$\psi$ が加法群の準同型として一意的に存在し，$\Im\phi$ への加法群の同型となる．
+	よって\hyperref[def:homo-ring]{環の準同型の定義}から，後は $\psi$ が積を保つことを示せば良い．
+
+	$I \coloneqq \Ker \phi$ とおく．$R/I$ の勝手な2つの元は $x+I,\, y+I\; (x,\, y \in R)$ と書ける．$\phi = \psi \circ \pi$ は環の準同型なので，
+	\begin{align}
+		\psi(x+I) \psi(y+I) = \bigl( \psi \circ \pi(x) \bigr) \bigl( \psi \circ \pi(y) \bigr) = \phi(x)\phi(y) = \phi(xy) = \psi(xy + I).
+	\end{align}
+	従って，$\psi$ は環の準同型．
+\end{proof}
+
+
+
+\begin{mytheo}[label=thm.homo-ring3]{環の準同型定理(第三同型定理)}
+	$R$ を環，$I \subset J$ を自明でない\hyperref[def:ideal]{両側イデアル}とするとき，次が成り立つ：
+	\begin{enumerate}
+		\item 環の準同型 $\phi \colon R/I \to R/J$ であって，$\phi(x+I) = x+J$ となるものが存在する．
+		\item $\bm{(R/I)/(J/I) \cong R/J}$
+	\end{enumerate}
+\end{mytheo}
+
+\subsection{環の直積}
+
+\begin{mydef}[label=def:prod-ring]{環の直積}
+	$R_1,\, \dots ,\, R_n$ を環とする．直積集合 $R \coloneqq R_1 \times \cdots \times R_n$ の上に加法 $+ \colon R \times R \to R$ と乗法 $\cdot\mathrel{}\colon R\times R \to R$ を次のように定めると，組 $(R,\, +,\, \cdot\mathrel{})$ は環になる．この環を $R_1,\, \dots,\, R_n$ の\textbf{直積}と呼ぶ：
+	\begin{align}
+		(a_1,\, \dots ,\, a_n) + (b_1,\, \dots,\, b_n)& \coloneqq (a_1 + b_1 ,\, \dots ,\, a_n+b_n), \\
+		(a_1,\, \dots ,\, a_n) \cdot (b_1,\, \dots,\, b_n)& \coloneqq (a_1b_1 ,\, \dots ,\, a_nb_n)
+	\end{align}
+\end{mydef}
+
+\subsection{中国式剰余定理}
+
+\begin{mytheo}[label=thm:ChineseRemainder]{中国式剰余定理}
+	$m,\, n \neq 0$ が互いに素な整数ならば以下が成り立つ：
+	\begin{align}
+		\mathbb{Z}/mn\mathbb{Z} \cong \mathbb{Z}/m \mathbb{Z} \times \mathbb{Z}/n\mathbb{Z}
+	\end{align}
+\end{mytheo}
+
+\begin{proof}
+	写像 $\phi \colon \mathbb{Z}/mn\mathbb{Z} \cong \mathbb{Z}/m \mathbb{Z} \times \mathbb{Z}/n\mathbb{Z}$ を
+	\begin{align}
+		\phi(x + mn\mathbb{Z}) \coloneqq (x+m\mathbb{Z},\, x+n\mathbb{Z})
+	\end{align}
+	と定義する．
+	明らかに $\phi$ は環の準同型写像である．
+	\begin{description}
+		\item[\textbf{well-definedness}]　
+		
+		$\forall y \in x + mn\mathbb{Z}$ は $a \in \mathbb{Z}$ を使って $y = x + mn a$ と書ける．従って $y \in x+m\mathbb{Z} \AND y \in x+n\mathbb{Z}$ であり，$\phi$ の定義は剰余類 $x + mn\mathbb{Z}$ の代表元の取り方によらない．
+		\item[\textbf{$\phi$ は全単射}]　
+		
+		$\abs{\mathbb{Z}/mn\mathbb{Z}} = \abs{\mathbb{Z}/m \mathbb{Z} \times \mathbb{Z}/n\mathbb{Z}} = mn < \infty$ だから，補題\ref{lem:finite-bijection}より $\phi$ が全射であることを示せば十分．
+		
+		$\forall (x+m\mathbb{Z},\, y+n\mathbb{Z}) \in \mathbb{Z}/m \mathbb{Z} \times \mathbb{Z}/n\mathbb{Z}$ をとる．
+		仮定より $m,\, n$ が互いに素なので，$\mathbb{Z}$ が単項イデアル整域であることから $ma + nb = 1$ を充たす $a,\, b \in \mathbb{Z}$ が存在する．従って $z \coloneqq may+nbx$ とおくと，
+		\begin{align}
+			z = may + (1-ma)x = x + ma(y-x) = (1-nb)y + nbx = y+nb(x-y)
+		\end{align}
+		が成立する．i.e. $z \in x+ m\mathbb{Z} \AND z \in y+n \mathbb{Z}$ であり，
+		\begin{align}
+			(x+m\mathbb{Z},\, y+n\mathbb{Z}) = \phi(z+mn\mathbb{Z}) \in \Im \phi
+		\end{align}
+		が言えた．
+	\end{description}
+\end{proof}
+
+\begin{mycol}[label=col:ChineseRemainder]{古典的な中国式剰余定理}
+	$m,\, n \neq 0$ を互いに素な整数とする．
+	$ma+nb=1$ を充たす整数 $a,\, b \in \mathbb{Z}$ をとる．このとき $\forall x,\, y \in \mathbb{Z}$ に対して $\bm{z \coloneqq may+nbx}$ とおけば，
+	\begin{align}
+		z &\equiv x \mod{m}, \\
+		z &\equiv y \mod{n}
+	\end{align}
+	が成り立つ．
+\end{mycol}
+
+\begin{proof}
+	定理\ref{thm:ChineseRemainder}の証明から即座に従う．
+\end{proof}
+
+より一般化すると次のようになる：
+
+\begin{mytheo}[label=thm:ChineseRemainder-ideal]{可換環における中国式剰余定理}
+	$R$ を\underline{可換環}，$I_1,\, \dots ,\, I_n \subsetneq R$ を\hyperref[def:ideal]{両側イデアル}とする．\hyperref[def:subtract-prod-ideal]{イデアルの和}に関して
+	\begin{align}
+		i\neq j \IMP I_i + I_j = R
+	\end{align}
+	が充たされている\footnote{このことを，イデアル $I_1,\, \dots ,\, I_n$ は互いに素であると言う．}とき，以下が成立する：
+	\begin{enumerate}
+		\item $\displaystyle 1\le \forall i \le n,\; I_i + \prod_{j\neq i} I_j = R$
+		\item $\displaystyle I_1 \cap \cdots \cap I_n = \prod_{i=1}^n I_j$
+		\item $\bm{R/(I_1 \cap \cdots \cap I_n) \cong R/I_1 \times \cdots \times R/I_n}$ 
+	\end{enumerate}
+\end{mytheo}
+\begin{proof}
+	\begin{enumerate}
+		\item $i=1$ とする．
+		$I_1 + (I_2I_3 \cdots I_n)$ は $R$ のイデアルだから，$I_1 + (I_2I_3 \cdots I_n) \supset R$ を示せばよい．仮定より $2 \le \forall i \le n$ に対して
+		\begin{align}
+			\exists x_i \in I_1,\, \exists y_i \in I_i,\; x_i + y_i = 1
+		\end{align}
+		である．このとき
+		\begin{align}
+			(x_2+y_2)(x_3+y_3) \cdots (x_n+y_n) = 1
+		\end{align}
+		であるが，左辺を展開すると $y_2y_3 \cdots y_n \in I_2I_3\cdots I_n$ かつそれ以外の項は $I_1$ の元である．よって $1 \in  I_1 + (I_2I_3 \cdots I_n)$ であるが，\hyperref[def:ideal]{イデアルの定義}から $a \in R \IMP a=a1 \in I_1 + (I_2I_3 \cdots I_n)$ がわかる．
+		\item 　$n \ge 2$ に関する数学的帰納法により示す．
+		
+		　$n=2$ のとき，$I_1I_2 \subset I_1 \cap I_2$ は明らか．仮定より $x + y = 1$ を充たす $x \in I_1,\, y \in I_2$ が存在する．従って
+		\begin{align}
+			a \in I_1\cap I_2 \IMP a = ax+ay
+		\end{align}
+		だが，$a \in I_2$ かつ \textbf{$\bm{R}$ が可換環である}ことから $ax \in I_1I_2$ であり，$a \in I_1$ であることから $ay \in I_1I_2$ である．よって $a \in I_1I_2$ が言えた． 
+
+		　$n-1$ まで成り立っているとすると，帰納法の仮定は
+		\begin{align}
+			I_1 \cap \cdots \cap I_{n-1} = I_1I_2 \cdots I_{n-1}.
+		\end{align}
+		(1)より $(I_1 \cdots I_{n-1}) + I_n = R$ なので，$n=2$ の場合の証明から
+		\begin{align}
+			I_1 \cap \cdots \cap I_{n-1} \cap I_n = (I_1 \cdots I_{n-1}) \cap I_n = I_1 \cdots I_{n-1} I_n.
+		\end{align}
+		\item 　$n \ge 2$ に関する数学的帰納法により示す．
+		
+		　$n=2$ のとき，準同型写像 $\phi \colon R \to R/I_1 \times R/I_2$ を
+		\begin{align}
+			\phi(a) \coloneqq \bigl( (a + I_1),\, (a + I_2) \bigr)
+		\end{align}
+		で定義する．
+		\begin{align}
+			a \in \Ker \phi \IFF \phi(a) = (I_1,\, I_2) \IFF a \in I_1 \AND a \in I_2
+		\end{align}
+		なので $\Ker \phi = I_1 \cap I_2$ である．
+		
+		　$\forall c \in R/I_1 \times R/I_2$ は $a,\, b \in R$ を使って $c = (a + I_1,\, b + I_2)$ と書ける．
+		ここで仮定より，ある $x \in I_1,\, y \in I_2$ が存在して $x + y = 1$ を充たすから，$z \coloneqq ay+bx$ とおくと
+		\begin{align}
+			z = a + (b-a)x \in a + I_1,\quad z = b + (a-b)y \in b + I_2
+		\end{align}
+		である．i.e. $c = \phi(z)$ であり，$\Im \phi = R/I_1 \times R/I_2$ がわかった．
+		従って，\hyperref[thm.homo1]{環準同型定理}より
+		\begin{align}
+			R/(I_1 \cap I_2) \cong R/I_1 \times R/I_2
+		\end{align}
+		が示された．
+		
+		　$n-1$ まで成り立っているとすると，帰納法の仮定は
+		\begin{align}
+			R/I_1 \cap \cdots \cap I_{n-1} \cong  R/I_1 \times \cdots \times R/I_{n-1}.
+		\end{align}
+		$J \coloneqq I_1I_2 \cdots I_{n-1}$ とおく．(2)より $J = I_1 \cap \cdots \cap I_{n-1}$ である．よって\textbf{(1)から
+		ある $\bm{x \in J,\, y \in I_n}$ が存在して $\bm{x + y = 1}$ を充たす}ので，$n=2$ の場合の証明をそのまま適用することができて，
+		\begin{align}
+			R/(I_1 \cap \cdots \cap I_n) &= R/(J \cap I_n) \cong R/J \times R/I_n \\
+			&= R/(I_1 \cap \cdots \cap Î_{n-1}) \times R/I_n \\
+			&\cong R/I_1 \times \cdots \times R/I_n.
+		\end{align}
+	\end{enumerate}
+	
+\end{proof}
+
+\begin{mycol}[]{}
+	定理\ref{thm:ChineseRemainder-ideal}の条件が成立しているとき，任意の整数 $a_1,\, \dots ,\, a_n$ に対して
+	\begin{align}
+		R/(I_1^{a_1} \cap \cdots \cap I_n^{a_n}) \cong R/I_1^{a_1} \times \cdots \times R/I_n^{a_n}
+	\end{align}
+\end{mycol}
+\begin{proof}
+	イデアル $I,\, J$ が互いに素であるとき，$x \in I,\, y \in J$ であって $x + y = 1$ を充たすものを取ることができる．このとき，$\forall a,\, b \in \mathbb{Z}$ に対して
+	\begin{align}
+		(x+y)^{a+b} = 1
+	\end{align}
+	であるが，左辺を展開して出現する項は全て $I^a$ に属するか $J^b$ に属するかのどちらかである．i.e.  $1 \in I^a + J^b$ であるから，$I^a + J^b = R$ である．
+\end{proof}
+
+
+\section{加群}
+
+\begin{myaxiom}[label=ax:module,breakable]{加群の公理}
+	\begin{itemize}
+		\item $R$ を環とする．\textbf{左 $\bm{R}$ 加群} (left $R$-module) とは，可換群 $(M,\, +,\, 0)$ と写像\footnote{この写像 $\cdot$ は\textbf{スカラー乗法} (scalar multiplication) と呼ばれる．}
+		\begin{align}
+			\cdot \; \colon R \times M \to M,\; (a,\, x) \mapsto a \cdot x
+		\end{align}
+		の組 $(M,\, +,\,\cdot\mathrel{})$ であって， $\forall x,\, x_1,\, x_2 \in M,\; \forall a,\, b \in R$ に対して以下を充たすもののことを言う：
+		\begin{description}
+			\item[\textbf{(LM1)}] $a \cdot (b \cdot x) = (\textcolor{red}{ab}) \cdot x$
+			\item[\textbf{(LM2)}] $(a+b) \cdot x = a \cdot x + b \cdot x$
+			\item[\textbf{(LM3)}] $a \cdot (x_1 + x_2) = a \cdot x_1 + a\cdot x_2$
+			\item[\textbf{(LM4)}] $1 \cdot x = x$
+		\end{description}
+		ただし，$1 \in R$ は\underline{環 $R$ の}乗法単位元である．
+		\item $R$ を環とする．\textbf{右 $\bm{R}$ 加群} (left $R$-module) とは，可換群 $(M,\, +,\, 0)$ と写像
+		\begin{align}
+			\cdot \; \colon M \times R \to M,\; (x,\, a) \mapsto x \cdot a
+		\end{align}
+		の組 $(M,\, +,\,\cdot\mathrel{})$ であって， $\forall x,\, x_1,\, x_2 \in M,\; \forall a,\, b \in R$ に対して以下を充たすもののことを言う：
+		\begin{description}
+			\item[\textbf{(RM1)}] $(x \cdot b) \cdot a = x \cdot (\textcolor{red}{ba})$
+			\item[\textbf{(RM2)}] $x \cdot (a+b) = x \cdot a + x \cdot b$
+			\item[\textbf{(RM3)}] $(x_1 + x_2) \cdot a = x_1 \cdot a + x_2 \cdot a$
+			\item[\textbf{(RM4)}] $x \cdot 1 = x$
+		\end{description}
+		\item $R,\, S$ を環とする．\textbf{$\bm{(R,\, S)}$ 両側加群} ($(R,\, S)$-bimodule) とは，可換群 $(M,\, +,\, 0)$ と写像
+		\begin{align}
+			\irm{\cdot}{L} \mathrel{} &\colon R \times M \to M,\; (a,\, x) \mapsto a \irm{\cdot}{L} x \\
+			\irm{\cdot}{R} \mathrel{} &\colon M \times R \to M,\; (x,\, a) \mapsto x \irm{\cdot}{R} a
+		\end{align}
+		の組  $(M,\, +,\, \irm{\cdot}{L}\mathrel{},\, \irm{\cdot}{R}\mathrel{})$ であって， 
+		$\forall x\in M,\; \forall a\in R,\; \forall b \in S$ に対して以下を充たすもののことを言う：
+		\begin{description}
+			\item[\textbf{(BM1)}] 左スカラー乗法 $\irm{\cdot}{L}$ に関して $M$ は左 $R$ 加群になる
+			\item[\textbf{(BM2)}] 右スカラー乗法 $\irm{\cdot}{R}$ に関して $M$ は右 $S$ 加群になる
+			\item[\textbf{(BM3)}] $(a \irm{\cdot}{L} x) \irm{\cdot}{R} b = a \irm{\cdot}{L} (x \irm{\cdot}{R} b)$
+		\end{description}
+	\end{itemize}
+\end{myaxiom}
+
+$R$ が\textbf{可換環}の場合，\textbf{(LM1)} と \textbf{(RM1)} が同値になるので，左 $R$ 加群と右 $R$ 加群の概念は同値になる．これを単に\textbf{$\bm{R}$ 加群} ($R$-module) と呼ぶ．
+
+$R$ が\textbf{体}の場合，$R$ 加群のことを \textbf{$\bm{R}$-ベクトル空間}と呼ぶ．
+
+\begin{marker}
+	以下では，なんの断りもなければ $R$ 加群と言って左 $R$ 加群を意味する．
+\end{marker}
+
+\begin{mydef}[label=def:submodule]{部分加群}
+	$R$ を環，$M$ を $R$ 加群とする．部分集合 $N \subset M$ が $M$ の演算によって $R$ 加群になるとき，$N$ を $M$ の\textbf{部分加群} (submodule) と呼ぶ．
+\end{mydef}
+
+\begin{myprop}[label=prop:submodule]{部分加群の判定法}
+	$N$ が部分加群であることと次の条件が成り立つことは同値である：
+	\begin{description}
+		\item[\textbf{(SM1)}] $N$ は $+$ に関して $M$ の部分群
+		\item[\textbf{(SM2)}] $a\in R,\, n \in N\quad \Longrightarrow \quad an \in N$
+	\end{description}
+\end{myprop}
+
+\begin{mydef}[label=def:sum-module]{部分加群の共通部分・和}
+	$M$ を $R$ 加群，$N_1,\, N_2$ をその部分加群とする．このとき，以下の二つの集合は部分加群になる：
+	\begin{enumerate}
+		\item $\bm{N_1 \cap N_2}$
+		\item $\bm{N_1 + N_2} \coloneqq \bigl\{\, x+y \bigm| x \in N_1,\, y\in N_2 \,\bigr\} $
+	\end{enumerate}
+\end{mydef}
+
+\subsection{加群の生成}
+
+\begin{mydef}[label=def:linear]{線形独立}
+	$M$ を $R$ 加群，$S = \{x_1,\, \dots ,\, x_n\}$ を $M$ の有限部分集合とする．
+	\begin{enumerate}
+		\item $S$ が\textbf{線形従属}であるとは，
+		\begin{align}
+			\exists a_1,\, \dots ,\, a_n \in R^n \mathrel{}\mathrm{s.t.}\mathrel{} \exists i \in \{1,\, \dots ,\, n\},\; a_i \neq 0,\; a_1 x_1 + \cdots a_n x_n = 0
+		\end{align}
+		が成り立つことを言う．
+		\item $S$ が線形従属でないとき，$S$ は\textbf{線形独立} (linearly independent) であると言う．$\emptyset$ は線形独立であると見做す．
+		\item 与えられた $S$ に対して
+		\begin{align}
+			a_1 x_1 +\cdots a_n x_n,\quad a_i \in R
+		\end{align}
+		の形をした $R$ の元を $S$ の\textbf{線型結合} (linear combination) と呼ぶ．$0$ は空集合の線形結合と見做す．
+	\end{enumerate}
+\end{mydef}
+
+\begin{mydef}[label=def:gen-module,breakable]{加群の生成}
+	$M$ を左 $R$ 加群，$\Lambda$ を任意の添字集合とする．任意の部分集合 $S \coloneqq \Familyset[\big]{x_\lambda}{\lambda\in\Lambda} \subset R$ を与える．
+	\begin{itemize}
+		\item $S$ の任意の\underline{有限部分集合}が定義\ref{def:linear}の意味で一次独立であるとき，$S$ は一次独立であると言う．
+		\item 
+		\begin{align}
+			M = \left\{ \sum_{\lambda\in\Lambda} a_\lambda x_\lambda \relmiddle| a_\lambda \in R,\; \substack{\text{有限個の添字}\; i_1,\, \dots ,\, i_n\;\text{を除いた} \\ \text{全ての添字}\; \lambda\in\Lambda \; \text{について}\; a_\lambda = 0}\right\} 
+		\end{align}
+		が成り立つとき，$S$ は $M$ を\textbf{張る}，または\textbf{生成する} (generate) と言い，$S$ のことを $M$ の\textbf{生成系} (generator) と呼ぶ．
+		
+		特に $\Lambda = \{1,\, \dots ,\, n\}$ のとき，$M$ は\textbf{$\bm{R}$上有限生成な加群} (finitely generated) と呼ばれる．
+		\item $S$ が一次独立で，かつ $M$ を生成するとき，$S$ を $M$ の\textbf{基底} (basis) と言う．
+	\end{itemize}
+\end{mydef}
+
+\begin{myprop}[label=prop:gen-submodule]{部分加群の生成}
+	$M$ を左 $R$ 加群，$\Lambda$ を任意の添字集合とする．部分集合 $S \coloneqq \Familyset[\big]{x_\lambda}{\lambda\in\Lambda} \subset R$ を与える．
+	このとき，集合
+	\begin{align}
+		\expval{S} \coloneqq \left\{ \sum_{\lambda\in\Lambda} a_\lambda x_\lambda \relmiddle| a_\lambda \in R,\; \substack{\text{有限個の添字}\; i_1,\, \dots ,\, i_n\;\text{を除いた} \\ \text{全ての添字}\; \lambda\in\Lambda \; \text{について}\; a_\lambda = 0}\right\} \subset M
+	\end{align}
+	は $M$ の\hyperref[def:submodule]{部分加群}になる．
+\end{myprop}
+
+\begin{proof}
+	命題\ref{prop:submodule}の2条件を充していることを確認する．
+	\begin{description}
+		\item[\textbf{(SM1)}] 
+		\begin{description}
+			\item[\textbf{加法単位元}] $0$ は空集合の線型結合と見做すので $0 \in \expval{S}$ である．
+			\item[\textbf{和，逆元について閉じていること}] 
+			$\expval{S}$ の勝手な2つの元 $u,\, v$ は $a_i,\, b_i \in R,\; x_i,\, y_i \in S$ によって
+			\begin{align}
+				u = a_1 x_1 + \cdots + a_n x_n,\quad v = \LC{b}{y}{n}\quad (m,\, n < \infty) 
+			\end{align}
+			と書ける．よって $u \pm v \in \expval{S}$ である． 
+		\end{description}
+		\item[\textbf{(SM2)}] $c \in R$ ならば，$\forall v = \LC{a}{x}{n} \in \expval{S}$ に対して
+		\begin{align}
+			cv = (ca_1) x_1 + \cdots + (ca_n) x_n \in \expval{S}.
+		\end{align}
+	\end{description}
+\end{proof}
+
+\begin{mydef}[]{}
+	$\expval{S}$ のことを $\bm{S}$ \textbf{によって生成された部分加群}と呼ぶ．
+	$\expval{S}$ のことを $\displaystyle\sum_{x \in S} Ax$ とも書く．$\Lambda = \{1,\, \dots ,\, n\}$ のときは $\expval{x_1,\, \dots ,\, x_n}$，あるいは $Ax_1 + \cdots +Ax_n$ とも書く．
+\end{mydef}
+
+\begin{marker}
+	$R$ の\hyperref[def:ideal]{イデアル}がイデアルとして\hyperref[def:gen-ideal]{有限生成}であることは，$R$ 加群として有限生成であることと同値である．
+\end{marker}
+
+
+\subsection{加群の準同型}
+\begin{mydef}[label=def:homo-module]{加群の準同型}
+	$M_1,\, M_2$ を環 $R$ 上の加群とする．
+    \begin{itemize}
+        \item 写像 $f \colon M_1 \to M_2$ が $\forall a \in R\, \forall x \in M_1$ に対して以下の条件を充たすとき，$f$ は\textbf{$\bm{R}$加群の準同型}であると言われる．
+		\begin{enumerate}
+			\item $f$ は加法 $+$ に関して\hyperref[def.hom_group]{可換群の準同型}である
+			\item $f(ax) = a f(x)$
+		\end{enumerate}
+        $R$加群の準同型全体の集合を $\bm{\mathrm{Hom}_R (M_1,\, M_2)}$ と書く．
+        \item  写像 $f \colon M_1 \to M_2$ が $R$ 加群の準同型であり，逆写像が存在してそれも $R$加群の準同型であるとき， $f$ を\textbf{ $\bm{R}$ 加群の同型}と呼び，$M \cong N$ と書く．
+    \end{itemize}
+	$R$ が体または斜体のとき，$R$ 加群の準同型のことを\textbf{線型写像}と呼ぶ．
+\end{mydef}
+
+\begin{myprop}[label=def:hom-hom]{$\Hom{R}$ 加群}
+	$R$ を\underline{可換群}とする．このとき，$\bm{\Hom{R} (M_1,\, M_2)}$ の上の加法 $+$，スカラー乗法 $\cdot$ を次のように定めると，組 $\bigl(\Hom{R} (M_1,\, M_2),\, +,\, \cdot\mathrel{}\bigr)$ は左 $R$ 加群になる：
+	\begin{enumerate}
+		\item $\forall x \in M_1,\; (f+g)(x) \coloneqq f(x) + g(x)$
+		\item $\forall a  \in R,\, \forall x \in M_1,\; (af)(x) \coloneqq af(x)$
+	\end{enumerate}
+\end{myprop}
+
+\begin{proof}
+	命題\ref{prop:submodule}の2条件を充たしていることを確かめる．
+	\begin{description}
+		\item[\textbf{(SM1)}] $+$ に関して命題\ref{prop.hom_group-1}の3条件を確認する．
+		\begin{description}
+			\item[\textbf{(SG1)}] 零写像を $0$ とすると，明らかに $0 \in \Hom{R} (M_1,\, M_2)$ である．
+			\item[\textbf{(SG2)}] 
+			\begin{align}
+				&f,\, g \in \Hom{R} (M_1,\, M_2) \\
+				\IMP &\forall a \in R,\, \forall x,\, y \in M_1,\\ 
+				&\quad (f+g)(x+y) =\textcolor{red}{f(x) +g(x) + f(y) + g(y)} = (f+g)(x) + (f+g)(y), \\
+				&\quad (f+g)(ax) = f(ax) + g(ax) = \bigl(a(f+g)\bigr)(x) \\
+				\IMP &f+g \in \Hom{R} (M_1,\, M_2)
+			\end{align}
+			ただし，赤文字の部分で$R$が $+$ について可換群であることを使った．
+			\item[\textbf{(SG3)}] 
+			\begin{align}
+				&f \in \Hom{R} (M_1,\, M_2) \\
+				\IMP &\forall a \in R,\, \forall x,\, y \in M_1,\\
+				&\quad (-f)(x+y) = -f(x+y) = (-f)(x) + (-f)(y), \\
+				&\quad (-f)(ax) = -f(ax) = \bigl( a(-f) \bigr)(x) \\
+				\IMP &-f \in \Hom{R} (M_1,\, M_2)
+			\end{align}
+		\end{description}
+		\item[\textbf{(SM2)}] $R$が可換環なので
+		\begin{align}
+			&r \in R,\, f \in \Hom{R} (M_1,\, M_2) \\
+			\IMP &\forall a \in R,\, \forall x,\, y \in M_1,\\
+			&\quad (rf)(x+y) = rf(x+y) = (rf)(x) + (rf)(y), \\
+			&\quad (rf)(ax) = \textcolor{red}{ra} f(x) = \textcolor{red}{ar} f(x) = \bigl( a(rf) \bigr)(x) \\
+			\IMP &af \in \Hom{R} (M_1,\, M_2)
+		\end{align}
+		である．
+	\end{description}
+\end{proof}
+
+
+\subsection{剰余加群}
+
+$M$ を $R$ 加群，$N \subset M$ を部分加群とする．$M$ は $+$ に関して可換群なので $N$ は $+$ に関して\hyperref[def.subgroup_normal]{正規部分群}であり，\hyperref[def.quotient_group]{剰余群} $M/N$ が定義できる．
+さらにスカラー乗法 $\cdot \; \colon R \times M/N \to M/N$ を上手く定義すれば $M/N$ が左 $R$ 加群になる：
+
+\begin{mytheo}[label=def:quotient-module]{剰余加群}
+	左 $R$ 加群 $M$ とその部分加群 $N$ を与える．このとき，加法に関する\hyperref[def.class_residue]{剰余類}\footnote{$+$ に関して可換群なので，左・右剰余類の区別はない．}全体の集合 $M/N$ の上の2つの二項演算 $+\colon M/N \times M/N \to M/N,\; \, \cdot \mathrel{}\colon R \times M/N \to M/N$ を
+	\begin{align}
+		(x+N) + (y+N) &\coloneqq (x+y) + N \\
+		a \cdot (x+N) &\coloneqq (ax) + N
+	\end{align}
+	と定義するとこれらはwell-definedであり，かつ $\bm{(M/N,\, +,\, \cdot\mathrel{})}$ \textbf{は $R$ 加群をなす．}この環を $M$ の $N$ による\textbf{剰余加群} (quotient module) と言う．
+\end{mytheo}
+
+% \begin{marker}
+% 	$R$ が可換環ならば，その剰余も可換環になる．
+% \end{marker}
+
+\begin{proof}
+	加法に関するwell-definednessおよび可換群であることは，定理\ref{def.quotient_group}より即座に従う．
+	\begin{description}
+		\item[\textbf{well-definedness}] 加法に関するwell-definednessは定理\ref{def.quotient_group}より従う．
+		スカラー乗法に関して示す．
+
+		\hyperref[def.class_residue]{剰余類}剰余類 $x+N$ の勝手な元は $x' = x+n\; (n\in N)$ とかける．故に $\forall a \in R$ に対して
+		\begin{align}
+			ax' = a(x+n) = ax + an
+		\end{align}
+		であるが，\textcolor{red}{$N$ が $M$ の部分加群であることにより} $an \in N$ が言える．従って $ax' \in (ax) + N$ であり，乗法の定義は剰余類の代表元の取り方に依らない．
+		\item[$R$ 加群であること] \hyperref[ax:module]{左 $R$ 加群の公理}を充していることを確認すれば良い．
+		\begin{description}
+			\item[\textbf{(LM1)}] $a \cdot \bigl(b \cdot (x+N)\bigr) = a \cdot \bigl( (bx) + N \bigr) = (abx) + N = (ab) \cdot (x+N)$
+			\item[\textbf{(LM2)}] $(a+b) \cdot (x+N) = \bigl( ax + bx \bigr) + N = a \cdot (x+N) + b \cdot (x+N)$
+			\item[\textbf{(LM3)}] $a \cdot \bigl( (x+N) + (y+N) \bigr) = \bigl( a(x+y) \bigr) + N = (ax+ay) + N = a \cdot (x+N) + a \cdot (y+N)$
+			\item[\textbf{(LM4)}] $1_R \cdot (x+N) = (1_Rx) +N = x+ N$
+		\end{description}
+	\end{description}
+\end{proof}
+
+\begin{mycol}[label=natural-homo-module]{剰余加群への自然な全射準同型}
+	$R$ 加群 $M$ とその部分加群 $N$ を与える．このとき標準射影（定義\ref{def.quo-proj}）$\pi \colon M \to N/I,\; x \mapsto x+N$ は\emph{ $\vb*{M/N}$ を剰余加群と見做すと全射準同型写像になる}．また，$\Ker \pi = N$ である．
+	$\pi$ のことを\textbf{自然な全射準同型}と呼ぶ．
+\end{mycol}
+
+\begin{proof}
+	加法 $+$ に関しては\hyperref[natural-homo]{剰余群の全射準同型の場合}と同様．後は定義\ref{def:homo-module}-(2) の成立を確かめれば良い．
+
+	実際，\hyperref[def:quotient-ring]{剰余加群のスカラー乗法の定義より} $\forall a\in R,\, \forall x \in M$ に対して
+	\begin{align}
+		\pi(ax) = (ax) + I = a \cdot (x+N) = a \cdot \pi(x)
+	\end{align}
+	だから良い．
+\end{proof}
+
+\begin{mydef}[label=def:ker-module]{核・像・余核}
+	$f \colon M \to N$ を $R$ 加群の準同型とする．
+	\begin{enumerate}
+		\item $\Ker f \coloneqq \bigl\{\, x \in M \bigm| f(x) = 0 \,\bigr\} $ を $f$ の\textbf{核} (kernel)，
+		\item $\Im f \coloneqq \bigl\{\, f(x) \bigm| x \in M \,\bigr\} $ を $f$ の\textbf{像} (image)，
+		\item $\Coker f \coloneqq N/\Im f$ を\textbf{余核} (cokernel) と呼ぶ．
+	\end{enumerate}
+\end{mydef}
+
+\begin{myprop}[label=prop:ker-module]{}
+	加群の準同型写像 $f \colon M \to N$ を与える．
+	$\Ker f,\, \Im f$ はそれぞれ $M,\, N$ の部分 $R$ 加群であり，$\Coker f$ は $R$ 加群である．
+\end{myprop}
+
+\begin{proof}
+	\begin{description}
+        \item[\textbf{$\bm{\Ker f \subset M}$ は部分 $\bm{R}$ 加群}]　
+        
+		命題\ref{prop:submodule}の2条件を充たしていることを確かめる．加法に関する\hyperref[prop.hom_group-1]{群準同型の性質}から $f(0_M) = 0_N$ が従う．
+		\hyperref[def:homo-module]{加群の準同型の定義}から
+		\begin{align}
+            x,\, y \in \Ker f \quad \Longrightarrow \quad &f(x + y) = f(x) + f(y) = 0,\, f(-x) = -f(x) = 0 \\
+            \Longrightarrow \quad &x+y,\, -x \in \Ker f
+        \end{align}
+        より $+$ に関して部分群であるとわかった（条件\hyperref[prop:submodule]{\textbf{(SM1)}}），
+        \begin{align}
+            \forall a \in R,\, \forall x \in \Ker f,\; f(ax) = af(x) = a0 = 0 \quad \Longrightarrow \quad ax \in \Ker f
+        \end{align}
+        より条件\hyperref[prop:submodule]{\textbf{(SM2)}}も充たす．
+        \item[\textbf{$\bm{\mathrm{Im} f \subset N}$ は部分 $\bm{R}$ 加群}]　
+        
+		命題\ref{prop:submodule}の2条件を充たしていることを確かめる．まず，$0_N = f(0_M)$ である．
+        \begin{align}
+            f(x),\, f(y) \in \Im f \quad \Longrightarrow \quad &f(x) + f(y) = f(x+y),\; -f(x) = f(-x) \\
+            \Longrightarrow \quad &0,\,  f(x) + f(y),\, -f(x) \in \Im f
+        \end{align}
+        より $+$ に関して部分群であるとわかる（条件\hyperref[prop:submodule]{\textbf{(SM1)}}），
+        \begin{align}
+            \forall a \in R,\, \forall f(x) \in \Im f,\; a f(x) = f(ax) \in \Im f
+        \end{align}
+        より条件\hyperref[prop:submodule]{\textbf{(SM2)}}も充たす．
+        \item[\textbf{$\bm{\Coker f}$ は $\bm{R}$ 加群}]　
+		
+		$\Im f$ が部分加群とわかったので，定理\ref{def:quotient-module}から $\Coker f$ も $R$ 加群である．
+    \end{description}
+\end{proof}
+
+\subsection{準同型定理}
+
+群，環の準同型定理（定理\ref{thm.homo1}，定理\ref{thm.homo-ring1}）と同様に加群の準同型定理も成り立つ．証明はほとんど同じなので省略する．
+
+\begin{mytheo}[label=thm.homo1]{加群の準同型定理(第一同型定理)}
+	$R$ 加群の準同型写像 $\phi \colon M \to N$ を与える．
+	$\pi \colon M \to M/\Ker \phi$ を自然な全射準同型とする．このとき，図\ref{fig.homo-module1}が可換図式となるような準同型 $\psi \colon M/\Ker \phi \to N$ がただ一つ存在し，$\psi \colon M/\Ker \phi \to \Im \phi$ は同型写像になる．
+\end{mytheo}
+
+\begin{figure}[H]
+	\centering
+	\begin{tikzcd}
+		M \arrow[twoheadrightarrow]{d}{\pi} \arrow{r}{\phi} & N \\
+		M/\Ker \phi \arrow[ur, red, dashrightarrow, "\exists! \psi"'] &
+	\end{tikzcd}
+	\caption{加群の準同型定理}
+	\label{fig.homo-module1}
+\end{figure}%
+
+\begin{mytheo}[label=thm.homo-ring3]{環の準同型定理(第二，第三同型定理)}
+	$M$ を $R$ 加群，$N_1,\, N_2$ を部分加群とする．
+	\begin{enumerate}
+		\item $\bm{(N_1+N_2)/N_2\cong N_1/N_1 \cap N_2}$ 
+		\item $N_1 \subset N_2$ ならば $\bm{(M/N_1)/(N_2/N_1) \cong M/N_2}$
+	\end{enumerate}
+\end{mytheo}
+
+\section{直積・直和・自由加群}
+
+$R$ を環，$\Lambda$ を任意の添字集合とする．$\forall \lambda \in \Lambda$ に対応して $R$ 加群 $M_\lambda$ が与えられているとする．
+$R$ 加群の族 $\Familyset[\big]{(M_\lambda,\, +,\, \cdot\mathrel{})}{\lambda \in \Lambda}$ の集合としての\hyperref[def:dp]{直積}は
+\begin{align}
+	\prod_{\lambda \in \Lambda} M_\lambda = \bigl\{\, \Dpmember{x_\lambda}{\lambda\in\Lambda} \bigm| \forall \lambda \in \Lambda,\; x_\lambda \in M_\lambda \,\bigr\} 
+\end{align}
+と書かれるのだった．
+
+\begin{mydef}[label=def:dp-mod,breakable]{加群の直積・直和}
+	$\Lambda,\, \Familyset[\big]{(M_\lambda,\, +,\,\cdot\mathrel{})}{\lambda \in \Lambda}$ を上述の通りにとる．
+	\begin{enumerate}
+		\item 集合 $\displaystyle\prod_{\lambda \in \Lambda} M_\lambda$ の上の加法 $+$ およびスカラー乗法 $\cdot$ を次のように定めると，
+		組 $\left(\displaystyle\prod_{\lambda \in \Lambda} M_\lambda,\, +,\,  \cdot\mathrel{}\right)$ は\hyperref[ax:module]{左 $R$ 加群}になる．これを加群の族 $\Familyset[\big]{(M_\lambda,\, +,\, \cdot\mathrel{})}{\lambda \in \Lambda}$ の\textbf{直積} (direct product) と呼ぶ：
+		\begin{align}
+			+ &\colon \prod_{\lambda \in \Lambda} M_\lambda \times \prod_{\lambda \in \Lambda} M_\lambda \to \prod_{\lambda \in \Lambda} M_\lambda,\; \bigl(\, \textcolor{blue}{(}\textcolor{red}{ x_\lambda}\textcolor{blue}{)_{\lambda \in \Lambda}},\, \textcolor{blue}{(}\textcolor{red}{ y_\lambda}\textcolor{blue}{)_{\lambda \in \Lambda}}\, \bigr) \mapsto \textcolor{blue}{(}\textcolor{red}{ x_\lambda + y_\lambda}\textcolor{blue}{)_{\lambda \in \Lambda}} \\
+			\cdot\mathrel{} &\colon R \times \prod_{\lambda \in \Lambda} M_\lambda \to \prod_{\lambda \in \Lambda} M_\lambda,\; \bigl( \, \textcolor{red}{a},\, \textcolor{blue}{(}\textcolor{red}{ x_\lambda}\textcolor{blue}{)_{\lambda \in \Lambda}}\, \bigr) \mapsto \textcolor{blue}{(}\textcolor{red}{ a \cdot x_\lambda}\textcolor{blue}{)_{\lambda \in \Lambda}}
+		\end{align}
+		添字集合 $\Lambda$ が有限集合 $\{1,\, \dots ,\, n\}$ であるときは
+		\begin{align}
+			M_1 \times M_2 \times \cdots \times M_n
+		\end{align}
+		とも書く．
+		\item 加群の直積 $\left(\displaystyle\prod_{\lambda \in \Lambda} M_\lambda,\, +,\, \cdot\mathrel{}\right)$ を与えると，
+		次のように定義される部分集合 $\displaystyle\bigoplus_{\lambda \in \Lambda} M_\lambda$ は部分 $R$ 加群をなす．これを加群の族 $\Familyset[\big]{(M_\lambda,\, +,\, \cdot\mathrel{})}{\lambda \in \Lambda}$ の\textbf{直和} (direct sum) と呼ぶ：
+		\begin{align}
+			\bigoplus_{\lambda \in \Lambda} M_\lambda \coloneqq \left\{\, \Dpmember{x_\lambda}{\lambda\in\Lambda} \in \prod_{\lambda \in \Lambda} M_\lambda \relmiddle| \substack{\text{有限個の添字}\; i_1,\, \dots,\, i_n \in \Lambda \;\text{を除いた}\\\text{全ての添字}\; \lambda \in \Lambda\; \text{について} \; x_\lambda = 0}  \,\right\} 
+		\end{align}
+		添字集合 $\Lambda$ が有限集合 $\{1,\, \dots ,\, n\}$ であるときは
+		\begin{align}
+			M_1 \oplus M_2 \oplus \cdots \oplus M_n
+		\end{align}
+		とも書く．
+	\end{enumerate}
+\end{mydef}
+
+\begin{marker}
+	添字集合 $\Lambda$ が有限のときは $R$ 加群として $\displaystyle\prod_{\lambda \in \Lambda} M_\lambda \cong \bigoplus_{\lambda \in \Lambda} M_\lambda$ である．
+	$\Lambda$ が無限集合の時は，包含写像 $\displaystyle\bigoplus_{\lambda \in \Lambda} M_\lambda \hookrightarrow \prod_{\lambda \in \Lambda} M_\lambda$ によって準同型であるが，同型とは限らない．
+\end{marker}
+
+\begin{mydef}[label=def:inj-proj]{標準射影，標準包含}
+	加群の族 $\Familyset[\big]{(M_\lambda,\, +,\, \cdot\mathrel{})}{\lambda \in \Lambda}$ を与える．
+	\begin{enumerate}
+		\item 各添字 $\mu \in \Lambda$ に対して，次のように定義される写像 $\pi_\mu \colon \displaystyle\prod_{\lambda \in \Lambda} M_\lambda \to M_\mu$ のことを\textbf{標準射影} (canonical projection) と呼ぶ：
+		\begin{align}
+			\pi_\mu \bigl( \Dpmember{x_\lambda}{\lambda \in \Lambda} \bigr) \coloneqq x_\mu
+		\end{align}
+		\item 各添字 $\mu \in \Lambda$ に対して，次のように定義される写像 $\iota_\mu \colon M_\mu \hookrightarrow \displaystyle\bigoplus_{\lambda \in \Lambda} M_\lambda$ のことを\textbf{標準包含} (canonical inclusion) と呼ぶ：
+		\begin{align}
+			\iota_\mu (x) \coloneqq \Dpmember{y_\lambda}{\lambda \in \Lambda},\quad 
+			\WHERE y_\lambda \coloneqq 
+			\begin{cases}
+				x, &\colon \lambda = \mu \\
+				0. &\colon \mathrm{otherwise}
+			\end{cases}
+		\end{align}
+	\end{enumerate}
+\end{mydef}
+
+加群の族をいちいち $\Familyset[\big]{(M_\lambda,\, +,\, \cdot\mathrel{})}{\lambda \in \Lambda}$ と書くと煩雑なので，以降では省略して $\Familyset[\big]{M_\lambda}{\lambda\in\Lambda}$ と書くことにする．
+
+\subsection{普遍性}
+
+\hyperref[def:ker-module]{核，余核}，\hyperref[def:dp-mod]{直積，直和}の普遍性による特徴付けを行う．これらは全て左 $R$ 加群の圏 $\MOD{R}$ における\hyperref[def:limit]{極限，余極限}である．
+
+\begin{myprop}[label=prop:univ-ker]{核・余核の普遍性}
+	左 $R$ 加群の準同型写像 $f\colon M \lto M'$ を与える．また $i \colon \Ker f \hookrightarrow M,\; x \mapsto x$ を標準的包含，$p \colon M' \twoheadrightarrow \Coker f,\; x \mapsto x + \Coker f$ を標準的射影とする．
+	このとき以下が成り立つ：
+	\begin{description}
+		\item[\textbf{(核の普遍性)}] 任意の左 $R$ 加群 $\textcolor{blue}{N}$ に対して，写像
+		\begin{align}
+			i_* \colon \Hom{R}(\textcolor{blue}{N},\, \Ker f) &\lto \bigl\{\, g \in \Hom{R}(\textcolor{blue}{N},\, M) \bigm| f \circ g = 0 \,\bigr\},\\
+			h &\lmto i \circ h
+		\end{align}
+		はwell-definedな全単射である．
+		i.e. $f \circ \textcolor{blue}{g} = 0$ を充たす任意の $\textcolor{blue}{g} \in \Hom{R}(\textcolor{blue}{N},\, M)$ に対して，ある $\textcolor{red}{h} \in \Hom{R}(\textcolor{blue}{N},\, \Ker f)$ が一意的に存在して図式\ref{fig:univ-ker}を可換にする．
+		\item[\textbf{(余核の普遍性)}] 任意の左 $R$ 加群 $N$ に対して，写像
+		\begin{align}
+			p^* \colon \Hom{R}(\Coker f,\, N) \lto \bigl\{\, g \in \Hom{R}(M',\, N) \bigm| g \circ f = 0 \,\bigr\},\; h \lmto h \circ p
+		\end{align}
+		はwell-definedな全単射である．
+		i.e. $\textcolor{blue}{g} \circ f = 0$ を充たす任意の $\textcolor{blue}{g} \in \Hom{R}(M',\, \textcolor{blue}{N})$ に対して，ある $\textcolor{red}{h} \in \Hom{R}(\Coker f,\, \textcolor{blue}{N})$ が一意的に存在して図式\ref{fig:univ-coker}を可換にする．
+	\end{description}
+\end{myprop}
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}{0.4\columnwidth}
+		\centering
+		\begin{tikzcd}[row sep=large, column sep=large]
+			\Ker f \ar[r, "i"] &M \ar[r, yshift=.5ex, "f"]\ar[r, yshift=-.5ex, "0"'] &M' \\
+			\forall \textcolor{blue}{N}\ar[u, red, dashed, "\exists! h"] \ar[ur, blue, "g"] & &
+		\end{tikzcd}
+		\caption{核の普遍性}
+		\label{fig:univ-ker}
+	\end{subfigure}
+	\hspace{5mm}
+	\begin{subfigure}{0.4\columnwidth}
+		\centering
+		\begin{tikzcd}[row sep=large, column sep=large]
+			M \ar[r, yshift=.5ex, "f"]\ar[r, yshift=-.5ex, "0"'] &M' \ar[r, "p"]\ar[dr, blue, "g"] &\Coker f \ar[d, red, dashed, "\exists! h"] \\
+										& &\forall \textcolor{blue}{N}
+		\end{tikzcd}
+		\caption{余核の普遍性}
+		\label{fig:univ-coker}
+	\end{subfigure}
+\end{figure}%
+
+\begin{proof}
+	\begin{enumerate}
+		\item \begin{description}
+			\item[\textbf{well-definedness}] 核の定義により $f \circ i = 0$ だから，$\forall h \in \Hom{R}(N,\, \Ker f),\; f \circ \bigl(i_*(h)\bigr) = (f \circ i) \circ h = 0$．
+			\item[\textbf{全単射であること}] $\forall g\in \bigl\{\, g \in \Hom{R}(N,\, M) \bigm| f \circ g = 0 \,\bigr\}$ をとる．
+			このとき $\forall x \in N$ に対して $f \bigl( g(x) \bigr) = 0 \IFF g(x) \in \Ker f$ なので，写像
+			\begin{align}
+				h \colon N \lto \Ker f,\; x \lmto g(x)
+			\end{align}
+			はwell-definedかつ $g = i \circ h \in \Im i_*$ が成り立つ．i.e. $i_*$ は全射．
+
+			また，$h,\, h' \in \Hom{R}(N,\, \Ker f)$ に対して
+			\begin{align}
+				i_*(h) = i_*(h') \IFF i \circ h = i \circ h' \IMP \forall x \in N,\; i \bigl( h(x) \bigr) = i \bigl( h'(x) \bigr)
+			\end{align}
+			だが，$i$ は単射なので $\forall x \in N,\; h(x) = h'(x) \IFF h = h'$ が成り立つ．i.e. $i_*$ は単射．
+		\end{description}
+		\item \begin{description}
+			\item[\textbf{well-definedness}] 余核の定義により $p \circ f  = 0$ だから，$\forall h \in \Hom{R}(\Coker f,\, N),\; p^*(h) \circ f = h \circ (p \circ f) = 0$．
+			\item[\textbf{全単射であること}] $\forall g \in \bigl\{\, g \in \Hom{R}(M',\, N) \bigm| g \circ f = 0 \,\bigr\} $ をとる．
+			このとき $\forall x' \in x + \Coker f$ はある $y \in M$ を用いて $x' = x + f(y)$ と書けるから
+			\begin{align}
+				g(x') = g(x) + (g \circ f)(y) = g(x) \in N
+			\end{align}
+			が成り立つ．したがって写像
+			\begin{align}
+				h \colon \Coker f \lto N,\; x + \Im f \lmto g(x)
+			\end{align}
+			はwell-definedであり，かつ $g = h \circ p \in \Im p^*$ が成り立つ．i.e. $p^*$ は全射．
+
+			また，$h,\, h' \in \Hom{R}(\Coker f,\, N)$ に対して
+			\begin{align}
+				p^*(h) = p^*(h') \IMP h \circ p = h' \circ p
+			\end{align}
+			が成り立つが，$p$ は全射なので $h = h'$ が言える．i.e. $p^*$ は単射．
+		\end{description}
+	\end{enumerate}
+\end{proof}
+
+
+\begin{myexample}[label=ex:univ-quomod]{商加群の普遍性}
+	\hyperref[ax:module]{左 $R$ 加群} $M$ と，その任意の\hyperref[prop:submodule]{部分加群} $N \subset M$ を与える．包含準同型 $i \colon N \lto M,\, x \lmto x$ の\hyperref[fig:univ-coker]{余核の普遍性の図式}は
+	\begin{center}
+		\begin{tikzcd}[row sep=large, column sep=large]
+			N \ar[r, yshift=.5ex, "i"]\ar[r, yshift=-.5ex, "0"'] &M' \ar[r, "p"]\ar[dr, blue, "f"'] &\Coker i = M/N \ar[d,red, dashed, "\exists! \overline{f}"] & \\
+									& &\forall \textcolor{blue}{N} &
+		\end{tikzcd}
+	\end{center}
+	のようになる．
+	すなわち，任意の左 $R$ 加群 $\textcolor{blue}{N}$ と，$\textcolor{blue}{f} \circ i = 0$ を充たす任意の準同型写像 $\textcolor{blue}{f} \colon M \lto \textcolor{blue}{N}$ に対して，ある $\textcolor{red}{\overline{f}} \colon M/N \lto \textcolor{blue}{N}$ が一意的に存在して可換図式
+	\begin{center}
+		\begin{tikzcd}[row sep=large, column sep=large]
+			M \ar[d, "p"']\ar[r, blue, "f"] &\forall \textcolor{blue}{N} \\
+			M/N \arrow[ur, red, dashed, "\exists!\bar{f}"']&
+		\end{tikzcd}
+	\end{center}
+	が成り立つということである．$\textcolor{blue}{f} \circ i = 0$ は $N \subset \Ker \textcolor{blue}{f}$ と同値なので，次の命題が示されたことになる：
+	
+\begin{myprop}[label=prop:quomod-univ, breakable]{商加群の普遍性}
+    $M,\, L$ を\hyperref[ax:module]{左 $R$ 加群}，$f \colon M \lto L$ を準同型とする．
+    \hyperref[prop:submodule]{部分加群} $N \subset M$ が
+    \begin{align}
+        N \subset \Ker f
+    \end{align}
+    を充たすならば，準同型 $\bar{f} \colon M/N \lto L$ であって標準的射影
+    \begin{align}
+        p \colon M \lto M/N,\; x \lmto x + N
+    \end{align}
+    に対して図式\ref{fig:quomod-univ}を可換にするようなものが\underline{一意に}存在する．このような準同型 $\bar{f} \colon M/N \to L$ を $f \colon M \to L$ によって $M/N$ 上に\textbf{誘導される準同型} (induced homomorphism) と呼ぶ．
+\end{myprop}
+\begin{figure}[H]
+    \centering
+    \begin{tikzcd}[row sep=large, column sep=large]
+        M \ar[d, "p"']\ar[r, "f"] &L \\
+        M/N \arrow[ur, red, dashed, "\exists!\bar{f}"']&
+    \end{tikzcd}
+    \caption{商加群の普遍性}
+    \label{fig:quomod-univ}
+\end{figure}%
+
+\end{myexample}
+
+
+
+\begin{myprop}[label=prop:universality-dp,breakable]{直積・直和の普遍性}
+	任意の添字集合 $\Lambda$，および加群の族 $\Familyset[\big]{M_\lambda}{\lambda\in \Lambda}$ を与える．添字 $\mu \in \Lambda$ に対する\hyperref[def:inj-proj]{標準射影，標準包含}をそれぞれ $\pi_\mu,\, \iota_\mu$ と書く．
+	\begin{enumerate}
+		\item 任意の左 $R$ 加群 $N$ に対して，写像
+		\begin{align}
+			\begin{array}{ccc}
+				\Hom{R} \biggl( N,\, \displaystyle\prod_{\lambda \in \Lambda} M_\lambda \biggr) &\longrightarrow &\displaystyle\prod_{\lambda\in\Lambda} \Hom{R}(N,\, M_\lambda) \\
+				\rotatebox{90}{\in} & & \rotatebox{90}{\in} \\
+				f & \longmapsto & \Familyset[\big]{\,\pi_\lambda \circ f\,}{\lambda \in \Lambda}
+			\end{array}
+		\end{align}
+		は全単射である．i.e. 任意の左 $R$ 加群 $N$ ，および任意の左 $R$ 加群の準同型写像の族 $\Familyset[\big]{\, f_\lambda \colon N \to M_\lambda\,}{\lambda\in\Lambda}$ に対して，$\forall \lambda\in\Lambda,\; \pi_\mu \circ f = f_\lambda$ を充たす準同型写像 $f \colon N \to \displaystyle \prod_{\lambda\in\Lambda} M_\lambda$ が一意的に存在する（図式\ref{fig:DP}）． 
+		\item 任意の左 $R$ 加群 $N$ に対して，写像
+		\begin{align}
+			\begin{array}{ccc}
+				\Hom{R} \biggl(\displaystyle \bigoplus_{\lambda\in\Lambda}M_\lambda ,\, N \biggr) &\longrightarrow &\displaystyle\prod_{\lambda\in\Lambda} \Hom{R}(M_\lambda,\, N) \\
+				\rotatebox{90}{\in} & & \rotatebox{90}{\in} \\
+				f & \longmapsto & \Familyset[\big]{\,f \circ \iota_\lambda\,}{\lambda \in \Lambda}
+			\end{array}
+		\end{align}
+		は全単射である．i.e. 任意の左 $R$ 加群 $N$ ，および任意の左 $R$ 加群の準同型写像の族 $\Familyset[\big]{\, f_\lambda \colon M_\lambda \to N\,}{\lambda\in\Lambda}$ に対して，$\forall \lambda\in\Lambda,\; f\circ \iota_\lambda = f_\lambda$ を充たす準同型写像 $f \colon \displaystyle \bigoplus_{\lambda\in\Lambda} M_\lambda  \to N$ が一意的に存在する（図式\ref{fig:DS}）． 
+	\end{enumerate}
+\end{myprop}
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}{0.4\columnwidth}
+		\centering
+		\begin{tikzcd}[column sep=huge,row sep=large]
+			N \arrow[r, "\exists! f",red,dashrightarrow] \arrow[dr, "f_\lambda"']
+			& \displaystyle\prod_{\lambda \in \Lambda} M_\lambda \arrow[d, "\pi_\lambda"] \\
+			&M_\lambda
+		\end{tikzcd}
+		\caption{直積の普遍性}
+		\label{fig:DP}
+	\end{subfigure}
+	\hspace{5mm}
+	\begin{subfigure}{0.4\columnwidth}
+		\centering
+		\begin{tikzcd}[column sep=huge,row sep=large]
+			M_\lambda \arrow[r, "\iota_\lambda"] \arrow[dr, "f_\lambda"']
+			& \displaystyle\bigoplus_{\lambda \in \Lambda} M_\lambda \arrow[d, "\exists! f", dashrightarrow, red] \\
+			&N
+		\end{tikzcd}
+		\caption{直和の普遍性}
+		\label{fig:DS}
+	\end{subfigure}
+\end{figure}%
+
+\begin{proof}
+	\begin{enumerate}
+		\item 
+		\begin{description}
+			\item[\textbf{存在}]　左 $R$ 加群の準同型写像の族 $\Familyset[\big]{\, f_\lambda \colon N \to M_\lambda\,}{\lambda\in\Lambda}$ が与えられたとき，写像 $f$ を
+			\begin{align}
+				f \colon N \to \prod_{\lambda\in\Lambda}M_\lambda,\; x \mapsto \Dpmember[\big]{f_\lambda(x)}{\lambda\in\Lambda}
+			\end{align}
+			と定義する．このとき $\forall \mu \in \Lambda,\,\forall x \in N$ に対して
+			\begin{align}
+				(\pi_\mu \circ f)(x) = f_\mu(x)
+			\end{align}
+			なので図\ref{fig:DP}は可換図式になる．
+			\item[\textbf{一意性}]　図\ref{fig:DP}を可換図式にする別の準同型写像 $g \colon N \to \displaystyle \prod_{\lambda\in\Lambda}M_\lambda$ が存在したとする．このとき $\forall x \in N,\,\forall \lambda \in \Lambda$ に対して
+			\begin{align}
+				\pi_\lambda \bigl( g(x) \bigr) = f_\lambda(x) = \pi_\lambda \bigl( f(x) \bigr) 
+			\end{align}
+			なので $f(x) = g(x)$ となる．i.e. $f$ は一意である．
+		\end{description}
+		\item 
+		\begin{description}
+			\item[\textbf{存在}]　左 $R$ 加群の準同型写像の族 $\Familyset[\big]{\, f_\lambda \colon M_\lambda \to N\,}{\lambda\in\Lambda}$ が与えられたとき，写像 $f$ を
+			\begin{align}
+				f \colon \bigoplus_{\lambda\in\Lambda} M_\lambda \to N,\; \Dpmember{x_\lambda}{\lambda\in\Lambda} \mapsto \sum_{\lambda \in \Lambda} f_\lambda(x_\lambda)
+			\end{align}
+			と定義する．右辺は有限和なので意味を持つ．
+
+			このとき $\forall \mu \in \Lambda,\,\forall x \in M_\mu$ に対して
+			\begin{align}
+				f \bigl( \iota_\mu(x) \bigr) = f_\mu(x_\mu) + \sum_{\lambda \neq \mu} f_\lambda(0) = f_\mu(x_\mu)
+			\end{align}
+			なので図\ref{fig:DS}は可換図式になる．
+			\item[\textbf{一意性}]　図\ref{fig:DS}を可換図式にする別の準同型写像 $g \colon \displaystyle \bigoplus_{\lambda\in\Lambda}M_\lambda \to N$ が存在したとする．このとき $\forall \Dpmember{x_\lambda}{\lambda\in\Lambda} \in \bigoplus_{\lambda\in\Lambda}$ に対して
+			\begin{align}
+				g \bigl( \Dpmember{x_\lambda}{\lambda\in\Lambda} \bigr) = g \left(\sum_{\lambda\in\Lambda} \iota_\lambda (x_\lambda)\right) = \sum_{\lambda\in\Lambda} g \bigl( \iota_\lambda(x_\lambda) \bigr) = \sum_{\lambda\in\Lambda} f_\lambda(x_\lambda) = f \bigl( \Dpmember{x_\lambda}{\lambda\in\Lambda} \bigr) 
+			\end{align}
+			なので $f = g$ となる．i.e. $f$ は一意である．
+		\end{description}
+	\end{enumerate}
+\end{proof}
+
+
+\subsection{自由加群}
+
+$\Lambda$ を集合，$M$ を左 $R$ 加群とする．左 $R$ 加群の族 $\Familyset[\big]{M_\lambda}{\lambda\in\Lambda}$ に対して，$\forall \lambda\in\Lambda,\; M_\lambda = M$ が成り立つとき
+\begin{align}
+	M^{\Lambda} \coloneqq \prod_{\lambda\in\Lambda} M_\lambda,\quad  M^{\oplus \Lambda} \coloneqq \bigoplus_{\lambda\in\Lambda} M_\lambda
+\end{align}
+と書く．得に $\Lambda = \{1,\, \dots ,\, n\}$ のとき $M^{n},\, M^{\oplus n}$ と書くが，$M^n \cong  M^{\oplus n}$ である．
+
+\begin{mydef}[label=def:free-mod,breakable]{自由加群}
+	\begin{itemize}
+		\item ある集合 $\Lambda$ に対して，左 $R$ 加群 $M$ が $R$ 上の\textbf{自由加群} (free module) であるとは，以下を充たすことを言う：
+		\begin{align}
+			M \cong R^{\oplus \Lambda} = \bigoplus_{\lambda\in\Lambda} R
+		\end{align}
+		\item $R^{\oplus \Lambda}$ の元を
+		\begin{align}
+			\sum_{\lambda \in \Lambda} a_\lambda \lambda \quad \WHERE a_\lambda \in R\; \text{は有限個を除いて}\; 0
+		\end{align}
+		と書き，$\Lambda$ の元の，$R$ を係数とする\textbf{形式的な線型結合} (formal linear combination) という．
+		\item 自由加群 $R^{\oplus \Lambda}$ の元のうち，第 $\lambda \in \Lambda$ 成分のみが $1 \in R$ で他が全て $0 \in R$ であるようなものを $\forall \lambda \in \Lambda$ について集めた族
+		\begin{align}
+			\Familyset[\big]{\, \iota_\lambda(1)\,}{\lambda\in \Lambda} \subset R^{\oplus \Lambda}
+		\end{align}
+		は $R^{\oplus \Lambda}$ の\textbf{基底} (basis) である．
+	\end{itemize}
+\end{mydef}
+
+\begin{myprop}[label=prop:free-module-basis]{基底を持つ $R$ 加群は自由加群}
+	$R$ 加群 $M$ が基底 $S$ を持てば
+	\begin{align}
+		M \cong R^{\oplus S}
+	\end{align}
+	である．
+\end{myprop}
+
+% \subsection{捩れ部分加群}
+
+% \begin{mydef}[label=torsion-module]{捩れ元・捩れ部分加群}
+% 	$R$ を可換環で整域，$M$ を $A$ 加群とする．
+% 	\begin{itemize}
+% 		\item $x \in M$ に対して
+% 		\begin{align}
+% 			\exists a \in R\setminus \{0\},\; ax = 0
+% 		\end{align}
+% 		が成り立つとき，$x$ を\textbf{捩れ元} (torsion element) と呼ぶ．
+% 		\item $M$ の捩れ元全体の集合を $\bm{\irm{M}{tor}}$ と書き，\textbf{捩れ部分加群} (torsion submodule) と呼ぶ．
+% 		\item $\irm{M}{tor} = \{0\}$ ならば $M$ は\textbf{捩れがない} (torsion-free) と言う．
+% 	\end{itemize}
+% \end{mydef}
+
+% \begin{myprop}[label=prop:torsion-module]{}
+% 	$R$ を可換環で整域，$M$ を $R$ 加群とする．
+% 	\begin{enumerate}
+% 		\item $\irm{M}{tor}$ は $M$ の部分 $R$ 加群である．
+% 		\item $M/\irm{M}{tor}$ には捩れがない．
+% 		\item $M$ が自由 $R$ 加群ならば捩れがない．
+% 	\end{enumerate}
+% \end{myprop}
+
+% \begin{proof}
+% 	\begin{enumerate}
+% 		\item 命題\ref{prop:submodule}の2条件を充していることを確認する．
+% 		\begin{description}
+% 			\item[\textbf{(SM1)}] $+$ に関して命題\ref{prop.hom_group-1}の3条件を確認する．
+% 			\begin{description}
+% 				\item[\textbf{(SG1)}] 明らかに $0_M\in \irm{M}{tor}$ である．
+% 				\item[\textbf{(SG2)}] 
+% 				\begin{align}
+% 					x,\, y \in \irm{M}{tor} &\IMP \exists a,\, b \in M\setminus \{0\},\; ax = by = 0 \\
+% 					&\IMP ab \in M\setminus\{0\},\; ab(x+y) = b(ax) + a(by) = b0 + a0 = 0 \\
+% 					&\IMP x+y \in \irm{M}{tor}
+% 				\end{align}
+% 				ただし，2行目で$M$が可換環かつ\hyperref[def:domain]{整域}であることを使った．
+% 				\item[\textbf{(SG3)}] 
+% 				\begin{align}
+% 					x \in \irm{M}{tor} &\IMP \exists a \in M\setminus \{0\},\; ax = 0 \\
+% 					&\IMP -a \in M\setminus\{0\},\; a(-x) = -(ax) = 0 \\
+% 					&\IMP -x \in \irm{M}{tor}
+% 				\end{align}
+% 				ただし，2行目で$M$が可換環であることを使った．
+% 			\end{description}
+% 			\item[\textbf{(SM2)}] $M$が可換環なので
+% 			\begin{align}
+% 				r \in R,\, x \in \irm{M}{tor} \IMP \exists a \in M \setminus\{0\},\; a(rx) = r(ax) = a0 = 0
+% 			\end{align}
+% 			である．$M$ が\hyperref[def:domain]{整域}かつ $a \neq 0$ だから $rx = 0$ である．i.e. $rx \in \irm{M}{tor}$ である．
+% 		\end{description}
+% 		\item \hyperref[natural-homo]{標準射影} $\pi \colon M \to M/\irm{M}{tor},\, x  \mapsto x + \irm{M}{tor}$ とする．$\pi$ は全射準同型である．
+		
+% 		$\bm{\irm{M}{tor} = M}$ のとき $M/\irm{M}{tor} = \{\irm{M}{tor}\} = \{0_{M/\irm{M}{tor}}\}$ なので明らかに捩れがない．
+
+% 		$\bm{\irm{M}{tor} \subsetneq M}$ のとき，$\forall x \in M,\, \forall a \in R$ を一つとる．
+% 		\begin{align}
+% 			a \pi(x) = 0_{M/\irm{M}{tor}} \IMP \pi(ax) = 0_{M/\irm{M}{tor}}\IMP ax \in \irm{M}{tor}
+% 		\end{align}
+% 		i.e. ある $b \in M\setminus \{0\}$ が存在して $bax = 0_{M}.$ $x \notin \irm{M}{tor}$ だから
+% 		\begin{align}
+% 			ba = 0_M
+% 		\end{align}
+% 		$R$ は整域かつ $a  \neq 0_M$ だから $b = 0_M$ である．i.e. $\pi(x) \notin (M/\irm{M}{tor})_{\mathrm{tor}}$  
+		
+% 		\item 仮定より $R$ が整域なので明らか．
+% 	\end{enumerate}
+% \end{proof}
+
+% \section{有限生成加群の基本定理}
+
+% \begin{mydef}[label=def:divisor]{約元}
+% 	$R$ を\hyperref[def:domain]{整域}，$a,\, b \in R \setminus \{0\}$ とする．$b$ が $a$ の\textbf{倍元}，$a$ が $b$ の\textbf{約元}であるとは，
+% 	\begin{align}
+% 		\exists c \in R,\; b = ac
+% 	\end{align}
+% 	であることを言う．記号として $\bm{a \mid b}$ と書く．
+% \end{mydef}
+
+% $R$ を\hyperref[def:PID]{単項イデアル整域}とする．ある $x \in R$ により $R/(x)$ という形をした $R$ 加群を\textbf{巡回加群}と言う．
+
+% \begin{mytheo}[label=thm:fin-gen-module]{有限生成加群の基本定理}
+% 	\textbf{$\bm{R}$ が\hyperref[def:PID]{単項イデアル整域}，$\bm{M}$ が\hyperref[def:gen-module]{有限生成 $\bm{R}$ 加群}}ならば，$r \in \mathbb{N}$ と\underline{\hyperref[def:zero-ring]{単元}でない} $e_1,\, \dots ,\, e_t \in R$ であって次の性質を充たすものが存在する\footnote{特に，$M = \expval{x_1,\, \dots ,\, x_m}$ と書く（記号の使い方は\ref{prop:gen-submodule}）と $m = r + t$ である．}：
+% 	\begin{enumerate}
+% 		\item $\bm{M \cong R^{\oplus r} \oplus R/(e_1) \oplus \cdots \oplus R/(e_t)}$
+% 		\item $\bm{e_i \mid e_{i+1}} \; (i = 1,\, \dots ,\, t-1)$
+% 	\end{enumerate}
+% 	上の条件が満たされるなら $r$ とイデアル $(e_1),\, \dots ,\, (e_t)$ は一意的に定まる．
+% \end{mytheo}
+
+% \section{加群のテンソル積・双対加群}
+
+% 第3章で\hyperref[ax.alg]{体 $\bm{\mathbb{K}}$ 上の多元環の公理}を与えたが，これは環 $R$ 上の多元環に拡張される：
+
+% \begin{myaxiom}[label=ax:alg-ring]{環上の多元環}
+% 	$R$ を環とする．$R$ 加群 $(M,\, +,\, \cdot \mathrel{})$ において，$(M,\, +,\, \comm{\;}{\;})$ を\hyperref[ax:ring]{環}にする二項演算 $\comm{\;}{\;} \colon M \times M \to M$ が定義され，$\forall x_1,\, x_2 \in M,\; \forall a \in R$ に対して
+% 	\begin{align}
+% 		a\comm{x_1}{x_2} = \comm{a \cdot x_1}{x_2} = \comm{x_1}{a \cdot x_2}
+% 	\end{align}
+% 	が成立するとき，$M$ を環 $R$ 上の\textbf{多元環}と呼ぶ．
+% \end{myaxiom}
+
+\section{ベクトル空間}
+
+$\mathbb{K}$ を\hyperref[ax:ring]{体}とする．
+このとき\hyperref[ax:module]{$\mathbb{K}$ 加群}のことを体 $\mathbb{K}$ 上の\hyperref[ax.vector]{ベクトル空間}と呼び，
+$\mathbb{K}$ 加群の準同型写像のことを\textbf{線型写像}と呼ぶのだった．
+
+線型写像 $f \colon V \lto W$ の核，像，余核は\hyperref[def:ker-module]{左 $R$ 加群の核，像，余核}と全く同様に
+\begin{align}
+	\Ker f &\coloneqq \bigl\{\, \bm{v} \in V \bigm| f(\bm{v}) = 0 \,\bigr\} , \\
+	\Im f &\coloneqq \bigl\{\, f(\bm{v}) \in W \bigm| \bm{v} \in V \,\bigr\} , \\
+	\Coker f &\coloneqq W/\Im f
+\end{align}
+として定義される．$\Ker f,\, \Im f$ がそれぞれ $V,\, W$ の\hyperref[def:submodule]{部分ベクトル空間}であることは，\hyperref[prop:ker-module]{左 $R$ 加群の場合}と全く同じ議論によって示される．
+
+\subsection{階数・退化次数の定理}
+
+$V,\, W$ を\textbf{有限次元} $\mathbb{K}$ ベクトル空間とし，線型写像 $T \colon V \lto W$ を与える．
+$V,\, W$ の\hyperref[def:free-mod]{基底} $\{\vb{e}_1,\, \dots,\, \vb{e}_{\dim V}\},\; \{\vb{f}_1,\, \dots,\, \vb{f}_{\dim W}\}$ をとり，
+\begin{align}
+	T(\vb{e}_\mu) = T^\nu{}_{\mu} \vb{f}_\nu
+\end{align}
+のように左辺を展開したときに得られる行列
+\begin{align}
+	\mqty[T^1{}_1 & \cdots &T^1{}_{\dim V} \\ \vdots &\ddots &\vdots \\ T^{\dim W}{}_1 &\cdots &T^{\dim W}{}_{\dim V}]
+\end{align}
+は基底 $\{\vb{e}_1,\, \dots,\, \vb{e}_{\dim V}\},\; \{\vb{f}_1,\, \dots,\, \vb{f}_{\dim W}\}$ に関する $T$ の\textbf{表現表列}と呼ばれる．
+$\forall \bm{v} = v^\nu \vb{e}_\nu \in V$ に対して
+\begin{align}
+	T(\bm{v}) = T(v^\nu \vb{e}_\nu) = v^\nu T(\vb{e}_\nu) = v^\nu T^\mu{}_{\nu} \vb{f}_\mu
+\end{align}
+と書けるので，成分表示だけを見ると $T$ はその表現行列を左から掛けることに相当する：
+\begin{align}
+	\mqty[T^1{}_1 & \cdots &T^1{}_{\dim V} \\ \vdots &\ddots &\vdots \\ T^{\dim W}{}_1 &\cdots &T^{\dim W}{}_{\dim V}] \mqty[v^1 \\ \vdots \\ v^{\dim V}]
+\end{align}
+
+\begin{mydef}[label=def:rank]{線型写像の階数}
+	$\Im T$ の次元のことを $T$ の\textbf{階数} (rank) と呼び，$\bm{\rank T}$ と書く．
+\end{mydef}
+
+\begin{myprop}[label=prop:canonical-matrix]{表現行列の標準形}
+	$V,\, W$ を\textbf{有限次元}ベクトル空間とし，任意の線型写像 $T \colon V \lto W$ を与える．
+	このとき $V,\, W$ の基底であって，$T$ の表現行列を
+	\begin{align}
+		\mqty[I_{\rank T} & 0 \\ 0 & 0]
+	\end{align}
+	の形にするものが存在する．
+\end{myprop}
+
+\begin{proof}
+	$\Im T$ の基底 $\{\vb{f}_1,\, \dots,\, \vb{f}_{\rank T}\}$ および $\Ker T$ の基底 $\{\vb{k}_1,\, \dots \vb{k}_{\dim (\Ker T)}\}$ を勝手にとる．
+	\hyperref[def:ker-module]{像の定義}から，$1 \le \forall \mu \le \rank T$ に対して $\vb{e}_\mu \in V$ が存在して $\vb{f}_\mu = T(\vb{e}_\mu)$ を充たす．
+	
+	まず $\vb{e}_1,\, \dots ,\, \vb{e}_{\rank T},\, \vb{k}_1,\, \dots,\, \vb{k}_{\dim (\Ker T)}$ が $V$ の基底を成すことを示す．
+	\begin{description}
+		\item[\textbf{線型独立性}] 
+		\begin{align}
+			\sum_{\mu = 1}^{\rank T} a^\mu \vb{e}_\mu + \sum_{\nu = 1}^{\dim (\Ker T)} b^\nu \vb{k}_\nu = 0
+		\end{align}
+		を仮定する．左辺に $T$ を作用させることで
+		\begin{align}
+			\sum_{\mu = 1}^{\rank T} a^\mu \vb{f}_\mu = 0
+		\end{align}
+		がわかるが，$\vb{f}_1,\, \dots,\, \vb{f}_{\rank T}$ は $\Im T$ の基底なので線型独立であり，$1 \le \forall \mu \le \rank T$ に対して $a_\mu = 0$ が言える．
+		故に仮定から
+		\begin{align}
+			\sum_{\nu = 1}^{\dim (\Ker T)} b^\nu \vb{k}_\nu = 0
+		\end{align}
+		であるが，$\vb{k}_1,\, \dots,\, \vb{k}_{\dim (\Ker T)}$ は $\Ker T$ の基底なので線型独立であり，$1 \le \forall \nu \le \dim (\Ker T)$ に対して $b_\nu = 0$ が言える．
+		i.e. $\vb{e}_1,\, \dots ,\, \vb{e}_{\rank T},\, \vb{k}_1,\, \dots,\, \vb{k}_{\dim (\Ker T)}$ は線型独立である．
+		\item[\textbf{$\bm{V}$ を生成すること}] 
+		$\forall \bm{v} \in V$ を1つとる．このとき $T(\bm{v}) \in \Im T$ なので
+		\begin{align}
+			T(\bm{v}) = \sum_{\mu = 1}^{\rank T} v^\mu \vb{f}_\mu
+		\end{align}
+		と展開できる．ここで
+		$\bm{w} \coloneqq \sum_{\mu=1}^{\rank T} v^\mu \vb{e}_\mu \in V$ 
+		とおくと，$T(\bm{v}) = T(\bm{w})$ が成り立つが，$T$ が線型写像であることから $T(\bm{v} - \bm{w}) = 0 \iff \bm{v} - \bm{w} \in \Ker T$ が言えて
+		\begin{align}
+			\bm{v} - \bm{w} = \sum_{\nu = 1}^{\dim (\Ker T)} w^\nu \vb{k}_\nu
+		\end{align}
+		と展開できる．従って
+		\begin{align}
+			\bm{v} = \bm{w} + (\bm{v} - \bm{w})
+			= \sum_{\mu=1}^{\rank T} v^\mu \vb{e}_\mu + \sum_{\nu = 1}^{\dim (\Ker T)} w^\nu \vb{k}_\nu
+		\end{align}
+		であり，$\vb{e}_1,\, \dots ,\, \vb{e}_{\rank T},\, \vb{k}_1,\, \dots,\, \vb{k}_{\dim (\Ker T)}$ は $V$ を生成する．
+	\end{description}
+	$\vb{f}_1,\, \dots,\, \vb{f}_{\rank T}$ と線型独立な $\dim W - \rank T$ 個のベクトル $\tilde{\vb{f}}_{\rank T + 1},\, \dots,\, \tilde{\vb{f}}_{\dim W}$ をとると，
+	\begin{itemize}
+		\item $V$ の基底 $\{\vb{e}_1,\, \dots ,\, \vb{e}_{\rank T},\, \vb{k}_1,\, \dots,\, \vb{k}_{\dim (\Ker T)}\}$ 
+		\item $W$ の基底 $\{\vb{f}_1,\, \dots,\, \vb{f}_{\rank T},\, \tilde{\vb{f}}_{\rank T + 1},\, \dots,\, \tilde{\vb{f}}_{\dim W}\}$
+	\end{itemize}
+	に関する $T$ の表現行列は
+	\begin{align}
+		\mqty[I_{\rank T} & 0 \\ 0 & 0]
+	\end{align}
+	になる．
+\end{proof}
+
+\begin{mycol}[label=col:rank-nullity]{階数・退化次数の定理（有限次元）}
+	$V,\, W$ を\textbf{有限次元}ベクトル空間とし，任意の線型写像 $T \colon V \lto W$ を与える．
+	このとき
+	\begin{align}
+		\dim V = \dim (\Im T) + \dim (\Ker T)
+	\end{align}
+	が成り立つ．
+\end{mycol}
+
+\begin{proof}
+	命題\ref{prop:canonical-matrix}の証明より従う．
+\end{proof}
+
+系\ref{col:rank-nullity}から便利な補題がいくつか従う：
+
+\begin{mylem}[label=lem:finvec-basic]{有限次元ベクトル空間に関する小定理集}
+	$V,\, W$ を\textbf{有限次元}ベクトル空間とし，任意の線型写像 $T \colon V \lto W$ を与える．
+	このとき以下が成り立つ：
+	\begin{enumerate}
+		\item $\rank T \le \dim V.$ 特に $\rank T = \dim V \iff T$ は単射
+		\item $\rank T \le \dim W.$ 特に $\rank T = \dim W \iff T$ は全射
+		\item $\dim V = \dim W$ かつ $T$ が単射 $\IMP$ $T$ は同型写像
+		\item $\dim V = \dim W$ かつ $T$ が全射 $\IMP$ $T$ は同型写像
+	\end{enumerate}
+\end{mylem}
+
+\begin{proof}
+	\begin{enumerate}
+		\item 系\ref{col:rank-nullity}より
+		\begin{align}
+			\dim V = \rank T + \dim (\Ker T) \ge \rank T
+		\end{align}
+		が成り立つ．特に命題\ref{prop.kernel1}から $T$ が単射 $\iff \Ker T = 0 \iff \dim (\Ker T) = 0 \iff \rank T = \dim V$ が従う．
+		\item \hyperref[def:rank]{rankの定義}より $\rank T \le \dim W$ は明らか．特に次元の等しい有限次元ベクトル空間は同型なので，$T$ が全射 $\iff \Im T \cong W \iff \dim (\Im T) = \rank T = \dim W$ が言える．
+		\item $\dim V = \dim W$ かつ $T$ が単射とする．$T$ が単射なので (1) より $\rank T = \dim V = \dim W$ が従い，(2) より $T$ は全射でもある．
+		\item $\dim V = \dim W$ かつ $T$ が全射とする．$T$ が全射なので (2) より $\rank T = \dim W = \dim V$ が従い，(1) より $T$ は単射でもある．
+	\end{enumerate}
+\end{proof}
+
+\subsection{分裂補題と射影的加群}
+
+
+実は，系\ref{col:rank-nullity}は有限次元でなくとも成り立つ．
+それどころか，左 $R$ 加群の場合の\hyperref[lem:splitting]{分裂補題}に一般化される．
+
+\begin{mylem}[label=lem:splitting]{分裂補題}
+    左 $R$ 加群の短完全列
+    \begin{align}
+        \label{SES:3-1}
+        0 \lto M_1 \xrightarrow{i_1} M \xrightarrow{p_2} M_2 \lto 0
+    \end{align}
+    が与えられたとする．このとき，以下の二つは同値である：
+    \begin{enumerate}
+        \item 左 $R$ 加群の準同型 $i_2 \colon M_2 \lto M$ であって $p_2 \circ i_2 = 1_{M_2}$ を充たすものが存在する
+        \item 左 $R$ 加群の準同型 $p_1 \colon M \lto M_1$ であって $p_1 \circ i_1 = 1_{M_1}$ を充たすものが存在する
+    \end{enumerate}
+\end{mylem}
+
+\begin{proof}
+    \begin{description}
+        \item[\textbf{(1) $\Longrightarrow$ (2)}] 写像
+        \begin{align}
+            p_1' \colon M \lto M,\; x \lmto x - i_2 \bigl( p_2(x) \bigr) 
+        \end{align}
+        を定義すると，
+        \begin{align}
+            p_2 \bigl( p_1'(x) \bigr) = p_2(x) - ((p_2 \circ i_2) \circ p_2)(x) = p_2(x) - p_2(x) = 0
+        \end{align}
+        が成り立つ．従って，\eqref{SES:3-1}が完全列であることを使うと $p_1'(x) \in \Ker p_2 = \Im i_1$ である．さらに $i_1$ が単射であることから
+        \begin{align}
+            \exists ! y \in M_1,\; p_1'(x) = i_1(y)
+        \end{align}
+        が成り立つ．ここで写像
+        \begin{align}
+            p_1 \colon M \lto M_1,\; x \lmto y
+        \end{align}
+        を定義するとこれは準同型写像であり，$\forall x \in M_1$ に対して
+        \begin{align}
+            p_1' \bigl( i_1(x) \bigr) = i_1(x) - (i_2 \circ (p_2 \circ i_1))(x) = i_1(x)
+        \end{align}
+        が成り立つ\footnote{\eqref{SES:3-1}が完全列であるため，$p_2 \circ i_1 = 0$}ことから
+        \begin{align}
+            (p_1 \circ i_1)(x) = x
+        \end{align}
+        とわかる．i.e. $p_1 \circ i_1 = 1_{M_1}$
+        \item[\textbf{(1) $\Longleftarrow$ (2)}] \eqref{SES:3-1}は完全列であるから $M_2 = \Ker 0 =  \Im p_2$ である．
+        従って $\forall x \in M_2 = \Im p_2$ に対して，$x = p_2(y)$ を充たす $y \in M$ が存在する．ここで写像
+        \begin{align}
+            i_2 \colon M_2 \lto M,\; x \lmto y - i_1 \bigl( p_1(y) \bigr) 
+        \end{align}
+        はwell-definedである．$x = p_2(y')$ を充たす勝手な元 $y' \in M$ をとってきたとき，$p_2(y-y') = 0$ より $y-y' \in \Ker p_2 = \Im i_1$ だから，$i_1$ の単射性から
+        \begin{align}
+            \exists ! z \in M_1,\quad y-y' = i_1(z)
+        \end{align}
+        が成り立ち，このとき
+        \begin{align}
+           	\Bigl( y - i_1 \bigl( p_1(y) \bigr) \Bigr) - \Bigl( y' - i_1 \bigl( p_1(y') \bigr)  \Bigr) = i_1(z) - (i_1 \circ (p_1 \circ i_1))(z) = i_1(z) - i_1(z) = 0
+        \end{align}
+        とわかるからである．$i_2$ は準同型写像であり，$\forall x \in M_2$ に対して
+        \begin{align}
+            (p_2 \circ i_2)(x) = p_2(y) - ((p_2 \circ i_1) \circ p_1)(y) = p_2(y) = x
+        \end{align}
+        なので $p_2 \circ i_2 = 1_{M_2}$．
+    \end{description}
+\end{proof}
+
+\begin{mycol}[label=col:split]{}
+    左 $R$ 加群の短完全列
+    \begin{align}
+        0 \lto M_1 \xrightarrow{i_1} M \xrightarrow{p_2} M_2 \lto 0
+    \end{align}
+    が補題\ref{lem:splitting}の条件を充たすならば
+    \begin{align}
+        M \cong M_1 \oplus M_2 
+    \end{align}
+\end{mycol}
+
+\begin{proof}
+    補題\ref{lem:splitting}の条件 (1) が満たされているとする．このとき補題\ref{lem:splitting}証明から $\forall x \in M$ に対して
+    \begin{align}
+        i_1  \bigl( p_1(x) \bigr) = p_1'(x) = x - i_2 \bigl( p_2(x) \bigr) \IFF i_1 \bigl(p_1(x)  \bigr) + i_2 \bigl( p_2(x) \bigr) = x
+    \end{align}
+    また，完全列の定義から $p_2 \bigl( i_1(x) \bigr) = 0$ であるから $\forall x \in M_2$ に対して
+    \begin{align}
+        p_1' \bigl( i_2(x) \bigr) = i_2(x) - ((i_2 \circ p_2) \circ i_2)(x) = 0 = i_1(0)
+    \end{align}
+    であり，結局 $p_1 \bigl( i_2(x) \bigr) = 0$ とわかる．
+
+    ここで準同型写像
+    \begin{align}
+        &f\colon M_1 \oplus M_2 \lto M,\; (x,\, y) \lmto i_1(x) + i_2(y), \\
+        &g\colon M \lto M_1 \oplus M_2,\; x \lmto \bigl( p_1(x),\, p_2(x) \bigr) 
+    \end{align}
+    を定めると
+    \begin{align}
+        (g \circ f)(x,\, y) &= \bigl( p_1(i_1(x)) + p_1(i_2(y)) ,\, p_2(i_1(x)) + p_2(i_2(x)) \bigr) = (x,\, y) , \\
+        (f\circ g)(x) &= i_1(p_1(x)) + i_2(p_2(x)) = x
+    \end{align}
+    なので $f,\, g$ は同型写像．
+\end{proof}
+
+\begin{mydef}[label=def:split]{分裂}
+    左 $R$ 加群の短完全列
+    \begin{align}
+        0 \lto M_1 \xrightarrow{i_1} M \xrightarrow{p_2} M_2 \lto 0
+    \end{align}
+    が\textbf{分裂} (split) するとは，補題\ref{lem:splitting}の条件を充たすことをいう．
+\end{mydef}
+
+
+% \subsection{射影的加群}
+
+\begin{mydef}[label=def:proj-mod]{射影的加群}
+    左 $R$ 加群 $P$ が\textbf{射影的加群} (projective module) であるとは，
+    任意の左 $R$ 加群の\textbf{全射準同型} $f\colon M \lto N$ および任意の準同型写像 $g \colon P \lto N$ に対し，左 $R$ 加群の準同型写像 $ h \colon P \lto M$ であって $f \circ h = g$ を充たすものが存在することを言う（図式\ref{fig:proj-mod}）．
+\end{mydef}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzcd}[row sep=large, column sep=large]
+        &P \ar[d, "g"]\ar[dl, red, dashed, "\exists h"] \\
+        M \ar[r, two heads, "f"] &N
+    \end{tikzcd}
+    \caption{射影的加群}
+    \label{fig:proj-mod}
+\end{figure}%
+
+\begin{myprop}[label=prop:proj-mod-split]{}
+    左 $R$ 加群の完全列
+    \begin{align}
+        0 \lto L \xrightarrow{f} M \xrightarrow{g} \textcolor{red}{N} \lto 0
+    \end{align}
+    は，$\textcolor{red}{N}$ が\hyperref[def:proj-mod]{射影的加群}ならば\hyperref[def:split]{分裂}する．
+\end{myprop}
+
+\begin{proof}
+    射影的加群の定義において $P = N$ とすることで，左 $R$ 加群の準同型写像 $s \colon N \lto M$ であって $g \circ s = 1_N$ を充たすものが存在する．
+\end{proof}
+
+\begin{myprop}[label=prop:proj-mod-dp]{射影的加群の直和}
+    左 $R$ 加群の族 $\Familyset[\big]{P_\lambda}{\lambda \in \Lambda}$ に対して以下の2つは同値：
+    \begin{enumerate}
+        \item $\forall \lambda \in \Lambda$ に対して $P_\lambda$ が射影的加群
+        \item $\displaystyle\bigoplus_{\lambda \in \Lambda} P_\lambda$ が射影的加群
+    \end{enumerate}
+\end{myprop}
+
+\begin{proof}
+    \hyperref[def:inj-proj]{標準的包含}を $\iota_\lambda \colon P_\lambda \hookrightarrow \bigoplus_{\lambda \in  \Lambda}P_\lambda$と書く．
+    \begin{description}
+        \item[\textbf{(1)$\bm{\Longrightarrow}$(2)}] 仮定より，$\forall \lambda \in \lambda$ に対して，任意の全射準同型写像
+        $f \colon M \lto N$ および任意の準同型写像 $g \colon \bigoplus_{\lambda \in \Lambda}P_\lambda \lto N$ に対して，準同型写像 $h_\lambda \colon P_\lambda \lto M$ であって $f \circ h_\lambda = g \circ \iota_\lambda$ を充たすものが存在する．
+        従って\hyperref[prop:univ-dp]{直和の普遍性}より
+        準同型写像
+        \begin{align}
+            h \colon \bigoplus_{\lambda \in \Lambda} P_\lambda \lto M
+        \end{align}
+        であって $f \circ h_\lambda = h \circ \iota_\lambda$ を充たすものが一意的に存在する．
+        このとき 
+        \begin{align}
+            (f \circ h) \circ \iota_\lambda = f \circ h_\lambda = g \circ \iota_\lambda
+        \end{align}
+        であるから，$h$ の一意性から $f \circ h = g$．
+        \item[\textbf{(1)$\bm{\Longleftarrow}$(2)}] $\lambda \in \Lambda$ を一つ固定し，任意の全射準同型写像
+        $f \colon M \lto N$ および任意の準同型写像 $g \colon P_\lambda \lto M$ を与える． 
+        \hyperref[prop:univ-dp]{直和の普遍性}より
+        準同型写像
+        \begin{align}
+            h \colon \bigoplus_{\lambda \in \Lambda} P_\lambda \lto N
+        \end{align}
+        であって $h \circ \iota_\lambda = g$（$\forall \mu \in \Lambda \setminus \{\lambda\},\; h \circ \iota_\lambda = 0$）を充たすものが一意的に存在する．
+        さらに仮定より，準同型写像
+        \begin{align}
+            \alpha \colon \bigoplus_{\lambda \in \Lambda} \lto M
+        \end{align}
+        であって $f \circ \alpha = h$ を充たすものが存在する．このとき
+        \begin{align}
+            f \circ (\alpha \circ \iota_\lambda) = h \circ \iota_\lambda = g
+        \end{align}
+        なので $\beta \coloneqq h \circ \iota_\lambda$ とおけば良い．
+    \end{description}
+\end{proof}
+
+\begin{mycol}[label=col:free-proj]{自由加群は射影的加群}
+    環 $R$ 上の自由加群は射影的加群である
+\end{mycol}
+
+\begin{proof}
+    $R$ が射影的加群であることを示せば命題\ref{prop:proj-mod-dp}より従う．
+
+    左 $R$ 加群の全射準同型写像と準同型写像 $f \colon M \lto N,\; g\colon R \lto N$ を任意に与える．このとき
+    ある $x \in M$ が存在して $f(x) = g(1)$ となる．この $x$ に対して準同型写像 $h \colon R \lto M,\; a \lmto ax$ を定めると，$\forall a \in R$ に対して
+    \begin{align}
+        f \bigl( h(a) \bigr)  = f(ax) = af(x) = ag(1) = g(a)
+    \end{align}
+    が成り立つので $f \circ h = g$ となる．
+\end{proof}
+
+$V,\, W$ を任意の（有限次元とは限らない） $\mathbb{K}$ ベクトル空間，$T \colon V \lto W$ を任意の線型写像とする．
+\begin{align}
+	i_1 &\colon \Ker T  \lto V,\; \bm{v} \lmto \bm{v}, \\
+	p_2 &\colon V \lto \Im T,\; \bm{v} \lmto T(\bm{v}),
+\end{align}
+と定めると，$i_1$ は単射，$p_2$ は全射で，かつ $p_2 \circ i_1 = 0$ が成り立つ．よって $\VEC{\mathbb{K}}$ の図式
+\begin{align}
+	\label{eq:split-vec}
+	0 \lto \Ker T \xrightarrow{i_1} V \xrightarrow{p_2} \Im T \lto 0
+\end{align}
+は短完全列だが，$\Im T$ はベクトル空間なので\hyperref[def:free-mod]{自由加群}であり，系\ref{col:free-proj}より\hyperref[def:proj-mod]{射影的加群}でもある．
+従って命題\ref{prop:proj-mod-split}より短完全列\eqref{eq:split-vec}は\hyperref[def:split]{分裂}し，系\ref{col:split}から
+\begin{align}
+	V \cong \Im T \oplus \Ker T
+\end{align}
+が言える．
+
+\begin{mytheo}[label=thm:rank-nullity]{階数・退化次数の定理}
+	$V,\, W$ をベクトル空間とし，任意の線型写像 $T \colon V \lto W$ を与える．
+	このとき
+	\begin{align}
+		\dim V = \dim (\Im T) + \dim (\Ker T)
+	\end{align}
+	が成り立つ．
+\end{mytheo}
+
+\end{document}

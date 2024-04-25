@@ -1,0 +1,1930 @@
+\documentclass[algtopo_main]{subfiles}
+\mathchardef\mhyphen="2D
+\begin{document}
+
+\setcounter{chapter}{6}
+
+\chapter{ファイブレーション・コファイブレーション・ホモトピー群}
+\textcolor{red}{(2023/5/11) この章は未完である}
+
+この章において $I \coloneqq [0,\, 1]$ とおく．
+\begin{mydef}[label=def:path-basic, breakable]{道}
+    $X$ を位相空間とする．
+    \begin{itemize}
+        \item $X$ における\textbf{道} (path) とは，連続写像 $\alpha \colon I \lto X$ のこと．点 $\alpha(0),\, \alpha(1) \in Y$ のことをそれぞれ道 $\alpha$ の\textbf{始点}, \textbf{終点}と呼ぶ．
+        特に始点と終点が一致する道のことを\textbf{ループ} (loop) と呼ぶ．
+        \item 点 $x_0 \in X$ における\textbf{不変な道} (constant path) とは，定数写像 $\mathrm{const}_{x_0} \colon I \lto X,\; t \lmto x_0$ のこと．
+        \item $X$ における2つの道 $\alpha,\, \beta \colon I \lto X$ は $\alpha(1) = \beta(0)$ を充たすとする．このとき\textbf{道の積} (product path) を次のように定義する：
+        \begin{align}
+            \alpha\beta \colon I \lto X,\; t \lmto 
+            \begin{cases}
+                \alpha(2t), & t \in [0,\, \frac{1}{2}], \\
+                \beta(2t-1), & t \in (\frac{1}{2},\, 1]
+            \end{cases}
+        \end{align}
+        \item $X$ における道 $\alpha \colon I \lto X$ の\textbf{逆の道} (inverse path) を次のように定義する：
+        \begin{align}
+            \alpha^{-1} \colon I \lto X,\; t \lmto \alpha(1-t)
+        \end{align}
+    \end{itemize}
+\end{mydef}
+
+\begin{mydef}[label=def:homotopy-basic, breakable]{ホモトピー}
+    $X,\, Y$ を位相空間とする．
+    \begin{itemize}
+        \item 2つの連続写像 $f_0,\, f_1 \colon X \lto Y$ を繋ぐ\textbf{ホモトピー} (homotopy) とは，連続写像 $F \colon X \times I \lto Y$ であって
+        \begin{align}
+            F|_{X \times \{0\}} = f_0,\quad F|_{X\times \{1\}} = f_1
+        \end{align}
+        を満たすもののことを言う．
+        \item 2つの連続写像 $f_0,\, f_1 \colon X \lto Y$ が\textbf{ホモトピック} (homotopic) であるとは，$f_0$ と $f_1$ を繋ぐホモトピーが存在することを言う．$\bm{f_0 \simeq f_1}$ と書く．
+        \item ホモトピックは集合 $\Hom{\TOP}(X,\, Y)$ 上の同値関係 $\simeq$ をなす．ホモトピックによる $\alpha \in \Hom{\TOP}(X,\, Y)$ の同値類を $\alpha$ の\textbf{ホモトピー類} (homotopy class) と呼び $\bm{[\alpha]}$ と書く．
+        \item 連続写像の組 $f \colon X \lto Y,\; g \colon Y \lto X$ が\textbf{ホモトピー同値写像} (homotopy equivalences) であるとは，
+        $g \circ f,\, f \circ g$ がそれぞれ $\mathrm{id}_X,\, \mathrm{id}_Y$ にホモトピックであることを言う\footnote{$f,\, g$ は互いに\textbf{ホモトピー逆写像} (homotopy inverse) であると言う場合がある．$f,\, g$ のどちらか一方のみを指してホモトピー同値写像という場合は，ホモトピー逆写像が存在することを意味する．}．
+        \item 位相空間 $X,\, Y$ の間にホモトピー同値写像が存在するとき，$X$ と $Y$ は同じ\textbf{ホモトピー型} (homotopy type) であるという．
+        \item 一点と同じホモトピー型である空間は\textbf{可縮} (contractible) であると言われる．
+        \item 商集合 $\bigl\{\, \alpha \in \Hom{\TOP}(I,\, X) \bigm| \alpha(0) = \alpha(1) = x_0 \,\bigr\} \bigm/ {\simeq}$ の上にwell-definedな群演算\footnote{右辺に\hyperref[def:path-basic]{道の積}を使った．}
+        \begin{align}
+            [\alpha] \cdot [\beta] \coloneqq [\alpha\beta]
+        \end{align}
+        を定めて群にしたものを $X$ の点 $x_0$ における\textbf{基本群}と呼び，$\bm{\pi_1(X,\, x_0)}$ と書く．
+    \end{itemize}
+\end{mydef}
+以後，ホモトピー $G \colon X \times I \lto Y$ と言うときは
+連続写像の族
+\begin{align}
+    G = \Familyset[\big]{G_t \colon X \lto Y}{t \in I}
+\end{align}
+を意味するものとする\footnote{これは自動的に2つの連続写像 $G_0,\, G_1 \colon X \lto Y$ を\hyperref[def:homotopy-basic]{繋ぐホモトピー}になる．}．
+
+\section{ファイブレーション}
+
+\subsection{HLPとファイブレーションの定義}
+
+\textbf{持ち上げ} (lifting) の問題とは，次のようなものである：
+\begin{itemize}
+    \item 連続写像 $p \colon E \lto B,\; g \colon X \lto B$ が与えられる．
+    \item このとき，連続写像 $\tilde{g} \colon X \lto E$ であって $g = p \circ \tilde{g}$ を充たすようなものは存在するか？
+\end{itemize}
+持ち上げと言う名前は，もしこのような $\tilde{f}$ が存在すれば図式
+\begin{figure}[H]
+    \centering
+    \begin{tikzcd}[row sep=large, column sep=large]
+        & E \ar[d, "p"] \\
+        X \ar[r, "g"]\ar[ur, red, dashed, "\tilde{g}"] &B
+    \end{tikzcd}
+\end{figure}
+が可換になることに由来する．$\tilde{f}$ のことを $f$ の\textbf{持ち上げ} (lifting) と呼ぶ．
+
+\begin{mydef}[label=def:HLP, breakable]{ホモトピー持ち上げ性質 (HLP)}
+    連続写像 $p \colon E \lto B$ が位相空間 $\textcolor{blue}{Y}$ に対して\textbf{ホモトピー持ち上げ性質} (homotopy lifting property) を充たすとは，以下の条件を充たすことを言う：
+    \begin{description}
+        \item[\textbf{(HLP)}]　
+        $\iota_0 \colon \textcolor{blue}{Y} \times \{0\} \hookrightarrow \textcolor{blue}{Y} \times I$ を包含写像とする．
+        \begin{itemize}
+            \item 連続写像 $\textcolor{blue}{\tilde{g}} \colon \textcolor{blue}{Y} \times \{0\} \lto E$
+            \item 連続写像 $\textcolor{blue}{G} \colon \textcolor{blue}{Y} \times I \lto B$
+        \end{itemize}
+        であって $\textcolor{blue}{G} \circ \iota_0 = p \circ \textcolor{blue}{\tilde{g}}$ を充たすもの
+        \footnote{i.e. $\forall y \in \textcolor{blue}{Y}$ に対して $\textcolor{blue}{G}(y,\, 0) = p \bigl( \textcolor{blue}{\tilde{g}}(y) \bigr)$ を充たすもの．
+                \hyperref[def:homotopy-basic]{ホモトピー} $\textcolor{blue}{G} \colon \textcolor{blue}{Y} \times I \lto B$ であって $\textcolor{blue}{G}_0 = p \circ \textcolor{blue}{\tilde{g}}$ を充たすもの，と言ってもよい． }を任意に与えたとき，
+        （必ずしも一意でない）連続写像 $\textcolor{red}{\tilde{G}} \colon \textcolor{blue}{Y} \times I \lto E$ が存在して図式\ref{cmtd:HLP}が可換になる．
+    \end{description}
+\end{mydef}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzcd}[row sep=large, column sep=large]
+        &\textcolor{blue}{Y} \times \{0\} \ar[r, blue, "\forall \tilde{g}"]\ar[d, hookrightarrow, "\iota_0"] &E \ar[d, "p"] \\
+        &\textcolor{blue}{Y} \times I \ar[ur, red, dashed, "\tilde{G}"]\ar[r, blue, "\forall G"] &B
+    \end{tikzcd}
+    \caption{ホモトピー持ち上げ性質 (HLP)}
+    \label{cmtd:HLP}
+\end{figure}%
+
+\begin{mydef}[label=def:fibration]{ファイブレーション}
+    連続写像 $p \colon E \lto B$ が\textbf{ファイブレーション} (fibration)\footnote{訳語だと\textbf{ファイバー空間}と呼ぶこともある．なお，これは\textbf{Hurewicz fibration}の定義である．} であるとは，任意の位相空間 $Y$ に対して\hyperref[def:HLP]{ホモトピー持ち上げ性質}が成り立つことを言う．
+\end{mydef}
+
+\begin{mylem}[label=lem:fib-product]{}
+    連続写像 $p \colon B \times F \lto B,\; (b,\, f) \lmto b$ は\hyperref[def:fibration]{ファイブレーション}である．
+\end{mylem}
+
+\begin{proof}
+    任意の位相空間 $X$ を1つ固定し，
+    \begin{itemize}
+        \item 連続写像 $ \tilde{g} \colon X \times \{0\} \lto B \times F,\; x \lmto \bigl(\tilde{g}_1(x),\, \tilde{g}_2(x)\bigr)$
+        \item 連続写像 $G \colon X \times I \lto B,\; (x,\, t) \lmto G(x,\, t)$
+    \end{itemize}
+    であって $G \circ \iota_0 = p \circ \tilde{g}$ を充たすものを任意に与える．
+    このとき $\forall x \in X$ に対して $G(x,\, 0) = \tilde{g}_1(x)$ が成り立つ．
+    従って連続写像 $\tilde{G} \colon X \times I \lto B \times F,\; (x,\, t) \lmto \bigl( G(x,\, t),\, \tilde{g}_2(x) \bigr)$ は $\forall (x,\, t) \in X \times I$ に対して
+    \begin{align}
+        p \bigl( \tilde{G}(x,\, t) \bigr) &= G (x,\, t), \\
+        \tilde{G} \bigl( \iota_0(x) \bigr) &=  \tilde{G}(x,\, 0) = \bigl(\tilde{g}_1(x),\, \tilde{g}_2(x) \bigr) = \tilde{g}(x)
+    \end{align}
+    を充たすので
+    $X$ について\hyperref[def:HLP]{HLP}が成り立つことが示された．
+\end{proof}
+
+次の定理の証明は煩雑なので省略する：
+\begin{mytheo}[label=thm:Hurewicz-fib]{}
+    連続写像 $p\colon E \lto B$ を与える．$B$ はパラコンパクトで，かつ $B$ の開被覆 $\Familyset[\big]{U_\lambda}{\lambda\in \Lambda} $ であって 
+    $\forall \lambda\in \Lambda$ に対して制限 $p|_{p^{-1}(U_\lambda)} \colon p^{-1}(U_\lambda) \lto U_\alpha$ が\hyperref[def:fibration]{ファイブレーション}となるようなものが存在するとする．
+
+    このとき，$p \colon E \lto B$ は\hyperref[def:fibration]{ファイブレーション}である．
+\end{mytheo}
+
+次の意味で，\hyperref[def:fibration]{ファイブレーション}は\hyperref[def:FB]{ファイバー束}の拡張になっている．
+\begin{mycol}[]{ファイバー束はファイブレーション}
+    パラコンパクトな位相空間 $B$ と，その上の\hyperref[def:FB]{ファイバー束} $\pi \colon E \lto B$ を与える．
+    このとき $\pi$ は\hyperref[def:fibration]{ファイブレーション}である．
+\end{mycol}
+
+\begin{proof}
+    \hyperref[def:FB]{ファイバー束の定義}より $\pi$ はある開被覆 $\{U_\lambda\}_{\lambda \in \Lambda}$ に対して $\forall \lambda \in \Lambda,\; \pi|_{\pi^{-1}(U_\lambda)} \colon \pi^{-1}(U_\lambda) \approx U_\lambda \times F \lto U_\lambda$ を充たす．
+    従って補題\ref{lem:fib-product}より $\forall \lambda \in \Lambda$ に対して $\pi|_{\pi^{-1}(U_\lambda)}$ は\hyperref[def:fibration]{ファイブレーション}であるから，
+    定理\ref{thm:Hurewicz-fib}より $\pi$ も\hyperref[def:fibration]{ファイブレーション}である．
+\end{proof}
+
+\begin{mydef}[label=def:fib-morphism]{ファイブレーションの射}
+    2つの\hyperref[def:fibration]{ファイブレーション} $p \colon E \lto B,\; p'\colon E' \lto B'$ を与える．
+
+    \textbf{ファイブレーションの射}とは，連続写像 $f \colon B \lto B',\; \tilde{f} \colon E \lto E'$ の対 $(f,\, \tilde{f})$ であって図式\ref{cmtd:fib-morphism}を可換にするもののこと．
+\end{mydef}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzcd}[row sep=large, column sep=large]
+        &E \ar[r, "\tilde{f}"]\ar[d, "p"] &E' \ar[d, "p'"] \\
+        &B \ar[r, "f"] &B'
+    \end{tikzcd}
+    \caption{ファイブレーションの射}
+    \label{cmtd:fib-morphism}
+\end{figure}%
+
+\begin{mydef}[label=def:fib-pullback]{ファイブレーションの引き戻し}
+    $p \colon E \lto B$ を\hyperref[def:fibration]{ファイブレーション}，$f \colon X \lto B$ を連続写像とする．
+
+    $f$ による $p$ の\textbf{引き戻し} (pullback) $q \colon f^*(E) \lto X$ を次のように定義する：
+    \begin{itemize}
+        \item 集合
+        \begin{align}
+            f^* (E) \coloneqq \bigl\{\, (x,\, e) \in X \times E \bigm| f(x) = p(e) \,\bigr\} 
+        \end{align}
+        \item 連続写像
+        \begin{align}
+            q \coloneqq \mathrm{proj}_1|_{f^*(E)}
+        \end{align}
+    \end{itemize}
+\end{mydef}
+
+\begin{myprop}[label=prop:fib-pullback]{}
+    \hyperref[def:fib-pullback]{ファイブレーションの引き戻し}は\hyperref[def:fibration]{ファイブレーション}である．
+\end{myprop}
+
+\begin{proof}
+    任意の位相空間 $Y$ を1つ固定し，%$p \colon E \lto B$ は\hyperref[def:fibration]{ファイブレーション}なので，
+    \begin{itemize}
+        \item 連続写像 $\tilde{g} \colon Y \times \{0\}\lto f^*(E),\; y \lmto \bigl( \tilde{g}_1(y),\, \tilde{g}_2 (y) \bigr) $
+        \item 連続写像 $G \colon Y \times I \lto X,\; (y,\, t) \lmto G(y,\, t)$
+    \end{itemize}
+    であって $\forall y \in Y,\;G(y,\, 0) = q \bigl( \tilde{g}(y) \bigr) = \tilde{g}_1(y)$ を充たすものを任意にとる．
+    \begin{itemize}
+        \item 連続写像 $\tilde{g}_2 \colon Y \times \{0\},\; y \lmto \tilde{g}_2(y)$
+        \item 連続写像 $f \circ G \colon Y \times I \lto B$
+    \end{itemize}
+    は，$f^*(E)$ の定義により $\forall y \in Y$ に対して 
+    $f \bigl( G(y,\, 0) \bigr) = f \bigl( \tilde{g}_1(y) \bigr) = p \bigl( \tilde{g}_2(y) \bigr)$ を充たす．
+    従って $p \colon E \lmto B$ が\hyperref[def:fibration]{ファイブレーション}であることにより，ある連続写像 $\tilde{F} \colon Y \times I \lto E$ が存在して
+    $p \bigl( \tilde{F}(y,\, t) \bigr) = f \bigl( G(y,\, t) \bigr),\; \tilde{F}(y,\, 0) = \tilde{g}_2(y)$ を充たす．
+    従って連続写像
+    \begin{align}
+        \tilde{G} \colon Y \times I \lto X \times E,\; (y,\, t) \lmto \bigl( G(x,\, t),\, \tilde{F}(x,\, t) \bigr) 
+    \end{align}
+    を考えると，$\Im \tilde{G} \subset f^*(E)$ でかつ $\forall (y,\, t) \in Y \times I$ に対して
+    \begin{align}
+        q \bigl( \tilde{G}(y,\, t) \bigr) &= G(y,\, t), \\
+        \tilde{G} \bigl( y,\, 0 \bigr) &= \bigl( G(y,\, 0),\, \tilde{F}(y,\, 0) \bigr) = \bigl( \tilde{g}_1(y),\, \tilde{g}_2(y) \bigr) = \tilde{g}(y)
+    \end{align}
+    が成り立つ．i.e. 連続写像 $\tilde{G}$ によって位相空間 $Y$ に関する\hyperref[def:HLP]{HLP}が充たされる．
+\end{proof}
+
+\subsection{ファイブレーションのファイバー}
+
+\begin{mytheo}[label=thm:fiber-basic]{ファイバーの基本性質}
+    $B$ を\underline{弧状連結空間}とし，\hyperref[def:fibration]{ファイブレーション} $p \colon E \lto B$ を与える．
+    $B$ の各点に対して定まる $E$ の部分空間 $E_b \coloneqq p^{-1}(\{b\})$ のことを\textbf{ファイバー} (fiber) と呼ぶ．
+    このとき，以下が成り立つ：
+    \begin{enumerate}
+        \item \textbf{全てのファイバーは同じ\hyperref[def:homotopy-basic]{ホモトピー型}である}
+        \item $B$ 上の任意の\hyperref[def:path-basic]{道} $\alpha \colon I \lto B$ は\hyperref[def:homotopy-basic]{ホモトピー同値写像} $h_\alpha \colon E_{\alpha(0)} \lto E_{\alpha(1)}$ を引き起こし，
+        その\hyperref[def:homotopy-basic]{ホモトピー類} $\alpha_* \coloneqq [h_\alpha]$ は $\alpha$ と端点を共有し，かつ\hyperref[def:homotopy-basic]{ホモトピック}であるような道の取り方によらない．
+        \item 特に，well-definedな群準同型
+        \begin{align}
+            \psi \colon \pi_1(B,\, b_0) &\lto \bigl\{ \substack{\text{ホモトピー同値写像}\; E_{b_0} \lto E_{b_0}\; \text{の} \\ \text{ホモトピー類全体}} \bigr\} \\
+            [\alpha] &\lmto (\alpha^{-1})_*
+        \end{align}
+        が存在する．
+    \end{enumerate}
+\end{mytheo}
+
+\begin{marker}
+    \begin{itemize}
+        \item \hyperref[def:fibration]{ファイブレーション} $p \colon E \lto B$ が与えられたとき，勝手な点 $b \in B$ に対して定まる部分空間 $E_b \subset E$ と同じ\hyperref[def:homotopy-basic]{ホモトピー型}であるような任意の位相空間のことを\hyperref[def:fibration]{ファイブレーション} $p\colon E \lto B$ の\textbf{ファイバー}と呼ぶ場合がある．
+        \item $F$ を $B$ のある指定された点におけるファイバーとして，ファイブレーション $p \colon E \lto B$ のことを $\bm{F \hookrightarrow E \xrightarrow{p} B}$ と書くことがある．
+    \end{itemize}
+    これらの記法は定理\ref{thm:fiber-basic}-(1)に由来する．
+\end{marker}
+
+\begin{proof}
+    まず「$h_\alpha$ がホモトピー同値写像であること」を除いて (2) を示す．
+    $B$ は弧状連結なので，$\forall b_0,\, b_1 \in B$ および\hyperref[def:path-basic]{道} $\alpha \colon I \lto B \ST \alpha(0) = b_0,\, \alpha(1) = b_1$ を任意にとることができる．
+    \begin{itemize}
+        \item 包含写像 $\iota_{b_0} \colon E_{b_0} \hookrightarrow E$ 
+        \item ホモトピー $H \colon E_{b_0} \times I \lto B,\; (e,\, t) \lmto \alpha(t)$
+    \end{itemize}
+    は以下の可換図式を充たす：
+    \begin{center}
+        \begin{tikzcd}[row sep=large, column sep=large]
+            &E_{b_0} \times \{0\} \ar[r, hookrightarrow, "\iota_{b_0}"] \ar[d, hookrightarrow] &E \ar[d, "p"] \\
+            &E_{b_0} \times I \ar[r, "H"] &B
+        \end{tikzcd}
+    \end{center}
+    $p \colon E \lto B$ は\hyperref[def:fibration]{ファイブレーション}なので，\hyperref[def:HLP]{HLP}により
+    $H$ の持ち上げ $\tilde{H} \colon E_{b_0} \times I \lto E$ が存在して以下の可換図式が成り立つ：
+    \begin{center}
+        \begin{tikzcd}[row sep=large, column sep=large]
+            &E_{b_0} \times \{0\} \ar[r, hookrightarrow, "\iota_{b_0}"] \ar[d, hookrightarrow] &E \ar[d, "p"] \\
+            &E_{b_0} \times I \ar[ur, dashed, red, "\exists \tilde{H}"]\ar[r, "H"] &B
+        \end{tikzcd}
+    \end{center}
+    ホモトピー $\tilde{H} \colon E_{b_0} \times I \lto E$ は $\forall e \in E_{b_0}$ に対して
+    $p \bigl(\tilde{H}(e,\, 1)\bigr) = H(e,\, 1) = \alpha(1) = b_1$ を充たすので $\Im \tilde{H}_1 \subset E_{b_1}$ がわかる．i.e. $\alpha$ によって
+    連続写像 $h_\alpha \coloneqq \tilde{H}_1 \colon E_{b_0} \lto E_{b_1}$ が引き起こされた．
+    ここで $\alpha_* \coloneqq [\tilde{H}_1]$ と定める．
+    これが道 $\alpha$ と端点を共有し，かつ\hyperref[def:homotopy-basic]{ホモトピック}であるような道の取り方によらないことを示す．
+    $h_\alpha$ が\hyperref[def:homotopy-basic]{ホモトピー同値写像}であることは後に (1) と同時に示す．
+    
+    \hyperref[def:path-basic]{道} $\alpha' \colon I \lto B$ は $\alpha$ と同一の端点を持ち，かつ $\alpha$ に\hyperref[def:homotopy-basic]{ホモトピック}であるとする．
+    すると
+    \begin{itemize}
+        \item 包含写像 $E_{b_0} \hookrightarrow E$
+        \item ホモトピー $H' \colon E_{b_0} \times I \lto B,\; (e,\, t) \lmto \alpha'(t)$
+    \end{itemize}
+    に対して\hyperref[def:HLP]{HLP}を用いることで次の可換図式が得られる：
+    \begin{center}
+        \begin{tikzcd}[row sep=large, column sep=large]
+            &E_{b_0} \times \{0\} \ar[r, hookrightarrow, "\iota_{b_0}"] \ar[d, hookrightarrow] &E \ar[d, "p"] \\
+            &E_{b_0} \times I \ar[ur, dashed, red, "\exists \tilde{H}'"]\ar[r, "H'"] &B
+        \end{tikzcd}
+    \end{center}
+    示すべきは $\tilde{H}_1 \simeq \tilde{H}'_1$ である．
+
+    $\alpha$ と $\alpha'$ を繋ぐ\hyperref[def:homotopy-basic]{ホモトピー} $F \colon I \times I \lto B$ をとる．すると連続写像
+    \begin{align}
+        \Lambda \colon (E_{b_0} \times I) \times I \lto B,\; (e,\, s,\, t) \lmto F(s,\, t)
+    \end{align}
+    は $H$ と $H'$ を繋ぐホモトピーになる．このとき連続写像
+    \begin{align}
+        \Gamma \colon &(E_{b_0} \times I ) \times \{0,\, 1\} \cup (E_{b_0} \times \{0\}) \times I \lto E, \\
+        &(e,\, s,\, t) \lmto 
+        \begin{cases}
+            \tilde{H} (e,\, s), & t=0 \\
+            \tilde{H}' (e,\, s), & t=1 \\
+            e, & s=0
+        \end{cases}
+    \end{align}
+    は図式
+    \begin{center}
+        \begin{tikzcd}[row sep=large, column sep=large]
+            &(E_{b_0} \times I ) \times \{0,\, 1\} \cup (E_{b_0} \times \{0\}) \times I \ar[r, "\Gamma"]\ar[d, hookrightarrow] &E \ar[d, "p"] \\
+            &(E_{b_0} \times I) \times I \ar[r, "\Lambda"] &B
+        \end{tikzcd}
+    \end{center}
+    を可換にする．
+    
+    ところで $U \coloneqq I \times \{0,\, 1\} \cup \{0\} \times I$ とおいたとき，同相写像 $\varphi \colon I^2 \lto I^2$ であって $\varphi(U) = I \times \{0\}$ とするようなものが存在する．
+    この $\varphi$ を使うと可換図式
+    \begin{center}
+        \begin{tikzcd}[row sep=large, column sep=large]
+            &E_{b_0} \times I \times \{0\} \ar[d, hookrightarrow] &E_{b_0} \times U \ar[l, "\mathrm{id} \times \varphi"]\ar[r, "\Gamma"]\ar[d, hookrightarrow] &E \ar[d, "p"] \\
+            &E_{b_0} \times I \times I &(E_{b_0} \times I) \times I \ar[l, "\mathrm{id} \times \varphi"] \ar[r, "\Lambda"] &B
+        \end{tikzcd}
+    \end{center}
+    が得られる．$p \colon E \lto b$ は\hyperref[def:fibration]{ファイブレーション}なので図式の外周部に\hyperref[def:HLP]{HLP}を使うことができて，
+    $\Lambda$ の持ち上げ $\tilde{\Lambda} \colon E_{b_0} \times I^2 \lto E$ を得る：
+    \begin{center}
+        \begin{tikzcd}[row sep=large, column sep=large]
+            &E_{b_0} \times U \ar[r, "\Gamma"] \ar[d, hookrightarrow] &E \ar[d, "p"] \\
+            &E_{b_0} \times I^2 \ar[ur, dashed, red, "\exists \tilde{\Lambda}"]\ar[r, "\Lambda"] &B
+        \end{tikzcd}
+    \end{center}
+    構成より $\tilde{\Lambda}$ は $\tilde{H}$ と $\tilde{H}'$ を繋ぐホモトピーであり，$E_{b_0} \times \{1\} \times I$ に制限することで $\tilde{H}_1$ と $\tilde{H}'_1$ を繋ぐホモトピーになる．
+    以上で (2) の証明が部分的に完了した．
+    
+    次に (1) および $h_\alpha$ が\hyperref[def:homotopy-basic]{ホモトピー同値写像}であることを示す．
+    2つの\hyperref[def:path-basic]{道} $\alpha,\; \beta \colon I \lto B$ であって $\alpha(1) = \beta(0)$ を充たすものをとる．
+    \hyperref[def:path-basic]{道の積}の定義より $(\alpha \beta)_* = \beta_* \circ \alpha_*$ が成り立つ．
+    特に $\beta = \alpha^{-1}$ の場合を考えると $(\alpha^{-1})_* \circ \alpha_* = (\mathrm{const}_{b_0})_* = [\mathrm{id}_{E_{b_0}}]$ が成り立つ．$B$ は弧状連結空間なので (1) および (2) の証明が完了した．
+
+    最後に (3) を示す．
+\end{proof}
+
+\subsection{道の空間におけるファイブレーション}
+
+\begin{mydef}[label=def:path-loop]{path spaceとloop space}
+    $(Y,\, y_0)$ を基点付き位相空間とする．
+    \begin{itemize}
+        \item \textbf{道の空間} (path space) とは，位相空間\footnote{コンパクト生成空間と見做して位相を入れる．}
+        \begin{align}
+            P_{y_0} Y \coloneqq \bigl\{\, \alpha \in \Hom{\TOP}(I,\, Y)\bigm| \alpha(0) = y_0 \,\bigr\} \subset \Hom{\TOP}(I,\, Y)
+        \end{align}
+        のことを言う．
+        \item \textbf{ループ空間} (loop space) とは，位相空間
+        \begin{align}
+            \Omega_{y_0} Y \coloneqq \bigl\{\, \alpha \in \Hom{\TOP} (I,\, Y) \bigm| \alpha(0) = \alpha(1) = y_0 \,\bigr\} \subset \Hom{\TOP} (I,\, Y)
+        \end{align}
+        のことを言う．
+    \end{itemize}
+    
+\end{mydef}
+
+\begin{marker}
+    基点 $y_0 \in Y$ はしばしば省略して書かれる．
+\end{marker}
+
+さらに，以降では次の記法を使うことがある：
+\begin{itemize}
+    \item 位相空間 $\Hom{\TOP} (I,\, Y)$ のことを\textbf{自由な道の空間} (free path space) と呼び，$\bm{Y^I}$ と略記する場合がある．
+    \item \underline{連続写像}\footnote{$p$ の $P_{y_0}Y$ への制限もまた連続である．} $p \colon Y^I \lto Y,\; \alpha \lmto \alpha(1)$
+\end{itemize}
+
+\begin{myprop}[]{}
+    $Y$ を\underline{弧状連結空間}とし，2点 $y_0,\, y_1 \in Y$ をとる．このとき\hyperref[def:path-loop]{ループ空間} $\Omega_{y_0}Y,\; \Omega_{y_1}Y$ は同じホモトピー型である．
+\end{myprop}
+
+\begin{proof}
+    $Y$ は弧状連結なので $y_0,\, y_1$ を繋ぐ道 $\eta \colon I \lto Y$ が存在する．このとき連続写像\footnote{定義に\hyperref[def:path-basic]{道の積}を使っている．}
+    \begin{align}
+        f &\colon \Omega_{y_0} Y \lto \Omega_{y_1} Y,\; \alpha \lmto \eta \alpha \eta^{-1}, \\
+        g &\colon \Omega_{y_1} Y \lto \Omega_{y_0} Y,\; \beta \lmto \eta^{-1} \beta \eta
+    \end{align}
+    は $g \circ f \simeq \mathrm{id}_{\Omega_{y_0} Y},\; f \circ g \simeq \mathrm{id}_{\Omega_{y_1} Y}$ を充たす．
+\end{proof}
+
+\begin{mytheo}[label=thm:path-space-fibration]{道の空間のファイブレーション}
+    \begin{enumerate}
+        \item 連続写像 $p \colon Y^I \lto Y,\; \alpha \lmto \alpha(1)$ は\hyperref[def:fibration]{ファイブレーション}であり，点 $y_0$ における\hyperref[thm:fiber-basic]{ファイバー}は $P_{y_0}Y$ と同相である．
+        \item 連続写像 $p \colon P_{y_0} \lto Y,\; \alpha \lmto \alpha(1)$ は\hyperref[def:fibration]{ファイブレーション}であり，点 $y_0$ における\hyperref[thm:fiber-basic]{ファイバー}は $\Omega_{y_0}Y$ と同相である．
+        \item $Y^I$ は $Y$ と同じ\hyperref[def:homotopy-basic]{ホモトピー型}である．$p \colon Y^I \lto Y$ が\hyperref[def:homotopy-basic]{ホモトピー同値写像}となる．
+        \item $P_{y_0} Y$ は\hyperref[def:homotopy-basic]{可縮}（i.e. 一点と同じホモトピー型を持つ）
+    \end{enumerate}
+\end{mytheo}
+
+\begin{proof}
+    任意の位相空間 $X$ を1つ固定する．
+    \begin{enumerate}
+        \item \begin{itemize}
+            \item 連続写像 $g \colon X \times \{0\} \lto Y^I$
+            \item ホモトピー $H \colon X \times I \lto Y$
+        \end{itemize}
+        であって図式
+        \begin{center}
+            \begin{tikzcd}[row sep=large, column sep=large]
+                &X \times \{0\} \ar[r, "g"]\ar[d, hookrightarrow] &Y^I \ar[d, "p"] \\
+                &X \times I \ar[r, "H"] &Y
+            \end{tikzcd}
+        \end{center}
+        を可換にするものを与える．このとき $\forall x \in X$ を1つ固定すると $g(x)$ は点 $H(x,\, 0) \in Y$ を終点に持つ道となり，
+        制限 $H|_{\{x\} \times I} \colon I \lto Y$ は $H(x,\, 0)$ を終点に持つ道となる．
+        従って $H$ の持ち上げ $\tilde{H} \colon X \times I \lto Y^I$ は，（もし存在すれば）道 $\tilde{H}(x,\, 0)$ が道 $g(x)$ に一致し，かつ道 $\tilde{H}(x,\, s)$ の終点が点 $H(x,\, s) \in Y$ に一致せねばならない．
+        実際，写像 $\tilde{H} \colon X \times I \lto Y^I$ を
+        \begin{align}
+            \tilde{H}(x,\, s)(t) \coloneqq
+            \begin{cases}
+                g(x) \bigl( (1+s)t \bigr), & t \in [0,\, \frac{1}{1+s}] \\
+                H\bigl(x,\, (1+s)t - 1\bigr), & t \in [\frac{1}{1+s},\, 1]
+            \end{cases}
+        \end{align}
+        と定義するとこれは連続で\footnote{コンパクト生成空間の位相を入れたため．}，かつ $\forall s \in I$ に対して $\tilde{H}(x,\, 0) = g(x),\; p \bigl( \tilde{H}(x,\, s) \bigr) = \tilde{H}(x,\, s)(1) = H(x,\, s)$ を充たす．
+        i.e. 位相空間 $X$ に対して\hyperref[def:HLP]{HLP}が充たされる．$X$ は任意だったので $p \colon Y^I \lto y$ は\hyperref[def:fibration]{ファイブレーション}である．
+    
+        点 $y_0 \in Y$ における\hyperref[thm:fiber-basic]{ファイバー} $p^{-1}(\{y_0\})$ は $y_0$ を終点とする $Y$ の道全体の集合である．従って連続写像
+        \begin{align}
+            P_{y_0}Y &\lto p^{-1}(\{y_0\}) \\
+            \alpha &\lmto \alpha(1-t)
+        \end{align}
+        は同相 $p^{-1}(\{y_0\}) \approx P_{y_0}Y$ を与える．
+        \item (1) と同様．
+        \item 連続写像 $i \colon Y \lto Y^I,\; y \lmto (t \lmto y)$ を考えると，$p \circ i = \mathrm{id}_Y$ である．
+        
+        一方，連続写像 $F \colon Y^I \times I \lto Y^I,\; (\alpha,\, s) \lmto \bigl(t \lmto \alpha(s(1-t) + t)\bigr)$ は
+        $\mathrm{id}_{Y^I} \colon \alpha \lmto \alpha$ と $i\circ p \colon \alpha \lmto \bigl(t \lmto \alpha(1)\bigr) = i \circ p(\alpha)$ を繋ぐホモトピーである．i.e. $i \circ p \simeq \mathrm{id}_{Y^I}$ がわかった．
+        \item (3) と同様．
+    \end{enumerate}
+    
+\end{proof}
+
+\subsection{ファイブレーションのホモトピー}
+
+2つの\hyperref[def:fib-morphism]{ファイブレーションの射}を繋ぐホモトピーを定義する．
+
+\begin{mydef}[label=def:fib-homotopy]{ファイブレーションのホモトピー}
+    2つの\hyperref[def:fibration]{ファイブレーション} $p\colon E \lto B,\; p' \colon E' \lto B'$ 
+    およびそれらの間の\hyperref[def:fib-morphism]{ファイブレーションの射} $(\tilde{f}_i,\, f_i),\quad i = 0,\, 1$ を与える．
+
+    $(\tilde{f}_0,\, f_0)$ と $(\tilde{f}_1,\, f_1)$ を繋ぐ\textbf{ファイバー・ホモトピー} (fiber homotopy) とは，
+    \begin{itemize}
+        \item ホモトピー $\tilde{H} \colon E \times I \lto E'$
+        \item ホモトピー $H \colon B \times I \lto B'$
+    \end{itemize}
+    の組であって図式\ref{cmtd:fib-homotopy}を可換にし，
+    \begin{align}
+        \tilde{H}_0 &= \tilde{f}_0, & \tilde{H}_1 &= \tilde{f}_1, \\
+        H_0 &= f_0, & H_1 &= f_1
+    \end{align}
+    を充たすもののこと，
+\end{mydef}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzcd}[row sep=large, column sep=large]
+        &E \times I \ar[r, "\tilde{H}"]\ar[d, "p \times \mathrm{id}_I"] &E' \ar[d, "p"] \\
+        &B \times I \ar[r, "H"] &B'
+    \end{tikzcd}
+    \caption{ファイバー・ホモトピー}
+    \label{cmtd:fib-homotopy}
+\end{figure}%
+
+\begin{mydef}[label=def:fib-hom-equiv, breakable]{ファイブレーションのホモトピー同値}
+    2つの\hyperref[def:fibration]{ファイブレーション} $p\colon E \lto B,\; p' \colon E' \lto B'$ が同じ\textbf{ファイバー・ホモトピー型} (fiber homotopy type) であるとは，
+    2つのファイブレーションの射 $(\tilde{f},\, \mathrm{id}_B),\; (\tilde{g},\, \mathrm{id}_B)\WHERE \tilde{f} \colon E \lto E',\, \tilde{g} \colon E' \lto E$ であって，以下の条件をみたすものが存在することを言う：
+    \begin{itemize}
+        \item ホモトピー $\tilde{H} \colon E \times I \lto E$ であって $\forall (e,\, t) \in E \times I$ に対して
+        \begin{align}
+            p \bigl( \tilde{H}(e,\, t) \bigr) &= p(e), \\
+            \tilde{H}_0 &= \tilde{g} \circ \tilde{f}, \\
+            \tilde{H}_1 &= \mathrm{id}_{E}
+        \end{align}
+        を充たすものが存在する．
+        \item ホモトピー $\tilde{G} \colon E' \times I \lto E'$ であって $\forall (e',\, t) \in E' \times I$ に対して
+        \begin{align}
+            p' \bigl( \tilde{G}(e',\, t) \bigr) &= p'(e'), \\
+            \tilde{G}_0 &= \tilde{f} \circ \tilde{g}, \\
+            \tilde{G}_1 &= \mathrm{id}_{E'}
+        \end{align}
+        を充たすものが存在する．
+    \end{itemize}
+    i.e. 合成 $(\tilde{g} \circ \tilde{f},\, \mathrm{id}_B),\; (\tilde{f} \circ \tilde{g},\, \mathrm{id}_B)$ がそれぞれ $(\mathrm{id}_{E},\, \mathrm{id}_B),\; (\mathrm{id}_{E'},\, \mathrm{id}_B)$ に，$B$ についてはホモトピー $B \times I \lto B,\; (b,\, t) \lmto b$ を通じて\hyperref[def:fib-homotopy]{ファイバー・ホモトピック}であるようなものが存在することを言う．
+    
+    このとき2つの連続写像 $\tilde{f},\; \tilde{g}$ のことを\textbf{ファイバー・ホモトピー同値写像} (fiber homotopy equivalences) と呼ぶ．
+\end{mydef}
+
+\begin{marker}
+    ファイバー・ホモトピー同値写像 $\tilde{f} \colon E \lto E'$ を\hyperref[thm:fiber-basic]{ファイバー} $E_{b_0}$ に制限した連続写像 $\tilde{f}|_{E_{b_0}} \colon E_{b_0} \lto E'_{b_0}$ はホモトピー同値写像である．
+\end{marker}
+
+\subsection{連続写像をファイブレーションに置き換える}
+
+連続写像 $f \colon X \lto Y$ を与える．
+この節では位相空間 $X$ は空でなく，位相空間 $Y$ は\underline{弧状連結}であるとする．
+
+定理\ref{thm:path-space-fibration}-(1) と同様の理由により，連続写像 $q \colon Y^I \lto Y,\; \alpha \lmto \alpha(0)$ は\hyperref[def:fibration]{ファイブレーション}である．
+
+\begin{mydef}[label=def:mapping-path-space]{mapping path space}
+    \begin{itemize}
+        \item \hyperref[def:fibration]{ファイブレーション}$q \colon Y^I \lto Y,\; \alpha \lmto \alpha(0)$ の $f \colon X \lto Y$ に沿った\hyperref[def:fib-pullback]{引き戻し} $P_f \coloneqq f^*(Y^I)$ は\footnote{命題\ref{prop:fib-pullback}より $\mathrm{proj}_1 \colon P_f \lto X$ もまた\hyperref[def:fibration]{ファイブレーション}である．} \textbf{mapping path space}と呼ばれる（可換図式\ref{cmtd:MPS}）．
+        \begin{align}
+            P_f \coloneqq \bigl\{\, (x,\, \alpha) \in X \times Y^I\bigm| f(x) = q(\alpha) = \alpha(0) \,\bigr\} 
+        \end{align}
+        である．
+        \item 連続写像
+        \begin{align}
+            p\colon P_f \lto Y,\; (x,\, \alpha) \lmto \alpha(1)
+        \end{align}
+        のことを\textbf{mapping path fibration}と呼ぶ\footnote{$p$ が\hyperref[def:fibration]{ファイブレーション}であることは定理\ref{thm:continuous-fibration}で示す．}．
+    \end{itemize}
+\end{mydef}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzcd}[row sep=large, column sep=large]
+        &P_f \ar[d, "\mathrm{proj_1}"]\ar[r, "\mathrm{proj}_2"] &Y^I \ar[d, "q"] \\
+        &X \ar[r, "f"] &Y
+    \end{tikzcd}
+    \caption{mapping path space}
+    \label{cmtd:MPS}
+\end{figure}%
+
+\begin{mytheo}[label=thm:continuous-fibration]{ファイブレーションと連続写像のホモトピー同値性}
+    任意の連続写像 $f \colon X \lto Y$ を与える．
+    \begin{enumerate}
+        \item \hyperref[def:homotopy-basic]{ホモトピー同値写像} $h \colon X \lto P_f$ であって図式\ref{cmtd:continuous-fibration}を可換にするものが存在する．
+        \item \hyperref[def:mapping-path-space]{mapping path fibration} $p \colon P_f \lto Y$ は\hyperref[def:fibration]{ファイブレーション}である．
+        \item $f \colon X \lto Y$ が\hyperref[def:fibration]{ファイブレーション}ならば $h$ は\hyperref[def:fib-homotopy]{ファイバー・ホモトピー同値写像}である．
+    \end{enumerate}
+\end{mytheo}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzcd}[row sep=large, column sep=large]
+        &X \ar[rr, "\exists h"]\ar[dr, "f"'] & &P_f \ar[dl, "p"] \\
+        & &Y &
+    \end{tikzcd}
+    \caption{ファイブレーションと連続写像のホモトピー同値性}
+    \label{cmtd:continuous-fibration}
+\end{figure}%
+
+\begin{marker}
+    連続写像 $f \colon X \lto Y$ が与えられたとき，「$F \hookrightarrow X \xrightarrow{f} Y$ は\hyperref[def:fibration]{ファイブレーション}である」と言うことがある．
+    この場合 $X$ と\hyperref[def:homotopy-basic]{ホモトピー同値}な\hyperref[def:mapping-path-space]{mapping path space} $P_f$ を使ってファイブレーション $F \hookrightarrow P_f \xrightarrow{p} Y$ を考えている．
+\end{marker}
+
+
+\begin{proof}
+    \begin{enumerate}
+        \item 連続写像 $h \colon X \lto P_f,\; x \lmto (x,\, \mathrm{const}_{f(x)})$ を考える．\footnote{$\mathrm{const}_{f(x)}$ は\hyperref[def:path-basic]{不変な道} $I \lto Y,\; t \lmto f(x)$ ．}．
+        すると $f = p \circ h$ であるから図式\ref{cmtd:continuous-fibration}は可換になる．
+        
+        $h$ の\hyperref[def:homotopy-basic]{ホモトピー逆写像}が $\mathrm{proj}_1 \colon P_f \lto X,\; (x,\, \alpha) \lmto x$ であることを示す．
+        $\mathrm{proj}_1 \circ h = \mathrm{id}_X$ は即座に従う．
+        一方，ホモトピー $F \colon P_f \times I \lto P_f,\; \bigl( (x,\, \alpha),\, s \bigr) \lmto \bigl(x,\, (t \lmto \alpha(st))\bigr) $ は $\forall (x,\, \alpha) \in P_f$ に対して
+        \begin{align}
+            F_0(x,\, \alpha) &= (x,\, \mathrm{const}_{\alpha(0)}), \\
+            F_1(x,\, \alpha) &= (x,\, \alpha)
+        \end{align}
+        を充たす．\hyperref[def:mapping-path-space]{$P_f$ の定義}より $\alpha(0) = f(x)$ が成り立つから $F_0 = h \circ \mathrm{proj}_1,\; F_1 = \mathrm{id}_{P_f}$ がわかる．i.e. $F$ は $h \circ \mathrm{proj}_1$ と $\mathrm{id}_{P_f}$ を繋ぐ\hyperref[def:homotopy-basic]{ホモトピー}である．
+        \item 任意の位相空間 $A$ を一つ固定し，
+        \begin{itemize}
+            \item 連続写像 $g \colon A \times \{0\} \lto P_f,\; a \lmto \bigl( g_1(a),\, g_2(a) \bigr) $
+            \item ホモトピー $H \colon A \times I \lto Y$
+        \end{itemize}
+        であって以下の可換図式を充たすものを任意に与える：
+        \begin{center}
+            \begin{tikzcd}[row sep=large, column sep=large]
+                &A \times \{0\} \ar[r, "g"]\ar[d, hookrightarrow] &P_f \ar[d, "p"] \\
+                &A \times I \ar[r, "H"] &Y
+            \end{tikzcd}
+        \end{center}
+        従って $\forall a \in A$ に対して $g_2(a)(1) = H(a,\, 0)$ が，$P_f$ の\hyperref[def:mapping-path-space]{定義}より $g_2(a)(0) = f\bigl(g_1(a)\bigr)$ が成り立つ．
+
+        ここで写像 $\tilde{H} \colon A \times I \lto P_f,\; (a,\, s) \lmto \bigl( g_1(a),\, (t \lmto \tilde{H}_2(a,\, s)(t)) \bigr) $ を
+        \begin{align}
+            \tilde{H}_2 (a,\, s)(t) \coloneqq
+            \begin{cases}
+                g_2(a) \bigl( (1+s)t \bigr) , &t \in [0,\, \frac{1}{1+s}] \\
+                H \bigl( a,\, (1+s)t - 1 \bigr) , &t \in [\frac{1}{1+s},\, 1]
+            \end{cases}
+        \end{align}
+        で定義するとこれは連続で，かつ $\forall (a,\, s) \in A \times I$ に対して $p\bigl(\tilde{H} (a,\, s)\bigr) = \tilde{H}_2(a,\, s)(1) = H(a,\, s),\; \tilde{H}(a,\, 0) = \bigl( g_1(a),\, g_2(a) \bigr) = g(a)$ を充たす．
+        i.e. 連続写像 $\tilde{H}$ によって $A$ に対する\hyperref[def:HLP]{HLP}が充たされる．$A$ は任意だったので $p \colon P_f \lto Y$ は\hyperref[def:fibration]{ファイブレーション}である．
+        \item $f \colon X \lto Y$ が\hyperref[def:fibration]{ファイブレーション}であるとする．(1) の証明において
+        $h \colon X \lto P_f$ は\hyperref[def:fib-morphism]{ファイブレーションの射}である． 
+        
+        一方，$\mathrm{proj}_1 \colon P_f \lto X$ は\hyperref[def:fib-morphism]{ファイブレーションの射}でない．従ってまず\hyperref[def:fib-morphism]{ファイブレーションの射} $g \colon P_f \lto X$ を構成する必要がある．
+        \begin{itemize}
+            \item 連続写像 $\mathrm{proj}_1 \colon P_f \lto X$
+            \item ホモトピー $\gamma \colon P_f \times I \lto P_f,\; \bigl( (x,\, \alpha),\, t \bigr) \lmto \alpha(t)$
+        \end{itemize}
+        を考えると，$P_f$ の定義から $f \circ \mathrm{proj}_1 (x,\, \alpha) = f(x) = \alpha(0) = \gamma \bigl( (x,\, \alpha),\, 0 \bigr)$ が成り立つ．$f \colon X \lto Y$ は\hyperref[def:fibration]{ファイブレーション}なので\hyperref[def:HLP]{HLP}が成り立ち，以下の可換図式を得る：
+        \begin{center}
+            \begin{tikzcd}[row sep=large, column sep=large]
+                &P_f \times \{0\} \ar[d, hookrightarrow]\ar[r, "\mathrm{proj}_1"] &X \ar[d, "f"] \\
+                &P_f \times I \ar[r, "\gamma"]\ar[ur, dashed, red, "\exists \tilde{\gamma}"] &Y
+            \end{tikzcd}
+        \end{center}
+        $\gamma_1(x,\, \alpha) = \alpha(1) = p(x,\, \alpha)$ であるから，$g \colon P_f \lto X,\; (x,\, \alpha) \lmto \tilde{\gamma}((x,\, \alpha),\, 1)$ と定めるとこれは\hyperref[def:fib-morphism]{ファイブレーションの射}になる．
+        その上 $\tilde{\gamma}((x,\, \alpha),\, 0) = \mathrm{proj}_1$ であるから $g \simeq \mathrm{proj}_1$ であり，(1) から $g$ が $h$ の\hyperref[def:homotopy-basic]{ホモトピー逆写像}であるとわかる．
+
+        あとは $g \circ f$ と $\mathrm{id}_X$ を繋ぐホモトピー $\tilde{H} \colon X \times I \lto X$ であって $f \bigl(\tilde{H}(x,\, t)\bigr) = f(x)$ を充たすものと，
+        $f \circ g$ と $\mathrm{id}_{P_f}$ を繋ぐホモトピー $\tilde{G} \colon P_f \times I \lto P_f$ であって $p \bigl(\tilde{G}\bigl((x,\, \alpha),\, t\bigr)\bigr) = p(x,\, \alpha)$ を充たすものが存在することを示せばよい．
+        実際
+        \begin{align}
+            \tilde{H} \colon X \times I \lto X,\; (x,\, t) \lmto \tilde{\gamma} \bigl( (x,\, \mathrm{const}_{f(x)}),\, t \bigr) 
+        \end{align}
+        と定義すれば
+        \begin{align}
+            f \bigl(\tilde{H}(x,\, t) \bigr) &= f \Bigl( \tilde{\gamma} \bigl( (x,\, \mathrm{const}_{f(x)}),\, t \bigr)  \Bigr) = \gamma (x,\, \mathrm{const}_{f(x)}) = f(x), \\
+            \tilde{H}|_{X \times \{0\}} &= \tilde{\gamma} \bigl( (x,\, \mathrm{const}_{f(x)}),\, 0 \bigr) = \mathrm{proj}_1 (x,\, \mathrm{const}_{f(x)}) = x, \\
+            \tilde{H}|_{X \times \{1\}} &= \tilde{\gamma} \bigl( (x,\, \mathrm{const}_{f(x)}),\, 1 \bigr) =  g(x,\, \mathrm{const}_{f(x)}) = (g \circ h)(x)
+        \end{align}
+        が充たされる．
+        一方
+        \begin{align}
+            \tilde{G} \colon P_f \times I \lto P_f,\;\bigl( (x,\, \alpha),\, s \bigr) \lmto \Bigl(\tilde{\gamma}\bigl((x,\, \alpha),\, s\bigr),\, \bigl( t \lmto \alpha((1-t)s + t) \bigr)\Bigr)
+        \end{align}
+        と定義すれば
+        \begin{align}
+            p \Bigl( \tilde{G}\bigl( (x,\, \alpha),\, s \bigr)\Bigr) &= p\Bigl(\tilde{\gamma}\bigl((x,\, \alpha),\, s\bigr),\, \bigl( t \lmto \alpha((1-t)s + t) \bigr)\Bigr) = \alpha(1) = p(x,\, \alpha) \\
+            \tilde{G}|_{P_f \times \{0\}}(x,\, \alpha) &= \Bigl(\tilde{\gamma}\bigl((x,\, \alpha),\, 0\bigr),\, \bigl( t \lmto \alpha(t) \bigr)\Bigr) =\bigl( \mathrm{proj}_1(x,\, \alpha),\, \alpha \bigr) = (x,\, \alpha), \\
+            \tilde{G}|_{P_f \times \{1\}}(x,\, \alpha) &= \Bigl(\tilde{\gamma}\bigl((x,\, \alpha),\, 1\bigr),\, \bigl( t \lmto \alpha(1) \bigr)\Bigr) =\bigl( g(x,\, \alpha),\, \mathrm{const}_{\alpha(1)} \bigr) \\
+            &= \bigl( g(x,\, \alpha),\, \mathrm{const}_{\gamma(x,\, \alpha,\, 1)} \bigr) \\
+            &= \bigl( g(x,\, \alpha),\, \mathrm{const}_{f \bigl(\tilde{\gamma}(x,\, \alpha,\, 1)\bigr)} \bigr) \\
+            &= \bigl( g(x,\, \alpha),\, \mathrm{const}_{f \bigl(g(x,\, \alpha)\bigr)} \bigr) = h\circ g(x,\, \alpha)
+        \end{align}
+        が充たされる．
+    \end{enumerate}
+\end{proof}
+
+\section{コファイブレーション}
+
+\subsection{HEPとコファイブレーションの定義}
+
+\textbf{拡張} (extension) の問題とは，次のようなものである：
+
+\begin{itemize}
+    \item 連続写像 $i \colon A \lto X,\; f \colon A \lto Y$ が与えられる．
+    \item このとき，連続写像 $\tilde{f} \colon X \lto Y$ であって $\tilde{f} \circ i = f$ を充たすようなものは存在するか？
+\end{itemize}
+この状況を可換図式で表すと
+\begin{center}
+    \begin{tikzcd}[row sep=large, column sep=large]
+        &A \ar[d, "i"]\ar[dr, "f"] & \\
+        &X \ar[r, dashed, red, "\tilde{f}"] &Y
+    \end{tikzcd}
+\end{center}
+のようになる．
+
+\begin{mydef}[label=def:HEP]{ホモトピー拡張性質 (HEP)}
+    連続写像 $i \colon A \lto X$ が位相空間 $\textcolor{blue}{Y}$ に対して\textbf{ホモトピー拡張性質} (homotopy extension property) を持つとは，以下の条件を充たすことをいう：
+    \begin{description}
+        \item[\textbf{(HEP)}] $\iota_0 \colon A \times \{0\} \hookrightarrow A \times I$ を包含写像とする．
+        \begin{itemize}
+            \item 連続写像 $\textcolor{blue}{\tilde{f}} \colon X \times \{0\} \lto \textcolor{blue}{Y}$
+            \item ホモトピー $\textcolor{blue}{H} \colon A \times I \lto \textcolor{blue}{Y}$
+        \end{itemize}
+        であって $\textcolor{blue}{H} \circ \iota_0 = \textcolor{blue}{\tilde{f}} \circ i$ を充たすもの
+        \footnote{i.e. $\forall a \in A$ に対して $\textcolor{blue}{H}(a,\, 0) = \textcolor{blue}{\tilde{f}} \bigl( i(a) \bigr)$ を充たすもの．\hyperref[def:homotopy-basic]{ホモトピー} $\textcolor{blue}{H} \colon A \times I \lto \textcolor{blue}{Y}$ であって $\textcolor{blue}{H}_0 = \textcolor{blue}{\tilde{f}} \circ i$ を充たすもの，と言ってもよい．}
+        を任意に与えたとき，（必ずしも一意でない）連続写像 $\textcolor{blue}{\tilde{H}} \colon X \times I \lto \textcolor{blue}{Y}$ が存在して図式\ref{cmtd:HEP}が可換になる．
+    \end{description}
+    
+\end{mydef}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzcd}[row sep=large, column sep=large]
+        &A \times \{0\} \ar[dd, "i"]\ar[rr, hookrightarrow, "\iota_0"] & &A \times I \ar[dd, "i \times \mathrm{id}_I"]\ar[dl, blue, "\forall H"'] \\
+        & &\textcolor{blue}{Y} & \\
+        &X \times \{0\} \ar[ur, blue, "\forall \tilde{f}"] \ar[rr, hookrightarrow] & &X \times I \ar[ul, dashed, red, "\tilde{H}"]
+    \end{tikzcd}
+    \caption{ホモトピー拡張性質 (HEP)}
+    \label{cmtd:HEP}
+\end{figure}%
+
+\begin{mydef}[label=def:cofibration]{コファイブレーション}
+    連続写像 $i \colon A \lto X$ が\textbf{コファイブレーション} (cofinration) であるとは，任意の位相空間 $Y$ に対して\hyperref[def:HEP]{ホモトピー拡張性質}が成り立つことを言う．
+\end{mydef}
+
+コファイブレーションは\hyperref[def:fibration]{ファイブレーション}の双対概念である．
+\hyperref[def:fibration]{ファイブレーション} $p \colon E \lto B$ に対する\hyperref[cmtd:HLP]{HLPの図式}を，currying
+\footnote{コンパクト生成空間の圏 $\CG$ がCartesian closed categoryであることから，exponentialが必ず存在する．故に $\lambda G$ は同型を除いて一意的に存在する．} 
+$G \colon Y \times I \lto B \rightsquigarrow \lambda G \colon Y \lto \Hom{\CG}(I,\, B) = B^I$ を使って書き換えると
+\begin{center}
+    \begin{tikzcd}[row sep=large, column sep=large]
+        &E &E^I  \ar[l, "\mathrm{eval. at} 0"']\ar[d, "\hat{p}"] \\
+        &\textcolor{blue}{Y} \ar[u, blue, "\tilde{g}"]\ar[r, blue, "\lambda G"]\ar[ur, dashed, red, "\lambda \tilde{G}"] &B^I
+    \end{tikzcd}
+\end{center}
+になる．
+一方，\hyperref[def:cofibration]{コファイブレーション} $i \colon A \lto X$ の\hyperref[cmtd:HEP]{HEPの図式}は
+\begin{center}
+    \begin{tikzcd}[row sep=large, column sep=large]
+        &X \ar[d, blue, "\tilde{f}"]\ar[r, hookrightarrow] &X \times I \ar[dl, red, dashed, "\tilde{H}"'] \\
+        &\textcolor{blue}{Y} &A \times I \ar[l, blue, "H"]\ar[u, "i \times \mathrm{id}_I"']
+    \end{tikzcd}
+\end{center}
+と書ける．
+
+「性質の良い」位相空間においては，任意の\hyperref[def:cofibration]{コファイブレーション} $\iota \colon A \lto X$ は単射かつ閉写像（i.e. 像が $X$ の閉集合）になる．
+特に空間対 $(X,\, A)$ であって $A$ が閉部分空間となっているものが与えられたとき，包含写像 $A \hookrightarrow X$ が\hyperref[def:cofibration]{コファイブレーション}であるとは
+\begin{itemize}
+    \item 任意の位相空間 $\textcolor{blue}{Y}$
+    \item 任意の連続写像 $\textcolor{blue}{f} \colon X \lto \textcolor{blue}{Y}$
+    \item  $\textcolor{blue}{h}_0 = \textcolor{blue}{f}|_A$ を充たす任意のホモトピー $\textcolor{blue}{h} \colon A \times I \lto \textcolor{blue}{Y}$ 
+\end{itemize}
+に対して拡張の問題
+\begin{center}
+    \begin{tikzcd}[row sep=large, column sep=large]
+        &(X \times \{0\}) \cup (A \times I) \ar[d, "i"]\ar[dr, blue, "f \cup h"] & \\
+        &X \times I \ar[r, dashed, red] &\textcolor{blue}{Y}
+    \end{tikzcd}
+\end{center}
+が解を持つことを言う．このことに由来して\hyperref[def:HEP]{ホモトピー拡張性質}と呼ぶのである．
+
+\begin{mydef}[label=def:retract, breakable]{変位レトラクト (再掲)}
+    空間対 $(X,\, A)$ を与える．
+    \begin{itemize}
+        \item $A$ が $X$ の\textbf{レトラクト} (retract) であるとは，ある連続写像 $r \colon X \lto A$ が存在して以下を充たすことを言う：
+        \begin{description}
+            \item[\textbf{(r)}] $r|_A = \mathrm{id}_A$
+        \end{description}
+        $r$ のことを\textbf{レトラクシション} (retraction) と呼ぶ．
+        \item $A$ が $X$ の\textbf{変位レトラクト} (deformation retract) であるとは，ある連続写像 $h \colon X \times I \lto X$ が存在して以下を充たすことを言う：
+        \begin{description}
+            \item[\textbf{(dr-1)}] $h|_{X \times \{0\}} = \mathrm{id}_X$
+            \item[\textbf{(dr-2)}] $h|_{A \times \{t\}} = \mathrm{id}_A,\quad \forall t \in I$
+            \item[\textbf{(dr-3)}] $h(x,\, 1) \in A,\quad \forall x \in X$
+        \end{description}
+    \end{itemize}
+\end{mydef}
+
+\begin{mydef}[label=def:NDR, breakable]{NDR-pair}
+    $X$ を\underline{コンパクト生成空間}とし，$A \subset X$ を部分空間とする．
+    \begin{itemize}
+        \item 空間対 $(X,\, A)$ が\textbf{NDR-対} (NDR-pair\footnote{neighborhood deformation retract}) であるとは，
+        ある2つの連続写像 $u \colon X \lto I,\; h \colon X \times I \lto X$ が存在して以下を充たすことを言う：
+        \begin{description}
+            \item[\textbf{(NDR-1)}] $A = u^{-1}(\{0\})$
+            \item[\textbf{(NDR-2)}] $h|_{X \times \{0\}} = \mathrm{id}_X$
+            \item[\textbf{(NDR-3)}] $h|_{A \times \{t\}} = \mathrm{id}_A,\quad \forall t \in I$
+            \item[\textbf{(NDR-4)}] $h(x,\, 1) \in A, \quad \forall x \in X \setminus u^{-1} (\{1\}) $
+        \end{description}
+        \item 空間対 $(X,\, A)$ が\textbf{DR-対} (DR-pair) であるとは，
+        ある2つの連続写像 $u \colon X \lto I,\; h \colon X \times I \lto X$ が存在して \textbf{\textsf{(NDR-1)}}, \textbf{\textsf{(NDR-2)}}, \textbf{\textsf{(NDR-3)}} と
+        \begin{description}
+            \item[\textbf{(DR-4)}] $h (x,\, 1) \in A,\quad  \forall x \in X$
+        \end{description}
+        を充たすことを言う．
+    \end{itemize}
+\end{mydef}
+
+\begin{marker}
+    DR-対の定義は，\textbf{\textsf{(NDR-1)}} を充たす $u \colon X \lto I$ が存在すると言う意味で通常の変位レトラクトの定義よりも強い定義となっている．
+\end{marker}
+
+\begin{mylem}[label=lem:NDR]{}
+    2つの空間対 $(X,\, A),\; (Y,\, B)$ を与える．
+    \begin{itemize}
+        \item 与えられた空間対の両方が\hyperref[def:NDR]{NDR-対}ならば，それらの積
+        \begin{align}
+            (X,\, A) \times (Y,\, B) \coloneqq \bigl( X \times Y,\, (X \times B) \cup (A \times Y) \bigr) 
+        \end{align}
+        もまた\hyperref[def:NDR]{NDR-対}となる．
+        \item どちらか一方が\hyperref[def:NDR]{DR-対}でもう一方が\hyperref[def:NDR]{NDR-対}ならば，積は\hyperref[def:NDR]{DR-対}である．
+    \end{itemize}
+    
+\end{mylem}
+証明は~\cite[THEOREM 6.3.]{Steenrod67}による．
+\begin{proof}
+    $(X,\, A)$ がNDR-対であると仮定し，\hyperref[def:NDR]{NDR-対の定義}における連続写像 $u \colon Y \lto I,\; h \colon X \times I \lto X$ をとる．
+    同様に$(X,\, A)$ がNDR-対であると仮定して，対応する連続写像 $v \colon Y \lto I,\; j \colon Y \times I \lto Y$ をとる．
+
+    ここで写像
+    \begin{align}
+        w \colon X \times Y \lto I,\; (x,\, y) \lmto u(x) v(y)
+    \end{align}
+    およびホモトピー
+    \begin{align}
+        q &\colon (X \times Y) \times I \lto X \times Y,\\ 
+        &(x,\, y,\, t) \lmto 
+        \begin{cases}
+            (x,\, y) = \bigl( h(x,\, t),\, j(y,\, t) \bigr), &x \in A \AND y \in B \\
+            \Bigl( h(x,\, t),\, j \bigl(y,\, \frac{u(x)}{v(y)} t \bigr)  \Bigr), &u(x) \le v(y) \AND v(y) > 0 \\
+            \Bigl( h \bigl( x,\, \frac{v(y)}{u(x)}t \bigr),\, j(y,\, t)  \Bigr), &u(x) \ge v(y) \AND u(x) > 0
+        \end{cases}
+    \end{align}
+    を考える．$w$ は明らかに連続写像である．
+    
+    $q$ の連続性を示す．定義の下2行の部分は集合 $\bigl\{\, (x,\, y) \in X \times Y \bigm| u(x) = v(y) > 0 \,\bigr\}$ 上で交わるが，この集合上でどちらも $\bigl( h(x,\, t),\, j(y,\, t) \bigr)$ となり一致する．
+    従ってこれらは集合 $(X \times Y \setminus A \times B) \times I$ 上の連続写像を成す．
+    あとは $\forall (x,\, y,\, t) \in A \times B \times I$ における $q$ の連続性を示せば良い．
+    
+    任意の開集合 $x \in U \subset X,\, y \in V \subset Y$ をとる．
+    \hyperref[def:NDR]{\textbf{\textsf{(NDR-3)}}} より $\forall t \in I,\; h(x,\, t) = x \in U$ が成り立つから，
+    包含関係 $\{x\} \times I \subset h^{-1}(U)$ が成り立つ．
+    連続写像の定義より $h^{-1}(U)$ は $X \times I$ の開集合であり，かつ $I$ はコンパクトだから，ある $X$ の開集合 $x \in S \subset X$ が存在して $S \times I \subset h^{-1}(U)$ を充たす．
+    同様の議論により，ある $Y$ の開集合 $y \in T \subset Y$ が存在して $T \times I \subset j^{-1}(V)$ を充たす．
+    従って点 $q(x,\, y,\, t) = (x,\, y) = \bigl( h(x,\, t),\, j(y,\, t) \bigr)  \in A \times B$ の開近傍 $U \times V$ に対して，$(x,\, y,\, t) \in S \times T \times I \subset q^{-1}(U \times V)$ が成り立つ，i.e. $q^{-1}(U \times V)$ は点 $(x,\, y,\, t)$ の近傍となる．
+    $U \times V$ の形をした $A \times B$ の開集合全体は積位相の開基をなすから，$q$ が $A \times B \times I$ 上で連続であることが示された．
+
+    次に，$w$ と $q$ が\hyperref[def:NDR]{\textbf{\textsf{(NDR-1)}} - \textbf{\textsf{(NDR-4)}}}を充していることを示す．
+    \begin{description}
+        \item[\textbf{(NDR-1)}] 明らかに $w^{-1} (\{0\}) = (X \times B) \cup (A \times Y)$ である．
+        \item[\textbf{(NDR-2)}] $\forall (x,\, y) \in X \times Y$ に対して
+        \begin{align}
+            q(x,\, y,\, 0) = \bigl(h(x,\, 0),\, j(y,\, 0)\bigr) = (x,\, y).
+        \end{align}
+        \item[\textbf{(NDR-3)}] $\forall (x,\, y) \in (X \times B) \cup (A \times Y),\; \forall t \in I$ に対して
+        \begin{align}
+            q(x,\, y,\, t) = 
+            \begin{cases}
+                (x,\, y), &(x,\, y) \in A \times B \\
+                \Bigl( x,\, j \bigl(y,\, 0 \bigr)  \Bigr) = (x,\, y), &(x,\, y) \in A \times (Y\setminus B) \\
+                \Bigl( h \bigl( x,\, 0 \bigr),\, y  \Bigr) = (x,\, y), &(x,\, y) \in (X \setminus A) \times B
+            \end{cases}
+        \end{align}
+        \item[\textbf{(NDR-4)}] $\forall (x,\, y) \in X \times Y$ に対して $w(x,\, y) = u(x)v(y) < 1 \iff (x,\, y) \in u(x) < 1 \OR v(y) < 1 $ である．
+        $w(x,\, y) = 0$ の場合は自明なので $0 < w(x,\, y) < 1$ を考える．
+        $u(x) < 1$ の場合と $v(y) < 1$ の場合の議論は全く同様なので，前者のみ考える．
+        \begin{align}
+            q(x,\, y,\, 1) = 
+            \begin{cases}
+                \Bigl( h(x,\, 1),\, j \bigl(y,\, \frac{u(x)}{v(y)} \bigr)  \Bigr) \in A \times A, &u(x) \le v(y) \AND v(y) > 0 \\
+                \Bigl( h \bigl( x,\, \frac{v(y)}{u(x)} \bigr),\, j(y,\, 1)  \Bigr) \in X \times B, &1 > u(x) \ge v(y) \AND u(x) > 0
+            \end{cases}
+        \end{align}
+    \end{description}
+    以上より前半が示された．
+
+    $(X,\, A)$ が\hyperref[def:NDR]{DR-対}の場合は，上述の構成において $u$ を $u' \coloneqq u/2$ に置き換える．すると $\forall (x,\, y) \in X \times Y$ に対して $w(x,\, y) < 1$ が成り立ち，従って $q(x,\, y,\, 1) \in (X \times B) \cup (A \times Y)$ が成り立つ．
+    故に積はDR-対となり，証明が完了する．
+\end{proof}
+
+
+\begin{mytheo}[label=thm:cofib-basic-Steenrod]{コファイブレーションの必要十分条件 (Steenrod)}
+    以下は同値である：
+    \begin{enumerate}
+        \item $(X,\, A)$ が\hyperref[def:NDR]{NDR-対}
+        \item $\bigl(X \times I,\, (X \times \{0\}) \cup (A \times I)\bigr)$ が\hyperref[def:NDR]{DR-対}
+        \item $(X \times \{0\}) \cup (A \times I)$ が $X \times I$ の\hyperref[def:retract]{レトラクト}
+        \item 包含写像 $i \colon A \hookrightarrow X$ が\hyperref[def:cofibration]{コファイブレーション}
+    \end{enumerate}
+\end{mytheo}
+
+\begin{proof}
+    \begin{description}
+        \item[\textbf{(1)$\IMP$(2)}] $(I,\, \{0\})$ は\hyperref[def:NDR]{DR-対}だから，補題\ref{lem:NDR}より $(X,\, A) \times (I,\, \{0\}) = \bigl( X \times I,\, (X \times \{0\}) \cup (A \times I) \bigr)$ も\hyperref[def:NDR]{DR対}である．
+        \item[\textbf{(2)$\IMP$(3)}] 明らか
+        \item[\textbf{(4)$\IMP$(3)}] 
+        $i \colon A \lto X$ が\hyperref[def:cofibration]{コファイブレーション}だとすると，位相空間 $X \times \{0\} \cup A \times I$ に対して\hyperref[def:HEP]{HEP}を使うことで
+        次の可換図式を得る：
+        \begin{center}
+            \begin{tikzcd}[row sep=large, column sep=large]
+                &A \times \{0\} \ar[dd, "i"]\ar[rr, hookrightarrow, "\iota_0"] & &A \times I \ar[dd, "i \times \mathrm{id}_I"]\ar[dl, "\mathrm{id}_{A \times I}"'] \\
+                & &X \times \{0\} \cup A \times I & \\
+                &X \times \{0\} \ar[ur, "\mathrm{id}_X"] \ar[rr, hookrightarrow] & &X \times I \ar[ul, dashed, red, "\exists r"]
+            \end{tikzcd}
+        \end{center}
+        図式中の連続写像 $\textcolor{red}{r} \colon X \times I \lto X \times \{0\} \cup A \times I$ は\hyperref[def:retract]{レトラクション}になっている．
+        \item[\textbf{(3)$\IMP$(4)}] 
+        連続写像 $r \colon X \times I \lto X \times \{0\} \cup A \times I$ を\hyperref[def:retract]{レトラクション}とする．
+
+        任意の位相空間 $Y$ を1つ固定する．
+        \begin{itemize}
+            \item 任意の連続写像 $f \colon X \lto Y$
+            \item $h_0 = f|_A$ を充たす任意のホモトピー $h \colon A \times I \lto Y$
+        \end{itemize}
+        に対する拡張の問題
+        \begin{center}
+            \begin{tikzcd}[row sep=large, column sep=large]
+                &A \times \{0\} \ar[dd, "i"]\ar[rr, hookrightarrow, "\iota_0"] & &A \times I \ar[dd, "i \times \mathrm{id}_I"]\ar[dl, blue, "\forall h"'] \\
+                & &\textcolor{blue}{Y} & \\
+                &X \times \{0\} \ar[ur, blue, "\forall f"] \ar[rr, hookrightarrow] & &X \times I \ar[ul, dashed, red]
+            \end{tikzcd}
+        \end{center}
+        は $f \circ r \colon X \times I \lto Y$ を解に持つ．
+        \item[\textbf{(3)$\IMP$(1)}] 
+    \end{description}
+    
+\end{proof}
+
+\begin{mycol}[]{}
+    空間対 $(X,\, A),\; (Y,\, B)$ の包含写像 $i \colon A \hookrightarrow X,\; j \colon B \hookrightarrow Y$ がどちらも\hyperref[def:cofibration]{コファイブレーション}ならば，積
+    \begin{align}
+        (X,\, A) \times (Y,\, B) = \bigl( X \times Y ,\, (X \times B) \cup (A \times Y) \bigr) 
+    \end{align}
+    の包含写像も\hyperref[def:cofibration]{コファイブレーション}となる．
+\end{mycol}
+
+\begin{proof}
+    補題\ref{lem:NDR}と定理\ref{thm:cofib-basic-Steenrod}-(1) より従う．
+\end{proof}
+
+押し出しと\hyperref[def:cofibration]{コファイブレーション}の関係を論じる．
+
+\begin{mydef}[label=def:pushout]{押し出し}
+    圏 $\Cat{C}$ における射 $f \in \Hom{\Cat{C}}(A,\, B),\; g \in \Hom{\Cat{C}}(A,\, C)$ の\textbf{押し出し}とは
+    対象 $f_*C \in \Obj{\Cat{C}}$ と射 $i_1 \in \Hom{\Cat{C}}(B,\, f_*C),\; i_2 \in \Hom{\Cat{C}} (C,\, f_*C)$ の組であって，以下の普遍性を充たすもののこと：
+    \begin{description}
+        \item[\textbf{(押し出しの普遍性)}] 
+        $\forall \textcolor{blue}{X} \in \Obj{\Cat{C}}$ に対して集合の写像
+        \begin{align}
+            \Hom{\Cat{C}} (f_*C,\, \textcolor{blue}{X}) &\lto \bigl\{\, (\textcolor{blue}{\varphi_1},\, \textcolor{blue}{\varphi_2}) \in \Hom{\Cat{C}}(B,\, \textcolor{blue}{X}) \times \Hom{\Cat{C}} (C,\, \textcolor{blue}{X}) \bigm| \textcolor{blue}{\varphi_1} \circ f = \textcolor{blue}{\varphi_2} \circ g \,\bigr\} \\
+            h &\lmto (h \circ i_1,\, h \circ i_2)
+        \end{align}
+        が全単射になる（図式\ref{cmtd:pushout}）．
+    \end{description}
+    
+\end{mydef}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzcd}[row sep=large, column sep=large]
+        &A \ar[r, "f"]\ar[d, "g"] &B \ar[d, "i_1"]\ar[ddr, blue, bend left, "\varphi_1"] & \\
+        &C \ar[r, "i_2"]\ar[drr, bend right, blue, "\varphi_2"] &f_*C \ar[dr, dashed, red, "\exists ! h"] & \\
+        & & &\forall \textcolor{blue}{X}
+    \end{tikzcd}
+    \caption{押し出しの普遍性}
+    \label{cmtd:pushout}
+\end{figure}%
+押し出しは帰納極限である．故に存在すれば同型を除いて一意である．
+
+さて，圏 $\TOP$ において押し出しが必ず存在することを示そう．
+2つの位相空間 $B,\, C \in \Obj{\TOP}$ のdisjoint unionを，基点 $b_0 \in B,\ c_0 \in C$ を固定した上で
+\begin{align}
+    B \amalg C \coloneqq \bigl\{\, (b,\, c_0,\, 0) \bigm| b\in B \,\bigr\} \cup \bigl\{\, (b_0,\, c,\, 1) \bigm| c \in C \,\bigr\} 
+\end{align}
+と定義する．
+
+\begin{myprop}[label=prop:TOP-pushout]{圏 $\TOP$ における押し出し}
+    圏 $\TOP$ における図式 $(A,\, B,\, C;\; f \colon A \lto B,\, g \colon A \lto C)$ を任意に与える． 
+    位相空間 $f_* C \in \Obj{\TOP}$ を
+    \begin{align}
+        f_*C \coloneqq \frac{B \amalg C}{f(a) \sim g(a)}
+    \end{align}
+    で定める． %\footnote{
+    %     これは記号の濫用である．正確には標準的包含 $\iota_1 B \hookrightarrow B \amalg C,\; b \lmto (b,\, c_0,\, 0),\; \iota_2 \colon C \hookrightarrow B \amalg C,\; c \lmto (b_0,\, c,\, 1)$ を用いて同値関係
+    %     ${\sim}\; \coloneqq \bigl\{\, (x,\, y) \in (B \amalg C)^2 \bigm| a \in A,\, x = \bigl(f(a)\bigr) \,\bigr\}$
+    % }
+    包含写像と商写像の合成を $i_1 \colon B \hookrightarrow f_*C,\; i_2 \colon C \hookrightarrow f_*C$ とおくと，組 $(f_*C,\, i_1,\, i_2)$ は\hyperref[def:pushout]{押し出し}である．
+\end{myprop}
+
+\begin{mytheo}[label=def:cofib-pushout]{コファイブレーションの押し出し}
+    \hyperref[cmtd:pushout]{押し出しの図式}において $g \colon A \lto C$ が\hyperref[def:cofibration]{コファイブレーション}であるとする．
+    このとき $i_1 \colon B \lto f_*C$ は\hyperref[def:cofibration]{コファイブレーション}である．
+\end{mytheo}
+
+\begin{proof}
+    コンパクト生成なHausdorff空間の圏 $\CG$ で考える．
+    $\CG$ がCartesian closed categoryであることから必ずexponentialsが存在する．従って\hyperref[def:HEP]{HEP}の問題
+    \begin{center}
+        \begin{tikzcd}[row sep=large, column sep=large]
+            &X \ar[d, blue, "f"]\ar[r, hookrightarrow] &X \times I \ar[dl, red, dashed] \\
+            &\textcolor{blue}{Y} &A \times I \ar[l, blue, "H"]\ar[u, "i \times \mathrm{id}_I"']
+        \end{tikzcd}
+    \end{center}
+    はcurryingにより
+    \begin{center}
+        \begin{tikzcd}[row sep=large, column sep=large]
+            &A \ar[d, "i"]\ar[r, blue, "\lambda H"] &\textcolor{blue}{Y}^I \ar[d, "\mathrm{eval. at} 0"] \\
+            &X \ar[r, blue, "f"]\ar[ur, dashed, red] &\textcolor{blue}{Y}
+        \end{tikzcd}
+    \end{center}
+    と同値である．以降で\hyperref[def:HEP]{HEP}の問題を考えるときは後者として考えることにする．
+
+    任意の位相空間 $Y \in \Obj{\CG}$ を一つ固定する．\hyperref[cmtd:pushout]{押し出しの図式}の右側にHEPの問題をつなげた図式
+    \begin{center}
+        \begin{tikzcd}[row sep=large, column sep=large]
+            &A \ar[r, "f"]\ar[d, "g"] &B \ar[d, "i_1"]\ar[r, "H"] &Y^I \ar[d, "\mathrm{eval. at}\, 0"] \\
+            &C \ar[r, "i_2"] &f_*C \ar[r, "h"]\ar[ur, red, dashed] &Y
+        \end{tikzcd}
+    \end{center}
+    を考える．$g \colon A \lto C$ が\hyperref[def:cofibration]{コファイブレーション}であることにより，HLPの問題
+    \begin{center}
+        \begin{tikzcd}[row sep=large, column sep=large]
+            &A \ar[r, "H \circ f"]\ar[d, "g"] &Y^I \ar[d, "\mathrm{eval. at}\, 0"] \\
+            &C \ar[r, "h \circ i_2"]\ar[ur, dashed, red] &Y
+        \end{tikzcd}
+    \end{center}
+    は解 $\tilde{H} \colon C \lto Y^I$ を持つ．
+    従って\hyperref[def:pushout]{押し出しの普遍性}より可換図式
+    \begin{center}
+        \begin{tikzcd}[row sep=large, column sep=large]
+            &A \ar[r, "f"]\ar[d, "g"] &B \ar[d, "i_1"]\ar[ddr, bend left, "H"] & \\
+            &C \ar[r, "i_2"]\ar[drr, bend right, "\tilde{H}"] &f_*C \ar[dr, dashed, red, "\exists ! j"] & \\
+            & & &Y^I
+        \end{tikzcd}
+    \end{center}
+    が得られる．図式の可換性より，連続写像 $j \colon f_*C \lto Y^I$ は $j \circ i_1 = H$ を充たす．
+    ところで，このとき2つの可換図式
+    \begin{figure}[H]
+        \centering
+        \begin{subfigure}{0.4\columnwidth}
+            \centering
+            \begin{tikzcd}[row sep=large, column sep=large]
+                &A \ar[r, "f"]\ar[d, "g"] &B \ar[d, "i_1"]\ar[ddr, bend left, "\mathrm{eval. at} 0 \circ H"] & \\
+                &C \ar[r, "i_2"]\ar[drr, bend right, "\mathrm{eval. at}\, 0 \circ \tilde{H}"] &f_*C \ar[dr, "h"] & \\
+                & & &Y^I
+            \end{tikzcd}
+        \end{subfigure}
+        \hspace{5mm}
+        \begin{subfigure}{0.4\columnwidth}
+            \centering
+            \begin{tikzcd}[row sep=large, column sep=large]
+                &A \ar[r, "f"]\ar[d, "g"] &B \ar[d, "i_1"]\ar[ddr, bend left, "\mathrm{eval. at} 0 \circ H"] & \\
+                &C \ar[r, "i_2"]\ar[drr, bend right, "\mathrm{eval. at}\, 0 \circ \tilde{H}"] &f_*C \ar[dr, "\mathrm{eval. at}\, 0 \circ j"] & \\
+                & & &Y^I
+            \end{tikzcd}
+        \end{subfigure}
+    \end{figure}
+    が成り立つが，\hyperref[def:pushout]{押し出しの普遍性}より $\mathrm{eval. at}\, 0 \circ j = h$ でなくてはならない．
+
+    以上の議論により，$i_1 \colon B \lto f_*C$ に対するHEPの問題が
+    \begin{center}
+        \begin{tikzcd}[row sep=large, column sep=large]
+            &B \ar[d, "i_1"]\ar[r, "H"] &Y^I \ar[d, "\mathrm{eval. at}\, 0"] \\
+            &f_*C \ar[r, "h"]\ar[ur, red, dashed, "j"] &Y
+        \end{tikzcd}
+    \end{center}
+    として解決された．$Y$ は任意であったから $i_1$ は\hyperref[def:cofibration]{コファイブレーション}である．
+\end{proof}
+
+\subsection{連続写像をコファイブレーションに置き換える}
+
+\begin{mydef}[label=def:cylinder-cone]{写像柱・写像錐}
+    $f \colon A \lto X$ を連続写像とする．
+    \begin{itemize}
+        \item $f$ の\textbf{写像柱} (mapping cylinder) を
+        \begin{align}
+            M_f \coloneqq \frac{(A \times I) \amalg X}{(a,\, 1) \sim f(a)}
+        \end{align}
+        で定義する．
+        \item $f$ の\textbf{写像錐} (mapping cone) を
+        \begin{align}
+            C_f \coloneqq \frac{M_f}{A \times \{0\}}
+        \end{align}
+        で定義する．
+    \end{itemize}
+\end{mydef}
+命題\ref{prop:TOP-pushout}より写像柱 $M_f$ は図式
+\begin{center}
+    \begin{tikzcd}[row sep=large, column sep=large]
+        &A \times \{1\} \ar[r, "f \times 1"]\ar[d, "g \times 1"] &X \times \{1\} \\
+        &A \times I
+    \end{tikzcd}
+\end{center}
+の\hyperref[def:pushout]{押し出し}としても得られる．このことは定理\ref{thm:continuous-fibration}を彷彿とさせる：
+
+\begin{mytheo}[label=thm:continuous-cofibration]{コファイブレーションと連続写像のホモトピー同値性}
+    任意の連続写像 $f \colon A \lto X$ を与える．包含写像 $i \colon A \hookrightarrow M_f,\; a \lmto [a,\, 0]$ を考える．
+    \begin{enumerate}
+        \item \hyperref[def:homotopy-basic]{ホモトピー同値写像} $h \colon M_f \lto X$ であって図式\ref{cmtd:continuous-cofibration}を可換にするものが存在する．
+        \item $i \colon A \lto M_f$ は\hyperref[def:cofibration]{コファイブレーション}である．
+        \item $f \colon A \lto X$ が\hyperref[def:cofibration]{コファイブレーション}ならば $h$ は\hyperref[def:homotopy-basic]{ホモトピー同値写像}である．
+        特に $h$ は\textbf{コファイバー} (cofiber) の\hyperref[def:homotopy-basic]{ホモトピー同値写像}
+        \begin{align}
+            C_f \lto X /f(A)
+        \end{align}
+        を引き起こす．
+    \end{enumerate}
+\end{mytheo}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzcd}[row sep=large, column sep=large]
+        & &A \ar[dl, "f"']\ar[dr, "i"] & \\
+        &X & &M_f \ar[ll, "h"]
+    \end{tikzcd}
+    \caption{コファイブレーションと連続写像のホモトピー同値性}
+    \label{cmtd:continuous-cofibration}
+\end{figure}%
+
+\begin{proof}
+    \begin{enumerate}
+        \item 連続写像 $h \colon M_f \lto X$ を
+        \begin{align}
+            h([a,\, s]) \coloneqq f(a),\quad h([x])  \coloneqq x
+        \end{align}
+        で定めると，図式\ref{cmtd:continuous-cofibration}は可換になる．
+
+        包含写像と商写像の合成 $j \colon X \lto M_f,\; x \lmto [x]$ は $h \circ j = \mathrm{id}_X$ を充たす．
+        ホモトピー $F \colon M_f \times I \lto M_f$ を
+        \begin{align}
+            F([a,\, s],\, t) &\coloneqq [a,\, (1-t)s + t], \\
+            F([x],\, t) &\coloneqq [x]
+        \end{align}
+        で定義すると $F_0 = \mathrm{id}_{M_f}$ かつ
+        \begin{align}
+            F_1 ([a,\, s]) &= [a,\, 1] = [f(a)] = j \circ h ([a,\, s]), \\
+            F_1 ([x]) &= [x] = j \circ h ([x])
+        \end{align}
+        が成り立つ．i.e. $j \circ h \simeq \mathrm{id}_{M_f}$ である．
+        \item 定理\ref{thm:cofib-basic-Steenrod}より，\hyperref[def:retract]{レトラクション} $R \colon M_f \times I \lto M_f \times \{0\} \cup A \times I$ を構成すれば良い．
+        連続写像 $r \colon I \times I \lto I \times \{0\} \cup \{0\} \times I,\; (s,\, t) \lmto \bigl( r_1(s,\, t),\, r_2(s,\, t) \bigr)$ を $r|_{\{1\} \times I} = \{(1,\, 0)\}$ となるようにとる．
+        そして連続写像 $R \colon M_f \times I \lto M_f \times \{0\} \cup A \times I$ を
+        \begin{align}
+            R([a,\, s],\, t) \coloneqq \bigl([a,\, r_1(s,\, t)],\, r_2(s,\, t) \bigr),\quad R([x],\, t) \coloneqq ([x],\, 0)
+        \end{align}
+        と定義する．
+        $R$ の $M_f \times \{0\} \cup A \times I$ への制限\footnote{正確には $M_f \times \{0\} \cup i(A) \times I$ への制限}は
+        \begin{align}
+            R([a,\, s],\, 0) &= \bigl([a,\, r_1(s,\, 0)],\, r_2(s,\, 0)\bigr) = ([a,\, s],\, 0),\\ 
+            R([x],\, 0) &= ([x],\, 0), \\
+            R([a,\, 0],\, t) &= \bigl([a,\, r_1(0,\, t)],\, r_2(0,\, t) \bigr) = ([a,\, 0],\, t)
+        \end{align}
+        を充たすのでレトラクションである．
+        \item 定理\ref{thm:cofib-basic-Steenrod}より，もし $f \colon A \hookrightarrow X$ が\hyperref[def:cofibration]{コファイブレーション}ならば\hyperref[def:retract]{レトラクション}
+        $ r\colon X \times I \lto X \times \{1\} \cup f(A) \times I$ が存在する．
+        また，自明な同相写像 $q \colon X \times \{1\} \cup f(A) \times I \xrightarrow{\approx} M_f$ がある．
+
+        連続写像 $g \colon X \lto M_f,\; x \lmto q \bigl( r(x,\, 0) \bigr) $ とホモトピー $H \coloneqq h \circ q \circ r \colon X \times I \lto X$ を考える．
+        すると 
+        \begin{align}
+            H_0 (x) &= h \circ q \circ r(x,\, 0) = h \circ g (x), \\
+            H_1(x) &= h \circ q \circ r(x,\, 1) = h \circ q(x,\, 1) = h([x]) = x
+        \end{align}
+        i.e. $H_0 = h \circ g,\; H_1 = \mathrm{id}_X$ が成り立つ．
+        一方，ホモトピー $F \colon M_f \times I \lto M_f$ を
+        \begin{align}
+            F([a,\, s],\, t) \coloneqq q \circ r \bigl( f(a),\, st \bigr),\quad F([x],\, t) \coloneqq q \circ r (x,\, t)
+        \end{align}
+        で定義する．すると
+        \begin{align}
+            F_0([a,\, s]) &= q \circ r \bigl( f(a),\, 0 \bigr) = g \circ h([a,\, s]), & F_0([x]) &= q \circ r(x,\, 0) = g \circ h([x]), \\
+            F_1([a,\, s]) &= q \circ r \bigl( f(a),\, s \bigr) = q(f(a),\, s) = [a,\, s], & F_1([x]) &= q \circ r(x,\, 1) = [x]
+        \end{align}
+        i.e. $F_0 = g \circ h,\; H_1 = \mathrm{id}_{M_f}$ が成り立つ．
+    \end{enumerate}
+    
+\end{proof}
+
+\section{ホモトピー集合}
+
+% 位相空間 $X,\, Y$ に対して，\textbf{ホモトピー集合} $[X,\, Y]$を
+% \begin{align}
+%     \comm{X}{Y} \coloneqq \Hom{\TOP}(X,\, Y)/ {\simeq}
+% \end{align}
+% で定義する．
+
+\begin{mydef}[label=def:homotopy-set]{ホモトピー集合}
+    位相空間 $X,\, Y$ を与える．
+    \begin{itemize}
+        \item $X,\, Y$ の\textbf{ホモトピー集合} $[X,\, Y]$を
+        \begin{align}
+            \comm{X}{Y} \coloneqq \Hom{\TOP}(X,\, Y)/ {\simeq}
+        \end{align}
+        で定義する\footnote{$X$ から $Y$ への連続写像全体の集合はしばしば $\mathrm{Map}(X,\, Y)$ と書かれる．}．
+        \item 空間対 $(X,\, \{x_0\}),\; (Y,\, \{y_0\})$ の間の射（\textbf{based map}）全体の集合を\hyperref[def:homotopy-basic]{ホモトピック}で類別した商集合を\textbf{基点付きホモトピー集合}と呼び，$\bm{[X,\, Y]_0}$ と書く．
+    \end{itemize}
+\end{mydef}
+
+\begin{itemize}
+    \item $Y$ が弧状連結であるとする．このとき任意の定数写像は同一の\hyperref[def:homotopy-basic]{ホモトピー類}に属する\footnote{定数写像 $f_0,\, f_1 \colon X \lto Y$ を任意にとり，$\{y_i\} \coloneqq \Im f_i$ とおく．$Y$ が弧状連結なので $y_0$ と $y_1$ を繋ぐ\hyperref[def:path-basic]{道} $\alpha \colon I \lto Y$ が存在する．このときホモトピー $H \colon X \times I \lto Y,\; (x,\, t) \lmto \alpha(t)$ を考えると $H_0 = (x \lmto y_0) = f_0,\; H_1 = (x \lmto y_1) = f_1$ が成り立つので $H$ が $f_0$ と $f_1$ を繋ぐ．}．
+    このホモトピー類を\textbf{ホモトピー集合 $\bm{[X,\, Y]}$ の基点}と呼ぶ．
+    \item $\comm{X}{Y}_0$ の元のうち，唯一の定数写像 $x \lmto y_0$ が属するものが存在する．これを\textbf{基点付きホモトピー集合 $\bm{[X,\, Y]_0}$ の基点}と呼ぶ．
+\end{itemize}
+
+\subsection{完全列}
+
+$\SETS$ における完全列の概念を定義する．
+\begin{mydef}[label=def:ES-SETS]{$\SETS$ における完全列}
+    圏 $\SETS$ における図式
+    \begin{align}
+        A \xrightarrow{f} B \xrightarrow{g} C
+    \end{align}
+    が $B$ において\textbf{完全} (exact) であるとは，$C$ が基点 $c_0$ を持ち，かつ
+    \begin{align}
+        \Im f = g^{-1}(\{c_0\})
+    \end{align}
+    が成り立つことを言う．
+\end{mydef}
+
+位相空間 $X_1,\, X_2,\, \textcolor{blue}{Y}$ と連続写像 $f \in \Hom{\TOP}(X_1,\, X_2)$ を任意に与える．
+このとき $f$ は2通りの方法で\hyperref[def:homotopy-set]{ホモトピー集合}の間の連続写像を誘導する：
+\begin{align}
+    f_* \colon \comm{\textcolor{blue}{Y}}{X_1} &\lto \comm{\textcolor{blue}{Y}}{X_2}, \\
+    [\alpha] &\lmto [f \circ \alpha]
+\end{align}
+または
+\begin{align}
+    f^* \colon \comm{X_2}{\textcolor{blue}{Y}} &\lto \comm{X_1}{\textcolor{blue}{Y}}, \\
+    [\alpha] &\lmto [\alpha \circ f]
+\end{align}
+と定義する．これらの定義の
+well-definednessを示す：
+\begin{proof}
+$\alpha \simeq \beta$ なる $\alpha,\, \beta \in \Hom{\TOP} (Y,\, X_1)$ をとると，ホモトピー $h \colon Y \times I \lto X_1$ であって $h_0 = \alpha,\; h_1 = \beta$ を充たすものが存在する．このとき
+新しいホモトピーを $\tilde{h} \colon Y \times I \lto X_2,\; (y,\, t) \lmto f \bigl( h(y,\, t)\bigr)$ と定めると $\tilde{h}_1 = f \circ \alpha,\; \tilde{h}_2 = f \circ \beta$ が成り立つ．i.e. $f \circ \alpha \simeq f \circ \beta$ であり，$f_*$ はwell-definedである．
+
+同様に $\alpha \simeq \beta$ なる $\alpha,\, \beta \in \Hom{\TOP} (X_2,\, Y)$ をとると，ホモトピー $g \colon X_2 \times I \lto Y$ であって $g_0 = \alpha,\; g_1 = \beta$ を充たすものが存在する．このとき
+新しいホモトピーを $\tilde{g} \colon X_1 \times I \lto Y,\; (y,\, t) \lmto h\bigl(f(y),\, t\bigr)$ と定めると $\tilde{g}_1 = \alpha \circ f,\; \tilde{g}_2 = \beta \circ f$ が成り立つ．i.e. $\alpha \circ f \simeq \beta \circ f$ であり，$f^*$ はwell-definedである．
+\end{proof}
+
+次の2つの定理は代数トポロジーにおける長完全列の構成の要石となる．
+
+\begin{mytheo}[label=thm:fib-basic]{ファイブレーションの基本性質}
+    $B$ を\underline{弧状連結空間}，$F \stackrel{i}{\hookrightarrow} E \xrightarrow{p} B$ を\hyperref[def:fibration]{ファイブレーション}とする．
+    
+    任意の位相空間 $\textcolor{blue}{Y}$ を与えたとき，圏 $\CG$ における図式
+    \begin{align}
+        \comm{\textcolor{blue}{Y}}{F} \xrightarrow{i_*} \comm{\textcolor{blue}{Y}}{E} \xrightarrow{p_*} \comm{\textcolor{blue}{Y}}{B}
+    \end{align}
+    は\hyperref[def:ES-SETS]{完全}である．
+\end{mytheo}
+
+\begin{proof}
+    \hyperref[def:homotopy-set]{ホモトピー集合} $\comm{Y}{B}$ の基点を $[\mathrm{const}]$ と書く．
+    \begin{description}
+        \item[\textbf{$\bm{\mathrm{Im}\, i_* \subset p_*^{-1}([\mathrm{const}])}$}] 　
+        
+        $\forall g \in \Hom{\CG} (Y,\, F)$ に対して 
+        $p_* \circ i_* ([g]) = [p \circ i \circ g]$ である．ところで $B$ の基点 $b_0$ に対して $F = p^{-1}(\{b_0\})$ だから，
+        $\forall y \in Y$ に対して $p \circ i \circ g(y) = p \bigl( g(y) \bigr) = b_0$ が成り立つ．i.e. $p \circ i \circ g$ は定数写像であり，$p_* \circ i_* ([g]) = [p \circ i \circ g] = [\mathrm{const}]$ が示された．
+        
+        \item[\textbf{$\bm{\mathrm{Im} i_* \supset p_*^{-1}([\mathrm{const}])}$}] 　
+        
+        $p_*([f]) = [\mathrm{const}]$ を充たす任意の $f \in \Hom{\CG}(Y,\, E)$ をとる．
+        このとき $p \circ f \in \Hom{\CG}(Y,\, B)$ は定数写像にホモトピックである，i.e.
+        $p \circ f$ と定数写像 $Y \lto B,\; y \lmto b_0$ を繋ぐホモトピー $G \colon Y \times I \lto B$ が存在する．$p \colon E \lto B$ が\hyperref[def:fibration]{ファイブレーション}なので，
+        \hyperref[def:HLP]{HLP}の問題
+        \begin{center}
+            \begin{tikzcd}[row sep=large, column sep=large]
+                &Y \times \{0\} \ar[d, hookrightarrow]\ar[r, "f"] &E \ar[d, "p"] \\
+                &Y \times I \ar[r, "G"]\ar[ur, red, dashed] &B
+            \end{tikzcd}
+        \end{center}
+        は解を持つ．それを $H \colon Y \times I \lto E$ とおくと，$\forall y \in Y$ に対して $p \circ H_1(y) = G_1(y) = b_0$ が成り立つことから $H_1(y) \in F = p^{-1}(\{b_0\})$ とわかる．
+        i.e. $H_1 \in \Hom{\CG} (Y,\, F)$ である．
+        $f \simeq H_1$ なので $[f] = [i \circ H_1] = i_*([H_1]) \in \Im i_*$ である．
+    \end{description}
+\end{proof}
+
+\begin{mytheo}[label=thm:cofib-basic]{コファイブレーションの基本性質}
+    $i \colon A \hookrightarrow X$ を，\hyperref[thm:continuous-cofibration]{コファイバー}\footnote{包含写像 $i \colon A \hookrightarrow X$ による接着空間 $X \cup_i A$ のこと．} $X/A$ を持つ\hyperref[def:cofibration]{コファイブレーション}とする．
+    $q \colon X \twoheadrightarrow X/A$ を商写像とする．
+
+    任意の\underline{弧状連結な}位相空間 $\textcolor{blue}{Y}$ を与えたとき，圏 $\CG$ における図式
+    \begin{align}
+        \comm{X/A}{\textcolor{blue}{Y}} \xrightarrow{q^*} \comm{X}{\textcolor{blue}{Y}} \xrightarrow{i^*} \comm{A}{\textcolor{blue}{Y}}
+    \end{align}
+    は\hyperref[def:ES-SETS]{完全}である．
+\end{mytheo}
+
+\begin{proof}
+    \hyperref[def:homotopy-set]{ホモトピー集合} $\comm{A}{Y}$ の基点を $[\mathrm{const}]$ と書く．
+    \begin{description}
+        \item[\textbf{$\bm{\mathrm{Im}\, q^* \subset (i^*)^{-1}([\mathrm{const}])}$}] 　
+
+        $\forall g \in \Hom{\CG} (X/A,\, X)$ に対して 
+        $i^* \circ q^* ([g]) = [g \circ q \circ i]$ である．$q \circ i(A) = q(A)$ は一点集合だから $g \circ q \circ i \in \Hom{\CG}(A,\, Y)$ は定数写像であり，$i^* \circ q^* ([g]) = [g \circ q \circ i] = [\mathrm{const}]$ が示された．
+
+        \item[\textbf{$\bm{\mathrm{Im}\, q^* \supset (i^*)^{-1}([\mathrm{const}])}$}] 　
+        
+        $i^*([f]) = [\mathrm{const}]$ を充たす任意の $f \in \Hom{\CG}(X\, Y)$ をとる．
+        このとき $f \circ i \in \Hom{\CG}(A,\, Y)$ は定数写像にホモトピックである，i.e.
+        $f \circ i$ と定数写像を繋ぐホモトピー $h \colon A \times I \lto Y$ が存在する．
+        $i \colon A \lto X$ が\hyperref[def:cofibration]{コファイブレーション}なので，
+        \hyperref[def:HEP]{HEP}の問題
+        \begin{center}
+            \begin{tikzcd}[row sep=large, column sep=large]
+                &X \times \{0\} \ar[d, "i"]\ar[r, "f \cup h"] &Y \\
+                &X \times I \ar[ur, red, dashed]
+            \end{tikzcd}
+        \end{center}
+        は解を持つ．それを $F \colon X \times I \lto Y$ とおくと $F_1 \simeq f$ で，かつ制限 $F_1|_A$ が定数写像となる．
+        故に商位相の定義から，圏 $\CG$ における可換図式
+        \begin{center}
+            \begin{tikzcd}[row sep=large, column sep=large]
+                &X \ar[d, "q"]\ar[r, "F_1"] &Y \\
+                &X/A \ar[ur, red, dashed, "\exists ! g"] &
+            \end{tikzcd}
+        \end{center}
+        が存在する．故に $[f] = [F_1] = q^*([g]) \in \Im q^*$ である．
+    \end{description}
+\end{proof}
+
+\hyperref[def:homotopy-set]{基点付きホモトピー集合}に定理\ref{thm:fib-basic}, \ref{thm:cofib-basic}を拡張するために，コンパクト生成空間の圏を拡張する：
+\begin{mydef}[label=def:CG-nd]{非退化な基点を持つコンパクト生成空間の圏}
+    \textbf{非退化な基点を持つコンパクト生成空間の圏} (category of compactly generated spaces with a non-degenerate base point) $\CG_*$
+    を以下のように定義する：
+    \begin{itemize}
+        \item 空間対 $(X,\, \{x_0\})$ であって，包含写像 $\{x_0\} \hookrightarrow X$ が\hyperref[def:cofibration]{コファイブレーション}であるようなもの\footnote{空間対 $(X,\, \{x_0\})$ が\hyperref[def:NDR]{NDR-対}である，と言っても良い（定理\ref{thm:cofib-basic-Steenrod}）．}を対象とする．
+        \item 基点を保存する連続写像を射とする．
+        \item 連続写像の合成を合成とする．
+    \end{itemize}
+\end{mydef}
+
+\begin{mytheo}[label=thm:fib-basic-b]{ファイブレーションの基本性質（基点付きの場合）}
+    $F \hookrightarrow E \xrightarrow{p} B$ を，基点を保つ\hyperref[def:fibration]{ファイブレーション}とする．
+    
+    任意の基点付き位相空間\footnote{ホモトピー集合の基点が一意に決まるので弧状連結性は必要ない．} $\textcolor{blue}{Y} \in \Obj{\CG_*}$ を与えたとき，圏 $\CG_*$ における図式
+    \begin{align}
+        \comm{\textcolor{blue}{Y}}{F}_0 \xrightarrow{i_*} \comm{\textcolor{blue}{Y}}{E}_0 \xrightarrow{p_*} \comm{\textcolor{blue}{Y}}{B}_0
+    \end{align}
+    は\hyperref[def:ES-SETS]{完全}である．
+\end{mytheo}
+
+\begin{mytheo}[label=thm:cofib-basic-b]{コファイブレーションの基本性質（基点付きの場合）}
+    $A \stackrel{i}{\hookrightarrow} X \xrightarrow{q} X/A$ を，基点を保つ\hyperref[def:cofibration]{コファイブレーション}とする．
+
+    任意の基点付き位相空間 $\textcolor{blue}{Y} \in \Obj{\CG_*}$ を与えたとき，圏 $\CG_*$ における図式
+    \begin{align}
+        \comm{X/A}{\textcolor{blue}{Y}}_0 \xrightarrow{q^*} \comm{X}{\textcolor{blue}{Y}}_0 \xrightarrow{i^*} \comm{A}{\textcolor{blue}{Y}}_0
+    \end{align}
+    は\hyperref[def:ES-SETS]{完全}である．
+\end{mytheo}
+
+\subsection{スマッシュ積}
+
+\begin{mydef}[label=def:wedge-smash]{ウェッジ和とスマッシュ積}
+    $(X,\, x_0),\, (Y,\, y_0) \in \Obj{\CG_*}$ を任意に与える．
+    \begin{itemize}
+        \item $(X,\, x_0)$ と $(Y,\, y_0)$ の\textbf{ウェッジ和} (wedge sum) を
+        \begin{align}
+            X \vee Y \coloneqq (X \times \{y_0\}) \cup (\{x_0\} \times Y)
+        \end{align}
+        で定義する\footnote{一点写像 $f \colon X \lto Y,\; x_0 \lmto y_0$ による接着空間 $X \cup_f Y$ のことをウェッジ和と言う場合もある．圏 $\CG_*$ においては同一視してしまって問題ない．}．
+        これは圏 $\CG_*$ における和である．
+        \item $(X,\, x_0)$ と $(Y,\, y_0)$ の\textbf{スマッシュ積} (smash product) を
+        \begin{align}
+            X \wedge Y \coloneqq \frac{X \times Y}{X \vee Y} = \frac{X\times Y}{(X \times \{y_0\}) \cup (\{x_0\} \times Y)}
+        \end{align}
+        で定義する．これは圏 $\CG_*$ における積\underline{ではない}．
+    \end{itemize}
+\end{mydef}
+
+\begin{myprop}[label=prop:adjoint-b]{随伴定理}
+    圏 $\CG_*$ における\hyperref[def:natural-isomorphism]{自然同値}
+    \begin{align}
+        \Hom{\CG_*} \bigl(X \wedge Y,\, Z\bigr) \cong \Hom{\CG_*} \bigl( X,\, \Hom{\CG_*} (Y,\, Z) \bigr) 
+    \end{align}
+    が成り立つ．
+\end{myprop}
+
+\begin{mydef}[label=def:suspension, breakable]{懸垂・約懸垂・錐・約錐}
+    $(X,\, x_0)\in \Obj{\CG_*}$ を任意に与える．
+    \begin{itemize}
+        \item $X$ の\textbf{懸垂} (suspension) を
+        \begin{align}
+            \susp(X) \coloneqq \frac{X \times I}{(X \times \{0\}) \cup (X \times \{1\})}
+        \end{align}
+        で定義する．
+        \item $X$ の\textbf{約懸垂} (reduced suspension) を
+        \begin{align}
+            SX \coloneqq S^1 \wedge X = \frac{X \times I}{(X \times \{0\}) \cup (X \times \{1\}) \cup (\{x_0\} \times I)}
+        \end{align}
+        で定義する．
+        \item $X$ の\textbf{錐} (cone) を
+        \begin{align}
+            \cone(X) \coloneqq \frac{X \times I}{X \times \{0\}}
+        \end{align}
+        で定義する．
+        \item $X$ の\textbf{約錐} (reduced cone) を
+        \begin{align}
+            CX \coloneqq I \wedge X = \frac{X \times I}{(X \times \{0\}) \cup (\{x_0\} \times I)}
+        \end{align}
+        で定義する．
+    \end{itemize}
+\end{mydef}
+
+\begin{marker}
+    約懸垂・約錐は，圏 $\CG_*$ において関手的であるという点で懸垂・錐よりも便利である．
+\end{marker}
+
+\begin{myprop}[]{}
+    圏 $\CG_*$ において，商写像
+    \begin{align}
+        \susp(X) \twoheadrightarrow SX,\quad \cone(X) \twoheadrightarrow CX
+    \end{align}
+    はどちらも\hyperref[def:homotopy-basic]{ホモトピー同値写像}である．
+\end{myprop}
+
+\begin{myprop}[label=prop:sphere-susp]{}
+    $m,\, n \ge 0$ に対して以下が成り立つ：
+    \begin{enumerate}
+        \item $SS^n \approx S^{n+1}$
+        \item $CS^n \approx D^{n+1}$
+        \item $S^m \wedge S^n \approx S^{m+n}$
+    \end{enumerate}
+\end{myprop}
+
+\begin{myprop}[label=prop:loop-susp]{}
+    $X,\, Y \in \Obj{\CG_*}$ に対して自然な同相
+    \begin{align}
+        \Hom{\CG_*} (SX,\, Y) \approx \Hom{\CG_*} (X,\, \Omega Y)
+    \end{align}
+    が成り立つ．ただし $\Omega Y \coloneqq \Omega_{y_0} Y = \Hom{\CG_*}(S^1,\, Y)$ は\hyperref[def:path-loop]{ループ空間}である．
+\end{myprop}
+
+\begin{proof}
+    \hyperref[def:suspension]{約懸垂の定義}と\hyperref[prop:adjoint-b]{随伴定理}より
+    \begin{align}
+        \Hom{\CG_*} (SX,\, Y) &= \Hom{\CG_*} (S^1 \wedge X,\, Y) = \Hom{\CG_*} (X \wedge S^1,\, Y ) \\
+        &= \Hom{\CG_*} \bigl( X,\, \Hom{\CG_*}(S^1,\, Y) \bigr) = \Hom{\CG_*} (X,\, \Omega Y)
+    \end{align}
+\end{proof}
+
+\subsection{Puppe系列}
+
+\begin{mydef}[label=def:homotopy-fiber]{ホモトピー・ファイバー}
+    連続写像 $f \colon X \lto Y$ を任意に与える．
+    \begin{itemize}
+        \item $f$ の\textbf{ホモトピー・ファイバー} (homotopy fiber) とは，$f$ に対して定理\ref{thm:continuous-fibration}を使って得られる\hyperref[def:fibration]{ファイブレーション} $p \colon P_f \lto Y$ の\hyperref[thm:fiber-basic]{ファイバー}のこと．
+        \item $f$ の\textbf{ホモトピー・コファイバー} (homotopy cofiber) とは，$f$ に対して定理\ref{thm:continuous-cofibration}を使って得られる\hyperref[def:cofibration]{コファイブレーション} $i \colon A \lto M_f$ のコファイバー，i.e. \hyperref[def:cylinder-cone]{写像錐} $C_f$ のこと．
+    \end{itemize}
+\end{mydef}
+
+\hyperref[def:fibration]{ファイブレーション}の\hyperref[thm:fiber-basic]{ファイバー}の\hyperref[def:homotopy-basic]{ホモトピー型}は，もとのファイブレーションが「どの程度\hyperref[def:homotopy-basic]{ホモトピー同値写像}からずれているのか」の指標となる．
+任意の（ファイブレーションとは限らない）連続写像に関しても，その\hyperref[def:homotopy-fiber]{ホモトピー・ファイバー}を見れば同じことができる．
+
+さらに，ファイバーの包含写像 $F \hookrightarrow E$ の\hyperref[def:homotopy-fiber]{ホモトピー・ファイバー}をとることもできる．このような操作を帰納的に行うことで，ファイブレーションの長い系列を得る．
+
+\begin{mytheo}[label=thm:homotopyF-step]{ファイブレーション系列の素材}
+    \begin{itemize}
+        \item $F \hookrightarrow E \xrightarrow{f} B$ を\hyperref[def:fibration]{ファイブレーション}，
+        $Z$ を $F \hookrightarrow E$ の\hyperref[def:homotopy-fiber]{ホモトピー・ファイバー}とする．
+        
+        このとき $Z$ は\hyperref[def:path-loop]{ループ空間} $\Omega B$ と同じ\hyperref[def:homotopy-basic]{ホモトピー型}である．
+        \item $A \stackrel{i}{\hookrightarrow} X \twoheadrightarrow X/A$ を\hyperref[def:cofibration]{コファイブレーション}，
+        $W$ を $X \twoheadrightarrow X/A$ の\hyperref[def:homotopy-fiber]{ホモトピー・コファイバー}とする．
+        
+        このとき $W$ は\hyperref[def:suspension]{懸垂} $\susp(A)$ と同じ\hyperref[def:homotopy-basic]{ホモトピー型}である．
+    \end{itemize}
+    
+\end{mytheo}
+
+\begin{proof}
+    \begin{itemize}
+        \item 　与えられたファイバーは，ある点 $b_0 \in B$ を使って $F = f^{-1}(\{b_0\})$ と書ける．
+        $F$ の点 $e_0 \in F$ を1つ選んで基点とする．\hyperref[thm:path-space-fibration]{mapping path fibration} $p \colon P_f \lto Y$ は
+        \begin{align}
+            P_f &\coloneqq \bigl\{\, (e,\, \alpha) \in E \times B^I \bigm| f(e) = \alpha(0) \,\bigr\}, \\
+            p(e,\, \alpha) &\coloneqq \alpha(1)
+        \end{align}
+        によって構成され，連続写像
+        \begin{align}
+            h \colon E \lto P_f,\; e \lmto \bigl( e,\, \mathrm{const}_{f(e)} \bigr) 
+        \end{align}
+        が\hyperref[def:fib-homotopy]{ファイバー・ホモトピー同値写像}になるのだった．i.e.
+        $(P_f)_0 \coloneqq p^{-1}(\{b_0\})$ とおくと，
+        \hyperref[def:fibration]{ファイブレーション} $(P_f)_0 \hookrightarrow P_f \xrightarrow{p} B$ は $F \hookrightarrow E \xrightarrow{f} B$ に\hyperref[def:fib-homotopy]{ファイバー・ホモトピー同値}である．
+        % \begin{align}
+        %     (P_f)_0 = \bigl\{\, (e,\, \alpha) \in E \times B^I \bigm| f(e) = \alpha(0),\, \alpha(1) = b_0 \,\bigr\} 
+        % \end{align}
+        % が成り立つ．
+
+        　連続写像 $\mathrm{proj}_1 \colon (P_f)_0 \lto E,\; (e,\, \alpha) \lmto e$ を考える．
+        \begin{align}
+            \mathrm{proj}_1^{-1} (\{e_0\}) = \bigl\{\, (e_0,\, \alpha) \in E \times B^I \bigm| f(e_0) = b_0 = \alpha(0),\, \alpha(1) = b_0 \,\bigr\} 
+        \end{align}
+        より明らかに $\mathrm{proj}_1^{-1} (\{e_0\}) \approx \Omega_{b_0} B$ である．
+        
+        　次に
+        $\Omega_{b_0}B \hookrightarrow (P_f)_0 \xrightarrow{\mathrm{proj}_1} E$ が\hyperref[def:fibration]{ファイブレーション}であることを示す．
+        任意の位相空間 $A$ に対して\hyperref[def:HLP]{HLP}の問題
+        \begin{center}
+            \begin{tikzcd}[row sep=large, column sep=large]
+                &A \times \{0\} \ar[d, hookrightarrow]\ar[r, "g"] &(P_f)_0 \ar[d, "\mathrm{proj}_1"] \\
+                &A \times I \ar[r, "G"]\ar[ur, red, dashed] &E
+            \end{tikzcd}
+        \end{center}
+        を考える．$g(a) \coloneqq \bigl( g_1(a),\, g_2(a) \bigr)$ とおいた上でホモトピー $\tilde{G} \colon A \times I \lto (P_f)_0$ を
+        \begin{align}
+            \tilde{G}(a,\, s) = \Bigl( 
+            G(a,\, s),\, t \mapsto
+            \begin{cases}
+                f \bigl( G \bigl( a,\, s-(1+s)t \bigr)  \bigr), &t \in [0,\, \frac{s}{1+s}] \\
+                g_2(a) \bigl( (1+s)t - s  \bigr), &t \in [\frac{s}{1+s},\, 1]
+            \end{cases} 
+            \, \Bigr)
+        \end{align}
+        で定義すると
+        \begin{align}
+            \tilde{G}_0(a) &= \bigl( G_0(a),\, t \mapsto g_2(a)(t)  \bigr) = g(a), \\
+            \mathrm{proj}_1 \circ \tilde{G}_t(a) &= G_t(a)
+        \end{align}
+        が成り立つので解になっている．よって$\Omega_{b_0}B \hookrightarrow (P_f)_0 \xrightarrow{\mathrm{proj}_1} E$ がファイブレーションであることが示された．
+
+        　最後に $\Omega B$ が $F \hookrightarrow E$ の\hyperref[def:homotopy-fiber]{ホモトピー・ファイバー}であることを示す．
+        $E \xrightarrow{h} P_f$ がファイバー・ホモトピー同値写像であることから，制限 $h|_{F} \colon F \lto (P_f)_0$ はホモトピー同値写像である．
+        従って図式
+        \begin{center}
+            \begin{tikzcd}[row sep=large, column sep=large]
+                &F \ar[rr, "\simeq"]\ar[dr, hookrightarrow] & &(P_f)_0 \ar[dl, "\mathrm{proj}_1"] \\
+                & &E
+            \end{tikzcd}
+        \end{center}
+        から，ファイブレーション $\Omega_{b_0}B \hookrightarrow (P_f)_0 \xrightarrow{\mathrm{proj}_1} E$ が $F \hookrightarrow E$ に関して定理\ref{thm:continuous-fibration}の要件を充していることがわかった．
+        \item 
+    \end{itemize}
+    
+\end{proof}
+
+基点付き空間 $(X,\, x_0)$ の\hyperref[def:path-loop]{ループ空間} $\Omega X$ は，それ自身が定数ループ $\mathrm{const}_{x_0}$ を基点とする基点付き空間になっている．故に $\Omega X$ のループ空間を考えることができる．この操作を $X$ に対して $n$ 回施して得られる基点付き位相空間を $\Omega^n X$ と書く．
+
+\begin{mytheo}[label=thm:fib-seq, breakable]{ファイブレーション・コファイブレーション系列}
+    \begin{enumerate}
+        \item $A \xrightarrow{i} X \xrightarrow{\iota} X/A$ を\hyperref[def:cofibration]{コファイブレーション}とする．このとき圏 $\CG$ における図式
+        \begin{align}
+            &A \xrightarrow{i} X \xrightarrow{\iota} X/A \\
+            &\textcolor{red}{\to} \susp(A)  \xrightarrow{\susp i} \susp(X) \xrightarrow{\susp \iota} \susp (X/A) \\
+            &\textcolor{red}{\to} \susp^2(A) \xrightarrow{\susp i} \cdots \\
+            &\textcolor{red}{\to} \susp^n (A) \xrightarrow{\susp^n i} \susp^n (X) \xrightarrow{\susp^n \iota} \susp^n (X/A) \textcolor{red}{\to} \cdots 
+        \end{align}
+        が存在して赤色をつけた射は\hyperref[def:homotopy-basic]{ホモトピー同値写像}になっている．
+        \item $A \xrightarrow{i} X \xrightarrow{\iota} X/A$ を基点を保つ\hyperref[def:cofibration]{コファイブレーション}とする．このとき圏 $\CG_*$ における図式
+        \begin{align}
+            &A \xrightarrow{i} X \xrightarrow{\iota} X/A \\
+            &\textcolor{red}{\to} SA  \xrightarrow{S i} SX \xrightarrow{S \iota} S (X/A) \\
+            &\textcolor{red}{\to} S^2A \xrightarrow{S^2 i} \cdots \\
+            &\textcolor{red}{\to} S^n A \xrightarrow{S^n i} S^n X \xrightarrow{S^n \iota} S^n (X/A) \textcolor{red}{\to} \cdots 
+        \end{align}
+        が存在して赤色をつけた射は\hyperref[def:homotopy-basic]{ホモトピー同値写像}になっている．
+        \item $F \stackrel{i}{\hookrightarrow} E \xrightarrow{p} B $ を\hyperref[def:fibration]{ファイブレーション}とする．このとき圏 $\CG$ における図式
+        \begin{align}
+            \cdots &\textcolor{red}{\to} \Omega^n F \xrightarrow{\Omega^n i} \Omega^n E \xrightarrow{\Omega^n p} \Omega^n B \\
+            &\textcolor{red}{\to} \Omega^{n-1} F \xrightarrow{\Omega^{n-1} i} \cdots \\
+            &\textcolor{red}{\to} \Omega F \xrightarrow{\Omega i} \Omega E \xrightarrow{-\Omega^n p} \Omega B  \\
+            &\textcolor{red}{\to} F \xrightarrow{i} E \xrightarrow{p} B
+        \end{align}
+        が存在して赤色をつけた射は\hyperref[def:homotopy-basic]{ホモトピー同値写像}になっている．
+    \end{enumerate}
+\end{mytheo}
+
+次に，定理\ref{thm:fib-seq}の系列の\hyperref[def:homotopy-set]{ホモトピー集合}をとることを考える．
+適切な場合において\hyperref[def:homotopy-set]{ホモトピー集合}をとると群構造が入るからである．
+
+\begin{mydef}[label=def:Hspace, breakable]{H空間}
+    $(Y,\, y_0) \in \Obj{\CG_*}$ が\textbf{H空間}であるとは，次の条件をみたす2つの連続写像
+    \begin{align}
+        \mu &\colon Y\times Y \lto Y, \\
+        \nu &\colon Y \lto Y
+    \end{align}
+    が存在すること：
+    \begin{enumerate}
+        \item 第 $j$ 成分への包含写像 $\iota_j \colon Y \lto Y\times Y$ に対し，連続写像
+        \begin{align}
+            Y \xrightarrow{\iota_1} Y\times Y \xrightarrow{\mu} Y,\quad Y \xrightarrow{\iota_2} Y\times Y \xrightarrow{\mu} Y
+        \end{align}
+        がどちらも $\mathrm{id}_Y \colon y \lto Y$ に\hyperref[def:homotopy-basic]{ホモトピック}
+        \item 連続写像\begin{align}
+            Y \times Y \times Y \xrightarrow{\mathrm{id}_Y \times \mu} Y\times Y \xrightarrow{\mu} Y,\quad Y \times Y \times Y \xrightarrow{\mu \times \mathrm{id}_Y} Y\times Y \xrightarrow{\mu} Y
+        \end{align}
+        が互いにホモトピック
+        \item 連続写像
+        \begin{align}
+            Y \xrightarrow{\mathrm{id}_Y \times \nu} Y\times Y \xrightarrow{\mu} Y
+        \end{align}
+        は定数写像 $\text{const}_{y_0} \colon Y \lto Y,\; y \lmto y_0$ にホモトピック．
+    \end{enumerate}
+\end{mydef}
+
+\begin{mydef}[label=def:coHspace,breakable]{余H空間}
+    $(Y,\, y_0) \in \Obj{\CG_*}$ が\textbf{余H空間}であるとは，次の条件をみたす2つの連続写像
+    \begin{align}
+        \mu &\colon Y \lto Y \vee Y, \\
+        \nu &\colon Y \lto Y
+    \end{align}
+    が存在すること：
+    \begin{enumerate}
+        \item 第 $j$ 成分への標準的射影 $\pi_j \colon Y\times Y \lto Y$ に対して，連続写像
+        \begin{align}
+            Y \xrightarrow{\mu} Y\vee Y \xrightarrow{\pi_1} Y,\quad Y \xrightarrow{\mu} Y\vee Y \xrightarrow{\pi_2} Y
+        \end{align}
+        がどちらも $\mathrm{id}_Y \colon y \lto Y$ に\hyperref[def:homotopy]{ホモトピック}
+        \item 連続写像
+        \begin{align}
+            Y \xrightarrow{\mu} Y\vee Y \xrightarrow{\mathrm{id}_Y \vee \mu} Y \vee Y \vee Y,\quad Y \xrightarrow{\mu} Y\vee Y \xrightarrow{\mu \vee \mathrm{id}_Y} Y \vee Y \vee Y
+        \end{align}
+        が互いにホモトピック．
+        \item 連続写像
+        \begin{align}
+            Y \xrightarrow{\mu} Y\vee Y \xrightarrow{\mathrm{id}_Y \vee \nu} Y
+        \end{align}
+        は定数写像 $\text{const}_{y_0} \colon Y \lto Y,\; y \lmto y_0$ にホモトピック．
+    \end{enumerate}
+\end{mydef}
+
+\begin{mytheo}[label=thm:homotopy-group]{ホモトピー集合の群構造}
+    \begin{itemize}
+        \item $\forall X \in \Obj{\CG_*}$ に対して集合 $\comm{X}{Y}_0$ が自然な群構造を持つ $\IFF$ $Y$ が\hyperref[def:Hspace]{H空間}
+        \item  $\forall X \in \Obj{\CG_*}$ に対して集合 $\comm{Y}{X}_0$ が自然な群構造を持つ $\IFF$ $Y$ が\hyperref[def:coHspace]{余H空間}
+    \end{itemize}
+\end{mytheo}
+
+\begin{proof}
+    \begin{itemize}
+        \item 
+        \begin{description}
+            \item[\textbf{$\bm{(\Longrightarrow)}$}] $\forall X \in \Obj{\CG_*}$ に対して $\comm{X}{Y}_0$ が自然な群演算
+            \begin{align}
+                \cdot \; &\colon \comm{X}{Y}_0 \times \comm{X}{Y}_0 \lto \comm{X}{Y}_0 \\
+                {}^{-1} &\colon \comm{X}{Y}_0 \lto \comm{X}{Y}_0
+            \end{align}
+            を持っているとする．
+            $X = Y \times Y$ として，各成分への射影 $p_i \colon Y \times Y \lto Y$ のホモトピー類 $[p_i] \in \comm{Y\times Y}{Y}$ を考える．
+            仮定の群の積 $\cdot$ を使って $[\mu] \coloneqq [p_1] \cdot [p_2]$ とおく．
+            連続写像 $\mu \colon Y \times Y \lto Y$ は\hyperref[def:homotopy-basic]{ホモトピー類} $[\mu]$ の任意の元とする．
+            一方，連続写像 $\nu \colon Y \lto Y$ は，恒等写像 $\mathrm{id}_Y \colon Y \lto Y$ のホモトピー類 $[\mathrm{id}_Y] \in \comm{Y}{Y}_0$ の，群 $\comm{Y}{Y}_0$ における逆元 $[\mathrm{id}_Y]^{-1} \in \comm{Y}{Y}_0$ の任意の代表元 $\nu \colon Y \lto Y$ とする．
+            
+            　$\forall X \in \Obj{\CG_0}$ を1つとる．
+            任意の連続写像 $f,\, g \colon X \lto Y$ に対して $(f,\, g) \colon X \lto Y \times Y,\; x \lmto \bigl( f(x),\, g(x) \bigr)$ と書く\footnote{$f \times g$ ではない．}．
+            連続写像 $(f,\, g)$ は連続写像
+            \begin{align}
+                (f,\, g)^* \colon \comm{Y \times Y}{Y}_0 \lto \comm{X}{Y}_0,\; [h] \lmto [h \circ (f,\, g)]
+            \end{align}
+            を誘導する．このとき群の積の $X$ に関する自然性から
+            \begin{align}
+                [\mu \circ (f,\, g)] &= (f,\, g)^*([\mu]) = (f,\, g)^*([p_1] \cdot [p_2]) \\
+                &= (f,\, g)^*[p_1] \cdot  (f,\, g)^*[p_2] = [f] \cdot [g] \label{Hspace-mult}
+            \end{align}
+            が成り立つ．
+            
+            　次に $X = \{x_0\}$ とする．
+            唯一の連続写像 $c \colon Y \lto X,\; y \lmto x_0$ は
+            群準同型
+            \begin{align}
+                c^* \colon \comm{X}{Y}_0 \lmto \comm{Y}{Y}_0,\; [f] \lmto [f \circ c]
+            \end{align}
+            を誘導する．ところで群 $\comm{X}{Y}_0$ はただ1つの元 $[x_0 \lmto y_0]$ からなるのでこれは単位元である．
+            故に $c^*$ が群準同型であることから
+            \begin{align}
+                c^*([x_0 \lmto y_0]) = [\mathrm{const}_{y_0}]
+            \end{align}
+            が群 $\comm{Y}{Y}_0$ の単位元だとわかる．
+
+            　さて， $\mu,\, \nu$ が\hyperref[def:Hspace]{H空間の定義}の (1)-(3) を充していることを示そう：
+            \begin{enumerate}
+                \item 
+                $\iota_1 = (\mathrm{id}_Y,\, \mathrm{const}_{y_0}),\; \iota_2 = (\mathrm{const}_{y_0},\, \mathrm{id}_Y)$ であることに注意する．式\eqref{Hspace-mult}を使うと
+                \begin{align}
+                    [\mu \circ \iota_1] &= [\mu \circ (\mathrm{id}_Y,\, \mathrm{const}_{y_0})] = [\mathrm{id}_Y] \cdot [\mathrm{const}_{y_0}] = [\mathrm{id}_Y], \\
+                    [\mu \circ \iota_2] &= [\mu \circ (\mathrm{const}_{y_0},\, \mathrm{id}_Y)] = [\mathrm{const}_{y_0}] \cdot [\mathrm{id}_Y] = [\mathrm{id}_Y]
+                \end{align}
+                なので $\mu \circ \iota_i \simeq \mathrm{id}_Y$ が示された．
+                \item 
+                $\pi_i \colon Y \times Y \times Y \lto Y$ を第 $i$ 成分からの射影とする．このとき式\eqref{Hspace-mult}を使うと
+                \begin{align}
+                    [\mu \circ (\mathrm{id}_Y \times \mu)] &= (\mathrm{id}_Y \times \mu)^*([\mu]) = (\mathrm{id}_Y \times \mu)^*([p_1]) \cdot (\mathrm{id}_Y \times \mu)^*([p_2]) \\
+                    &= [\pi_1] \cdot [\mu \circ (\pi_2,\, \pi_3)] = [\pi_1] \cdot ([\pi_2] \cdot [\pi_3]), \\
+                    [\mu \circ (\mu \times \mathrm{id}_Y)] &= (\mu \times \mathrm{id}_Y)^*([\mu]) = (\mu \times \mathrm{id}_Y)^*([p_1]) \cdot (\mu \times \mathrm{id}_Y)^*([p_2]) \\
+                    &= [\mu \circ (\pi_1,\, \pi_2)] \cdot [\pi_3] = ([\pi_1] \cdot [\pi_2]) \cdot [\pi_3]
+                \end{align}
+                なので，群 $\comm{Y\times Y \times Y}{Y}$ の結合律から $\mu \circ (\mathrm{id}_Y \times \mu) \simeq \mu \circ (\mu \times \mathrm{id}_Y)$ が示された．
+                \item $\nu$ の定義から
+                \begin{align}
+                    [\mu \circ (\mathrm{id}_Y \times \nu)] &= (\mathrm{id}_Y \times \nu)^*([\mu]) = (\mathrm{id}_Y \times \nu)^*([p_1]) \cdot (\mathrm{id}_Y \times \nu)^*([p_2]) \\
+                    &= [\mathrm{id}_Y] \cdot [\nu] = [\mathrm{id}_Y] \cdot [\mathrm{id}_Y]^{-1} = [\mathrm{const}_{y_0}]
+                \end{align}
+                なので $\mu \circ (\mathrm{id}_Y \times \nu) \simeq \mathrm{const}_{y_0}$ が示された．
+            \end{enumerate}
+            \item[\textbf{$\bm{(\Longleftarrow)}$}] $Y$ が\hyperref[def:Hspace]{H空間}であるとする．$\forall X \in \Obj{\CG_*}$ を1つとる．
+            このとき
+            連続写像 $\mu \colon Y \times Y \lto Y$ は連続写像
+            \begin{align}
+                \mu_* \colon \comm{X}{Y \times Y}_0 \lto \comm{X}{Y}_0,\; [f] \lmto [\mu \circ f]
+            \end{align}
+            を誘導する．
+            自然同型
+            \begin{align}
+                \theta \colon \comm{X}{Y}_0 \times \comm{X}{Y}_0 \xrightarrow{=} \comm{X}{Y \times Y}_0
+            \end{align}
+            との合成を $\tilde{\mu} \coloneqq \mu_* \circ \theta \colon \comm{X}{Y}_0 \times \comm{X}{Y}_0 \lto \comm{X}{Y}_0$ とおく．
+            　同様に連続写像 $\nu \colon Y \lto Y$ は連続写像
+            \begin{align}
+                \nu_* \colon \comm{X}{Y}_0 \lto \comm{X}{Y}_0,\; [f] \lmto [\nu \circ f]
+            \end{align}
+            を誘導する．
+
+            \hyperref[def:Hspace]{H空間の定義}より，集合 $\comm{X}{Y}_0$ は $\tilde{\mu}$ を積，$\nu_*$ を逆元とする群となる．以上の構成は $X$ について自然である．
+        \end{description}
+        
+    \end{itemize}
+    
+\end{proof}
+
+
+
+特に，\hyperref[def:path-loop]{ループ空間} $\Omega X$ が\hyperref[def:Hspace]{H空間}であり，
+\hyperref[def:suspension]{約懸垂} $SX$ が\hyperref[def:coHspace]{余H空間}であることは注目すべきである．
+
+\begin{mycol}[label=col:group-susp]{}
+    $X,\, Y \in \Obj{\CG_*}$ をとる．
+    \begin{enumerate}
+        \item $\comm{X}{\Omega Y}_0 = \comm{SX}{Y}_0$ は群．
+        \item $\comm{X}{\Omega^2 Y}_0 = \comm{SX}{\Omega Y}_0= \comm{S^2X}{Y}_0$ は$\mathbb{Z}$ 加群．
+    \end{enumerate}
+\end{mycol}
+
+\begin{proof}
+    
+\end{proof}
+
+
+定理\ref{thm:fib-basic-b}, \ref{thm:cofib-basic-b}と\hyperref[thm:fib-seq]{ファイブレーション・コファイブレーション系列}と系\ref{col:group-susp}を組み合わせることで
+重要な\hyperref[def:ES-SETS]{完全列}が得られる：
+
+\begin{mytheo}[label=ES:Puppe, breakable]{Puppe系列}
+    $Y \in \Obj{\CG_*}$を任意に与える．
+    \begin{enumerate}
+        \item $F \hookrightarrow E \to B$ が\hyperref[def:fibration]{ファイブレーション}ならば，圏 $\CG_*$ における完全列
+        \begin{align}
+            \cdots &\to \comm{Y}{\Omega^n F}_0 \to \comm{Y}{\Omega^n E}_0 \to \comm{Y}{\Omega^nB}_0 \to \\
+            &\cdots \comm{Y}{\Omega B}_0 \to \comm{Y}{F}_0 \to \comm{Y}{E}_0 \to \comm{Y}{B}_0
+        \end{align}
+        がある．この完全列は
+        \begin{itemize}
+            \item $n \ge 0$ の部分は\hyperref[def:ES-SETS]{$\SETS$ の完全列}
+            \item $n \ge 1$ の部分は群の完全列
+            \item $n \ge 2$ の部分は$\mathbb{Z}$ 加群の完全列
+        \end{itemize}
+        となっている．
+        \item $A \to X \to X/A$ が\hyperref[def:cofibration]{コファイブレーション}ならば，圏 $\CG_*$ における完全列
+        \begin{align}
+            \cdots &\to \comm{S^n(X/A)}{Y}_0 \to \comm{S^n X}{Y}_0 \to \comm{S^n A}{Y}_0 \to \\
+            &\cdots \comm{SA}{Y}_0 \to \comm{X/A}{Y}_0 \to \comm{X}{Y}_0 \to \comm{A}{Y}_0
+        \end{align}
+        がある．この完全列は
+        \begin{itemize}
+            \item $n \ge 0$ の部分は\hyperref[def:ES-SETS]{$\SETS$ の完全列}
+            \item $n \ge 1$ の部分は群の完全列
+            \item $n \ge 2$ の部分は$\mathbb{Z}$ 加群の完全列
+        \end{itemize}
+        となっている．
+    \end{enumerate}
+\end{mytheo}
+
+\section{ホモトピー群}
+
+\begin{mydef}[label=def:homotopy-group]{ホモトピー群}
+    $(X,\, x_0) \in \Obj{\CG_*}$ を任意に与える．
+    基点付き空間 $X$ の\textbf{第 $\bm{n}$ ホモトピー群} ($n$-th homotopy group) とは，
+    \begin{align}
+        \bm{\pi_n (X,\, x_0)} \coloneqq \comm{S^n}{X}_0
+    \end{align}
+    のことを言う．これは $n=0$ のとき集合，$n=1$ のとき群，$n \ge 2$ のとき$\mathbb{Z}$ 加群である．
+\end{mydef}
+
+命題\ref{prop:sphere-susp}と\hyperref[def:suspension]{約懸垂の定義}，および系\ref{col:group-susp}-(1)より
+\begin{align}
+    \pi_n (X,\, x_0) = \comm{S^n}{X}_0 = \comm{S^{1} \wedge S^{n-1}}{X}_0 = \comm{SS^{n-1}}{X}_0 = \comm{S^{n-1}}{\Omega X}_0 = \pi_{n-1}(\Omega X)
+\end{align}
+がわかる．この操作を $k \le n$ 回繰り返すことで
+\begin{align}
+    \pi_{n}(X,\, x_0) = \pi_{n-k}(\Omega^k X)
+\end{align}
+がわかる．特に $\pi_n (X) = \pi_1 (\Omega^{n-1} X)$ が成り立つ．
+
+$Y = S^0 \in \Obj{\CG_*}$ として\hyperref[ES:Puppe]{Puppe系列}を使うと，即座に次の長完全列が得られる：
+
+\begin{mytheo}[label=ES:homotopy]{ファイブレーションのホモトピー長完全列}
+    $F \hookrightarrow E \to B$ を\hyperref[def:fibration]{ファイブレーション}とする．このとき圏 $\CG_*$ の図式
+    \begin{align}
+        \cdots &\pi_n (F) \to \pi_n (E) \to \pi_n (B) \to \pi_{n-1} (F) \to \cdots \\
+        &\to \pi_1(F) \to \pi_1(E) \to \pi_1(B) \to \pi_0 (F) \to \pi_0 (E) \to \pi_0(B)
+    \end{align}
+    は\hyperref[def:ES-SETS]{完全列}である．特に
+    \begin{itemize}
+        \item $n \ge 0$ の部分は\hyperref[def:ES-SETS]{$\SETS$ の完全列}
+        \item $n \ge 1$ の部分は群の完全列
+        \item $n \ge 2$ の部分は $\mathbb{Z}$ 加群の完全列
+    \end{itemize}
+    となっている．
+\end{mytheo}
+
+% \begin{mytheo}[label=thm:covering-iso]{}
+%     $X$ を\underline{連結空間}，$p \colon \tilde{X} \lto X$ を連結な被覆空間とする．このとき
+%     \begin{align}
+%         \pi_n (\tilde{X}) \xrightarrow{p_*} \pi_n (X)
+%     \end{align}
+%     は $n=1$ のとき単射な群準同型で，$n \ge 2$ のとき群同型である．
+% \end{mytheo}
+
+\section{相対ホモトピー群}
+
+\textcolor{red}{この節は未完である}．参考になる文献としては，~\cite[ChapterIV]{Whitehead}, ~\cite[Chap 7]{Spanier}などがある．
+
+\begin{mydef}[label=def:rel-homotopy-group]{相対ホモトピー群}
+    空間対 $(X,\, A)$ であって基点 $x_0 \in A \subset X$ を持つものを任意に与える．
+    また，$p \coloneqq (1,\, 0,\, \cdots ,\, 0) \in S^{n-1} \subset D^n$ とおく．
+    
+    このとき，空間対 $(X,\, A)$ の\textbf{相対ホモトピー群}（$n=1$ のときは集合）とは
+    \begin{align}
+        \bm{\pi_n (X,\, A,\, x_0)} \coloneqq \comm{(D^n,\, S^{n-1},\, p)}{(X,\, A,\, x_0)}
+    \end{align}
+    のこと．i.e. 空間対の圏の射\footnote{$(X,\, A),\; (Y,\, B)$ を空間対としたとき，連続写像 $f \colon X \lto Y$ であって，$f (A) \subset B$ を充たすもののこと．}
+    $(D^n,\, S^{n-1}) \to (X,\, A)$ であって基点を保つものの\hyperref[def:homotopy-basic]{ホモトピー類}全体の集合のこと．
+\end{mydef}
+
+\begin{marker}
+    対応 $\pi_n (\mhyphen)$ は
+    \begin{itemize}
+        \item $n=1$ のとき空間対の圏から $\SETS$ への関手
+        \item $n=2$ のとき空間対の圏から群の圏への関手
+        \item $n\ge 3$ のとき空間対の圏から $\MOD{\mathbb{Z}}$ への関手
+    \end{itemize}
+    である．
+\end{marker}
+
+つまり，$\pi_n(X,\, A,\, x_0)$ の代表元は連続写像 $f \colon D^n \lto X$ であって $f(S^{n-1}) \subset A,\; f(p) = x_0$ を充たすものであり，
+ホモトピー類 $[f] \in \pi_n(X,\, A,\, x_0)$ の元 $g$ は
+ホモトピー $H \colon D^n \times I \lto X$ であって $H_t(S^{n-1}) \subset A,\, H_t(p) = x_0\; (\forall t \in I)$ を充たすものによって $f$ と繋がっている．
+
+\begin{mytheo}[label=ES:rel-homotopy]{相対ホモトピー群の長完全列}
+    \hyperref[def:rel-homotopy-group]{相対ホモトピー群}は
+    \begin{itemize}
+        \item $n \ge 2$ のとき群
+        \item $n \ge 3$ のとき $\mathbb{Z}$ 加群
+    \end{itemize}
+    である．さらに，圏 $\CG_*$ における\hyperref[def:ES-SETS]{完全列}
+    \begin{align}
+        \cdots &\to \pi_n (A) \to \pi_n (X) \to \pi_n (X,\, A) \\
+        &\to \pi_{n-1} (A) \to \cdots \\
+        &\to \pi_1 (A) \to \pi_1 (X) \to \pi_1 (X,\, A) \to \pi_0 (A) \to \pi_0(X)
+    \end{align}
+    がある．
+\end{mytheo}
+
+\begin{proof}
+    
+\end{proof}
+
+\begin{mylem}[]{}
+    $F \hookrightarrow E \xrightarrow{f} B$ を\hyperref[def:fibration]{ファイブレーション}とする．
+    $A \subset B$ を部分空間とし，$G \coloneqq f^{-1}(A)$ とおく．このとき $F \hookrightarrow G \xrightarrow{f}$ はファイブレーションである．
+
+    このとき，$\forall k \ge 1$ について，$f$ は同型 $f_* \colon \pi_k(E,\, G) \lto \pi_k(B,\, A)$ を誘導する．特に $A = \{b_0\}$ とすると
+    可換図式\ref{cmtd:rel-homotopy-ladder}が成り立つ．
+\end{mylem}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzcd}[row sep=large, column sep=large]
+        \cdots \ar[r] &\pi_k(F) \ar[d, "\mathrm{id}"]\ar[r] &\pi_k (E) \ar[d, "\mathrm{id}"]\ar[r] &\pi_k(E,\, F) \ar[d, "f_*"] \ar[r] &\pi_{k-1}(F) \ar[d, "\mathrm{id}"]\ar[r] &\cdots (\text{exact}) \\
+        \cdots \ar[r] &\pi_k(F) \ar[r] &\pi_k (E) \ar[r] &\pi_k(B) \ar[r] &\pi_{k-1}(F) \ar[r] &\cdots (\text{exact})
+    \end{tikzcd}
+    \caption{}
+    \label{cmtd:rel-homotopy-ladder}
+\end{figure}%
+
+\begin{proof}
+    
+\end{proof}
+
+\section{ホモトピー集合への基本群の作用}
+
+$X \in \Obj{\CG_*}$ とし，$Y$ を基点付き空間とする．
+
+\begin{mydef}[label=def:freely-homotopic]{}
+    連続写像\footnote{基点を保たなくても良い} $f_0,\, f_1 \colon X \lto Y$ と道 $u \colon I \lto Y$ をとり，$f_0$ と $f_1$ を繋ぐホモトピー $H \colon X \times I \lto Y$ が $F_t (x_0) = u(t)$ を充しているとする．
+    このとき $f_0$ は $f_1$ に\textbf{$\bm{u}$ に沿ってfreely homotopic}であると言い，$f_0 \underset{u}{\simeq} f_1$ と書く．
+\end{mydef}
+
+\begin{marker}
+    $f_0,\, f_1$ が基点を保つ連続写像ならば $u$ はループになる．i.e. 基点付き連続写像のfree homotopy は $\pi_1 (Y,\, y_0)$ の要素を引き起こす．
+\end{marker}
+
+\begin{mylem}[label=lem:freely-homotopic]{}
+    \begin{enumerate}
+        \item $f_0 \colon X \lto Y$ と道 $u \colon I \lto y$ であって $u(0) = f_0(x_0)$ を充たすものが与えられたとき，
+        $f_0$ と $u$ に沿って\hyperref[def:freely-homotopic]{freely homotopic}な $f_1 \colon X \lto Y$ が存在する．
+        \item $f_0 \underset{u}{\simeq} f_1 \AND f_0 \underset{u}{\simeq} f_2 \AND u \simeq v\; (\text{rel}\, \partial I)$ ならば $f_0 \underset{\text{const}}{\simeq} f_1$
+        \item $f_0 \underset{u}{\simeq} f_1 \AND f_1 \underset{u}{\simeq} f_2 \IMP f_0 \underset{uv}{\simeq} f_2$
+    \end{enumerate}
+\end{mylem}
+
+\begin{proof}
+    \begin{enumerate}
+        \item 仮定より $(X,\, \{x_0\})$ が\hyperref[def:NDR]{NDR-対}（i.e. \hyperref[thm:cofib-basic-Steenrod]{コファイブレーション}）なので明らか．
+        \item $(I,\, \partial I),\; (X,\, x_0)$ が\hyperref[def:NDR]{NDR-対}なので，補題\ref{lem:NDR}により $\bigl(X \times I,\, X \times \partial I \cup \{x_0\} \times I\bigr)$ もNDR-対である．
+        よって\hyperref[def:HEP]{HEP}の問題
+        \begin{center}
+            \begin{tikzcd}[row sep=large, column sep=large]
+                &X \times I \times \{0\} \cup X \times \{0,\, 1\} \times I \cup \{x_0\} \times I \times I \ar[d]\ar[r] &Y \\
+                &X \times I \times I \ar[ur, dashed, red] &
+            \end{tikzcd}
+        \end{center}
+        は解 $H \colon X \times I \times I \lto Y$ を持つ．
+        \item 自明
+    \end{enumerate}
+    
+\end{proof}
+
+\subsection{基本群の作用}
+
+$\pi_1(Y,\, y_0)$ の $\comm{X}{Y}_0$ への作用
+\begin{align}
+    \Theta \colon \pi_1(Y,\, y_0) \times \comm{X}{Y}_0 \lto \comm{X}{Y}_0,\; ([u],\, [f]) \lmto [u] \cdot [f]
+\end{align}
+を，$f \underset{u}{\simeq} f_1$ なる $f_1 \colon X \lto Y$ を用いて $[u] \cdot [f] \coloneqq [f_1]$ と定めよう．
+well-definednessを確認する：
+\begin{proof}
+    補題\ref{lem:freely-homotopic}-(2) より $[f_1]$ が $u$ によらないことがわかる．
+
+    $[f] = [g] \in \comm{X}{Y}_0 \AND g \underset{u}{\simeq} g_1$ とする．すると
+    \begin{align}
+        f_1 \underset{u^{-1}}{\simeq} f \underset{\text{const}}{\simeq} g \underset{u}{\simeq} g_1
+    \end{align}
+    が成り立つ．
+    補題\ref{lem:freely-homotopic}-(3)より $f_1$ と $g_1$ は基点付きホモトピーである．
+\end{proof}
+
+
+
+\begin{mytheo}[]{}
+    $Y$ が\underline{弧状連結}ならば $\comm{X}{Y}$ は作用 $\Theta$ による $\comm{X}{Y}_0$ の軌道空間である．
+\end{mytheo}
+
+\begin{proof}
+    基点を無かったことにする忘却関手
+    \begin{align}
+        \Phi \colon \comm{X}{Y}_0 \lto \comm{X}{Y}
+    \end{align}
+    が商写像になることを示す．$\Phi([u] \cdot [f]) = [f]$ であり，$\Phi([f_0]) = \Phi([f_1])$ ならばある $u$ が存在して $[u] \cdot [f_0] = [f_1]$ となる．i.e. $[f_1] \in \pi(Y,\, y_0) \cdot [f_0]$ である．
+    $\Phi$ が全射であることは，補題\ref{lem:freely-homotopic}-(3)および $Y$ が弧状連結であることから従う．
+\end{proof}
+
+\begin{mycol}[]{}
+    $Y$ が\underline{弧状連結かつ単連結}ならば
+    忘却関手 $\comm{X}{Y}_0 \lto \comm{X}{Y}$ は全単射になる．
+\end{mycol}
+
+
+\subsection{被覆空間による方法}
+
+\section{Hurewiczの定理}
+
+\textcolor{red}{未完}
+
+\end{document}
