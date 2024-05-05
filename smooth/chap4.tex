@@ -572,6 +572,432 @@ Cartanの公式\ref{thm.Cartan}より，Lie微分の様々な性質が示され�
 	\end{enumerate}
 \end{proof}
 
+\section{$C^\infty$ 多様体の向き}
+
+\subsection{$C^\infty$ 多様体の向き付けとその特徴付け}
+
+% $n$ 次元多様体 $M$ をとる．多様体の各点 $p$ における\textbf{向き} (orientation) は，接空間 $T_pM$ の順序付き基底を考えることで定義される．
+
+% $e_1,\, \dots ,\, e_n$ と $f_1,\, \dots ,\, f_n$ を $T_pM$ の二つの順序付き基底とする．これらは正則な線型変換 $T \colon T_p M \to T_pM$ で移り合うが，$\det T > 0$ であるときに $\{ e_i \} \sim \{f_i\}$ であるとして，$T_pM$ の順序付き基底全体の集合 $\mathcal{B}_p$ の上の同値関係 $\sim$ を定義する：
+% \begin{align} 
+% 	\sim \; \coloneqq \bigl\{ \bigl(\{e_i\},\, \{f_i\}\bigr) \in \mathcal{B}_p \times \mathcal{B}_p \bigm| \exists T = [T^i_j] \in \mathrm{GL}(n,\, \mathbb{R})\, \mathrm{s.t.}\, f_i = T^j_i e_j,\; \det T > 0 \bigr\} 
+% \end{align}
+% $\sim$ が同値関係であることは明らかである．故に同値類 $[\{ e_i \}] \in \mathcal{B}_p /\mathord{\sim}$ を考えることができ，これを点 $p$ における\textbf{向き}と呼ぶ．
+
+% $M$ が\cinfty 多様体の場合，$T_pM$ における自然基底を代表元にもつ同値類 $[\{(\pdv*{}{x^i})_p\}]$ を定義でき，これを\textbf{正の向き}と呼ぶ．$M$ の座標変換に伴う基底の取り替えはJacobi行列で表現されるから，Jacobianの正負で向きを判定できる．
+
+% \begin{mydef}[label=def:smooth-orientation]{向き付け可能} 
+% 	\cinfty 多様体 $M$ が\textbf{向き付け可能} (orientable) であるとは，$M$ のアトラス $\mathcal{S} = \{(U_\lambda,\, \varphi_\lambda)\}_{\lambda \in \Lambda}$ であって，全ての座標変換 $f_{\beta \alpha} = \varphi_{\beta} \circ \varphi_{\alpha}^{-1}$ のJacobianが $\varphi_{\alpha}(U_\alpha \cap U_\beta)$ の全ての点で正になるようなものが存在することを言う．
+% \end{mydef}
+
+
+有限次元ベクトル空間 $V$ （$\dim V > 0$）の順序付き基底全体の集合を $\mathcal{B}_V$ と書く．
+\begin{itemize}
+	\item $\mathcal{B}_V$ 上の同値関係を
+	\begin{align}
+		(e_1,\, \dots,\, e_{\dim V}) \sim (f_1,\, \dots,\, f_{\dim V}) \DEF \exists T = [T^{\mu}{}_\nu] \in \LGL(\dim V),\; e_\mu = f_\nu T^{\nu}{}_\mu \AND \det T > 0
+	\end{align}
+	で定め，この同値関係による同値類のことをベクトル空間 $V$ の\textbf{向き} (orientation) と呼ぶ．
+	\item ベクトル空間 $V$ とその向き $\mathcal{O}_V \in \mathcal{B}_V / \sim$ の組 $(V,\, \mathcal{O}_V)$ のことを\textbf{向き付けられたベクトル空間} (oriented vector space) と呼ぶ．
+	\item 向き付けられたベクトル空間 $(V,\, \mathcal{O}_V)$ の順序付き基底 $(e_1,\, \dots,\, e_{\dim V}) \in \mathcal{B}_V$ は，$(e_1,\, \dots,\, e_{\dim V}) \in \mathcal{O}_V$ のとき\textbf{正の向き} (positively oriented)，$(e_1,\, \dots,\, e_{\dim V}) \notin \mathcal{O}_V$ のとき\textbf{負の向き} (negatively oriented) であるという．
+\end{itemize}
+
+\begin{marker}
+	$\dim V = 0$ のときは $\mathcal{O}_V \in \{\pm 1\}$ とする．
+\end{marker}
+
+$C^\infty$ 多様体 $M$ の各点 $p \in M$ における接空間 $T_p M$ は有限次元ベクトル空間なので，上述の意味で向き $\mathcal{O}_{T_p M}$ を与えることができる．
+この各点各点で与えた接空間の向きたち $\Familyset[\big]{\mathcal{O}_{T_p M}}{p \in M}$ を次の意味で「連続に繋げる」ことができたとき，$C^\infty$ 多様体 $M$ に\textbf{向き}が与えられたと言う：
+
+\begin{mydef}[label=def:smooth-orientation]{$C^\infty$ 多様体の向き}
+    境界なし/あり $C^\infty$ 多様体 $M$ を与える．
+    \begin{itemize}
+        \item $M$ の\textbf{各点の向き} (pointwise orientation) とは，族 $\Familyset[\big]{\mathcal{O}_{T_p M}}{p \in M}$ のこと．
+        \item $M$ の各点の向き $\Familyset[\big]{\mathcal{O}_{T_p M}}{p \in M}$ を与える．
+        開集合 $U \subset M$ 上の局所フレーム $(E_1,\, \dots,\, E_{\dim M})$ が\textbf{正の向き} (positively oriented) であるとは，$\forall p \in U$ において $(E_1|_p,\, \dots,\, E_{\dim M}|_p) \in \mathcal{O}_{T_p M}$ であることを言う．\textbf{負の向き}も同様に定義する．
+        \item 与えられた $M$ の各点の向き $\Familyset[\big]{\mathcal{O}_{T_p M}}{p \in M}$ が\textbf{連続} (continuous) であるとは，$\forall p \in M$ に対してある正の向きの局所フレーム $E^{(p)} \coloneqq (E^{(p)}_1,\, \dots,\, E^{^{(p)}}_{\dim M})$ が存在して $p \in \dom E^{(p)}$ を充たすことを言う．
+        \item $M$ の\textbf{向き} (orientation) とは，$M$ の各点の向きであって連続であるもののことを言う．
+        \item $M$ が\textbf{向き付け可能} (orientable) であるとは，$M$ の向きが存在することを言う．
+        \item $M$ が向き付け可能なとき，向き $\Familyset[\big]{\mathcal{O}_{T_p M}}{p \in M}$ と $M$ の組 $(M,\, \Familyset[\big]{\mathcal{O}_{T_p M}}{p \in M})$ のことを\textbf{向きづけられた多様体} (oriented manifold) という．
+    \end{itemize}
+\end{mydef}
+
+\begin{mylem}[label=lem:orientation]{}
+    \begin{itemize}
+        \item \hyperref[def:smooth-orientation]{向き付け可能}な境界あり/なし $C^\infty$ 多様体 $M$ の向き $\Familyset[\big]{\mathcal{O}_{T_p M}}{p \in M}$ 
+        \item \textbf{連結}な開集合 $U \subset M$
+    \end{itemize}
+    を任意に与える．このとき，$U$ 上の任意の局所フレーム $(E_1,\, \dots,\, E_{\dim M})$ は正の向きであるか負の向きであるかのどちらかである．
+\end{mylem}
+
+\begin{proof}
+    背理法により示す．$U$ 上の局所フレーム $E \coloneqq (E_1,\, \dots,\, E_{\dim M})$ であって，
+    % ある異なる2点 $p,\, q \in U$ において $E_p \in \mathcal{O}_{T_p M} \AND E_q \notin \mathcal{O}_{T_p M}$ が成り立つようなものが存在するとする．
+    \begin{align}
+        W \coloneqq \bigl\{\, p \in U \bigm| E_p \in \mathcal{O}_{T_p M} \,\bigr\} 
+    \end{align}
+    とおいたときに $W \neq \emptyset \AND U \setminus W \neq \emptyset$ が成り立つものが存在するとする．
+    
+	$\forall p \in W \subset M$ を1つ固定する．仮定より各点の向き $\Familyset[\big]{\mathcal{O}_{T_p M}}{p \in M}$ は連続だから，ある正の向きの局所フレーム $F^{(p)}$ が存在して $p \in \dom F^{(p)} \eqqcolon V_p$ を充たす．
+	このとき連続写像 $T \colon U \cap V_p \lto \LGL(\dim M)$ を
+	\begin{align}
+		E_\mu|_x \eqqcolon F^{(p)}{}_\nu|_x\, \bigl[\, T(x)\,\bigr]^\nu{}_\mu\quad (\forall x \in U \cap V_p)
+	\end{align}
+	により定めると\footnote{$T$ の連続性は，$E,\, F^{(p)}$ が局所フレームであることによる．}，
+	\begin{align}
+		W \cap V_p = T^{-1}\bigl( \LGL_+ (\dim M) \bigr) 
+	\end{align}
+	と書けるので $W \cap V_p$ は開集合であり\footnote{$\LGL_+ (\dim M) \coloneqq \bigl\{\, X \in \LGL (\dim M) \bigm| \det X > 0 \,\bigr\}$ である．$\det \colon \LGL(\dim M) \lto \mathbb{R}$ が連続写像なので $\LGL_+ (\dim M) = \det^{-1} \bigl( (0,\, \infty) \bigr)$ は $\LGL (\dim M)$ の開集合である．} 
+	，かつ $p \in W \cap V_p \subset W$ を充たす．i.e. $\forall p \in W$ に対して $W$ における $p$ の開近傍 $W \cap U_p$ が存在するので，命題\ref{prop.opdet}より $W$ が開集合だと分かった．
+    同じ議論により $U \setminus W$ が開集合であることもわかるが，これは $U$ の連結性に矛盾する．
+\end{proof}
+
+定義\ref{def:smooth-orientation}の意味は直感的だが，扱い辛い．
+しかし，実は微分形式によって $C^\infty$ 多様体の向きを特徴付けることができて計算上便利である：
+
+\begin{myprop}[label=prop:orientation-form]{微分形式による向きの特徴付け}
+    境界あり/なし $C^\infty$ 多様体 $M$ を与える．
+    \begin{enumerate}
+        \item $\forall p \in M$ において $0$ にならない $\omega \in \Omega^{\dim M}(M)$ が与えられたとする．
+        このとき $\forall p \in M$ に対して
+		\begin{align}
+			\mathcal{O}_{\omega_p} \coloneqq \bigl\{\, (e_1,\, \dots,\, e_{\dim M}) \in \mathcal{B}_{T_p M} \bigm| \omega_p (e_1,\, \dots,\, e_{\dim M}) > 0 \,\bigr\} 
+		\end{align}
+		とおくと，族 $\Familyset[\big]{\mathcal{O}_{\omega_p}}{p \in M}$ は $M$ の\hyperref[def:smooth-orientation]{向き}である．
+		%  $M$ の\hyperref[def:smooth-orientation]{向き}を一意に定める．
+        \item $M$ に向き $\Familyset[\big]{\mathcal{O}_{T_p M}}{p \in M}$ が与えられたとする．
+		このとき $\forall p \in M$ および $\forall (e_1,\, \dots,\, e_{\dim M}) \in \mathcal{O}_{T_ p M}$ に対して
+        \begin{align}
+			\omega_p \neq 0 \AND  \omega_p (e_1,\, \dots,\, e_{\dim M}) > 0
+		\end{align}
+		を充たす $\omega \in \Omega^{\dim M}(M)$ が存在する．
+    \end{enumerate}
+\end{myprop}
+
+\begin{proof}
+    \begin{enumerate}
+        \item $\forall p \in M$ において $\omega_p \neq 0$ とする．このとき $\forall (e_1,\, \dots,\, e_{\dim M}),\, (f_1,\, \dots,\, f_{\dim M}) \in \mathcal{B}_{T_p M}$ に対して，$e_\mu = f_\nu T^{\nu}{}_\mu$ ならば，
+        \begin{align}
+            \omega_p (e_1,\, \dots,\, e_{\dim M}) 
+            &= \omega_p (f_{\nu_1} T^{\nu_1}{}_1,\, \dots,\, f_{\nu_{\dim M}} T^{\nu_{\dim M}}{}_{\dim M}) \\
+            &= T^{\nu_{1}}{}_{1} \cdots T^{\nu_{\dim M}}{}_{\dim M} \epsilon_{\nu_1 \dots \nu_{\dim M}} \omega_p (f_{1},\, \dots,\, f_{\dim M}) \\
+            &= (\det T) \omega_p (f_{1},\, \dots,\, f_{\dim M})
+        \end{align}
+        で $\det T \neq 0$ なので，
+        \begin{align}
+            &(e_1,\, \dots,\, e_{\dim M}) \sim (f_1,\, \dots,\, f_{\dim M}) \\
+			\DEF &\omega_p (e_1,\, \dots,\, e_{\dim M}),\, \omega_p (f_1,\, \dots,\, f_{\dim M})\; \text{が同符号}
+        \end{align}
+        によって定めた $\mathcal{B}_{T_p M}$ の同値関係 $\sim$ による同値類はベクトル空間 $T_p M$ の向きである．
+		特に2つある同値類のうち $\omega_p$ の符号が正であるものを $\mathcal{O}_{\omega_p}$ とおいたので，族 $\Familyset[\big]{\mathcal{O}_{\omega_p}}{p \in M}$ は\hyperref[def:smooth-orientation]{各点の向き}である．
+
+        　次に，各点の向き $\Familyset[\big]{\mathcal{O}_{\omega_p}}{p \in M}$ が連続であることを示す．$\forall p \in M$ を一つ固定し，$p$ の連結な開近傍 $p \in U \subset M$ とその上の任意の局所フレーム $(E_1,\, \dots,\, E_{\dim M})$ をとる\footnote{例えば座標ベクトル場の定義域を十分小さく取れば良い．}．$(E_i)$ の双対フレームを $(\varepsilon_i)$ とする．
+        すると $U$ 上で任意の $\omega \in \Omega^n(M)$ はある $f \in C^\infty (U)$ を使って $\omega = f \varepsilon^1 \wedge \cdots \wedge \varepsilon^{\dim M}$ の形で書ける．
+        $\omega$ が $0$ にならないと言うことは $f$ が $0$ にならないので，$U$ 上至る所で $\omega(E_1,\, \dots,\, E_{\dim M}) = f \neq 0$ である．i.e. $f(U) \subset \mathbb{R} \setminus \{0\}$ であるが，$U$ の連結性から $f(U) \subset \mathbb{R}_{> 0}$ か $f(U) \subset \mathbb{R}_{< 0}$ のどちらかしかあり得ない．
+        \item $\Familyset[\big]{\mathcal{O}_{T_p M}}{p \in M}$ を $M$ の\hyperref[def:smooth-orientation]{向き}とする．
+        このとき $\forall p \in M$ に対してある\hyperref[def:smooth-orientation]{正の向き}の局所フレーム $E^{(p)}$ が存在して $p \in \dom E^{(p)}$ を充たす．そのような局所フレームの族 $\Familyset[\big]{E^{(p)}}{p \in M}$ を1つ固定する．
+		すると $M$ の部分集合族 $\mathcal{E} \coloneqq \Familyset[\big]{\dom E^{(p)}}{p \in M}$ は $M$ の開被覆であるから，$\mathcal{E}$ に\hyperref[def:PoU]{従属する $C^\infty$ 級の1の分割} $\Familyset[\big]{\psi_p \in M \lto [0,\, 1]}{p \in M}$ をとることができる．
+
+		　ここで $\forall p \in M$ について $E^{(p)}$ の双対フレーム $\varepsilon^{(p)}$ をとり，
+		\begin{align}
+			\omega^{(p)} \coloneqq \varepsilon^{(p)}{}^1 \wedge \cdots \wedge \varepsilon^{(p)}{}^{\dim M}
+		\end{align}
+		と定義する．
+		このとき $\forall \textcolor{red}{x} \in \dom E^{(p)}$ および $(e_1,\, \dots,\, e_{\dim M}) \in \mathcal{O}_{T_{\textcolor{red}{x}} M}$ に対して，
+		向きの定義から $E^{(p)}|_{\textcolor{red}{x}} \in \mathcal{O}_{T_{\textcolor{red}{x}} M}$ であることと (1) の議論から
+		$\omega^{(p)}|_{\textcolor{red}{x}} (E^{(p)}{}_1|_{\textcolor{red}{x}},\, \dots,\, E^{(p)}{}_{\dim M}|_{\textcolor{red}{x}}) = 1 > 0$ と $\omega^{(p)}|_{\textcolor{red}{x}} (e_1,\, \dots,\, e_{\dim M})$ は同符号，i.e. 正である．
+		したがって $\omega \in \Omega^{\dim M}(M)$ を
+		\begin{align}
+			\omega \coloneqq \sum_{p \in M} \psi_p\, \omega^{(p)}
+		\end{align}
+		で定義すると $\forall x \in M$ および $\forall (e_1,\, \dots,\, e_{\dim M}) \in \mathcal{O}_{T_x M}$ に対して
+		\begin{align}
+			\omega_x (e_1,\, \dots,\, e_{\dim M})
+			&= \sum_{\substack{p \in M, \\ x \in \dom E^{(p)}}} \psi_p (x)\, \underbrace{\omega^{(p)}|_x (e_1,\, \dots,\, e_{\dim M})}_{> 0}
+		\end{align}
+		であり，\hyperref[def:PoU]{1の分割の性質-(4)}から少なくとも $1$ つの $p \in M$ について $\psi_p(x) > 0$ であるので，左辺が正であることが示された．構成から明らかに $\forall p \in M$ について $\omega_p \neq 0$ である．
+    \end{enumerate}
+\end{proof}
+
+命題\ref{prop:orientation-form}を踏まえて次のように定義する：
+
+\begin{mydef}[label=def:orientation-form]{向き付け形式}
+	境界あり/なし $C^\infty$ 多様体 $M$ の至る所で $0$ にならない $\omega \in \Omega^{\dim M}(M)$ のことを\textbf{向き付け形式} (orientation form) と呼ぶ．
+\end{mydef}
+
+\hyperref[def:smooth-orientation]{向きの定義}では局所フレームが登場したが，実際には座標フレームを考えれば十分だとわかる：
+
+\begin{mydef}[label=def:atlas-oriented]{向きづけられたアトラス}
+	境界あり/なし多様体 $M$ を与え\footnote{この時点では\hyperref[def:smooth-orientation]{向き付け可能}でなくても良い}，$M$ の\hyperref[maxatlas]{極大アトラス} $\mathcal{A}^+ \coloneqq \bigl\{\, (U_\alpha,\; \varphi_\alpha)  \,\bigr\}_{\alpha \in \Lambda^+}$ を1つ固定する．
+
+	\begin{itemize}
+		\item $M$ が\hyperref[def:smooth-orientation]{向きづけられた多様体}であるとする．
+		このとき $M$ のチャート $\bigl(U,\, (x^\mu)\bigr) \in \mathcal{A}^+$ が\textbf{正の向き} (positively oriented) であるとは，座標フレーム $\bigl( \pdv{}{x^1},\, \dots,\, \pdv{}{x^{\dim M}} \bigr)$ が\hyperref[def:smooth-orientation]{正の向き}であることを言う．
+		\item （極大とは限らない）\hyperref[diffmani]{$C^\infty$ アトラス} $\mathcal{A} \coloneqq \bigl\{\, (U_\alpha,\, \varphi_\alpha) \,\bigr\}_{\alpha \in \Lambda \subset \Lambda^+}  \subset \mathcal{A}^+$ が\textbf{向き付けれられた $C^\infty$ アトラス} (oriented smooth atlas) であるとは，
+		$\forall \alpha,\, \beta \in \Lambda \subset \Lambda^+$ に対して座標変換
+		\begin{align}
+			\varphi_\beta^{-1} \circ \varphi_\alpha \colon \varphi_\alpha^{-1} (U_\alpha \cap U_\beta) \lto \varphi_\beta^{-1}(U_\alpha \cap U_\beta)
+		\end{align}
+		のJacobianが正であることを言う．
+		% \item $\mathcal{A}^+$ に含まれる全ての向きづけられた $C^\infty$ アトラスの集合を $\irm{\mathscr{A}}{oriented} (\mathcal{A}^+)$ と書く．$\irm{\mathscr{A}}{oriented} (\mathcal{A}^+)$ 上の同値関係 $\sim$ を
+		% \begin{align}
+		% 	\mathcal{A} \sim \mathcal{B} \DEF \mathcal{A} \cup \mathcal{B} \in \irm{\mathscr{A}}{oriented}(\mathcal{A}^+)
+		% \end{align}
+		% により定義する．
+		% $\mathcal{A} \in \irm{\mathscr{A}}{oriented}(\mathcal{A})$ の同値関係 $\sim$ による同値類を $[\mathcal{A}]$ と書く．
+		% このとき
+		% \begin{align}
+		% 	\bigcup_{\mathcal{B} \in [\mathcal{A}]} \mathcal{B} \in \irm{\mathscr{A}}{oriented} (\mathcal{A}^+)
+		% \end{align}
+		% のことを\textbf{向きづけられた極大アトラス}と呼ぶ．
+	\end{itemize}
+\end{mydef}
+
+
+\begin{myprop}[label=prop:orientation-coordinate]{向きづけられた $C^\infty$ アトラスによる向きの特徴付け}
+	境界あり/なし $C^\infty$ 多様体 $M$ を与え，$M$ の\hyperref[maxatlas]{極大アトラス} $\mathcal{A}^+ \coloneqq \bigl\{\, (U_\alpha,\; \varphi_\alpha)  \,\bigr\}_{\alpha \in \Lambda^+}$ を1つ固定する．
+	\begin{enumerate}
+		\item $M$ に\hyperref[def:atlas-oriented]{向きづけられた $C^\infty$ アトラス} $\mathcal{A} \coloneqq \bigl\{\, (U_\alpha,\, \varphi_\alpha) \,\bigr\}_{\alpha \in \Lambda}$ が与えられたとする．
+		このとき $M$ の\hyperref[def:smooth-orientation]{向き} $\Familyset[\big]{\mathcal{O}_{T_p M}}{p \in M}$ であって，$\forall \alpha \in \Lambda$ について $M$ のチャート $(U_\alpha,\, \varphi_\alpha) \in \mathcal{A}$ が\hyperref[def:atlas-oriented]{正の向き}になるようなものが一意的に存在する．
+		\item $M$ に\hyperref[def:smooth-orientation]{向き} $\Familyset[\big]{\mathcal{O}_{T_p M}}{p \in M}$ が与えられたとする．
+		このとき\underline{$\partial M = \emptyset \OR \dim M > 1$ ならば}， $\mathcal{A}^+$ の部分集合
+		\begin{align}
+			\mathcal{A} \coloneqq \bigl\{\, (U,\, \varphi) \in \mathcal{A}^+ \bigm| (U,\, \varphi)\; \text{は\hyperref[def:atlas-oriented]{正の向き}} \,\bigr\} 
+		\end{align}
+		は\hyperref[def:atlas-oriented]{向きづけられた $C^\infty$ アトラス}である．
+	\end{enumerate}
+	
+\end{myprop}
+
+\begin{proof}
+	\begin{enumerate}
+		\item まず $\forall p \in M$ を1つ固定する．$\mathcal{A}$ は $M$ の $C^\infty$ アトラスなので，ある $\alpha_p \in \Lambda$ が存在して $p \in U_{\alpha_p}$ を充たす．このときチャート $\bigl( U_{\alpha_p},\, \varphi_{\alpha_p} \bigr) = \bigl( U_{\alpha_p},\, (x^\mu) \bigr) \in \mathcal{A}$ について，
+		自然基底 $\left( \eval{\pdv{}{x^1}}_{p},\, \dots,\, \eval{\pdv{}{x^{\dim M}}}_p \right) \in \mathcal{B}_{T_p M}$ が属する $T_p M$ の向きを $\mathcal{O}_{T_p M}$ と定義する．
+		$p \in U_{\beta_p}$ を充たす別の $\beta_p \in \Lambda$ に関しても，$\mathcal{A}$ が\hyperref[def:atlas-oriented]{向きづけられた $C^\infty$ アトラス}であるという仮定からチャート $\bigl( U_{\beta_p},\, \varphi_{\beta_p} \bigr) = \bigl( U_{\beta_p},\, (y^\mu)\bigr) \in \mathcal{A}$ について 
+		\begin{align}
+			\left( \eval{\pdv{}{x^1}}_{p},\, \dots,\, \eval{\pdv{}{x^{\dim M}}}_p \right) \sim \left( \eval{\pdv{}{y^1}}_{p},\, \dots,\, \eval{\pdv{}{y^{\dim M}}}_p \right)
+		\end{align}
+		が成り立つ\footnote{自然基底の間の基底の取り替え行列はJacobi行列である．}ので，$\mathcal{O}_{T_p M}$ はwell-definedである．
+		族 $\Familyset[\big]{\mathcal{O}_{T_p M}}{p \in M}$ は $M$ の\hyperref[def:smooth-orientation]{各点の向き}であるが，座標フレームは局所フレームなので $M$ の\hyperref[def:smooth-orientation]{向き}でもある．
+		
+		$M$ にこの向きを与えたとき，構成から明らかに $\forall (U,\, \varphi) \in \mathcal{A}$ は\hyperref[def:atlas-oriented]{正の向き}のチャートである．
+
+		\item $\mathcal{A}^+$ は $M$ の $C^\infty$ アトラスなので，$\forall p \in M$ に対して $\alpha_p \in \Lambda^+$ が存在して $p \in U_{\alpha_p}$ を充たす．必要なら $U_{\alpha_p}$ を十分小さくとることで $U_{\alpha_p}$ は連結であるとして良い\footnote{$\mathcal{A}^+$ は極大アトラスなのでこのようなチャート $\bigl( U_{\alpha_p},\, \varphi_{\alpha_p} \bigr)$ を必ず含む．}．このときチャート $\bigl( U_{\alpha_p},\, \varphi_{\alpha_p} \bigr) = \bigl( U_{\alpha_p},\, (x^1,\, x^2,\, \dots) \bigr) \in \mathcal{A}^+$ に付随する座標フレームは補題\ref{lem:orientation}により\hyperref[def:smooth-orientation]{正の向き}であるか負の向きであるかのどちらかである．もしも負の向きならば，$x^1$ を $-x^1$ に置き換えた別の $C^\infty$ チャート\footnote{$\mathcal{A}^+$ は極大アトラスなのでこのようなチャートを必ず含む．なお，この構成は $\partial M \neq \emptyset \AND \dim M = 1$ のとき\hyperref[def:int-manifold-with-boundary]{境界チャート}に適用することができない．} $\bigl( U_{\alpha_p}',\, \varphi_{\alpha_p}' \bigr) \coloneqq  \bigl( U_{\alpha_p},\, (-x^1,\, x^2, \, \dots) \bigr) \in \mathcal{A}^+$ は正の向きである．よって $\mathcal{A}$ は $C^\infty$ アトラスを成す．
+		$\mathcal{A}$ に属する全てのチャートが正の向きなので，それらの間の変換関数のJacobianもまた正でなくてはいけない．
+	\end{enumerate}
+	
+\end{proof}
+
+
+\begin{mydef}[label=def:orientation-preserving]{向き付けを保つ $C^\infty$ 写像}
+    \hyperref[def:smooth-orientation]{向き付けられた} $C^\infty$ 多様体 $(M,\, \{\mathcal{O}_{T_p M}\}_{p \in M}),\, (N,\, \{\mathcal{O}_{T_q N}\}_{q \in N})$ と，局所微分同相写像 $F \colon M \lto N$ を与える．
+    
+    \begin{itemize}
+        \item $F$ が\textbf{向きを保つ} (orientation-preserving) とは，$\forall p \in M$ において同型写像 $T_p F \colon T_p M \lto T_{F(p)} N$ が $T_p F (\mathcal{O}_{T_p M}) = \mathcal{O}_{T_{F(p)} N}$ を充たすことを言う．
+        \item $F$ が\textbf{向きを逆にする} (orientation-reversing) とは，$\forall p \in M$ において同型写像 $T_p F \colon T_p M \lto T_{F(p)} N$ が $T_p F (\mathcal{O}_{T_p M}) = -\mathcal{O}_{T_{F(p)} N}$ を充たすことを言う．
+    \end{itemize}
+
+\end{mydef}
+
+\subsection{新しい向きの構成}
+
+素材となる\hyperref[def:smooth-orientation]{向き付けられた $C^\infty$ 多様体}から新しい向きづけられた多様体を作る方法をいくつか紹介する．
+
+\begin{myprop}[label=prop:product-orientation]{積多様体の向き}
+	\begin{itemize}
+		\item \hyperref[def:smooth-orientation]{向き付けられた $C^\infty$ 多様体} $M_1,\, M_2$
+		\item $C^\infty$ 写像
+		\begin{align}
+			\pi_1 &\colon M_1 \times M_2 \lto M_1,\; (x,\, y) \lmto x, \\
+			\pi_2 &\colon M_1 \times M_2 \lto M_2,\; (x,\, y) \lmto y
+		\end{align}
+	\end{itemize}
+	を与える．このとき，積多様体 $M_1 \times M_2$ の\hyperref[def:smooth-orientation]{向き}であって以下を充たすもの（\textbf{product orientation}と言う）が一意的に存在する：
+
+	\begin{description}
+		\item[\textbf{(product orientation)}]　
+		
+		$M_i$ に与えられた向きを命題\ref{prop:orientation-form}-(1) の方法で再現する\hyperref[def:orientation-form]{向き付け形式} $\omega_i \in \Omega^{\dim M_i}(M_i)$ に関して，$\pi_1^* \omega_1 \wedge \pi_2^* \omega_2 \in \Omega^{\dim (M_1 \times M_2)} (M_1 \times M_2)$ はproduct orientationを命題\ref{prop:orientation-form}-(1) の方法で再現する向き付け形式である．
+	\end{description}
+\end{myprop}
+
+\begin{proof}
+	$n_i \coloneqq \dim M_i$ とおく．$\forall (p,\, q) \in M_1 \times M_2$ を1つ固定する．
+	$\omega_i$ は $M_i$ 上至る所 $0$ でないので，ある $v_1,\, \dots,\, v_{n_1} \in T_p M_1$ および $w_1,\, \dots,\, w_{n_2} \in T_q M_2$ が存在して
+	\begin{align}
+		\omega_1|_p (v_1,\, \dots,\, v_{n_1}) &\neq 0, \quad
+		\omega_2|_q (w_1,\, \dots,\, w_{n_2}) \neq 0
+	\end{align}
+	を充たす．ここで $C^\infty$ 写像
+	\begin{align}
+		\mathrm{inj}_1^{q} &\colon M_1 \lto M_1 \times M_2,\; x \lmto (x,\, q) \\
+		\mathrm{inj}_2^{p} &\colon M_2 \lto M_1 \times M_2,\; x \lmto (p,\, x)
+	\end{align}
+	によって
+	\begin{align}
+		V_i &\coloneqq T_{p} (\mathrm{inj}_1^{q}) (v_i) \in T_{(p,\, q)} (M_1 \times M_2) \WHERE i = 1,\, \dots,\, n_1, \\ 
+		V_{n_1 + j} &\coloneqq T_q(\mathrm{inj}_2^{p})(w_j) \in T_{(p,\, q)} (M_1 \times M_2) \WHERE j = 1,\, \dots,\, n_2
+	\end{align}
+	を定義すると，命題\ref{prop:product-tangentv}から
+	\begin{align}
+		T_{(p,\, q)} \pi_1 (V_i) &= v_i, & T_{(p,\, q)} \pi_2 (V_i) = 0, \\
+		T_{(p,\, q)} \pi_1 (V_{n_1 + j}) &= 0, & T_{(p,\, q)} \pi_2 (V_{n_1+j}) = w_j
+	\end{align}
+	が言える．よって
+	\begin{align}
+		&\pi_1^* \omega_1 \wedge \pi_2^* \omega_2|_{(p,\, q)} (V_1,\, \dots,\, V_{n_1},\, V_{n_1 + 1},\, \dots,\, V_{n_1 + n_2}) \\
+		&= \frac{1}{n_1 ! n_2 !} \sum_{\sigma \in \mathfrak{S}_{n_1 + n_2}} \sgn{\sigma}\, \pi_1^* \omega_1|_{(p,\, q)} (V_{\sigma(1)},\, \dots,\, V_{\sigma(n_1)})\, \pi_2\omega_2|_{(p,\, q)} (V_{\sigma(n_1 + 1)},\, \dots,\, V_{\sigma(n_1 + n_2)}) \\
+		&= \frac{1}{n_1 ! n_2 !} \sum_{\sigma \in \mathfrak{S}_{n_1 + n_2}} \sgn{\sigma}\, \omega_1|_p \bigl( T_{(p,\, q)} \pi_1(V_{\sigma(1)}),\, \dots,\, T_{(p,\, q)} \pi_1(V_{\sigma(n_1)})\bigr)\\
+		&\qquad \times \omega_2|_q \bigl(T_{(p,\, q)} \pi_2 (V_{\sigma(n_1 + 1)}),\, \dots,\, T_{(p,\, q)} \pi_2(V_{\sigma(n_1 + n_2)})\bigr) \\
+		&= \frac{1}{n_1 ! n_2 !} \sum_{\sigma \in \mathfrak{S}_{n_1},\, \tau \in \mathfrak{S}_{n_2}} \sgn{\sigma \tau}\, \omega_1|_p \bigl( T_{(p,\, q)} \pi_1(V_{\sigma(1)}),\, \dots,\, T_{(p,\, q)} \pi_1(V_{\sigma(n_1)})\bigr)\\
+		&\qquad \times \omega_2|_q \bigl(T_{(p,\, q)} \pi_2 (V_{n_1+\tau(1)}),\, \dots,\, T_{(p,\, q)} \pi_2(V_{n_1 + \tau(n_2)})\bigr) \\
+		&= \omega_1|_p (v_1,\, \dots,\, v_{n_1})\,  \omega_2|_p (w_1,\, \dots,\, w_{n_2}) \\
+		&\neq 0
+	\end{align}
+	であり，$\pi_1^* \omega_1 \wedge \pi_2^* \omega_2|_{(p,\, q)} \neq 0$ が言えた．
+\end{proof}
+
+\begin{mydef}[label=def:loc-diffeo]{局所微分同相写像}
+    境界なし/あり $C^\infty$ 多様体 $M,\, N$ を与える．
+    
+    $C^\infty$ 写像 $F \colon M \lto N$ が\textbf{局所微分同相写像} (local diffeomorphism) であるとは，
+    $\forall p \in M$ が以下の条件を充たす近傍 $p \in U_p \subset M$ を持つことを言う：
+    \begin{enumerate}
+        \item $F(U_p) \subset N$ が開集合
+        \item $F|_{U_p} \colon U_p \lto F(U_p)$ が微分同相写像
+    \end{enumerate}
+\end{mydef}
+
+\begin{myprop}[label=prop:pullback-orientation]{引き戻しによる向き}
+	\begin{itemize}
+		\item 境界あり/なし $C^\infty$ 多様体 $M$ 
+		\item \hyperref[def:smooth-orientation]{向き付けられた}境界あり/なし $C^\infty$ 多様体 $N$
+		\item \hyperref[def:loc-diffeo]{局所微分同相写像} $F \colon M \lto N$
+	\end{itemize}
+	を与える．このとき $M$ は $F$ が\hyperref[def:orientation-preserving]{向きを保つ}ような向き（\textbf{pullback orientation}と言う）を一意にもつ．
+\end{myprop}
+
+\begin{proof}
+	$N$ に与えられた向きを $\Familyset[\big]{\mathcal{O}_{T_q(N)}}{q \in N}$ と書く．
+	$\forall p \in M$ を1つ固定する．$F$ が局所微分同相写像なので，点 $p$ における $F$ の微分 $T_p F \colon T_p M \lto T_{F(p)} N$ はベクトル空間の同型写像である．
+	よって $T_p M$ の向き $\mathcal{O}_{T_p M}$ であって $T_p F (\mathcal{O}_{T_p M}) = \mathcal{O}_{T_{F(p)} N}$ を充たすものが一意的に存在する．
+	% こうして\hyperref[def:smooth-orientation]{各点の向き} $\Familyset[\big]{\mathcal{O}_{T_p M}}{p \in M}$ であって $F$ が\hyperref[def:orientation-preserving]{向きを保つ}ようなものが得られる．
+
+	$N$ の向き $\Familyset[\big]{\mathcal{O}_{T_q(N)}}{q \in N}$ を命題\ref{prop:orientation-form}-(1) の方法で再現する\hyperref[def:orientation-form]{向き付け形式} $\omega \in \Omega^{\dim N}(N)$ について，
+	$F^* \omega \in \Omega^{\dim M}(M)$ は明らかに $M$ 上至る所 $0$ でなく，$F^* \omega$ が命題\ref{prop:orientation-form}-(1) の方法で作る $M$ の向き $\Familyset[\big]{\mathcal{O}_{F^* \omega|_p}}{p \in M}$ は $\Familyset[\big]{\mathcal{O}_{T_p M}}{p \in M}$ と等しい．
+\end{proof}
+
+\subsection{部分多様体の $C^\infty$ 構造}
+
+次に，部分多様体に向きを入れる方法を考える．
+然るに，そのためには部分多様体の $C^\infty$ 構造を真面目に扱う必要がある．まずいくつかの定義を述べる：
+
+\begin{mydef}[label=def:rank-smooth]{$C^\infty$ 写像のランク}
+    境界あり/なし $C^\infty$ 多様体 $M,\, N$ および $C^\infty$ 写像 $F \colon M \lto N$ を与える．
+    \begin{itemize}
+        \item 点 $p \in M$ における $F$ の\textbf{ランク} (rank) とは，線型写像 $T_p F \colon T_p M \lto T_{F(p)} N$ のランク，i.e. $\dim \bigl(\Im (T_p F)\bigr) \in \mathbb{Z}_{\ge 0}$ のこと．$\forall p \in M$ における $F$ のランクが等しいとき，$F$ は\textbf{定ランク} (constant rank) であると言い，$\bm{\rank F} \coloneqq \dim \bigl(\Im (T_p F)\bigr)$ と書く．
+        \item 点 $p \in M$ における $F$ のランクが $\min \bigl\{\dim M,\, \dim N\bigr\}$ に等しいとき，$F$ は\textbf{点 $\bm{p}$ においてフルランク} (full rank at $p$) であると言う．
+        $\rank F = \min \bigl\{\dim M,\, \dim N\bigr\}$ ならば $F$ は\textbf{フルランク} (full rank) であると言う．
+    \end{itemize}
+\end{mydef}
+
+位相空間 $M,\, N$ を与える．連続写像 $F \colon M \lto N$ が\textbf{位相的埋め込み} (topological embedding) であるとは，$F(M) \subset N$ に $N$ からの相対位相を入れたときに写像 $F \colon M \lto F(M)$ が同相写像になることを言う．
+
+\begin{mydef}[label=def:submersion-smooth]{$C^\infty$ 沈めこみ・$C^\infty$ はめ込み・$C^\infty$ 埋め込み}
+    境界あり/なし $C^\infty$ 多様体 $M,\, N$ および\hyperref[def:rank-smooth]{定ランク}の $C^\infty$ 写像 $F \colon M \lto N$ を与える．
+    \begin{itemize}
+        \item $F$ が\textbf{ $\bm{C^\infty}$ 沈め込み} (smooth submersion) であるとは，$\forall p \in M$ において $T_p F \colon T_p M \lto T_{F(p)} N$ が全射である，i.e. $\rank F = \dim N$ であることを言う．
+        \item $F$ が\textbf{ $\bm{C^\infty}$ はめ込み} (smooth immersion) であるとは，$\forall p \in M$ において $T_p F \colon T_p M \lto T_{F(p)} N$ が単射である，i.e. $\rank F = \dim M$ であること\footnote{階数・退化次元の定理から $\dim (\Ker T_p F) + \dim (\Im T_p F) = \dim M$ なので，$\rank F = \dim (\Im T_p F) = \dim M \IMP \dim (\Ker T_p F) = 0 \IFF \Ker T_p F = 0$}を言う．
+        \item $F$ が\textbf{ $\bm{C^\infty}$ 埋め込み} (smooth embedding) であるとは，$F$ が $C^\infty$ はめ込みであってかつ位相的埋め込みであることを言う．
+    \end{itemize}
+\end{mydef}
+
+\begin{mydef}[label=def:submanifold,breakable]{部分多様体}
+	境界あり/なし $C^\infty$ 多様体 $(M,\, \mathscr{O}_M)$ を与え\footnote{$\mathscr{O}_M$ は $M$ の\hyperref[ax.topo]{位相}}，その\hyperref[maxatlas]{極大アトラス} $\mathcal{A}_M^+$ を1つ固定する．
+	$M$ の\underline{部分集合}\footnote{この時点では $S$ の位相を指定していない．} $S \subset M$ を与える．
+	\begin{itemize}
+		\item $S$ が $M$ の境界あり/なし\textbf{$\bm{C^\infty}$ 部分多様体} (smooth submanifold) であるとは，
+		$S$ に位相\footnote{位相空間 $(M,\, \mathscr{O}_M)$ からの\hyperref[def.reltopo]{相対位相}\underline{でなくても良い}} $\mathscr{O}_S$ が与えられていて位相空間 $(S,\, \mathscr{O}_S)$ が境界あり/なし\hyperref[def.topomani]{位相多様体}になっており，
+		かつ位相多様体 $(S,\, \mathscr{O}_S)$ に\hyperref[diffmani]{$C^\infty$ アトラス}\footnote{$\mathcal{A}_S \subset \mathcal{A}_M^+$ \underline{でなくても良い}} $\mathcal{A}_S$ が与えられていて\hyperref[diffmani]{$C^\infty$ 多様体}になっていることを言う．
+		\item \underline{境界を持たない} $C^\infty$ 部分多様体 $(S,\, \mathscr{O}_S,\, \mathcal{A}_S)$ が $M$ に\textbf{はめ込まれた $\bm{C^\infty}$ 部分多様体} (immersed submanifold) であるとは，
+		$C^\infty$ アトラス $\mathcal{A}_S$ に関して包含写像 $\iota \colon S \hookrightarrow M$ が\hyperref[def:submersion-smooth]{$C^\infty$ はめ込み}になっていることを言う．
+		\item \underline{境界を持たない} $C^\infty$ 部分多様体 $(S,\, \mathscr{O}_S,\, \mathcal{A}_S)$ が $M$ に\textbf{埋め込まれた $\bm{C^\infty}$ 部分多様体} (embedded submanifold) であるとは，
+		位相 $\mathscr{O}_S$ が位相空間 $(M,\, \mathscr{O}_M)$ からの相対位相であり，かつ
+		$C^\infty$ アトラス $\mathcal{A}_S$ に関して包含写像 $\iota \colon S \hookrightarrow M$ が\hyperref[def:submersion-smooth]{$C^\infty$ 埋め込み}になっていることを言う．
+	\end{itemize}
+	
+	\tcblower
+
+	$M$ にはめ込まれた $C^\infty$ 部分多様体 $(S,\, \mathscr{O}_S,\, \mathcal{A}_S)$ について，$\dim M - \dim S$ を $S$ の\textbf{余次元} (codimension) と呼ぶ．
+\end{mydef}
+
+混乱の恐れがない場合，以下では $C^\infty$ 部分多様体の位相と $C^\infty$ アトラスを明示しない．また，特に断らずに部分多様体と言ったら $C^\infty$ 部分多様体のことを指すものとする．
+
+\begin{mydef}[label=def:slice-chart]{スライスチャート}
+	境界あり/なし $C^\infty$ 多様体 $M$ を与え，その\hyperref[maxatlas]{極大アトラス} $\mathcal{A}_M^+$ を1つ固定する．
+	部分集合 $S \subset M$ を与える．
+
+	\underline{$M$ の}チャート $(U,\, \varphi) = \bigl( U,\, (x^\mu) \bigr) \in \mathcal{A}_M^+$ が\textbf{$\bm{S}$ に関する $\bm{k}$-スライスチャート}であるとは，
+	\begin{align}
+		\varphi(S \cap U) 
+		&= \bigl\{\, (x^1,\, \dots,\, x^k,\, x^{k+1},\, \dots,\, x^{\dim M}) \in \varphi(U) \bigm| x^{k+1},\, \dots,\, x^{\dim M}\; \text{は定数} \,\bigr\} 
+	\end{align}
+	が成り立つ，i.e. $\varphi(S \cap U) \subset \mathbb{R}^{\dim M}$ が $\varphi(U)$ と $k$ 次元超平面との共通部分になっていることを言う．
+\end{mydef}
+
+\begin{mytheo}[label=thm:slice-shart-embedded]{スライスチャートによる埋め込まれた $C^\infty$ 部分多様体の特徴付け}
+	境界を持たない $C^\infty$ 多様体 $M$ を与え，その\hyperref[maxatlas]{極大アトラス} $\mathcal{A}_M^+$ を1つ固定する．
+	部分集合 $S \subset M$ を与える．このとき，以下の2つが成り立つ．
+	\begin{enumerate}
+		\item $S$ が\hyperref[def:submersion-smooth]{埋め込まれた $C^\infty$ 部分多様体} 
+		$\IMP$
+		$\forall p \in S$ に対して， $p$ を含む\hyperref[def:slice-chart]{$S$ に関する $\dim S$-スライスチャート} $(U,\, \varphi) \in \mathcal{A}^+_M$ が存在する．
+		\item $\forall p \in S$ に対して， $p$ を含む\hyperref[def:slice-chart]{$S$ に関する $k$-スライスチャート} $(U,\, \varphi) \in \mathcal{A}^+_M$ が存在する．
+		$\IMP$
+		$S$ は $M$ からの\hyperref[def.reltopo]{相対位相}によって $k$ 次元の\hyperref[def.topomani]{位相多様体}になり，
+		かつ $S$ の $C^\infty$ アトラス
+		\begin{align}
+			\mathcal{A}_S \coloneqq \bigl\{\, (S \cap U,\, \varphi|_{S \cap U}) \bigm| (U,\, \varphi) \in \mathcal{A}_M^+ \ST S\,\text{に関する}\,k\text{-スライスチャート} \,\bigr\} 
+		\end{align}
+		が $S$ に与える\hyperref[diffmani]{$C^\infty$ 構造}に関して $S$ は $M$ に\hyperref[def:submanifold]{埋め込まれた $C^\infty$ 部分多様体}になる．
+	\end{enumerate}
+\end{mytheo}
+
+\begin{proof}
+	\begin{enumerate}
+		\item 
+	\end{enumerate}
+	
+\end{proof}
+
+\hyperref[def:mani-with-boundary]{境界付き $C^\infty$ 多様体} $M$ の境界 $\partial M$ に $M$ からの相対位相を入れると $\dim M - 1$ 次元の\hyperref[def.topomani]{境界を持たない位相多様体}になることは命題\ref{prop:manifold-boundary-basic}-(2) で見たが，その際は $\partial M$ の $C^\infty$ 構造については何も言及していなかった．
+ここまでの準備の下，$\partial M$ の $C^\infty$ 構造を定めよう：
+
+\begin{mytheo}[label=thm:smooth-structure-of-boundary]{境界の $C^\infty$ 構造}
+	境界付き $C^\infty$ 多様体 $(M,\, \mathscr{O}_M)$ を与え，その\hyperref[maxatlas]{極大アトラス} $\mathcal{A}_M^+$ を1つ固定する．
+	このとき，$M$ の境界 $\partial M$ に $M$ からの相対位相 $\mathscr{O}_{\partial M}$ を入れてできる $\dim M -1$ 次元位相多様体 $(\partial M,\, \mathscr{O}_{\partial M})$ について以下が成り立つ：
+	\begin{enumerate}
+		\item $(\partial M,\, \mathscr{O}_{\partial M})$ は
+		\begin{align}
+			\mathcal{A}_{\partial M} \coloneqq \bigl\{\, (\partial M \cap U,\, \varphi|_{\partial M \cap U}) \bigm| (U,\, \varphi) \in \mathcal{A}_M^+ \ST \text{\hyperref[def:int-manifold-with-boundary]{境界チャート}} \,\bigr\} 
+		\end{align}
+		を $C^\infty$ アトラスに持つ．
+		\item $C^\infty$ 多様体 $(\partial M,\, \mathscr{O}_{\partial M},\, \mathcal{A}_{\partial M})$ は $M$ にproperに\footnote{つまり，包含写像 $\iota \colon \partial M \lto M$ による $M$ の任意のコンパクト集合 $K \subset M$ の逆像 $\iota^{-1}(K) \subset \partial M$ がコンパクト}
+		\hyperref[def:submanifold]{埋め込まれた $C^\infty$ 部分多様体}になる．
+	\end{enumerate}
+\end{mytheo}
+
+\begin{proof}
+	\begin{enumerate}
+		\item 
+	\end{enumerate}
+	
+\end{proof}
+
+% \begin{mydef}[label=def:vecf-along]{部分多様体に沿ったベクトル場}
+	
+% \end{mydef}
+
 \section{微分形式の積分}
 
 \subsection{パラコンパクト・1の分割}
@@ -582,11 +1008,17 @@ Cartanの公式\ref{thm.Cartan}より，Lie微分の様々な性質が示され�
 \end{mydef}
 
 $X$ の\textbf{任意の開被覆}が局所有限な細分を持つとき，$X$ は\textbf{パラコンパクト} (paracompact) であるという．この条件は\hyperref[def.compact]{コンパクト}よりも弱い．次の定理は，全ての\underline{多様体}（\cinfty 多様体だけでなく！）がパラコンパクトよりももう少し良い性質を持っていることを保証してくれる：
+
 \begin{mytheo}[]{}
 	$M$ を位相多様体とする．$M$ の任意の開被覆に対して，その細分となる高々可算個の元からなる\footnote{添字集合 $I$ の濃度 (cardinality) が $\abs{I} \le \aleph_0.$}局所有限な開被覆 $\mathcal{V} = \bigl\{\, V_i \,\bigr\}_{i \in I}$ であって，$\overline{V_i}$ が全てコンパクトとなるものが存在する．
 
 	必要ならば，さらに強い条件を充たすようにできる．i.e. 開被覆を成す各 $V_i$ 上にチャート $(V_i,\, \psi_i)$ をとることができて，$\psi_i(V_i) = D(3)$ \footnote{半径 $3$ の開円板．記号の使い方は \ref{gen_cinfty} を参照．}かつ $\bigl\{\, \psi_i^{-1}\bigl(D(1)\bigr) \,\bigr\}_{i \in I}$ が既に $M$ の開被覆となっている．
 \end{mytheo}
+
+\begin{proof}
+	~\cite[p.30, 命題1.29]{Morita}
+\end{proof}
+
 
 位相空間 $X$ の連続関数 $f \colon X \to \mathbb{R}$ に対して，$f$ の値が $0$ にならない点全体の集合を含む最小の閉集合
 \begin{align} 
@@ -594,40 +1026,36 @@ $X$ の\textbf{任意の開被覆}が局所有限な細分を持つとき，$X$ 
 \end{align}
 を $f$ の \textbf{台} (support) と呼ぶ．
 
-\begin{mydef}[label=partition_unity]{1の分割}
-	$M$ を\cinfty 多様体とする．$M$ 上の高々可算個の \cinfty 関数の族 $\bigl\{\, f_i \in \cinftyf{M} \,\bigr\}_{i \in I} $ は，
-	\begin{enumerate} 
-		\item $\forall p \in M,\; \forall i \in I$ に対して $f_i (p) \ge 0$ であり，$\bigl\{\, \mathrm{supp}\, f_i \,\bigr\}_{i \in I}$ は\hyperref[def:locally-finite]{局所有限}
-		\item $\forall p \in M$ に対して $\sum_{i \in I} f_i(p) = 1$
-	\end{enumerate}
-	の2条件を充たすとき，$M$ 上の\textbf{$1$の分割} (partition of unity) という．
 
-	その上 $\bigl\{\, \mathrm{supp}\, f_i \,\bigr\}_{i \in I}$ が $M$ の開被覆 $\{ U_\lambda\}$ の細分になっているとき，1の分割 $\bigl\{\, f_i \,\bigr\}_{i \in I} $ は開被覆 $\{ U_\lambda \}$ に\textbf{従属する}という．
+\begin{mydef}[label=def:PoU]{1の分割}
+    \begin{itemize}
+        \item 境界なし/あり $C^\infty$ 多様体 $M$
+        \item $M$ の開被覆 $\mathcal{U} \coloneqq \Familyset[\big]{U_\lambda}{\lambda \in \Lambda}$
+    \end{itemize}
+    を与える．\textbf{$\bm{\mathcal{U}}$ に従属する $\bm{C}^\infty$ 級の $1$の分割}\footnote{本資料では「$C^\infty$ 級の」を省略する} (smooth partition of unity subordinate to $\mathcal{U}$) とは，$C^\infty$ 関数の族 $\Familyset[\big]{\psi_\lambda \colon M \lto \mathbb{R}}{\lambda \in \Lambda}$ であって以下の条件を充たすもののこと：
+    \begin{enumerate}
+        \item $\forall \lambda \in \Lambda,\; \forall p \in M$ に対して $\psi_\alpha (x) \in [0,\, 1]$
+        \item $\forall \lambda \in \Lambda$ に対して $\supp \psi_\lambda \subset U_\lambda$
+        \item $M$ の部分集合族 $\Familyset[\big]{\supp \psi_\lambda}{\lambda \in \Lambda}$ は局所有限である．i.e. $\forall p \in M$ に対してある開近傍 $p \in U_p \subset M$ が存在して，$\bigl\{\, \lambda \in \Lambda \bigm| U_p \cap \supp \psi_\lambda \neq \emptyset \,\bigr\} \subset \Lambda$ が有限集合になる．
+        \item $\forall p \in M$ に対して\footnote{条件 $(3)$ により左辺の和はwell-definedである．} $\sum_{\lambda \in \Lambda} \psi_\lambda(p) = 1$
+    \end{enumerate}
 \end{mydef}
 
-\begin{mytheo}[]{1の分割の存在}
-	$M$ を\cinfty 多様体，$\{U_\lambda\}$ をその開被覆とする．このとき，$\{U_\lambda\}$ に従属する1の分割が存在する．
-\end{mytheo}
+\begin{myprop}[label=prop:PoU]{1の分割の存在}
+    \begin{itemize}
+        \item 境界なし/あり $C^\infty$ 多様体 $M$
+        \item $M$ の開被覆 $\mathcal{U} \coloneqq \Familyset[\big]{U_\lambda}{\lambda \in \Lambda}$
+    \end{itemize}
+    を任意に与える．このとき，\hyperref[def:PoU]{$\mathcal{U}$ に従属する1の分割}が存在する．
+\end{myprop}
 
-これらの存在定理のおかげで，安心してベクトル場や微分形式，微分形式の積分などをアトラス全体にわたって「貼り合わせる」ことができる．
+\begin{proof}
+    かなり技術的なので省略する．例えば~\cite[Theorem 2.23]{Lee12}を参照．
+\end{proof}
 
-\subsection{多様体の向き付け}
+この存在定理のおかげで，ある1つのチャート（したがって $\mathbb{R}^n,\, \mathbb{H}^n$）の上で定義した構造をアトラス全体にわたって「貼り合わせる」ことができる．
+したがって，しばしば $\mathbb{R}^n,\, \mathbb{H}^n$ の上でだけ考えれば十分である．
 
-$n$ 次元多様体 $M$ をとる．多様体の各点 $p$ における\textbf{向き} (orientation) は，接空間 $T_pM$ の順序付き基底を考えることで定義される．
-
-$e_1,\, \dots ,\, e_n$ と $f_1,\, \dots ,\, f_n$ を $T_pM$ の二つの順序付き基底とする．これらは正則な線型変換 $T \colon T_p M \to T_pM$ で移り合うが，$\det T > 0$ であるときに $\{ e_i \} \sim \{f_i\}$ であるとして，$T_pM$ の順序付き基底全体の集合 $\mathcal{B}_p$ の上の同値関係 $\sim$ を定義する：
-\begin{align} 
-	\sim \; \coloneqq \bigl\{ \bigl(\{e_i\},\, \{f_i\}\bigr) \in \mathcal{B}_p \times \mathcal{B}_p \bigm| \exists T = [T^i_j] \in \mathrm{GL}(n,\, \mathbb{R})\, \mathrm{s.t.}\, f_i = T^j_i e_j,\; \det T > 0 \bigr\} 
-\end{align}
-$\sim$ が同値関係であることは明らかである．故に同値類 $[\{ e_i \}] \in \mathcal{B}_p /\mathord{\sim}$ を考えることができ，これを点 $p$ における\textbf{向き}と呼ぶ．
-
-$M$ が\cinfty 多様体の場合，$T_pM$ における自然基底を代表元にもつ同値類 $[\{(\pdv*{}{x^i})_p\}]$ を定義でき，これを\textbf{正の向き}と呼ぶ．$M$ の座標変換に伴う基底の取り替えはJacobi行列で表現されるから，Jacobianの正負で向きを判定できる．
-
-\begin{mydef}[label=def.orientable]{向き付け可能} 
-	\cinfty 多様体 $M$ が\textbf{向き付け可能} (orientable) であるとは，$M$ のアトラス $\mathcal{S} = \{(U_\lambda,\, \varphi_\lambda)\}_{\lambda \in \Lambda}$ であって，全ての座標変換 $f_{\beta \alpha} = \varphi_{\beta} \circ \varphi_{\alpha}^{-1}$ のJacobianが $\varphi_{\alpha}(U_\alpha \cap U_\beta)$ の全ての点で正になるようなものが存在することを言う．
-\end{mydef}
-
-\subsection{$n$次元多様体上の$n$形式の積分}
 
 $n$ 次元\cinfty 多様体 $M$ が向き付け可能としよう．
 
@@ -648,7 +1076,7 @@ $M$ のチャート $(U,\, \varphi) = (U;\; x^i)$ をとる．$n$-形式 $\omega
 \begin{align} 
 	\int_{U_i} \omega \coloneqq \int_{\varphi(U_i)} h\bigl(\varphi^{-1}_i (x)\bigr) \dd{x^1} \cdots \dd{x^n}
 \end{align}
-として定義できる．積分範囲を $M$ に拡張するには\hyperref[partition_unity]{1の分割}を使う：
+として定義できる．積分範囲を $M$ に拡張するには\hyperref[def:PoU]{1の分割}を使う：
 
 \begin{mydef}[label=def.int-n]{$n$-形式の積分} 
 	$\omega \in \Omega^n(M)$ は台がコンパクトであるとする．また，$M$ の座標近傍からなる開被覆 $\{U_i\}$ と，それに従属する1の分割 $\{ f_i \}$ をとる．このとき $\omega$ の $M$ 上の積分を次のように定義する：
