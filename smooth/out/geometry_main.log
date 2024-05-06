@@ -1,8 +1,8 @@
-This is LuaHBTeX, Version 1.16.0 (TeX Live 2023)  (format=lualatex 2023.3.29)  11 JAN 2024 22:17
+This is LuaHBTeX, Version 1.16.0 (TeX Live 2023)  (format=lualatex 2023.3.29)  5 MAY 2024 21:50
  restricted system commands enabled.
  file:line:error style messages enabled.
-**/Users/takamatoshinori/Desktop/LaTeX/PhysLab_mp/algtopo/geometry_notes/geometry_main.tex
-(/Users/takamatoshinori/Desktop/LaTeX/PhysLab_mp/algtopo/geometry_notes/geometry_main.tex
+**/Users/takamatoshinori/Desktop/LaTeX/geometry_notes/smooth/geometry_main.tex
+(/Users/takamatoshinori/Desktop/LaTeX/geometry_notes/smooth/geometry_main.tex
 LaTeX2e <2022-11-01> patch level 1
 Lua module: luaotfload 2022-10-03 3.23 Lua based OpenType font support
 Lua module: lualibs 2022-10-04 2.75 ConTeXt Lua standard libraries.
@@ -619,6 +619,8 @@ Package bm Info: No bold for \U/rsfs/m/n, using \pmb.
 LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 149.
 ) (/usr/local/texlive/2023/texmf-dist/tex/latex/cancel/cancel.sty
 Package: cancel 2013/04/12 v2.2 Cancel math terms
+) (/usr/local/texlive/2023/texmf-dist/tex/latex/doublestroke/dsfont.sty
+Package: dsfont 1995/08/01 v0.1 Double stroke roman fonts
 ) (/usr/local/texlive/2023/texmf-dist/tex/latex/siunitx/siunitx.sty
 Package: siunitx 2023-03-04 v3.2.2 A comprehensive (SI) units package
 \l__siunitx_angle_tmp_dim=\dimen187
@@ -1182,7 +1184,7 @@ warning  (map file): entry for 'ascgrp' already exists, duplicates ignored
 ) (/usr/local/texlive/2023/texmf-dist/tex/luatex/luatexja/patches/lltjp-array.sty
 Package: lltjp-array 2019-07-18 Patch to array for LuaTeX-ja
 )
-Package translations Info: No language package found. I am going to use `english' as default language. on input line 258.
+Package translations Info: No language package found. I am going to use `english' as default language. on input line 259.
  (./out/geometry_main.aux
 
 LaTeX Warning: Label `thm.Levi-Civita' multiply defined.
@@ -1200,6 +1202,15 @@ LaTeX Warning: Label `def.tensor-bundle' multiply defined.
 LaTeX Warning: Label `col:limit-sets' multiply defined.
 
 
+LaTeX Warning: Label `def:loc-diffeo' multiply defined.
+
+
+LaTeX Warning: Label `def:rank-smooth' multiply defined.
+
+
+LaTeX Warning: Label `def:submersion-smooth' multiply defined.
+
+
 LaTeX Warning: Label `prop:prod-group' multiply defined.
 
 
@@ -1211,34 +1222,34 @@ LaTeX Warning: Label `thm.homo-ring3' multiply defined.
 )
 \openout1 = geometry_main.aux
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 258.
-LaTeX Font Info:    ... okay on input line 258.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 258.
-LaTeX Font Info:    ... okay on input line 258.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 258.
-LaTeX Font Info:    ... okay on input line 258.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 258.
-LaTeX Font Info:    ... okay on input line 258.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 258.
-LaTeX Font Info:    Trying to load font information for TS1+cmr on input line 258.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 259.
+LaTeX Font Info:    ... okay on input line 259.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 259.
+LaTeX Font Info:    ... okay on input line 259.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 259.
+LaTeX Font Info:    ... okay on input line 259.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 259.
+LaTeX Font Info:    ... okay on input line 259.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 259.
+LaTeX Font Info:    Trying to load font information for TS1+cmr on input line 259.
  (/usr/local/texlive/2023/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 2022/07/10 v2.5l Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 258.
-LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 258.
-LaTeX Font Info:    ... okay on input line 258.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 258.
-LaTeX Font Info:    ... okay on input line 258.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 258.
-LaTeX Font Info:    ... okay on input line 258.
-LaTeX Font Info:    Checking defaults for JY3/mc/m/n on input line 258.
-LaTeX Font Info:    ... okay on input line 258.
-LaTeX Font Info:    Checking defaults for JT3/mc/m/n on input line 258.
-LaTeX Font Info:    ... okay on input line 258.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 258.
-LaTeX Font Info:    ... okay on input line 258.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 258.
-LaTeX Font Info:    ... okay on input line 258.
+LaTeX Font Info:    ... okay on input line 259.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 259.
+LaTeX Font Info:    ... okay on input line 259.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 259.
+LaTeX Font Info:    ... okay on input line 259.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 259.
+LaTeX Font Info:    ... okay on input line 259.
+LaTeX Font Info:    Checking defaults for JY3/mc/m/n on input line 259.
+LaTeX Font Info:    ... okay on input line 259.
+LaTeX Font Info:    Checking defaults for JT3/mc/m/n on input line 259.
+LaTeX Font Info:    ... okay on input line 259.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 259.
+LaTeX Font Info:    ... okay on input line 259.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 259.
+LaTeX Font Info:    ... okay on input line 259.
  (/usr/local/texlive/2023/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count379
@@ -1258,7 +1269,7 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 48
  (/usr/local/texlive/2023/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 ))
-Package hyperref Info: Link coloring ON on input line 258.
+Package hyperref Info: Link coloring ON on input line 259.
  (./out/geometry_main.out) (./out/geometry_main.out)
 \@outlinefile=\write7
 
@@ -1278,9 +1289,9 @@ Package siunitx Warning: Detected the "physics" package:
 (/usr/local/texlive/2023/texmf-dist/tex/latex/translations/translations-basic-dictionary-english.trsl
 File: translations-basic-dictionary-english.trsl (english translation file `translations-basic-dictionary')
 )
-Package translations Info: loading dictionary `translations-basic-dictionary' for `english'. on input line 258.
+Package translations Info: loading dictionary `translations-basic-dictionary' for `english'. on input line 259.
 
-Package chemgreek Info: Activating mapping `default' on line 258.
+Package chemgreek Info: Activating mapping `default' on line 259.
 
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: listings package is loaded.
@@ -1291,80 +1302,80 @@ Package pgfplots notification 'compat/show suggested version=true': you might be
 \c@lstlisting=\count385
 (load cache: extra_lmroman17-regular.luc)
 LaTeX Font Info:    Font shape `JT3/mc/m/n' will be
-(Font)              scaled to size 15.97903pt on input line 264.
+(Font)              scaled to size 15.97903pt on input line 265.
 LaTeX Font Info:    Font shape `JY3/mc/m/n' will be
-(Font)              scaled to size 15.97903pt on input line 264.
+(Font)              scaled to size 15.97903pt on input line 265.
 (load cache: extra_lmroman12-regular.luc)
 LaTeX Font Info:    Font shape `JT3/mc/m/n' will be
-(Font)              scaled to size 11.09656pt on input line 264.
+(Font)              scaled to size 11.09656pt on input line 265.
 LaTeX Font Info:    Font shape `JY3/mc/m/n' will be
-(Font)              scaled to size 11.09656pt on input line 264.
+(Font)              scaled to size 11.09656pt on input line 265.
 LaTeX Font Info:    Font shape `JY3/mc/m/n' will be
-(Font)              scaled to size 5.54828pt on input line 264.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 264.
+(Font)              scaled to size 5.54828pt on input line 265.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 265.
 (/usr/local/texlive/2023/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 264.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 265.
  (/usr/local/texlive/2023/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    Trying to load font information for U+rsfs on input line 264.
+LaTeX Font Info:    Trying to load font information for U+rsfs on input line 265.
  (/usr/local/texlive/2023/texmf-dist/tex/latex/jknapltx/ursfs.fd
 File: ursfs.fd 1998/03/24 rsfs font definition file (jk)
 )
 LaTeX Font Info:    Font shape `JY3/gt/m/n' will be
-(Font)              scaled to size 11.09656pt on input line 264.
+(Font)              scaled to size 11.09656pt on input line 265.
 (load cache: extra_haranoajigothic-medium.luc)
 LaTeX Font Info:    Font shape `JY3/gt/m/n' will be
-(Font)              scaled to size 7.3977pt on input line 264.
+(Font)              scaled to size 7.3977pt on input line 265.
 LaTeX Font Info:    Font shape `JY3/gt/m/n' will be
-(Font)              scaled to size 5.54828pt on input line 264.
+(Font)              scaled to size 5.54828pt on input line 265.
  [1
 
 ]
 LaTeX Font Info:    Font shape `JT3/mc/m/n' will be
-(Font)              scaled to size 13.31586pt on input line 265.
+(Font)              scaled to size 13.31586pt on input line 266.
 LaTeX Font Info:    Font shape `JY3/mc/m/n' will be
-(Font)              scaled to size 13.31586pt on input line 265.
+(Font)              scaled to size 13.31586pt on input line 266.
 (load cache: extra_lmroman12-bold.luc)
 LaTeX Font Info:    Font shape `JT3/mc/b/n' in size <14.4> not available
-(Font)              Font shape `JT3/gt/m/n' tried instead on input line 265.
+(Font)              Font shape `JT3/gt/m/n' tried instead on input line 266.
 LaTeX Font Info:    Font shape `JT3/gt/m/n' will be
-(Font)              scaled to size 13.31586pt on input line 265.
+(Font)              scaled to size 13.31586pt on input line 266.
 LaTeX Font Info:    Font shape `JY3/mc/b/n' in size <14.4> not available
-(Font)              Font shape `JY3/gt/m/n' tried instead on input line 265.
+(Font)              Font shape `JY3/gt/m/n' tried instead on input line 266.
 LaTeX Font Info:    Font shape `JY3/gt/m/n' will be
-(Font)              scaled to size 13.31586pt on input line 265.
+(Font)              scaled to size 13.31586pt on input line 266.
 LaTeX Font Info:    Font shape `JY3/mc/m/n' will be
-(Font)              scaled to size 6.47299pt on input line 269.
+(Font)              scaled to size 6.47299pt on input line 270.
 LaTeX Font Info:    Font shape `JY3/mc/m/n' will be
-(Font)              scaled to size 4.62357pt on input line 269.
+(Font)              scaled to size 4.62357pt on input line 270.
 LaTeX Font Info:    Font shape `JY3/gt/m/n' will be
-(Font)              scaled to size 9.24713pt on input line 269.
+(Font)              scaled to size 9.24713pt on input line 270.
 LaTeX Font Info:    Font shape `JY3/gt/m/n' will be
-(Font)              scaled to size 6.47299pt on input line 269.
+(Font)              scaled to size 6.47299pt on input line 270.
 LaTeX Font Info:    Font shape `JY3/gt/m/n' will be
-(Font)              scaled to size 4.62357pt on input line 269.
+(Font)              scaled to size 4.62357pt on input line 270.
 (load cache: extra_lmroman7-regular.luc)
 LaTeX Font Info:    Font shape `JT3/mc/m/n' will be
-(Font)              scaled to size 6.47299pt on input line 269.
+(Font)              scaled to size 6.47299pt on input line 270.
 (load cache: extra_lmroman6-regular.luc)
 LaTeX Font Info:    Font shape `JT3/mc/m/n' will be
-(Font)              scaled to size 5.54828pt on input line 269.
+(Font)              scaled to size 5.54828pt on input line 270.
 LaTeX Font Info:    Font shape `JT3/gt/m/n' will be
-(Font)              scaled to size 9.24713pt on input line 288.
+(Font)              scaled to size 9.24713pt on input line 289.
 (load cache: extra_lmsans10-regular.luc)
 warning  (pdf backend): ignoring duplicate destination with the name 'page.1'
 [1]
 LaTeX Font Info:    Font shape `JT3/mc/m/n' will be
-(Font)              scaled to size 23.00687pt on input line 288.
+(Font)              scaled to size 23.00687pt on input line 289.
 LaTeX Font Info:    Font shape `JY3/mc/m/n' will be
-(Font)              scaled to size 23.00687pt on input line 288.
+(Font)              scaled to size 23.00687pt on input line 289.
 LaTeX Font Info:    Font shape `JT3/gt/m/n' will be
-(Font)              scaled to size 23.00687pt on input line 288.
+(Font)              scaled to size 23.00687pt on input line 289.
 LaTeX Font Info:    Font shape `JY3/gt/m/n' will be
-(Font)              scaled to size 23.00687pt on input line 288.
+(Font)              scaled to size 23.00687pt on input line 289.
 (load cache: extra_lmsans17-regular.luc) (./out/geometry_main.toc [2
 
 ] [3] [4] [5])
@@ -1702,28 +1713,66 @@ Overfull \hbox (4.71077pt too wide) detected at line 438
 [][]
  []
 
-[95] [96] [97] [98] [99]
+[95] [96] [97]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 630.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 630.
+(hyperref)                removing `math shift' on input line 575.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 630.
+(hyperref)                removing `superscript' on input line 575.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 630.
+(hyperref)                removing `\infty' on input line 575.
 
-[100] [101]) (./chap5.tex [102]
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 575.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 577.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `superscript' on input line 577.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\infty' on input line 577.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 577.
+
+
+Overfull \hbox (8.19379pt too wide) detected at line 599
+[][]
+ []
+
+[98] [99] [100] [101] [102] [103] [104]
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 890.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `superscript' on input line 890.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\infty' on input line 890.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 890.
+
+[105] [106] [107] [108] [109]) (./chap5.tex [110]
 第5章
-[103
+[111
 
-] [104]
+] [112]
 Overfull \hbox (2.44206pt too wide) detected at line 109
 [][]
  []
@@ -1736,7 +1785,7 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 118.
 
-[105] [106]
+[113] [114]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 228.
@@ -1753,10 +1802,10 @@ LaTeX Font Info:    Font shape `JY3/gt/m/it' in size <10> not available
 (Font)              Font shape `JY3/gt/m/n' tried instead on input line 233.
 LaTeX Font Info:    Font shape `JY3/gt/m/n' will be
 (Font)              scaled to size 9.24713pt on input line 233.
-[107]
+[115]
 \matrixtoks=\toks71
 \matrixtoks=\toks72
- [108]
+ [116]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 281.
@@ -1769,25 +1818,25 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 281.
 
-[109] [110] [111]
+[117] [118] [119]
 Overfull \hbox (4.88158pt too wide) detected at line 415
 [][]
  []
 
-[112] [113] [114] [115]) (./chap6.tex [116]
+[120] [121] [122] [123]) (./chap6.tex [124]
 第6章
-[117
+[125
 
-](load cache: extra_lmroman7-bold.luc)(load cache: extra_lmroman5-bold.luc) [118] [119] [120] [121] [122] [123]) (./chap7.tex [124]
+](load cache: extra_lmroman7-bold.luc)(load cache: extra_lmroman5-bold.luc) [126] [127] [128] [129] [130] [131]) (./chap7.tex [132]
 第7章
 
 Overfull \hbox (11.12369pt too wide) detected at line 25
 [][]
  []
 
-[125
+[133
 
-] [126] [127]
+] [134] [135]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 180.
@@ -1809,73 +1858,81 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 180.
 
-[128] [129]
+[136] [137]
 
-LaTeX Warning: Reference `prop.orthonormal' on page 130 undefined on input line 309.
+LaTeX Warning: Reference `prop.orthonormal' on page 138 undefined on input line 309.
 
-[130] [131] [132] [133]
+[138] [139] [140] [141]
 
-LaTeX Warning: Reference `def.tensor' on page 134 undefined on input line 487.
+LaTeX Warning: Reference `def.tensor' on page 142 undefined on input line 487.
 
-[134]) (./chap8.tex [135]
+[142]) (./chap8.tex [143]
 第8章
-[136
+[144
 
-] [137] [138] [139]) (./chap9.tex [140]
+] [145] [146] [147]) (./chap9.tex [148]
 第9章
-[141
+[149
 
-] [142] [143]
+] [150] [151]
 Overfull \hbox (31.83612pt too wide) in paragraph at lines 216--217
  [][] 
  []
 
-[144] [145]
+[152] [153]
 
-LaTeX Warning: Hyper reference `def.disjoint_topo' on page 146 undefined on input line 269.
+LaTeX Warning: Hyper reference `def.disjoint_topo' on page 154 undefined on input line 269.
 
-[146] [147]
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 381.
-
+[154] [155]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 381.
 
-[148] [149] [150] [151]
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 381.
+
+[156] [157] [158] [159]
 Overfull \hbox (37.2269pt too wide) detected at line 542
 [][]
  []
 
-[152] [153] [154] [155] [156] [157]) (./appendixA.tex [158]
+[160] [161] [162]
+
+LaTeX Warning: Reference `def.submani' on page 163 undefined on input line 702.
+
+[163]
+
+LaTeX Warning: Hyper reference `def.submani' on page 164 undefined on input line 751.
+
+[164] [165]) (./appendixA.tex [166]
 付録A
-[159
+[167
 
-] [160] [161] [162] [163]
+] [168] [169] [170] [171]
 
-LaTeX Warning: Hyper reference `cmtd:univ-prod' on page 164 undefined on input line 352.
+LaTeX Warning: Hyper reference `cmtd:univ-prod' on page 172 undefined on input line 352.
 
-[164] [165] [166] [167] [168] [169] [170] [171] [172] [173] [174] [175]
+[172] [173] [174] [175] [176] [177] [178] [179] [180] [181] [182] [183]
 
-LaTeX Warning: Hyper reference `cmtd:pullback' on page 176 undefined on input line 1069.
+LaTeX Warning: Hyper reference `cmtd:pullback' on page 184 undefined on input line 1069.
 
-[176]
+[184]
 
-LaTeX Warning: Hyper reference `cmtd:pullback' on page 177 undefined on input line 1124.
+LaTeX Warning: Hyper reference `cmtd:pullback' on page 185 undefined on input line 1124.
 
-[177]
+[185]
 
-LaTeX Warning: Hyper reference `cmtd:pushout' on page 178 undefined on input line 1199.
+LaTeX Warning: Hyper reference `cmtd:pushout' on page 186 undefined on input line 1199.
 
-[178]
+[186]
 
-LaTeX Warning: Hyper reference `quotopo' on page 179 undefined on input line 1238.
+LaTeX Warning: Hyper reference `quotopo' on page 187 undefined on input line 1238.
 
 
-LaTeX Warning: Hyper reference `cmtd:pushout' on page 179 undefined on input line 1259.
+LaTeX Warning: Hyper reference `cmtd:pushout' on page 187 undefined on input line 1259.
 
-[179]
+[187]
 Overfull \hbox (2.65634pt too wide) in paragraph at lines 1305--1306
  [][] 
  []
@@ -1890,40 +1947,61 @@ Overfull \hbox (10.77863pt too wide) in paragraph at lines 1326--1327
  [][] 
  []
 
-[180] [181] [182] [183] [184] [185] [186] [187] [188] [189] [190] [191]
+[188] [189] [190] [191] [192] [193] [194] [195] [196] [197] [198] [199]
 
-LaTeX Warning: Hyper reference `cmtd:univ-limit' on page 192 undefined on input line 1999.
+LaTeX Warning: Hyper reference `cmtd:univ-limit' on page 200 undefined on input line 1999.
 
-[192]) (./appendixB.tex [193]
+[200]) (./appendixB.tex [201]
 付録B
-[194
+[202
 
-] [195] [196] [197] [198]) (./appendixC.tex [199]
+] [203] [204](load cache: extra_lmsans8-regular.luc) [205]
+LaTeX Font Info:    Trying to load font information for U+dsrom on input line 230.
+ (/usr/local/texlive/2023/texmf-dist/tex/latex/doublestroke/Udsrom.fd
+File: Udsrom.fd 1995/08/01 v0.1 Double stroke roman font definitions
+) [206] [207] [208] [209] [210] [211] [212] [213] [214] [215] [216] [217]
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 807.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `superscript' on input line 807.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\infty' on input line 807.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 807.
+
+[218] [219]) (./appendixC.tex [220]
 付録C
-[200
+[221
 
-] [201] [202] [203] [204] [205] [206] [207] [208] [209] [210] [211]
+] [222] [223] [224] [225] [226] [227] [228] [229] [230] [231] [232]
 LaTeX Font Info:    Font shape `TU/lmss/m/it' in size <10> not available
 (Font)              Font shape `TU/lmss/m/sl' tried instead on input line 653.
-(load cache: extra_lmsans10-oblique.luc) [212] [213] [214] [215] [216] [217] [218] [219] [220] [221] [222] [223] [224]
+(load cache: extra_lmsans10-oblique.luc) [233] [234] [235] [236] [237] [238] [239] [240] [241] [242] [243] [244] [245]
 Missing character: There is no Î (U+00CE) in font cmmi10!
 Missing character: There is no Î (U+00CE) in font cmmi10!
-[225] [226] [227] [228] [229] [230] [231] [232]
+[246] [247] [248] [249] [250] [251] [252] [253]
 
-LaTeX Warning: Hyper reference `def:dp' on page 233 undefined on input line 1674.
+LaTeX Warning: Hyper reference `def:dp' on page 254 undefined on input line 1674.
 
-[233] [234] [235] [236] [237] [238] [239] [240] [241] [242] [243] [244]
+[254] [255] [256] [257] [258] [259] [260] [261] [262] [263] [264] [265]
 
-LaTeX Warning: Hyper reference `prop:univ-dp' on page 245 undefined on input line 2384.
+LaTeX Warning: Hyper reference `prop:univ-dp' on page 266 undefined on input line 2384.
 
 
-LaTeX Warning: Hyper reference `prop:univ-dp' on page 245 undefined on input line 2397.
+LaTeX Warning: Hyper reference `prop:univ-dp' on page 266 undefined on input line 2397.
 
-[245]) (./appendixD.tex [246]
+[266]) (./appendixD.tex [267]
 付録D
-[247
+[268
 
-] [248]
+] [269]
 Overfull \hbox (6.02248pt too wide) detected at line 93
 [][]
  []
@@ -1933,7 +2011,7 @@ Overfull \hbox (14.41449pt too wide) detected at line 97
 [][]
  []
 
-[249] [250]
+[270] [271]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 196.
@@ -1950,12 +2028,12 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 196.
 
-<./figs/fig-apD_bump.png, id=4453, 601.7682pt x 460.119pt>
+<./figs/fig-apD_bump.png, id=4866, 601.7682pt x 460.119pt>
 File: ./figs/fig-apD_bump.png Graphic file (type png)
 <use ./figs/fig-apD_bump.png>
 Package luatex.def Info: ./figs/fig-apD_bump.png  used on input line 224.
 (luatex.def)             Requested size: 270.79318pt x 207.05164pt.
-[251<./figs/fig-apD_bump.png>]) (./out/geometry_main.bbl [252]) [253
+[272<./figs/fig-apD_bump.png>]) (./out/geometry_main.bbl [273]) [274
 
 ] (./out/geometry_main.aux)
 
@@ -1965,25 +2043,25 @@ LaTeX Warning: There were undefined references.
 LaTeX Warning: There were multiply-defined labels.
 
 Package rerunfilecheck Info: File `geometry_main.out' has not changed.
-(rerunfilecheck)             Checksum: 8B4D2024F4F5650E0731CFE3DA73D246;19310.
+(rerunfilecheck)             Checksum: 97917C780F60865F0EA01FB7AF2B26B3;20109.
 )
 
 Here is how much of LuaTeX's memory you used:
- 58050 strings out of 478285
+ 58322 strings out of 478285
  305782,1977958 words of node,token memory allocated
- 73227 words of node memory still in use:
-   11 hlist, 2 vlist, 5 rule, 53 glue, 4 kern, 7 sub_mlist, 1 glyph, 33018 attribute, 62 glue_spec, 3014 attribute_list, 2 write, 14 user_defined, 24 pdf_action nodes
-   avail lists: 1:41,2:63257,3:2928,4:2123,5:895,6:99,7:6465,8:96,9:3104,10:24,11:64
- 74967 multiletter control sequences out of 65536+600000
- 159 fonts using 89605047 bytes
- 118i,34n,128p,1822b,2199s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 83787 words of node memory still in use:
+   11 hlist, 2 vlist, 5 rule, 71 glue, 4 kern, 15 sub_mlist, 1 glyph, 37781 attribute, 62 glue_spec, 3447 attribute_list, 2 write, 14 user_defined, 27 pdf_action nodes
+   avail lists: 1:40,2:59933,3:2920,4:2123,5:929,6:96,7:6453,8:96,9:3104,10:26,11:64
+ 75093 multiletter control sequences out of 65536+600000
+ 170 fonts using 90457367 bytes
+ 118i,34n,128p,1810b,2199s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
 warning  (pdf backend): unreferenced destination with name 'Hfootnote.15'
-</usr/local/texlive/2023/texmf-dist/fonts/opentype/public/lm/lmroman10-italic.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/lm/lmroman8-bold.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/lm/lmroman9-regular.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/lm/lmsans10-bold.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/lm/lmroman8-regular.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/lm/lmroman7-italic.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/lm/lmroman10-bold.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/lm/lmsans17-regular.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/lm/lmsans10-regular.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/lm/lmroman6-regular.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/lm/lmroman7-regular.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/lm/lmroman10-regular.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/haranoaji/HaranoAjiGothic-Medium.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/lm/lmroman12-bold.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/lm/lmroman12-regular.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/haranoaji/HaranoAjiMincho-Regular.otf></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbsy10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmbsy5.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmbsy6.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmbsy7.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmbsy8.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx5.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx6.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx7.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex7.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex8.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib5.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib6.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib7.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib8.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/euler/eufb10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/euler/eufm10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/euler/eufm7.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/latxfont/line10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm5.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/rsfs/rsfs10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/rsfs/rsfs7.pfb>
-Output written on geometry_main.pdf (254 pages, 2190337 bytes).
+</usr/local/texlive/2023/texmf-dist/fonts/opentype/public/lm/lmroman10-italic.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/lm/lmroman8-bold.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/lm/lmroman9-regular.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/lm/lmsans10-bold.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/lm/lmroman8-regular.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/lm/lmroman7-italic.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/lm/lmroman10-bold.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/lm/lmsans17-regular.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/lm/lmsans10-regular.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/lm/lmroman6-regular.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/lm/lmroman7-regular.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/lm/lmroman10-regular.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/haranoaji/HaranoAjiGothic-Medium.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/lm/lmroman12-bold.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/lm/lmroman12-regular.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/haranoaji/HaranoAjiMincho-Regular.otf></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbsy10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmbsy5.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmbsy6.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmbsy7.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmbsy8.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx5.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx6.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx7.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex7.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex8.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib5.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib6.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib7.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib8.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/doublestroke/dsrom10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/euler/eufb10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/euler/eufm10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/euler/eufm7.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/latxfont/line10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm5.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/rsfs/rsfs10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/rsfs/rsfs7.pfb>
+Output written on geometry_main.pdf (275 pages, 2349122 bytes).
 
-PDF statistics: 4770 PDF objects out of 5155 (max. 8388607)
- 4362 compressed objects within 44 object streams
- 1366 named destinations out of 1440 (max. 131072)
- 1418 words of extra memory for PDF output out of 10000 (max. 100000000)
+PDF statistics: 5190 PDF objects out of 6186 (max. 8388607)
+ 4735 compressed objects within 48 object streams
+ 1492 named destinations out of 1728 (max. 131072)
+ 1466 words of extra memory for PDF output out of 10000 (max. 100000000)
 

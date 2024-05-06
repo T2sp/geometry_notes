@@ -1,8 +1,8 @@
-This is LuaHBTeX, Version 1.16.0 (TeX Live 2023)  (format=lualatex 2023.3.29)  26 MAY 2023 16:33
+This is LuaHBTeX, Version 1.16.0 (TeX Live 2023)  (format=lualatex 2023.3.29)  5 MAY 2024 21:42
  restricted system commands enabled.
  file:line:error style messages enabled.
-**/Users/takamatoshinori/Desktop/LaTeX/PhysLab_mp/algtopo/geometry_notes/appendixB.tex
-(/Users/takamatoshinori/Desktop/LaTeX/PhysLab_mp/algtopo/geometry_notes/appendixB.tex
+**/Users/takamatoshinori/Desktop/LaTeX/geometry_notes/smooth/appendixB.tex
+(/Users/takamatoshinori/Desktop/LaTeX/geometry_notes/smooth/appendixB.tex
 LaTeX2e <2022-11-01> patch level 1
 Lua module: luaotfload 2022-10-03 3.23 Lua based OpenType font support
 Lua module: lualibs 2022-10-04 2.75 ConTeXt Lua standard libraries.
@@ -1186,9 +1186,10 @@ warning  (map file): entry for 'ascgrp' already exists, duplicates ignored
 Package: lltjp-array 2019-07-18 Patch to array for LuaTeX-ja
 )
 Package translations Info: No language package found. I am going to use `english' as default language. on input line 3.
- (./out/appendixB.aux)
-\openout1 = appendixB.aux
 
+No file appendixB.aux.
+
+\openout1 = appendixB.aux
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 3.
 LaTeX Font Info:    ... okay on input line 3.
 LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 3.
@@ -1199,7 +1200,7 @@ LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 3.
 LaTeX Font Info:    ... okay on input line 3.
 LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 3.
 LaTeX Font Info:    Trying to load font information for TS1+cmr on input line 3.
- (/usr/local/texlive/2023/texmf-dist/tex/latex/base/ts1cmr.fd
+(/usr/local/texlive/2023/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 2022/07/10 v2.5l Standard LaTeX font definitions
 )
 LaTeX Font Info:    ... okay on input line 3.
@@ -1237,7 +1238,6 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 48
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 ))
 Package hyperref Info: Link coloring ON on input line 3.
- (./out/appendixB.out) (./out/appendixB.out)
 \@outlinefile=\write7
 
 \openout7 = appendixB.out
@@ -1339,6 +1339,16 @@ LaTeX Font Info:    Font shape `JY3/gt/b/n' in size <10> not available
 (Font)              Font shape `JY3/gt/m/n' tried instead on input line 39.
 LaTeX Font Info:    Font shape `JY3/gt/m/n' will be
 (Font)              scaled to size 9.24713pt on input line 39.
+
+
+LaTeX Warning: Hyper reference `def:cover' on page 1 undefined on input line 51.
+
+
+LaTeX Warning: Hyper reference `def:cover' on page 1 undefined on input line 51.
+
+
+LaTeX Warning: Hyper reference `def:cover' on page 1 undefined on input line 54.
+
 (load cache: extra_lmroman7-regular.luc)
 LaTeX Font Info:    Font shape `JT3/mc/m/n' will be
 (Font)              scaled to size 6.47299pt on input line 55.
@@ -1369,7 +1379,6 @@ LaTeX Font Info:    Font shape `JY3/mc/m/it' in size <6> not available
 LaTeX Font Info:    Font shape `JY3/mc/m/n' will be
 (Font)              scaled to size 5.54828pt on input line 55.
 
-
 LaTeX Warning: Hyper reference `def:neighborhood' on page 1 undefined on input line 57.
 
 [1
@@ -1384,6 +1393,9 @@ LaTeX Warning: Hyper reference `def.topomani' on page 2 undefined on input line 
 
 
 LaTeX Warning: Citation `Lee12' on page 2 undefined on input line 65.
+
+
+LaTeX Warning: Hyper reference `def:cover' on page 2 undefined on input line 81.
 
 
 LaTeX Warning: Hyper reference `maxatlas' on page 2 undefined on input line 86.
@@ -1471,66 +1483,340 @@ LaTeX Warning: Hyper reference `def:second-countable' on page 4 undefined on inp
 
 LaTeX Warning: Hyper reference `def:separation' on page 4 undefined on input line 150.
 
-(load cache: extra_lmroman8-bold.luc)
-LaTeX Font Info:    Font shape `JT3/mc/b/n' in size <8> not available
-(Font)              Font shape `JT3/gt/m/n' tried instead on input line 187.
-LaTeX Font Info:    Font shape `JT3/gt/m/n' will be
-(Font)              scaled to size 7.3977pt on input line 187.
-LaTeX Font Info:    Font shape `JY3/mc/b/n' in size <8> not available
-(Font)              Font shape `JY3/gt/m/n' tried instead on input line 187.
-LaTeX Font Info:    Font shape `JY3/gt/m/n' will be
-(Font)              scaled to size 7.3977pt on input line 187.
-[4]
+(load cache: extra_lmsans8-regular.luc) [4]
+/Users/takamatoshinori/Desktop/LaTeX/geometry_notes/smooth/appendixB.tex:230: Undefined control sequence.
+\unity ->\mathds 
+                 {1}
+l.230     は $C^\infty$ 級で，$DF_2(0) = \unity
+                                                 _n$ かつ $V''_0 \subset V...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+/Users/takamatoshinori/Desktop/LaTeX/geometry_notes/smooth/appendixB.tex:236: Undefined control sequence.
+\unity ->\mathds 
+                 {1}
+l.236         \item $DF(p) = \unity
+                                 _n$
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+/Users/takamatoshinori/Desktop/LaTeX/geometry_notes/smooth/appendixB.tex:245: Undefined control sequence.
+\unity ->\mathds 
+                 {1}
+l.245     を考える．まず $DH(0) = \unity
+                                             _n - \unity_n = 0$ が成り立...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+/Users/takamatoshinori/Desktop/LaTeX/geometry_notes/smooth/appendixB.tex:245: Undefined control sequence.
+\unity ->\mathds 
+                 {1}
+l.245 ...える．まず $DH(0) = \unity_n - \unity
+                                                  _n = 0$ が成り立つこ...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+[5]
+
+LaTeX Warning: Reference `ineq:thm-inv-1' on page 6 undefined on input line 289.
+
+
+LaTeX Warning: Reference `ineq:thm-inv-1' on page 6 undefined on input line 294.
+
+
+LaTeX Warning: Reference `lem:contraction' on page 6 undefined on input line 298.
+
+
+LaTeX Warning: Reference `ineq:thm-inv-2' on page 6 undefined on input line 303.
+
+[6]
+
+LaTeX Warning: Reference `ineq:thm-inv-1' on page 7 undefined on input line 321.
+
+(load cache: extra_lmroman7-bold.luc)(load cache: extra_lmroman5-bold.luc)
+
+LaTeX Warning: Reference `ineq:thm-inv-1' on page 7 undefined on input line 321.
+
+[7]
+/Users/takamatoshinori/Desktop/LaTeX/geometry_notes/smooth/appendixB.tex:365: Undefined control sequence.
+\unity ->\mathds 
+                 {1}
+l.365     \end{align}
+                   
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+/Users/takamatoshinori/Desktop/LaTeX/geometry_notes/smooth/appendixB.tex:365: Undefined control sequence.
+\unity ->\mathds 
+                 {1}
+l.365     \end{align}
+                   
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+LaTeX Warning: Hyper reference `thm:inverse-function-Rn' on page 8 undefined on input line 366.
+
+[8]
 LaTeX Font Info:    Font shape `JT3/mc/m/n' will be
-(Font)              scaled to size 11.09656pt on input line 194.
+(Font)              scaled to size 11.09656pt on input line 401.
 LaTeX Font Info:    Font shape `JY3/mc/m/n' will be
-(Font)              scaled to size 11.09656pt on input line 194.
+(Font)              scaled to size 11.09656pt on input line 401.
 LaTeX Font Info:    Font shape `JT3/mc/b/n' in size <12> not available
-(Font)              Font shape `JT3/gt/m/n' tried instead on input line 194.
+(Font)              Font shape `JT3/gt/m/n' tried instead on input line 401.
 LaTeX Font Info:    Font shape `JT3/gt/m/n' will be
-(Font)              scaled to size 11.09656pt on input line 194.
+(Font)              scaled to size 11.09656pt on input line 401.
 LaTeX Font Info:    Font shape `JY3/mc/b/n' in size <12> not available
-(Font)              Font shape `JY3/gt/m/n' tried instead on input line 194.
+(Font)              Font shape `JY3/gt/m/n' tried instead on input line 401.
 LaTeX Font Info:    Font shape `JY3/gt/m/n' will be
-(Font)              scaled to size 11.09656pt on input line 194.
+(Font)              scaled to size 11.09656pt on input line 401.
 
 
-LaTeX Warning: Reference `def.k-form_pullback' on page 5 undefined on input line 197.
+LaTeX Warning: Hyper reference `thm:inverse-function-Rn' on page 9 undefined on input line 435.
+
+[9]
+
+LaTeX Warning: Reference `thm:inverse-function' on page 10 undefined on input line 444.
+
+
+LaTeX Warning: Reference `thm:inverse-function' on page 10 undefined on input line 480.
+
+
+LaTeX Warning: Reference `lem:singular-b' on page 10 undefined on input line 482.
+
+
+LaTeX Warning: Reference `thm:inverse-function' on page 10 undefined on input line 483.
+
+[10]
+
+LaTeX Warning: Hyper reference `def:rank-smooth' on page 11 undefined on input line 502.
+
+
+LaTeX Warning: Hyper reference `def:loc-diffeo' on page 11 undefined on input line 518.
+
+
+LaTeX Warning: Hyper reference `def:submersion-smooth' on page 11 undefined on input line 518.
+
+
+LaTeX Warning: Hyper reference `def:submersion-smooth' on page 11 undefined on input line 518.
+
+
+LaTeX Warning: Hyper reference `def:submersion-smooth' on page 11 undefined on input line 519.
+
+
+LaTeX Warning: Hyper reference `def:submersion-smooth' on page 11 undefined on input line 519.
+
+
+LaTeX Warning: Hyper reference `def:loc-diffeo' on page 11 undefined on input line 519.
+
+
+LaTeX Warning: Hyper reference `def:loc-diffeo' on page 11 undefined on input line 531.
+
+[11]
+
+LaTeX Warning: Hyper reference `thm:inverse-function-b' on page 12 undefined on input line 536.
+
+
+LaTeX Warning: Hyper reference `thm:inverse-function-b' on page 12 undefined on input line 541.
+
+
+LaTeX Warning: Hyper reference `def:rank-smooth' on page 12 undefined on input line 548.
+
+
+LaTeX Warning: Hyper reference `def:submersion-smooth' on page 12 undefined on input line 564.
+
+
+LaTeX Warning: Reference `eq:coord-rep-canonical' on page 12 undefined on input line 564.
+
+
+LaTeX Warning: Hyper reference `def:submersion-smooth' on page 12 undefined on input line 569.
+
+
+LaTeX Warning: Reference `eq:coord-rep-canonical' on page 12 undefined on input line 569.
+
+[12]
+
+LaTeX Warning: Hyper reference `def:rank-smooth' on page 13 undefined on input line 601.
+
+
+LaTeX Warning: Hyper reference `thm:inverse-function-Rn' on page 13 undefined on input line 605.
+
+/Users/takamatoshinori/Desktop/LaTeX/geometry_notes/smooth/appendixB.tex:626: Undefined control sequence.
+\unity ->\mathds 
+                 {1}
+l.626     \end{align}
+                   
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+/Users/takamatoshinori/Desktop/LaTeX/geometry_notes/smooth/appendixB.tex:626: Undefined control sequence.
+\unity ->\mathds 
+                 {1}
+l.626     \end{align}
+                   
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+LaTeX Warning: Reference `eq:hypothesis-rank-theorem' on page 13 undefined on input line 627.
+
+
+LaTeX Warning: Hyper reference `thm:inverse-function-Rn' on page 13 undefined on input line 627.
+
+[13]
+/Users/takamatoshinori/Desktop/LaTeX/geometry_notes/smooth/appendixB.tex:663: Undefined control sequence.
+\unity ->\mathds 
+                 {1}
+l.663     \end{align}
+                   
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+/Users/takamatoshinori/Desktop/LaTeX/geometry_notes/smooth/appendixB.tex:663: Undefined control sequence.
+\unity ->\mathds 
+                 {1}
+l.663     \end{align}
+                   
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+LaTeX Warning: Reference `eq:thm-rank-1' on page 14 undefined on input line 683.
+
+[14]
+
+LaTeX Warning: Reference `eq:thm-rank-1' on page 15 undefined on input line 692.
+
+
+LaTeX Warning: Reference `eq:thm-rank-ans' on page 15 undefined on input line 711.
+
+
+LaTeX Warning: Hyper reference `def:rank-smooth' on page 15 undefined on input line 722.
+
+
+LaTeX Warning: Reference `thm:rank' on page 15 undefined on input line 731.
+
+
+LaTeX Warning: Reference `eq:coord-rep-canonical' on page 15 undefined on input line 731.
+
+
+LaTeX Warning: Hyper reference `def:rank-smooth' on page 15 undefined on input line 735.
+
+
+LaTeX Warning: Hyper reference `def:rank-smooth' on page 15 undefined on input line 742.
+
+
+LaTeX Warning: Hyper reference `def:submersion-smooth' on page 15 undefined on input line 747.
+
+
+LaTeX Warning: Hyper reference `def:submersion-smooth' on page 15 undefined on input line 748.
+
+[15]
+
+LaTeX Warning: Hyper reference `thm:rank' on page 16 undefined on input line 756.
+
+
+LaTeX Warning: Reference `eq:coord-rep-canonical' on page 16 undefined on input line 762.
+
+
+LaTeX Warning: Hyper reference `thm:rank' on page 16 undefined on input line 768.
+
+
+LaTeX Warning: Reference `eq:coord-rep-canonical' on page 16 undefined on input line 774.
+
+
+LaTeX Warning: Reference `prop:SI-basics' on page 16 undefined on input line 777.
+
+
+LaTeX Warning: Hyper reference `def:loc-diffeo' on page 16 undefined on input line 777.
+
+
+LaTeX Warning: Hyper reference `def:submersion-smooth' on page 16 undefined on input line 787.
+
+[16]
+
+LaTeX Warning: Hyper reference `def:submersion-smooth' on page 17 undefined on input line 810.
+
+
+LaTeX Warning: Hyper reference `def:submersion-smooth' on page 17 undefined on input line 811.
+
+[17]
+
+LaTeX Warning: Reference `def.k-form_pullback' on page 18 undefined on input line 868.
 
 LaTeX Font Info:    Font shape `JT3/mc/m/n' will be
-(Font)              scaled to size 23.00687pt on input line 223.
+(Font)              scaled to size 23.00687pt on input line 894.
 LaTeX Font Info:    Font shape `JY3/mc/m/n' will be
-(Font)              scaled to size 23.00687pt on input line 223.
+(Font)              scaled to size 23.00687pt on input line 894.
 LaTeX Font Info:    Font shape `JT3/mc/b/n' in size <24.88> not available
-(Font)              Font shape `JT3/gt/m/n' tried instead on input line 223.
+(Font)              Font shape `JT3/gt/m/n' tried instead on input line 894.
 LaTeX Font Info:    Font shape `JT3/gt/m/n' will be
-(Font)              scaled to size 23.00687pt on input line 223.
+(Font)              scaled to size 23.00687pt on input line 894.
 LaTeX Font Info:    Font shape `JY3/mc/b/n' in size <24.88> not available
-(Font)              Font shape `JY3/gt/m/n' tried instead on input line 223.
+(Font)              Font shape `JY3/gt/m/n' tried instead on input line 894.
 LaTeX Font Info:    Font shape `JY3/gt/m/n' will be
-(Font)              scaled to size 23.00687pt on input line 223.
-[5] [6] (./out/appendixB.aux)
+(Font)              scaled to size 23.00687pt on input line 894.
+[18] [19] (./out/appendixB.aux)
 
 LaTeX Warning: There were undefined references.
 
-Package rerunfilecheck Info: File `appendixB.out' has not changed.
-(rerunfilecheck)             Checksum: 29A4529F16C975777860991FCC0B3282;665.
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+
+Package rerunfilecheck Warning: File `appendixB.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `appendixB.out':
+(rerunfilecheck)             Before: <no file>
+(rerunfilecheck)             After:  BE92D2DAE7A3154ABDAF8BDA2F210748;831.
 )
 
 Here is how much of LuaTeX's memory you used:
- 50787 strings out of 478285
+ 51008 strings out of 478285
  195705,1977958 words of node,token memory allocated
- 3064 words of node memory still in use:
-   11 hlist, 2 vlist, 5 rule, 3 glue, 4 kern, 1 glyph, 1096 attribute, 62 glue_spec, 112 attribute_list, 2 write, 14 user_defined nodes
-   avail lists: 1:40,2:44871,3:1042,4:696,5:366,6:57,7:5357,8:45,9:2147,10:17,11:33
- 69102 multiletter control sequences out of 65536+600000
- 106 fonts using 74784415 bytes
- 138i,16n,144p,1842b,1060s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/local/texlive/2023/texmf-dist/fonts/opentype/public/lm/lmroman8-regular.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/lm/lmroman6-regular.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/lm/lmroman7-regular.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/lm/lmroman7-italic.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/lm/lmsans10-bold.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/lm/lmroman10-regular.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/lm/lmroman10-bold.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/lm/lmroman12-bold.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/haranoaji/HaranoAjiMincho-Regular.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/lm/lmsans17-regular.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/haranoaji/HaranoAjiGothic-Medium.otf></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbsy10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib7.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/rsfs/rsfs10.pfb>
-Output written on appendixB.pdf (6 pages, 267757 bytes).
+ 9820 words of node memory still in use:
+   11 hlist, 2 vlist, 5 rule, 15 glue, 4 kern, 8 sub_mlist, 1 glyph, 4143 attribute, 62 glue_spec, 389 attribute_list, 2 write, 14 user_defined nodes
+   avail lists: 1:39,2:53014,3:890,4:726,5:679,6:60,7:5442,8:81,9:2709,10:26,11:33
+ 69270 multiletter control sequences out of 65536+600000
+ 121 fonts using 76048351 bytes
+ 138i,20n,144p,1830b,1385s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/local/texlive/2023/texmf-dist/fonts/opentype/public/lm/lmroman8-regular.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/lm/lmroman6-regular.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/lm/lmroman7-regular.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/lm/lmroman7-italic.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/lm/lmsans10-bold.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/lm/lmroman10-regular.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/lm/lmroman10-bold.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/lm/lmroman12-bold.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/haranoaji/HaranoAjiMincho-Regular.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/lm/lmsans17-regular.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/haranoaji/HaranoAjiGothic-Medium.otf></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbsy10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmbsy7.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx7.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex7.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex8.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib7.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/rsfs/rsfs10.pfb>
+Output written on appendixB.pdf (19 pages, 492685 bytes).
 
-PDF statistics: 240 PDF objects out of 1000 (max. 8388607)
- 178 compressed objects within 2 object streams
- 28 named destinations out of 1000 (max. 131072)
- 64 words of extra memory for PDF output out of 10000 (max. 100000000)
+PDF statistics: 389 PDF objects out of 1000 (max. 8388607)
+ 302 compressed objects within 4 object streams
+ 90 named destinations out of 1000 (max. 131072)
+ 16 words of extra memory for PDF output out of 10000 (max. 100000000)
 

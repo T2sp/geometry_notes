@@ -1,4 +1,4 @@
-This is LuaHBTeX, Version 1.16.0 (TeX Live 2023)  (format=lualatex 2023.3.29)  5 MAY 2024 16:09
+This is LuaHBTeX, Version 1.16.0 (TeX Live 2023)  (format=lualatex 2023.3.29)  7 MAY 2024 00:22
  restricted system commands enabled.
  file:line:error style messages enabled.
 **/Users/takamatoshinori/Desktop/LaTeX/geometry_notes/smooth/chap4.tex
@@ -624,6 +624,8 @@ Package bm Info: No bold for \U/rsfs/m/n, using \pmb.
 LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 149.
 ) (/usr/local/texlive/2023/texmf-dist/tex/latex/cancel/cancel.sty
 Package: cancel 2013/04/12 v2.2 Cancel math terms
+) (/usr/local/texlive/2023/texmf-dist/tex/latex/doublestroke/dsfont.sty
+Package: dsfont 1995/08/01 v0.1 Double stroke roman fonts
 ) (/usr/local/texlive/2023/texmf-dist/tex/latex/siunitx/siunitx.sty
 Package: siunitx 2023-03-04 v3.2.2 A comprehensive (SI) units package
 \l__siunitx_angle_tmp_dim=\dimen187
@@ -1513,81 +1515,115 @@ LaTeX Warning: Reference `prop:product-tangentv' on page 19 undefined on input l
 
 [19] [20]
 
-LaTeX Warning: Hyper reference `ax.topo' on page 21 undefined on input line 916.
-
-
-LaTeX Warning: Hyper reference `maxatlas' on page 21 undefined on input line 916.
-
-
-LaTeX Warning: Hyper reference `def.reltopo' on page 21 undefined on input line 920.
-
-
-LaTeX Warning: Hyper reference `def.topomani' on page 21 undefined on input line 920.
-
-
-LaTeX Warning: Hyper reference `diffmani' on page 21 undefined on input line 921.
-
-
-LaTeX Warning: Hyper reference `diffmani' on page 21 undefined on input line 921.
-
-[21]
-
-LaTeX Warning: Hyper reference `maxatlas' on page 22 undefined on input line 937.
-
-
-LaTeX Warning: Hyper reference `maxatlas' on page 22 undefined on input line 949.
-
-
-LaTeX Warning: Hyper reference `def.reltopo' on page 22 undefined on input line 957.
-
-
-LaTeX Warning: Hyper reference `def.topomani' on page 22 undefined on input line 957.
-
-
-LaTeX Warning: Hyper reference `diffmani' on page 22 undefined on input line 962.
-
-
-LaTeX Warning: Hyper reference `def:mani-with-boundary' on page 22 undefined on input line 973.
-
-
-LaTeX Warning: Hyper reference `def.topomani' on page 22 undefined on input line 973.
-
-
-LaTeX Warning: Reference `prop:manifold-boundary-basic' on page 22 undefined on input line 973.
-
-
-LaTeX Warning: Hyper reference `maxatlas' on page 22 undefined on input line 977.
-
-
-LaTeX Warning: Hyper reference `def:int-manifold-with-boundary' on page 22 undefined on input line 983.
-
-
-LaTeX Warning: Hyper reference `def:int-manifold-with-boundary' on page 22 undefined on input line 983.
-
-[22]
-
-LaTeX Warning: Hyper reference `def.compact' on page 23 undefined on input line 1010.
+LaTeX Warning: Hyper reference `def.compact' on page 21 undefined on input line 900.
 
 (load cache: extra_lmroman8-bold.luc)
 LaTeX Font Info:    Font shape `JT3/mc/b/n' in size <8> not available
-(Font)              Font shape `JT3/gt/m/n' tried instead on input line 1015.
+(Font)              Font shape `JT3/gt/m/n' tried instead on input line 905.
 LaTeX Font Info:    Font shape `JT3/gt/m/n' will be
-(Font)              scaled to size 7.3977pt on input line 1015.
+(Font)              scaled to size 7.3977pt on input line 905.
 LaTeX Font Info:    Font shape `JY3/mc/b/n' in size <8> not available
-(Font)              Font shape `JY3/gt/m/n' tried instead on input line 1015.
+(Font)              Font shape `JY3/gt/m/n' tried instead on input line 905.
 LaTeX Font Info:    Font shape `JY3/gt/m/n' will be
-(Font)              scaled to size 7.3977pt on input line 1015.
+(Font)              scaled to size 7.3977pt on input line 905.
 
-LaTeX Warning: Reference `gen_cinfty' on page 23 undefined on input line 1015.
+LaTeX Warning: Reference `gen_cinfty' on page 21 undefined on input line 905.
 
 
-LaTeX Warning: Citation `Morita' on page 23 undefined on input line 1019.
+LaTeX Warning: Citation `Morita' on page 21 undefined on input line 909.
+
+[21]
+
+LaTeX Warning: Citation `Lee12' on page 22 undefined on input line 943.
+
+[22]
+
+LaTeX Warning: Hyper reference `ax.topo' on page 23 undefined on input line 976.
+
+
+LaTeX Warning: Hyper reference `maxatlas' on page 23 undefined on input line 976.
+
+
+LaTeX Warning: Hyper reference `def.reltopo' on page 23 undefined on input line 980.
+
+
+LaTeX Warning: Hyper reference `diffmani' on page 23 undefined on input line 980.
+
+
+LaTeX Warning: Hyper reference `diffmani' on page 23 undefined on input line 980.
+
+
+LaTeX Warning: Hyper reference `maxatlas' on page 23 undefined on input line 996.
+
+
+Overfull \hbox (12.53786pt too wide) detected at line 1010
+[][]
+ []
 
 [23]
 
-LaTeX Warning: Citation `Lee12' on page 24 undefined on input line 1053.
+LaTeX Warning: Hyper reference `maxatlas' on page 24 undefined on input line 1022.
 
-[24] [25] [26] (./out/chap4.aux)
+
+LaTeX Warning: Hyper reference `def.reltopo' on page 24 undefined on input line 1037.
+
+
+LaTeX Warning: Hyper reference `def.topomani' on page 24 undefined on input line 1037.
+
+
+LaTeX Warning: Hyper reference `diffmani' on page 24 undefined on input line 1042.
+
+
+LaTeX Warning: Hyper reference `def.reltopo' on page 24 undefined on input line 1054.
+
+
+LaTeX Warning: Hyper reference `def.topomani' on page 24 undefined on input line 1054.
+
+
+LaTeX Warning: Hyper reference `diffmani' on page 24 undefined on input line 1059.
+
+[24]
+
+LaTeX Warning: Hyper reference `thm:rank' on page 25 undefined on input line 1067.
+
+[25]
+
+LaTeX Warning: Hyper reference `thm:rank-b' on page 26 undefined on input line 1122.
+
+
+LaTeX Warning: Hyper reference `def:mani-with-boundary' on page 26 undefined on input line 1125.
+
+
+LaTeX Warning: Hyper reference `def.topomani' on page 26 undefined on input line 1125.
+
+
+LaTeX Warning: Reference `prop:manifold-boundary-basic' on page 26 undefined on input line 1125.
+
+
+LaTeX Warning: Hyper reference `maxatlas' on page 26 undefined on input line 1130.
+
+
+LaTeX Warning: Hyper reference `def:int-manifold-with-boundary' on page 26 undefined on input line 1142.
+
+
+LaTeX Warning: Hyper reference `def:int-manifold-with-boundary' on page 26 undefined on input line 1142.
+
+
+LaTeX Warning: Hyper reference `def:int-manifold-with-boundary' on page 26 undefined on input line 1152.
+
+[26]
+
+LaTeX Warning: Citation `Lee12' on page 27 undefined on input line 1182.
+
+[27] [28] [29]
+
+LaTeX Warning: Reference `prop:tangent-velocity' on page 30 undefined on input line 1312.
+
+[30] [31]
+
+LaTeX Warning: Reference `lem:pullback' on page 32 undefined on input line 1438.
+
+[32] [33] [34] [35] (./out/chap4.aux)
 
 LaTeX Warning: There were undefined references.
 
@@ -1596,19 +1632,19 @@ Package rerunfilecheck Info: File `chap4.out' has not changed.
 )
 
 Here is how much of LuaTeX's memory you used:
- 51168 strings out of 478285
+ 51258 strings out of 478285
  244631,1977958 words of node,token memory allocated
- 14489 words of node memory still in use:
-   11 hlist, 2 vlist, 5 rule, 10 glue, 4 kern, 4 sub_mlist, 1 glyph, 6299 attribute, 62 glue_spec, 585 attribute_list, 2 write, 14 user_defined, 2 pdf_action nodes
-   avail lists: 1:36,2:59256,3:1206,4:962,5:560,6:57,7:5765,8:91,9:2843,10:22,11:45
- 69345 multiletter control sequences out of 65536+600000
+ 17754 words of node memory still in use:
+   11 hlist, 2 vlist, 5 rule, 11 glue, 4 kern, 4 sub_mlist, 1 glyph, 7784 attribute, 62 glue_spec, 720 attribute_list, 2 write, 14 user_defined, 5 pdf_action nodes
+   avail lists: 1:36,2:58199,3:1206,4:962,5:576,6:54,7:5752,8:91,9:2843,10:18,11:50
+ 69389 multiletter control sequences out of 65536+600000
  133 fonts using 76388559 bytes
- 138i,19n,144p,1826b,1381s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/local/texlive/2023/texmf-dist/fonts/opentype/public/lm/lmroman8-bold.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/lm/lmsans10-bold.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/lm/lmroman7-italic.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/lm/lmroman8-regular.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/lm/lmroman6-regular.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/lm/lmroman7-regular.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/lm/lmroman10-regular.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/haranoaji/HaranoAjiMincho-Regular.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/lm/lmroman10-bold.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/lm/lmroman12-bold.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/lm/lmsans17-regular.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/haranoaji/HaranoAjiGothic-Medium.otf></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbsy10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmbsy7.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex8.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/euler/eufm10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/euler/eufm7.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/latxfont/line10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/rsfs/rsfs10.pfb>
-Output written on chap4.pdf (26 pages, 548269 bytes).
+ 138i,27n,144p,1826b,1418s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/local/texlive/2023/texmf-dist/fonts/opentype/public/lm/lmroman8-bold.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/lm/lmsans10-bold.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/lm/lmroman7-italic.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/lm/lmroman8-regular.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/lm/lmroman6-regular.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/lm/lmroman7-regular.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/lm/lmroman10-regular.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/haranoaji/HaranoAjiMincho-Regular.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/lm/lmroman10-bold.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/lm/lmroman12-bold.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/lm/lmsans17-regular.otf></usr/local/texlive/2023/texmf-dist/fonts/opentype/public/haranoaji/HaranoAjiGothic-Medium.otf></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbsy10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmbsy7.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx7.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex8.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib5.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib7.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/euler/eufm10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/euler/eufm7.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/latxfont/line10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/rsfs/rsfs10.pfb>
+Output written on chap4.pdf (35 pages, 633726 bytes).
 
-PDF statistics: 620 PDF objects out of 1000 (max. 8388607)
- 514 compressed objects within 6 object streams
- 159 named destinations out of 1000 (max. 131072)
+PDF statistics: 776 PDF objects out of 1000 (max. 8388607)
+ 650 compressed objects within 7 object streams
+ 196 named destinations out of 1000 (max. 131072)
  80 words of extra memory for PDF output out of 10000 (max. 100000000)
 

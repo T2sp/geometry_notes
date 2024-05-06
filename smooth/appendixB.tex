@@ -158,34 +158,705 @@
 \end{proof}
 
 
+\section{沈めこみ・はめ込み・埋め込み}
+
+$\mathbb{R}^n$ における逆関数定理から始める．まず距離空間に関する基本的な補題を用意する．
+
+\begin{mylem}[label=lem:contraction]{Banachの不動点定理}
+    空でない完備な距離空間 $(X,\, d)$ を与える．
+    このとき，以下の条件を充たす任意の写像 $F \colon X \lto X$ はただ1つの固定点を持つ：
+    \begin{description}
+        \item[\textbf{(contraction)}]  
+        ある定数 $\lambda \in (0,\, 1)$ が存在し，$\forall x,\, y \in X$ に対して $d \bigl( F(x),\, F(y) \bigr) \le \lambda d(x,\, y)$
+    \end{description}
+\end{mylem}
+
+\begin{proof}
+    まず固定点の存在を示す．$\forall x_0 \in X$ を1つとり， $X$ の点列 $\bigl(\, x_i \,\bigr)_{i=0}^\infty$ を漸化式 $x_{i+1} = F(x_i)$ によって帰納的に定める．
+    仮定より $\lambda \in (0,\, 1)$ なので，$\forall \varepsilon > 0$ に対して十分大きな $N_\varepsilon \in \mathbb{N}$ を取れば $\lambda^{N_\varepsilon} < \frac{1-\lambda}{d(x_1,\, x_0)} \varepsilon$ が成り立つようにできる．
+    このとき $\forall m,\, n \ge N_\varepsilon \WHERE m \ge n$ に対して
+    \begin{align}
+        d(x_m,\, x_n) 
+        &\le d(x_{m},\, x_{m-1}) + \cdots + d(x_{n+1},\, x_n) & &\because \; \text{三角不等式} \\
+        &\le \lambda^{m-1} d(x_1,\, x_0) + \cdots + \lambda^n d(x_1,\, x_0) & &\because \; \text{条件\textsf{\textbf{(contraction)}}} \\
+        &\le \lambda^n \left(\sum_{i=0}^{\infty} \lambda^i \right) d(x_1,\, x_0) & \\
+        &\le \lambda^{N_\varepsilon} \frac{d(x_1,\, x_0)}{1-\lambda} < \varepsilon
+    \end{align}
+    が成り立つ．i.e. 点列 $\bigl(\, x_i \,\bigr)_{i=0}^\infty$ はCauchy列であり，仮定より $X$ は完備なのでその収束点 $x \coloneqq \lim_{i \to \infty} x_i \in X$ が一意的に存在する．
+    $F$ は明らかに連続なので
+    \begin{align}
+        F(x) = F (\lim_{i \to \infty} x_i) = \lim_{i \to \infty} F(x_i) = x
+    \end{align}
+    が成り立つ．i.e. $x$ は固定点である．
+
+    次に固定点 $x$ の一意性を示す．別の固定点 $x' \in X$ が存在したとする．このとき条件\textsf{\textbf{(contraction)}}より
+    \begin{align}
+        d(x,\, x') = d \bigl( F(x),\, F(x') \bigr)  \le \lambda d(x,\, x') \IFF (1- \lambda) d(x,\, x') \le 0
+    \end{align}
+    が成り立つので $x = x'$ でなくてはいけない．
+\end{proof}
+
+\begin{mytheo}[label=thm:inverse-function-Rn]{$\mathbb{R}^n$ における逆関数定理}
+    \begin{itemize}
+        \item 開集合\footnote{$\mathbb{R}^n$ には通常のEuclid位相を入れる．} $U,\, V \in \mathbb{R}^n$
+        \item $C^\infty$ 関数\footnote{$F = (F^1,\, \dots,\, F^n)$ の各成分 $F^i$ が任意回偏微分可能．} $F \colon U \lto V,\; x \lmto \bigl( F^1(x),\, \dots,\, F^n(x) \bigr)$
+    \end{itemize}
+    を与え，$F$ のJacobi行列を返す $C^\infty$ 写像
+    \begin{align}
+        DF \colon U \lto \Mat{n}{\mathbb{R}},\; x \lmto \left[\, \pdv{F^\mu}{x^\nu} ()(x) \right]_{1 \le \mu,\, \nu \le n}
+    \end{align}
+    を定める．このとき，ある点 $p \in U$ において $DF(p) \in \LGL(n,\, \mathbb{R})$ ならば，
+    \begin{itemize}
+        \item 点 $p \in U$ の\underline{連結な}近傍 $p \in U_0 \subset U$
+        \item 点 $F(p) \in V$ の\underline{連結な}近傍 $F(p) \in V_0 \subset V$
+    \end{itemize}
+    が存在して $F|_{U_0} \colon U_0 \lto V_0$ が微分同相写像\footnote{i.e. $F|_{U_0}$ は $C^\infty$ 級の逆写像を持つ．}になる．
+\end{mytheo}
+
+\begin{proof}
+    $U' \coloneqq \bigl\{\, x - p \in \mathbb{R}^n \bigm| x \in U \,\bigr\},\; V' \coloneqq \bigl\{\, x - F(p) \in \mathbb{R}^n \bigm| x \in V \,\bigr\}$ とおく．
+    このとき写像
+    \begin{align}
+        F_1 \colon U' \lto V',\; x \lmto F(x + p) - F(p)
+    \end{align}
+    は $C^\infty$ 級で，かつ $F_1(0) = 0,\; DF_1(0) = DF(p)$ を充たし，
+    $0$ の連結な近傍 $0 \in U'_0 \subset U',\; 0 \in V'_0 \subset V'$ が存在して $F_1|_{U'_0} \colon U'_0 \lto V'_0$ が微分同相写像になることと，点 $p \in U$ の連結な近傍 $p \in U_0 \subset U$ と点 $F(p) \in V$ の連結な近傍 $F(p) \in V_0 \subset V$ が存在して $F|_{U_0} \colon U_0 \lto V_0$ が微分同相写像になることは同値である．
+
+    さらに，$V'' \coloneqq \bigl\{\, DF_1(0)^{-1}(x) \in \mathbb{R}^n \bigm| x \in V' \,\bigr\},\; V''_0 \coloneqq \bigl\{\, DF_1(0)^{-1}(x) \in \mathbb{R}^n \bigm| x \in V'_0 \,\bigr\}$ とおくと
+    写像\footnote{$DF_1(0)^{-1} \bigl(F_1(x)\bigr)$ と言うのは，列ベクトル $F_1(x) \in \mathbb{R}^n$ に $n \times n$ 行列 $DF_1(0)^{-1} \in \Mat{n}{\mathbb{R}}$ を作用させると言う意味．} 
+    \begin{align}
+        F_2 \colon U' \lto V'',\; x \lmto DF_1(0)^{-1} \bigl(F_1(x)\bigr)
+    \end{align}
+    は $C^\infty$ 級で，$DF_2(0) = \unity_n$ かつ $V''_0 \subset V''$ は $0$ の連結な近傍であり\footnote{$V'_0$ が連結であり，行列 $DF_1(0)^{-1}$ をかけると言う写像は連続なので．}，
+    $F_2|_{U'_0} \colon U'_0 \lto V''_0$ が微分同相写像になることと $F_1|_{U'_0} \colon U'_0 \lto V'_0$ が微分同相写像になることは同値である．
+    以上の考察から，
+    \begin{itemize}
+        \item $p = 0 \in U$
+        \item $F(p) = 0 \in V$
+        \item $DF(p) = \unity_n$
+    \end{itemize}
+    を仮定しても一般性を失わないことが分かった．
+
+
+    ここで $C^\infty$ 写像
+    \begin{align}
+        H \colon U \lto \mathbb{R}^n,\; x \lmto x - F(x)
+    \end{align}
+    を考える．まず $DH(0) = \unity_n - \unity_n = 0$ が成り立つことがわかる．
+    さらに写像 $DH \colon U \lto \Mat{n}{\mathbb{R}},\; x \lmto DH(x)$ の連続性\footnote{$H$ が $C^\infty$ 級なので $DH$ は連続．}から，
+    $B_\delta(0) \subset U$ を充たす $\delta > 0$ が存在して，$\forall x \in \overline{B_\delta(0)}$ に対して\footnote{$\norm*{\cdot} \colon \Mat{n}{\mathbb{R}} \lto \mathbb{R}_{\ge 0}$ はFrobeniusノルム．}
+    \begin{align}
+        \norm*{DH(x) - DH(0)} = \norm*{DH(x)} \le \frac{1}{2}
+    \end{align}
+    が成り立つようにできる．
+
+    \begin{description}
+        \item[\textbf{$\bm{F}$ は $\bm{\overline{B_\delta(0)}}$ 上単射}]　
+        
+        $\forall x,\, y \in \overline{B_\delta(0)}$ をとる．
+        $\overline{B_\delta(0)}$ は凸集合なので $\forall t \in [0,\, 1]$ に対して $x + t(y - x) \in \overline{B_\delta(0)}$ が成り立つ．よって
+        % 連続写像 $\norm*{DH} \colon U \lto \mathbb{R},\; x \lmto \norm*{DH(x)}$ による像もまたコンパクトである．よって $M \coloneqq \sup_{x \in \overline{B_\delta(0)}} \norm{DH(x)}$ が存在する．
+        \begin{align}
+            \abs{H(y) - H(x)} 
+            &= \abs{\int_0^1 \dd{t} \dv{}{t} H\bigl(x + t(y - x)\bigr)} \\
+            &= \abs{\int_0^1 \dd{t} DH \bigl( x + t(y - x) \bigr) (y - x)} \\
+            &\le \int_0^1 \dd{t} \abs{DH \bigl( x + t(y - x) \bigr) (y - x)} \\
+            &\le \int_0^1 \dd{t} \sup_{x \in \overline{B_\delta(0)}} \norm{DH(x)} \abs{y-x} \\
+            &\le \frac{1}{2} \abs{y-x} \label{ineq:thm-inv-1}
+        \end{align}
+        が言える．故に
+        \begin{align}
+            \abs{y - x} 
+            &= \abs{F(y) - F(x) + H(y) - H(x)} \\
+            &\le \abs{F(y) - F(x)} + \abs{H(y) - H(x)} \\
+            &\le \abs{F(y) - F(x)} + \frac{1}{2}\abs{y - x}
+        \end{align}
+        が成り立ち，
+        \begin{align}
+            \label{ineq:thm-inv-2}
+            \frac{1}{2} \abs{y - x} \le \abs{F(y) - F(x)}
+        \end{align}
+        が従う．故にノルムの正定値性から $\overline{B_\delta(0)}$ 上 $F$ が単射だと分かった．
+        
+        \item[$\bm{\overline{B_{\delta/2}(0)} \subset F(\overline{B_\delta(0)})}$]　
+        
+        $\forall y \in \overline{B_{\delta/2}(0)}$ に対してある $x_y \in \overline{B_\delta(0)}$ が存在して $F(x_y) = y$ を充たすことを示す．
+        $C^\infty$ 写像
+        \begin{align}
+            G \colon U \lto \mathbb{R}^n,\; x \lmto y + H(x) = y + x - F(x)
+        \end{align}
+        を考える．
+        不等式\eqref{ineq:thm-inv-1}から $\forall x \in \overline{B_\delta(0)}$ に対して
+        \begin{align}
+            \abs{G(x)} \le \abs{y} + \abs{H(x)} \le \frac{\delta}{2} + \frac{1}{2}\abs{x} \le \delta
+        \end{align}
+        が成り立つので $G \bigl( \overline{B_\delta(0)} \bigr) \subset \overline{B_{\delta(0)}}$ が分かった．
+        その上再度\eqref{ineq:thm-inv-1}から $\forall x,\, y \in \overline{B_\delta(0)}$ に対して
+        \begin{align}
+            \abs{G(x) - G(y)} = \abs{H(x) - H(y)} \le \frac{1}{2} \abs{x - y}
+        \end{align}
+        が成り立つので，空でない完備な距離空間 $\overline{B}_\delta(0)$ 上の写像 $G|_{\overline{B}_\delta(0)} \colon \overline{B}_\delta(0) \lto \overline{B}_\delta(0)$ は補題\ref{lem:contraction}の条件 \textsf{\textbf{(contraction)}} を充たし，$G$ はただ1つの固定点 $x_y \in \overline{B}_\delta(0)$ を持つ．
+        $G$ の定義より $G(x_y) = x_y \IMP F(x_y) = y$ である．
+
+        　以上の議論から，$U_0 \coloneqq \overline{B_\delta(0)} \cap F^{-1}\bigl( \overline{B_{\delta/2}(0)} \bigr),\, V_0 \coloneqq \overline{B_{\delta/2}(0)}$ とおくと $F|_{U_0} \colon U_0 \lto V_0$ が全単射になることが分かった．
+        従って逆写像\footnote{厳密には $(F|_{U_0})^{-1}$ と書くべきだが略記した．} $F^{-1} \colon V_0 \lto U_0$ が存在する．
+        さらに $\forall x',\, y' \in V_0$ をとり不等式\eqref{ineq:thm-inv-2}において $x = F^{-1}(x'),\, y = F^{-1}(y')$ とおくことで $F^{-1}$ が連続写像であることがわかる．i.e. $F|_{U_0}$ は同相写像である．
+        よって $V_0$ が定義から連結なので $U_0$ も連結である．
+
+        \item[\textbf{$\bm{F^{-1}}$ が $\bm{C^\infty}$ 級}]　
+        
+        まず $F^{-1} \colon V_0 \lto U_0$ が $C^1$ 級であることを示す．
+        $\forall y \in V_0$ を1つ固定する．
+        偏微分の連鎖律より $D(F^{-1})(y) = DF \bigl( F^{-1}(y) \bigr)^{-1}$ であるから，
+        \begin{align}
+            \lim_{y' \to y} \frac{F^{-1}(y') - F^{-1}(y) -  DF \bigl( F^{-1}(y) \bigr)^{-1} (y' - y)}{\abs{y'- y}} = 0
+        \end{align}
+        を示せば良い．$\forall y' \in V_0 \setminus \{y\}$ を取り，$x \coloneqq F^{-1}(y),\; x' \coloneqq F^{-1}(y') \in U_0 \setminus \{x\}$ とおく．すると
+        \begin{align}
+            &\abs{\frac{F^{-1}(y') - F^{-1}(y) -  DF \bigl( F^{-1}(y) \bigr)^{-1} (y' - y)}{\abs{y'- y}}}  \\
+            &= \frac{\abs{x' - x -  DF(x)^{-1} (y' - y)}}{\abs{y'- y}}  \\
+            &= \frac{1}{\abs{y'- y}} \abs{DF(x)^{-1} \bigl( DF(x)(x' - x) - (y' - y)  \bigr)} \\
+            &= \frac{\abs{x' - x}}{\abs{F(x') - F(x)}} \abs{DF(x)^{-1} \left( \frac{F(x') - F(x) - DF(x)(x' - x)}{\abs{x' - x}} \right)}  \\
+            &\le 2 \sup_{x \in U_0} \norm{DF(x)^{-1}} \abs{\frac{F(x') - F(x) - DF(x)(x' - x)}{\abs{x' - x}}} & &\because\; \text{不等式\eqref{ineq:thm-inv-1}}  \\
+        \end{align}
+        と評価できるが，$F$ が $C^\infty$ 級なので $\sup_{x \in U_0} \norm{DF(x)^{-1}}$ は有限確定値である．
+        $F$ の連続性から $y' \to y$ のとき $x' \to x$ であり，仮定より $F$ は $C^\infty$ 級なので，この極限で最右辺が $0$ に収束することが分かった．
+
+        　次に $F^{-1}$ が $\forall k \in \mathbb{N}$ について $C^k$ 級であることを数学的帰納法により示す．$k=1$ の場合は先ほど示した．
+        $k > 1$ とする．$D(F^{-1}) = {}^{-1} \circ DF \circ F^{-1}$ であるから\footnote{${}^{-1} \colon \LGL(n,\, \mathbb{R}) \lto \LGL(n,\, \mathbb{R}),\; X \lmto X^{-1}$ とおいた．Cramerの公式よりこれは $C^\infty$ 級である．}，帰納法の仮定より $D(F^{-1})$ は $C^k$ 級関数の合成で書けているので $C^k$ 級である．よって $F^{-1}$ は $C^{k+1}$ 級であり，帰納法が完成した．
+
+    \end{description}
+    
+\end{proof}
+
+\begin{mycol}[label=col:implicit]{陰関数定理}
+    $\mathbb{R}^n \times \mathbb{R}^k$ の座標を $(x,\, y) \coloneqq (x^1,\, \dots,\, x^n,\, y^1,\, \dots,\, y^k)$ と書く．
+    \begin{itemize}
+        \item 開集合 $U \subset \mathbb{R}^n \times \mathbb{R}^k$
+        \item $C^\infty$ 関数 $\Phi \colon U \lto \mathbb{R}^k,\; (x,\, y) \lmto \bigl( \Phi^1(x,\, y),\, \dots,\, \Phi^k(x,\, y) \bigr) $
+    \end{itemize}
+    を与える．
+    このとき，点 $(a,\, b) \in U$ において
+    \begin{align}
+        \left[\, \pdv{\Phi^\mu}{y^\nu}()(a,\, b) \,\right]_{1 \le \mu,\, \nu \le k} \in \LGL(k,\, \mathbb{R})
+    \end{align}
+    が成り立つならば，
+    \begin{itemize}
+        \item 点 $a$ の近傍 $a \in V_0 \subset \mathbb{R}^n$
+        \item 点 $b$ の近傍 $b \in W_0 \subset \mathbb{R}^k$ 
+        \item $C^\infty$ 関数 $F \colon V_0 \lto W_0,\; x \lmto \bigl( F^1(x),\, \dots,\, F^k(x) \bigr)$
+    \end{itemize}
+    の3つ組であって
+    \begin{align}
+        \Phi^{-1}(\{c\}) \cap (V_0 \times W_0) = \Bigl\{\, \bigl( x,\, F(x) \bigr) \in V_0 \times W_0 \,\Bigr\} 
+    \end{align}
+    を充たすものが存在する．ただし $c \coloneqq \Phi(a,\, b) \in \mathbb{R}^k$ とおいた．
+\end{mycol}
+
+\begin{proof}
+    $C^\infty$ 写像
+    \begin{align}
+        \Psi \colon U \lto \mathbb{R}^n \times \mathbb{R}^k,\; (x,\, y) \lmto \bigl( x,\, \Phi(x,\, y) \bigr) 
+    \end{align}
+    を考える．仮定より点 $(a,\, b) \in U$ において
+    \begin{align}
+        D\Psi (a,\, b) 
+        &= \mqty[\unity_n & 0 \\ \left[\, \pdv{\Phi^\mu}{x^\nu}()(a,\, b) \,\right]_{1 \le \mu \le k,\, 1 \le \nu \le n} & \left[\, \pdv{\Phi^\mu}{y^\nu}()(a,\, b) \,\right]_{1 \le \mu,\, \nu \le k} ] \in \LGL(n+k,\, \mathbb{R})
+    \end{align}
+    であるから，\hyperref[thm:inverse-function-Rn]{逆関数定理}より点 $(a,\, b)$ の連結な近傍 $U_0 \subset U$ と点 $(a,\, c)$ の連結な近傍 $Y_0 \subset \mathbb{R}^n \times \mathbb{R}^k$ が存在して $\Psi|_{U_0} \colon U_0 \lto Y_0$ が微分同相写像になる．$U_0,\, Y_0$ を適当に小さくとることで $U_0 = V \times W$ の形をしていると仮定して良い\footnote{開集合の直積は積位相の開基を成すので．}．
+
+    $\forall (x,\, y) \in Y_0$ に対して $\Psi^{-1}(x,\, y) = \bigl( A(x,\, y),\, B(x,\, y) \bigr)$ とおくと $A\colon Y_0 \lto \mathbb{R}^n,\; B \colon Y_0 \lto \mathbb{R}^k$ はどちらも $C^\infty$ 関数で，
+    \begin{align}
+        (x,\, y)
+        &= \Phi \circ \Psi^{-1}(x,\, y) \\
+        &= \Bigl( A(x,\, y),\, \Psi \bigl( A(x,\, y),\, B(x,\, y) \bigr)  \Bigr) 
+    \end{align}
+    が成り立つ．よって
+    \begin{align}
+        \Psi^{-1}(x,\, y) &= \bigl( x,\, B(x,\, y) \bigr), \\
+        y &= \Psi \bigl( x,\, B(x,\, y) \bigr) 
+    \end{align}
+    が従う．
+
+    ここで $V_0 \coloneqq \bigl\{\, x \in V \bigm| (x,\, c) \in Y_0 \,\bigr\},\; W_0 \coloneqq W$ とおき，
+    \begin{align}
+        F \colon V_0 \lto W_0,\; x \lmto B(x,\, c)
+    \end{align}
+    と定義する．すると $\forall x \in V_0$ に対して
+    \begin{align}
+        c = \Phi \bigl( x,\, B(x,\, c) \bigr) = \Psi \bigl( x,\, F(x) \bigr) 
+    \end{align}
+    である．i.e. $\Phi^{-1}(\{c\}) \cap (V_0 \times W_0) \supset \Bigl\{\, \bigl( x,\, F(x) \bigr) \in V_0 \times W_0 \,\Bigr\}$ が言えた．
+    逆に $\forall (x,\, y) \in \Phi^{-1}(\{c\}) \cap (V_0 \times W_0)$ をとる．
+    このとき $\Phi(x,\, y) = c$ なので $\Psi(x,\, y) = \bigl( x,\, \Phi(x,\, y) \bigr) = (x,\, c)$ であり，
+    \begin{align}
+        (x,\, y) = \Psi^{-1}(x,\, c) = \bigl( x,\, B(x,\, c) \bigr) = \bigl( x,\, F(x) \bigr) 
+    \end{align}
+    が成り立つ．i.e. $\Phi^{-1}(\{c\}) \cap (V_0 \times W_0) \subset \Bigl\{\, \bigl( x,\, F(x) \bigr) \in V_0 \times W_0 \,\Bigr\}$ が言えた．
+
+\end{proof}
+
+
+
+\subsection{局所微分同相写像}
+
+\begin{mydef}[label=def:loc-diffeo]{局所微分同相写像}
+    境界なし/あり $C^\infty$ 多様体 $M,\, N$ を与える．
+    
+    $C^\infty$ 写像 $F \colon M \lto N$ が\textbf{局所微分同相写像} (local diffeomorphism) であるとは，
+    $\forall p \in M$ が以下の条件を充たす近傍 $p \in U_p \subset M$ を持つことを言う：
+    \begin{enumerate}
+        \item $F(U_p) \subset N$ が開集合
+        \item $F|_{U_p} \colon U_p \lto F(U_p)$ が微分同相写像
+    \end{enumerate}
+\end{mydef}
+
+\begin{mytheo}[label=thm:inverse-function]{境界を持たない $C^\infty$ 多様体における逆関数定理}
+    \begin{itemize}
+        \item \underline{境界を持たない} $C^\infty$ 多様体 $M,\, N$
+        \item $C^\infty$ 写像 $F \colon M \lto N$
+    \end{itemize}
+    を与える．このとき，ある点 $p \in M$ において $T_p F \colon T_p M \lto T_{F(p)} N$ が全単射ならば，
+    \begin{itemize}
+        \item 点 $p \in M$ の連結な近傍 $p \in U_0 \subset M$
+        \item 点 $F(p) \in N$ の連結な近傍 $p \in V_0 \subset N$
+    \end{itemize}
+    が存在して $F|_{U_0} \colon U_0 \lto V_0$ が微分同相写像になる．
+\end{mytheo}
+
+\begin{proof}
+    $T_p F$ が全単射なので，$\dim M = \dim N \eqqcolon n$ である．
+    $p$ を含むチャート $(U,\, \varphi)$ と $F(p)$ を含むチャート $(V,\, \psi)$ を，$F(U) \subset V$ を充たすようにとる．すると
+    \begin{itemize}
+        \item $\mathbb{R}^n$ の開集合 $\varphi(U),\, \psi(V) \subset \mathbb{R}^n$
+        \item $C^\infty$ 関数 $\widehat{F} \coloneqq \psi \circ F \circ \varphi^{-1} \colon \varphi(U) \lto \psi(V)$
+    \end{itemize}
+    の2つ組は，仮定より点 $\varphi(p) \in \varphi(U)$ において $T_{\varphi(p)} \widehat{F} = T_{F(p)} \psi \circ T_{p} F \circ T_{\varphi(p)} (\varphi^{-1}) \in \LGL(n,\, \mathbb{R})$ を充たすので，
+    \hyperref[thm:inverse-function-Rn]{$\mathbb{R}^n$ の逆関数定理}が使えて
+    \begin{itemize}
+        \item 点 $\varphi(p) \in \varphi(U)$ の連結な近傍 $\varphi(p) \in \widehat{U_0} \subset \varphi(U)$
+        \item 点 $\widehat{F}\bigl(\varphi(p)\bigr) = \psi \bigl( F(p) \bigr) \in \varphi(U)$ の連結な近傍 $\widehat{F}\bigl(\varphi(p)\bigr) \in \widehat{V_0} \subset \varphi(V)$
+    \end{itemize}
+    であって $\widehat{F}|_{\widehat{U_0}} \colon \widehat{U_0} \lto \widehat{V_0}$ が微分同相写像となるようなものがある．
+    従って $U_0 \coloneqq \varphi^{-1} (\widehat{U_0}) \subset M,\, V_0 \coloneqq \psi^{-1}(\widehat{V_0}) \subset N$ とおけばこれらはそれぞれ点 $p,\, F(p)$ の連結な近傍で，かつ $F|_{U_0} = \psi^{-1}|_{V_0} \circ \widehat{F}|_{\widehat{U_0}} \circ \varphi|_{U_0} \colon U_0 \lto V_0$ は微分同相写像の合成なので微分同相写像である．
+\end{proof}
+
+定理\ref{thm:inverse-function}を，値域の $C^\infty$ 多様体が境界を持つ場合に拡張できる\footnote{定義域の $C^\infty$ 多様体が境界を持つ場合は上手くいかない．}．鍵となるのは次の補題である：
+
+\begin{mylem}[label=lem:singular-b]{}
+    \begin{itemize}
+        \item \underline{境界を持たない} $C^\infty$ 多様体 $M$
+        \item \underline{境界付き} $C^\infty$ 多様体 $N$
+        \item $C^\infty$ 写像 $F \colon M \lto N$
+    \end{itemize}
+    を与える．
+    このとき，点 $p \in M$ において $T_p F \colon T_p M \lto T_{F(p)} N$ が単射ならば $F(p) \in \Int N$ である．
+\end{mylem}
+
+\begin{proof}
+    $F(p) \in \partial N$ だと仮定し， 
+    点 $p \in M$ を含むチャート $(U,\, \varphi) = \bigl( U,\, (x^\mu) \bigr) $ および点 $F(p) \in \partial N$ の境界チャート $(V,\, \psi) = \bigl( V,\, (y^\mu) \bigr) $ をとる．
+    このとき $F$ の座標表示 $\widehat{F} \coloneqq \psi \circ F \circ \varphi^{-1} \colon \varphi(U) \lto \psi(V),\; x \lmto \bigl( \widehat{F}^1(x),\, \dots,\, \widehat{F}^{\dim N}(x) \bigr)$ は $\widehat{F}^{\dim N} \bigl( \varphi(p) \bigr) = 0$ を充たす．
+    ところで $\psi(V) \subset \mathbb{H}^n$ なので $\forall x \in \varphi(U)$ に対して $\widehat{F}^{\dim N} (x) \ge 0$ であり，$C^\infty$ 関数 $\widehat{F}^{\dim N} \colon \varphi(U) \lto \mathbb{R}$ は点 $\varphi(p) \in \varphi(U)$ において最小値をとることが分かった．
+    従って $\pdv*{\widehat{F}^{\dim N}}{x^\nu} ()\bigl(\varphi(p)\bigr) = 0\quad (1 \le \forall \nu \le \dim N)$ であり，点 $\varphi(p) \in \varphi(U)$ における $\widehat{F}$ のJacobi行列の第 $\dim N$ 行が全て $0$ だと言うことになるが，これは $T_p F$ が単射であることに矛盾．
+    よって背理法から $F(p) \notin \partial N \IFF F(p) \in \Int N$ が示された．
+\end{proof}
+
+\begin{mytheo}[label=thm:inverse-function-b]{$C^\infty$ 多様体における逆関数定理}
+    \begin{itemize}
+        \item \underline{境界を持たない} $C^\infty$ 多様体 $M$
+        \item \underline{境界あり/なし} $C^\infty$ 多様体 $N$
+        \item $C^\infty$ 写像 $F \colon M \lto N$
+    \end{itemize}
+    を与える．このとき，ある点 $p \in M$ において $T_p F \colon T_p M \lto T_{F(p)} N$ が全単射ならば，
+    \begin{itemize}
+        \item 点 $p \in M$ の連結な近傍 $p \in U_0 \subset M$
+        \item 点 $F(p) \in N$ の連結な近傍 $p \in V_0 \subset N$
+    \end{itemize}
+    が存在して $F|_{U_0} \colon U_0 \lto V_0$ が微分同相写像になる．
+\end{mytheo}
+
+\begin{proof}
+    $N$ が境界を持たない場合は定理\ref{thm:inverse-function}が使える．
+
+    $N$ が境界付き $C^\infty$ 多様体だとする．仮定より $T_p F$ は単射なので補題\ref{lem:singular-b}から $F(p) \in \Int N$ が分かる．
+    $\Int N$ は境界を持たない $C^\infty$ 多様体なので定理\ref{thm:inverse-function}の証明がそのまま成り立つ．
+
+\end{proof}
+
+
+\subsection{ランク定理}
+
+\begin{mydef}[label=def:rank-smooth]{$C^\infty$ 写像のランク}
+    境界あり/なし $C^\infty$ 多様体 $M,\, N$ および $C^\infty$ 写像 $F \colon M \lto N$ を与える．
+    \begin{itemize}
+        \item 点 $p \in M$ における $F$ の\textbf{ランク} (rank) とは，線型写像 $T_p F \colon T_p M \lto T_{F(p)} N$ のランク，i.e. $\dim \bigl(\Im (T_p F)\bigr) \in \mathbb{Z}_{\ge 0}$ のこと．$\forall p \in M$ における $F$ のランクが等しいとき，$F$ は\textbf{定ランク} (constant rank) であると言い，$\bm{\rank F} \coloneqq \dim \bigl(\Im (T_p F)\bigr)$ と書く．
+        \item 点 $p \in M$ における $F$ のランクが $\min \bigl\{\dim M,\, \dim N\bigr\}$ に等しいとき，$F$ は\textbf{点 $\bm{p}$ においてフルランク} (full rank at $p$) であると言う．
+        $\rank F = \min \bigl\{\dim M,\, \dim N\bigr\}$ ならば $F$ は\textbf{フルランク} (full rank) であると言う．
+    \end{itemize}
+\end{mydef}
+
+位相空間 $M,\, N$ を与える．連続写像 $F \colon M \lto N$ が\textbf{位相的埋め込み} (topological embedding) であるとは，$F(M) \subset N$ に $N$ からの相対位相を入れたときに写像 $F \colon M \lto F(M)$ が同相写像になることを言う．
+
+\begin{mydef}[label=def:submersion-smooth]{$C^\infty$ 沈めこみ・$C^\infty$ はめ込み・$C^\infty$ 埋め込み}
+    境界あり/なし $C^\infty$ 多様体 $M,\, N$ および\hyperref[def:rank-smooth]{定ランク}の $C^\infty$ 写像 $F \colon M \lto N$ を与える．
+    \begin{itemize}
+        \item $F$ が\textbf{ $\bm{C^\infty}$ 沈め込み} (smooth submersion) であるとは，$\forall p \in M$ において $T_p F \colon T_p M \lto T_{F(p)} N$ が全射である，i.e. $\rank F = \dim N$ であることを言う．
+        \item $F$ が\textbf{ $\bm{C^\infty}$ はめ込み} (smooth immersion) であるとは，$\forall p \in M$ において $T_p F \colon T_p M \lto T_{F(p)} N$ が単射である，i.e. $\rank F = \dim M$ であること\footnote{階数・退化次元の定理から $\dim (\Ker T_p F) + \dim (\Im T_p F) = \dim M$ なので，$\rank F = \dim (\Im T_p F) = \dim M \IMP \dim (\Ker T_p F) = 0 \IFF \Ker T_p F = 0$}を言う．
+        \item $F$ が\textbf{ $\bm{C^\infty}$ 埋め込み} (smooth embedding) であるとは，$F$ が $C^\infty$ はめ込みであってかつ位相的埋め込みであることを言う．
+    \end{itemize}
+\end{mydef}
+
+\begin{myprop}[label=prop:SI-basics]{局所微分同相写像と $C^\infty$ 沈めこみ・$C^\infty$ はめ込み}
+    \begin{itemize}
+        \item \underline{境界を持たない} $C^\infty$ 多様体 $M$
+        \item \underline{境界あり/なし} $C^\infty$ 多様体 $N$
+        \item 写像 $F \colon M \lto N$
+    \end{itemize}
+    を与える．このとき以下が成り立つ：
+    \begin{enumerate}
+        \item $F$ が\hyperref[def:loc-diffeo]{局所微分同相写像} $\IFF$ $F$ は\hyperref[def:submersion-smooth]{$C^\infty$ 沈め込み}かつ\hyperref[def:submersion-smooth]{$C^\infty$ はめ込み}
+        \item $\dim M = \dim N$ かつ $F$ が\hyperref[def:submersion-smooth]{$C^\infty$ 沈め込み}\underline{または}\hyperref[def:submersion-smooth]{$C^\infty$ はめ込み} $\IMP$ $F$ は\hyperref[def:loc-diffeo]{局所微分同相}
+    \end{enumerate}
+    
+\end{myprop}
+
+\begin{proof}
+    \begin{enumerate}
+        \item \begin{description}
+            \item[\textbf{$\bm{\Longrightarrow}$}]　
+            
+            $F$ が局所微分同相だとする．$\forall p \in M$ を1つ固定する．仮定よりこのとき $p$ の近傍 $p \in U \subset M$ であって $F|_U \colon U \lto F(U)$ が微分同相写像となるようなものがある．
+
+            特に\hyperref[def:loc-diffeo]{局所微分同相写像の定義}から $U,\, F(U)$ はそれぞれ $M,\, N$ の開集合なので，包含写像 $\iota_U \colon U \hookrightarrow M,\; \iota_{F(U)} \colon F(U) \hookrightarrow N$ の微分 $T_p (\iota_U) \colon T_p U \lto T_p M,\; T_{F(p)} \bigl( \iota_{F(U)} \bigr) \colon T_{F(p)} \bigl( F(U) \bigr) \lto T_{F(p)} N$ はベクトル空間の同型写像である．
+            さらに $F|_U$ が微分同相写像なので $T_p (F|_U) \colon T_p U \lto T_{F(p)} \bigl( F(U) \bigr) \cong T_{F(p)} N$ はベクトル空間の同型写像だが，$T_p (F|_U) = T_p (F \circ \iota_U) = T_p F \circ T_p (\iota_U)$ なので，$T_p F \colon T_p M \lto T_p N$ 自身もベクトル空間の同型写像である．
+            故に $\rank F = \dim M = \dim N$ が言える．
+            \item[\textbf{$\bm{\Longleftarrow}$}]　
+            
+            $F$ が $C^\infty$ 沈め込みかつ $C^\infty$ はめ込みであるとする．すると $\forall p \in M$ に対して $T_p F \lto T_p M \lto T_{F(p)} N$ は全単射なので，\hyperref[thm:inverse-function-b]{$C^\infty$ 多様体における逆関数定理}が使える．
+        \end{description}
+        \item $\forall p \in M$ をとる．
+        $\dim M = \dim N$ かつ $T_p F \colon T_p M \lto T_{F(p)}N$ が単射ならば，階数-退化次元の定理より $\dim (\Im T_p F) = \dim M - \dim (\Ker T_p F) = \dim M = \dim N$ なので $T_p F$ が全単射だとわかる．
+        $\dim M = \dim N$ かつ $T_p F \colon T_p M \lto T_{F(p)}N$ が全射ならば，階数-退化次元の定理より $\dim (\Ker T_p F) = \dim M - \dim (\Im T_p F) = \dim M - \dim N = 0$ なので $T_p F$ が全単射だとわかる．
+        よってどちらの場合も\hyperref[thm:inverse-function-b]{$C^\infty$ 多様体における逆関数定理}が使える．
+    \end{enumerate}
+\end{proof}
+
+\begin{mytheo}[label=thm:rank]{局所的ランク定理（境界を持たない場合）}
+    \begin{itemize}
+        \item \underline{境界を持たない} $C^\infty$ 多様体 $M,\, N$ 
+        \item \hyperref[def:rank-smooth]{定ランク}の $C^\infty$ 写像 $F \colon M \lto N$
+    \end{itemize}
+    を与える．
+    このとき $\forall p \in M$ に対して
+    \begin{itemize}
+        \item 点 $p \in M$ を含む $M$ の $C^\infty$ チャート $(U_0,\, \Phi)$ であって $\Phi(p) = 0 \in \mathbb{R}^{\dim M}$ を充たすもの
+        \item 点 $F(p) \in N$ を含む $N$ の $C^\infty$ チャート $(V_0,\, \Psi)$ であって $\Psi \bigl( F(p) \bigr) = 0 \in \mathbb{R}^{\dim N}$ かつ $F(U) \subset V$ を充たすもの
+    \end{itemize}
+    が存在して，$\forall (x^1,\, \dots,\, x^{\dim M}) \in \Phi(U) \subset \mathbb{R}^{\dim M}$ に対して
+    \begin{align}
+        \label{eq:coord-rep-canonical}
+        \Psi \circ F \circ \Phi^{-1} &(x^1,\, \dots,\, x^{\rank F},\, x^{\rank F + 1},\, \dots,\,  x^{\dim M}) \\
+        =\; &(x^1,\, \dots,\, x^{\rank F},\, \underbrace{0,\, \dots,\, 0}_{\dim N - \rank F}) \in \Psi(V) \subset \mathbb{R}^{\dim N}
+    \end{align}
+    を充たす．
+    \tcblower
+    特に $F$ が\hyperref[def:submersion-smooth]{$C^\infty$ 沈め込み}ならば\eqref{eq:coord-rep-canonical}は
+    \begin{align}
+        \label{eq:coord-rep-canonical-submersion}
+        \Psi \circ F \circ \Phi^{-1} (x^1,\, \dots,\, x^{\dim N},\, x^{\dim N + 1},\, \dots,\,  x^{\dim M}) = (x^1,\, \dots,\, x^{\dim N})
+    \end{align}
+    の形になり，$F$ が\hyperref[def:submersion-smooth]{$C^\infty$ はめ込み}ならば\eqref{eq:coord-rep-canonical}は
+    \begin{align}
+        \label{eq:coord-rep-canonical-immersion}
+        \Psi \circ F \circ \Phi^{-1} (x^1,\, \dots,\, x^{\dim M}) = (x^1,\, \dots,\, x^{\dim M},\, 0,\, \dots,\, 0)
+    \end{align}
+    の形になる．
+\end{mytheo}    
+
+\begin{proof}
+    $\forall p \in M$ を1つ固定する．以降では $p$ を含む $M$ の任意の $C^\infty$ チャート $(U,\, \varphi) = \bigl( U,\, (x^\mu) \bigr) $ および $F(p)$ を含む $N$ の任意の $C^\infty$ チャート $(V,\, \psi) = \bigl( V,\, (x'{}^\mu) \bigr) $ に対して
+    \begin{align}
+        \widehat{U} &\coloneqq \varphi(U) \subset \mathbb{R}^{\dim M}, \\
+        \widehat{V} &\coloneqq \psi(V) \subset \mathbb{R}^{\dim N}, \\
+        \widehat{F} &\coloneqq \psi \circ F \circ \varphi^{-1} \colon \widehat{U} \lto \widehat{V}, \\
+        \widehat{p} &\coloneqq \varphi(p) \in \widehat{U}
+    \end{align}
+    とおく．便宜上 $C^\infty$ チャート $\bigl(U,\, (x^\mu)\bigr),\, \bigl(V,\, (x'{}^\mu)\bigr)$ の座標関数をそれぞれ
+    \begin{align}
+        &(x,\, y) = (x^1,\, \dots,\, x^{\rank F},\, y^1,\, \dots,\, y^{\dim M - \rank F})
+        \coloneqq (x^1,\, \dots,\, x^{\dim M})  \\
+        % \colon U \lto \widehat{U} \subset \mathbb{R}^{\rank F} \times \mathbb{R}^{\dim M - \rank F} \\
+        &(v,\, w) = (v^1,\, \dots,\, v^{\rank F},\, w^1,\, \dots,\, w^{\dim N - \rank F})
+        \coloneqq (x'{}^1,\, \dots,\, x'{}^{\dim N}) 
+        % \colon V \lto \widehat{V} \subset \mathbb{R}^{\rank F} \times \mathbb{R}^{\dim N - \rank F}
+    \end{align}
+    とおき直す．また，2つの $C^\infty$ 写像を
+    \begin{align}
+        Q \colon \widehat{U} &\lto \mathbb{R}^{\rank F},\; (x,\, y) \lmto \bigl( \widehat{F}^1(x,\, y),\, \dots,\, \widehat{F}^{\rank F} (x,\, y) \bigr) \\
+        R \colon \widehat{U} &\lto \mathbb{R}^{\dim N - \rank F},\; (x,\, y) \lmto \bigl( \widehat{F}^{\rank F + 1}(x,\, y),\, \dots,\, \widehat{F}^{\dim N} (x,\, y) \bigr)
+    \end{align}
+    と定義する．このとき $\widehat{F} = (Q,\, R)$ と書ける．
+    
+    仮定より $F$ は\hyperref[def:rank-smooth]{定ランク}なので，点 $\widehat{p} \in \widehat{U}$ において線型写像 $T_{\widehat{p}} \widehat{F} \colon T_{\widehat{p}} \widehat{U} \lto T_{\widehat{F} (\widehat{p})} \widehat{V}$ の表現行列のランクは $\rank F$ である．
+    必要ならば $M,\, N$ の $C^\infty$ チャートを取り替えることで座標関数の順番を好きなように入れ替えることができる
+    \footnote{座標を入れ替える写像は微分同相写像なので，$M,\, N$ の $C^\infty$ 構造の中には座標の入れ替えによって互いに移り合えるような $C^\infty$ チャートたちが含まれている．}
+    ので，
+    $T_{\widehat{p}} \widehat{F}$ の表現行列\footnote{これは $C^\infty$ 関数 $\widehat{F}$ の\hyperref[thm:inverse-function-Rn]{Jacobi行列} $D \widehat{F} (\widehat{p})$ である．}の $\rank F$ 次首座小行列に対して
+    \begin{align}
+        \label{eq:hypothesis-rank-theorem}
+        \left[ \, \pdv{\widehat{F}^\mu}{x^\nu}()(\widehat{p}) \, \right]_{1 \le \mu,\, \nu \le \rank F} = \left[ \, \pdv{Q^\mu}{x^\nu}()(0,\, 0) \,\right]_{1 \le \mu,\, \nu \le \rank F} \in \LGL(\rank F,\, \mathbb{R})
+    \end{align}
+    が成り立つような $C^\infty$ チャート $\bigl( U,\, (x,\, y) \bigr),\, \bigl( V,\, (v,\, w) \bigr)$ が存在する．
+    さらに，$\widehat{U},\, \widehat{V}$ の原点を平行移動することでいつでも $\widehat{p} = (0,\, 0) \in \mathbb{R}^{\dim M},\, \widehat{F}(\widehat{p}) = (0,\, 0) \in \mathbb{R}^{\dim N}$ が成り立つようにできる\footnote{平行移動は微分同相写像なので，$M,\, N$ の $C^\infty$ 構造には平行移動によって互いに移り合えるような $C^\infty$ チャートたちが含まれている．}．
+
+    ここまでの議論の要請を満たす $M,\, N$ の任意の $C^\infty$ チャート $(U,\, \varphi),\, (V,\, \psi)$ をとり， 
+    $C^\infty$ 写像
+    \begin{align}
+        \widehat{\Phi} \colon \widehat{U} \lto \mathbb{R}^{\dim M},\; (x,\, y) \lmto \bigl( Q(x,\, y),\, y \bigr) 
+    \end{align}
+    を考える．点 $(0,\, 0) \in \widehat{U}$ における $\Psi$ のJacobi行列は
+    \begin{align}
+        D\Psi(0,\, 0) = 
+        \mqty[
+            \left[\pdv{Q^\mu}{x^\nu}()(0,\, 0)\right]_{1 \le \mu,\, \nu \le \rank F} & \left[\pdv{Q^\mu}{y^\nu}()(0,\, 0)\right]_{1 \le \mu \le \rank F,\, 1 \le \nu \le \dim M - \rank F} \\ 
+            & \\
+            0 & \unity_{\dim M - \rank F}
+        ]
+    \end{align}
+    となるが，仮定\eqref{eq:hypothesis-rank-theorem}よりこれは正則行列である．よって\hyperref[thm:inverse-function-Rn]{$\mathbb{R}^{\dim M}$ における逆関数定理}から
+    \begin{itemize}
+        \item 点 $(0,\, 0) \in \widehat{U}$ の連結な近傍 $\widehat{U_0} \subset \widehat{U}$
+        \item 点 $(0,\, 0) \in \mathbb{R}^{\dim M}$ の連結な近傍 $\tilde{U}_0 \subset \mathbb{R}^{\dim M}$
+    \end{itemize}
+    が存在して $\widehat{\Phi}|_{\widehat{U_0}} \colon \widehat{U_0} \lto \tilde{U}_0$ が微分同相写像になる．$\widehat{U_0},\, \tilde{U}_0$ を適当に小さくとり直すことで $\tilde{U}_0$ が開区間の直積であると仮定して良い．
+    $\widehat{\Phi}|_{\widehat{U_0}}$ の逆写像を $\widehat{\Phi}^{-1} \colon \tilde{U}_0 \lto \widehat{U_0},\; (x,\, y) \lmto \bigl( A(x,\, y),\, B(x,\, y) \bigr)$ と書くと $A \colon \tilde{U}_0 \lto \mathbb{R}^{\rank F},\, B \colon \tilde{U}_0 \lto \mathbb{R}^{\dim M -\rank F}$ はどちらも $C^\infty$ 写像で，
+    $\forall (x,\, y) \in \tilde{U}_0$ に対して
+    \begin{align}
+        (x,\, y) 
+        = \widehat{\Phi} \circ \widehat{\Phi}^{-1}(x,\, y)
+        = \Bigl( Q \bigl( A(x,\, y),\, B(x,\, y) \bigr),\, B(x,\, y)  \Bigr)
+    \end{align}
+    が成り立つ．よって
+    \begin{align}
+        \widehat{\Phi}^{-1}(x,\, y) &= \bigl( A(x,\, y),\, y \bigr) , \\
+        x &= Q \bigl( A(x,\, y),\, y \bigr) 
+    \end{align}
+    であり，
+    \begin{align}
+        \widehat{F} \circ \widehat{\Phi}^{-1} (x,\, y)
+        &= \widehat{F} \bigl( A(x,\, y),\, y \bigr)  \\
+        &= \Bigl( Q \bigl( A(x,\, y),\, y \bigr),\,  R \bigl( A(x,\, y),\, y \bigr)  \Bigr) \\
+        &= \Bigl( x,\,  R \bigl( A(x,\, y),\, y \bigr)  \Bigr)
+    \end{align}
+    が分かった．
+    従って $C^\infty$ 写像 $\tilde{R} \colon \tilde{U}_0 \lto \mathbb{R}^{\dim N -\rank F},\, (x,\, y) \lmto R \bigl( A(x,\, y),\, y \bigr)$ と定義すると，
+    $\forall (x,\, y) \in \tilde{U}_0$ における $\widehat{F} \circ \widehat{\Phi}^{-1}$ のJacobi行列は
+    \begin{align}
+        &D (\widehat{F} \circ \Psi^{-1}) (x,\, y) \\
+        &= 
+        \mqty[
+            \unity_{\rank F} & 0 \\
+            & \\
+            \left[\pdv{\tilde{R}^\mu}{x^\nu}()(x,\, y)\right]_{1 \le \mu \le \dim N - \rank F,\, 1 \le \nu \le \rank F} & \left[\pdv{\tilde{R}^\mu}{y^\nu}()(x,\, y)\right]_{1 \le \mu \le \dim N - \rank F,\, 1 \le \nu \le \dim M - \rank F} \\ 
+        ]
+    \end{align}
+    と計算できる．ところが，仮定より行列 $D(\widehat{F})(x,\, y)$ のランクは $\rank F$ で，かつ $\widehat{\Phi}^{-1}$ は微分同相写像なので $D(\widehat{\Phi}^{-1})(x,\, y) \in \LGL(\dim M,\, \mathbb{R})$ であり，行列 $D (\widehat{F} \circ \widehat{\Phi}^{-1})(x,\, y) = D(\widehat{F})(x,\, y) \circ D(\widehat{\Phi}^{-1})(x,\, y)$ のランクは $\rank F$ に等しい．よって $\forall (x,\, y) \in \tilde{U_0}$ において
+    \begin{align}
+        \left[\pdv{\tilde{R}^\mu}{y^\nu}()(x,\, y)\right]_{1 \le \mu \le \dim N - \rank F,\, 1 \le \nu \le \dim M - \rank F} = 0
+    \end{align}
+    でなくてはいけない．$\tilde{U}_0$ は開区間の直積なので，このことから $\tilde{R}$ が $(y^1,\, \dots,\, y^{\dim M - \rank F})$ によらないことが分かった．
+    よって $S(x) \coloneqq \tilde{R}(x,\, 0)$ とおくと
+    \begin{align}
+        \label{eq:thm-rank-1}
+        \widehat{F} \circ \widehat{\Phi}^{-1}(x,\, y) = \bigl( x,\, S(x) \bigr) 
+    \end{align}
+    と書けることが分かった．
+
+    最後に，点 $\widehat{F} (\widehat{p}) = (0,\, 0) \in \widehat{V}$ の適当な近傍を構成する．
+    開集合\footnote{写像 $f \colon \widehat{V} \lto \mathbb{R}^{\dim M},\; (v,\, w) \lmto (v,\, 0)$ は連続で，$\tilde{U}_0 \subset \mathbb{R}^{\dim M}$ は開集合なので，$V_0 = \widehat{V} \cap f^{-1}(\tilde{U}_0) \subset \widehat{V}$ もまた開集合．} 
+    $\widehat{V_0} \subset \widehat{V}$ を
+    \begin{align}
+        \widehat{V_0} \coloneqq \bigl\{\, (v,\, w) \in \widehat{V} \bigm| (v,\, 0) \in \tilde{U}_0 \,\bigr\} 
+    \end{align}
+    と定義すると，$\widehat{F} (\widehat{p}) = (0,\, 0) \in \widehat{V_0}$ なので $\widehat{V_0}$ は点 $\widehat{F} (\widehat{p})$ の近傍であり，
+    $\tilde{U}_0$ は開区間の直積なので\eqref{eq:thm-rank-1}から$\widehat{F} \circ \widehat{\Phi}^{-1}(\tilde{U}_0) \subset \widehat{V_0}$ が成り立つ．
+    そして $C^\infty$ 写像
+    \begin{align}
+        \widehat{\Psi} \colon \widehat{V_0} \lto \mathbb{R}^{\dim N},\; (v,\, w) \lmto \bigl( v,\, w - S(v) \bigr) 
+    \end{align}
+    を考える．$\widehat{\Psi} \colon \widehat{V_0} \lto \widehat{\Psi}(\widehat{V_0})$ は $C^\infty$ 写像
+    \begin{align}
+        \widehat{\Psi}^{-1} \colon \widehat{\Psi}(\widehat{V_0}) \lto \widehat{V_0},\; (s,\, t) \lmto \bigl( s,\, t + S(s) \bigr) 
+    \end{align}
+    を逆写像に持つので微分同相写像であり，$(V_0,\, \widehat{\Psi})$ は $N$ の $C^\infty$ チャートである．その上\eqref{eq:thm-rank-1}から $\forall (x,\, y) \in \tilde{U}_0$ に対して
+    \begin{align}
+        \label{eq:thm-rank-ans}
+        \widehat{\Psi} \circ \widehat{F} \circ \widehat{\Phi}^{-1}(x,\, y) = \widehat{\Psi}\bigl(x,\, S(x)\bigr) = (x,\, 0)
+    \end{align}
+    となる．
+
+    以上をまとめると，
+    \begin{align}
+        U_0 &\coloneqq \varphi^{-1} (\widehat{U_0}) \subset M, \\
+        V_0 &\coloneqq \psi^{-1} (\widehat{V_0}) \subset N, \\
+        \Phi &\coloneqq \widehat{\Phi} \circ \varphi \colon U_0 \lto \Phi(U_0), \\
+        \Psi &\coloneqq \widehat{\Psi} \circ \psi \colon V_0 \lto \Psi(V_0)
+    \end{align}
+    とおくと $\Phi,\, \Psi$ は微分同相写像であり，
+    \begin{itemize}
+        \item 点 $p \in M$ を含む $M$ の $C^\infty$ チャート $(U_0,\, \Phi)$
+        \item 点 $F(p) \in N$ を含む $N$ の $C^\infty$ チャート $(V_0,\, \Psi)$
+    \end{itemize}
+    の2つ組は\eqref{eq:thm-rank-ans}から $\forall (x,\, y) \in \Phi(U_0) = \tilde{U}_0$ に対して
+    \begin{align}
+        \Psi \circ F \circ \Phi (x,\, y) = \widehat{\Psi} \circ \widehat{F} \circ \widehat{\Phi}^{-1}(x,\, y) = (x,\, 0)
+    \end{align}
+    を充たすので証明が完了する．
+\end{proof}
+
+\begin{mycol}[label=col:rank]{}
+    \underline{境界を持たない} $C^\infty$ 多様体 $M,\, N$ と $C^\infty$ 写像 $F \colon M \lto N$ を与える．
+    このとき $M$ が連結ならば以下の2つは同値である：
+    \begin{enumerate}
+        \item $F$ は\hyperref[def:rank-smooth]{定ランク}
+        \item $\forall p \in M$ において，$p,\, F(p)$ を含む $M,\, N$ の $C^\infty$ チャート $(U,\, \varphi),\, (V,\, \psi)$ であって $F$ の座標表示 $\psi \circ F \circ \varphi^{-1} \colon \varphi(U) \lto \psi(V)$ が線型写像となるようなものが存在する．
+    \end{enumerate}
+\end{mycol}
+
+\begin{proof}
+    \begin{description}
+        \item[\textbf{(1) $\bm{\Longrightarrow}$ (2)}]　
+        
+        定理\ref{thm:rank}の\eqref{eq:coord-rep-canonical}は $F$ の座標表示が線型写像であることを意味する．
+
+        \item[\textbf{(1) $\bm{\Longleftarrow}$ (2)}]　
+        
+        任意の線型写像のランクは一意に定まるので，$\forall p \in M$ の近傍において $F$ の\hyperref[def:rank-smooth]{ランク}は一定だが，仮定より $M$ は連結なので $F$ は定ランクである．
+    \end{description}
+\end{proof}
+
+\begin{mytheo}[label=thm:rank-global]{大域的ランク定理（境界を持たない場合）}
+    \begin{itemize}
+        \item \underline{境界を持たない} $C^\infty$ 多様体 $M,\, N$ 
+        \item \hyperref[def:rank-smooth]{定ランク}の $C^\infty$ 写像 $F \colon M \lto N$
+    \end{itemize}
+    を与える．
+    このとき以下が成り立つ：
+    \begin{enumerate}
+        \item $F$ が全射 $\IMP$ $F$ は\hyperref[def:submersion-smooth]{$C^\infty$ 沈め込み}
+        \item $F$ が単射 $\IMP$ $F$ は\hyperref[def:submersion-smooth]{$C^\infty$ はめ込み}
+        \item $F$ が全単射 $\IMP$ $F$ は微分同相写像
+    \end{enumerate}
+\end{mytheo}
+
+\begin{proof}
+    \begin{enumerate}
+        \item $F$ が全射だとする．
+        もし $\rank F < \dim N$ ならば，\hyperref[thm:rank]{局所的ランク定理}により 
+        $\forall p \in M$ に対して
+        \begin{itemize}
+            \item 点 $p \in M$ を含む $M$ の $C^\infty$ チャート $(U_p,\, \Phi)$ であって $\Phi(p) = 0 \in \mathbb{R}^{\dim M}$ を充たすもの
+            \item 点 $F(p) \in N$ を含む $N$ の $C^\infty$ チャート $(V_p,\, \Psi)$ であって $\Psi \bigl( F(p) \bigr) = 0 \in \mathbb{R}^{\dim N}$ かつ $F(U_p) \subset V_p$ を充たすもの
+        \end{itemize}
+        が存在して，$F$ の座標表示 $\Psi \circ F \circ \Phi^{-1} \colon \Phi(U_p) \lto \Psi(V_p)$ が\eqref{eq:coord-rep-canonical}の形になる．
+        必要なら $U_p$ を適当に小さくとることで $\exists r > 0,\; \Phi(U_p) = B_r (0) \subset \mathbb{R}^{\dim M}$ で，かつ $F(\overline{U_p}) \subset V_p$ が成り立つと仮定して良い．
+        このとき $F(\overline{U_p})$ はHausdorff空間 $\bigl\{\, y \in V_p \bigm| \Psi(y) = (y^1,\, \dots,\, y^{\rank F},\, 0,\, \dots,\, 0)  \,\bigr\}$ のコンパクト部分集合なので，$N$ の閉集合でかつ $N$ の開集合を部分集合として持たない．i.e. $N$ 上\textbf{疎} (nowhere dense) である．
+        多様体の第2可算性より任意の多様体の開被覆は高々可算な部分被覆を持つから，$M$ の開被覆 $\Familyset[\big]{U_p}{p \in M}$ および $F(M)$ の開被覆 $\Familyset[\big]{V_p}{p \in M}$ はそれぞれ高々可算な部分被覆 $\Familyset[\big]{U_{i}}{i \in I},\, \Familyset[\big]{V_i}{i \in I}$ を持つ．i.e. $F(M)$ は高々可算個の疎集合 $F(\overline{U_i})$ たちの和集合なので，Baireのカテゴリー定理から $F(M)$ の $N$ における内部は空集合ということになるが，これは $F$ が全射であることに矛盾する．
+        よって背理法から $\rank F = \dim N$ が言えた．
+        \item $F$ が単射だとする．
+        もし $\rank F < \dim M$ ならば，\hyperref[thm:rank]{局所的ランク定理}により 
+        $\forall p \in M$ に対して
+        \begin{itemize}
+            \item 点 $p \in M$ を含む $M$ の $C^\infty$ チャート $(U_p,\, \Phi)$ であって $\Phi(p) = 0 \in \mathbb{R}^{\dim M}$ を充たすもの
+            \item 点 $F(p) \in N$ を含む $N$ の $C^\infty$ チャート $(V_p,\, \Psi)$ であって $\Psi \bigl( F(p) \bigr) = 0 \in \mathbb{R}^{\dim N}$ かつ $F(U_p) \subset V_p$ を充たすもの
+        \end{itemize}
+        が存在して，$F$ の座標表示 $\Psi \circ F \circ \Phi^{-1} \colon \Phi(U_p) \lto \Psi(V_p)$ が\eqref{eq:coord-rep-canonical}を充たす．
+        このことから，十分小さな任意の $\varepsilon \in \mathbb{R}^{\dim M - \rank F}$ に対して $\Psi \circ F \circ \Phi^{-1}(0,\, \dots,\, 0,\, \varepsilon) = \Psi \circ F \circ \Phi^{-1}(0,\, \cdots,\, 0)$ が成り立つことになり $F$ の単射性に矛盾．
+        \item (1), (2) より $F$ が全単射なら $F$ は $C^\infty$ 沈め込みかつ $C^\infty$ はめ込みであるから，
+        命題\ref{prop:SI-basics}より $F$ は全単射な\hyperref[def:loc-diffeo]{局所微分同相写像}である．よって $F$ は微分同相写像である．
+    \end{enumerate}
+    
+\end{proof}
+
+
+\begin{mytheo}[label=thm:rank-b]{はめ込みに関する局所的ランク定理（境界付き）}
+    \begin{itemize}
+        \item \underline{境界付き} $C^\infty$ 多様体 $M$
+        \item \underline{境界を持たない} $C^\infty$ 多様体 $N$
+        \item \hyperref[def:submersion-smooth]{$C^\infty$ はめ込み}の $C^\infty$ 写像 $F \colon M \lto N$
+    \end{itemize}
+    を与える．
+    このとき $\forall p \in \textcolor{red}{\partial M}$ に対して
+    \begin{itemize}
+        \item 点 $p \in M$ を含む $M$ の $C^\infty$ 境界チャート $(U_0,\, \Phi)$ であって $\Phi(p) = 0 \in \mathbb{H}^{\dim M}$ を充たすもの
+        \item 点 $F(p) \in N$ を含む $N$ の $C^\infty$ チャート $(V_0,\, \Psi)$ であって $\Psi \bigl( F(p) \bigr) = 0 \in \mathbb{R}^{\dim N}$ かつ $F(U) \subset V$ を充たすもの
+    \end{itemize}
+    が存在して，$\forall (x^1,\, \dots,\, x^{\dim M}) \in \Phi(U) \subset \mathbb{H}^{\dim M}$ に対して
+    \begin{align}
+        \label{eq:coord-rep-canonical-b}
+        \Psi \circ F \circ \Phi^{-1} &(x^1,\, \dots,\, x^{\dim M}) = (x^1,\, \dots,\, x^{\dim M},\, \underbrace{0,\, \dots,\, 0}_{\dim N - \rank M}) \in \Psi(V) \subset \mathbb{R}^{\dim N}
+    \end{align}
+    を充たす．
+\end{mytheo}
+
+\begin{proof}
+    
+\end{proof}
+
+\subsection{$C^\infty$ 埋め込み}
+
+\begin{myprop}[label=prop:embedding-basic]{}
+    境界あり/なし $C^\infty$ 多様体 $M,\, N$ および単射な \hyperref[def:submersion-smooth]{$C^\infty$ はめ込み} $F \colon M \lto N$ を与える．
+    このとき，以下のいずれかの条件が充たされれば $F$ は \hyperref[def:submersion-smooth]{$C^\infty$ 埋め込み}である：
+    \begin{enumerate}
+        \item $F$ は開写像または閉写像
+        \item $F$ は固有写像 (\textbf{proper map}\footnote{$Y$ の任意のコンパクト部分集合の逆像が $X$ のコンパクト部分集合})
+        \item $M$ はコンパクト
+        \item $\partial M = \emptyset$ かつ $\dim M = \dim N$
+    \end{enumerate}
+    
+\end{myprop}
+
+\begin{proof}
+    \begin{enumerate}
+        \item $F$ が開写像だとする．
+        $F \colon M \lto F(M)$ は全単射なので，逆写像 $F^{-1} \colon F(M) \lto M$ が存在する．このとき，$X$ の任意の開集合 $U \subset X$ に対して $(F^{-1})^{-1}(U) = F(U) \subset Y$ は仮定より $Y$ の開集合であるから，相対位相の定義より $F(M)$ においても開集合である．i.e. $F^{-1}$ は連続写像であり，$F \colon M \lto F(M)$ が同相写像だと分かった．
+        i.e. $F$ は位相的埋め込みである．
+        $F$ が閉写像の場合も同様．
+        \item 
+    \end{enumerate}
+    
+\end{proof}
+
 \section{部分多様体}
 
-\begin{mydef}[label=def.submani]{部分多様体}
-	$n$ 次元\cinfty 多様体 $(M,\, \mathscr{O}_M)$ を与える．部分集合 $N \subset M$ は以下の条件を充たすとき\textbf{部分多様体} (submanifold) と呼ばれる：
-	\begin{description} 
-		\item[\textbf{(sub)}] $\forall p \in N$ に対してある開近傍 $U \in \mathscr{O}_M$ と $U$ 上定義された座標関数 $x^\mu \colon U \to \mathbb{R}$ が存在して，
-		\begin{align} 
-			\exists k \ge 0,\; N \cap U = \bigl\{ q \in U \bigm| x^{k+1}(q) = \cdots = x^n(q) = 0 \bigr\}.
-		\end{align}
-	\end{description}
+% \begin{mydef}[label=def.submani]{部分多様体}
+% 	$n$ 次元\cinfty 多様体 $(M,\, \mathscr{O}_M)$ を与える．部分集合 $N \subset M$ は以下の条件を充たすとき\textbf{部分多様体} (submanifold) と呼ばれる：
+% 	\begin{description} 
+% 		\item[\textbf{(sub)}] $\forall p \in N$ に対してある開近傍 $U \in \mathscr{O}_M$ と $U$ 上定義された座標関数 $x^\mu \colon U \to \mathbb{R}$ が存在して，
+% 		\begin{align} 
+% 			\exists k \ge 0,\; N \cap U = \bigl\{ q \in U \bigm| x^{k+1}(q) = \cdots = x^n(q) = 0 \bigr\}.
+% 		\end{align}
+% 	\end{description}
 	
-	$N$ が $M$ の閉集合であるときは\textbf{閉部分多様体}と呼ぶ．
-\end{mydef}
+% 	$N$ が $M$ の閉集合であるときは\textbf{閉部分多様体}と呼ぶ．
+% \end{mydef}
 
-\begin{mydef}[label=def.embedding]{はめ込みと埋め込み}
-	\cinfty 多様体 $M,\, N$ と \cinfty 写像 $f \colon M \to N$ を与える．
-	\begin{enumerate} 
-		\item $\forall p \in M$ において $f$ の微分写像 $f_* \colon T_p M \to T_{f(p)}N$ が\underline{単射}のとき，$f$ を\textbf{はめ込み} (immersion) と呼ぶ．
-		\item $f \colon M \to N$ が\underline{はめ込み}であって，かつ全射 $f\colon M \twoheadrightarrow f(M)$ が同相写像であるとき，$f$ を\textbf{埋め込み} (embedding) と呼ぶ．
-		\item $f \colon M \to N$ が\underline{全射}であって，かつ $\forall p \in M$ において $f_* \colon T_p M \to T_{f(p)}N$ が\underline{全射}であるとき， $f$ を\textbf{沈め込み} (submersion) と呼ぶ．
-	\end{enumerate}
-\end{mydef}
+% \begin{mydef}[label=def.embedding]{はめ込みと埋め込み}
+% 	\cinfty 多様体 $M,\, N$ と \cinfty 写像 $f \colon M \to N$ を与える．
+% 	\begin{enumerate} 
+% 		\item $\forall p \in M$ において $f$ の微分写像 $f_* \colon T_p M \to T_{f(p)}N$ が\underline{単射}のとき，$f$ を\textbf{はめ込み} (immersion) と呼ぶ．
+% 		\item $f \colon M \to N$ が\underline{はめ込み}であって，かつ全射 $f\colon M \twoheadrightarrow f(M)$ が同相写像であるとき，$f$ を\textbf{埋め込み} (embedding) と呼ぶ．
+% 		\item $f \colon M \to N$ が\underline{全射}であって，かつ $\forall p \in M$ において $f_* \colon T_p M \to T_{f(p)}N$ が\underline{全射}であるとき， $f$ を\textbf{沈め込み} (submersion) と呼ぶ．
+% 	\end{enumerate}
+% \end{mydef}
 
-\begin{mytheo}[]{埋め込みと部分多様体}
-	$f \colon M \to N$ を埋め込みとする．このとき $f(M) \subset N$ は $N$ の部分多様体であり，$f \colon M \twoheadrightarrow f(M)$ は微分同相写像である．
+% \begin{mytheo}[]{埋め込みと部分多様体}
+% 	$f \colon M \to N$ を埋め込みとする．このとき $f(M) \subset N$ は $N$ の部分多様体であり，$f \colon M \twoheadrightarrow f(M)$ は微分同相写像である．
 	
-	逆に $M$ が $N$ の部分多様体であるとき，包含写像\footnote{$M \subset N$ のとき，$p \in M$ を $N$ の元として扱う写像．$\iota(p) = p$ である．\textbf{標準単射} (canonical injection) と呼ばれることもある．} $\iota \colon M \hookrightarrow N$ は埋め込みである．
-\end{mytheo}
+% 	逆に $M$ が $N$ の部分多様体であるとき，包含写像\footnote{$M \subset N$ のとき，$p \in M$ を $N$ の元として扱う写像．$\iota(p) = p$ である．\textbf{標準単射} (canonical injection) と呼ばれることもある．} $\iota \colon M \hookrightarrow N$ は埋め込みである．
+% \end{mytheo}
 
 \begin{mytheo}[label=thm.Whitney]{Whitney の埋め込み定理}
 	任意の $n$ 次元 \cinfty 多様体は $\mathbb{R}^{2n+1}$ の中に閉部分多様体として埋め込むことができる．

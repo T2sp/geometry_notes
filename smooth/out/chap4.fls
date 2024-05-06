@@ -306,6 +306,9 @@ INPUT /usr/local/texlive/2023/texmf-dist/tex/latex/tools/bm.sty
 INPUT /usr/local/texlive/2023/texmf-dist/tex/latex/cancel/cancel.sty
 INPUT /usr/local/texlive/2023/texmf-dist/tex/latex/cancel/cancel.sty
 INPUT /usr/local/texlive/2023/texmf-dist/tex/latex/cancel/cancel.sty
+INPUT /usr/local/texlive/2023/texmf-dist/tex/latex/doublestroke/dsfont.sty
+INPUT /usr/local/texlive/2023/texmf-dist/tex/latex/doublestroke/dsfont.sty
+INPUT /usr/local/texlive/2023/texmf-dist/tex/latex/doublestroke/dsfont.sty
 INPUT /usr/local/texlive/2023/texmf-dist/tex/latex/siunitx/siunitx.sty
 INPUT /usr/local/texlive/2023/texmf-dist/tex/latex/siunitx/siunitx.sty
 INPUT /usr/local/texlive/2023/texmf-dist/tex/latex/siunitx/siunitx.sty
@@ -787,6 +790,7 @@ INPUT ./out/chap4.out
 INPUT /usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbsy10.pfb
 INPUT /usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmbsy7.pfb
 INPUT /usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
+INPUT /usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx7.pfb
 INPUT /usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb
 INPUT /usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex8.pfb
 INPUT /usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb
@@ -796,6 +800,8 @@ INPUT /usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pf
 INPUT /usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb
 INPUT /usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb
 INPUT /usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb
+INPUT /usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib5.pfb
+INPUT /usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib7.pfb
 INPUT /usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb
 INPUT /usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb
 INPUT /usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb

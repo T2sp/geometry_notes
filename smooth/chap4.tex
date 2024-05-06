@@ -887,120 +887,10 @@ $C^\infty$ 多様体 $M$ の各点 $p \in M$ における接空間 $T_p M$ は�
 	$F^* \omega \in \Omega^{\dim M}(M)$ は明らかに $M$ 上至る所 $0$ でなく，$F^* \omega$ が命題\ref{prop:orientation-form}-(1) の方法で作る $M$ の向き $\Familyset[\big]{\mathcal{O}_{F^* \omega|_p}}{p \in M}$ は $\Familyset[\big]{\mathcal{O}_{T_p M}}{p \in M}$ と等しい．
 \end{proof}
 
-\subsection{部分多様体の $C^\infty$ 構造}
-
-次に，部分多様体に向きを入れる方法を考える．
-然るに，そのためには部分多様体の $C^\infty$ 構造を真面目に扱う必要がある．まずいくつかの定義を述べる：
-
-\begin{mydef}[label=def:rank-smooth]{$C^\infty$ 写像のランク}
-    境界あり/なし $C^\infty$ 多様体 $M,\, N$ および $C^\infty$ 写像 $F \colon M \lto N$ を与える．
-    \begin{itemize}
-        \item 点 $p \in M$ における $F$ の\textbf{ランク} (rank) とは，線型写像 $T_p F \colon T_p M \lto T_{F(p)} N$ のランク，i.e. $\dim \bigl(\Im (T_p F)\bigr) \in \mathbb{Z}_{\ge 0}$ のこと．$\forall p \in M$ における $F$ のランクが等しいとき，$F$ は\textbf{定ランク} (constant rank) であると言い，$\bm{\rank F} \coloneqq \dim \bigl(\Im (T_p F)\bigr)$ と書く．
-        \item 点 $p \in M$ における $F$ のランクが $\min \bigl\{\dim M,\, \dim N\bigr\}$ に等しいとき，$F$ は\textbf{点 $\bm{p}$ においてフルランク} (full rank at $p$) であると言う．
-        $\rank F = \min \bigl\{\dim M,\, \dim N\bigr\}$ ならば $F$ は\textbf{フルランク} (full rank) であると言う．
-    \end{itemize}
-\end{mydef}
-
-位相空間 $M,\, N$ を与える．連続写像 $F \colon M \lto N$ が\textbf{位相的埋め込み} (topological embedding) であるとは，$F(M) \subset N$ に $N$ からの相対位相を入れたときに写像 $F \colon M \lto F(M)$ が同相写像になることを言う．
-
-\begin{mydef}[label=def:submersion-smooth]{$C^\infty$ 沈めこみ・$C^\infty$ はめ込み・$C^\infty$ 埋め込み}
-    境界あり/なし $C^\infty$ 多様体 $M,\, N$ および\hyperref[def:rank-smooth]{定ランク}の $C^\infty$ 写像 $F \colon M \lto N$ を与える．
-    \begin{itemize}
-        \item $F$ が\textbf{ $\bm{C^\infty}$ 沈め込み} (smooth submersion) であるとは，$\forall p \in M$ において $T_p F \colon T_p M \lto T_{F(p)} N$ が全射である，i.e. $\rank F = \dim N$ であることを言う．
-        \item $F$ が\textbf{ $\bm{C^\infty}$ はめ込み} (smooth immersion) であるとは，$\forall p \in M$ において $T_p F \colon T_p M \lto T_{F(p)} N$ が単射である，i.e. $\rank F = \dim M$ であること\footnote{階数・退化次元の定理から $\dim (\Ker T_p F) + \dim (\Im T_p F) = \dim M$ なので，$\rank F = \dim (\Im T_p F) = \dim M \IMP \dim (\Ker T_p F) = 0 \IFF \Ker T_p F = 0$}を言う．
-        \item $F$ が\textbf{ $\bm{C^\infty}$ 埋め込み} (smooth embedding) であるとは，$F$ が $C^\infty$ はめ込みであってかつ位相的埋め込みであることを言う．
-    \end{itemize}
-\end{mydef}
-
-\begin{mydef}[label=def:submanifold,breakable]{部分多様体}
-	境界あり/なし $C^\infty$ 多様体 $(M,\, \mathscr{O}_M)$ を与え\footnote{$\mathscr{O}_M$ は $M$ の\hyperref[ax.topo]{位相}}，その\hyperref[maxatlas]{極大アトラス} $\mathcal{A}_M^+$ を1つ固定する．
-	$M$ の\underline{部分集合}\footnote{この時点では $S$ の位相を指定していない．} $S \subset M$ を与える．
-	\begin{itemize}
-		\item $S$ が $M$ の境界あり/なし\textbf{$\bm{C^\infty}$ 部分多様体} (smooth submanifold) であるとは，
-		$S$ に位相\footnote{位相空間 $(M,\, \mathscr{O}_M)$ からの\hyperref[def.reltopo]{相対位相}\underline{でなくても良い}} $\mathscr{O}_S$ が与えられていて位相空間 $(S,\, \mathscr{O}_S)$ が境界あり/なし\hyperref[def.topomani]{位相多様体}になっており，
-		かつ位相多様体 $(S,\, \mathscr{O}_S)$ に\hyperref[diffmani]{$C^\infty$ アトラス}\footnote{$\mathcal{A}_S \subset \mathcal{A}_M^+$ \underline{でなくても良い}} $\mathcal{A}_S$ が与えられていて\hyperref[diffmani]{$C^\infty$ 多様体}になっていることを言う．
-		\item \underline{境界を持たない} $C^\infty$ 部分多様体 $(S,\, \mathscr{O}_S,\, \mathcal{A}_S)$ が $M$ に\textbf{はめ込まれた $\bm{C^\infty}$ 部分多様体} (immersed submanifold) であるとは，
-		$C^\infty$ アトラス $\mathcal{A}_S$ に関して包含写像 $\iota \colon S \hookrightarrow M$ が\hyperref[def:submersion-smooth]{$C^\infty$ はめ込み}になっていることを言う．
-		\item \underline{境界を持たない} $C^\infty$ 部分多様体 $(S,\, \mathscr{O}_S,\, \mathcal{A}_S)$ が $M$ に\textbf{埋め込まれた $\bm{C^\infty}$ 部分多様体} (embedded submanifold) であるとは，
-		位相 $\mathscr{O}_S$ が位相空間 $(M,\, \mathscr{O}_M)$ からの相対位相であり，かつ
-		$C^\infty$ アトラス $\mathcal{A}_S$ に関して包含写像 $\iota \colon S \hookrightarrow M$ が\hyperref[def:submersion-smooth]{$C^\infty$ 埋め込み}になっていることを言う．
-	\end{itemize}
-	
-	\tcblower
-
-	$M$ にはめ込まれた $C^\infty$ 部分多様体 $(S,\, \mathscr{O}_S,\, \mathcal{A}_S)$ について，$\dim M - \dim S$ を $S$ の\textbf{余次元} (codimension) と呼ぶ．
-\end{mydef}
-
-混乱の恐れがない場合，以下では $C^\infty$ 部分多様体の位相と $C^\infty$ アトラスを明示しない．また，特に断らずに部分多様体と言ったら $C^\infty$ 部分多様体のことを指すものとする．
-
-\begin{mydef}[label=def:slice-chart]{スライスチャート}
-	境界あり/なし $C^\infty$ 多様体 $M$ を与え，その\hyperref[maxatlas]{極大アトラス} $\mathcal{A}_M^+$ を1つ固定する．
-	部分集合 $S \subset M$ を与える．
-
-	\underline{$M$ の}チャート $(U,\, \varphi) = \bigl( U,\, (x^\mu) \bigr) \in \mathcal{A}_M^+$ が\textbf{$\bm{S}$ に関する $\bm{k}$-スライスチャート}であるとは，
-	\begin{align}
-		\varphi(S \cap U) 
-		&= \bigl\{\, (x^1,\, \dots,\, x^k,\, x^{k+1},\, \dots,\, x^{\dim M}) \in \varphi(U) \bigm| x^{k+1},\, \dots,\, x^{\dim M}\; \text{は定数} \,\bigr\} 
-	\end{align}
-	が成り立つ，i.e. $\varphi(S \cap U) \subset \mathbb{R}^{\dim M}$ が $\varphi(U)$ と $k$ 次元超平面との共通部分になっていることを言う．
-\end{mydef}
-
-\begin{mytheo}[label=thm:slice-shart-embedded]{スライスチャートによる埋め込まれた $C^\infty$ 部分多様体の特徴付け}
-	境界を持たない $C^\infty$ 多様体 $M$ を与え，その\hyperref[maxatlas]{極大アトラス} $\mathcal{A}_M^+$ を1つ固定する．
-	部分集合 $S \subset M$ を与える．このとき，以下の2つが成り立つ．
-	\begin{enumerate}
-		\item $S$ が\hyperref[def:submersion-smooth]{埋め込まれた $C^\infty$ 部分多様体} 
-		$\IMP$
-		$\forall p \in S$ に対して， $p$ を含む\hyperref[def:slice-chart]{$S$ に関する $\dim S$-スライスチャート} $(U,\, \varphi) \in \mathcal{A}^+_M$ が存在する．
-		\item $\forall p \in S$ に対して， $p$ を含む\hyperref[def:slice-chart]{$S$ に関する $k$-スライスチャート} $(U,\, \varphi) \in \mathcal{A}^+_M$ が存在する．
-		$\IMP$
-		$S$ は $M$ からの\hyperref[def.reltopo]{相対位相}によって $k$ 次元の\hyperref[def.topomani]{位相多様体}になり，
-		かつ $S$ の $C^\infty$ アトラス
-		\begin{align}
-			\mathcal{A}_S \coloneqq \bigl\{\, (S \cap U,\, \varphi|_{S \cap U}) \bigm| (U,\, \varphi) \in \mathcal{A}_M^+ \ST S\,\text{に関する}\,k\text{-スライスチャート} \,\bigr\} 
-		\end{align}
-		が $S$ に与える\hyperref[diffmani]{$C^\infty$ 構造}に関して $S$ は $M$ に\hyperref[def:submanifold]{埋め込まれた $C^\infty$ 部分多様体}になる．
-	\end{enumerate}
-\end{mytheo}
-
-\begin{proof}
-	\begin{enumerate}
-		\item 
-	\end{enumerate}
-	
-\end{proof}
-
-\hyperref[def:mani-with-boundary]{境界付き $C^\infty$ 多様体} $M$ の境界 $\partial M$ に $M$ からの相対位相を入れると $\dim M - 1$ 次元の\hyperref[def.topomani]{境界を持たない位相多様体}になることは命題\ref{prop:manifold-boundary-basic}-(2) で見たが，その際は $\partial M$ の $C^\infty$ 構造については何も言及していなかった．
-ここまでの準備の下，$\partial M$ の $C^\infty$ 構造を定めよう：
-
-\begin{mytheo}[label=thm:smooth-structure-of-boundary]{境界の $C^\infty$ 構造}
-	境界付き $C^\infty$ 多様体 $(M,\, \mathscr{O}_M)$ を与え，その\hyperref[maxatlas]{極大アトラス} $\mathcal{A}_M^+$ を1つ固定する．
-	このとき，$M$ の境界 $\partial M$ に $M$ からの相対位相 $\mathscr{O}_{\partial M}$ を入れてできる $\dim M -1$ 次元位相多様体 $(\partial M,\, \mathscr{O}_{\partial M})$ について以下が成り立つ：
-	\begin{enumerate}
-		\item $(\partial M,\, \mathscr{O}_{\partial M})$ は
-		\begin{align}
-			\mathcal{A}_{\partial M} \coloneqq \bigl\{\, (\partial M \cap U,\, \varphi|_{\partial M \cap U}) \bigm| (U,\, \varphi) \in \mathcal{A}_M^+ \ST \text{\hyperref[def:int-manifold-with-boundary]{境界チャート}} \,\bigr\} 
-		\end{align}
-		を $C^\infty$ アトラスに持つ．
-		\item $C^\infty$ 多様体 $(\partial M,\, \mathscr{O}_{\partial M},\, \mathcal{A}_{\partial M})$ は $M$ にproperに\footnote{つまり，包含写像 $\iota \colon \partial M \lto M$ による $M$ の任意のコンパクト集合 $K \subset M$ の逆像 $\iota^{-1}(K) \subset \partial M$ がコンパクト}
-		\hyperref[def:submanifold]{埋め込まれた $C^\infty$ 部分多様体}になる．
-	\end{enumerate}
-\end{mytheo}
-
-\begin{proof}
-	\begin{enumerate}
-		\item 
-	\end{enumerate}
-	
-\end{proof}
-
-% \begin{mydef}[label=def:vecf-along]{部分多様体に沿ったベクトル場}
-	
-% \end{mydef}
-
-\section{微分形式の積分}
 
 \subsection{パラコンパクト・1の分割}
+
+ここでいったん1の分割の技巧を説明しよう．
 
 \begin{mydef}[label=def:locally-finite]{局所有限}
 	$X$ を位相空間とし， $\mathcal{U} = \{\, U_\lambda \,\}_{\lambda \in \Lambda}$ を $X$ の被覆とする．
@@ -1057,37 +947,569 @@ $X$ の\textbf{任意の開被覆}が局所有限な細分を持つとき，$X$ 
 したがって，しばしば $\mathbb{R}^n,\, \mathbb{H}^n$ の上でだけ考えれば十分である．
 
 
-$n$ 次元\cinfty 多様体 $M$ が向き付け可能としよう．
+\subsection{部分多様体の $C^\infty$ 構造}
 
-$M$ のチャート $(U,\, \varphi) = (U;\; x^i)$ をとる．$n$-形式 $\omega \in \Omega^k(M)$ が
-\begin{align} 
-	\omega \coloneqq h(p) \dd{x^1} \wedge \cdots \wedge \dd{x^n}
-\end{align}
-と座標表示されているとする．
-別のチャート $(V,\, \psi) = (V;\; y^i)$ をとったときの $U \cap V \neq \emptyset$ 上の $\omega$ は
-\begin{align} 
-	\omega &= h(p) \pdv{x^1}{y^{j_1}}\dd{y^{j_1}} \wedge \cdots \wedge \pdv{x^n}{y^{j_n}}\dd{y^{j_n}} \\
-	&=  h(p)\, \epsilon^{j_1 \dots j_n} \pdv{x^1}{y^{j_1}} \cdots \pdv{x^n}{y^{j_n}} \dd{y^1} \wedge \cdots \wedge \dd{y^n} \\
-	&= h(p)\, \det \left( \pdv{x^k}{y^{l}} \right) \dd{y^1} \wedge \cdots \wedge \dd{y^n}
-\end{align}
-である．よって座標変換としてJacobianが正のものだけを考えれば， $\displaystyle \int \omega$ は既知の重積分の変数変換公式と整合的である．ここで\underline{$M$ が向き付け可能であると言う仮定が効いてくる}のである．
+次に，部分多様体に向きを入れる方法を考える．
+然るに，そのためには部分多様体の $C^\infty$ 構造を真面目に扱う必要がある．まずいくつかの定義を述べる：
 
-以上の考察から，$n$-形式 $\omega$ のチャート $(U_i;\, x^\mu)$ 上の積分を
-\begin{align} 
-	\int_{U_i} \omega \coloneqq \int_{\varphi(U_i)} h\bigl(\varphi^{-1}_i (x)\bigr) \dd{x^1} \cdots \dd{x^n}
-\end{align}
-として定義できる．積分範囲を $M$ に拡張するには\hyperref[def:PoU]{1の分割}を使う：
-
-\begin{mydef}[label=def.int-n]{$n$-形式の積分} 
-	$\omega \in \Omega^n(M)$ は台がコンパクトであるとする．また，$M$ の座標近傍からなる開被覆 $\{U_i\}$ と，それに従属する1の分割 $\{ f_i \}$ をとる．このとき $\omega$ の $M$ 上の積分を次のように定義する：
-	\begin{align} 
-		\int_M \omega \coloneqq \sum_{i} \int_{U_i} f_i \omega
-	\end{align}
+\begin{mydef}[label=def:rank-smooth]{$C^\infty$ 写像のランク}
+    境界あり/なし $C^\infty$ 多様体 $M,\, N$ および $C^\infty$ 写像 $F \colon M \lto N$ を与える．
+    \begin{itemize}
+        \item 点 $p \in M$ における $F$ の\textbf{ランク} (rank) とは，線型写像 $T_p F \colon T_p M \lto T_{F(p)} N$ のランク，i.e. $\dim \bigl(\Im (T_p F)\bigr) \in \mathbb{Z}_{\ge 0}$ のこと．$\forall p \in M$ における $F$ のランクが等しいとき，$F$ は\textbf{定ランク} (constant rank) であると言い，$\bm{\rank F} \coloneqq \dim \bigl(\Im (T_p F)\bigr)$ と書く．
+        \item 点 $p \in M$ における $F$ のランクが $\min \bigl\{\dim M,\, \dim N\bigr\}$ に等しいとき，$F$ は\textbf{点 $\bm{p}$ においてフルランク} (full rank at $p$) であると言う．
+        $\rank F = \min \bigl\{\dim M,\, \dim N\bigr\}$ ならば $F$ は\textbf{フルランク} (full rank) であると言う．
+    \end{itemize}
 \end{mydef}
 
-\begin{myprop}[]{} 
-	定義\ref{def.int-n}は座標近傍の開被覆 $\{U_i\}$ やそれに従属する1の分割 $\{f_i\}$ の取り方によらない．
+位相空間 $M,\, N$ を与える．連続写像 $F \colon M \lto N$ が\textbf{位相的埋め込み} (topological embedding) であるとは，$F(M) \subset N$ に $N$ からの相対位相を入れたときに写像 $F \colon M \lto F(M)$ が同相写像になることを言う．
+
+\begin{mydef}[label=def:submersion-smooth]{$C^\infty$ 沈めこみ・$C^\infty$ はめ込み・$C^\infty$ 埋め込み}
+    境界あり/なし $C^\infty$ 多様体 $M,\, N$ および\hyperref[def:rank-smooth]{定ランク}の $C^\infty$ 写像 $F \colon M \lto N$ を与える．
+    \begin{itemize}
+        \item $F$ が\textbf{ $\bm{C^\infty}$ 沈め込み} (smooth submersion) であるとは，$\forall p \in M$ において $T_p F \colon T_p M \lto T_{F(p)} N$ が全射である，i.e. $\rank F = \dim N$ であることを言う．
+        \item $F$ が\textbf{ $\bm{C^\infty}$ はめ込み} (smooth immersion) であるとは，$\forall p \in M$ において $T_p F \colon T_p M \lto T_{F(p)} N$ が単射である，i.e. $\rank F = \dim M$ であること\footnote{階数・退化次元の定理から $\dim (\Ker T_p F) + \dim (\Im T_p F) = \dim M$ なので，$\rank F = \dim (\Im T_p F) = \dim M \IMP \dim (\Ker T_p F) = 0 \IFF \Ker T_p F = 0$}を言う．
+        \item $F$ が\textbf{ $\bm{C^\infty}$ 埋め込み} (smooth embedding) であるとは，$F$ が $C^\infty$ はめ込みであってかつ位相的埋め込みであることを言う．
+    \end{itemize}
+\end{mydef}
+
+\begin{mydef}[label=def:submanifold,breakable]{部分多様体}
+	境界あり/なし $C^\infty$ 多様体 $(M,\, \mathscr{O}_M)$ を与え\footnote{$\mathscr{O}_M$ は $M$ の\hyperref[ax.topo]{位相}}，その\hyperref[maxatlas]{極大アトラス} $\mathcal{A}_M^+$ を1つ固定する．
+	$M$ の\underline{部分集合}\footnote{この時点では $S$ の位相を指定していない．} $S \subset M$ を与える．
+	\begin{itemize}
+		\item $S$ が $M$ の境界あり/なし\textbf{$\bm{C^\infty}$ 部分多様体} (smooth submanifold) であるとは，
+		$S$ に位相\footnote{位相空間 $(M,\, \mathscr{O}_M)$ からの\hyperref[def.reltopo]{相対位相}\underline{でなくても良い}} $\mathscr{O}_S$ と\hyperref[diffmani]{$C^\infty$ アトラス}\footnote{$\mathcal{A}_S \subset \mathcal{A}_M^+$ \underline{でなくても良い}} $\mathcal{A}_S$ が与えられていて $(S,\, \mathscr{O}_S,\, \mathcal{A}_S)$ が境界あり/なし\hyperref[diffmani]{$C^\infty$ 多様体}になっていることを言う．
+		\item 境界あり/なし $C^\infty$ 部分多様体 $(S,\, \mathscr{O}_S,\, \mathcal{A}_S)$ が $M$ に\textbf{はめ込まれた（境界あり/なし）$\bm{C^\infty}$ 部分多様体} (immersed submanifold) であるとは，
+		$C^\infty$ アトラス $\mathcal{A}_S$ に関して包含写像 $\iota \colon S \hookrightarrow M$ が\hyperref[def:submersion-smooth]{$C^\infty$ はめ込み}になっていることを言う．
+		\item 境界あり/なし $C^\infty$ 部分多様体 $(S,\, \mathscr{O}_S,\, \mathcal{A}_S)$ が $M$ に\textbf{埋め込まれた（境界あり/なし）$\bm{C^\infty}$ 部分多様体} (embedded submanifold) であるとは，
+		位相 $\mathscr{O}_S$ が位相空間 $(M,\, \mathscr{O}_M)$ からの相対位相であり，かつ
+		$C^\infty$ アトラス $\mathcal{A}_S$ に関して包含写像 $\iota \colon S \hookrightarrow M$ が\hyperref[def:submersion-smooth]{$C^\infty$ 埋め込み}になっていることを言う．
+	\end{itemize}
+	
+	\tcblower
+
+	$M$ にはめ込まれた $C^\infty$ 部分多様体 $(S,\, \mathscr{O}_S,\, \mathcal{A}_S)$ について，$\dim M - \dim S$ を $S$ の\textbf{余次元} (codimension) と呼ぶ．
+\end{mydef}
+
+混乱の恐れがない場合，以下では $C^\infty$ 部分多様体の位相と $C^\infty$ アトラスを明示しない．また，特に断らずに部分多様体と言ったら $C^\infty$ 部分多様体のことを指すものとする．
+
+\begin{mydef}[label=def:slice-chart]{スライスチャート}
+	境界あり/なし $C^\infty$ 多様体 $M$ を与え，その\hyperref[maxatlas]{極大アトラス} $\mathcal{A}_M^+$ を1つ固定する．
+	部分集合 $S \subset M$ を与える．
+
+	\begin{itemize}
+		\item \underline{$M$ の}チャート $(U,\, \varphi) = \bigl( U,\, (x^\mu) \bigr) \in \mathcal{A}_M^+$ が\textbf{$\bm{S}$ に関する内部 $\bm{k}$-スライスチャート}であるとは，
+		\begin{align}
+			\varphi(S \cap U) 
+			&= \bigl\{\, (x^1,\, \dots,\, x^k,\, c^{k+1},\, \dots,\, c^{\dim M}) \in \varphi(U) \bigm| c^{k+1},\, \dots,\, c^{\dim M}\; \text{は定数} \,\bigr\} 
+		\end{align}
+		が成り立つことを言う．
+		\item \underline{$M$ の}チャート $(U,\, \varphi) = \bigl( U,\, (x^\mu) \bigr) \in \mathcal{A}_M^+$ が\textbf{$\bm{S}$ に関する境界 $\bm{k}$-スライスチャート}であるとは，
+		\begin{align}
+			\varphi(S \cap U) 
+			&= \bigl\{\, (x^1,\, \dots,\, x^k,\, c^{k+1},\, \dots,\, c^{\dim M}) \in \varphi(U) \bigm| x^k \ge 0 \AND c^{k+1},\, \dots,\, c^{\dim M}\; \text{は定数} \,\bigr\} 
+		\end{align}
+		が成り立つことを言う．
+	\end{itemize}
+	
+	\tcblower
+
+	$S$ に関する境界 $k$-スライスチャートを考えない場合は，$S$ に関する内部 $k$-スライスチャートのことを単に \textbf{$\bm{S}$ に関する $\bm{k}$-スライスチャート}と呼ぶ．
+	% ，i.e. $\varphi(S \cap U) \subset \mathbb{R}^{\dim M}$ が $\varphi(U)$ と $k$ 次元超平面との共通部分になっていることを言う．
+\end{mydef}
+
+\begin{mytheo}[label=thm:slice-shart-embedded,breakable]{スライスチャートによる埋め込まれた $C^\infty$ 部分多様体の特徴付け}
+	\begin{itemize}
+		\item 境界を持たない $C^\infty$ 多様体 $M$ とその\hyperref[maxatlas]{極大アトラス} $\mathcal{A}_M^+$
+		\item $C^\infty$ 写像
+		\begin{align}
+			\pi \colon \mathbb{R}^{\dim M} \lto \mathbb{R}^k,\; (x^1,\, \dots,\, x^k,\, x^{k+1},\, \dots,\, x^{\dim M}) \lmto (x^1,\, \dots,\, x^k)
+		\end{align}
+		\item 部分集合 $S \subset M$
+	\end{itemize}
+	を与える．
+	このとき，以下の2つが成り立つ．
+	\begin{enumerate}
+		\item $S$ が\hyperref[def:submersion-smooth]{埋め込まれた境界なし $C^\infty$ 部分多様体} 
+		$\IMP$
+		$\forall p \in S$ に対して， $p$ を含む\hyperref[def:slice-chart]{$S$ に関する $\dim S$-スライスチャート} $(U,\, \varphi) \in \mathcal{A}^+_M$ が存在する．
+		\item $\forall p \in S$ に対して， $p$ を含む\hyperref[def:slice-chart]{$S$ に関する $k$-スライスチャート} $(U,\, \varphi) \in \mathcal{A}^+_M$ が存在する．
+		$\IMP$
+		$S$ は $M$ からの\hyperref[def.reltopo]{相対位相}によって $k$ 次元の\hyperref[def.topomani]{位相多様体}になり，
+		かつ $S$ の $C^\infty$ アトラス
+		\begin{align}
+			\mathcal{A}_S \coloneqq \bigl\{\, (S \cap U,\, \pi \circ \varphi|_{S \cap U}) \bigm| (U,\, \varphi) \in \mathcal{A}_M^+ \ST S\,\text{に関する}\,k\text{-スライスチャート} \,\bigr\} 
+		\end{align}
+		が $S$ に与える\hyperref[diffmani]{$C^\infty$ 構造}に関して $S$ は $M$ に\hyperref[def:submanifold]{埋め込まれた境界なし $C^\infty$ 部分多様体}になる．
+	\end{enumerate}
+	
+	\tcblower
+
+	もしくは，$S$ に境界がある場合は次の通り：
+	\begin{enumerate}
+		\item $S$ が\hyperref[def:submersion-smooth]{埋め込まれた境界付き $C^\infty$ 部分多様体} 
+		$\IMP$
+		$\forall p \in S$ に対して， $p$ を含む\hyperref[def:slice-chart]{$S$ に関する内部 $\dim S$-スライスチャート} $(U,\, \varphi) \in \mathcal{A}^+_M$ が存在するか，$p$ を含む\hyperref[def:slice-chart]{$S$ に関する境界 $\dim S$-スライスチャート} $(U,\, \varphi) \in \mathcal{A}^+_M$ が存在するかのどちらかである．
+		\item $\forall p \in S$ に対して， $p$ を含む\hyperref[def:slice-chart]{$S$ に関する内部 $\dim S$-スライスチャート} $(U,\, \varphi) \in \mathcal{A}^+_M$ が存在するか，$p$ を含む\hyperref[def:slice-chart]{$S$ に関する境界 $\dim S$-スライスチャート} $(U,\, \varphi) \in \mathcal{A}^+_M$ が存在するかのどちらかである．
+		$\IMP$
+		$S$ は $M$ からの\hyperref[def.reltopo]{相対位相}によって $k$ 次元の\hyperref[def.topomani]{境界付き位相多様体}になり，
+		かつ $S$ の $C^\infty$ アトラス
+		\begin{align}
+			\mathcal{A}_S \coloneqq \bigl\{\, (S \cap U,\, \pi \circ \varphi|_{S \cap U}) \bigm| (U,\, \varphi) \in \mathcal{A}_M^+ \ST S\,\text{に関する}\,k\text{-スライスチャート} \,\bigr\} 
+		\end{align}
+		が $S$ に与える\hyperref[diffmani]{$C^\infty$ 構造}に関して $S$ は $M$ に\hyperref[def:submanifold]{埋め込まれた境界付き $C^\infty$ 部分多様体}になる．
+	\end{enumerate}
+\end{mytheo}
+
+\begin{proof}
+	$S$ の包含写像を $\iota \colon S \hookrightarrow M$ とおく．まずは $S$ の境界がない場合に示す．
+	\begin{enumerate}
+		\item $\forall p \in S$ を1つ固定する．
+		$(S,\, \mathcal{O}_S,\, \mathcal{A}_S)$ が埋め込まれた $C^\infty$ 部分多様体だとする．このとき $\iota$ は\hyperref[def:submersion-smooth]{$C^\infty$ 埋め込み}，従って\hyperref[def:rank-smooth]{定ランク写像}であるから，\hyperref[thm:rank]{局所的ランク定理}により
+		$p$ を含む $C^\infty$ チャート $(U,\, \varphi) \in \mathcal{O}_S$，$(V,\, \psi) \in \mathcal{O}_M$ が存在して，
+		% $\varphi(p) = \psi(p) = 0$ かつ
+		$\forall (x^1,\, \dots,\, x^{\dim S}) \in \varphi(U)$ に対して
+		\begin{align}
+			\psi \circ \iota|_U \circ \varphi^{-1}(x^1,\, \dots,\, x^{\dim S})
+			&= (x^1,\, \dots,\, x^{\dim S},\, 0,\, \dots,\, 0)
+		\end{align}
+		を充たす．
+		ここで $B_\varepsilon^{\dim S} \bigl( \varphi(p) \bigr)  \subset \varphi(U) \AND B_{\varepsilon}^{\dim M} \bigl( \psi(p) \bigr) \subset \psi(V)$ を充たすような十分小さい $\varepsilon > 0$ をとり，$U_0 \coloneqq \varphi^{-1} \bigl( B_\varepsilon^{\dim S} (\varphi(p)) \bigr) \subset U,\; V_0 \coloneqq \psi^{-1} \bigl( B_\varepsilon^{\dim M} (\psi(p)) \bigr) \subset V$ とおく．
+		すると $U_0 \in \mathcal{O}_S$ であるが，$\mathcal{O}_S$ は $M$ からの相対位相なので，ある $M$ の開集合 $W \subset M$ が存在して $U_0 = S \cap W$ と書ける．このとき $(V_0 \cap W,\, \psi|_{V_0 \cap W}) \in \mathcal{A}_M^+$ は
+		\begin{align}
+			\psi|_{V_0 \cap W} \bigl((V_0 \cap W) \cap U\bigr) = \psi(U_0) = \psi \circ \varphi^{-1} \bigl( B_{\varepsilon}^{\dim S}(\varphi(p)) \bigr) = \psi \circ \iota|_U \circ \varphi^{-1} \bigl( B_{\varepsilon}^{\dim S}(\varphi(p)) \bigr) 
+		\end{align}
+		を充たすので，$S$ に関する $\dim S$-スライスチャートになっている．
+
+		\item 
+		% $\forall p \in S$ に対して， $p$ を含む\hyperref[def:slice-chart]{$S$ に関する $\dim S$-スライスチャート} $(U,\, \varphi) \in \mathcal{A}^+_M$ が存在する．
+		まず，$S$ に $M$ からの相対位相 $\mathcal{O}_S$ を入れて位相空間にしたときにそれが位相多様体になっていることを示す．
+		位相空間 $(S,\, \mathcal{O}_S)$ が第2可算なHausdorff空間であることは明らかなので，あとは $\forall p \in S$ に対して
+		\begin{itemize}
+			\item $p$ の開近傍 $p \in V \subset S$
+			\item $\mathbb{R}^{k}$ の開集合 $\psi(V) \subset \mathbb{R}^{k}$
+			\item 同相写像 $\psi \colon V \xrightarrow{\approx} \psi(V)$
+		\end{itemize}
+		が存在することを言えば良い．実際，点 $p$ を含む $k$-スライスチャート $(U,\, \varphi) \in \mathcal{A}_M^+$ をとり，
+		\begin{align}
+			V \coloneqq U \cap S,\quad \psi \coloneqq \pi \circ \varphi|_V \colon V \lto \psi(V)
+		\end{align}
+		とおくと連続写像 $\psi \colon V \lto \psi(V)$ は同相写像である．と言うのも，$C^\infty$ 写像
+		\begin{align}
+			j \colon \mathbb{R}^k \lto \mathbb{R}^{\dim M},\; (x^1,\, \dots,\, x^k) \lmto (x^1,\, \dots,\, x^k,\, c^{k+1},\, \dots,\, c^{\dim M})
+		\end{align}
+		を使って定義される連続写像
+		\begin{align}
+			\varphi^{-1} \circ j|_{\psi(V)} \colon \psi(V) \lto V
+		\end{align}
+		が $\psi$ の逆写像になっているからである．
+
+		　次に，$\mathcal{A}_S$ が位相多様体 $(S,\, \mathcal{O}_S)$ に $C^\infty$ 構造を定めることを示す．
+		仮定より $\mathcal{A}_S$ は $S$ の開被覆を与える．よって座標変換が $C^\infty$ 級であることを示せば良い． 
+		実際，$U \cap U' \neq \emptyset$ を充たす2つの $S$ に関する $k$-スライスチャート $(U,\, \varphi),\; (U',\, \varphi') \in \mathcal{A}_M^+$ をとると，対応する
+		$\mathcal{A}_S$ の座標変換は
+		\begin{align}
+			(\pi \circ \varphi'|_{S \cap U'}) \circ (\pi \circ \varphi_{S \cap U})^{-1} = \pi \circ \varphi'|_{S \cap U'} \circ \varphi \circ j|_{\pi (\varphi(S \cap U \cap U'))}
+		\end{align}
+		であり，$C^\infty$ 写像の合成で書けているので $C^\infty$ 写像である．
+
+		　最後に，$C^\infty$ 多様体 $(S,\, \mathcal{O}_S,\, \mathcal{A}_S)$ が $M$ に埋め込まれた $C^\infty$ 部分多様体であることを示す．$\mathcal{O}_S$ が $M$ からの相対位相なので包含写像 $\iota$ が\hyperref[def:submersion-smooth]{位相的埋め込み}であることは明らか．
+		$\forall p \in S$ を一つ固定する．このとき $p$ の近傍における包含写像 $\iota$ の座標表示であって
+		\begin{align}
+			(x^1,\, \dots,\, x^{k}) \lmto (x^1,\, \dots,\, x^{k},\, c^{k+1},\, \dots,\, c^{\dim M})
+		\end{align}
+		の形のものが必ず存在し，その微分（i.e. Jacobi行列）は単射なので，$\iota$ は $C^\infty$ はめ込みだと分かった．
+	\end{enumerate}
+	$S$ の境界がある場合，(1) において $p \in \partial S$ のときは\hyperref[thm:rank-b]{境界がある場合の局所的ランク定理}を使えば良い．(2) は内部スライスチャートの場合と境界スライスチャートの場合とで全く同じ議論ができる．
+\end{proof}
+
+\hyperref[def:mani-with-boundary]{境界付き $C^\infty$ 多様体} $M$ の境界 $\partial M$ に $M$ からの相対位相を入れると $\dim M - 1$ 次元の\hyperref[def.topomani]{境界を持たない位相多様体}になることは命題\ref{prop:manifold-boundary-basic}-(2) で見たが，その際は $\partial M$ の $C^\infty$ 構造については何も言及していなかった．
+ここでそれが明らかになる：
+
+\begin{mytheo}[label=thm:smooth-structure-of-boundary]{境界の $C^\infty$ 構造}
+	\begin{itemize}
+		\item 境界付き $C^\infty$ 多様体 $(M,\, \mathscr{O}_M)$ とその\hyperref[maxatlas]{極大アトラス} $\mathcal{A}_M^+$
+		\item $C^\infty$ 写像 
+		\begin{align}
+			\pi \colon \mathbb{R}^{\dim M} \lto \mathbb{R}^{\dim M - 1},\; (x^1,\, \dots,\, x^{\dim M -1},\, x^{\dim M}) \lmto (x^1,\, \dots,\, x^{\dim M -1})
+		\end{align}
+	\end{itemize}
+	を与える．
+	このとき，$M$ の境界 $\partial M$ に $M$ からの相対位相 $\mathscr{O}_{\partial M}$ を入れてできる $\dim M -1$ 次元位相多様体 $(\partial M,\, \mathscr{O}_{\partial M})$ について以下が成り立つ：
+	\begin{enumerate}
+		\item $(\partial M,\, \mathscr{O}_{\partial M})$ は
+		\begin{align}
+			\mathcal{A}_{\partial M} \coloneqq \bigl\{\, (\partial M \cap U,\, \pi \circ \varphi|_{\partial M \cap U}) \bigm| (U,\, \varphi) \in \mathcal{A}_M^+ \ST \text{\hyperref[def:int-manifold-with-boundary]{境界チャート}} \,\bigr\} 
+		\end{align}
+		を $C^\infty$ アトラスに持つ．
+		\item $C^\infty$ 多様体 $(\partial M,\, \mathscr{O}_{\partial M},\, \mathcal{A}_{\partial M})$ は $M$ にproperに\footnote{つまり，包含写像 $\iota \colon \partial M \lto M$ による $M$ の任意のコンパクト集合 $K \subset M$ の逆像 $\iota^{-1}(K) \subset \partial M$ がコンパクト}
+		\hyperref[def:submanifold]{埋め込まれた $C^\infty$ 部分多様体}になる．
+	\end{enumerate}
+\end{mytheo}
+
+\begin{proof}
+	包含写像を $\iota \colon \partial M \hookrightarrow M$ と書く．
+	\begin{enumerate}
+		\item \hyperref[def:int-manifold-with-boundary]{$\partial M$ の定義}から，$\forall p \in \partial M$ に対して境界チャート $(U,\, \varphi) \in \mathcal{A}_M^+$ が存在して $p \in U$ を充たす．i.e. $\mathcal{A}_{\partial M}$ は $\partial M$ の開被覆を与えるので，あとは $\mathcal{A}_{\partial M}$ の座標変換が $C^\infty$ 級であることを示せば良い．
+		実際，任意の境界チャート $(U,\, \varphi) = \bigl(U,\, (x^\mu)\bigr) \in \mathcal{A}_M^+$ に関して
+		\begin{align}
+			\varphi|_{\partial M \cap U} \colon p \lmto \bigl( x^1(p),\, \dots,\, x^{\dim M - 1}(p),\, 0 \bigr) 
+		\end{align}
+		であるから，
+		$C^\infty$ 写像
+		\begin{align}
+			j \colon \mathbb{R}^{\dim M - 1} \lto \mathbb{R}^{\dim M},\; (x^1,\, \dots,\, x^{\dim M -1}) \lmto  (x^1,\, \dots,\, x^{\dim M -1},\, 0) 
+		\end{align}
+		を使って
+		\begin{align}
+			(\pi \circ \varphi|_{\partial M \cap U})^{-1} = \varphi^{-1} \circ j|_{\pi(\varphi(\partial M \cap U))}
+		\end{align}
+		と書けるので，$U \cap U' \neq \emptyset$ を充たす2つの境界チャート $(U,\, \varphi),\, (U',\, \varphi') \in \mathcal{A}_M^+$ をとると，対応する $\mathcal{A}_{\partial M}$ の座標変換は
+		\begin{align}
+			(\pi \circ \varphi'|_{\partial M \cap U'}) \circ (\pi \circ \varphi|_{\partial M \cap U})^{-1} = \pi \circ \varphi'|_{\partial M \cap U'} \circ \varphi^{-1} \circ j|_{\pi(\varphi(\partial M \cap U \cap U'))}
+		\end{align}
+		と $C^\infty$ 写像の合成で書けるので $C^\infty$ 写像である．
+
+		\item $\forall p \in \partial M$ を1つ固定する．このとき $p$ を含む境界チャート $(U,\, \varphi) \in \mathcal{A}_M^+$ が存在するので，$(V,\, \psi) \coloneqq (\partial M \cap U,\, \pi \circ \varphi|_{\partial M \cap U}) \in \mathcal{A}_{\partial M}$ と $(U,\, \varphi) \in \mathcal{A}_M^+$ による包含写像 $\iota$ の座標表示は
+		\begin{align}
+			\varphi \circ \iota \circ \psi^{-1} = \varphi \circ \iota \circ \varphi^{-1} \circ j|_{\pi(\varphi(\partial M \cap U))} = j|_{\pi(\varphi(\partial M \cap U))}
+		\end{align}
+		である．従って $T_{\psi(p)} (\varphi \circ \iota \circ \psi^{-1})$ は明らかに単射なので連鎖率および $\psi,\, \varphi$ が微分同相写像であることから $T_p \iota$ は単射だとわかる．よって $\iota$ は\hyperref[def:submersion-smooth]{$C^\infty$ はめ込み}である．
+		$\mathcal{O}_{\partial M}$ が $M$ からの相対位相であることから包含写像 $\iota$ が位相的埋め込みであることは明らか．
+	\end{enumerate}
+	
+\end{proof}
+
+実は，もう少し緻密な考察をすると定理\ref{thm:slice-shart-embedded}, \ref{thm:smooth-structure-of-boundary}で構成した $C^\infty$ 構造は微分同相を除いて一意であることがわかる~\cite[p.114, Theorem5.31]{Lee12}が，議論が若干技術的なのでここでは省略する．
+
+\subsection{$C^\infty$ 部分多様体の向き付け}
+
+ここでは特に，\hyperref[def:submersion-smooth]{はめ込まれた or 埋め込まれた境界あり/なし $C^\infty$ 部分多様体}のみ考える．
+\begin{itemize}
+	\item \hyperref[def:smooth-orientation]{向きづけられた境界あり/なし $C^\infty$ 多様体} $\bigl(M,\, \Familyset[\big]{\mathcal{O}_{T_p M}}{p \in M}\bigr)$
+	\item $M$ に\hyperref[def:submersion-smooth]{はめ込まれた\underline{余次元 $1$ の}境界あり/なし $C^\infty$ 部分多様体} $S \subset M$
+\end{itemize}
+が与えられたとき，包含写像を $\iota_S \colon S \hookrightarrow M$ と書くことにする．
+% このとき位相は相対位相で，$C^\infty$ 構造としては定理\ref{thm:slice-shart-embedded}で定まるものになる．
+
+\begin{mydef}[label=def:vecf-along]{部分多様体に沿ったベクトル場}
+	\begin{itemize}
+		\item 境界あり/なし $C^\infty$ 多様体 $M$
+		\item $M$ に\hyperref[def:submersion-smooth]{はめ込まれた境界あり/なし $C^\infty$ 部分多様体} $S \subset M$
+	\end{itemize}
+	を与える．\textbf{$\bm{S}$ に沿ったベクトル場}とは，接束
+	\begin{align}
+		\mathbb{R}^{\dim M} \hookrightarrow TM \xrightarrow{\pi} M
+	\end{align}
+	の部分束
+	\begin{align}
+		\mqty{	
+			\mathbb{R}^{\dim M} &\hookrightarrow &\displaystyle\underbrace{\coprod_{p \in S} T_p M}_{\eqqcolon \bm{TM|_S}} &\xrightarrow{\pi} &S \\
+			&&&& \\
+			&&\rotatebox{90}{\subset}&& \\
+			&&&& \\
+			&&TS&&
+		}
+	\end{align}
+	の $C^\infty$ 切断のことを言う\footnote{$S$ の接束 $TS$ の $C^\infty$ 切断\underline{ではない}．また，$\mathfrak{X}(M)|_S \subsetneq TM|_S$ である．}．
+	
+	\tcblower
+
+	$X \in \Gamma(TM|_S)$ が\textbf{至る所で $\bm{S}$ に接さない}とは，$\forall p \in S$ において $X_p \in T_p M \setminus T_p \iota_S (T_p S)$ が成り立つことを言う．
+\end{mydef}
+
+\begin{myprop}[label=prop:submanifold-orientation]{余次元 $1$ の部分多様体の向き}
+	\begin{itemize}
+		\item \hyperref[def:smooth-orientation]{向きづけられた境界あり/なし $C^\infty$ 多様体} $\bigl(M,\, \Familyset[\big]{\mathcal{O}_{T_p M}}{p \in M}\bigr)$
+		\item $M$ に\hyperref[def:submersion-smooth]{はめ込まれた\underline{余次元 $1$ の}境界あり/なし $C^\infty$ 部分多様体} $S \subset M$
+	\end{itemize}
+	を与える．
+	このとき，\hyperref[def:vecf-along]{$S$ に沿った，至る所で $S$ に接さないベクトル場} $N \in \Gamma(TM|_S)$ が存在するならば，
+	以下が成り立つ：
+	\begin{enumerate}
+		\item 与えられた $M$ の向きを命題\ref{prop:orientation-form}-(1) の方法で再現する $M$ の\hyperref[def:orientation-form]{向き付け形式} $\omega \in \Omega^{\dim M}(M)$ に対して，$\iota_S^* \bigl( \iunit_N (\omega) \bigr) \in \Omega^{\dim M - 1}(S)$ は $S$ の向き付け形式である．
+		\item 
+		$\forall p \in S$ に対して
+		\begin{align}
+			\mathcal{O}_{N_p} \coloneqq \Bigl\{(e_1,\, \dots,\, e_{\dim M - 1}) \in \mathcal{B}_{T_p S} \Bigm| \bigl(N_p,\, T_p \iota_S (e_1),\, \dots,\, T_p \iota_S(e_{\dim M - 1})\bigr) \in \mathcal{O}_{T_p M}\Bigr\}
+		\end{align}
+		と定義すると，族 $\Familyset[\big]{\mathcal{O}_{N_p}}{p \in S}$ は $S$ の\hyperref[def:smooth-orientation]{向き}であり，
+		(1) の向き付け形式 $\iota_S^* \bigl( \iunit_N (\omega) \bigr)$ によって\ref{prop:orientation-form}-(1) の方法で再現される．
+	\end{enumerate}
 \end{myprop}
+
+\begin{proof}
+	\begin{enumerate}
+		\item $\iota_S^* \bigl( \iunit_N (\omega) \bigr)$ が $\forall p \in S$ において $0$ にならないことを示す．
+		
+		仮定より $S$ がはめ込まれた $C^\infty$ 部分多様体でかつ $N$ は至る所 $S$ に接さないので，
+		$T_p \iota_S \colon T_p S \lto T_p M$ は単射でかつ $\forall (e_1,\, \dots,\, e_{\dim M - 1}) \in \mathcal{B}_{T_p S}$ に対して $\bigl(N_p,\, T_p \iota_S(e_1),\, \dots,\, T_p \iota_S(e_{\dim M - 1})\bigr) \in \mathcal{B}_{T_p M}$ である．よって
+		\begin{align}
+			\iota_S^* \bigl( \iunit_N (\omega) \bigr)|_p \bigl( e_1,\, \dots,\, e_{\dim M - 1} \bigr) = \omega_p \bigl( N_p,\, T_p \iota_S(e_1),\, \dots,\, T_p \iota_S (e_{\dim M - 1}) \bigr) \neq 0
+		\end{align}
+		が言えた．
+		\item (1) の証明より明らか．
+	\end{enumerate}
+\end{proof}
+
+\hyperref[def:vecf-along]{$S$ に沿った，至る所で $S$ に接さないベクトル場} $N \in \Gamma(TM|_S)$ はいつでも存在するとは限らないので，$N$ をどのようにして構成するかが問題となる．
+$S = \partial M$ の場合はいつでも $N$ を作ることができる：
+
+\begin{mydef}[label=def:inward-pointing]{境界における内向き/外向きの接ベクトル}
+	境界付き $C^\infty$ 多様体 $M$ と，$\forall p \in \partial M$ を1つ与える．
+	\begin{itemize}
+		\item $v \in T_p M$ が\textbf{内向き}であるとは，ある $\varepsilon > 0$ と $C^\infty$ 曲線 $\gamma \colon [0,\, \varepsilon) \lto M$ が存在して $\gamma \bigl( \textcolor{red}{(}0,\, \varepsilon) \bigr) \subset \Int M,\;  \gamma(0) = p,\; \dot{\gamma}(0) = v$ を充たすことを言う．
+		\item $v \in T_p M$ が\textbf{外向き}であるとは，ある $\varepsilon > 0$ と $C^\infty$ 曲線 $\gamma \colon (-\varepsilon,\, 0] \lto M$ が存在して $\gamma \bigl( (-\varepsilon,\, 0 \textcolor{red}{)} \bigr) \subset \Int M,\; \gamma(0) = p,\; \dot{\gamma}(0) = v$ を充たすことを言う．
+	\end{itemize}
+	点 $p \in M$ における内向きの接ベクトル全体の集合を $\bm{T_p^+ M}$，外向きの接ベクトル全体の集合を $\bm{T_p^- M}$ と書く．
+\end{mydef}
+
+\begin{mylem}[label=lem:inward-pointing]{内向き/外向きの接ベクトルの特徴付け}
+	境界付き $C^\infty$ 多様体 $M$ と，$\forall p \in \partial M$ を1つ与える．
+	$p$ を含む境界チャート $(U,\, \varphi) = \bigl( U,\, (x^\mu) \bigr)$ を1つ固定する．
+	\begin{enumerate}
+		\item $v \in T_p M$ が内向き $\IFF$ $v = v^\mu \eval{\pdv{}{x^\mu}}_p$ と展開したときに $v^{\dim M} > 0$
+		\item $v \in T_p M$ が外向き $\IFF$ $v = v^\mu \eval{\pdv{}{x^\mu}}_p$ と展開したときに $v^{\dim M} < 0$
+		\item 集合として
+		\begin{align}
+			T_p M = T_p \iota_{\partial M} \bigl( T_p (\partial M) \bigr) \sqcup T_p^+ M \sqcup T_p^- M
+		\end{align}
+		が成り立つ．特に $v \in T_p^+ M \IFF -v \in T_p^- M$ である．
+	\end{enumerate}
+	
+\end{mylem}
+
+\begin{proof}
+	\begin{enumerate}
+		\item 
+		\begin{description}
+			\item[\textbf{($\bm{\Longrightarrow}$)}]　
+			
+			$C^\infty$ 関数
+			\begin{align}
+				\gamma^\mu &\coloneqq x^\mu \circ \gamma \colon [0,\, \varepsilon) \lto \mathbb{R} \WHERE \mu \neq \dim M \\
+				\gamma^\mu &\coloneqq x^\mu \circ \gamma \colon [0,\, \varepsilon) \lto \mathbb{H} \WHERE \mu = \dim M
+			\end{align}
+			を考える．
+			このとき
+			\begin{align}
+				v^{\mu} = \dv{\gamma^{\mu}}{t}()(0)
+			\end{align}
+			なのでTaylorの定理より $\gamma^\mu(t) = \gamma^\mu (0) + tv^\mu + \order{t^2}$ だとわかるが，$p = \gamma(0)\in \partial M$ なので $\gamma^{\dim M}(0) = 0$．
+			よって $v^{\dim M} > 0$ でなくてはいけない．
+
+			\item[\textbf{($\bm{\Longleftarrow}$)}]　
+			
+			$C^\infty$ 曲線 $\gamma \colon [0,\, \varepsilon) \lto M$ を
+			\begin{align}
+				\gamma(t) \coloneqq \varphi^{-1} \bigl( x^1(p) + tv^1,\, \dots,\, tv^{\dim M} \bigr) 
+			\end{align}
+			で定義すると $\gamma \bigl( (0,\, \varepsilon) \bigr) \subset \Int M,\; \gamma(0) = p,\; \dot{\gamma}(0) = v$ を充たす．
+		\end{description}
+
+		\item (1) と全く同様
+		
+		\item 
+		命題\ref{prop:tangent-velocity}より，$v \in T_p \iota_{\partial M} \bigl( T_p (\partial M) \bigr) \IFF v = v^\mu \eval{\pdv{x^\mu}}_p$ と展開したときに $v^{\dim M} = 0$ である．
+	\end{enumerate}
+	
+\end{proof}
+
+\begin{myprop}[label=prop:outward-vecf]{境界に沿った外向きベクトル場}
+	境界付き $C^\infty$ 多様体 $M$ を与える．このとき，\hyperref[def:vecf-along]{$\partial M$ に沿った}ベクトル場 $X \in \Gamma(TM|_{\partial M})$ であって，$\forall p \in \partial M$ において $X_p$ が\hyperref[def:inward-pointing]{外向き}（内向き）であるものが存在する．
+\end{myprop}
+
+\begin{proof}
+	$M$ の全ての境界チャートの集合を $\Familyset[\big]{\bigl(U_\alpha,\, (x_\alpha{}^\mu)\bigr)}{\alpha \in A}$ と書くと，開集合族 $\mathcal{U} \coloneqq \Familyset[\big]{U_\alpha \cap \partial M}{\alpha \in A}$ は $\partial M$ の開被覆である．
+	命題\ref{thm:smooth-structure-of-boundary}より $\partial M$ は $C^\infty$ 多様体だから，\hyperref[def:PoU]{$\mathcal{U}$ に従属する1の分割} $\Familyset[\big]{\psi_\alpha \colon \partial M \lto [0,\, 1]}{\alpha \in A}$ をとることができる．
+	
+	ところで，補題\ref{lem:inward-pointing}-(2) より $\forall \alpha \in A$ および $\forall p \in U_\alpha$ について $-\eval{\pdv{}{x_\alpha{}^{\dim M}}}_p \in T_p M$ は外向きであるから，
+	\begin{align}
+		X \coloneqq -\sum_{\alpha \in A} \psi_\alpha\,\eval{\pdv{}{x_\alpha{}^{\dim M}}}_{\partial M} \in \Gamma(TM|_{\partial M})
+	\end{align}
+	は $\partial M$ 上至る所外向きである．
+\end{proof}
+
+補題\ref{lem:inward-pointing}-(3) より $\partial M$ に沿った至る所\hyperref[def:inward-pointing]{外向き}なベクトル場は\hyperref[def:vecf-along]{至る所 $\partial M$ に接さない}ので，次のことがわかる：
+
+\begin{myprop}[label=prop:boundary-orientation]{境界の向き}
+	$1$ 次元以上の\hyperref[def:smooth-orientation]{向きづけられた境界付き $C^\infty$ 多様体} $\bigl(M,\, \Familyset[\big]{\mathcal{O}_{T_p M}}{p \in M}\bigr)$ を与える．
+	このとき $\dim M - 1$ 次元 $C^\infty$ 多様体\footnote{$\partial M$ の $C^\infty$ 構造は命題\ref{thm:smooth-structure-of-boundary}によって指定されるものである．} $\partial M$ は\hyperref[def:smooth-orientation]{向き付け可能}であり，
+	任意の\hyperref[def:vecf-along]{$\partial M$ に沿った}\hyperref[def:inward-pointing]{外向きベクトル場} $N \in\Gamma(TM|_{\partial M})$ が命題\ref{prop:submanifold-orientation}-(2) の方法で $\partial M$ に与える向き $\Familyset[\big]{\mathcal{O}_{N_p}}{p \in \partial M}$ は，$N$ の取り方によらずに一意に定まる．
+\end{myprop}
+
+\begin{proof}
+	命題\ref{prop:outward-vecf}より $\partial M$ が向き付け可能だとわかる．
+
+	勝手な2つの $\partial M$ に沿った外向きベクトル場 $N,\, N'$ をとる．$\forall p \in \partial M$ を一つ固定し，$p$ を含む境界チャート $\bigl( U,\, (x^\mu) \bigr)$ を1つとる．
+	すると
+	\begin{align}
+		\left(N_p,\, \eval{\pdv{}{x^1}}_p,\, \dots,\, \eval{\pdv{}{x^{\dim M -1}}}_p \right),\, \left(N'_p,\, \eval{\pdv{}{x^1}}_p,\, \dots,\, \eval{\pdv{}{x^{\dim M -1}}}_p \right) \in \mathcal{B}_{T_p M}
+	\end{align}
+	であるが，両者の間の変換行列は
+	\begin{align}
+		\mqty[
+			N^{\dim M}(p)/ N'{}^{\dim M}(p) &0 &\cdots &0 \\
+			* &1 &\cdots &0 \\
+			\vdots &  &\ddots &\vdots \\
+			* &0 &\cdots &1 \\
+		]
+	\end{align}
+	の形をしているのでその行列式は $N^{\dim M}(p)/ N'{}^{\dim M}(p)$ に等しく，補題\ref{lem:inward-pointing}-(2) から正だとわかる．よって $\mathcal{O}_{N_p} = \mathcal{O}_{N'_p}$ が言えた．
+\end{proof}
+
+\begin{myexample}[label=ex:orientation-of-halfplane]{$\mathbb{H}^n$ の境界の向き}
+	$\mathbb{H}^n$ に $\mathbb{R}^n$ からの標準的な向きを入れたとき，$\partial \mathbb{H}^n$ に命題\ref{prop:boundary-orientation}の向きを入れてみよう．
+	ベクトル場 $-\eval{\pdv{}{x^n}}_{\partial \mathbb{H}^n}$ は $\partial \mathbb{H}^n$ に沿った外向きベクトル場だから，
+	$\mathbb{H}^n$ の向き付け形式 $\omega \in \Omega^n(\mathbb{H}^n)$ に対して
+	\begin{align}
+		\iunit_{-\pdv{}{x^n}}(\omega) \left( \pdv{}{x^1},\, \dots,\, \pdv{}{x^{n-1}} \right) 
+		&= (-1)^{n} \omega \left( \pdv{}{x^1},\, \dots,\, \pdv{}{x^{n-1}},\, \pdv{}{x^n} \right) 
+	\end{align}
+	が $\partial \mathbb{H}^n$ の向きを定めている．i.e. $n$ が偶数のとき $\mathbb{R}^{n-1}$ の標準的な向きと同一だが，$n$ が奇数のときは逆になる．
+\end{myexample}
+
+
+\section{微分形式の積分}
+
+% $n$ 次元\cinfty 多様体 $M$ が向き付け可能としよう．
+
+% $M$ のチャート $(U,\, \varphi) = (U;\; x^i)$ をとる．$n$-形式 $\omega \in \Omega^k(M)$ が
+% \begin{align} 
+% 	\omega \coloneqq h(p) \dd{x^1} \wedge \cdots \wedge \dd{x^n}
+% \end{align}
+% と座標表示されているとする．
+% 別のチャート $(V,\, \psi) = (V;\; y^i)$ をとったときの $U \cap V \neq \emptyset$ 上の $\omega$ は
+% \begin{align} 
+% 	\omega &= h(p) \pdv{x^1}{y^{j_1}}\dd{y^{j_1}} \wedge \cdots \wedge \pdv{x^n}{y^{j_n}}\dd{y^{j_n}} \\
+% 	&=  h(p)\, \epsilon^{j_1 \dots j_n} \pdv{x^1}{y^{j_1}} \cdots \pdv{x^n}{y^{j_n}} \dd{y^1} \wedge \cdots \wedge \dd{y^n} \\
+% 	&= h(p)\, \det \left( \pdv{x^k}{y^{l}} \right) \dd{y^1} \wedge \cdots \wedge \dd{y^n}
+% \end{align}
+% である．よって座標変換としてJacobianが正のものだけを考えれば， $\displaystyle \int \omega$ は既知の重積分の変数変換公式と整合的である．ここで\underline{$M$ が向き付け可能であると言う仮定が効いてくる}のである．
+
+% 以上の考察から，$n$-形式 $\omega$ のチャート $(U_i;\, x^\mu)$ 上の積分を
+% \begin{align} 
+% 	\int_{U_i} \omega \coloneqq \int_{\varphi(U_i)} h\bigl(\varphi^{-1}_i (x)\bigr) \dd{x^1} \cdots \dd{x^n}
+% \end{align}
+% として定義できる．積分範囲を $M$ に拡張するには\hyperref[def:PoU]{1の分割}を使う：
+
+% \begin{mydef}[label=def.int-n]{$n$-形式の積分} 
+% 	$\omega \in \Omega^n(M)$ は台がコンパクトであるとする．また，$M$ の座標近傍からなる開被覆 $\{U_i\}$ と，それに従属する1の分割 $\{ f_i \}$ をとる．このとき $\omega$ の $M$ 上の積分を次のように定義する：
+% 	\begin{align} 
+% 		\int_M \omega \coloneqq \sum_{i} \int_{U_i} f_i \omega
+% 	\end{align}
+% \end{mydef}
+
+% \begin{myprop}[]{} 
+% 	定義\ref{def.int-n}は座標近傍の開被覆 $\{U_i\}$ やそれに従属する1の分割 $\{f_i\}$ の取り方によらない．
+% \end{myprop}
+
+\subsection{$\mathbb{R}^n,\, \mathbb{H}^n$ の場合}
+
+\begin{mydef}[label=def:domain-of-integration]{積分領域}
+    $\mathbb{R}^n,\, \mathbb{H}^n$ の\textbf{積分領域} (domain of integration) とは，$\mathbb{R}^n,\, \mathbb{H}^n$ の有界な部分集合であって境界が零集合であるようなもののこと．
+\end{mydef}
+
+\hyperref[def:domain-of-integration]{積分領域} $D \subset \mathbb{R}^n,\, \mathbb{H}^n$ を1つ固定する．
+$\forall \omega = f \dd{x^1} \wedge \cdots \wedge \dd{x^n} \in \Omega^n (\overline{D})$ の $D$ 上の積分を
+\begin{align}
+    \int_D \omega  \coloneqq \int_D \dd{x^1} \cdots \dd{x^n} f
+\end{align}
+で定義する．
+
+\begin{myprop}[label=prop:integral-pullback]{微分同相写像による引き戻しの積分}
+    
+    \begin{itemize}
+        \item 開\hyperref[def:domain-of-integration]{積分領域} $D,\, E \subset \mathbb{R}^n,\, \mathbb{H}^n$
+        \item $C^\infty$ 写像 $F \colon \overline{D} \lto \overline{E}$ であって，$F|_D \colon D \lto E$ が\hyperref[def:orientation-preserving]{向きを保つ or 逆にする}微分同相写像であるもの
+    \end{itemize}
+    を与える．このとき $\forall \omega \in \Omega^n (\overline{E})$ に対して
+    \begin{align}
+        \int_D F^* \omega = 
+        \begin{cases}
+            +\int_E \omega, &F\; \text{が向きを保つ} \\
+            -\int_E \omega, &F\; \text{が向きを逆にする}
+        \end{cases}
+    \end{align}
+    が成り立つ．
+\end{myprop}
+
+\begin{proof}
+    $D,\, E$ の標準的な座標をそれぞれ $(x^\mu),\, (y^\mu)$ と書いて区別する．
+    $\omega = f \dd{y^1} \wedge \cdots \wedge \dd{y^n}$ と書くと，補題\ref{lem:pullback}より
+    \begin{align}
+        F^* \omega 
+        &= (f \circ F) \dd{(y^1 \circ F)} \wedge \cdots \wedge \dd{(y^n \circ F)} \\
+        &= (f \circ F) (\det DF)\dd{x^1} \wedge \cdots \wedge \dd{x^n}
+    \end{align}
+    が成り立つ．よって変数変換公式から
+    \begin{align}
+        \int_E \omega
+        &= \int_E \dd{y^1} \cdots \dd{y^n} f \\
+        &= \int_D \dd{x^1} \cdots \dd{x^n} \abs{\det DF} (f \circ F) \\
+        &= \pm \int_D \dd{x^1} \cdots \dd{x^n} (\det DF) (f \circ F) \\
+        &= \pm \int_D (f \circ F) (\det DF) \dd{x^1} \wedge \cdots \wedge \dd{x^n} \\
+        &= \pm \int_D F^* \omega
+    \end{align}
+\end{proof}
+
+一般の開集合 $U \subset \mathbb{R}^n,\, \mathbb{H}^n$ 上の，コンパクト台を持つ $\omega \in \Omega^n(U)$ を積分するには，$\supp \omega \subset D$ を充たす\hyperref[def:domain-of-integration]{積分領域} $D$ に $\omega$ の定義域を拡張して
+\begin{align}
+    \int_U \omega \coloneqq \int_D \omega
+\end{align}
+とすれば良い．このとき命題\ref{prop:integral-pullback}は任意の $\mathbb{R}^n,\, \mathbb{H}^n$ の開集合に対して成り立つ\footnote{証明には若干の技術的な注意が必要}．
+
+\subsection{一般の $C^\infty$ 多様体の場合}
+
+\hyperref[def:smooth-orientation]{向き付けられた} $C^\infty$ 多様体 $M$ と，そのチャート $(U,\, \varphi)$ をとる．
+コンパクト台を持つ $\omega \in \Omega^n(U)$ を与えたとき，$M$ 上の $\omega$ の積分を
+\begin{align}
+    \int_M \omega \coloneqq 
+    \begin{cases}
+        + \int_{\varphi(U)} (\varphi^{-1})^* \omega, & (U,\, \varphi)\; \text{は\hyperref[def:atlas-oriented]{正の向き}} \\
+        - \int_{\varphi(U)} (\varphi^{-1})^* \omega, & (U,\, \varphi)\; \text{は負の向き}
+    \end{cases}
+\end{align}
+% ただし，チャート $(U,\, \varphi) = \bigl( U,\, (x^\mu) \bigr) $ が正の向きであると言うのは，座標フレーム $\bigl( \pdv{}{x^1},\, \dots,\, \pdv{}{x^{\dim M}} \bigr)$ が\hyperref[def:smooth-orientation]{正の向き}であることを言う．
+この定義がチャートの取り方によらないことを示そう．$(U,\, \varphi),\, (\tilde{U},\, \tilde{\varphi})$ を，$\supp \omega \subset U \cap \tilde{U}$ を充たす $M$ のチャートとする．
+どちらのチャートも向きが同じならば，座標変換 $\tilde{\varphi} \circ \varphi^{-1} \colon \varphi(U \cap \tilde{U}) \lto \tilde{\varphi}(U \cap \tilde{U})$ は\hyperref[def:orientation-preserving]{向きを保つ}微分同相写像なので，命題\ref{prop:integral-pullback}から
+\begin{align}
+    \int_{\tilde{\varphi}(\tilde{U})} (\tilde{\varphi}^{-1})^* \omega
+    &= \int_{\tilde{\varphi}(U \cap \tilde{U})} (\varphi^{-1} \circ \varphi \circ \tilde{\varphi}^{-1})^* \omega \\
+    &= \int_{\tilde{\varphi}(U \cap \tilde{U})} (\varphi \circ \tilde{\varphi}^{-1})^* \bigl((\varphi^{-1})^*\omega\bigr) \\
+    &= \int_{\varphi(U \cap \tilde{U})} (\varphi^{-1})^*\omega \\
+    &= \int_{\varphi(U)} (\varphi^{-1})^*\omega
+\end{align}
+が成り立つ．違う向きならば，座標変換 $\tilde{\varphi} \circ \varphi^{-1} \colon \varphi(U \cap \tilde{U}) \lto \tilde{\varphi}(U \cap \tilde{U})$ が\hyperref[def:orientation-preserving]{向きを逆にする}微分同相写像なので命題\ref{prop:integral-pullback}から $-$ が出て，定義の $-$ を相殺する．
+
+$M$ 上の積分にするには，正 or 負の向きの座標近傍からなる $\supp \omega$ の有限開被覆 $\{U_i\}_{i \in I}$ と，それに\hyperref[def:PoU]{従属する1の分割}$\{\psi_i \colon M \lto [0,\, 1]\}_{i \in I}$ をとってきて
+\begin{align}
+    \int_M \omega \coloneqq \sum_{i \in I} \int_M \psi_i \omega
+\end{align}
+と定義すれば良い．
+この定義は1の分割の取り方によらない．
+
+
+
+\begin{myprop}[label=prop:integral-pullback-general]{微分同相写像による引き戻しの積分}
+    \begin{itemize}
+        \item 空でない\hyperref[def:smooth-orientation]{向き付けられた} $C^\infty$ 多様体 $M,\, N$
+        \item \hyperref[def:orientation-preserving]{向きを保つ or 逆にする} 微分同相写像写像 $F \colon M \lto N$
+    \end{itemize}
+    を与える．このときコンパクト台を持つ任意の $\omega \in \Omega^n (N)$ に対して
+    \begin{align}
+        \int_M F^* \omega = 
+        \begin{cases}
+            +\int_N \omega, &F\; \text{が向きを保つ} \\
+            -\int_N \omega, &F\; \text{が向きを逆にする}
+        \end{cases}
+    \end{align}
+    が成り立つ．
+\end{myprop}
+
+\begin{proof}
+    1の分割を使って貼り合わせれば良いので，単一のチャートについてのみ示す．
+    $(U,\, \varphi)$ を正の向きの $N$ のチャートであって $\supp \omega \subset U$ を充たすものとする．このとき $\bigl( F^{-1}(U),\, \varphi \circ F\bigr)$ は，$F$ が向きを保つなら正の向きの $M$ のチャートであって $\supp F^* \omega \subset F^{-1}(U)$ を充たし，$F$ が向きを逆にする場合は負の向きのチャートである．命題\ref{prop:integral-pullback}より示された．
+\end{proof}
 
 \section{ベクトル空間に値をとる微分形式}
 
