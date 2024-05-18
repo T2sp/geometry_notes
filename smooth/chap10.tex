@@ -1,0 +1,2999 @@
+\documentclass[geometry_main]{subfiles}
+
+\begin{document}
+
+\setcounter{chapter}{9}
+
+\chapter{ゲージ場の数学}
+\label{chap10}
+\section{物理学的なゲージ場の導入}
+
+時空の多様体を $\mathcal{M}$ と書く．
+
+% \subsection{ゲージ場の定義}
+
+場\footnote{この段階では，\textbf{場}とはその配位を記述する空間 $F$ （これは \cinfty 多様体だったりベクトル空間だったりする）と \cinfty 写像 $\varphi \colon \mathcal{M} \lto F$ の組のことと考える．この描像は後にファイバー束の \cinfty 切断として定式化される．} $\varphi \colon \mathcal{M} \lto \mathbb{K}^N,\; x \lmto \bigl(\varphi_1(x),\, \dots,\, \varphi_N(x)\bigr)$ が行列Lie群 $G \subset \gGL{N}{\mathbb{K}}$ で記述される\footnote{ここでは $\mathbb{K} = \mathbb{R},\, \mathbb{C}$ としておく．}内部対称性を持っているような系を考える．
+つまり，ゲージ原理を要請し，任意の \cinfty 写像 $U \colon \mathcal{M} \lto G$ に対して\footnote{\underline{内部}対称性という言葉を使うのは，$U$ が定数写像とは限らないことを意味する．}，系のラグランジアン密度の場に関する項 $\mathcal{L}[\varphi_\mu (x)]$ が $\mathcal{L}\bigl[\, [U(x)]^j_i \varphi_j (x) \bigr] = \mathcal{L}[\varphi_i (x)]$ を充たすとする．
+もしくは，場 $\varphi \colon \mathcal{M} \lto \mathbb{K}^N$ であって，時空の各点 $x \in \mathcal{M}$ および任意の \cinfty 写像 $U \colon \mathcal{M} \lto G$ に対して $\varphi (x) \lto U(x) \varphi (x)$ と変換する
+\footnote{
+    一般相対論の数学的定式化におけるテンソル場の変換性は，時空の多様体 $\mathcal{M}$ 上の一般座標変換（i.e. チャートの取り替え）に由来するものであった．
+    同じように，ここで考えている場の変換性はどのような数学的定式化に由来するのかということを考えると，時空 $\mathcal{M}$ を底空間とする主束 $G \hookrightarrow P \xrightarrow{\pi} \mathcal{M}$ の同伴ベクトル束 $\mathbb{K}^N \hookrightarrow P \times_\rho \mathbb{K}^N \xrightarrow{q} \mathcal{M}$ における，$\mathcal{M}$ のチャートの取り替えに伴う局所自明化の取り替え（i.e. 変換関数のファイバーへの作用）の概念に行き着くのである．詳細は次の小節で議論する．
+}
+ものを考えると言っても良い．
+
+
+この系を経路積分により量子化することを見据えて，このような変換性を充たす全ての場がなす空間の幾何学を考察すると見通しが良いだろう．
+そのため，まず時空上の無限小だけ離れた2点 $\irm{x}{i},\, \irm{x}{f} \in \mathcal{M}$ における場の配位 $\varphi(\irm{x}{i}),\, \varphi(\irm{x}{f})$ を比較しよう．
+内部自由度による変換性を議論したいので，$\varphi (\irm{x}{f}) - \varphi(\irm{x}{i})$ なる量を調べても意味がない．$\irm{x}{i},\, \irm{x}{f}$ を結ぶ \cinfty 曲線 $\gamma \colon [\irm{t}{i},\, \irm{t}{f}] \lto \mathcal{M}$ を持ってきて，$\gamma$ に沿って $\varphi(\irm{x}{i})$ を $\irm{x}{f}$ まで流してやるのが良い．つまり，場の配位を記述する空間 $\mathbb{K}^N$ 上の \cinfty 曲線 $\varphi^{(\gamma)} \coloneqq \varphi \circ \gamma \colon [\irm{t}{i},\, \irm{t}{f}] \lto \mathbb{K}^N$ を考えれば，
+量 $\varphi (\irm{x}{f}) - \varphi^{(\gamma)}(\irm{t}{f})$ は $U(\irm{x}{f}) \in G$ による変換を受けるはずである．
+$\irm{x}{i},\, \irm{x}{f}$ の両方を含む $\mathcal{M}$ のチャート $\bigl( V,\, (x^\mu) \bigr)$ を持ってきて成分計算すると，$\dd{x} \coloneqq \irm{x}{f} - \irm{x}{i}$ が\footnote{厳密にはこれは座標関数の差 $\dd{x}^\mu \coloneqq x^\mu(\irm{x}{f}) - x^\mu(\irm{x}{i})$ の絶対値が小さいことを主張している．}微小なのでTaylor展開において $\dd{x}$ の1次の項まで残すことで
+\begin{align}
+    \varphi^{(\gamma)}_i(\irm{t}{f}) &\eqqcolon \varphi_i (\irm{x}{i}) - [\, \textcolor{red}{A_\mu(\irm{x}{i})} \,]^j_i \varphi_j (\irm{x}{i}) \dd{x}^\mu \label{eq:2-gauge1} \\
+    \varphi(\irm{x}{f}) &= \varphi (\irm{x}{i}) + \partial_\mu \varphi (x) \dd{x}^\mu
+\end{align}
+と書けるはずである
+% \footnote{この定義の係数は，物理で使うベクトルポテンシャル $\mathcal{A}_\mu$ と $A_\mu = \iunit \mathcal{A}_\mu$ の関係にある．}
+．ただし，式\eqref{eq:2-gauge1}の右辺によって $\dim \mathcal{M}$ 個の成分を持つ\underline{新しい場} $A_\mu \colon \mathcal{M} \lto \gGL{N}{\mathbb{K}}$ を定義した．この場は\textbf{ゲージ場}と呼ばれる．
+
+ゲージ場 $A_\mu$ を時空の各点 $x \in \mathcal{M}$ における変換性によって特徴付けよう．
+そのためには，量
+\begin{align}
+    \varphi (\irm{x}{f}) - \varphi^{(\gamma)}(\irm{t}{f}) = \bigl( \partial_\mu \varphi (\irm{x}{i}) + A_\mu(\irm{x}{i}) \varphi (\irm{x}{i}) \bigr) \dd{x}^\mu
+\end{align}
+が $U(\irm{x}{f}) \in G$ による変換を受けることに注目すれば良い．つまり，\textbf{共変微分}と呼ばれる線型写像を $\mathcal{D}_\mu (x) \coloneqq \partial_\mu + A_\mu (x)$ で定義すると，$\forall x \in \mathcal{M}$ における，内部対称性による変換
+\begin{align}
+    \label{eq:2-inner1}
+    \varphi(x) \lto \tilde{\varphi}(x) \coloneqq U(x) \varphi (x)
+\end{align}
+に伴って $\mathcal{D}_\mu (x) \varphi (x)$ は
+\begin{align}
+    \mathcal{D}_\mu(x) \varphi(x) \lto \tilde{\mathcal{D}_\mu} (x) \tilde{\varphi}(x) \coloneqq U(x) \mathcal{D}_\mu (x) \varphi(x)
+\end{align}
+の変換を受ける．このことから，場 $\varphi$ の変換\eqref{eq:2-inner1}に伴う共変微分自身の変換則は
+\begin{align}
+    \label{eq:def-codv-transform}
+    \mathcal{D}_\mu (x) \lto \tilde{D_\mu} (x) = U(x) \mathcal{D}_\mu (x) U(x)^{-1}
+\end{align}
+となる．従って場 $A_\mu \colon \mathcal{M} \lto \gGL{N}{\mathbb{K}}$ の，場 $\varphi$ の変換\eqref{eq:2-inner1}に伴う変換則が
+\begin{align}
+    \label{eq:def-gauge-transform}
+    A_\mu (x) \lto U(x)\bigl(\partial_\mu + A_\mu(x) \bigr) U(x)^{-1}
+\end{align}
+だと分かった．このような場の変換則を\textbf{ゲージ変換} (gauge transformation) と呼ぶ．
+% \begin{align}
+    
+% \end{align}
+
+% が $t \in [0,\, 1]$ を変化させた時にどのように変化するかを考察しよう．
+% いつもの如くまずは $\irm{x}{i},\, \irm{x}{f}$ が無限小だけ離れている場合を考える．無駄に煩雑になるので $\irm{x}{i} = x$，$\irm{x}{f} = x + \dd{x}$ と書いておく．
+% Lie群 $G$ のLie代数 $\mathfrak{g}$ およびその基底 $\sigma_a / (2\iunit)$ を考えると，$\forall g \in G$ はある $\theta^a \sigma_a / (2\iunit)$ によって $g = \exp (\iunit \theta^a \sigma_a)$ 
+\subsection{内部対称性の定式化}
+
+% 前小節では場 $\varphi$ が $N$ 次元ベクトル空間に値を持つ場合を考えた．つまり，場の配位空間と呼ぶべきものはランク $N$ の\textbf{ベクトル束} (vector bundle) であった：
+
+% \begin{mydef}[label=def:vect]{ベクトル束}
+    
+% \end{mydef}
+% ゲージ場は，主束の接続として定式化できる．特に，主束の同伴ベクトル束が重要である．
+前節で考えた内部対称性を持つ場 $\varphi \colon \mathcal{M} \lto \mathbb{K}^N$ を数学の言葉に翻訳すると，\hyperref[def.PFD]{主束}
+\begin{align}
+    G \hookrightarrow P \xrightarrow{\pi} \mathcal{M}
+\end{align}
+の，行列Lie群 $G$ の $N$ 次元表現
+\begin{align}
+    \rho \colon G \lto \LGL (\mathbb{K}^N),\; U \lmto (\bm{v} \lmto U\bm{v})
+\end{align}
+による\hyperref[def:associated-vect]{同伴ベクトル束}
+\begin{align}
+    \mathbb{K}^N \hookrightarrow P \times_\rho \mathbb{K}^N \xrightarrow{q} \mathcal{M}
+\end{align}
+の\hyperref[def.section]{局所切断} $\phi \colon V_\alpha \lto P \times_\rho \mathbb{K}^N$ を，ある一つの\hyperref[def.fiber-1]{局所自明化} $\sigma_\alpha \colon q^{-1}(V_\alpha) \lto V_\alpha \times \mathbb{K}^N$ によって座標表示したもの（の第2成分を取り出してきたもの）
+\begin{align}
+    \varphi = \mathrm{proj}_2 \circ \sigma_\alpha \circ \phi \colon V_\alpha \lto \mathbb{K}^N
+\end{align}
+ということになる．と言うのも，こう考えることで場の変換性\eqref{eq:2-inner1}
+\begin{align}
+    \varphi(x) \lto \tilde{\varphi}(x) \coloneqq U(x) \varphi (x)
+\end{align}
+が，時空 $\mathcal{M}$ の2つのチャート $\bigl(V,\, (x^\mu)\bigr),\, \bigl(\tilde{V},\, (\tilde{x}^\mu)\bigr)$ の共通部分 $V \cap \tilde{V}$ 上における，局所自明化 $\sigma,\, \tilde{\sigma} \colon q^{-1} (V \cap \tilde{V}) \lto (V \cap \tilde{V}) \times \mathbb{K}^N$ の取り替え（内部自由度に関する一般座標変換のようなもの）に伴う変換関数 $U_{\tilde{V},\, V} \colon \mathcal{M} \lto G$ の作用
+\begin{align}
+    \tilde{\sigma} \circ \sigma^{-1} \colon (V \cap \tilde{V}) \times \mathbb{K}^N &\lto (V \cap \tilde{V}) \times \mathbb{K}^N, \\
+    \bigl(x,\, \bm{\varphi(x)}\bigr) &\lmto \Bigl(x,\, \rho\bigl(U_{\tilde{V},\, V}(x)\bigr)\bigl( \varphi(x) \bigr) \Bigr) = \Bigl( x,\, \bm{U_{\tilde{V},\, V} (x) \varphi(x)} \Bigr) \label{eq:field-locsym}
+\end{align}
+として上手く定式化できているのである
+\footnote{
+    物理では変換性によって場を定義するので，数学的定式化はこれで良い．なお，この定式化は主束の全空間 $P$ の情報を一切使っていないが，これは命題\ref{prop.cocycle}の表れである．実際，この節の冒頭の議論で顕に登場したのは時空 $\mathcal{M}$，場の配位を記述する空間 $\mathbb{K}^N$，内部対称性を表すLie群 $G$ とその表現 $\rho \colon G \lto \gGL{N}{\mathbb{K}}$，場の局所的変換を表す \cinfty 写像 $U \colon \mathcal{M} \lto G$ だけだったので，その数学的定式化が $P$ によらないのは妥当だと思う．
+}．
+ここまでは，ゲージ変換\eqref{eq:def-gauge-transform}に従う場 $A_\mu(x)$ を導入するための舞台の定式化である．
+以降の節では，ゲージ場 $A_\mu(x)$ そのものの数学的定式化について解説する．
+最初に答えを言ってしまうと，$A_\mu(x)$ は，主束の接続形式を主束 $G \hookrightarrow P \xrightarrow{\pi} M$ の局所切断によって引き戻したものとして定式化できる．
+
+\section{Lie群の指数写像と基本ベクトル場}
+
+% ベクトル空間 $V$ に値をとる微分形式とは，通常の $\mathcal{M}$ 上の微分形式 $\Omega^\bullet (\mathcal{M})$ に $V$ をテンソル積してできる系列 $V \otimes \Omega^\bullet (\mathcal{M})$ のことを言う．
+主束の接続の話に入る前に，Lie群のLie代数についての準備をしなくてはいけない．
+この節は~\cite[Chapter 20]{Lee12}，~\cite[第6章]{Imano}による．
+道具として\hyperref[thm:fundamental-flow]{ベクトル場のフロー}を使うので，必要に応じて\hyperref[appendixB]{付録B}の該当箇所を参照することにしよう．
+
+Lie群 $G$ の上の\underline{微分同相写像}\footnote{従って，命題\ref{prop:diffeo-Frelated}から $L_g,\, R_g$ による\hyperref[prop:diffeo-Frelated]{ベクトル場の押し出し}が一意的に存在する．}
+\begin{align}
+    \bm{L_g} \colon G &\lto G,\, x \lmto gx, \\
+    \bm{R_g} \colon G &\lto G,\, x \lmto xg, \\
+\end{align}
+のことをそれぞれ\textbf{左移動}，\textbf{右移動}と言う．
+
+\begin{mydef}[label=def:left-invariant]{左不変ベクトル場}
+    Lie群 $G$ の\textbf{左不変ベクトル場} (left-invariant vector field) とは，$\mathbb{R}$-ベクトル空間
+    \begin{align}
+        \bm{\Lie{\mathfrak{X}} (G)} \coloneqq \bigl\{\, X \in \mathfrak{X}(G) \bigm| \forall g \in G,\; (L_g)_* X = X \,\bigr\} 
+    \end{align}
+    の元のこと．i.e. $\forall g \in G$ に対して自分自身と \hyperref[def:F-related]{$L_g$-related} な \cinfty ベクトル場のことを言う．
+\end{mydef}
+
+$\forall g \in G$ と $\forall X,\, Y \in \Lie{\mathfrak{X}}(G)$ をとる．このとき $(L_g)_* X = X,\; (L_g)_* Y = Y$ なので，命題\ref{prop:Lie-bracket-natural}の後半から
+\begin{align}
+    (L_g)_* \comm{X}{Y} = \comm{(L_g)_* X}{(L_g)_* Y} = \comm{X}{Y}
+\end{align}
+が言える．i.e. 
+% \textbf{左不変}\hyperref[def:vecf]{ベクトル場}とは，$\mathbb{R}$-ベクトル空間
+\underline{$\Lie{\mathfrak{X}} (G)$ は\hyperref[def:Lie-bracket]{Lieブラケット}について閉じるので，体 $\mathbb{R}$ 上のLie代数になる}．
+
+\begin{myprop}[label=prop:LieAlg]{}
+    $G$ をLie群とする．このとき評価写像
+    \begin{align}
+        \evalunit \colon \Lie{\mathfrak{X}}(M) \lto T_{1_G} G,\; X \lmto X_{1_G}
+    \end{align}
+    はベクトル空間の同型写像である．
+    % よって $\dim \Lie{\mathfrak{X}}(G) = \dim G$ である．
+\end{myprop}
+
+\begin{proof}
+    $\evalunit$ が $\mathbb{R}$-線型写像であることは明らか．
+    \begin{description}
+        \item[\textbf{$\bm{\evalunit}$ が単射}]　
+        
+        $\Ker \evalunit = \{ 0 \}$ を示す．$\forall X \in \Ker \evalunit$ に対して $\evalunit (X) = X_{1_G} = 0$ が成り立つ．
+        一方 $X \in \Lie{\mathfrak{X}}(G)$ でもあるので，$\forall g \in G$ に対して $X_g = X_{L_g(1_G)} = (T_{1_G} L_g)(X_{1_G}) = 0$ が言える\footnote{2つ目の等号で\hyperref[def:F-related]{$L_g$-related}の定義を使った．}．
+        \item[\textbf{$\bm{\evalunit}$ が全射}]　
+        
+        $\forall v \in T_{1_G} G$ を1つとり，\hyperref[def:vecf]{\cinfty ベクトル場} $\Lie{v} \in \mathfrak{X}(G)$ を
+        \begin{align}
+            \label{eq:vL}
+            \Lie{v} \colon G \lto TG,\; g \lmto T_{1_G} (L_g) (v)
+        \end{align}
+        と定義する
+        \footnote{
+            $\Lie{v}$ が \cinfty であることは次のようにしてわかる：$\forall f \in C^\infty (G)$ をとる．$\gamma(0) = 1_G,\; \dot{\gamma}(0) = v$ を充たす \cinfty 曲線 $\gamma \colon (-\delta,\, \delta) \lto G$ をとると，$\forall g \in G$ に対して $(\Lie{v} f)(g) = v (f \circ L_g) = \dot{\gamma}(0) (f \circ L_g) = \eval{\dv{}{t}}_{t=0} (f \circ L_g \circ \gamma)(t)$ と書ける．$f \circ L_g \circ \gamma \colon (-\delta,\, \delta) \times G \lto \mathbb{R}$ と見做すとこれは \cinfty 写像の合成なので \cinfty 写像であり，右辺は $g$ に関して \cinfty 級である．
+        }．
+        $\forall g \in G$ に対して $\Lie{v}$ が自分自身と $L_g$-related であることを示す．
+        実際，$\forall h \in G$ に対して
+        \begin{align}
+            T_h(L_g) (\Lie{v}|_h) &= T_h(L_g) \circ T_{1_G}(L_h)(v) = T_{1_G}(L_g \circ L_h)(v) = T_{1_G}(L_{gh})(v) = \Lie{v}|_{gh} = \Lie{v}|_{L_g(h)}
+        \end{align}
+        が言える．i.e. $\Lie{v} \in \Lie{\mathfrak{X}}(G)$ である．
+        従って $\Lie{v}$ に $\evalunit$ を作用させることができ，$\evalunit (\Lie{v}) = \Lie{v}|_{1_G} = T_{1_G} L_{1_G} (v) = v \in \Im \evalunit$ が言えた．
+    \end{description}
+\end{proof}
+
+
+
+% 線型写像
+% \begin{align}
+%     \iota \colon \Lie{\mathfrak{X}}(G) \lto T_{1_G} G,\; X \lmto X_{1_G}
+% \end{align}
+% を考える．$\forall X \in \Lie{\mathfrak{X}}(G),\; \forall g \in G$ に対して $X_g = \bigl((L_g)_* X\bigr)_{1_G} = X_{1_G}$ であるから $X \in \Lie{\mathfrak{X}} (G)$ は $X_{1_G}$ だけで完全に決まる．i.e. $\iota$ は単射である．
+% 逆に $\forall v \in T_{1_G} G$ に対して，ベクトル場 $X \colon G \lto TG,\; g \lmto \bigl( g,\, T_{1_G}(L_g) v \bigr)$ は $v = \iota(X)$ でかつ $X \in \Lie{\mathfrak{X}}(G)$ を充たすので $\iota$ は全射である．
+
+ここで $\bm{\mathfrak{g}} \coloneqq T_{1_G} G$ とおき，命題\ref{prop:LieAlg}の\eqref{eq:vL}を使って $\mathfrak{g}$ 上のLieブラケットを
+\begin{align}
+    \comm{X}{Y} \coloneqq \comm{\Lie{X}}{\Lie{Y}}_{1_G} \in \mathfrak{g}
+\end{align}
+と定義すれば $\evalunit$ はLie代数の同型写像となる．この意味で $\mathfrak{g}$ のことを\textbf{Lie群} $\bm{G}$ \textbf{のLie代数}と呼ぶ．
+% さて，慣例に従って $X\in \mathfrak{g}$ に対して $\bm{X^\#} \coloneqq \iota^{-1}(X)$ と書く．
+
+\begin{myexample}[label=ex:gl]{一般線型群とそのLie代数}
+    一般線型群 $\LGL(n,\, \mathbb{K}) \subset \Mat{n}{\mathbb{K}}$ のLie代数 $\Lgl(n,\, \mathbb{K}) \coloneqq T_{\unity_n} \LGL(n,\, \mathbb{K})$ を，$\LGL(n,\,\mathbb{K})$ のチャート $\bigl( \LGL(n,\,\mathbb{K}),\, (x^\mu{}_\nu) \bigr)$ の下で考える．
+    まず，$\mathbb{K}$-線型写像
+    \begin{align}
+        \alpha \colon \Lgl(n,\, \mathbb{K}) &\lto \Mat{n}{\mathbb{K}}, \\
+        a^\mu{}_\nu \eval{\pdv{}{x^\mu{}_\nu}}_{\unity_n} &\lmto \bigl[\, a^\mu{}_\nu \,\bigr]_{1 \le \mu,\, \nu \le n}
+    \end{align}
+    は明らかに $\mathbb{K}$-ベクトル空間の同型写像である．
+    $\forall a = a^\mu{}_\nu \eval{\pdv{}{x^\mu{}_\nu}}_{\unity_n} ,\, b = b^\mu{}_\nu \eval{\pdv{}{x^\mu{}_\nu}}_{\unity_n} \in \Lgl(n,\, \mathbb{K})$ 
+    をとる．このとき $\forall g = \bigl[ \, g^{\mu}{}_\nu \bigr]_{1 \le \mu,\, \nu \le n} \in \LGL(n,\, \mathbb{K})$ に関する左移動は
+    \begin{align}
+        L_g \bigl(\bigl[\, x^\mu{}_\nu \,\bigr]_{1 \le \mu,\, \nu \le n} \bigr) 
+        = \bigl[\, g^\mu{}_\rho x^\rho{}_\nu \,\bigr]_{1 \le \mu,\, \nu \le n}
+    \end{align}
+    なる $C^\infty$ 写像だから
+    \begin{align}
+        \Lie{a}{}_g = T_{1_G} (L_g) (a) 
+        &= a^\mu{}_\nu\, T_{1_G} (L_g) \left( \eval{\pdv{}{x^\mu{}_\nu}}_{\unity_n} \right) \\
+        &= a^\mu{}_\nu\, \pdv{[\, L_g \,]^\rho{}_\sigma}{x^\mu{}_\nu}()(\unity_n) \eval{\pdv{}{x^\rho{}_\sigma}}_{L_g(\unity_n)} \\
+        &= g^\rho{}_\mu a^\mu{}_\nu \eval{\pdv{}{x^\rho{}_\nu}}_{g}
+    \end{align}
+    と計算できる．i.e. 第 $(\mu,\, \nu)$ 成分を取り出す $C^\infty$ 関数を $\mathrm{pr}^\mu{}_\nu \colon \LGL(n,\, \mathbb{K}) \lto \mathbb{K}$ とおくと  $\forall f \in C^\infty\bigl(\LGL(n,\, \mathbb{K})\bigr)$ に対して $\Lie{a} f \in C^\infty \bigl(\LGL(n,\, \mathbb{K})\bigr)$ は
+    \begin{align}
+        \Lie{a} f(g) = a^\mu{}_\nu\, \mathrm{pr}^\rho{}_\mu(g) \pdv{f}{x^\rho{}_\nu}()(g)
+    \end{align}
+    と書ける．
+    よって
+    \begin{align}
+        \comm{a}{b} f
+        &= \comm{\Lie{a}}{\Lie{b}} f (\unity_n)\\
+        &= a^\mu{}_\nu\, \mathrm{pr}^\rho{}_\mu(\unity_n) \eval{\pdv{}{x^\rho{}_\nu}\left(b^\alpha{}_\beta\, \mathrm{pr}^\gamma{}_\alpha \pdv{f}{x^\gamma{}_\beta} \right)}_{\unity_n} \\
+        &\quad - b^\mu{}_\nu\, \mathrm{pr}^\rho{}_\mu(\unity_n) \eval{\pdv{}{x^\rho{}_\nu}\left(a^\alpha{}_\beta\, \mathrm{pr}^\gamma{}_\alpha \pdv{f}{x^\gamma{}_\beta} \right)}_{\unity_n}\\
+        &= a^\mu{}_\nu b^\nu{}_\beta\, \pdv{f}{x^\mu{}_\beta}()(\unity_n) + \cancel{a^\mu{}_\nu b^\alpha{}_\beta \pdv[2]{f}{x^\mu{}_\nu}{x^\alpha{}_\beta}()(\unity_n)} \\
+        &\quad - b^\mu{}_\nu a^\nu{}_\beta \pdv{f}{x^\mu{}_\beta}()(\unity_n) - \cancel{b^\mu{}_\nu a^\alpha{}_\beta \pdv[2]{f}{x^\mu{}_\nu}{x^\alpha{}_\beta}()(\unity_n)} \\
+        &= \left( (a^\mu{}_\rho b^\rho{}_\nu - b^\mu{}_\rho a^\rho{}_\nu) \eval{\pdv{}{x^\mu{}_\nu}}_{\unity_n}\right) f
+    \end{align}
+    であり，
+    \begin{align}
+        \alpha (\comm{a}{b}) = \bigl[\, a^\mu{}_\rho b^\rho{}_\nu - b^\mu{}_\rho a^\rho{}_\nu \,\bigr]_{1\le \mu,\, \nu \le n}
+    \end{align}
+    i.e. $\alpha$ はLie代数の同型写像だと分かった．
+\end{myexample}
+
+
+\begin{mytheo}[label=thm:induced-LieAlg-hom]{誘導されるLie代数の準同型}
+    Lie群 $G,\, H$ とLie群の準同型 $F \colon G \lto H$ を与える．
+    \begin{enumerate}
+        \item このとき，$\forall X \in \mathfrak{g}$ に対して $Y \in \mathfrak{h}$ がただ一つ存在して，$\Lie{X}$ と $\Lie{Y}$ が\hyperref[def:F-related]{$F$-related}になる．i.e. $\Lie{Y} = F_* \Lie{X}$ である．
+        \item $T_{1_G} F \colon \mathfrak{g} \lto \mathfrak{h},\; X \lmto T_{1_G}F(X)$ はLie代数の準同型である．
+    \end{enumerate}
+\end{mytheo}
+
+\begin{proof}
+    \begin{enumerate}
+        \item $Y = T_{1_G} F(X) \in \mathfrak{h}$ に対して $\Lie{X}$ と $\Lie{Y}$ が $F$-relatedであることを示す．
+        実際，$F$ がLie群の準同型であることから
+        $\forall g,\, h \in G$ について
+        \begin{align}
+            F \circ L_g (h) = F(gh) = F(g)F(h) = L_{F(g)} \circ F(h)
+        \end{align}
+        が成り立つこと，i.e. $F \circ L_g = L_{F(g)} \circ F$ に注意すると
+        $\forall g \in G$ に対して
+        \begin{align}
+            T_g F (\Lie{X}|_g) &= T_g F \bigl( T_{1_G} L_g(X) \bigr) \\
+            &= T_{1_G}(F \circ L_g)(X) \\
+            &= T_{1_G}(L_{F(g)} \circ F)(X) \\
+            &= T_{1_H}(L_{F(g)}) \circ T_{1_G} F(X) \\
+            &= T_{1_H}(L_{F(g)})(Y) \\
+            &= Y_{F(g)}
+        \end{align}
+        が言える．系\ref{col:pushforward}より $F_* \Lie{X} = \Lie{Y}$ がわかるので $Y$ は一意的に定まる．
+        \item $\forall X,\, Y \in \mathfrak{g}$ をとる．(1) と命題\ref{prop:Lie-bracket-natural}-(1) より $\comm{F_* \Lie{X}}{F_* \Lie{Y}}$ は $\comm{\Lie{X}}{\Lie{Y}}$ と $F$-related であるが，(1) で示した一意性から
+        \begin{align}
+            F_*\comm{\Lie{X}}{\Lie{Y}} = \comm{F_* \Lie{X}}{F_* \Lie{Y}}
+        \end{align}
+        が言える．両辺の $1_H \in H$ における値をとることで
+        \begin{align}
+            T_{1_G}F (\comm{X}{Y}) = (F_*\comm{\Lie{X}}{\Lie{Y}})_{1_G} = (\comm{F_* \Lie{X}}{F_* \Lie{Y}})_{1_G} = \comm{X}{Y}
+        \end{align}
+        が示された．
+    \end{enumerate}
+\end{proof}
+
+
+\begin{mydef}[label=def:one-parameter-subgroup]{1パラメータ部分群}
+    Lie群の準同型写像 $\mathbb{R} \lto G$ のことをLie群 $G$ の\textbf{1パラメータ部分群} (one-parameter subgroup) と呼ぶ\footnote{1パラメータ部分群自身は\underline{部分Lie群ではない}．}．
+\end{mydef}
+
+\begin{myprop}[label=prop:one-parameter-basic]{1パラメータ部分群の特徴付け}
+    Lie群 $G$ を与える．
+    \begin{enumerate}
+        \item $G$ の任意の\hyperref[def:one-parameter-subgroup]{1パラメータ部分群} $\gamma \colon \mathbb{R} \lto G$ に対して，$\gamma$ を初期条件 $\gamma(0) = 1_G$ を充たす\hyperref[def:local-flow]{極大積分曲線}として持つ\hyperref[def:left-invariant]{左不変ベクトル場} $X \in \Lie{\mathfrak{X}}(G)$ が一意的に存在する．
+        \item $\forall X \in \Lie{\mathfrak{X}}(G)$ に対して，初期条件 $\gamma(0) = 1_G$ を充たす唯一の $X$ の極大積分曲線 $\gamma \colon \mathbb{R} \lto G$ は $G$ の1パラメータ部分群である．
+    \end{enumerate}
+    \tcblower
+    上述の対応によって $X \in \Lie{\mathfrak{X}}(G)$ から一意的に定まる1パラメータ部分群のことを\textbf{$\bm{X}$ が生成する1パラメータ部分群}と呼ぶ．
+\end{myprop}
+
+\begin{marker}
+    命題\ref{prop:LieAlg}の同型と併せると
+    \begin{align}
+        \bigl\{\, G\; \text{の1パラメータ部分群}  \,\bigr\} \overset{{}_*}{\longleftrightarrow} \Lie{\mathfrak{X}}(G) \overset{\evalunit}{\longleftrightarrow} T_{1_G} G
+    \end{align}
+    の1対1対応がある．i.e. $G$ の任意の1パラメータ部分群 $\gamma$ は，その初速度 $\dot{\gamma}(0) \in T_{1_G} G$ により完全に決定される．
+\end{marker}
+
+
+\begin{proof}
+    \begin{enumerate}
+        \item $G$ の1パラメータ部分群 $\gamma \colon \mathbb{R} \lto G$ を与える．
+        $\dv{}{t} \in \Lie{\mathfrak{X}}(\mathbb{R})$ なので，定理\ref{thm:induced-LieAlg-hom}より，$X \coloneqq \gamma_* \bigl(\dv{}{t}\bigr) \in \Lie{\mathfrak{X}}(G)$ は $\dv{}{t}$ と $\gamma$-related な唯一の左不変ベクトル場である．
+        このとき $\forall t_0 \in \mathbb{R}$ に大して
+        \begin{align}
+            X_{\gamma(t_0)} = T_{t_0} \gamma \left( \eval{\dv{}{t}}_{t=t_0} \right) = \dot{\gamma}(t_0)
+        \end{align}
+        が成り立ち，$\gamma$ は初期条件 $\gamma(0) = 1_G$ を充たす$X$ の極大積分曲線である．
+        \item 定理\ref{thm:left-invariant-complete}より $\forall X \in \Lie{\mathfrak{X}}(G)$ は\hyperref[def:complete-vecf]{完備}なので，
+        $X$ は\hyperref[def:global-flow]{大域的なフロー}を\hyperref[thm:fundamental-flow]{生成する}．従って $\gamma(0) = 1_G$ を充たす $X$ の極大積分曲線 $\gamma$ が唯一存在し，その定義域が $\mathbb{R}$ になる．
+        
+        　$\forall g \in G$ をとる．\hyperref[def:left-invariant]{左不変ベクトル場の定義}より $X \in \Lie{\mathfrak{X}}(G)$ は $X$ 自身と \hyperref[def:F-related]{$L_g$-related}なので，命題\ref{prop:natural-integral-curve}から $L_g \circ \gamma \colon \mathbb{R} \lto G$ もまた $X$ の積分曲線である．
+        従って $\forall s \in \mathbb{R}$ に対して曲線 $L_{\gamma(s)} \circ \gamma \colon t \lmto L_{\gamma(s)} \bigl( \gamma(t) \bigr) = \gamma(s) \gamma(t)$ は $t=0$ において点 $\gamma(s) \in G$ を通過する $X$ の積分曲線である．
+        然るに補題\ref{lem:affine-integral-curve}-(2) より曲線 $t \colon t \lmto \gamma(s+t)$ もまた同一の初期条件を充たす $X$ の積分曲線なので，定理\ref{thm:fundamental-flow}よりこれらは $\forall t \in \mathbb{R}$ において一致しなくてはならない：
+        \begin{align}
+            \gamma(s) \gamma(t) = \gamma(s+t)
+        \end{align}
+        i.e. $\gamma \colon \mathbb{R} \lto G$ は1パラメータ部分群である．
+    \end{enumerate}
+    
+\end{proof}
+
+\begin{mydef}[label=def:exp]{指数写像}
+    Lie群 $G$ を与える．$\mathfrak{g}$ を $G$ のLie代数とする．
+    $G$ の\textbf{指数写像} (exponential map) を
+    \begin{align}
+        \exp \colon \mathfrak{g} \lto G,\; X \lmto \gamma_{(X)}(1)
+    \end{align}
+    と定義する．ただし，$\gamma_{(X)} \colon \mathbb{R} \lto G$ は $\Lie{X} \in \Lie{\mathfrak{X}}(G)$ が \hyperref[prop:one-parameter-basic]{生成する1パラメータ部分群}である．
+\end{mydef}
+
+\begin{myprop}[label=prop:exp]{指数写像の性質}
+    Lie群 $G$ を与える．$\mathfrak{g}$ を $G$ のLie代数とする．
+    \begin{enumerate}
+        \item $\exp \colon \mathfrak{g} \lto G$ は \cinfty 写像 
+        \item $\forall X \in \mathfrak{g}$ に対して，
+        \begin{align}
+            \gamma_{(X)} \colon \mathbb{R} \lto G,\; t \lmto \exp (tX)
+        \end{align}
+        は $\Lie{X} \in \Lie{\mathfrak{X}}(G)$ が\hyperref[prop:one-parameter-basic]{生成する1パラメータ部分群}である．
+        \item $\forall X \in \mathfrak{g},\; \forall s,\, t \in \mathbb{R}$ に対して
+        \begin{align}
+            \exp \bigl( (s+t) X\bigr) = \exp (sX) \exp(tX)
+        \end{align}
+        
+        \item $\forall X \in \mathfrak{g}$ に対して
+        \begin{align}
+            (\exp X)^{-1} = \exp (-X)
+        \end{align}
+        
+        % \item $T_0 \exp \colon T_0 \mathfrak{g} \lto T_{1_G} G \cong \mathfrak{g}$
+
+        \item $H$ を別のLie群，$\textcolor{blue}{F} \colon G \lto H$ を任意のLie群の準同型とするとき，以下の図式が可換になる：
+        \begin{center}
+            \begin{tikzcd}[row sep=large, column sep=large]
+            &\mathfrak{g} \ar[r, "T_{1_G} \textcolor{blue}{F}"]\ar[d, "\exp"'] &\mathfrak{h} \ar[d, "\exp"] \\
+            &G \ar[r, blue, "F"] &H
+        \end{tikzcd}
+        \end{center}
+        
+        \item $\forall X \in \mathfrak{g}$ に対して，左不変ベクトル場 $\Lie{X} \in \Lie{\mathfrak{X}}(G)$ が\hyperref[thm:fundamental-flow]{生成するフロー} $\theta_{(X)} \colon \mathbb{R} \times G \lto G$ に対して 
+        \begin{align}
+            \theta_{(X)}(t,\, g) = g \exp(tX) \, \bigl(\,\eqqcolon R_{\exp(tX)}(g)\,\bigr)
+        \end{align}
+        が成り立つ．
+
+        \item $T_0 (\exp) \colon T_0 \mathfrak{g} \lto \mathfrak{g}$ は恒等写像である．
+        \item 点 $0 \in \mathfrak{g}$ の近傍 $U \subset \mathfrak{g}$ および点 $1_G \in G$ の近傍 $V \subset G$ が存在して，$\exp|_U \colon U \lto V$ が微分同相写像になる．
+    \end{enumerate}
+\end{myprop}
+
+\begin{proof}
+    \begin{enumerate}
+        \item ~\cite[p.519, Proposition 20.8-(1)]{Lee12}
+        \item $\gamma \colon \mathbb{R} \lto G$ を $\Lie{X} \in \Lie{\mathfrak{X}}(G)$ が\hyperref[prop:one-parameter-basic]{生成する1パラメータ部分群}とする．これは命題\ref{prop:one-parameter-basic}-(2) により $\gamma(0) = 1_G$ を充たす $\Lie{X}$ の唯一の\hyperref[thm:fundamental-flow]{極大積分曲線}である．
+        
+        　$\forall t \in \mathbb{R}$ をとる．このとき補題\ref{lem:affine-integral-curve}-(1) より，\cinfty 曲線 $\tilde{\gamma} \colon \mathbb{R} \lto G,\; s \lmto \gamma(ts)$ は初期条件 $\tilde{\gamma}(0) = 1_G$ を充たすベクトル場 $t \Lie{X}$ の極大積分曲線なので，その一意性から
+        \begin{align}
+            \gamma_{(X)}(t) = \exp (tX) = \tilde{\gamma}(1) = \gamma(t)
+        \end{align}
+        が成り立つ．i.e. $\gamma_{(X)} = \gamma$ が言えた．
+        \item (2) より $\gamma_{(X)}$ が1パラメータ部分群なので
+        \begin{align}
+            \exp \bigl( (s+t)X \bigr) = \gamma_{(X)}(s+t) = \gamma_{(X)}(s)\gamma_{(X)}(t) = \exp(sX)\exp(tX)
+        \end{align}
+        \item (2) より $\gamma_{(X)}$ が1パラメータ部分群なので
+        \begin{align}
+            \exp X \exp(-X) &= \gamma_{(X)} (1) \gamma_{(X)}(-1) = \gamma_{(X)}(0) = 1_G \\
+            \exp (-X) \exp X &= \gamma_{(X)} (-1) \gamma_{(X)}(1) = \gamma_{(X)}(0) = 1_G
+        \end{align}
+        が言える．i.e. $(\exp X)^{-1} = \exp (-X)$ である．
+        \item $\forall X \in \mathfrak{g}$ を1つ固定する．
+        % $\forall t \in \mathbb{R}$ を1つとる．
+        (2) より \cinfty 写像 $t \lmto \exp \bigl(t\, T_{1_G} \textcolor{blue}{F}(X)\bigr)$ は左不変ベクトル場 $\Lie{\bigl(T_{1_G} \textcolor{blue}{F}(X)\bigr)} = \textcolor{blue}{F}_*(\Lie{X}) \in \Lie{\mathfrak{X}}(G)$ が生成する1パラメータ部分群である．
+        ここで，$\sigma \colon \mathbb{R} \lto H,\; t \lmto \textcolor{blue}{F}\bigl(\exp (tX)\bigr)$ とおいたとき
+        \begin{align}
+            \dot{\sigma}(0)
+            &= T_{0} \bigl( \textcolor{blue}{F} \circ \exp (tX) \bigr) \left( \eval{\dv{}{t}}_{t=0} \right) \\
+            &= T_{1_G} \textcolor{blue}{F} \circ T_0 \bigl( \exp (tX)  \bigr)  \left( \eval{\dv{}{t}}_{t=0} \right) \\
+            &= T_{1_G} \textcolor{blue}{F} \bigl( \dot{\gamma_{(X)}}(0) \bigr) \\
+            &= T_{1_G} \textcolor{blue}{F} (X)
+        \end{align}
+        が成り立つので $\sigma$ もまた左不変ベクトル場 $\Lie{\bigl(T_{1_G} \textcolor{blue}{F} (X)\bigr)} \in \Lie{\mathfrak{X}}(G)$  が生成する1パラメータ部分群であり，その一意性から $\sigma(t) = \exp \bigl( t T_{1_G} \textcolor{blue}{F} (X) \bigr)$ が言える．
+        \item $\forall (t,\, g) \in \mathbb{R} \times G$ をとる．\hyperref[def:left-invariant]{左不変ベクトル場の定義}より $\Lie{X} \in \Lie{\mathfrak{X}}(G)$ は $\Lie{X}$ 自身と \hyperref[def:F-related]{$L_g$-related}なので，
+        命題\ref{prop:natural-integral-curve}から $L_g \circ \gamma_{(X)} \colon \mathbb{R} \lto G,\; t \lmto \exp (tX)$ もまた $\Lie{X}$ の極大積分曲線である．$L_g \circ \gamma_{(X)}(0) = g$ なので，極大積分曲線の一意性から $L_g \circ \gamma_{(X)} = \theta_{(X)}^{(g)}$ が言える．
+        従って
+        \begin{align}
+            g \exp(tX) = L_g(\exp(tX)) = L_g \circ \gamma_{(X)}(t) = \theta_{(X)}^{(g)}(t) = \theta_{(X)} (t,\, g).
+        \end{align}
+
+        \item $\forall X \in T_0 \mathfrak{g}$ を1つとる．$\mathfrak{g}$ 上の $C^\infty$ 曲線 $\gamma \colon \mathbb{R} \lto \mathfrak{g},\; t \lmto t X$ は $\dot{\gamma}(0) = X$ を充たすので
+        \begin{align}
+            T_0 (\exp)(X)
+            &= T_0(\exp) \bigl( \dot{\gamma}(0) \bigr) \\
+            &= T_0 (\exp) \circ T_0 \gamma \left( \eval{\dv{}{t}}_{t=0} \right) \\
+            &= T_0 (\exp \circ \gamma)  \left( \eval{\dv{}{t}}_{t=0} \right) \\
+            &= \eval{\dv{}{t}}_{t=0} \exp(tX) \\
+            &= X
+        \end{align}
+        
+        \item (7) より点 $0 \in \mathfrak{g}$ において $T_0 (\exp) \colon T_0 \mathfrak{g} \lto \mathfrak{g} = T_{1_G} G$ が全単射なので，\hyperref[thm:inverse-function-b]{$C^\infty$ 多様体に関する逆関数定理}が使える．
+    \end{enumerate}
+\end{proof}
+
+
+% \begin{myprop}[label=prop:Exp,breakable]{指数写像の性質}
+%     $G$ をLie群，$\mathfrak{g}$ をそのLie代数とする．このとき以下が成り立つ：
+%     \begin{enumerate}
+%         \item $\forall X \in \mathfrak{g}$ に対して，\hyperref[def:vecf]{ベクトル場} $X^\# \in \Lie{\mathfrak{X}} (G)$ は\hyperref[def:complete-vecf]{完備}である．従って\hyperref[def:global-flow]{大域的な流れ}\footnote{つまり，Lie群 $\mathbb{R}$ の\hyperref[def:Lie-action]{作用}．} $\theta \colon \mathbb{R} \times G \lto G$ を生成する．
+%         \item $\forall X \in \mathfrak{g},\; \forall t \in \mathbb{R}$ に対して $\exp_G (t X) \coloneqq \theta(t,\, 1_G)$ と書くと，$\theta_t = R_{\exp_G (tX)} \colon G \lto G$ が成り立つ．
+%         \item $\forall X \in \mathfrak{g},\; \forall s,\, t \in \mathbb{R}$ に対して $\exp_G (sX) \exp_G (tX) = \exp_G ((s+t)X) \in G$ が成り立つ．i.e.
+%         $\{\exp_G (tX)\}_{t \in \mathbb{R}}$ 
+%         は $G$ の1パラメータ部分群である．
+%         \item $\forall X \in \mathfrak{g}$ に対して
+%         $\eval{\dv{}{t}}_{t=0} \bigl(\exp_G (tX)\bigr) = X \in \mathfrak{g}$ が成り立つ．
+%         \item 対応 $X \lmto \{\exp_G (tX)\}_{t \in \mathbb{R}}$ は $\mathfrak{g}$ から $G$ の1パラメータ部分群全体の全単射である．
+%     \end{enumerate}
+%     従って，\textbf{指数写像} $\exp_G \colon \mathfrak{g} \lmto G$ が定義される．
+% \end{myprop}
+
+% \begin{proof}
+%     \begin{enumerate}
+%         \item 命題\ref{prop:existence-integral}より，ベクトル場 $X^{\#}$ の\hyperref[def:integral-curve]{積分曲線} $\gamma_{1_G} \colon (-\varepsilon,\, \varepsilon) \lto G$ で，$\gamma_\varepsilon (0) = 1_G$ を充たすものが存在する．
+%         このとき $\forall g \in G$ に対して \cinfty 曲線を
+%         \begin{align}
+%             \gamma_g \colon (-\varepsilon,\, \varepsilon) \lto G,\; t \lmto g \gamma_{1_G} (t)
+%         \end{align}
+%         と定義すると
+%         \begin{align}
+%             \eval{\dv{}{s}}_{s=0} \gamma_g(t + s) 
+%             &= \eval{\dv{}{s}}_{s=0}\bigl( L_g \circ \gamma_{1_G}(t + s)\bigr) \\
+%             &= T_{\gamma_{1_G}(t)} (L_g) \left( \eval{\dv{}{s}}_{s=0} \gamma_{1_G}(t + s) \right) \\
+%             &= T_{\gamma_{1_G}(t)} (L_g) \left( (X^\#)_{\gamma_{1_G} (t)} \right) \\
+%             &= (X^\#)_{\gamma_{g} (t)}
+%         \end{align}
+%         が成り立つので，$\gamma_g$ は初期条件 $\gamma_g (0) = g$ を充たす $X^\#$ の積分曲線である．
+
+%         　ここで $g_1 \coloneqq \gamma_{1_G} (\varepsilon/2),\; g_2 \coloneqq \gamma_{1_G}(-\varepsilon/2)$ とおいて
+%         \begin{align}
+%             \gamma_{1_G}(t) \coloneqq 
+%             \begin{cases}
+%                 \gamma_{g_1} (t - \frac{\varepsilon}{2}), & t \in [\varepsilon/2,\, 3\varepsilon/2) \\
+%                 \gamma_{1_{G}} (t), & t \in [-\varepsilon/2,\, \varepsilon/2] \\
+%                 \gamma_{g_2} (t + \frac{\varepsilon}{2}), & t \in (-3\varepsilon/2,\, -\varepsilon/2] 
+%             \end{cases}
+%         \end{align}
+%         と定義すると $\gamma_{1_G} \colon (-3\varepsilon/2,\, 3\varepsilon/2) \lto G$ はwell-definedで，$X^\#$ の積分曲線となる．同様の議論で定義域を拡張すれば，初期条件 $\gamma_{1_G} (0) = 1_G$  を充たす $X^\#$ の積分曲線 $\gamma_{1_G} \colon \mathbb{R} \lto G$ が得られる．
+
+%         　次に，上の議論により得られた $\gamma_{1_G}$ を使って $\forall g \in G$ に対して
+%         \begin{align}
+%             \gamma_g \colon \mathbb{R} \lto G,\; t \lmto g \gamma_{1_G}(t)
+%         \end{align}
+%         と定義するとこれは $\gamma_g (0) = g$ を充たす $X^\#$ の積分曲線である．よって $X^\#$ は大域的な流れ
+%         \begin{align}
+%             \theta \colon \mathbb{R} \times G \lto G,\; (t,\, g) \lmto \gamma_g(t)
+%         \end{align}
+%         を生成する．
+%         \item (1) の証明より，$\forall t \in \mathbb{R},\, \forall g \in G$ に対して
+%         \begin{align}
+%             \exp_G (tX) &= \theta(t,\, 1_G) = \gamma_{1_G}(t), \\
+%             \theta_t (g) &\coloneqq \theta(t,\, g) = \gamma_g(t) = g \gamma_{1_G} (t) = R_{\exp_G (tX)}(g)
+%         \end{align}
+%         が言える．
+%         \item (1) で得た $\theta$ が大域的な流れなので
+%         \begin{align}
+%             \exp_G (sX) \exp_G (tX) &= \theta_t \bigl( 1_G\exp_G (sX) \bigr)  = \theta_t \circ \theta_s (1_G) = \theta_{s+t}(1_G) = \exp_G \bigl( (s+t) X\bigr) 
+%         \end{align}
+%         が成り立つ．
+%         \item 
+%         \begin{align}
+%             \eval{\dv{}{t}}_{t=0} \bigl( \exp_G(tX) \bigr) &= \eval{\dv{}{t}}_{t=0} \gamma_{1_G} (t) = (X^\#)_{1_G} = \iota (X^\#) = X
+%         \end{align}
+%         \item 
+%     \end{enumerate}
+    
+% \end{proof}
+
+
+\begin{mydef}[label=def:diff-rep]{微分表現}
+    $V$ を $\mathbb{K}$-ベクトル空間とする．Lie群 $G$ の表現 $\rho \colon G \lto \LGL (V)$ の，$1_G \in G$ における微分
+    $T_{1_G} \rho \colon \mathfrak{g} \lto \mathfrak{gl}(V)$ はLie代数の表現である．この $T_{1_G} \rho$ のことを $\rho$の\textbf{微分表現} (differential representation) と呼ぶ．
+\end{mydef}
+
+\begin{myexample}[label=def:Lie-adj]{随伴表現}
+    $\forall g \in G$ に対して準同型 $F_g \colon G \lto G,\; x \lmto gxg^{-1}$ を考えると $F_{gh} = F_g \circ F_h$ が成り立つ．
+    故に，$1_G \in G$ における微分
+    \begin{align}
+        T_{1_G} (F_g) \colon \mathfrak{g} \lto \mathfrak{g}
+    \end{align}
+    は，$T_{1_G}$ の関手性から $T_{1_G}(F_{gh}) = T_{1_G}(F_g) \circ T_{1_G}(F_h)$ を充たす．よって
+    \begin{align}
+        \Adj \colon G \lto \LGL (\mathfrak{g}),\; g \lmto T_{1_G} (F_g)
+    \end{align}
+    はLie群 $G$ の表現となる\footnote{厳密には $\Adj$ の \cinfty 性を示さなくてはならない．証明は~\cite[p.534, Proposition 20.24]{Lee12}を参照．}．
+    これをLie群 $G$ の\textbf{随伴表現} (adjoint representation) と呼ぶ．
+    
+    　$\Adj$ の微分表現を\hyperref[def:exp]{指数写像}を使って計算してみよう．
+    $\forall X \in \mathfrak{g}$ をとる．命題\ref{prop:exp}-(2) により曲線 $\gamma_{(X)} \colon t \lmto \exp(tX)$ は $X$ が生成する1パラメータ部分群なので，
+    命題\ref{prop:infinitesimal-generator-local}から $\dot{\gamma_{(X)}}(0) = X$ である．従って $\forall Y \in \mathfrak{g}$ に大して
+    \begin{align}
+        \bigl(T_{1_G}(\Adj) (X)\bigr)Y 
+        &= \Bigl( T_{1_G} (\Adj)\bigl(\dot{\gamma_{(X)}}(0)\bigr) \Bigr) Y \\
+        &= T_{1_G} (\Adj) \circ T_0 \gamma_{(X)} \left( \eval{\dv{}{t}}_{t=0} \right)  Y \\
+        &= T_{0} (\Adj \circ \gamma_{(X)}) \left( \eval{\dv{}{t}}_{t=0}  \right) Y \\
+        &= \left(\eval{\dv{}{t}}_{t=0} \Adj \bigl(\exp (tX)\bigr) \right) Y \\
+        &= \left(\eval{\dv{}{t}}_{t=0} \Adj \bigl(\exp (tX)\bigr)(Y) \right) \\
+        &= \eval{\dv{}{t}}_{t=0} \Bigl(T_{1_G}\bigl( F_{\exp (tX)}  \bigr)(Y) \Bigr) \\
+        &= \eval{\dv{}{t}}_{t=0} \Bigl(T_{1_G}\bigl( R_{(\exp (tX))^{-1}} \circ L_{\exp (tX)} \bigr)(\Lie{Y}_{1_G}) \Bigr)\\
+        &= \eval{\dv{}{t}}_{t=0} \Bigl(T_{L_{\exp (tX)}(1_G)}\bigl( R_{\exp (-tX)} \bigr) \circ T_{1_G} \bigl( L_{\exp (tX)} \bigr)(\Lie{Y}_{1_G}) \Bigr)\\
+        &= \eval{\dv{}{t}}_{t=0} \Bigl(T_{\exp (tX)}\bigl( R_{\exp (-tX)} \bigr) \bigl(\Lie{Y}_{\exp (tX)}\bigr) \Bigr)
+    \end{align}
+    ここで，命題\ref{prop:exp}-(6) より $\Lie{X} \in \Lie{\mathfrak{X}}(G)$ が\hyperref[thm:fundamental-flow]{生成するフロー}が $\theta_t (g) = R_{\exp(tX)} (g)$ と書かれることを思い出すと，
+    \begin{align}
+        &\eval{\dv{}{t}}_{t=0} \Bigl(T_{\exp (tX)}\bigl( R_{\exp (-tX)} \bigr) \bigl(\Lie{Y}_{\exp (tX)}\bigr) \Bigr) \\
+        &= \eval{\dv{}{t}}_{t=0} T_{\theta_t(1_G)} \bigl(\theta_{-t}\bigr) \bigl( \Lie{Y}_{\theta_t (1_G)} \bigr) \\
+        &= \lim_{t \to 0} \frac{T_{\theta_t(1_G)} \bigl(\theta_{-t}\bigr) \bigl( \Lie{Y}_{\theta_t (1_G)} \bigr) - \Lie{Y}_{1_G}}{t} \\
+        &= (\Liedv{\Lie{X}} \Lie{Y})_{1_G} \\
+        &= \comm{\Lie{X}}{\Lie{Y}}_{1_G} \\
+        &= \comm{X}{Y}
+    \end{align}
+    となる．ただし3つ目の等号で\hyperref[def:Liedv]{Lie微分の定義}を使った．結局
+    \begin{align}
+        \ad \coloneqq T_{1_G} (\Adj) \colon \mathfrak{g} \lto \mathfrak{gl}(\mathfrak{g}),\; X \lmto (Y \mapsto \comm{X}{Y})
+    \end{align}
+    であることが分かった．
+    % 実際，$F_g = R_{g^{-1}} \circ L_g$ で，命題\ref{prop:Exp}-(2) より $\{R_{\exp_G (tX)}\}_{t \in \mathbb{R}}$ は $X^\#$ の生成する1パラメータ変換群だから，
+    % \begin{align}
+    %     \ad(X)(Y) &= \eval{\dv{}{t}}_{t=0}()
+    % \end{align}
+    
+\end{myexample}
+
+\begin{myexample}[label=ex:gl-adj]{一般線型群の随伴表現}
+    $G = \LGL (n,\, \mathbb{K})$ としたときの\hyperref[def:Lie-adj]{随伴表現}を考える．$\LGL(n,\, \mathbb{K})$ のチャート $\bigl( \LGL(n,\, \mathbb{K}),\, (x^\mu{}_\nu) \bigr)$ をとると $\forall g = \bigl[\, g^\mu{}_\nu \,\bigr]_{1 \le \mu,\, \nu \le n} \in \LGL(n,\, \mathbb{K})$ に関して $C^\infty$ 写像 $F_g \colon G \lto G$ は
+    \begin{align}
+        F_g \bigl( \bigl[\, x^\mu{}_\nu \,\bigr]_{1 \le \mu,\, \nu \le n}  \bigr) = \bigl[ \, g^\mu{}_\rho x^\rho{}_\sigma [g^{-1}]^\sigma{}_\nu \, \bigr]_{1 \le \mu,\, \nu \le n}
+    \end{align}
+    と座標表示されるので，$\forall c^\mu{}_\nu \eval{\pdv{}{x^\mu{}_\nu}}_{\unity_n} \in \Lgl (n,\, \mathbb{K})$ の自然基底に関して
+    \begin{align}
+        \Adj (g) \left( c^\mu{}_\nu \eval{\pdv{}{x^\mu{}_\nu}}_{\unity_n} \right) 
+        &= c^\mu{}_\nu\, T_{\unity_n} \left( \eval{\pdv{}{x^\mu{}_\nu}}_{\unity_n} \right) \\
+        &= c^\mu{}_\nu\, \pdv{[\, F_g \,]^\rho{}_\sigma}{x^\mu{}_\nu}()(\unity_n) \eval{\pdv{}{x^\rho{}_\sigma}}_{F_g(\unity_n)} \\
+        &= g^\rho{}_\mu c^\mu{}_\nu [g^{-1}]^\nu{}_\sigma \eval{\pdv{}{x^\rho{}_\sigma}}_{\unity_n}
+    \end{align}
+    がわかる．\exref{ex:gl}のLie代数の同型写像 $\alpha \colon \Lgl(n,\, \mathbb{K}) \lto \Mat{n}{\mathbb{K}}$ を使うと，これは行列の積の意味で
+    \begin{align}
+        \alpha \circ \Adj (g)  \circ \alpha^{-1} (X) = g X g^{-1}
+    \end{align}
+    を意味する．
+    以上の議論は $G$ が $\LGL(n,\, \mathbb{K})$ の部分Lie群の場合にも成立するが，\underline{大抵の場合Lie代数の同型写像 $\alpha$ は省略される}．
+\end{myexample}
+
+定理\ref{thm:fundamental-flow}によって，\cinfty 多様体 $M$ 上の\hyperref[def:vecf-complete]{完備}なベクトル場 $X$ がLie群 $\mathbb{R}$ の $M$ への作用 $\theta \colon \mathbb{R} \times M \lto M$ を一意に定めることが分かる．
+そしてこのような状況を指して，ベクトル場 $X$ はLie群 $\mathbb{R}$ の作用 $\theta$ の無限小生成子であると言うのだった．
+この考えを任意のLie群 $G$ の，任意の $M$ への\underline{右作用}に拡張することができる．
+つまり，任意のLie群 $G$ の任意の右作用 $\btl \colon M \times G \lto M$ は，ただ一つの無限小生成子を持つ．
+
+\begin{mydef}[label=def:fundamental-vecf]{基本ベクトル場}
+    Lie群 $G$ が\cinfty 多様体 $M$ に\hyperref[def:Lie-action]{右から作用}しているとする．この右作用を $\btl \colon M \times G \lto M$ と書く．
+    \begin{itemize}
+        \item $\forall X \in \mathfrak{g}$ に対して，\textbf{基本ベクトル場} (fundamental vector field) $\bm{X^{\#}} \in \mathfrak{X}(M)$ を次のように定める：
+        \begin{align}
+            X^{\#}_x \coloneqq \eval{\dv{}{t}}_{t=0} \bigl(x \btl \exp(tX)\bigr) \in T_x M
+        \end{align}
+        \item 写像
+        \begin{align}
+            \btl^{\#} \colon \mathfrak{g} \lto \mathfrak{X}(M),\; X \lmto X^\#
+        \end{align}
+        のことを\textbf{右作用 $\btl$ の無限小生成子}と呼ぶ．
+    \end{itemize}
+    \tcblower
+    上の状況下で
+    \begin{itemize}
+        \item $\forall \textcolor{blue}{g} \in G$ に対して\textbf{右作用移動} $R_{\textcolor{blue}{g}} \colon M \lto M$ を $R_g (x) \coloneqq x \btl \textcolor{blue}{g}$ と定義する．
+        \item $\forall \textcolor{red}{x} \in M$ に対して\textbf{右作用軌道} $R^{(\textcolor{red}{x})} \colon G \lto M$ を $R^{(x)} (g) \coloneqq \textcolor{red}{x} \btl g$ と定義する．
+    \end{itemize}
+\end{mydef}
+
+$\forall X \in \mathfrak{g}$ に対して，\cinfty 写像\footnote{これは命題\ref{prop:exp}-(6)からの類推だと言える．}
+\begin{align}
+    \theta_{(X)} \colon \mathbb{R} \times M \lto M,\; (t,\, x) \lmto x \btl \exp(tX) = R_{\exp(tX)} (x)
+\end{align}
+は\hyperref[def:flow-global]{大域的フロー}である
+\footnote{
+    実際，命題\ref{prop:exp}から
+    \begin{align}
+        \theta_{(X)}(0,\, x) &= x \btl 1_G = x, \\
+        \theta_{(X)}(t+s,\, x) &= x \btl \exp \bigl( (s+t) X \bigr) \\
+        &= x \btl \bigl(\exp(sX)\exp(tX)\bigr) \\
+        &= x \btl \exp(sX) \btl \exp(tX) \\
+        &= \theta_{(X)} \bigl(t ,\, \theta_{(X)}(s,\, x)\bigr)
+    \end{align}
+    が成り立つ．
+}
+．
+この大域的フローの\hyperref[def:thm:fundamental-flow]{無限小生成子}はベクトル場
+\begin{align}
+    x \lmto \Bigl( x,\, \dot{\theta_{(X)}^{(x)}} (0) \Bigr) = \left( x,\, T_0 \bigl( \theta_{(X)}^{(x)} \bigr) \left( \eval{\dv{}{t}}_{t=0} \right)   \right) 
+\end{align}
+であるが\footnote{強引に書くと $\theta^{(x)}_{(X)} = R^{(x)} \circ \exp (\mhyphen X) \colon \mathbb{R} \lto M$ と言うことになる．}，これがまさに $X^\# \in \mathfrak{X}(M)$ になっている．つまり，基本ベクトル場は $\forall x \in M$ において，$\forall f \in C^\infty (M)$ に
+\begin{align}
+    X^\#_x f = T_0 \bigl( \theta_{(X)}^{(x)} \bigr) \left( \eval{\dv{}{t}}_{t=0} \right)f = \eval{\dv{}{t}}_{t=0} \bigl( f \circ \theta_{(X)}^{(x)}  \bigr) (t) = \eval{\dv{}{t}}_{t=0} f \bigl(x \btl \exp(tX)\bigr)
+\end{align}
+と作用する．
+
+もしくは，次のように考えることもできる：
+曲線 $\gamma_{(X)} \colon t  \lmto \exp(tX)$ は初速度 $\dot{\gamma_{(X)}}(0) = X$ なので，
+\begin{align}
+    T_{1_G}(R^{(x)}) (X) 
+    &= T_{1_G} (R^{(x)}) \bigl( \dot{\gamma_{(X)}}(0) \bigr) \\
+    &= T_{1_G} (R^{(x)}) \circ T_0 (\gamma_{(X)}) \left( \eval{\dv{}{t}}_{t=0} \right) \\
+    &= T_0 (R^{(x)} \circ \gamma_{(X)}) \left( \eval{\dv{}{t}}_{t=0} \right) \\
+    &= T_0 (\theta_{(X)}^{(x)})\left( \eval{\dv{}{t}}_{t=0} \right) \\
+    &= X^\#_x. \label{eq:fundamental-vecf}
+\end{align}
+このことから $\btl^\#$ が $\mathbb{R}$-線型写像だとわかる．なお，等式\eqref{eq:fundamental-vecf}は\hyperref[thm:connection-basic]{主束の接続形式を調べる}際に極めて重要な役割を果たす．
+
+\begin{mylem}[label=lem:fundamental-vecf]{}
+    Lie群 $G$ の\cinfty 多様体 $M$ への右作用 $\btl \colon M \times G \lto M$ を与える．
+    
+    このとき $\forall x \in M$ および $\forall X \in \mathfrak{g}$ に対して，$\Lie{X} \in \Lie{\mathfrak{X}}(G)$ とその\hyperref[def:fundamental-vecf]{基本ベクトル場} $X^\#$ は $R^{(x)}$\hyperref[def:F-related]{-related}である
+\end{mylem}
+
+\begin{proof}
+    $\forall g,\, h \in G$ に対して
+    \begin{align}
+        R^{(x \btl g)}(h) = x \btl g \btl h = x \btl(gh) = x \btl L_g(h) = R^{(x)} \circ L_g(h)
+    \end{align}
+    が成り立つことに注意する．
+    $\forall g \in G$ をとり，$y \coloneqq R^{(x)}(g) = x \btl g$ とおく．$\Lie{X}$ が\hyperref[def:left-invariant]{左不変ベクトル場}であることから
+    \begin{align}
+        X^\#_y &= T_{1_G}(R^{(y)})(X) \\
+        &= T_{1_G} (R^{(x \btl g)}) (\Lie{X}_{1_G}) \\
+        &= T_{1_G} (R^{(x)} \circ L_g)(\Lie{X}_{1_G}) \\
+        &= T_{L_g(1_G)} (R^{(x)}) \circ T_{1_G}(L_g)(\Lie{X}_{1_G}) \\
+        &= T_{g} (R^{(x)}) (\Lie{X}_g)
+    \end{align}
+    が言えた．
+\end{proof}
+
+
+\begin{myprop}[label=prop:infinitesimal-generator-R]{$\btl^\#$ はLie代数の準同型}
+    Lie群 $G$ の\cinfty 多様体 $M$ への右作用 $\btl \colon M \times G \lto M$ を与える．
+    このとき\hyperref[def:fundamental-vecf]{右作用 $\btl$ の無限小生成子}
+    \begin{align}
+        \btl^\# \colon \mathfrak{g} \lto \mathfrak{X}(M),\; X \lmto X^\#
+    \end{align}
+    はLie代数の準同型である．
+\end{myprop}
+
+\begin{proof}
+    % まず，$\forall x \in M$ および $\forall X \in \mathfrak{g}$ に対して，$\Lie{X} \in \Lie{\mathfrak{X}}(M)$ とその\hyperref[def:fundamental-vecf]{基本ベクトル場} $X^\#$ が\hyperref[def:F-related]{$R^(x)$-related}であることを示す．
+    % $\forall g \in G$ をとり，$y \coloneqq R^{(x)}(g) = x \btl g$ とおく．$\Lie{X}$ が\hyperref[def:left-invariant]{左不変ベクトル場}であることから
+    % \begin{align}
+    %     X^\#_y &= T_{1_G}(R^{(y)})(X) \\
+    %     &= T_{1_G} (R^{(x \btl g)}) (\Lie{X}_{1_G}) \\
+    %     &= T_{1_G} (R^{(x)} \circ L_g)(\Lie{X}_{1_G}) \\
+    %     &= T_{g} (R^{(x)}) \circ T_{1_G}(L_g)(\Lie{X}_{1_G}) \\
+    %     &= T_{g} (R^{(x)}) (\Lie{X}_g)
+    % \end{align}
+    % が言えた．
+    $\forall X,\, Y \in \mathfrak{g}$ をとる．
+    補題\ref{lem:fundamental-vecf}と\hyperref[prop:Lie-bracket-natural]{Lieブラケットの自然性}から $\forall x \in M$ に対して $\comm{\Lie{X}}{\Lie{Y}}$ と $\comm{X^\#}{Y^\#}$ が $R^{(x)}$-relatedだと分かる．i.e.
+    \begin{align}
+        \comm{X^\#}{Y^\#}_x = \comm{X^\#}{Y^\#}_{R^{(x)}(1_G)} = T_{1_G} (R^{(x)}) (\comm{\Lie{X}}{\Lie{Y}}_{1_G}) = T_{1_G} (R^{(x)}) (\comm{X}{Y}) = \comm{X}{Y}^\#_x
+    \end{align}
+    が言えた．
+\end{proof}
+
+しばらくの間Lie群 $G$ （もしくはその部分群）のLie代数を $\mathrm{Lie}(G) \coloneqq \mathfrak{g}$ と書くことにする\footnote{例えば~\cite{Lee12}では，$\mathrm{Lie}(G) \coloneqq \Lie{\mathfrak{X}}(G)$ と定義しているので注意．同型なので然程問題にはならないが...}．
+
+\begin{myprop}[label=prop:fundamental-vecf-basic]{基本ベクトル場の零点}
+    Lie群 $G$ の\cinfty 多様体 $M$ への右作用 $\btl \colon M \times G \lto M$ を与える．
+    このとき，以下の2つは同値である：
+    \begin{enumerate}
+        \item $X \in \mathfrak{g}$ の\hyperref[def:fundamental-vecf]{基本ベクトル場} $X^\#$ が点 $x \in M$ において $X^\#_x = 0$ になる
+        \item $X \in \mathrm{Lie}\bigl(\Stab (x)\bigr)$
+    \end{enumerate}
+    ただし，$\Stab (x) \subset G$ は点 $x \in M$ の安定化部分群\footnote{つまり，$\Stab (x) \coloneqq \bigl\{\, g \in G \bigm| x \btl g = x \,\bigr\}$ }である．
+\end{myprop}
+
+\begin{proof}
+    \begin{description}
+        \item[\textbf{(1) $\bm{\Longleftarrow}$ (2)}]　
+        
+        $X \in \mathrm{Lie}\bigl(\Stab (x)\bigr)$ ならば $\forall t \in \mathbb{R}$ に対して $\exp (tX) \in \mathrm{Stab} (x)$ である．従って $x \in M$ の近傍上で定義された任意の \cinfty 関数 $f$ に対して
+        \begin{align}
+            X^\#_x f = \eval{\dv{}{t}}_{t=0} f\bigl(x \btl \exp(tX)\bigr) = \eval{\dv{}{t}}_{t=0} f(x) = 0.
+        \end{align}
+        と計算できる\footnote{$f\bigl(x \btl \exp(tX)\bigr)$ が $t$ に関して定数関数なので．}
+        \item[\textbf{(1) $\bm{\Longrightarrow}$ (2)}]　
+        
+        $X^\#_x = 0$ とする．このとき定数写像 $\gamma \colon \mathbb{R} \lto M,\; t \lmto x$ が
+        \begin{align}
+            \dot{\gamma}(t) = 0 = X^\#_{\gamma(t)}
+        \end{align}
+        を充たすので，初期条件 $\gamma(0) = x$ を充たす $X^\# \in \mathfrak{X}(M)$ の極大積分曲線となる．
+        一方，$\theta_{(X)}^{(x)} \colon \mathbb{R} \lto M,\; t \lmto x \btl \exp(tX)$ もまた同一の初期条件をみたす $X^\#$ の極大積分曲線だったので，その一意性から $\theta_{(X)}^{(x)} = \gamma \IFF x \btl \exp(tX) = x\quad \forall t \in \mathbb{R} \IFF \exp(tX) \in \Stab(x)\quad \forall t \in \mathbb{R}$ が言えた．従って $X \in \mathrm{Lie}(\Stab(x))$ である．
+
+    \end{description}
+\end{proof}
+
+\begin{mycol}[label=col:fundamental-vecf-basic]{}
+    Lie群 $G$ の\cinfty 多様体 $M$ への右作用 $\btl \colon M \times G \lto M$ を与える．
+
+    このとき，$\forall x \in M$ の\hyperref[def:fundamental-vecf]{右作用軌道} $R^{(x)} \colon G \lto M$ の微分
+    \begin{align}
+        T_{1_G} (R^{(x)}) \colon \mathfrak{g} \lto T_x M
+    \end{align}
+    に対して
+    \begin{align}
+        \Ker \bigl( T_{1_G}(R^{(x)}) \bigr) = \mathrm{Lie} \bigl( \Stab(x) \bigr) 
+    \end{align}
+    が成り立つ．
+\end{mycol}
+
+\begin{proof}
+    $\forall X \in \mathfrak{g}$ をとる．\eqref{eq:fundamental-vecf}と命題\ref{prop:fundamental-vecf-basic}から
+    \begin{align}
+        X \in \Ker \bigl( T_{1_G}(R^{(x)}) \bigr) 
+        &\IFF  T_{1_G}(R^{(x)}) (X) = 0 \\
+        &\IFF X^\#_x = 0 \\
+        &\IFF X \in \mathrm{Lie} \bigl( \Stab(x) \bigr) 
+    \end{align}
+    
+\end{proof}
+
+
+% $\forall X,\, Y \in \mathfrak{g}$ に対して
+% \begin{align}
+%     \comm{X^{\#}}{Y^{\#}} = \comm{X}{Y}^{\#}
+% \end{align}
+% が成り立つ．
+
+\section{主束の接続}
+
+与えられた \cinfty 多様体 $M$ 上の $\bm{k}$-\textbf{形式} ($k$-form) とは，外積代数束（これは\hyperref[def:vect]{ベクトル束}になる）
+\begin{align}
+    \extp^k T^* M \coloneqq \coprod_{p \in M} \left( \extp^k T^*_p M \right) 
+\end{align}
+の\hyperref[def.section]{\cinfty 切断}のことであった．$k$-形式全体の集合を
+\begin{align}
+    \bm{\Omega^k (M)} \coloneqq \Gamma \Bigl( \extp^k T^* M \Bigr)
+\end{align}
+と書く．
+
+任意の $\mathbb{K}$-ベクトル空間 $V,\, W$ に関して，自然な $\mathbb{K}$-ベクトル空間の同型
+\begin{align}
+    \underbrace{V^* \otimes \cdots \otimes V^*}_k \otimes W \cong \bigl\{\, f \colon \underbrace{V \times \cdots \times V}_k \lto W  \bigm| \text{多重線型写像} \,\bigr\} 
+\end{align}
+がある（系\ref{col:tensor-multillinear}）．
+$M$ を底空間とする任意の\hyperref[def:vect]{ベクトル束} $E \xrightarrow{\pi} M$ が与えられたとき，この同型を念頭において，$\bm{E}$ \textbf{値 $\bm{k}$-形式} ($E$-valued $k$ form) をテンソル積束
+\begin{align}
+    \label{def:vecf-valued}
+    \left(\extp^k T^* M\right) \otimes E
+\end{align}
+の \cinfty 切断として定義する．$E$ 値 $k$-形式全体の集合を
+\begin{align}
+    \label{eq:E-valued}
+    \bm{\Omega^k (M;\, E)} \coloneqq \Gamma \Bigl( \left(\extp^k T^* M\right) \otimes E \Bigr) 
+\end{align}
+と書く\footnote{$\bm{\Omega^0(M;\, E) = \Gamma(E)}$ に注意．}．特に $E$ があるベクトル空間 $V$ に対して $E = M \times V$ の形をした自明束の場合，代わりに
+\begin{align}
+    \bm{\Omega^k (M;\, V)} \coloneqq \Omega^k (M;\, M \times V)
+\end{align}
+と書き，\textbf{$\bm{V}$ 値 $\bm{k}$-形式}と呼ぶ\footnote{$V$ が有限次元ベクトル空間ならば，$\Omega^k (M;\, V) \cong \Omega^k (M) \otimes_{\mathbb{R}} V$ が成り立つ．}．
+
+さて，Lie群に関する準備が終わったのでいよいよ\hyperref[def.PFD]{主束}の接続を定義する．この節の内容は~\cite[第6章]{Imano}, \cite[\S 28]{Tu2017differential}が詳しい．
+
+
+\begin{mydef}[label=def:connection,breakable]{主束の接続（Ehresmann接続）}
+    $G \hookrightarrow P \xrightarrow{\pi} M$ を\hyperref[def.PFD]{主束}とする．$\forall g \in G$ に対して，命題\ref{prop.PFD_right}の右作用によって\hyperref[def:fundamental-vecf]{右作用移動}を $R_g \colon P \lto P,\; u \lmto u \btl g$ と定義する．
+    \begin{itemize}
+        \item 分布 $\bigl\{\, H_u \subset T_u P \bigm| u \in P \,\bigr\}$ が $P$ 上の\textbf{接続} (connection) であるとは，以下の2条件が成り立つことを言う：
+        \begin{description}
+            \item[\textbf{(C-1)}]  $\forall u \in P$ に対して
+            \begin{align}
+                T_u P = \Ker (T_u \pi) \oplus H_u
+            \end{align}
+            \item[\textbf{(C-2)}] $\forall u \in P,\; \forall g \in G$ に対して
+            \begin{align}
+                T_u(R_g) (H_u) = H_{R_g(u)}
+            \end{align}
+            が成り立つ（分布 $\{H_u\}$ は\textbf{$G$-不変}）．
+        \end{description}
+        $\Ker T_u (\pi),\, H_u$ をそれぞれ $T_u P$ の\textbf{垂直部分空間}, \textbf{水平部分空間}と呼ぶ．
+        \item $\mathfrak{g}$ \hyperref[eq:E-valued]{値1-形式} $\omega \in \Omega^1(P;\, \mathfrak{g})$ が\textbf{接続形式}であるとは，次の2条件を充たすことをいう：
+        \begin{description}
+            \item[\textbf{(CF-1)}] $\forall X \in \mathfrak{g}$ に対して
+            \begin{align}
+                \omega(X^\#) = X
+            \end{align}
+            \item[\textbf{(CF-2)}] $\forall g \in G$ に対して
+            \begin{align}
+                (R_g)^* \omega = \Adj (g^{-1})(\omega)
+            \end{align}
+            ただし $\Adj \colon G \lto \LGL (\mathfrak{g})$ はLie群 $G$ の\hyperref[def:Lie-adj]{随伴表現}である．
+        \end{description}
+    \end{itemize}
+    
+\end{mydef}
+
+本題に入る前に，微分幾何学の風習への注意をしておく．境界あり/なし \cinfty 多様体 $M$ とその部分多様体 $S \subset M$ を与える．
+このとき包含写像を $\iota \colon S \hookrightarrow M$ と書くと，$\forall p \in S \subset M$ に対して $T_p S$ を $T_p \iota (T_p S)$ と同一視する
+\footnote{
+    つまり $\forall v \in T_p S$ は $\forall f \in C^\infty (S)$ に $v(f)$ として作用するが，$v \in T_p S \subset T_p M$ と見做す時は $\forall f \in C^\infty (M)$ に，$\bm{T_p \iota(v)}f = v(f \circ \iota) = v(f|_S)$ として作用する．
+}
+ことで $T_p M$ の部分ベクトル空間と見做すのである~\cite[p.116]{Lee12}．
+
+さて，主束 $G \hookrightarrow P \xrightarrow{\pi} M$ において $\forall u \in P$ を1つ固定する．
+$G_{\pi(u)} \coloneqq \pi^{-1}(\{\pi(u)\})$ とおいたとき，
+$\forall X \in T_u G_{\pi(u)} \subset T_u P$ （i.e. 点 $u \in \bm{P}$ におけるファイバー方向の接空間）の，$\pi \colon P \lto M$ の微分による像 $T_u \pi (X) \in T_{\pi(u)} M$ は，上述の注意より勝手な \cinfty 関数 $f \in C^\infty (M)$ に対して
+\begin{align}
+    T_u \pi (X)f = X(f \circ \pi|_{G_{\pi(u)}})
+\end{align}
+と作用する．然るに \cinfty 写像 $f \circ \pi|_{G_{\pi(u)}}$ は常に値 $f(\pi(u))$ を返す定数写像なので，$T_u \pi (X)f = 0$ が言える\footnote{定数関数に接ベクトルを作用させると $0$ になる：Leibniz則より，定数関数 $1 \colon M \lto \mathbb{R},\;p \lmto 1$ に対して $v(1) = v(1\cdot 1) = v(1) + v(1) \IMP v(1) = 0$．$v$ の線型性から一般の定数関数に対しても $0$ になることが言える．}．i.e. $X \in \Ker (T_u \pi)$ であり，
+\begin{align}
+    T_u G_{\pi(u)} \subset \Ker (T_u \pi)
+\end{align}
+が言えた．
+一方，$T_u \pi \colon T_u P \lto T_{\pi(u)} M$ は明らかに全射なので $\dim \Im (T_u \pi) = \dim T_{\pi(u)} M$ であり，故にファイバー束の局所自明性と階数-退化次元の定理から
+\begin{align}
+    \label{eq:dim}
+    \dim \Ker (T_u \pi) = \dim T_u P - \dim T_{\pi(u)} M = \dim T_u G_{\pi(u)} = \dim G
+\end{align}
+が言える．結局
+\begin{align}
+    \label{eq:tangent-fiber}
+    T_u G_{\pi(u)} = \Ker (T_u \pi)
+\end{align}
+だと分かった．さらに次の非常に重要な補題がある．この補題のために\hyperref[def:fundamental-vecf]{基本ベクトル場}を導入したと言っても過言ではない：
+\begin{mylem}[label=lem:connection]{}
+    $G \hookrightarrow P \xrightarrow{\pi} M$ を\hyperref[def.PFD]{主束}とする．
+    命題\ref{prop.PFD_right}で与えたLie群 $G$ の全空間 $P$ への\hyperref[def:fundamental-vecf]{右作用 $\btl \colon P \times G \lto P$ の無限小生成子} $\btl^\# \colon \mathfrak{g} \lto \mathfrak{X}(P),\; X \lmto X^\#$ について，
+    \begin{align}
+        \forall u \in P,\quad \bm{\Ker (T_{u} \pi) = \bigl\{\, X^\#_{u} \in T_{u} P \bigm| X \in \mathfrak{g} \,\bigr\}}
+    \end{align}
+    が成り立つ．
+\end{mylem}
+
+\begin{proof}
+    $\forall \textcolor{red}{u} \in P$ を1つ固定する．
+    \begin{description}
+        \item[\textbf{$\bm{\Ker (T_{\textcolor{red}{u}} \pi) \supset \bigl\{\, X^\#_{\textcolor{red}{u}} \in T_{\textcolor{red}{u}} P \bigm| X \in \mathfrak{g} \,\bigr\}}$}]　
+        
+        $\forall X \in \mathfrak{g}$ をとる．
+        このとき\eqref{eq:fundamental-vecf}より $X^\#_{\textcolor{red}{u}} = T_{1_G}(R^{(\textcolor{red}{u})})(X)$ だが，$\pi \circ R^{(\textcolor{red}{u})}$ は定数写像なので
+        \begin{align}
+            T_{\textcolor{red}{u}}\pi (X^\#_{\textcolor{red}{u}}) &= T_{\textcolor{red}{u}}\pi \circ T_{1_G}(R^{(\textcolor{red}{u})})(X) \\
+            &= T_{1_G}(\pi \circ R^{(\textcolor{red}{u})}) (X) \\
+            &= 0
+        \end{align}
+        が分かる．i.e. $X^\#_{\textcolor{red}{u}} \in \Ker (T_{\textcolor{red}{u}} \pi)$ である．
+    
+        \item[\textbf{$\bm{\Ker (T_{\textcolor{red}{u}} \pi) \subset \bigl\{\, X^\#_{\textcolor{red}{u}} \in T_{\textcolor{red}{u}} P \bigm| X \in \mathfrak{g} \,\bigr\}}$}]　
+        
+        まず，$\mathbb{R}$-線型写像
+        \begin{align}
+            T_{1_G}\bigl(R^{(\textcolor{red}{u})} \bigr) \colon \mathfrak{g} \lto \Ker (T_{\textcolor{red}{u}} \pi)
+        \end{align}
+        がベクトル空間の同型写像であることを示す．
+        系\ref{col:fundamental-vecf-basic}から $\Ker T_{1_G}\bigl(R^{(\textcolor{red}{u})} \bigr) = \mathrm{Lie}\bigl( \Stab (\textcolor{red}{u}) \bigr)$ だが，命題\ref{prop.PFD_right}より右作用 $\btl$ は\hyperref[def:Lie-action]{自由}なので $ \Stab (\textcolor{red}{u}) = \{1_G\}$ である．従って $\Ker T_{1_G}\bigl(R^{(\textcolor{red}{u})} \bigr) = \{0\}$ であり，$T_{1_G}\bigl(R^{(\textcolor{red}{u})} \bigr)$ は単射．
+        % 上の議論から $\Im T_{1_G}\bigl(R^{(\textcolor{red}{u})} \bigr) \s\textcolor{red}{u}bset \Ker (T_{\textcolor{red}{u}} \pi)$ も分かる．このときベクトル空間の短完全列
+        % \begin{align}
+        %     0 \lto \Ker (T_{\textcolor{red}{u}} \pi) \lto T_{\textcolor{red}{u}} P \xrightarrow{T_{\textcolor{red}{u}}\pi} T_{\pi(\textcolor{red}{u})} M \lto 0
+        % \end{align}
+        \eqref{eq:dim}より $\dim \mathfrak{g} = \dim G = \dim \Ker (T_{\textcolor{red}{u}} \pi)$ なので $T_{1_G}\bigl(R^{(\textcolor{red}{u})} \bigr)$ はベクトル空間の同型写像である．
+        
+        　以上より，$\forall v \in \Ker (T_{\textcolor{red}{u}} \pi)$ に対して $\bigl(T_{1_G} (R^{(\textcolor{red}{u})})\bigr)^{-1}(v) \in \mathfrak{g}$ であり，\eqref{eq:fundamental-vecf}から
+        \begin{align}
+            v = T_{1_G} (R^{(\textcolor{red}{u})}) \Bigl( \bigl(T_{1_G} (R^{(\textcolor{red}{u})})\bigr)^{-1}(v)\Bigr) = \Bigl(\bigl(T_{1_G} (R^{(\textcolor{red}{u})})\bigr)^{-1}(v)\Bigr)^\#_{\textcolor{red}{u}}
+        \end{align}
+        が言えた．
+    \end{description}
+
+\end{proof}
+
+\hyperref[def:connection]{接続の定義}は幾何学的イメージがわかりやすいが，計算は絶望的である．
+幸いにして主束の接続を与えることと，全空間上の\hyperref[def:connection]{接続形式}を与えることは同値なのでなんとかなる：
+
+\begin{mytheo}[label=thm:connection-basic]{接続と接続形式の関係}
+    $G \hookrightarrow P \xrightarrow{\pi} M$ を\hyperref[def.PFD]{主束}とする．
+    \begin{enumerate}
+        \item $\omega \in \Omega^1(P;\, \mathfrak{g})$ が\hyperref[def:connection]{接続形式}ならば，分布 
+        \begin{align}
+            \bigl\{\, \Ker \omega_u \subset T_u P\bigm| u \in P \,\bigr\} 
+        \end{align}
+        は $P$ 上の\hyperref[def:connection]{接続}である．
+        \item (1) は $P$ 上の接続形式全体の集合から $P$ 上の接続全体の集合への1対1対応を与える．
+    \end{enumerate}
+\end{mytheo}
+
+\begin{proof}
+    \begin{enumerate}
+        \item 
+        $\forall u \in P$ を1つ固定する．命題\ref{prop.PFD_right}で与えたLie群 $G$ の全空間 $P$ への\hyperref[def:fundamental-vecf]{右作用 $\btl \colon P \times G \lto P$ の無限小生成子} $\btl^\# \colon \mathfrak{g} \lto \mathfrak{X}(P),\; X \lmto X^\#$ を考える．
+        \begin{description}
+            \item[\textbf{(C-1)}]　
+            
+            　接続形式の定義から $\forall X \in \mathfrak{g}$ に対して $\omega (X^\#) = X$ が成り立つ．i.e. $\omega_{u} \colon T_{u}P \lto \mathfrak{g}$ は全射であり，
+            $\mathbb{R}$-線型写像の系列\footnote{$i$ は包含準同型なので $\Ker \omega_{u} = \Im i$．$\omega_{u}$ が全射なので $\Im \omega_{u} = \mathfrak{g} = \Ker 0$．}
+            % よって $T_{u} P = \Ker (T_{u}\pi) \oplus \Ker \omega_{u}$ である．
+            \begin{align}
+                0 \lto \Ker \omega_{u} \xrightarrow{i} T_{u} P \xrightarrow{\omega_{u}} \mathfrak{g} \lto 0
+            \end{align}
+            は短完全列になる．
+            さらにこれは補題\ref{lem:connection}の証明で与えた線型写像 $T_{1_G} (R^{(u)}) \colon \mathfrak{g} \lto \Ker (T_{u} \pi) \subset T_{u}P$ によって分裂するので
+            \begin{align}
+                T_{u} \cong \mathfrak{g} \oplus \Ker \omega_{u} \cong \Ker (T_{u} \pi) \oplus \Ker \omega_{u}
+            \end{align}
+            がわかる．
+
+            \item[\textbf{(C-2)}]　
+            
+            $\forall v \in \Ker \omega_{u}$ をとる．このとき\hyperref[def:connection]{\textbf{\textsf{(CF-2)}}}より $\forall g \in G$ に対して
+            \begin{align}
+                \omega_{u \btl g} \bigl( T_{u}(R_g)(v) \bigr) = ((R_g)^* \omega)_{u} (v) = \Adj (g^{-1})\bigl(\omega_{u}(v)\bigr) = 0
+            \end{align}
+            が従い，$T_{u}(R_g)(\Ker \omega_{u}) \subset \Ker \omega_{u \btl g}$ が言えた．
+            両辺の次元が等しいので $T_u(R_g)(\Ker \omega_u) = \Ker \omega_{u \btl g}$ が言えた．
+        \end{description}
+
+        \item　
+        
+        \begin{description}
+            \item[\textbf{(単射性)}]　
+            
+            \hyperref[def:connection]{接続形式} $\omega,\, \eta \in \Omega^1(P;\, \mathfrak{g})$ に対して $\bigl\{\, \Ker \omega_u \bigm| u \in P \,\bigr\} = \bigl\{\, \Ker \eta_u \bigm| u \in P \,\bigr\}$ が成り立つとする．
+            このとき $\forall u \in P$ に対して $\Ker \omega_u = \Ker \eta_u$ が成り立つ．
+            補題\ref{lem:connection}および (1) から $T_u P = \Ker (T_u \pi) \oplus \Ker \omega_u = \bigl\{\, X^\#_u \bigm| X \in \mathfrak{g} \,\bigr\} \oplus \Ker \omega_u$ の直和分解があり，$\forall v \in T_u P$ に対して $V \in \mathfrak{g},\; v^H \in \Ker \omega_u = \Ker \eta_u$ が一意的に存在して $v = V^\#_u + v^H$ と書ける．
+            よって\textbf{\textsf{(CF-1)}}から
+            \begin{align}
+                \omega_u(v) = \omega_u(V^\#_u) = V = \eta_u(V^\#_u) = \eta_u(v)
+            \end{align}
+            が分かった．i.e. $\omega_u = \eta_u$ である．$u$ は任意だったので $\omega = \eta$ が言えた．
+
+            \item[\textbf{(全射性)}]　
+            
+            主束 $G \hookrightarrow P \xrightarrow{\pi} M$ の\hyperref[def:connection]{接続} $\bigl\{\, H_u \subset T_u P \bigm| u \in P \,\bigr\}$ を与える．$\forall u \in P$ に対して
+            直和分解 $T_u P = \Ker (T_u \pi) \oplus H_u$ の垂直，水平部分空間成分への射影をそれぞれ 
+            \begin{align}
+                i_1 \colon T_u P &\lto \Ker (T_u \pi),\; v^V + v^H \lmto v^V \\
+                i_2 \colon T_u P &\lto H_u,\; v^V + v^H \lmto v^H
+            \end{align}
+            と書き，
+            $\omega \in \Omega^1(P;\, \mathfrak{g})$ を，$\forall u \in P$ に対して補題\ref{lem:connection}の証明で与えた同型写像 $T_{1_G} (R^{(u)}) \colon \mathfrak{g} \lto \Ker (T_u \pi)$ を用いて
+            \begin{align}
+                \omega_u \coloneqq \bigl(T_{1_G} (R^{(u)})\bigr)^{-1} \circ i_1 \colon T_u P \xrightarrow{i_1} \Ker (T_u \pi) \xrightarrow{\bigl(T_{1_G} (R^{(u)})\bigr)^{-1}} \mathfrak{g}
+            \end{align}
+            と定義する．この $\omega$ が\hyperref[def:connection]{\textbf{\textsf{(CF-1)}}, \textbf{\textsf{(CF-2)}}}を充たすことを示す：
+            \begin{description}
+                \item[\textbf{(CF-1)}]　
+                $\forall u \in P$ を1つ固定する．
+                $\forall X \in \mathfrak{g}$ をとる．補題\ref{lem:connection}より $X_u^\# \in \Ker (T_u\pi)$ だから，\eqref{eq:fundamental-vecf}より
+                \begin{align}
+                    \omega_u (X^\#_u) &= \bigl(T_{1_G} (R^{(u)})\bigr)^{-1} \circ i_1(X^\#_u) \\
+                    &= \bigl(T_{1_G} (R^{(u)})\bigr)^{-1} (X^\#_u) \\
+                    &= \bigl(T_{1_G} (R^{(u)})\bigr)^{-1} \bigl( T_{1_G}(R^{(u)})(X) \bigr)  \\
+                    &= X \label{eq:CF-1}
+                \end{align}
+                が言えた．
+                \item[\textbf{(CF-2)}]　
+                
+                $\forall u \in P$ を1つ固定する．
+                $\forall g \in G$ をとる．示すべきは $\forall v \in T_u P$ に対して
+                \begin{align}
+                    \bigl((R_g)^* \omega\bigr)_u (v) = \omega_{R_g(u)} \bigl( T_u (R_g)(v) \bigr) = \Adj (g^{-1})\bigl( \omega_u (v)\bigr)
+                \end{align}
+                が成り立つことである．
+                実際 $\textcolor{red}{i_1(v)} \in \Ker(T_u \pi)$ に対しては，補題\ref{lem:connection}からある $V \in \mathfrak{g}$ が一意的に存在して $i_1(v) = V^\#_u$ と書けるので
+                \begin{align}
+                    \omega_{R_g(u)} \Bigl( T_u (R_g)\bigl(\textcolor{red}{i_1(v)}\bigr) \Bigr)
+                    &= \omega_{u \btl g} \Bigl( T_u (R_g)\bigl(V^\#_u\bigr) \Bigr) &&\\
+                    &= \omega_{u \btl g} \Bigl( T_u (R_g)\circ T_{1_G}(R^{(u)})(V)\Bigr) &&\because\quad\text{\eqref{eq:fundamental-vecf}}\\
+                    &= \omega_{u \btl g} \Bigl( T_{1_G}(R_g \circ R^{(u)})(V)\Bigr) &&
+                \end{align}
+                となるが，$\forall x \in G$ に対して
+                \begin{align}
+                    R_g \circ R^{(u)}(x) 
+                    &= u \btl x \btl g 
+                    = u \btl (xg) 
+                    = u \btl (gg^{-1}xg)  \\
+                    &= (u \btl g)  \btl (g^{-1}xg) 
+                    = R^{(u \btl g)} \circ  F_{g^{-1}}(x) 
+                \end{align}
+                が成り立つ\footnote{記号は\exref{def:Lie-adj}を参照}ことから
+                \begin{align}
+                    \omega_{u \btl g} \Bigl( T_{1_G}(R_g \circ R^{(u)})(V)\Bigr) 
+                    &= \omega_{u \btl g} \bigl(T_{F_{g^{-1}}(1_G)} (R^{(u \btl g)}) \circ T_{1_G}(F_{g^{-1}}) (V) \bigr) &&\\
+                    &= \omega_{u \btl g} \bigl(T_{1_G} (R^{(u \btl g)}) \circ \Adj (g^{-1})(V)\bigr) &&\because\quad \Adj\; \text{の\hyperref[def:Lie-adj]{定義}}\\
+                    &= \omega_{u \btl g} \Bigl( \bigl( \Adj (g^{-1})(V) \bigr)^\#_{u \btl g} \Bigr) &&\because\quad \text{\eqref{eq:fundamental-vecf}}\\
+                    &= \bigl( T_{1_G}(R^{(u\btl g)}) \bigr)^{-1} \circ T_{1_G} (R^{(u \btl g)}) \circ \Adj (g^{-1})(V) &&\because\quad \text{\eqref{eq:CF-1}}\\
+                    &= \Adj (g^{-1})(V) &&\\
+                    &= \Adj (g^{-1})\omega_u(V^\#_u) &&\because\quad \text{\eqref{eq:CF-1}}\\
+                    &= \Adj (g^{-1})\omega_u\bigl(\textcolor{red}{i_1(v)}\bigr) &&
+                \end{align}
+                が言える．$\textcolor{blue}{i_2(v)} \in H_u$ に関しては，\hyperref[def:connection]{\textbf{\textsf{(C-2)}}}から $T_u (R_g)\bigl(\textcolor{blue}{i_2(v)}\bigr) \in H_{u \btl g}$ なので
+                \begin{align}
+                    \omega_{R_g(u)} \Bigl( T_u (R_g)\bigl(\textcolor{blue}{i_2(v)}\bigr) \Bigr) 
+                    &= \bigl( T_{1_G}(R^{(u \btl g)}) \bigr)^{-1} \circ i_1 \Bigl(T_u (R_g)\bigl(\textcolor{blue}{i_2(v)}\bigr)\Bigr) \\
+                    &= 0 \\
+                    &= \Adj(g^{-1}) \Bigl( \omega_u \bigl(\textcolor{blue}{i_2(v)}\bigr) \Bigr) 
+                \end{align}
+                が言える．$v = \textcolor{red}{i_1(v)} + \textcolor{blue}{i_2(v)}$ なので証明が完了した．
+                
+                
+            \end{description}
+            
+        \end{description}
+        
+    \end{enumerate}
+\end{proof}
+
+\section{同伴ベクトル束上の共変微分}
+
+% $V$ を有限次元 $\mathbb{K}$-ベクトル空間，$\rho \colon G \lto \LGL(V)$ をLie群 $G$ の $\dim V < \infty$ 次元表現とする．
+
+\begin{mydef}[label=def:tensorial-form,breakable]{tensorial form}
+    \begin{itemize}
+        \item \hyperref[def.PFD]{主束} $G \hookrightarrow P \xrightarrow{\pi} M$
+        \item 有限次元 $\mathbb{K}$-ベクトル空間 $V$
+        \item Lie群 $G$ の有限次元表現 $\rho \colon G \lto \LGL(V)$
+    \end{itemize}
+    を与える．$\forall g \in G$ に対して，命題\ref{prop.PFD_right}の右作用によって\hyperref[def:fundamental-vecf]{右作用移動}を $R_g \colon P \lto P,\; u \lmto u \btl g$ と定義する．
+    全空間 $P$ 上の\hyperref[eq:E-valued]{$V$-値 $k$ 形式} $\phi \in \Omega^k(P;\, V)$ を与える．
+    \begin{itemize}
+        \item $\phi$ が\textbf{水平} (horizontal) であるとは，$\forall X \in \mathfrak{g}$ に対して
+        \begin{align}
+            i_{X^\#} (\phi) = 0
+        \end{align}
+        が成り立つことを言う\footnote{$i_{X^\#} \colon \Omega^k (P;\, V) \lto \Omega^{k-1}(P;\, V)$ は微分形式の\textbf{内部積} (interior product) である．}．
+        \item $\phi$ が $\bm{\rho}$ \textbf{型の右同変}
+        \footnote{
+            equivalent の訳語には\textbf{同変}があてられることが多い．何かしらの群作用を考えると言う意味があるようだ：\url{http://pantodon.jp/index.rb?body=equivariant_topology}
+        }
+        (right equivalent of type $\rho$) であるとは，$\forall g \in G$ に対して
+        \begin{align}
+            (R_g)^* \phi = \rho(g^{-1})(\phi)
+        \end{align}
+        が成り立つことを言う．
+        \item $\phi$ が $\bm{\rho}$ \textbf{型のtensorial $\bm{k}$-form} (tensorial form of type $\rho$) であるとは，
+        $\phi$ が水平かつ$\rho$ 型の右同変であることを言う．
+    \end{itemize}
+    \tcblower
+    $\rho$ 型のtensorial $k$-form全体がなす $\mathbb{K}$-ベクトル空間を $\bm{\Omega^k_\rho (P;\, V)}$ と書く．
+\end{mydef}
+
+\begin{marker}
+    補題\ref{lem:fundamental-vecf}より，$\phi \in \Omega^k(P;\, V)$ が水平であることは任意の $k$-個の \cinfty ベクトル場 $X_1,\, \dots,\, X_k \in \mathfrak{X}(P)$ に対して
+    \begin{align}
+        \exists l\; \mathrm{s.t.}\; X_l\;\text{が\hyperref[def:connection]{垂直}} \IMP \phi (X_1,\, \dots,\, X_k) = 0
+    \end{align}
+    が成り立つことと同値である．
+    また，$P$ 上の任意の$0$-形式は引数を持たないので，自動的に水平ということになる．
+\end{marker}
+
+\begin{mylem}[label=lem:assoc-basic,breakable]{同伴ベクトル束のファイバーの構造}
+    \begin{itemize}
+        \item \hyperref[def.PFD]{主束} $G \hookrightarrow P \xrightarrow{\pi} M$
+        \item 有限次元 $\mathbb{K}$-ベクトル空間 $V$
+        \item Lie群 $G$ の有限次元表現 $\rho \colon G \lto \LGL(V)$
+        \item 主束 $P$ の\hyperref[def:associated-vect]{同伴ベクトル束} $V \hookrightarrow P \times_\rho V \xrightarrow{q} M$
+    \end{itemize}
+    を与える．このとき，$\forall u \in P$ に対して $\mathbb{K}$-線型写像
+    \begin{align}
+        f_u \colon V \lto q^{-1}(\{\pi(u)\}),\; v \lmto u \times_\rho v
+    \end{align}
+    はベクトル空間の同型写像である．
+\end{mylem}
+
+\begin{proof}
+    % \begin{enumerate}
+    %     \item 
+    % \end{enumerate}
+    $v,\, w \in V$ について $u \times_\rho v = u \times_\rho w$ とする．このとき\hyperref[prop:Borelconst]{$\times_\rho$ の定義}から，ある $g \in G$ が存在して $(u,\, w) = (u \btl g,\, g^{-1} \btr v)$ とかける．\hyperref[prop.PFD_right]{右作用 $\btl$ は自由}なので $u = u \btl g \IMP g = 1_G$ が言える．従って $w = 1_G^{-1} \btr v = v$ が言えた．i.e. $f_u$ は単射である．
+
+    　$\forall x \times_\rho w \in (P \times_\rho V)_{\pi(u)}$ を1つとる．このとき $x \in \pi^{-1}(\{\pi(u)\})$ でもあるので，ある $g \in G$ が存在して $x = u \btl g$ と書ける．従って
+    \begin{align}
+        x \times_\rho w = (u \btl g) \times_\rho w = u \times_\rho g \btr w = f_u(g \btr w)
+    \end{align}
+    だとわかる．i.e. $f_u$ は全射である．
+\end{proof}
+
+
+命題\ref{prop:Borelconst}を思い出すと，主束 $G \hookrightarrow P \xrightarrow{\pi} M$ の開被覆，局所自明化，変換関数をそれぞれ $\bigl\{ U_\alpha \bigr\}_{\alpha \in \Lambda},\; \bigl\{ \varphi_\alpha \colon \pi^{-1}(U_\alpha) \lto U_\alpha \times G \bigr\}_{\alpha \in \Lambda},\; \bigl\{  t_{\alpha\beta} \colon M \lto G  \bigr\}_{\alpha,\, \beta \in \Lambda}$ とおき，
+\underline{$P$ の}\hyperref[def.section]{局所切断}の族
+\begin{align}
+    \label{eq:assoc-sec}
+    \Familyset[\big]{s_\alpha \colon U_\alpha \lto \pi^{-1}(U_\alpha),\; x \lmto \varphi_\alpha^{-1}(x,\, 1_G)}{\alpha \in \Lambda}
+\end{align}
+を与えてから，
+\hyperref[def:associated-vect]{同伴ベクトル束} $V \hookrightarrow P \times_\rho V \xrightarrow{q} M$ の局所自明化を
+\begin{align}
+    \label{eq:assoc-loctriv}
+    \Familyset[\big]{\psi_\alpha \colon q^{-1}(U_\alpha) \lto U_\alpha \times V,\; s_\alpha(x) \times_\rho v \lmto (x,\, v)}{\alpha \in \Lambda}
+\end{align}
+として定義するのだった．
+
+\begin{myprop}[label=prop:assoc-basic]{tensorial formと同伴ベクトル束上の微分形式の対応}
+    \begin{itemize}
+        \item \hyperref[def.PFD]{主束} $G \hookrightarrow P \xrightarrow{\pi} M$
+        \item 有限次元 $\mathbb{K}$-ベクトル空間 $V$
+        \item Lie群 $G$ の有限次元表現 $\rho \colon G \lto \LGL(V)$
+        \item 主束 $P$ の\hyperref[def:associated-vect]{同伴ベクトル束} $V \hookrightarrow P \times_\rho V \xrightarrow{q} M$
+    \end{itemize}
+    を与える．
+    $\forall \phi \in \Omega^k (M;\, P \times_\rho V)$ に対して
+    % \footnote{つまり，$\phi$ は\hyperref[eq:E-valued]{$P \times_\rho V$ 値 $k$-形式}である．}，
+    $\phi^\sharp \in \Omega^k (P;\, V)$ を
+    % $\forall u \in \textcolor{red}{P}$ に対して，$\phi_u^\sharp \in \Omega^k_\rho (P;\, V)$ を
+    \begin{align}
+        \phi^\sharp \colon u \lmto f_u^{-1} \circ \pi^* \phi|_u
+    \end{align}
+    と定義する．また，$\forall \psi \in \Omega_\rho^k (P;\, V)$ に対して $\psi^\flat \in \Omega^k (M;\, P \times_\rho V)$ を，$\forall x \in \textcolor{red}{M},\; \forall w_1,\, \dots,\, w_k \in T_x \textcolor{red}{M}$ に対して
+    次のように定義する：
+    \begin{align}
+        \label{def:flat}
+        \psi^\flat|_x (w_1,\, \dots,\, w_k) \coloneqq u \times_\rho \psi_u (v_1,\, \dots,\, v_k)
+    \end{align}
+    ただし $u \in \pi^{-1}(\{x\})$ および $v_i \in (T_u \pi)^{-1} (\{w_i\})$ は\underline{任意}にとって良い．
+    \begin{enumerate}
+        \item $\phi^\sharp \in \Omega^k_\rho (P;\, V)$ である．
+        \item 写像
+        \begin{align}
+            \sharp \colon \Omega^k (M;\, P \times_\rho V) \lto \Omega^k_\rho(P;\, V),\; \phi \lmto \phi^\sharp    
+        \end{align}
+        はベクトル空間の同型写像であり，その逆写像は
+        \begin{align}
+            \flat \colon \Omega^k_\rho(P;\, V) \lto \Omega^k (M;\, P \times_\rho V),\; \psi \lmto \psi^\flat
+        \end{align}
+        である．
+        \item $\forall s \in \Omega^k(M),\; \forall \eta \in \Omega^l(M;\, P \times_\rho V)$ に対して
+        \begin{align}
+            \sharp (s \wedge \eta) = (\pi^* s)\wedge \sharp \eta
+        \end{align}
+        が成り立つ．
+        % \footnote{この意味で，(2) と併せると $\sharp$ は $C^\infty(M),\, C^\infty(P)$-加群の同型写像のように振る舞うと言える．}．
+        \item 
+        $\forall \phi \in \Omega^k (M;\, P \times_\rho V)$ に対して
+        \begin{align}
+            \mathrm{proj}_2 \circ \psi_\alpha \circ \phi = s_\alpha^* (\phi^\sharp) \in \Omega^k (U_\alpha;\, V)
+        \end{align}
+        が成り立つ．ただし $\psi_\alpha \colon q^{-1} (U_\alpha) \lto U_\alpha \times V$ は\eqref{eq:assoc-loctriv}で定義された局所自明化，$s_\alpha \colon M \lto \pi^{-1}(U_\alpha)$ は\eqref{eq:assoc-sec}で定義された\hyperref[def.section]{局所切断}とする．
+    \end{enumerate}
+\end{myprop}
+
+\begin{proof}
+    $\forall \phi \in \Omega^k(M;\, P \times_\rho V)$ を1つ固定する．
+    \begin{enumerate}
+        \item 
+        $\phi^\sharp$ が\hyperref[def:tensorial-form]{$\rho$ 型のtensorial $k$-form}であることを示す．
+        \begin{description}
+            \item[\textbf{$\bm{\phi^\sharp}$ が水平であること}]　
+            
+            $\forall u \in P$ を1つ固定すると，$\forall X \in \mathfrak{g}$ および $\forall v_2,\, \dots,\, v_k \in T_u P$ に対して
+            \begin{align}
+                \bigl(i_{X^\#}(\phi^\sharp)\bigr)_u(v_2,\, \dots,\, v_k)
+                &= f_u^{-1} \circ (\pi^* \phi)_u (X^\#_u,\, v_2,\, \dots,\, v_k)&& \\
+                &= f_u^{-1} \Bigl( \phi_u \bigl(T_u \pi (X^\#_u),\, T_u \pi (v_2),\, \dots,\, T_u \pi(v_k)\bigr) \Bigr)&& \\
+                &= f_u^{-1} \Bigl( \phi_u \bigl(0,\, T_u \pi (v_2),\, \dots,\, T_u \pi(v_k)\bigr) \Bigr) &&\because\quad \text{補題\ref{lem:connection}}
+            \end{align}
+            が成り立つが，$\phi_u$ は多重線型写像なので最右辺は $0$ になる．よって $i_{X^\#}(\phi^\sharp) = 0$ が言えた．
+        
+            \item[\textbf{$\bm{\phi^\sharp}$ が $\rho$-型の右同変であること}]　
+            
+            $\forall u \in P$ を1つ固定し，$\forall v_1,\, v_2,\, \dots,\, v_k \in T_u P$ をとる．
+            \hyperref[def:tensorial-form]{右作用移動の定義}を思い出すと $\forall g \in G$ に対して $\pi \circ R_g = \pi$ が成り立つので
+            \begin{align}
+                &\bigl((R_g)^* \phi^\sharp\bigr)_u(v_1,\, \dots,\, v_k) \\
+                &= (\phi^\sharp)_{R_g(u)} \bigl( T_u (R_g)(v_1),\, \dots,\, T_u (R_g)(v_k) \bigr) \\
+                &= f^{-1}_{u \btl g} \Bigl( \phi_{\pi(u \btl g)} \bigl(  T_{u \btl g} \pi \circ T_u (R_g)(v_1),\, \dots,\, T_{u \btl g} \pi \circ T_u (R_g)(v_k) \bigr)  \Bigr) \\
+                &= f^{-1}_{u \btl g} \Bigl( \phi_{\pi(u)} \bigl(  T_{u} (\pi \circ R_g)(v_1),\, \dots,\, T_{u} (\pi \circ R_g)(v_k) \bigr)  \Bigr) \\
+                &= f^{-1}_{u \btl g} \Bigl( \phi_{\pi(u)} \bigl(  T_{u} \pi (v_1),\, \dots,\, T_{u} \pi (v_k) \bigr)  \Bigr) \\
+                &= f^{-1}_{u \btl g} \bigl( (\pi^*\phi)_u ( v_1,\, \dots,\, v_k)  \bigr) \\
+                &= f^{-1}_{u \btl g} \bigl( f_u \circ f^{-1}_u \circ (\pi^*\phi)_u ( v_1,\, \dots,\, v_k )  \bigr) \\
+                &= f^{-1}_{u \btl g} \Bigl( f_u \bigl(\phi^\sharp_u (v_1,\, \dots,\, v_k)  \bigr) \Bigr) &&\because \quad \phi^\sharp\; \text{の定義}\\
+                &= f^{-1}_{u \btl g} \bigl( u \times_\rho \phi^\sharp_u (v_1,\, \dots,\, v_k)  \bigr) &&\because \quad f_u\; \text{の\hyperref[lem:assoc-basic]{定義}} \\
+                &= f^{-1}_{u \btl g} \Bigl( (u \btl g) \times_\rho \rho(g)^{-1} \bigl(\phi^\sharp_u (v_1,\, \dots,\, v_k) \bigr)  \Bigr) &&\because \quad \times_\rho\; \text{の\hyperref[prop:Borelconst]{定義}} \\
+                &= \rho(g^{-1}) \bigl(\phi^\sharp_u (v_1,\, \dots,\, v_k) \bigr) &&\because\quad f_u\; \text{の\hyperref[lem:assoc-basic]{定義}}
+            \end{align}
+            i.e. $(R_g)^* \phi^\sharp = \rho(g^{-1})(\phi^\sharp)$ が言えた．
+        \end{description}
+        
+        \item $\mathbb{K}$-線型写像 $\sharp \colon \Omega^k (M;\, P \times_\rho V) \lto \Omega^k_\rho(P;\, V)$ がベクトル空間の同型写像であることを示す．
+        \begin{description}
+            \item[\textbf{$\bm{\sharp}$ の単射性}]　
+            
+            $\phi,\, \eta \in \Omega^k(M;\, P \times_\rho V)$ に対して $\phi^\sharp = \eta^\sharp$ が成り立つとする．このとき $\forall u \in P$ を1つ固定すると，$f_u$ は全単射なので $(\pi^* \phi)_u = (\pi^* \eta)_u$ が言える．i.e. 
+            $\forall v_1,\, \dots,\, v_k \in T_u P$ に対して
+            \begin{align}
+                0 = \bigl(\pi^* (\phi - \eta)\bigr)_u(v_1,\, \dots,\, v_k) = (\phi_{\pi(u)} - \eta_{\pi(u)})\bigl(T_u \pi (v_1),\, \dots,\, T_u \pi(v_k)\bigr)
+            \end{align}
+            が成り立つ．$T_u \pi \colon T_u P \lto T_{\pi(u)} M$ は全射なので $\phi - \eta = 0 \IFF \phi = \eta$ が言えた．
+            
+            \item[\textbf{$\bm{\sharp}$ の全射性}]　
+            
+            $\forall \psi \in \Omega^k_\rho (P;\, V)$ を1つ固定する．
+            まず，$\psi^\flat \in \Omega^k (M;\, P \times_\rho V)$ がwell-definedであることを示す．
+            そのためには $\forall x \in M,\; \forall w_1,\, \dots,\, w_k \in T_x M$ を固定し，\eqref{def:flat}の右辺が $u \in \pi^{-1}(\{x\})$ および $v_i \in (T_u\pi)^{-1} (\{w_i\})$ の取り方によらずに定まることを示せば良い．
+            
+            \begin{description}
+                \item[\textbf{$\bm{\psi^\flat}$ はwell-defined}]　
+                
+                まず $u \in \pi^{-1}(\{x\})$ を1つ固定する．このとき $v_i,\, v'_i \in (T_u \pi)^{-1}(\{w_i\})$ に対して $v'_i - v_i \in \Ker (T_u \pi)$ なので，
+                $\psi \in \Omega_\rho^k (P;\, V)$ が\hyperref[def:tensorial-form]{水平}であることおよび $\psi_u$ の多重線型性から
+                \begin{align}
+                    \psi_u (v'_1,\, \dots,\, v'_k) 
+                    &= \psi_u  \bigl(v_1 + (v'_1 - v_1),\, \dots,\, v_k + (v'_k - v_k)\bigr) \\
+                    &= \psi_u  (v_1,\, \dots,\, v_k) + (\text{少なくとも1つの}\, i\, \text{について引数が}\; v'_i - v_i) \\
+                    &= \psi_u (v_1,\, \dots,\, v_k)
+                \end{align}
+                が言える．i.e. $\psi_u$ は $v_i$ の取り方によらない．
+                
+                　次に，他の $u' \in \pi^{-1}(\{x\})$ をとる．このときある $h \in G$ が存在して $u' \btl h = u$ となる．
+                \footnote{
+                    $x \in U_\alpha \subset M$ に対する $P$ の局所自明化 $\varphi_\alpha$ について $g' \coloneqq \mathrm{proj}_2 \circ \varphi_\alpha (u'),\; g \coloneqq \mathrm{proj}_2 \circ \varphi_\alpha (u)$ とおけば，$h \coloneqq g'{}^{-1}g \in G$ に対して $u' \btl h = u$ となる．
+                }
+                $T_{u \btl h} \pi \circ T_{u} (R_{h})(v_i) = T_{u} \pi (v_i) = w_i$ かつ $\psi$ が $v_i$ の取り方によらないこと，および $\psi$ の\hyperref[def:tensorial-form]{右同変性}を使うと
+                \begin{align}
+                    \psi_{u'} (v_1,\, \dots,\, v_k)
+                    &= \psi_{u \btl h} \bigl(T_{u}(R_h)(v_1),\, \dots,\, T_{u}(R_h)(v_k)\bigr) \\
+                    &= \bigl((R_h)^* \psi\bigr)_u (v_1,\, \dots,\, v_k) \\
+                    &= \rho(h^{-1})\bigl(\psi_u (v_1,\, \dots,\, v_k)\bigr)
+                \end{align}
+                だとわかるので，\hyperref[prop:Borelconst]{$\times_\rho$ の定義}から
+                \begin{align}
+                    u' \times_\rho \psi_{u'} (v_1,\, \dots,\, v_k)
+                    &= u ' \times_\rho \rho(h^{-1})\bigl(\psi_u (v_1,\, \dots,\, v_k)\bigr) \\
+                    &= (u ' \btl h) \times_\rho \rho(h) \circ \rho(h^{-1})\bigl(\psi_u (v_1,\, \dots,\, v_k)\bigr) \\
+                    &= u \times_\rho \psi_u (v_1,\, \dots,\, v_k)
+                \end{align}
+                が言える．i.e. $\psi^\flat|_x$ は $u \in \pi^{-1}(\{x\})$ の取り方にもよらない．
+            \end{description}
+            \hyperref[lem:assoc-basic]{$f_u$ の定義}および $\phi_x$ のwell-definednessから，
+            \begin{align}
+                &f_u \bigl(\psi_u(v_1,\, \dots,\, v_k)\bigr) = \psi^\flat|_{\pi(u)}(w_1,\, \dots,\, w_k) = \pi^* (\psi^\flat)|_u (v_1,\, \dots,\, v_k) \\
+                \IFF &\psi_u = f_u^{-1} \circ \pi^* (\psi^\flat)|_u = (\psi^\flat)^\sharp|_u
+            \end{align}
+            i.e. $\psi = (\psi^\flat)^\sharp$ が言えた．
+        \end{description}
+        \item $\forall u \in P$ および $\forall v_1,\, \dots,\, v_{k+l} \in T_u P$ に対して
+        \begin{align}
+            &\sharp (s \wedge \eta)_u (v_1,\, \dots,\, v_{k+l}) \\
+            &= f^{-1}_u \circ \bigl(\pi^* (s \wedge \eta)\bigr)_u (v_1,\, \dots,\, v_{k+l}) \\
+            &= f^{-1}_u \Bigl( (\pi^* s \wedge \pi^* \eta)_u(v_1,\, \dots,\, v_{k+l}) \Bigr) \\
+            &= f^{-1}_u \left( \frac{1}{k! l!} \sum_{\sigma \in \mathfrak{S}_{k+l}} \sgn \sigma\, \underbrace{(\pi^* s)_u(v_{\sigma(1)},\, \dots,\, v_{\sigma(k)})}_{\in \mathbb{K}} \otimes (\pi^* \eta)_u(v_{\sigma(k+1)},\, \dots,\, v_{\sigma(k+l)}) \right) \\
+            &= \frac{1}{k! l!} \sum_{\sigma \in \mathfrak{S}_{k+l}} \sgn \sigma\, (\pi^* s)_u(v_{\sigma(1)},\, \dots,\, v_{\sigma(k)}) f^{-1}_u \left(  (\pi^* \eta)_u(v_{\sigma(k+1)},\, \dots,\, v_{\sigma(k+l)}) \right) \\
+            &= \bigl((\pi^* s) \wedge \sharp \eta\bigr)_u (v_1,\, \dots,\, v_{k+l})
+        \end{align}
+        が成り立つ．ただし最後から2番目の等号では $f_u^{-1}$ の $\mathbb{K}$-線型性を使った．
+        \item 
+        % $\forall \phi \in \Omega^k(M;\, P \times_\rho V)$ を1つ固定する．
+        % このとき
+        % \eqref{eq:assoc-sec}で定義した\hyperref[def.section]{局所切断} $s_\alpha \Gamma(P|_{U_\alpha})$ に対して，
+        $\forall x \in U_\alpha,\; \forall w_1,\, \dots,\, w_k \in T_x M$ に対して
+        \begin{align}
+            &(\mathrm{proj}_2 \circ \psi_\alpha \circ \phi)_x (w_1,\, \dots,\, w_k) \\
+            &= f_{s_\alpha(x)}^{-1}\bigl( \phi_x (w_1,\, \dots,\, w_k)\bigr) &&\because\quad f_{s_\alpha(x)}\; \text{の\hyperref[lem:assoc-basic]{定義}}\\
+            &= f_{s_\alpha(x)}^{-1}\Bigl( \phi_x \bigl(T_x(\pi \circ s_\alpha)(w_1),\, \dots,\, T_x(\pi \circ s_\alpha)(w_k)\bigr) \Bigr) &&\because\quad \pi \circ s_\alpha = \mathrm{id}_{U_\alpha}\\
+            &= f_{s_\alpha(x)}^{-1}\Bigl( \phi_x \bigl(T_{s_\alpha(x)} \pi \circ T_x(s_\alpha)(w_1),\, \dots,\, T_{s_\alpha(x)} \pi \circ T_x(s_\alpha)(w_k)\bigr) \Bigr) \\
+            &= f_{s_\alpha(x)}^{-1} \circ (\pi^* \phi)_{s_\alpha(x)}\bigl(T_x(s_\alpha)(w_1),\, \dots,\, T_x(s_\alpha)(w_k)\bigr) \\
+            &= (\phi^\sharp)_{s_\alpha(x)} \bigl(T_x(s_\alpha)(w_1),\, \dots,\, T_x(s_\alpha)(w_k)\bigr) &&\because\quad \phi^\sharp\;\text{の\hyperref[prop:assoc-basic]{定義}}\\
+            &= \bigl(s_\alpha^* (\phi^\sharp)\bigr)_x (w_1,\, \dots,\, w_k)
+        \end{align}
+        が成り立つ．
+    \end{enumerate}
+    
+\end{proof}
+
+
+\begin{mydef}[label=def:connection-vect]{ベクトル束上の接続}
+    $V \hookrightarrow  E \xrightarrow{\pi} M$ を\hyperref[def:vect]{ベクトル束}とする．
+    \begin{itemize}
+        \item ベクトル束 $E$ 上の\textbf{接続} (connection) とは，$\mathbb{K}$-線型写像
+        \begin{align}
+            \bm{\nabla^E} \colon \Gamma(E) \lto \Omega^1(M;\, E)
+        \end{align}
+        であって，$\forall f \in C^\infty (M) = \Omega^0 (M),\; \forall s \in \Gamma(E) = \Omega^0 (M;\, E)$ に対してLeibniz則
+        \begin{align}
+            \nabla^E (fs) = \dd{f} \otimes s + f \nabla^E s
+        \end{align}
+        を充たすもののこと．
+        \item $X \in \Gamma (TM) = \mathfrak{X}(M)$ に対して定まる $\mathbb{K}$-線型写像
+        \begin{align}
+            \bm{\nabla^E_X} \colon \Gamma(E) &\lto \Gamma(E), \\
+            s &\lmto (\nabla^E s)(X)
+        \end{align}
+        のことを\textbf{$\bm{X}$ に沿った共変微分} (covariant derivative along $X$) と呼ぶ．
+        \item $\forall \omega \in \Omega^\bullet(M),\; \forall s \in \Gamma(E)$ に対して
+        \begin{align}
+            \dd^{\nabla^E}(\omega \otimes s) \coloneqq \dd{\omega} \otimes s + (-1)^{\deg \omega} \omega \wedge \nabla^E s
+        \end{align}
+        と定義することで定まる写像
+        \begin{align}
+            \bm{\mathrm{d}^{\nabla^E}} \colon \Omega^\bullet (M;\, E) \lto \Omega^{\bullet+1} (M;\, E)
+        \end{align}
+        のことを\textbf{共変外微分} (exterior covariant derivative) と呼ぶ．
+    \end{itemize}
+\end{mydef}
+
+\exref{def:associated-vect}を思い出すと，主束に与えられた\hyperref[def:connection]{接続形式}が自然に同伴\hyperref[def:connection-vect]{ベクトル束上の接続}と結び付くような気がしてくる．
+実際それは正しい~\cite[p.150, 命題6.3.3]{Imano}：
+
+\begin{mytheo}[label=thm:connection-assoc,breakable]{同伴ベクトル束上の接続}
+    \begin{itemize}
+        \item \hyperref[def.PFD]{主束} $G \hookrightarrow P \xrightarrow{\pi} M$
+        \item \hyperref[def:connection]{接続形式} $\omega \in \Omega^1(P;\, \mathfrak{g})$
+        \item 有限次元 $\mathbb{K}$-ベクトル空間 $V$ とLie群 $G$ の $\dim V$ 次元表現 $\rho \colon G \lto \LGL (V)$ 
+        \item \hyperref[def:associated-vect]{同伴ベクトル束} $V \hookrightarrow P \times_\rho V \xrightarrow{q} M$
+    \end{itemize}
+    を与える．$\rho_* \coloneqq T_{1_G} \rho \colon \mathfrak{g} \lto \mathfrak{gl}(V)$ を $\rho$ の\hyperref[def:diff-rep]{微分表現}とする．
+    このとき，次が成り立つ：
+    \begin{enumerate}
+        \item \begin{align}
+            \bigl(\dd + \rho_* (\omega) \wedge\bigr) \Omega^k_\rho(P;\, V) \subset \Omega^{k+1}_\rho (P;\, V)
+        \end{align}
+        \item $E \coloneqq P \times_\rho V$ とおく．命題\ref{prop:assoc-basic}で定めた同型写像 $\sharp \colon \Omega^k(M;\, E) \lto \Omega^k_\rho(P;\, V)$ を用いて定義した写像
+        \begin{align}
+            \nabla^E \coloneqq \sharp^{-1} \circ \bigl(\dd + \rho_*(\omega) \bigr) \circ \sharp\colon \Gamma(E) \lto \Omega^1(M;\, E)
+        \end{align}
+        は\hyperref[def:connection-vect]{ベクトル束 $E$ 上の接続}である．
+        \item \eqref{eq:assoc-loctriv}によって定義された局所自明化 $\psi_\alpha \colon E|_{U_\alpha} \lto U_\alpha \times V$ に対して
+        \begin{align}
+            \mathrm{proj}_2 \circ \psi_\alpha \circ \nabla^E = \dd + \rho_* (s_\alpha^* \omega)
+        \end{align}
+        とかける．
+        \item (2) の接続について\hyperref[def:connection-vect]{共変外微分} $\dd^{\nabla^E} \colon \Omega^k(M;\, E) \lto \Omega^{k+1}(M;\, E)$
+        を考えると，以下の図式が可換になる：
+        \begin{center}
+            \begin{tikzcd}[row sep=large, column sep=large]
+                &\Omega^k(M;\, E) \ar[r, "\dd^{\nabla^E}"]\ar[d, "\sharp"'] &\Omega^{k+1}(M;\, E) \ar[d, "\sharp"] \\
+                &\Omega^k_\rho(P;\, V) \ar[r, "\dd + \rho_*(\omega) \wedge"'] &\Omega^{k+1}_\rho(P;\, V)
+            \end{tikzcd}
+        \end{center}
+        
+    \end{enumerate}
+    
+\end{mytheo}
+
+\begin{marker}
+    $\omega \in \Omega^1(P;\, \mathfrak{g}),\; \tilde{s} \in \Omega^k(P;\, V)$ に対して $\rho_*(\omega) \wedge \tilde{s} \in \Omega^{k+1}(P;\, V)$ の意味するところは，\textbf{通常の $\bm{\wedge}$ とは微妙に異なる}ことに注意．
+    正確には $\forall X_1,\, \dots,\, X_{k+1} \in \mathfrak{X}(P)$ に対して
+    \begin{align}
+        \bigl(\rho_*(\omega) \wedge \tilde{s} \bigr)(X_1,\, \dots,\, X_{k+1})
+        \coloneqq \frac{1}{1!k!} \sum_{\sigma \in \mathfrak{S}_{k+1}} \sgn \sigma \, \underbrace{\rho_*\bigl(\omega(X_{\sigma(1)})\bigr)}_{\in \mathfrak{gl}(V)} \bigl( \underbrace{\tilde{s}(X_{\sigma(2)},\, \dots,\, X_{\sigma(k+1)})}_{\in V} \bigr) 
+    \end{align}
+    として新しく定義したものである．
+\end{marker}
+
+
+\begin{proof}
+    \begin{enumerate}
+        \item $\forall \tilde{s} \in \Omega_\rho^k (P;\, V)$ を1つ固定する．
+        \begin{description}
+            \item[\textbf{$\bm{\bigl(\mathrm{d} + \rho_* (\omega)\wedge\bigr) \tilde{s}}$ が\hyperref[def:tensorial-form]{水平}}]　
+            
+            $\forall X \in \mathfrak{g}$ を1つとる．\hyperref[def:fundamental-vecf]{基本ベクトル場} $X^\# \in \Gamma(P)$ が\hyperref[thm:fundamental-flow]{生成するフロー}は $\theta \colon \mathbb{R} \times M \lto M,\; (t,\, u) \lmto R_{\exp(tX)}(u)$ だったので，
+            \hyperref[def:Liedv]{Lie微分の定義}から
+            \begin{align}
+                \Liedv{X^\#} \tilde{s}
+                &= \eval{\dv{}{t}}_{t=0} (R_{\exp(tX)})^* \tilde{s} \\
+                &= \eval{\dv{}{t}}_{t=0} \rho\bigl(\exp(tX)^{-1}\bigr) (\tilde{s}) &&\because\quad \tilde{s}\; \text{の\hyperref[def:tensorial-form]{右同変性}}\\
+                &= \left(\eval{\dv{}{t}}_{t=0} \rho\bigl(\exp(-tX)\bigr)\right) \tilde{s} \\
+                &= -T_{1_G}\rho(X)(\tilde{s}) \\
+                &= -\rho_*(X)(\tilde{s})
+            \end{align}
+            がわかる．従ってLie微分の公式 (Cartan magic formula) から 
+            \begin{align}
+                i_{X\#} \Bigl( \bigl(\mathrm{d} + \rho_* (\omega)\wedge\bigr) \tilde{s} \Bigr) 
+                &= i_{X^\#} (\dd{\tilde{s}}) + i_{X^\#}\bigl(\rho_* (\omega)\bigr) \wedge \tilde{s} + (-1)^{\deg \omega} \rho_*(\omega) \wedge \cancel{i_{X^\#} (\tilde{s})} \\
+                &= \Liedv{X^\#} \tilde{s} - \dd \bigl( \cancel{i_{X^\#}(\tilde{s})} \bigr)  + \rho_*\bigl(i_{X^\#}(\omega)\bigr) \wedge \tilde{s} \\
+                &= -\rho_*(X)(\tilde{s}) + \rho_* (X) (\tilde{s}) \\
+                &= 0
+            \end{align}
+            が言える．
+            \item[\textbf{$\bm{\bigl(\mathrm{d} + \rho_* (\omega)\wedge\bigr) \tilde{s}}$ が\hyperref[def:tensorial-form]{右同変}}]　
+            
+            $\forall g \in G$ をとる．
+            % $\forall X \in \mathfrak{X}(P)$ に対して
+            % \begin{align}
+            %     \rho_* \bigl(\Adj(g^{-1})(\omega)  \bigr)(X)
+            %     &= \rho_* \Bigl( \Adj(g^{-1}) \bigl( \omega(X) \bigr)  \Bigr) \\
+            %     &= T_{1_G} \rho \circ T_{1_G} (F_{g^{-1}}) \bigl( \omega(X) \bigr)   \\
+            %     &= T_{1_G}(\rho \circ F_{g^{-1}})\bigl( \omega(X) \bigr) \\
+            %     &= \rho(g^{-1}) \circ \rho_* \bigl( \omega(X) \bigr) \circ \rho(g)
+            % \end{align}
+            % が成り立つ，i.e. 
+            $\rho_* \bigl( \Adj(g^{-1})(\omega) \bigr) = \rho(g^{-1}) \circ \rho_*(\omega) \circ \rho(g)$ なので
+            \footnote{
+                \exref{def:diff-rep}と大体同じ議論をすれば良い：
+                $\forall X \in \mathfrak{g}$ をとる．このとき命題\ref{prop:exp}-(2) より \cinfty 曲線 $\gamma \colon t \lmto \exp(tX)$ は $X$ が生成する1パラメータ部分群なので，
+                \begin{align}
+                    \rho_* \bigl(\Adj(g^{-1})(X)  \bigr)
+                    &= T_{1_G} \rho \Bigl(\Adj(g^{-1})\bigl(\dot{\gamma}(0)\bigr) \Bigr)   \\
+                    &= T_{1_G} \rho \circ T_{1_G}(F_{g^{-1}}) \circ T_0 \gamma \left( \eval{\dv{}{t}}_{t=0} \right)  \\
+                    &= T_{0}(\rho \circ F_{g^{-1}} \circ \gamma) \left( \eval{\dv{}{t}}_{t=0} \right) \\
+                    &= \eval{\dv{}{t}}_{t=0} \rho\bigl(g^{-1} \exp(tX) g\bigr) \\
+                    &= \rho(g^{-1}) \circ \eval{\dv{}{t}}_{t=0}\Bigl(\rho\bigl(\exp(tX)\bigr) \Bigr) \circ \rho(g) \\
+                    &= \rho(g^{-1}) \circ \rho_*(X) \circ \rho(g)
+                \end{align}
+                ただし最後から2番目の等号では $\rho \colon G \lto \LGL (V)$ がLie群の準同型であることを使った．
+                $\omega$ は $\mathfrak{g}$ に値を取るので示された．
+            }
+            % \footnote{
+            %     $\rho_*(\omega)$ の意味は，$\forall X \in \mathfrak{X}(P)$ に対して得られる $\omega(X) \in \mathfrak{g}$ に $\rho_* \coloneqq T_{1_G}\rho \colon \mathfrak{g} \lto \Lgl (V)$ を作用させるという意味である．従って $\rho_* \bigl( \omega(X) \bigr) \in \Lgl (V)$ であるから，
+            %     このことを踏まえると，
+            %     \begin{align}
+            %         T_{1_G}(\rho \circ F_{g^{-1}}) \bigl( \omega(X_1,\, \dots,\, X_k) \bigr)v =  \omega(X_1,\, \dots,\, X_k)(f \circ \rho \circ F_{g^{-1}})
+            %     \end{align}
+                
+            % }
+            \begin{align}
+                (R_g)^* \Bigl(\bigl( \dd + \rho_*(\omega) \wedge\bigr) \tilde{s}\Bigr)
+                &= (R_g)^*\dd\tilde{s} + (R_g)^* \bigl( \rho_*(\omega) \wedge \tilde{s} \bigr) \\
+                &= \dd \bigl( (R_g)^* \tilde{s} \bigr) + \rho_* \bigl( (R_g)^* \omega \bigr) \wedge (R_g)^* \tilde{s} \\
+                &= \dd \bigl( \rho(g^{-1})\tilde{s} \bigr) + \rho_* \bigl(\Adj(g^{-1})(\omega)  \bigr) \wedge \rho(g^{-1}) \tilde{s} \\
+                &= \rho(g^{-1}) \Bigl( \bigl(\dd + \rho_* (\omega) \wedge\bigr) \tilde{s} \Bigr) 
+            \end{align}
+            が言える．
+        \end{description}
+        
+        \item 
+        $\forall f \in C^\infty(M),\; \forall s \in \Gamma(E) = \Omega^0(M;\, E)$ に対して
+        \hyperref[def:connection-vect]{Leibniz則}が成り立つことを示す．
+        % $\forall \omega \in \Omega^k(M),\, \forall \eta \in \Omega^l(M;\, E)$ に対して
+        % \begin{align}
+        %     \sharp (\omega \wedge \eta)_u (v_1,\, \dots,\, v_{k+l})
+        %     &= f^{-1}_u \circ \bigl(\pi^* (\omega \wedge \eta)\bigr)_u (v_1,\, \dots,\, v_{k+l}) \\
+        %     &= f^{-1}_u \Bigl( (\pi^* \omega \wedge \pi^* \eta)_u(v_1,\, \dots,\, v_{k+l}) \Bigr) \\
+        %     &= f^{-1}_u \left( \frac{1}{k! l!} \sum_{\sigma \in \mathfrak{S}_{k+l}} \sgn \sigma\, \underbrace{(\pi^* \omega)_u(v_{\sigma(1)},\, \dots,\, v_{\sigma(k)})}_{\in \mathbb{K}} \otimes (\pi^* \eta)_u(v_{\sigma(k+1)},\, \dots,\, v_{\sigma(k+l)}) \right) \\
+        %     &= \frac{1}{k! l!} \sum_{\sigma \in \mathfrak{S}_{k+l}} \sgn \sigma\, (\pi^* \omega)_u(v_{\sigma(1)},\, \dots,\, v_{\sigma(k)}) f^{-1}_u \left(  (\pi^* \eta)_u(v_{\sigma(k+1)},\, \dots,\, v_{\sigma(k+l)}) \right) \\
+        %     &= \bigl((\pi^* \omega) \wedge \sharp \eta\bigr)_u
+        % \end{align}
+        % が成り立つ
+        % \begin{align}
+        %     \sharp (fs)_u 
+        %     &= f_u^{-1} \circ \bigl(\pi^* (fs) \bigr)_u \\
+        %     &= f_u^{-1} \circ \Bigl((f s) \circ \pi(u)\Bigr) \\
+        %     &= f_u^{-1} \Bigl( f\bigl(\pi(u)\bigr)s\bigl(\pi(u) \bigr) \Bigr) \\
+        %     &= \bigl(f \circ \pi(u)\bigr) f_u^{-1} \circ (s \circ \pi)(u) &&\because\quad f_u^{-1}\; \text{の}\; \mathbb{K}\text{-線型性} \\
+        %     &= (\pi^* f)_u \,f_u^{-1} \circ (\pi^* s)_u \\
+        %     &= (\pi^* f)_u \,s^\sharp_u
+        % \end{align}
+        % が成り立つので $\sharp (fs) = (\pi^* f)\, s^\sharp$ である．よって
+        外微分と引き戻しが可換であることに注意すると
+        \begin{align}
+            \nabla^E (fs)
+            &= \sharp^{-1} \circ \Bigl( \dd\bigl(\sharp (fs)\bigr) + \rho_* (\omega) \bigl( \sharp(fs) \bigr)   \Bigr) \\
+            &= \sharp^{-1} \circ \Bigl( \dd\bigl((\pi^* f)\, \sharp s\bigr) + \rho_* (\omega) \bigl( (\pi^* f)\, \sharp s \bigr)   \Bigr) & &\because\quad\text{命題\ref{prop:assoc-basic}-(3)}\\
+            &= \sharp^{-1} \circ \Bigl(\dd(\pi^* f) \otimes \sharp s + (\pi^* f)\, \dd (\sharp s) + (\pi^* f)\, \rho_* ( \omega ) (\sharp s)   \Bigr) \\
+            &= \sharp^{-1} \circ \Bigl(\pi^* (\dd f) \otimes \sharp s + (\pi^* f)\, \bigl(\dd + \rho_* ( \omega )\bigr) (\sharp s)   \Bigr) \\
+            &= \sharp^{-1} \circ \Bigl(\sharp(\dd f \otimes s) + (\pi^* f)\, \sharp \bigl(\nabla^E(s)\bigr) \Bigr) & &\because\quad\text{命題\ref{prop:assoc-basic}-(3)} \\
+            &= \dd f \otimes s + f \nabla^E s & &\because\quad\text{命題\ref{prop:assoc-basic}-(3)}
+        \end{align}
+        が言えた．
+        \item $\forall s \in \Gamma(E)$ に対して，命題\ref{prop:assoc-basic}-(4) より
+        \begin{align}
+            \mathrm{proj}_2 \circ \psi_\alpha \circ (\nabla^E s)
+            &= s_\alpha^*\bigl(\sharp (\nabla^E s)\bigr) \\
+            &= s_\alpha^* \Bigl( \bigl(\dd + \rho_* (\omega)\bigr)(\sharp s) \Bigr) \\
+            &= s_\alpha^* \bigl(\dd(\sharp s)\bigr) + s_\alpha^* \bigl( \rho_*(\omega) (\sharp s)\bigr) \\
+            &= \dd\bigl(s_\alpha^*(\sharp s)\bigr) + \rho_* \bigl( s_\alpha^*\omega \bigr)\bigl( s_\alpha^* (\sharp s)\bigr) \\
+            &= \bigl( \dd + \rho_* (s_\alpha^* \omega) \bigr) s_\alpha^*(\sharp s) \\
+            &= \bigl( \dd + \rho_* (s_\alpha^* \omega) \bigr) \bigl( \mathrm{proj}_2 \circ \psi_\alpha (s) \bigr)
+        \end{align}
+        が言える．
+        \item $\forall s \in \Omega^k(M;\, E)$ をとる．
+        局所自明化 $\psi_\alpha \colon E|_{U_\alpha} \lto U_\alpha \times V$ について，命題\ref{prop:assoc-basic}-(4) より
+        \begin{align}
+            &\mathrm{proj}_2 \circ \psi_\alpha \circ \bigl( \sharp^{-1} \circ (\dd + \rho_*(\omega) \wedge) \circ \sharp(s) \bigr) \\
+            &= s_\alpha^* \bigl( (\dd + \rho_*(\omega) \wedge)(\sharp s)\bigr) \\
+            &= s_\alpha^* \bigl( \dd(\sharp s) \bigr) + s_\alpha^* \bigl( \rho_*(\omega) \wedge \sharp s \bigr) \\
+            &= \dd\bigl( s_\alpha^*(\sharp s) \bigr) + \rho_* \bigl( s_\alpha^*(\omega) \bigr) \wedge s_\alpha^*(\sharp s)  \\
+            &= \bigl( \dd + \rho_*(s_\alpha^*\omega) \wedge \bigr)  s_\alpha^*(\sharp s) \\
+            &= \bigl( \dd + \rho_*(s_\alpha^*\omega) \wedge \bigr)  \bigl(\mathrm{proj}_2 \circ \psi_\alpha(s) \bigr) 
+        \end{align}
+        が言える．
+        % \footnote{この命題の注で述べたことから，$s_\alpha^* \bigl( \rho_*(\omega) \wedge \sharp s \bigr) =  \rho_* \bigl( s_\alpha^*(\omega) \bigr) \wedge s_\alpha^*(\sharp s)$ が言える．}．
+        また，$\forall s \in \Omega^k(M),\; \forall t \in \Gamma(E)$ に対して
+        \begin{align}
+            &\mathrm{proj}_2 \circ \psi_\alpha \bigl( \dd{s} \otimes t + (-1)^{\deg s} s \wedge \nabla^E t \bigr) \\
+            &= s_\alpha^* \bigl( \sharp(\dd{s} \otimes t)\bigr) + (-1)^{\deg s} s_\alpha^*\bigl( \sharp (s \wedge \nabla^E t)\bigr) \\
+            &= s_\alpha^* \bigl( \pi^*(\dd{s}) \otimes \sharp t\bigr) + (-1)^{\deg s} s_\alpha^*\bigl( \pi^*(s) \wedge \sharp(\nabla^E t)\bigr) \qquad \because\quad \text{命題\ref{prop:assoc-basic}-(3)}\\
+            &= \dd \bigl( s_\alpha^* (\pi^* s) \bigr) \otimes s_\alpha^* (\sharp t)  + (-1)^{\deg s}s_\alpha^* (\pi^* s) \wedge s_\alpha^* \bigl( \sharp (\nabla^E t) \bigr) \\
+            &= \dd \bigl( s_\alpha^* (\pi^* s) \bigr) \otimes s_\alpha^* (\sharp t)  + (-1)^{\deg s} s_\alpha^* (\pi^* s) \wedge \dd \bigl( s_\alpha^*(\sharp t) \bigr) + (-1)^{\deg s} s_\alpha^* (\pi^* s)  \wedge \rho_* (s_\alpha^* \omega)(s_\alpha^*(\sharp t)) \\
+            &= \dd \bigl( s_\alpha^* (\pi^* s) \otimes s_\alpha^* (\sharp t) \bigr) + \rho_* (s_\alpha^* \omega) \wedge (s_\alpha^* (\pi^* s) \otimes s_\alpha^*(\sharp t)) \\
+            &= \bigl( \dd + \rho_*(s_\alpha^*\omega) \wedge \bigr)  s_\alpha^* \bigl((\pi^* s) \otimes (\sharp t)  \bigr) \\
+            &= \bigl( \dd + \rho_*(s_\alpha^*\omega) \wedge \bigr)  s_\alpha^* \bigl(\sharp(s \otimes t)  \bigr) \qquad \because\quad \text{命題\ref{prop:assoc-basic}-(3)}\\
+            &= \bigl( \dd + \rho_*(s_\alpha^*\omega) \wedge \bigr)  \bigl(\mathrm{proj}_2 \circ \psi_\alpha (s \otimes t) \bigr)
+        \end{align}
+        であるが，\hyperref[def:connection-vect]{共変外微分の定義}から最左辺は $\mathrm{proj}_2 \circ \psi_\alpha \circ \dd^{\nabla^E}(s \otimes t)$ と等しい．よって
+        \begin{align}
+            \dd^{\nabla^E} (s \otimes t) = \sharp^{-1} \circ \bigl( \dd + \rho_*(\omega) \wedge \bigr) \circ \sharp (s \otimes t)
+        \end{align}
+        が言えた．
+        共変外微分の定義から，$d^{\nabla^E}$ が一般の $\Omega^k(M;\, E)$ の元に作用する場合についても示された．
+    \end{enumerate}
+\end{proof}
+
+命題\ref{thm:connection-assoc}-(3) がまさに我々の良く知るゲージ場になっていることを確認しよう．
+% そのためには，局所自明化の取り替えに伴って $\nabla^E|_{U_\alpha \cap U_\beta}$ が\eqref{eq:gauge-transform}の変換性を充たすことを示せば良い．
+
+まずは状況設定である．\hyperref[def.PFD]{主束}
+\begin{align}
+    G \hookrightarrow P \xrightarrow{\pi} M
+\end{align}
+は
+\begin{itemize}
+    \item 開被覆 $\Familyset[\big]{U_\alpha}{\alpha \in \Lambda}$
+    \item 局所自明化 $\Familyset[\big]{\varphi_\alpha \colon \pi^{-1}(U_\alpha) \lto U_\alpha \times G}{\alpha \in \Lambda}$ 
+    \item 変換関数 $\Familyset[\big]{t_{\alpha\beta} \colon U_\alpha \cap U_\beta \lto G}{\alpha,\, \beta \in \Lambda}$
+\end{itemize}
+を持つとする．\underline{$P$ の}\hyperref[def.section]{局所切断} $\Familyset[\big]{s_\alpha \colon U_\alpha \lto \pi^{-1}(U_\alpha)}{\alpha \in \Lambda}$ を，\eqref{eq:assoc-loctriv}の通り $s_\alpha (x) \coloneqq \varphi_\alpha^{-1}(x,\, 1_G)$ と定義する．
+このとき主束 $P$ の\hyperref[def:associated-vect]{同伴ベクトル束}
+\begin{align}
+    V \hookrightarrow P \times_\rho V \xrightarrow{q} M
+\end{align}
+はその構成から
+\begin{itemize}
+    \item 開被覆 $\Familyset[\big]{U_\alpha}{\alpha \in \Lambda}$
+    \item 変換関数 $\Familyset[\big]{t_{\alpha\beta} \colon U_\alpha \cap U_\beta \lto G}{\alpha,\, \beta \in \Lambda}$
+\end{itemize}
+を持ち，局所自明化 $\Familyset[\big]{\psi_\alpha \colon q^{-1}(U_\alpha) \lto U_\alpha \times V}{\alpha \in \Lambda}$ は\eqref{eq:assoc-loctriv}の通りに $\psi_\alpha \bigl( s_\alpha(x) \times_\rho v \bigr) \coloneqq (x,\, v)$ と構成された．なお，命題\ref{prop:Borelconst}の証明の脚注で述べたようにこれは $\psi_\alpha(u \times_\rho v) \coloneqq \bigl( \pi(u),\, \mathrm{proj}_2 \circ \varphi_\alpha(u) \btr v \bigr)$ と定義することと同値である．
+以下では便宜上 $E \coloneqq P \times_\rho V$ とおく．
+
+さて，\underline{主束 $P$ 上の}\hyperref[def:connection]{接続形式} $\omega \in \Omega^1(P;\, \mathfrak{g})$ を任意に1つ与えよう．このとき定理\ref{thm:connection-assoc}-(2) により，\underline{同伴ベクトル束 $E$ 上の}\hyperref[def:connection-vect]{接続} $\nabla^E \colon \Gamma(E) \lto \Omega^1(M;\, E)$ が $\nabla^E \coloneqq \sharp^{-1}\circ \bigl(\dd + \rho_* (\omega)\bigr) \circ \sharp$ として誘導される．
+
+\eqref{eq:field-locsym}が示すように，Lie群 $G$ で記述される内部対称性を持つ場 $\phi$ は\underline{$E$ の}切断 $\phi \in \Gamma(E)$ を局所自明化 $\psi_\alpha$ によって表示した $\phi_\alpha \coloneqq \mathrm{proj}_2 \circ \psi_\alpha \circ \phi \colon U_\alpha \lto V$ と同一視された．
+ここで，$\phi \in \Gamma(E) = \Omega^0 (M;\, E)$ なので，ある\underline{$M$ 上の}\hyperref[def:vecf]{ベクトル場} $X \in \mathfrak{X}(M) = \Gamma(TM)$ に\hyperref[def:connection-vect]{沿った共変微分} $\nabla_X^E \colon \Gamma(E) \lto \Gamma(E),\; \phi \lmto \nabla^E\phi(X)$ を取ることができる．そして $\nabla^E_X \phi \in \Gamma (E)$ の局所自明化による表示 $(\nabla^E_X \phi)_\alpha \coloneqq \mathrm{proj}_2 \circ \psi_\alpha \circ \nabla^E_X \phi \colon U_\alpha \lto V$ もまた，$U_\alpha \cap U_\beta$ における $\psi_\alpha$ から $\psi_\beta$ への局所自明化の取り替えに伴って\eqref{eq:field-locsym}の変換を受ける：
+\begin{align}
+    \psi_\beta \circ \psi_\alpha^{-1} \colon (U_\alpha \cap U_\beta) \times V &\lto (U_\alpha \cap U_\beta) \times V, \\
+    \Bigl( x,\, \bm{(\nabla_X^E\phi)_\alpha (x)} \Bigr) &\lmto \Bigl( x,\, \bm{(\nabla_X^E\phi)_\beta (x)}  \Bigr) = \Bigl( x,\, \bm{\rho\bigl(t_{\beta\alpha}(x)\bigr) \bigl( (\nabla_X^E\phi)_\alpha (x)\bigr)}  \Bigr) 
+\end{align}
+一方で，定理\ref{thm:connection-assoc}-(3)から
+\begin{align}
+    (\nabla_X^E\phi)_\alpha
+    &= (\nabla^E\phi)_\alpha(X)
+    = \bigl( \dd + \rho_* (s^*_\alpha \omega) \bigr)( \phi_\alpha ) (X)
+    % &= \dd \phi_\alpha (X) + \rho_* \bigl( (s^*_\alpha \omega)(X) \bigr) (\phi_\alpha)
+\end{align}
+なので，$\forall x \in U_\alpha \cap U_\beta$ において
+\begin{align}
+    &(\nabla_X^E\phi)_\beta (x) \\
+    &= \eval{\bigl( \dd + \rho_* (s^*_\beta \omega) \bigr) ( \phi_\beta )}_x (X_x) \\
+    &= \eval{\rho \bigl( t_{\beta\alpha}(x) \bigr) \circ \bigl( \dd + \rho_* (s^*_\alpha \omega) \bigr) ( \phi_\alpha )}_x (X_x) \\
+    &= \eval{\rho \bigl( t_{\beta\alpha}(x) \bigr) \circ \bigl( \dd + \rho_* (s^*_\alpha \omega) \bigr) \circ \rho\bigl(t_{\beta\alpha}(x)\bigr)^{-1} (\phi_\beta)}_x (X_x) \\
+    &= \eval{\rho \bigl( t_{\beta\alpha}(x) \bigr) \circ \bigl( \dd + \rho_* (s^*_\alpha \omega) \bigr) \circ \rho\bigl(t_{\beta\alpha}(x)^{-1}\bigr) (\phi_\beta)}_x (X_x)
+\end{align}
+だとわかる．i.e.
+\begin{align}
+    \bigl(\dd + \rho_* (s^*_\beta \omega)\bigr)_x &= \rho \bigl( t_{\beta\alpha}(x) \bigr) \circ \bigl( \dd + \rho_* (s^*_\alpha \omega) \bigr)_x \circ \rho\bigl(t_{\beta\alpha}(x)^{-1}\bigr)
+\end{align}
+となって\eqref{eq:def-codv-transform}の変換則を再現する．
+また，$V$ の基底を $e_1,\, \dots e_{\dim V}$ として $\phi_\beta(x) = \phi_\beta{}^i (x) e_i$ と展開し，$\rho (t_{\beta\alpha}(x)^{-1}) \in \LGL (V)$ をこの基底に関して $[\, \rho (t_{\beta\alpha}(x)^{-1})\, ]^{i}{}_j$ と行列表示ときに
+\begin{align}
+    \eval{\dd \circ \rho \bigl( t_{\beta\alpha}(x)^{-1} \bigr) (\phi_\beta)}_x 
+    &= \dd\underbrace{\bigl([\, \rho (t_{\beta\alpha}(x)^{-1})\, ]^{i}{}_j \phi_\beta{}^i (x) \bigr)}_{\in \Omega^0(\textcolor{red}{M}) = C^\infty(\textcolor{red}{M})} e_i \\
+    &= \partial_\mu \bigl([\, \rho (t_{\beta\alpha}(x)^{-1})\, ]^{i}{}_j \bigr) \phi_{\beta}{}^i (x) \dd{x}^\mu e_i + [\, \rho (t_{\beta\alpha}(x)^{-1})\, ]^{i}{}_j \partial_{\mu} \phi_\beta{}^j (x) \dd{x}^\mu e_i \\
+    &\eqqcolon \eval{\Bigl(\dd \bigl(\rho \bigl( t_{\beta\alpha}(x)^{-1} \bigr) \bigr) + \rho \bigl( t_{\beta\alpha}(x)^{-1} \bigr) \circ \dd\Bigr) (\phi_\beta)}_x
+\end{align}
+が成り立つと言う意味で
+\begin{align}
+    \eval{\rho_* (s_\beta^* \omega)}_x = \rho \bigl( t_{\beta\alpha}(x) \bigr) \circ \dd \bigl(\rho \bigl( t_{\beta\alpha}(x)^{-1} \bigr)\bigr) + \rho \bigl( t_{\beta\alpha}(x) \bigr) \circ \rho_* (s_\alpha \omega) \circ \rho \bigl( t_{\beta\alpha}(x)^{-1} \bigr)
+\end{align}
+と書けてゲージ変換\eqref{eq:def-gauge-transform}を再現する．つまり，\textbf{ゲージ場}とは，接続形式 $\omega$ の局所切断による引き戻し $s_\alpha^* \omega \in \Omega^1(U_\alpha;\, \mathfrak{g})$ のことだったのである．
+
+\section{局所接続形式とゲージ場}
+
+これまでの議論で主束，およびその同伴ベクトル束の接続を大域的な表式を得た．以降の節では，物理の文脈で登場する接続の局所表示（それは\textbf{ゲージ場}と呼ばれる）および曲率とその局所表示（それは\textbf{場の強さ}と呼ばれる）を，主束およびその同伴ベクトル束の各々において，より直接的な形で定式化する．
+まず始めにゲージ場と局所ゲージ変換を\hyperref[def:connection]{主束上の接続}の言葉で定式化しよう．
+
+先に進む前に，Maurer-Cartan形式についての注意をしておく．
+
+\begin{mydef}[label=def:Maurer-Cartan]{Maurer-Cartan形式}
+    Lie群 $G$ の\textbf{Maurer-Cartan形式}とは，
+    \begin{align}
+        \theta_g \coloneqq T_g(L_{g^{-1}}) \colon T_g G \lto \mathfrak{g}
+    \end{align}
+    によって定義される\underline{$G$ 上の} $\mathfrak{g}$ 値1-形式 $\theta \in \Omega^1(G;\, \mathfrak{g})$ のことを言う．
+\end{mydef}
+特に $G$ が $\LGL (V)$ の部分Lie群（行列Lie群）である場合，Maurer-Cartan形式 $\theta \colon TG \lto \mathfrak{g}$ はよく $\bm{g^{-1} \mathrm{d} g}$ と略記される．これの解釈は次の通りである：
+まず $\forall g \in G$ と $G$ 上の恒等写像 $\mathrm{id}_G \colon G \lto G,\; g \lmto g$ を同一視する．このとき $\dd g \colon TG \lto TG$ は，$\forall g \in G$ に対して $T_g (\mathrm{id}_G) = \mathrm{id}_{T_g G} \colon T_g G \lto T_g G$ のことだと解釈する．
+すると，\exref{ex:gl}, \exref{ex:gl-adj}の議論から行列Lie群の場合 $T_g(L_{g^{-1}}) = L_{g^{-1}}$ と見做して良いので，$\forall v \in T_g G$ に対して
+\begin{align}
+    \theta_g(v) = T_g(L_{g^{-1}})(v) = L_{g^{-1}} \circ \mathrm{id}_{T_g G}(v) = g^{-1} \dd g(v)
+\end{align}
+と書けるのである．
+
+さて，ここで任意の\cinfty 写像 $t \colon M \lto G$ をとる．このとき，$G$ が $\LGL (V)$ の部分Lie群ならば，Maurer-Cartan形式の $t$ による引き戻しが $t^* \theta = \bm{t^{-1} \mathrm{d} t} \in \Omega^1(M;\, \mathfrak{g})$ と表記できることを確認しよう．
+$\forall g \in G$ を1つ固定し，$\forall v \in T_p M$ をとる．すると
+\begin{align}
+    (t^* \theta)_p (v)
+    &= \theta_{t(p)} \bigl( T_p t (v) \bigr) \\
+    &= T_{t(p)} (L_{t(p)^{-1}}) \circ T_p t (v) \\
+    &= T_p (L_{t(p)^{-1}} \circ t)(v) \\
+    &= T_p (L_{t(p)^{-1}} \circ t)\bigl(\dot{\gamma}(0)\bigr) \\
+    &= T_p (L_{t(p)^{-1}} \circ t) \circ T_0 \gamma \left( \eval{\dv{}{t}}_{t=0} \right) \\
+    &= \eval{\dv{}{t}}_{t=0} \bigl( L_{t(p)^{-1}} \circ t \circ \gamma(t) \bigr) \\
+    &= \eval{\dv{}{t}}_{t=0} t(p)^{-1} t \bigl( \gamma(t) \bigr) \\
+    &= t(p)^{-1} \eval{\dv{}{t}}_{t=0} t\bigl( \gamma(t) \bigr) \\
+    &= t(p)^{-1} T_p t (\dot{\gamma}(0)) \\
+    &= t(p)^{-1} \dd t|_p (v)
+\end{align}
+ただし $\gamma$ は $v$ が\hyperref[thm:fundamental-flow]{生成する積分曲線}である．
+
+ここで，いくつかの技術的な補題を述べよう．
+
+\begin{mylem}[label=lem:tangent-product,breakable]{積多様体の接空間}
+    $C^\infty$ 多様体 $M_1,\, M_2$ およびその任意の点 $p_1 \in M_1,\, p_2 \in M_2$ を与え，
+    $C^\infty$ 写像
+    \begin{align}
+        \mathrm{proj}_1 &\colon M_1 \times M_2 \lto M_1,\; (x_1,\, x_2) \lmto x_1, \\
+        \mathrm{proj}_2 &\colon M_1 \times M_2 \lto M_2,\; (x_1,\, x_2) \lmto x_2, \\
+        \mathrm{inj}_1^{p_2} &\colon M_1 \lto M_1 \times M_2,\; x \lmto (x,\, p_2), \\
+        \mathrm{inj}_2^{p_1} &\colon M_2 \lto M_1 \times M_2,\; x \lmto (p_1,\, x)
+    \end{align}
+    を考える．このとき，$\mathbb{R}$-線型写像
+    \begin{align}
+        \alpha \colon T_{(p_1,\, p_2)}(M_1 \times M_2) &\lto T_{p_1} M_1 \oplus T_{p_2} M_2,\\ 
+        v &\lmto \bigl( T_{(p_1,\, p_2)} (\mathrm{proj}_1)(v),\, T_{(p_1,\, p_2)} (\mathrm{proj}_2)(v) \bigr)
+    \end{align}
+    と
+    \begin{align}
+        \beta \colon T_{p_1} M_1 \oplus T_{p_2} M_2 &\lto T_{(p_1,\, p_2)}(M_1 \times M_2),\\ 
+        (v,\, w) &\lmto T_{p_1} (\mathrm{inj}_1^{p_2})(v) + T_{p_2} (\mathrm{inj}_2^{p_1})(w)
+    \end{align}
+    は互いに逆写像である．i.e. $\mathbb{R}$-ベクトル空間の同型
+    \begin{align}
+        T_{(p_1,\, p_2)}(M_1 \times M_2) \cong T_{p_1} M_1 \oplus T_{p_2} M_2
+    \end{align}
+    が成り立つ．
+\end{mylem}
+
+\begin{proof}
+    $\forall (v,\, w) \in T_{p_1}M_1 \oplus T_{p_2}M_2$ に対して
+    \begin{align}
+        &\alpha \bigl( \beta(v,\, w)\bigr)\\
+        &= \bigl( T_{p_1}(\mathrm{proj}_1 \circ \mathrm{inj}_1^{p_2})(v) + \cancel{T_{p_2}(\mathrm{proj}_1 \circ \mathrm{inj}_2^{p_1})(w)},\, \cancel{T_{p_1}(\mathrm{proj}_2 \circ \mathrm{inj}_1^{p_2})(v)} + T_{p_2}(\mathrm{proj}_2 \circ \mathrm{inj}_2^{p_1})(w) \bigr)  \\
+        &= \bigl( T_{p_1}(\mathrm{id}_{M_1})(v),\, T_{p_2}(\mathrm{id}_{M_2}) (w) \bigr) \\
+        &= (v,\, w)
+    \end{align}
+    が成り立つので $\alpha$ は全射である．さらに $\dim T_{(p_1,\, p_2)}(M_1 \times M_2) = \dim  (T_{p_1} M_1 \oplus T_{p_2} M_2)$ なので，階数-退化次元の定理から $\alpha$ が同型写像であることがわかる．
+\end{proof}
+
+\begin{mylem}[label=lem:diff-product]{積の微分の亜種}
+    \begin{itemize}
+        \item $C^\infty$ 多様体 $M_1,\, M_2,\, N_1,\, N_2,\, P$
+        \item 任意の点 $p_i \in M_i$
+        \item $C^\infty$ 写像 $F_i \colon M_i \lto N_i$
+        \item $C^\infty$ 写像 $\mu \colon N_1 \times N_2 \lto P$
+    \end{itemize}
+    このとき，
+    \begin{align}
+        T_{(p_1,\, p_2)} \bigl( \mu \circ (F_1 \times F_2) \bigr) 
+        = T_{(p_1,\, p_2)} (\mu \circ \mathrm{inj}_1^{F_2(p_2)} \circ F_1 \circ \mathrm{proj}_1) + T_{(p_1,\, p_2)} (\mu \circ \mathrm{inj}_2^{F_1(p_1)} \circ F_2 \circ \mathrm{proj}_2)
+    \end{align}
+    が成り立つ．
+\end{mylem}
+
+\begin{proof}
+    $\forall (x_1,\, x_2) \in M_1 \times M_2$ に対して
+    \begin{align}
+        \mathrm{proj}_i \circ (F_1 \times F_2)(x_1,\, x_2) 
+        &= \mathrm{proj}_i \bigl( F_1(x_1),\, F_2(x_2) \bigr) \\
+        &= F_i(x_i) \\
+        &= F_i \circ \mathrm{proj}_i (x_1,\, x_2)
+    \end{align}
+    i.e. $\mathrm{proj}_i \circ (F_1 \times F_2) = F_i \circ \mathrm{proj}_i$ が成り立つことに注意すると，
+    補題\ref{lem:tangent-product}より $\forall v \in T_{(p_1,\, p_2)}(M_1 \times M_2)$ に対して
+    \begin{align}
+        &T_{(p_1,\, p_2)} \bigl( \mu \circ (F_1 \times F_2) \bigr)(v) \\
+        &= T_{(F_1(p_1),\, F_2(p_2))} \mu \circ T_{(p_1,\, p_2)}(F_1 \times F_2)(v) \\
+        &= T_{(F_1(p_1),\, F_2(p_2))} \mu \circ \beta \circ \alpha \circ T_{(p_1,\, p_2)}(F_1 \times F_2)(v) \\
+        &= T_{(F_1(p_1),\, F_2(p_2))} \mu \circ \beta \Bigl(T_{(p_1,\, p_2)} \bigl(\mathrm{proj}_1 \circ (F_1 \times F_2)\bigr)(v) ,\, T_{(p_1,\, p_2)}\bigl(\mathrm{proj}_2 \circ (F_1 \times F_2)\bigr)(v) \Bigr) \\
+        &= T_{(F_1(p_1),\, F_2(p_2))} \mu \circ \beta \bigl(T_{(p_1,\, p_2)} (F_1 \circ \mathrm{proj}_1)(v) ,\, T_{(p_1,\, p_2)}(F_2 \circ \mathrm{proj}_2)(v) \bigr) \\
+        &= T_{(p_1,\, p_2)} (\mu \circ \mathrm{inj}_1^{F_2(p_2)} \circ F_1 \circ \mathrm{proj}_1)(v) + T_{(p_1,\, p_2)} (\mu \circ \mathrm{inj}_2^{F_1(p_1)} \circ F_2 \circ \mathrm{proj}_2)(v)
+    \end{align}
+    がわかる．
+\end{proof}
+
+\begin{mylem}[label=lem:differential-of-local-section]{局所切断の微分}
+    \hyperref[def.PFD]{主束} $G \hookrightarrow P \xrightarrow{\pi} M$ と，その開被覆 $\Familyset[\big]{U_\alpha}{\alpha \in \Lambda}$，局所自明化 $\Familyset[\big]{\varphi_\alpha \colon \pi^{-1}(U_\alpha) \lto U_\alpha \times G}{\alpha \in \Lambda}$，変換関数 $\Familyset[\big]{t_{\alpha\beta} \colon U_\alpha \cap U_\beta \lto G}{\alpha,\, \beta \in \Lambda}$ を与える．
+    \hyperref[def.section]{局所切断}の族 $\Familyset[\big]{s_\alpha \colon U_\alpha \lto \pi^{-1}(U_\alpha)}{\alpha \in \Lambda}$ を\eqref{eq:assoc-sec}で定義する． 
+    $\theta \in \Omega^1(G;\, \mathfrak{g})$ を\hyperref[def:Maurer-Cartan]{Maurer-Cartan形式}とする．
+
+    このとき，$\forall \alpha,\, \beta \in \Lambda$ および $\forall x \in U_\alpha \cap U_\beta$ に関して，
+    $\forall v \in T_x \textcolor{red}{M}$ は\footnote{~\cite[p.36, 補題10.1]{Nakahara2018topo2}には誤植がある}
+    \begin{align}
+        T_x s_\beta (v) = T_{s_\alpha(x)}(R_{t_{\alpha\beta}(x)}) \circ T_x s_\alpha (v) + \eval{\bigl((t_{\alpha\beta}^*\theta)_x(v)\bigr)^\#}_{s_\beta(x)}
+    \end{align}
+    を充たす．
+\end{mylem}
+
+\begin{proof}
+    $\forall \alpha,\, \beta \in \Lambda$ を固定し，$\forall x \in U_\alpha \cap U_\beta$ を取る．
+    $\forall v \in T_x M$ を1つ固定する．
+    \hyperref[def.fiber-1]{変換関数の定義}および\hyperref[prop.PFD_right]{ $P$ への右作用 $\btl$ の定義}から $s_\beta (x) = \varphi_\beta^{-1}(x,\, 1_G) = \varphi_\alpha^{-1}\bigl(x,\, t_{\alpha\beta}(x)\bigr) = s_\alpha(x) \btl t_{\alpha\beta}(x)$ が成り立つ．i.e. \cinfty 写像 $\Delta \colon M \lto M \times M,\; x \lmto (x,\, x)$ を使って $s_\beta = \btl \circ (s_\alpha \times t_{\alpha\beta}) \circ \Delta$ と書けるので，
+    \begin{align}
+        T_x s_\beta (v)
+        &= T_{(x,\, x)} \bigl(\btl \circ (s_\alpha \times t_{\alpha\beta})\bigr) \circ T_x\Delta (v)
+    \end{align}
+    となる．最右辺に補題\ref{lem:diff-product}を使うことで
+    \begin{align}
+        T_x s_\beta(v)
+        &= T_x (\btl \circ \mathrm{inj}_1^{t_{\alpha\beta}(x)} \circ s_\alpha \circ \mathrm{proj}_1 \circ \Delta )(v)
+        + T_x (\btl \circ \mathrm{inj}_2^{s_\alpha(x)} \circ t_{\alpha\beta} \circ \mathrm{proj}_2 \circ \Delta )(v) \\
+        &= T_x (\btl \circ \mathrm{inj}_1^{t_{\alpha\beta}(x)} \circ s_\alpha )(v)
+        + T_x (\btl \circ \mathrm{inj}_2^{s_\alpha(x)} \circ t_{\alpha\beta} )(v) \\
+        &= T_x (R_{t_{\alpha\beta}(x)} \circ s_\alpha)(v)
+        + T_x (R^{(s_\alpha(x))} \circ t_{\alpha\beta})(v) \\
+        &= T_{s_\alpha(x)} (R_{t_{\alpha\beta(x)}}) \circ T_{x} s_\alpha (v)
+        + T_{x} (R^{(s_\alpha(x))} \circ t_{\alpha\beta}) (v)
+    \end{align}
+    を得る．一方\eqref{eq:fundamental-vecf}から
+    \begin{align}
+        \bigl((t_{\alpha\beta}^* \theta)_x (v) \bigr)^\#|_{s_\beta(x)}
+        &= \bigl( \theta_{t_{\alpha\beta}(x)}(T_{x} t_{\alpha\beta} v) \bigr)^\#|_{s_\alpha(x) \btl t_{\alpha\beta}(x)} \\
+        &= T_{1_G} ( R^{(s_\alpha(x) \btl t_{\alpha\beta}(x) )} ) \circ T_{t_{\alpha\beta}(x)}(L_{t_{\alpha\beta}(x)^{-1}}) \circ T_{x} t_{\alpha\beta} (v) \\
+        &= T_{x} ( R^{(s_\alpha(x))} \circ L_{t_{\alpha\beta}(x)} \circ L_{t_{\alpha\beta}(x)^{-1}} \circ t_{\alpha\beta}) (v) \\
+        &= T_{x} ( R^{(s_\alpha(x))} \circ t_{\alpha\beta}) (v)
+    \end{align}
+    と計算できる．    
+\end{proof}
+
+
+~\cite[第10章-1]{Nakahara2018topo2}に倣って，先ほど導入したゲージ場をより扱いやすい形にしよう．
+
+\begin{mytheo}[label=thm:local-connection]{貼り合わせによる接続形式の構成}
+    \hyperref[def.PFD]{主束} $G \hookrightarrow P \xrightarrow{\pi} M$ と，その開被覆 $\Familyset[\big]{U_\alpha}{\alpha \in \Lambda}$，局所自明化 $\Familyset[\big]{\varphi_\alpha \colon \pi^{-1}(U_\alpha) \lto U_\alpha \times G}{\alpha \in \Lambda}$，変換関数 $\Familyset[\big]{t_{\alpha\beta} \colon U_\alpha \cap U_\beta \lto G}{\alpha,\, \beta \in \Lambda}$ を与える．
+    \hyperref[def.section]{局所切断}の族 $\Familyset[\big]{s_\alpha \colon U_\alpha \lto \pi^{-1}(U_\alpha)}{\alpha \in \Lambda}$ を\eqref{eq:assoc-sec}で定義する． 
+    $\theta \in \Omega^1(G;\, \mathfrak{g})$ を\hyperref[def:Maurer-Cartan]{Maurer-Cartan形式}とする．
+    \begin{enumerate}
+        \item $\mathfrak{g}$ 値1-形式の族 $\Familyset[\big]{A_\alpha \in \Omega^1(\textcolor{red}{U_\alpha};\, \mathfrak{g})}{\alpha \in \Lambda}$ が $\forall \alpha,\, \beta \in \Lambda$ について
+        \begin{align}
+            \label{eq:compatible}
+            A_\beta|_x = \Adj \bigl( t_{\alpha\beta}(x)^{-1} \bigr) \bigl( A_\alpha|_x \bigr) + (t_{\alpha\beta}^* \theta)_x, \quad \forall x \in U_\alpha \cap U_\beta
+        \end{align}
+        を充たすならば，$\forall \alpha \in \Lambda$ に対して $A_\alpha = s_\alpha^* \omega$ を充たす\hyperref[def:connection]{接続形式} $\omega \in \Omega^1(P;\, \mathfrak{g})$ が存在する．
+        \item 任意の\hyperref[def:connection]{接続形式} $\omega \in \Omega^1(P;\, \mathfrak{g})$ に対して，$\mathfrak{g}$ 値1-形式の族 $\Familyset[\big]{A_\alpha \coloneqq s_\alpha^* \omega \in \Omega^1 (\textcolor{red}{U_\alpha};\, \mathfrak{g})}{\alpha \in \Lambda}$ は $\forall \alpha,\, \beta \in \Lambda$ について
+        \begin{align}
+            A_\beta|_x = \Adj \bigl( t_{\alpha\beta}(x)^{-1} \bigr) \bigl( A_\alpha|_x \bigr) + (t_{\alpha\beta}^* \theta)_x, \quad \forall x \in U_\alpha \cap U_\beta
+        \end{align}
+        を充たす．
+    \end{enumerate}
+\end{mytheo}
+
+\begin{proof}
+    \begin{enumerate}
+        \item 
+        この証明ではLie群の左移動，右移動\footnote{\hyperref[prop.PFD_right]{主束の全空間への右作用}による右移動との混同を防ぐために $R_g$ とは書かない．}，積をそれぞれ
+        \begin{align}
+            \lambda_g &\colon G \lto G,\; x \lmto gx \\
+            \rho_g &\colon G \lto G,\; x \lmto xg \\
+            \mu &\colon G \times G \lto G,\; (x,\, y) \lmto xy
+        \end{align}
+        と書くことにする．
+        条件\eqref{eq:compatible}を充たす$\mathfrak{g}$ 値1-形式の族 $\Familyset[\big]{A_\alpha \in \Omega^1(U_\alpha;\, \mathfrak{g})}{\alpha \in \Lambda}$ を与える．
+        $\forall \alpha \in \Lambda$ に対して
+        \begin{align}
+            g_\alpha \coloneqq \mathrm{proj}_2 \circ \varphi_\alpha \colon \pi^{-1}(U_\alpha) \lto G
+        \end{align}
+        とおく．このとき $\forall u \in \pi^{-1}(U_\alpha)$ に対して $\varphi_\alpha(u) = \bigl( \pi(u),\, g_\alpha(u)\bigr) = s_\alpha \bigl(\pi(u)\bigr) \btl g_\alpha(u)$ が成り立つ．
+        
+        　$\forall \alpha \in \Lambda$ に対して，\underline{$P$ の座標近傍 $\pi^{-1}(U_\alpha)$ 上の} $\mathfrak{g}$ 値1-形式 $\omega_\alpha \in \Omega^1\bigl(\pi^{-1}(U_\alpha);\, \mathfrak{g}\bigr)$ を
+        \begin{align}
+            \label{def:patched-connection}
+            \omega_\alpha|_u \coloneqq \Adj \bigl( g_\alpha(u)^{-1} \bigr)\bigl((\pi^* A_\alpha)_u\bigr) + (g_\alpha^*\theta)_u \quad \WHERE \forall u \in \pi^{-1}(U_\alpha)
+        \end{align}
+        と定義する．
+        $\forall x \in \textcolor{red}{U_\alpha}$ および $\forall v \in T_{x} M$ に対して
+        \begin{align}
+            (s_\alpha^* \omega_\alpha)_{x}(v)
+            &= \omega_\alpha|_{s_\alpha(x)} \bigl( T_{x} s_\alpha (v) \bigr) \\
+            &= \Adj \bigl( g_\alpha(s_\alpha(x))^{-1} \bigr)\bigl((\pi^* A_\alpha)_{s_\alpha(x)}(T_x s_\alpha(v))\bigr) + (g_\alpha^*\theta)_{s_\alpha(x)}\bigl( T_{x} s_\alpha (v) \bigr) \\
+            &= \Adj \bigl( 1_G \bigr)\Bigl(A_\alpha|_{x}\bigl(T_{s_\alpha(x)} \pi \circ T_x s_\alpha(v)\bigr)\Bigr) + \theta_{g_\alpha(s_\alpha(x))}\bigl( T_{s_\alpha(x)} g_\alpha \circ T_{x} s_\alpha (v) \bigr) \\
+            &= A_\alpha|_{x}\bigl(T_x(\pi \circ s_\alpha)(v)\bigr) + \theta_{1_G}\bigl( \cancel{T_{x} (g_\alpha \circ s_\alpha)} (v) \bigr) \\
+            &= A_\alpha|_{x}(v)
+        \end{align}
+        が成り立つので $s_\alpha^* \omega_\alpha = A_\alpha$ である．ただし，最後の等号で $\pi \circ s_\alpha = \mathrm{id}_{U_\alpha}$ であることと $g_\alpha \circ s_\alpha$ が常に $1_G$ を返す定数写像であることを使った．
+        \begin{description}
+            \item[\textbf{$\bm{\omega_\alpha}$ が $\bm{U_\alpha}$ 上で\hyperref[def:connection]{接続形式の公理}を充たすこと}]　
+            
+            \begin{description}
+                \item[\textbf{(CF-1)}]　
+
+                $\forall X \in \mathfrak{g}$ を1つとる．補題\ref{lem:connection}から，$\forall u \in \pi^{-1}(U_\alpha)$ に対して $T_u \pi (X^\#_u) = 0$ である．
+                \hyperref[prop.PFD_right]{右作用 $\btl$ の定義}から $\forall g \in G$ に対して $L_{g_\alpha(u)^{-1}} \circ g_\alpha \circ R^{(u)}(g) = g_\alpha(u)^{-1} g_\alpha (u) g = g$ が成り立つ，i.e. $L_{g_\alpha(u)^{-1}} \circ g_\alpha \circ R^{(u)} = \mathrm{id}_G$ であることから
+                \begin{align}
+                    \omega_\alpha (X^\#)
+                    &= \Adj \bigl( g_\alpha(u)^{-1} \bigr) \Bigl( A_\alpha|_{\pi(u)}\bigl( \cancel{T_u \pi (X^\#_u)} \bigr)  \Bigr) + \theta_{g_\alpha(u)} \bigl( T_u g_\alpha (X^\#_u) \bigr) \\
+                    &= T_{g_\alpha(u)} (\lambda_{g_\alpha(u)^{-1}}) \circ T_u g_\alpha \circ T_{1_G} (R^{(u)})(X) &&\because\quad \text{\eqref{eq:fundamental-vecf}} \\
+                    &= T_{1_G} (\lambda_{g_\alpha(u)^{-1}} \circ g_\alpha \circ R^{(u)})(X) \\
+                    &= X
+                \end{align}
+                が言えた．
+                \item[\textbf{(CF-2)}]　
+
+                $\forall u \in P$ を1つ固定する．$\forall v \in T_u P,\; \forall g \in G$ に対して
+                \begin{align}
+                    &(R_g^* \omega_\alpha)_u(v) \\
+                    &= \omega_\alpha|_{R_g(u)} \bigl( T_u (R_g) (v)\bigr) \\
+                    &= \Adj \bigl( g_\alpha (u \btl g)^{-1} \bigr) \Bigl( A_\alpha|_{\pi(u \btl g)} \bigl(T_{u \btl g} \pi \circ T_u (R_g) (v)\bigr) \Bigr) + \theta_{g_\alpha(u \btl g)} \bigl( T_{u \btl g} g_\alpha \circ T_u (R_g)(v) \bigr)  \\
+                    &= \Adj \bigl( g^{-1}g_\alpha (u)^{-1} \bigr) \Bigl( A_\alpha|_{\pi(u)} \bigl(T_{u} (\pi \circ R_g) (v)\bigr) \Bigr) + \theta_{g_\alpha(u)g} \bigl( T_{u} (g_\alpha \circ R_g)(v) \bigr)  \\
+                    &= \Adj \bigl( g^{-1} \bigr) \circ \Adj \bigl(g_\alpha (u)^{-1}\bigr) \Bigl( A_\alpha|_{\pi(u)} \bigl(T_{u} \pi (v)\bigr) \Bigr) + T_{u} (\lambda_{g^{-1}g_\alpha(u)^{-1}} \circ g_\alpha \circ R_g)(v) \\
+                    &= \Adj \bigl( g^{-1} \bigr) \Bigl( \Adj \bigl(g_\alpha (u)^{-1}\bigr) \bigl( (\pi^* A_\alpha)_u (v) \bigr) \Bigr) + T_{u} (\lambda_{g^{-1}g_\alpha(u)^{-1}} \circ g_\alpha \circ R_g)(v)
+                \end{align}
+                一方，$\rho_g \circ g_\alpha(u) = g_\alpha(u) g = g_\alpha(u \btl g) = g_\alpha \circ R_g(u)$ に注意すると
+                \begin{align}
+                    &\Adj(g^{-1}) \bigl( (g_\alpha^* \theta)_u (v) \bigr) \\
+                    &= T_{1_G} (F_{g^{-1}}) \circ \theta_{g_\alpha(u)}\bigl(T_u g_\alpha(v)\bigr) \\
+                    &= T_{1_G} (\lambda_{g^{-1}} \circ \rho_g) \circ T_{g_\alpha(u)} (\lambda_{g_\alpha(u)^{-1}}) \circ T_u g_\alpha(v) \\
+                    &= T_u (\lambda_{g^{-1}} \circ \rho_g \circ \lambda_{g_\alpha (u)^{-1}} \circ g_\alpha)(v) \\
+                    &= T_u (\lambda_{g^{-1}} \circ \lambda_{g_\alpha (u)^{-1}} \circ g_\alpha \circ R_g)(v) \\
+                    &= T_u (\lambda_{g^{-1}g_\alpha (u)^{-1}} \circ g_\alpha \circ R_g)(v)
+                \end{align}
+                がわかり，
+                \begin{align}
+                    R_g^* \omega_\alpha = \Adj \bigl( g^{-1} \bigr)\bigl( \omega_\alpha \bigr) 
+                \end{align}
+                が示された．
+            \end{description}
+            \item[\textbf{$\bm{\omega_\alpha}|_{\pi^{-1}(U_\alpha \cap U_\beta)} = \bm{\omega_\beta}|_{\pi^{-1}(U_\alpha \cap U_\beta)}$}]　
+            
+            $\forall u \in \pi^{-1}(U_\alpha \cap U_\beta)$ および $\forall v \in T_u P$ を1つ固定する．
+            変換関数の定義から $g_\beta(u) = t_{\beta\alpha} \bigl( \pi(u) \bigr) g_\alpha(u)$ が成り立つ．
+            i.e. $C^\infty$ 写像 $\Delta \colon P \lto P \times P$ を用いて $g_\beta = \mu \circ \bigl( (t_{\beta\alpha} \circ \pi) \times g_\alpha \bigr) \circ \Delta$ と書ける．よって補題\ref{lem:diff-product}を使って
+            \begin{align}
+                T_u g_\beta (v) 
+                &= T_u \bigl( \mu \circ \mathrm{inj}_1^{g_\alpha(u)} \circ t_{\beta\alpha} \circ \pi \circ \mathrm{proj}_1 \circ \Delta \bigr) (v) \\
+                &\quad + T_u \bigl( \mu \circ \mathrm{inj}_2^{t_{\beta\alpha}(u)} \circ g_\alpha \circ \mathrm{proj}_2 \circ \Delta \bigr) (v) \\
+                &= T_u (\rho_{g_\alpha(u)} \circ t_{\beta\alpha} \circ \pi)(v) + T_u(\lambda_{t_{\beta\alpha}(\pi(u))} \circ g_\alpha)(v)
+            \end{align}
+            であり，\hyperref[def:Maurer-Cartan]{Maurer-Cartan形式の定義}から
+            \begin{align}
+                (g_\beta^* \theta)_u(v)
+                &= T_{t_{\beta\alpha}(\pi(u)) g_\alpha(u)} (\lambda_{g_\alpha(u)^{-1} t_{\beta\alpha}(\pi(u))^{-1}}) \bigl( T_u g_\beta(v) \bigr)  \\
+                &= T_u (\lambda_{g_\alpha(u)^{-1}} \circ \lambda_{t_{\beta\alpha}(\pi(u))^{-1}} \circ \rho_{g_\alpha(u)} \circ t_{\beta\alpha} \circ \pi)(v) \\
+                &\quad + T_{g_\alpha(u)} (\lambda_{g_\alpha(u)^{-1}}) \bigl( T_u g_\alpha (v) \bigr) \\
+                &= \Adj \bigl(g_\alpha(u)^{-1}\bigr) \bigl( T_u(\lambda_{t_{\beta\alpha}(\pi(u))^{-1}})(v) \bigr) + (g_\alpha^* \theta)_u (v)
+            \end{align}
+            と計算できる．
+            従って，$\omega_\alpha \in \Omega^1\bigl(\pi^{-1}(U_\alpha);\, \mathfrak{g}\bigr)$ の定義\eqref{def:patched-connection}および条件\eqref{eq:compatible}より
+            \begin{align}
+                \omega_\beta|_u (v)
+                &= \Adj \bigl( g_\beta(u)^{-1} \bigr) \bigl( (\pi^* A_\beta)_u(v) \bigr) + (g_\beta^* \theta)_u(v) \\
+                &= \Adj \Bigl( g_\alpha(u)^{-1} t_{\beta\alpha}\bigl(\pi(u)\bigr)^{-1} \Bigr) \Bigl( \Adj \bigl( t_{\alpha\beta}(\pi(u))^{-1} \bigr) \bigl( (\pi^* A_\alpha)_u(v) \bigr) + \bigl((t_{\alpha\beta} \circ \pi)^* \theta\bigr)_u(v)  \Bigr) \\
+                &\quad + (g_\beta^* \theta)_u(v) \\
+                &= \Adj \bigl( g_\alpha(u)^{-1} \bigr) \bigl( (\pi^* A_\alpha)_u (v) \bigr) \\
+                &\quad + \Adj \bigl(g_\alpha(u)^{-1}\bigr) \Bigl( \Adj \bigl( t_{\alpha\beta}(\pi(u)) \bigr)\bigl( T_{t_{\alpha\beta}(\pi(u))} (\lambda_{t_{\alpha\beta}(\pi(u))^{-1}}) \circ T_u (t_{\alpha\beta}\circ \pi) (v) \bigr) \Bigr) \\
+                &\quad + \Adj \bigl(g_\alpha(u)^{-1}\bigr) \bigl( T_u(\lambda_{t_{\beta\alpha}(\pi(u))^{-1}})(v) \bigr) + (g_\alpha^* \theta)_u (v) \\
+                &= \omega_\alpha|_u (v) \\
+                &\quad + \Adj \bigl(g_\alpha(u)^{-1}\bigr) \Bigl( T_u \bigl( \rho_{t_{\beta\alpha}(\pi(u))} \circ t_{\alpha\beta} \circ \pi \bigr)(v) + T_u \bigl( \lambda_{t_{\alpha\beta}(\pi(u))} \circ t_{\beta\alpha} \circ \pi \bigr)(v)  \Bigr) \\
+                &= \omega_\alpha|_u(v) \\
+                &\quad + \Adj \bigl(g_\alpha(u)^{-1}\bigr) \Bigl( T_u \bigl( \mu \circ \bigl( (t_{\alpha\beta} \circ \pi) \times (t_{\beta\alpha} \circ \pi) \bigr) \circ \Delta \bigr)(v) \Bigr) \\
+                &= \omega_\alpha|_u(v)
+            \end{align}
+            が言えた．ただし，最後から3つ目の等号では\hyperref[eq.cocycle]{コサイクル条件}から従う $t_{\alpha\beta}(\pi(u))^{-1} = t_{\beta\alpha}(\pi(u))$ を使い，最後から2番目の等号では補題\ref{lem:diff-product}を使い，最後の等号では $\mu \circ \bigl( (t_{\alpha\beta} \circ \pi) \times (t_{\beta\alpha} \circ \pi) \bigr) \circ \Delta \colon P \lto G$ が常に $1_G$ を返す定数写像であることを使った．
+            
+            % $\forall w \in T_{s_\alpha(x)}P$ に対して，
+            % \begin{align}
+            %     \omega_\beta|_{s_\alpha(x)}(w) 
+            % \end{align}
+        \end{description}
+        ところで，$\Familyset[\big]{U_\alpha}{\alpha \in \Lambda}$ は $M$ の開被覆であったから $P = \bigcup_{\alpha \in \Lambda} \pi^{-1}(U_\alpha)$ が成り立つ．
+        よって $\forall u \in P$ に対してある $\alpha \in \Lambda$ が存在して $u \in \pi^{-1}(U_\alpha)$ を充たす．
+        従って\underline{大域的な} $\mathfrak{g}$ 値1-形式 $\omega \in \Omega^1(P; \mathfrak{g})$ を
+        \begin{align}
+            \omega_u \coloneqq \omega_\alpha|_u
+        \end{align}
+        と定義すると，上で示したことからこれはwell-definedな\hyperref[def:connection]{接続形式}になり，かつ $\forall \alpha \in \Lambda$ に対して $s_\alpha^* \omega = A_\alpha$ を充たす．
+
+        \item $\forall x \in U_\alpha \cap U_\beta$ を1つ固定する．このとき\hyperref[def:connection]{接続形式の公理}および補題\ref{lem:differential-of-local-section}から，$\forall v \in T_x M$ に対して
+        \begin{align}
+            s_\beta^* \omega|_x (v) 
+            &= \omega_{s_\beta(x)} \bigl( T_x s_\beta (v) \bigr) \\
+            &= \omega_{s_\alpha(x) \btl t_{\alpha\beta}(x)} \Bigl( T_{s_\alpha(x)} (R_{t_{\alpha\beta}(x)}) \bigl( T_x s_\alpha(v) \bigr)\Bigr) + \omega_{s_\beta(x)}\Bigl( \bigl( (t_{\alpha\beta}^* \theta)_x (v) \bigr)^\#|_{s_\beta(x)} \Bigr) \\
+            &= \bigl((R_{t_{\alpha\beta}(x)})^* \omega\bigr)_{s_\alpha(x)} \bigl( T_x s_\alpha(v) \bigr) + (t_{\alpha\beta}^* \theta)_x (v) \\
+            &= \Adj \bigl( t_{\alpha\beta}(x)^{-1} \bigr) \Bigl( \omega_{s_\alpha(x)} \bigl( T_x s_\alpha (v) \bigr) \Bigr)  + (t_{\alpha\beta}^* \theta)_x (v) \\
+            &= \Adj \bigl( t_{\alpha\beta}(x)^{-1} \bigr) \bigl( s_\alpha^* \omega|_x (v) \bigr)  + (t_{\alpha\beta}^* \theta)_x (v)
+        \end{align}
+        が成り立つ．
+    \end{enumerate}
+\end{proof}
+
+% 定理\ref{thm:local-connection}の証明で行った計算は大変複雑であったが，以下で種々の局所表示を求める際に必要になる重要な部分だけまとめておく：
+
+% \begin{mylem}[label=lem:differential]{$C^\infty$ 写像の微分の便利公式}
+%     $C^\infty$ 多様体 $M,\, N,\, P$ および $C^\infty$ 写像 $f \colon M \lto N,\, g \colon M \lto P$ を与える．対角写像を $\Delta \colon M \lto M \times M,\; x \lmto (x,\, x)$ と書く．
+
+% \end{mylem}
+
+\section{水平持ち上げ}
+
+\begin{mydef}[label=def:horizontal-lift-curve]{$C^\infty$ 曲線の水平持ち上げ}
+    \begin{itemize}
+        \item 主束 $G \hookrightarrow P \xrightarrow{\pi} M$ およびその\hyperref[def:connection]{接続形式} $\omega \in \Omega^1(P;\, \mathfrak{g})$
+        \item \underline{$M$ 上の} \cinfty 曲線 $\gamma \colon [0,\, 1] \lto M$
+    \end{itemize}
+    を与える．
+    このとき，$\forall u \in \pi^{-1}(\{\gamma(0)\})$ に対して以下を充たす\underline{$P$ 上の} \cinfty 曲線 $\tilde{\gamma} \colon [0,\, 1] \lto P$ が一意的に存在し，$\gamma$ の\textbf{水平持ち上げ} (horizontal lift) と呼ばれる：
+    \begin{description}
+        \item[\textbf{(HC-1)}] $\pi \circ \tilde{\gamma} = \gamma$
+        \item[\textbf{(HC-2)}] $\tilde{\gamma}(0) = u$
+        \item[\textbf{(HC-3)}] $\forall t \in [0,\, 1]$ に対して
+        \begin{align}
+            \dot{\tilde{\gamma}}(t) \in \Ker \omega_{\tilde{\gamma}(t)}
+        \end{align}
+    \end{description}
+\end{mydef}
+
+
+一意存在は本質的に常微分方程式の基本定理による：
+
+\begin{mylem}[label=lem:horizontal-lift-curve]{水平持ち上げの公式}
+    \begin{itemize}
+        \item 主束 $G \hookrightarrow P \xrightarrow{\pi} M$ およびその\hyperref[def:connection]{接続形式} $\omega \in \Omega^1(P;\, \mathfrak{g})$
+        \item \underline{$M$ 上の} \cinfty 曲線 $\gamma \colon [0,\, 1] \lto M$
+        \item $\forall u \in \pi^{-1} \bigl( \{\gamma(0)\} \bigr)$
+    \end{itemize}
+    を与える．このとき，$\gamma$ の\hyperref[def:horizontal-lift-curve]{水平持ち上げ} $\tilde{\gamma} \colon [0,\, 1] \lto P$ が一意的に存在して以下を充たす：
+    \begin{enumerate}
+        \item $\forall t \in [0,\, 1]$ に対して
+        \begin{align}
+            \dot{\tilde{\gamma}} (t) = T_{s_\alpha(\gamma(t))} R_{g(t)} \circ T_{\gamma(t)}s_\alpha \bigl(\dot{\gamma}(t)\bigr) - \biggl(\Adj \bigl( g(t)^{-1} \bigr) \Bigl( s_\alpha^* \omega|_{\gamma(t)}\bigl(\dot{\gamma}(t)\bigr) \Bigr) \biggr)^\#_{\tilde{\gamma}(t)}
+        \end{align}
+        \item $\forall t \in [0,\, 1]$ に対して
+        \begin{align}
+            \dot{g}(t) = -T_{1_G} \rho_{g(t)} \Bigl(s_\alpha^* \omega|_{\gamma(t)} \bigl( \dot{\gamma}(t) \bigr)  \Bigr)
+        \end{align}
+    \end{enumerate}
+    ただし \underline{$G$ 上の} $C^\infty$ 曲線 $g \colon [0,\, 1] \lto G$ を 
+    \begin{align}
+        g \coloneqq \mathrm{proj}_2 \circ \varphi_\alpha \circ \tilde{\gamma}
+    \end{align}
+    で定義した．
+\end{mylem}
+
+補題\ref{lem:horizontal-lift-curve}-(2) は，$G$ が行列Lie群の場合には\hyperref[thm:local-connection]{ゲージ場}を使って
+\begin{align}
+    \dot{g}(t) 
+    &= -A_\alpha|_{\gamma(t)} \bigl( \dot{\gamma}(t) \bigr)\, g(t)
+\end{align}
+と書ける．$C^\infty$ 写像の成分表示の公式\eqref{eq:differential-coord}を使うとこれは
+\begin{align}
+    \dv{g}{s}()(t) =- A_\alpha{}_\mu \bigl( \gamma(t) \bigr)  \dv{\gamma^\mu}{s}()(t)\, g(t)
+\end{align}
+とも書くことができるが，この常微分方程式の解 $g(t)$ の $t=1$ における値は時間順序積 $\mathcal{T}$ および経路順序積 $\mathcal{P}$ を使って形式的に
+\begin{align}
+    g(1) 
+    &= \mathcal{T} \exp \left( - \int_0^1 \dd{s} \dv{\gamma^\mu}{s}\, A_\alpha{}_\mu \bigl( \gamma(s) \bigr) \right) \\
+    &= \mathcal{P} \exp \left( - \int_{\gamma} A_\alpha \right) 
+\end{align}
+と書けて，物理では\textbf{Wilson line}として知られている物理量を表している．
+
+\begin{proof}
+    定理\ref{thm:local-connection}と同様に
+    \begin{itemize}
+        \item 開被覆 $\Familyset[\big]{U_\alpha}{\alpha \in \Lambda}$
+        \item 局所自明化 $\Familyset[\big]{\varphi_\alpha \colon \pi^{-1}(U_\alpha) \lto U_\alpha \times G}{\alpha \in \Lambda}$，変換関数 $\Familyset[\big]{t_{\alpha\beta} \colon U_\alpha \cap U_\beta \lto G}{\alpha,\, \beta \in \Lambda}$ を与える．
+        \item \eqref{eq:assoc-sec}で定義される\hyperref[def.section]{局所切断}の族 $\Familyset[\big]{s_\alpha \colon U_\alpha \lto \pi^{-1}(U_\alpha)}{\alpha \in \Lambda}$
+    \end{itemize}
+    を与える．
+    $[0,\, 1] \subset \mathbb{R}$ はコンパクト集合なので連続写像 $\gamma \colon [0,\, 1] \lto M$ による像 $\gamma ([0,\, 1]) \subset M$ もまたコンパクトである．よって $\gamma([0,\, 1])$ を有限個の点で区切ることにより，ある $\alpha \in \Lambda$ が存在して $\gamma([0,\, 1]) \subset U_\alpha$ が成り立つと仮定して良い．
+    また，このとき $\tilde{\gamma} ([0,\, 1]) \subset \pi^{-1}(U_\alpha)$ を充たす任意の $C^\infty$ 曲線 $\tilde{\gamma} \colon [0,\, 1] \lto P$ に対して定義される
+    \begin{align}
+        g \coloneqq \mathrm{proj}_2 \circ \varphi_\alpha \circ \tilde{\gamma} \colon [0,\, 1] \lto G
+    \end{align}
+    は $G$ 上の $C^\infty$ 曲線であり，\hyperref[prop.PFD_right]{全空間 $P$ への右作用の定義}から $\forall t \in [0,\, 1]$ に対して
+    \begin{align}
+        \tilde{\gamma}(t) = \varphi_\alpha^{-1} \Bigl( \pi\bigl(\tilde{\gamma}(t)\bigr),\, g(t) \Bigr) = s_\alpha \Bigl( \pi \bigl( \tilde{\gamma}(t) \bigr) \Bigr) \btl g(t)
+    \end{align}
+    が成り立つ．$C^\infty$ 写像 $\Delta \colon [0,\, 1] \lto [0,\, 1] \times [0,\, 1],\; t \lmto (t,\, t)$ を使うと
+    \begin{align}
+        \label{eq:horizontal-lift-curve-1}
+        \tilde{\gamma} = \btl \circ \bigl( (s_\alpha \circ \pi \circ \tilde{\gamma}) \times g \bigr) \circ \Delta
+    \end{align}
+    と書くこともできる．
+
+    ここで，$\tilde{\gamma}$ を $\gamma$ の水平持ち上げとする．すると条件 \textsf{\textbf{(HC-1)}} より\eqref{eq:horizontal-lift-curve-1}は $\tilde{\gamma} =  \btl \bigl( (s_\alpha \circ \gamma) \times g \bigr) \circ \Delta$ となるから，補題\ref{lem:diff-product}より
+    \begin{align}
+        \dot{\tilde{\gamma}}(t) 
+        &= T_t \tilde{\gamma} \left( \eval{\dv{}{s}}_{s=t} \right) \\
+        &= T_{(t,\, t)}\Bigl(\btl \circ \bigl( (s_\alpha \circ \gamma) \times g \bigr) \Bigr)\circ T_t \Delta \left( \eval{\dv{}{s}}_{s=t} \right) \\
+        &= T_{(t,\, t)}\Bigl(\btl \circ \bigl( (s_\alpha \circ \gamma) \times g \bigr) \Bigr)\circ T_t \Delta \left( \eval{\dv{}{s}}_{s=t} \right) \\
+        &= T_{t}(\btl \circ \mathrm{inj}_1^{g(t)} \circ s_\alpha \circ \gamma) \left( \eval{\dv{}{s}}_{s=t} \right) \\
+        &\quad + T_{t}(\btl \circ \mathrm{inj}_2^{s_\alpha (\gamma(t))} \circ g) \left( \eval{\dv{}{s}}_{s=t} \right) \\
+        &= T_{s_\alpha(\gamma(t))} R_{g(t)} \circ T_{\gamma(t)}s_\alpha \bigl(\dot{\gamma}(t)\bigr) \\
+        &\quad + T_{t} \bigl(R^{\bigl( s_\alpha(\gamma(t)) \bigr)} \circ g\bigr) \left( \eval{\dv{}{s}}_{s=t} \right) \label{eq:horizontal-lift-curve-4}
+    \end{align}
+    が分かった．補題\ref{lem:differential-of-local-section}の証明と同様の計算により，\hyperref[def:Maurer-Cartan]{Maurer-Cartan}形式 $\theta \in \Omega^1(G;\, \mathfrak{g})$ を使った等式
+    \begin{align}
+        T_{t} \bigl(R^{\bigl( s_\alpha(\gamma(t)) \bigr)} \circ g\bigr) \left( \eval{\dv{}{s}}_{s=t} \right) 
+        &= \eval{\left( (g^* \theta)_t \left( \eval{\dv{}{s}}_{s=t} \right) \right)^\#}_{\tilde{\gamma}(t)}
+    \end{align}
+    が成り立つ．よって条件 \textsf{\textbf{(HC-2)}} より
+    \begin{align}
+        0 
+        &= \omega_{\tilde{\gamma}(t)} \bigl( \dot{\tilde{\gamma}} (t) \bigr) \\
+        &= (R_{g(t)}^* \omega)_{s_\alpha(\gamma(t))} \Bigl( T_{\gamma(t)}s_\alpha \bigl(\dot{\gamma}(t)\bigr) \Bigr) + (g^* \theta)_t \left( \eval{\dv{}{s}}_{s=t} \right) \\
+        &= \Adj \bigl( -g(t) \bigr) \Bigl( s_\alpha^* \omega|_{\gamma(t)}\bigl(\dot{\gamma}(t)\bigr) \Bigr) + \theta_{g(t)} \bigl( \dot{g}(t) \bigr) \label{eq:horizontal-lift-curve-2}
+    \end{align}
+    が従い，
+    \begin{align}
+        \label{eq:horizontal-lift-curve-3}
+        (g^* \theta)_t \left( \eval{\dv{}{s}}_{s=t} \right) = -\Adj \bigl( g(t)^{-1} \bigr) \Bigl( s_\alpha^* \omega|_{\gamma(t)}\bigl(\dot{\gamma}(t)\bigr) \Bigr)
+    \end{align}
+    が分かった．
+    \begin{enumerate}
+        \item \eqref{eq:horizontal-lift-curve-4}, \eqref{eq:horizontal-lift-curve-3}より
+        \begin{align}
+            \dot{\tilde{\gamma}} (t) = T_{s_\alpha(\gamma(t))} R_{g(t)} \circ T_{\gamma(t)}s_\alpha \bigl(\dot{\gamma}(t)\bigr) + \biggl( -\Adj \bigl( g(t)^{-1} \bigr) \Bigl( s_\alpha^* \omega|_{\gamma(t)}\bigl(\dot{\gamma}(t)\bigr) \Bigr) \biggr)^\#_{\tilde{\gamma}(t)}
+        \end{align}
+        \item \hyperref[def:Lie-adj]{$\Adj$ の定義}とMaurer-Cartan形式の定義より\eqref{eq:horizontal-lift-curve-2}は
+        \begin{align}
+            0
+            &= T_{1_G} (\lambda_{g^{-1}(t)} \circ \rho_{g(t)}) \Bigl( s_\alpha^* \omega|_{\gamma(t)} \bigl( \dot{\gamma}(t) \bigr)  \Bigr) + T_{g(t)} (\lambda_{g(t)^{-1}}) \bigl( \dot{g}(t) \bigr) \\
+            &= T_{1_G} (\lambda_{g^{-1}(t)}) \biggl( T_{1_G} \rho_{g(t)} \Bigl( s_\alpha^* \omega|_{\gamma(t)} \bigl( \dot{\gamma}(t) \bigr)  \Bigr) + \dot{g}(t) \biggr)
+        \end{align}
+        とも書けるが，Lie群の左移動が微分同相写像であることから $T_{1_G} (\lambda_{g^{-1}(t)})$ はベクトル空間の同型写像であり，
+        \begin{align}
+            \dot{g}(t) = -T_{1_G} \rho_{g(t)} \Bigl(s_\alpha^* \omega|_{\gamma(t)} \bigl( \dot{\gamma}(t) \bigr)  \Bigr)
+        \end{align}
+        が分かった．これは $g$ に関する常微分方程式であり，与えられた初期条件 $g(0) = \mathrm{proj}_2 \bigl( \varphi_\alpha(u) \bigr)$ に関して一意的な解を持つ．
+    \end{enumerate}
+    (2) の証明より $\tilde{\gamma}$ の一意存在も言えた．
+\end{proof}
+
+\begin{myprop}[label=prop:horizontal-lift-init]{}
+    $\gamma$ の2つの\hyperref[def:horizontal-lift-curve]{水平持ち上げ} $\tilde{\gamma},\, \tilde{\gamma}'$ が，ある $g \in G$ について $\tilde{\gamma}'(0) = \tilde{\gamma}(0) \btl g$ を充たすとする．
+    このとき，$\forall t \in [0,\, 1]$ において $\tilde{\gamma}'(t) = \tilde{\gamma}(t) \btl g$ が成り立つ．
+\end{myprop}
+
+\begin{proof}
+    $C^\infty$ 曲線
+    \begin{align}
+        \tilde{\gamma} \btl g \colon [0,\, 1] \lto P,\; t \lmto \tilde{\gamma}(t) \btl g
+    \end{align}
+    は，$\pi \circ \tilde{\gamma} \btl g = \gamma$，$\tilde{\gamma} \btl g(0) = \tilde{\gamma}(0) \btl g$ を充たし，
+    \begin{align}
+        \omega_{\tilde{\gamma} \btl g}\bigl(\dot{\tilde{\gamma} \btl g} (t)\bigr)
+        &= (R_g^*\omega)_{\tilde{\gamma}(t)} \bigl( \dot{\tilde{\gamma}}(t) \bigr) \\
+        &= \Adj(g^{-1}) \Bigl(\omega_{\tilde{\gamma}(t)} \bigl( \dot{\tilde{\gamma}}(t) \bigr)\Bigr) \\
+        &= 0
+    \end{align}
+    も充たすので，初期条件 $\tilde{\gamma} \btl g(0) = \tilde{\gamma}(0) \btl g = \tilde{\gamma}'(0)$ を充たす水平持ち上げである．故に水平持ち上げの一意性から
+    \begin{align}
+        \tilde{\gamma}' = \tilde{\gamma} \btl g
+    \end{align}
+    が言える．
+\end{proof}
+
+
+$C^\infty$ 曲線のみならず，底空間上の $C^\infty$ ベクトル場もまた全空間に持ち上がる．
+
+\begin{mydef}[label=def:horizontal-lift-vecf]{$C^\infty$ ベクトル場の水平持ち上げ}
+    \begin{itemize}
+        \item 主束 $G \hookrightarrow P \xrightarrow{\pi} M$ およびその\hyperref[def:connection]{接続形式} $\omega \in \Omega^1(P;\, \mathfrak{g})$
+        \item \underline{$M$ 上の} \cinfty ベクトル場 $X \in \mathfrak{X}(M)$
+    \end{itemize}
+    このとき，$\forall u \in P$ に対して以下を充たす\underline{$P$ 上の} $C^\infty$ ベクトル場 $\tilde{X} \in \mathfrak{X}(P)$ が一意的に存在し，$X$ の\textbf{水平持ち上げ} (horizontal life) と呼ばれる：
+    \begin{description}
+        \item[\textbf{(HV-1)}] $T_u \pi (\tilde{X}_u) = X_{\pi(u)}$
+        \item[\textbf{(HV-2)}] $\tilde{X}_u \in \Ker \omega_u$
+    \end{description}
+\end{mydef}
+
+定理\ref{thm:connection-basic}より $\forall u \in P$ に対して
+\begin{align}
+    T_u \pi|_{\Ker \omega_u} \colon \Ker \omega_u \lto T_{\pi(u)} M
+\end{align}
+はベクトル空間の同型写像であるから，与えられた $X \in \mathfrak{X} (M)$ に対して接束 $TP$ の（$C^\infty$ とは限らない）切断 $\tilde{X}$ を
+\begin{align}
+    \tilde{X}_u \coloneqq \bigl( T_u \pi|_{\Ker \omega_u} \bigr)^{-1} (X_{\pi(u)})
+\end{align}
+と定義すればこれは\hyperref[def:horizontal-lift-vecf]{\textbf{\textsf{(HV-1)}}, \textsf{\textbf{(HV-2)}}}を充たす．逆に性質\hyperref[def:horizontal-lift-vecf]{\textbf{\textsf{(HV-1)}}, \textsf{\textbf{(HV-2)}}}を充たす接束 $TP$ の（$C^\infty$ とは限らない）任意の切断 $\tilde{Y}$ に対して，
+\begin{align}
+    \tilde{Y}_u = \bigl( T_u \pi|_{\Ker \omega_u} \bigr)^{-1} (X_{\pi(u)}) = \tilde{X}_u
+\end{align}
+が成り立つので，一意存在がわかった．あとはこのようにして構成した $\tilde{X}$ が $C^\infty$ ベクトル場であることを確かめれば良い．そのためには，命題\ref{prop:smoothvecf-2}より $\forall f \in C^\infty(P)$ に対して $\tilde{X} f$ が $C^\infty$ 関数になっていることを示せば良い．
+
+\begin{myprop}[]{水平持ち上げの $C^\infty$ 性}
+    $\tilde{X}$ は $C^\infty$ ベクトル場である．
+\end{myprop}
+
+\begin{proof}
+    $\forall X \in \mathfrak{X}(M)$ および $\forall u \in P$ を1つ固定する．
+    $X_{\pi(u)}$ は何らかの $C^\infty$ 曲線 $\gamma \colon [0,\, 1] \lto M$ の $t=0$ における速度ベクトルである．
+    $\gamma$ の\hyperref[def:horizontal-lift-curve]{水平持ち上げ} $\tilde{\gamma}$ であって $\tilde{\gamma} (0) = u$ を充たすものをとる．
+    このとき，一般に $\forall g \in G$ に対して $\pi \circ R_g = \pi$  が成り立つことに注意すると補題\ref{lem:assoc-basic}, \ref{lem:horizontal-lift-curve}から
+    \begin{align}
+        T_u \pi \bigl(\dot{\tilde{\gamma}} (0)\bigr)
+        &= T_{u} (\pi \circ R_{g(0)}) \circ T_{\gamma(0)} s_\alpha \bigl( \dot{\gamma}(0) \bigr) - T_u \pi \biggl(\Adj \bigl( g(0)^{-1} \bigr) \Bigl( s_\alpha^* \omega|_{\gamma(0)}\bigl(\dot{\gamma}(0)\bigr) \Bigr) \biggr)^\#_{\tilde{\gamma}(t)} \\
+        &= T_u (\pi \circ s_\alpha) (X_{\pi(u)}) \\
+        &= T_u (\mathrm{id}_{U_\alpha}) (X_{\pi(u)}) \\
+        &= X
+    \end{align}
+    が従い，$\dot{\tilde{\gamma}}(0)$ は点 $u \in P$ において\hyperref[def:horizontal-lift-vecf]{\textbf{\textsf{(HV-1)}}, \textsf{\textbf{(HV-2)}}}を充たす．よって $\tilde{X}$ の一意性から
+    \begin{align}
+        \tilde{X}_{u} 
+        &= \dot{\tilde{\gamma}}(0)
+    \end{align}
+    である．
+
+    ここで $\forall f \in C^\infty (P)$ を1つ固定する．このとき
+    \begin{align}
+        \tilde{X} f|_u
+        &= \dot{\tilde{\gamma}}(0) f|_u \\
+        &= T_{s_\alpha(\gamma(0))} R_{g(0)} \circ T_{\gamma(0)} s_\alpha \bigl( X_{\pi(u)} \bigr) f - \biggl(\Adj \bigl( g(0)^{-1} \bigr) \Bigl( s_\alpha^* \omega|_{\pi(u)}\bigl(X_{\pi(u)}\bigr) \Bigr) \biggr)^\#_{u} f \\
+        &= X_{\pi(u)} (f \circ R_{g(0)} \circ s_\alpha) - \biggl(\Adj \bigl( g(0)^{-1} \bigr) \Bigl( s_\alpha^* \omega|_{\pi(u)}\bigl(X\bigr) \Bigr) \biggr)^\#_{u} f
+    \end{align}
+    であるが，$f \circ R_{g(0)} \circ s_\alpha \in C^\infty(U_\alpha)$ であることおよび写像 $U_\alpha \lto \mathfrak{g},\;  u \lmto \Adj \bigl( g(0)^{-1} \bigr) \Bigl( s_\alpha^* \omega|_{\pi(u)}\bigl(X\bigr) \Bigr)$ が $C^\infty$ 写像であることから，
+    あとは $C^\infty$ 写像 $A \colon P \lto \mathfrak{g}$ に関して定まる関数 $P \lto \mathbb{R},\; u \lmto A(u)^\# f$ が $C^\infty$ 級であることを言えば良い．
+    
+    ところで\hyperref[def:fundamental-vecf]{基本ベクトル場の定義}を思い出すと
+    \begin{align}
+        A(u)^\# f = \eval{\dv{}{t}}_{t=0} f \bigl( u \btl \exp(t A(u)) \bigr) = T_{0} \bigl( R^{(u)} \circ \exp (\mhyphen A(u)) \bigr) \left( \eval{\dv{}{t}}_{t=0} \right) 
+    \end{align}
+    であるが，$R^{(u)} \circ \exp (\mhyphen A(u)) \colon [0,\, 1] \lmto P$ は $u$ に関しても $C^\infty$ 級なので，$A(u)^\# f \in C^\infty (P)$ が言えた．
+\end{proof}
+
+\begin{myprop}[label=prop:horizontal-lift-vecf]{ベクトル場の水平持ち上げは右不変}
+    $\tilde{X}$ は右不変である．i.e. $\forall g \in G$ に対して自分自身と\hyperref[def:F-rel]{$R_g$-related}である．
+\end{myprop}
+
+\begin{proof}
+    $\forall u \in P,\; \forall g \in G$ を1つ固定する．このとき
+    \begin{align}
+        T_{u} \pi \bigl( (R_g{}_* \tilde{X})_{u} \bigr) 
+        &= T_{u} \pi \circ T_{u \btl g^{-1}} (R_{g}) (\tilde{X}_{u \btl g^{-1}}) \\
+        &= T_{u \btl g^{-1}} (\pi \circ R_g) (\tilde{X}_{u \btl g^{-1}}) \\
+        &= T_{u \btl g^{-1}} \pi (\tilde{X}_{u \btl g^{-1}}) \\
+        &= X_{\pi(u \btl g^{-1})} \\
+        &= X_{\pi(u)}
+    \end{align}
+    かつ
+    \begin{align}
+        \omega_{u} \bigl( (R_g{}_* \tilde{X})_u \bigr) 
+        &= \omega_{u} \bigl( T_{u \btl g^{-1}} (R_{g}) (\tilde{X}_{u \btl g^{-1}}) \bigr) \\
+        &= (R_g^* \omega)_{u \btl g^{-1}} (\tilde{X}_{u \btl g^{-1}}) \\
+        &= \Adj (g^{-1}) \bigl( \omega_{u \btl g^{-1}} (\tilde{X}_{u \btl g^{-1}}) \bigr)  \\
+        &= 0
+    \end{align}
+    なので，ベクトル場 $R_g{}_* \tilde{X}$ は\hyperref[def:horizontal-lift-vecf]{\textsf{\textbf{(HV-1)}}, \textsf{\textbf{(HV-2)}}}を充たす．i.e. $X$ の水平持ち上げである．
+    水平持ち上げの一意性から
+    \begin{align}
+        R_g{}_* \tilde{X}|_{u \btl g} = T_u (R_g)(\tilde{X}_u) = \tilde{X}_{u \btl g}
+    \end{align}
+    でなくてはいけない．
+\end{proof}
+
+\section{主束上の曲率形式}
+
+この節では主束上の曲率と主束上の共変微分を大域的な形で定義する．
+
+\begin{mydef}[label=def:curvature]{曲率 $2$ 形式}
+    主束 $G \hookrightarrow P \xrightarrow{\pi} M$ およびその\hyperref[def:connection]{接続形式} $\omega \in \Omega^1(P;\, \mathfrak{g})$ を与える．
+    
+    \textbf{曲率 $\bm{2}$ 形式} (curvature $2$ form) $\Omega \in \Omega^2(P;\, \mathfrak{g})$ を以下で定義する：
+    \begin{align}
+        \Omega \coloneqq \dd{\omega} + \frac{1}{2} \comm{\omega}{\omega}
+    \end{align}
+\end{mydef}
+
+\begin{marker}
+    $\Omega$ の定義の第2項は，Lie代数 $\mathfrak{g}$ の基底 $T^a \WHERE a = 1,\, \dots,\, \dim G$ をとったときに
+    \begin{align}
+        \frac{1}{2} \comm{\omega}{\omega} \coloneqq \frac{1}{2} \omega_a \wedge \omega_b \comm{T^a}{T^b}
+    \end{align}
+    という意味であって，\underline{$\mathfrak{g}$-値 $1$ 形式のウェッジ積という意味ではない}．
+\end{marker}
+
+\begin{mylem}[label=lem:extend-horizontal]{}
+    主束 $G \hookrightarrow P \xrightarrow{\pi} M$ およびその\hyperref[def:connection]{接続形式} $\omega \in \Omega^1(P;\, \mathfrak{g})$ を与える．
+    $\forall u \in P$ において，
+    \begin{enumerate}
+        \item $\forall v \in \Ker T_u \pi$ に対して，ある $V \in \mathfrak{g}$ が存在して $V^\#|_u = v$ を充たす．
+        \item $\forall v \in \Ker \omega_u$ に対して，ある $H \in \mathfrak{X}(M)$ が存在して $\tilde{H}|_u = v$ を充たす．ただし $\tilde{H}$ は $H$ の\hyperref[def:horizontal-lift-vecf]{水平持ち上げ}である．
+    \end{enumerate}
+    
+\end{mylem}
+
+\begin{proof}
+    \begin{enumerate}
+        \item 補題\ref{lem:connection}の証明より $T_{1_G} (R^{(u)}) \colon \mathfrak{g} \lto \Ker T_u \pi$ は全射だから，ある $V \in \mathfrak{g}$ が存在して $v = T_{1_G} (R^{(u)}) (V) = V^\#|_u$ を充たす．ただし最後の等号で\eqref{eq:fundamental-vecf}を使った．
+        \item $T_u \pi (v) \in T_{\pi(u)} M$ を $H \in \mathfrak{X}(M)$ に拡張すればよい．
+    \end{enumerate}
+\end{proof}
+
+\begin{mytheo}[label=thm:curvature]{曲率形式の性質}
+    主束 $G \hookrightarrow P \xrightarrow{\pi} M$ およびその\hyperref[def:connection]{接続形式} $\omega \in \Omega^1(P;\, \mathfrak{g})$ を与える．
+    $\Omega \in \Omega^2 (P;\, \mathfrak{g})$ を\hyperref[def:curvature]{曲率形式}とする．
+
+    \begin{enumerate}
+        \item $\forall u \in P$ および $\forall v,\, w \in T_u P$ において
+        \begin{align}
+            \Omega_u (v,\, w) = \dd \omega|_u \bigl( \uirm{v}{H},\, \uirm{w}{H} \bigr) 
+        \end{align}
+        \item $\forall g \in \Omega$ に対して
+        \begin{align}
+            R_g^* \Omega = \Adj (g^{-1}) \Omega
+        \end{align}
+        
+        \item \textbf{(Bianchiの第2恒等式)}
+        \begin{align}
+            \dd{\Omega} = \comm{\Omega}{\omega}
+        \end{align}
+    \end{enumerate}
+    
+\end{mytheo}
+
+\begin{marker}
+    定理\ref{thm:curvature}-(1) を\hyperref[def:curvature]{曲率形式}の定義とすることもある（~\cite[p.43]{Nakahara2018topo2}など）．
+    その場合，我々が採用した定義\ref{def:curvature}は以下で与える証明と全く同じ議論によって導出され，\textbf{Cartanの構造方程式}と呼ばれる．
+\end{marker}
+
+
+\begin{proof}
+    \begin{enumerate}
+        \item 引数を場合分けする．
+        \begin{description}
+            \item[\textbf{$\bm{v,\, w \in \Ker \omega_u}$}]　
+            
+            \begin{align}
+                \Omega_u (v,\, w) 
+                &= \dd{\omega}|_u (v,\, w) + \frac{1}{2} \comm{\omega_u}{\omega_u} (v,\, w) \\
+                &= \dd{\omega}|_u (v,\, w) + \frac{1}{2} \bigl(\comm{\omega_u(v)}{\omega_u(w)} - \comm{\omega_u(w)}{\omega_u(v)}\bigr) \\
+                &= \dd{\omega}|_u (v,\, w) \\
+                &= \dd{\omega}|_u (\uirm{v}{H},\, \uirm{w}{H})
+            \end{align}
+            
+            \item[\textbf{$\bm{v \in \Ker T_u \pi,\, w \in \Ker \omega_u}$}]　
+            
+            $\comm{\omega_u}{\omega_u} (v,\, w) = 0$ である．補題\ref{lem:extend-horizontal}より $v$ は\hyperref[def:fundamental-vecf]{基本ベクトル場} $A^\# \in \mathfrak{X}(P)$ に拡張し，$w$ は\hyperref[def:horizontal-lift-vecf]{水平持ち上げ} $\tilde{B} \in \mathfrak{X}(P)$ に拡張する． 
+            外微分の公式から
+            \begin{align}
+                \dd{\omega} (A^{\#},\, \tilde{B}) 
+                &= A^{\#} \omega(\tilde{B}) - \tilde{B} \omega(A^\#) - \omega (\comm{A^{\#}}{\tilde{B}})
+            \end{align}
+            第1項は $\omega$ の性質から $0$ で，第2項は $\omega(A^\#) = A$ が\footnote{$\omega(A^\#) \in C^\infty (P)$ というのは，$\omega(A^\#) \colon P \lto \mathbb{R},\; u \lmto \omega_u(A^\#|_u)$ という意味である．} $P$ 上の定数関数なので $0$ になる．
+            第3項が $0$ になることを示すためには $\comm{A^{\#}}{\tilde{B}}$ が水平であることを示せば十分である．実際，
+            $A^\#$ の\hyperref[thm:fundamental-flow]{生成するフロー}が
+            \begin{align}
+                \theta \colon \mathbb{R} \times \mathbb{R} \times M \lto M,\; (t,\, x) \lmto R_{\exp(tX)}(x)
+            \end{align}
+            であることを\hyperref[def:fundamental-vecf]{思い出す}と，
+            \hyperref[def:Liedv]{Lie微分の定義}と\hyperref[thm:Liedv]{公式}から
+            \begin{align}
+                \comm{A^{\sharp}}{\tilde{B}}_u 
+                &= \lim_{t \to 0} \frac{T_{u \btl \exp(tA)} (R_{\exp(-tA)})(\tilde{B}_{u \btl \exp(tA)}) - \tilde{B}_{u}}{t}
+            \end{align}
+            が言える．$\tilde{B}_{u} \in \Ker \omega_u$ は明らかで，\hyperref[def:connection]{接続形式の定義}から
+            \begin{align}
+                \omega_u \bigl( T_{u \btl \exp(tA)} (R_{\exp(-tA)})(\tilde{B}_{u \btl \exp(tA)}) \bigr) 
+                &= \bigl( R_{\exp(-tA)}^* \omega \bigr)_{u \btl \exp(tA)} \bigl( \tilde{B}_{u \btl \exp(tA)}\bigr) \\
+                &= \Adj \bigl( \exp(tA) \bigr) \Bigl( \omega_{u \btl \exp(tA)}\bigl( \tilde{B}_{u \btl \exp(tA)}\bigr) \Bigr)  \\
+                &= 0
+            \end{align}
+            が言えるので $\comm{A^{\sharp}}{\tilde{B}}_u \in \Ker \omega_u$ が示された．
+            \item[\textbf{$\bm{v \in \Ker T_u \pi,\, w \in \Ker T_u \pi}$}]　
+            
+            $v,\, w$ を補題\ref{lem:extend-horizontal}により拡張して $A^\#,\, B^\#$ にする．
+            このとき
+            \begin{align}
+                \Omega(A^\#,\, B^\#)
+                &= \dd{\omega} (A^\#,\, B^\#) + \comm{A}{B} \\
+                &= A^\# \omega(B^\#) - B^\# \omega(A^\#) - \omega(\comm{A^\#}{B^\#}) + \comm{A}{B} \\
+                &=  - \omega(\comm{A}{B}^\#) + \comm{A}{B}\\
+                &=  - \omega(\comm{A}{B}) + \comm{A}{B}\\
+                &= 0
+            \end{align}
+            が成り立つ．
+        \end{description}
+        \item 引き戻しが外微分，wedge積と可換なので
+        \begin{align}
+            R^*_g \Omega
+            &= \dd{R_g^* \omega} + \frac{1}{2} \comm{R_g^* \omega}{R_g^* \omega} \\
+            &= \Adj (g^{-1})\Omega
+        \end{align}
+        がわかる．
+        \item 
+        \begin{align}
+            \dd{\Omega}
+            &= \frac{1}{2} \bigl( \comm{\dd{\omega}}{\omega} - \comm{\omega}{\dd{\omega}} \bigr) \\
+            &= \comm{\dd{\omega}}{\omega} \\
+            &= \comm{\Omega}{\omega} - \frac{1}{2} \comm{\comm{\omega}{\omega}}{\omega} 
+            % &= \comm{\Omega}{\omega}
+        \end{align}
+        ところで，$\omega = \omega_a T^a$ と展開すると
+        \begin{align}
+            \comm{\comm{\omega}{\omega}}{\omega}
+            &= \omega_a \wedge \omega_b \wedge \omega_c \comm{\comm{T_a}{T_b}}{T_c} \\
+            &= - \omega_a \wedge \omega_b \wedge \omega_c \comm{\comm{T_b}{T_c}}{T_a} - \omega_a \wedge \omega_b \wedge \omega_c \comm{\comm{T_c}{T_a}}{T_b} & \because\quad \text{Jacobiの恒等式}\\
+            &= -2 \omega_a \wedge \omega_b \wedge \omega_c \comm{\comm{T_a}{T_b}}{T_c} \\
+            &= -2 \comm{\comm{\omega}{\omega}}{\omega}
+        \end{align}
+        i.e. $\comm{\comm{\omega}{\omega}}{\omega} = 0$ が分かった．
+
+    \end{enumerate}
+    
+\end{proof}
+
+定理\ref{thm:curvature}より，$\Omega$ は\hyperref[def:tensorial-form]{tensorial form of type $\Adj$}であることが分かった．記号としては $\Omega \in \Omega^2_{\Adj} (P;\, \mathfrak{g})$ ということである．
+定理\ref{thm:curvature}-(1) は，\underline{主束上の}共変微分の定義のヒントになっている．
+
+\begin{mydef}[label=def:codv-pbun]{主束上の共変微分}
+    \begin{itemize}
+        \item 主束 $G \hookrightarrow P \xrightarrow{\pi} M$ およびその\hyperref[def:connection]{接続形式} $\omega \in \Omega^1(P;\, \mathfrak{g})$ を与える．
+        \item 有限次元ベクトル空間 $V$
+    \end{itemize}
+    を与える．
+    このとき，主束 $P$ 上の\textbf{共変微分} $\codd \colon \Omega^k (P;\, V) \lto \Omega^{k+1}(P;\, V)$ を
+    \begin{align}
+        \codd{\phi}|_u (v_1,\, \dots,\, v_{k+1}) \coloneqq \dd{\phi}|_u (\uirm{v_1}{H},\, \dots,\, \uirm{v_{k+1}}{H})
+    \end{align}
+    で定義する．ただし任意の $\phi \in \Omega^k (P;\, V),\; u \in P,\; v_1,\, \dots,\, v_{k+1} \in T_u P$ をとった．
+\end{mydef}
+
+この定義は\hyperref[def:connection-vect]{ベクトル束上の共変微分の定義}と見かけ上大きく異なっている．しかし，実は定理\ref{thm:connection-assoc}-(4) の意味で同じものだということが次の命題からわかる：
+
+\begin{myprop}[label=prop:codv-pbun]{主束上の共変微分の公式}
+    \begin{itemize}
+        \item 主束 $G \hookrightarrow P \xrightarrow{\pi} M$ およびその\hyperref[def:connection]{接続形式} $\omega \in \Omega^1(P;\, \mathfrak{g})$ を与える．
+        \item 有限次元ベクトル空間 $V$ 
+        \item Lie群 $G$ の表現 $\rho \colon G \lto \LGL(V)$
+    \end{itemize}
+    を与える．このとき，$\forall \phi \in \Omega^k_\rho (P;\, V)$ に対して以下が成り立つ：
+    \begin{align}
+        \codd{\phi} = \dd{\phi} + \rho_* (\omega) \wedge \phi
+    \end{align}
+\end{myprop}
+
+\begin{marker}
+    定理\ref{thm:connection-assoc}のときと同様に，
+    \begin{align}
+        \label{eq:codv-pbun}
+        \bigl(\rho_* (\omega) \wedge \phi\bigr)_u (v_1,\, \dots,\, v_{k+1})
+        &\coloneqq \frac{1}{1! k!} \sum_{\sigma \in \mathfrak{S}_{k+1}} \sgn{\sigma}\, T_u \rho \bigl( v_{\sigma(1)} \bigr) \bigl( \phi(v_{\sigma(2)},\, \dots,\, v_{\sigma(k+1)}) \bigr) 
+    \end{align}
+    という定義である．
+\end{marker}
+
+\begin{proof}
+    $\forall u \in P$ および $\forall v_1,\, \dots,\, v_{k+1} \in T_u P$ を固定する．示すべき式は全ての引数に関して線型だから，$v_i$ は水平であるか垂直であるかのどちらかであるとして良い．
+    さらに以下では補題\ref{lem:extend-horizontal}によって水平（resp. 垂直）な $v_i \in T_u P$ を水平（resp. 垂直）な $X_i \in \mathfrak{X}(P)$ に拡張する．
+    具体的には，$v_i \in T_u P$ 水平（resp. 垂直）ならば $X_i$ は\hyperref[def:horizontal-lift-vecf]{水平持ち上げ} $\tilde{B}_i$（resp. \hyperref[def:fundamental-vecf]{基本ベクトル場} $A_i{}^\# \in \mathfrak{X}(P)$）である．
+    
+    引数について場合分けする．
+    \begin{description}
+        \item[\textbf{$\bm{X_i}$ が全て水平}]　
+        
+        $\forall \sigma \in \mathfrak{S}_{k+1}$ に対して $\omega(X_{\sigma(1)}) = 0$ なので自明．
+
+        \item[\textbf{$\bm{X_i}$ のうち少なくとも2つが垂直}]　
+        
+        引数の入れ替えに関する反対称性より，$X_1 = A_1{}^\#,\, X_2 = A_2{}^\#$ を仮定しても一般性を損なわない．
+        このとき命題\ref{prop:infinitesimal-generator-R}より $\comm{X_1}{X_2} = \comm{A_1}{A_2}^\#$ が成り立つので $\comm{X_1}{X_2}$ もまた垂直である．
+        
+        まず，共変微分の定義から\eqref{eq:codv-pbun}の左辺は
+        \begin{align}
+            \codd{\phi}(X_1,\, \dots,\, X_{k+1}) = \dd{\phi}(0,\, 0,\, \dots) = 0
+        \end{align}
+        である．
+        よって\eqref{eq:codv-pbun}の右辺が $0$ になることを示せば良い．
+        実際，右辺第1項に関しては，外微分の公式より
+        \begin{align}
+            \dd{\phi}(X_1,\, \dots,\, X_{k+1})
+            &= \sum_{i=1}^{k+1} (-1)^{i-1} X_i \phi(\dots,\, \widehat{X_i},\, \dots) 
+            + \sum_{1 \le i < j \le k+1} (-1)^{i+j} \phi(\comm{X_i}{X_j},\, \dots,\, \widehat{X_i},\, \widehat{X_j},\, \dots) \label{eq:extdv-global} \\
+            &= 0 + 0
+        \end{align}
+        が言える．さらに右辺第2項に関して，$\phi$ の引数のうち少なくとも1つが水平なので
+        \begin{align}
+            \bigl(\rho_* (\omega) \wedge \phi\bigr) (X_1,\, \dots,\, X_{k+1}) = 0
+        \end{align}
+        がわかる．
+
+        \item[\textbf{$\bm{X_i}$ の1つのみが垂直で他が全て水平}]　
+        
+        引数の入れ替えに関する反対称性より，$X_1 = A_1{}^\#$ を仮定しても一般性を損なわない．
+
+        まず，共変微分の定義から\eqref{eq:codv-pbun}の左辺は
+        \begin{align}
+            \codd{\phi}(X_1,\, \dots,\, X_{k+1}) = \dd{\phi}(0,\, \dots) = 0
+        \end{align}
+        である．よって\eqref{eq:codv-pbun}の右辺が $0$ になることを示せば良い．
+        
+        \eqref{eq:codv-pbun}の右辺第1項に関しては，外微分の公式\eqref{eq:extdv-global}より非ゼロな項が
+        \begin{align}
+            X_1 \phi(X_2,\, \dots) + \sum_{2 \le j \le k+1} (-1)^{1+j} \phi(\comm{X_1}{X_j},\, X_2,\, \dots,\, \widehat{X_j},\, \dots)
+        \end{align}
+        だとわかる．ところが，命題\ref{prop:horizontal-lift-vecf}より $X_2,\, \dots,\, X_{k+1}$ が右不変なのでLie微分の公式より
+        \begin{align}
+            \comm{X_1}{X_j}_u
+            &= \comm{A_1{}^\#}{X_j}_u \\
+            &= \lim_{t\to 0} \frac{T_{u \btl \exp(tA_1)} (R_{\exp (-tA_1)}) (X_j|_{u \btl \exp(tA_1)}) - X_j|_u}{t} \\
+            &= \lim_{t\to 0} \frac{X_j|_{u \btl \exp(tA_1) \btl\exp (-tA_1)} - X_j|_u}{t} \\
+            &= \lim_{t\to 0} \frac{X_j|_u - X_j|_u}{t} \\
+            &= 0
+        \end{align}
+        が言えて，結局
+        \begin{align}
+            \dd{\phi}(X_1,\, \dots,\, X_{k+1}) = X_1 \phi(X_2,\, \dots) = A_1{}^\# \phi(X_2,\, \dots,\, X_{k+1})
+        \end{align}
+        が分かった．$f \in C^\infty (P)$ を $f(u) \coloneqq \phi_u(X_2|_u,\, \dots,\, X_{k+1}|_u)$ によって定義し，\eqref{eq:fundamental-vecf}を使ってさらに計算を進めると
+        \begin{align}
+            \bigl(A_1{}^\# \phi(X_2,\, \dots,\, X_{k+1})\bigr)|_u
+            &= (A_1{}^\# f)(u) \\
+            &= T_{1_G} (R^{(u)})(A_1) f \\
+            &= A_1 \bigl( f \circ R^{(u)} \bigr)
+        \end{align}
+        となるが，$\forall g \in G$ に対して
+        \begin{align}
+            f \circ R^{(u)} (g)
+            &= \phi_{R^{(u)}(g)} \bigl( X_2|_{R^{(u)}(g)},\, \dots,\, X_{k+1}|_{R^{(u)}(g)} \bigr)  \\
+            &= \phi_{u \btl g} \bigl( T_u (R_g)(X_2|_u),\, \dots,\, T_u(R_g)(X_{k+1}|_{u}) \bigr) &&\because\quad X_j\, \text{の\hyperref[prop:horizontal-lift-vecf]{右不変性}} \\
+            &= (R_g^*\phi)_u (X_2|_u,\, \dots,\, X_{k+1}|_{u}) \\
+            &= \rho (g^{-1}) \bigl( \phi_u (X_2|_u,\, \dots,\, X_{k+1}|_{u})  \bigr) &&\because\quad \phi\, \text{の\hyperref[def:tensorial-form]{右同変性}} \\
+            &= \rho(g^{-1})\bigl( f(u) \bigr)
+        \end{align}
+        が成り立つので，
+        \begin{align}
+            A_1 \bigl( f \circ R^{(u)} \bigr) 
+            &= \eval{\dv{}{t}}_{t=0} \Bigl( \rho\bigl(\exp(t A_1)^{-1}\bigr) \bigl(f(u)\bigr)  \Bigr) \\
+            &= \left(\eval{\dv{}{t}}_{t=0} \rho\bigl(\exp(t A_1)^{-1}\bigr) \right) \bigl(f(u)\bigr) &&\because\quad \text{補題\ref{lem:diff-product}} \\
+            &= \left(\eval{\dv{}{t}}_{t=0} \rho\bigl(\exp(-t A_1)\bigr) \right) \bigl(f(u)\bigr) &&\because\quad \text{命題\ref{prop:exp}} \\
+            &= -\left(\eval{\dv{}{t}}_{t=0} \rho\bigl(\exp(t A_1)\bigr) \right) \bigl(f(u)\bigr) \\
+            &= - T_0 \bigl(\rho\circ \exp(\mhyphen A_1)\bigr)\left(\eval{\dv{}{t}}_{t=0} \right) \bigl(f(u)\bigr) \\
+            &= - T_{1_G} \rho \circ T_0 \bigl(\exp(\mhyphen A_1)\bigr)\left(\eval{\dv{}{t}}_{t=0} \right) \bigl(f(u)\bigr) \\
+            &= - \rho_* (A_1) f(u)
+        \end{align}
+        i.e. $A_1{}^\# \phi(X_2,\, \dots,\, X_{k+1}) = -\rho_* \bigl( A_1 \bigr) \phi(X_{2},\, \dots,\, X_{k+1})$ だと分かった．
+        一方，右辺第2項の非ゼロな項は
+        \begin{align}
+            &\frac{1}{k!} \sum_{\sigma \in \mathfrak{S}_{k+1},\, \sigma(1) = 1} \sgn{\sigma}\, \rho_* \bigl( \omega(X_1) \bigr) \bigl(\phi(X_{\sigma(2)},\, \dots,\, X_{\sigma(k+1)})\bigr) \\
+            &=\frac{1}{k!} \sum_{\sigma \in \mathfrak{S}_{k+1},\, \sigma(1) = 1} \sgn{\sigma}\, \rho_* \bigl( A_1 \bigr) \bigl(\phi(X_{\sigma(2)},\, \dots,\, X_{\sigma(k+1)})\bigr) \\
+            &= \rho_* \bigl( A_1 \bigr) \phi(X_{2},\, \dots,\, X_{k+1})
+        \end{align}
+        であるから，これらは相殺して $0$ になる．
+    \end{description}
+    
+\end{proof}
+
+特に $\Omega \in \Omega^2_{\Adj} (P;\, \mathfrak{g})$ なので，命題\ref{prop:codv-pbun}から
+\begin{align}
+    \codd{\Omega} 
+    &= \dd{\Omega} + \ad (\omega) \wedge \Omega \\
+    &= \dd{\Omega} + \omega_a \wedge \Omega_b\ad(T^a)(T^b) \\
+    &= \dd{\Omega} + \omega_a \wedge \Omega_b \comm{T^a}{T^b} \\
+    &= \dd{\Omega} + \comm{\omega}{\Omega}
+\end{align}
+だとわかる．よって\hyperref[thm:curvature]{Bianchiの第2恒等式}は\hyperref[def:codv-pbun]{共変微分}を使って
+\begin{align}
+    \label{eq:Bianchi-second}
+    \codd{\Omega} = 0
+\end{align}
+と書くこともできる．
+
+\section{曲率形式の局所表示と場の強さ}
+
+この小説では，前節で定義した主束上の曲率形式を局所表示し，それが物理側で\textbf{場の強さ}と呼ばれるものと同一視できることを確認する．
+
+\hyperref[def.PFD]{主束} $G \hookrightarrow P \xrightarrow{\pi} M$ と，その開被覆 $\Familyset[\big]{U_\alpha}{\alpha \in \Lambda}$，局所自明化 $\Familyset[\big]{\varphi_\alpha \colon \pi^{-1}(U_\alpha) \lto U_\alpha \times G}{\alpha \in \Lambda}$，変換関数 $\Familyset[\big]{t_{\alpha\beta} \colon U_\alpha \cap U_\beta \lto G}{\alpha,\, \beta \in \Lambda}$ を与える．
+\hyperref[def.section]{局所切断}の族 $\Familyset[\big]{s_\alpha \colon U_\alpha \lto \pi^{-1}(U_\alpha)}{\alpha \in \Lambda}$ を\eqref{eq:assoc-sec}で定義する． 
+
+定理\ref{thm:local-connection}を参考に，\hyperref[def:curvature]{曲率形式}の局所表示を
+\begin{align}
+    \label{def:field-strength}
+    F_\alpha \coloneqq s_\alpha^* \Omega \in \Omega^2 (\textcolor{red}{U_\alpha};\, \mathfrak{g})
+\end{align}
+で定義する．曲率形式の定義と，引き戻しと外微分，wedge積が可換であることから
+\begin{align}
+    F_\alpha 
+    % &= s_\alpha^* \dd{\omega} + \frac{1}{2} s_\alpha^* \comm{\omega}{\omega} \\
+    &= \dd s_\alpha^* \omega + \frac{1}{2} \comm{s_\alpha^* \omega}{s_\alpha^* \omega} \\
+    &= \dd{A_\alpha} + \frac{1}{2} \comm{A_\alpha}{A_\alpha}
+\end{align}
+がわかる．$F_\alpha$ の，チャート $(U_\alpha (x^\mu))$ における成分表示 $F_\alpha = \textcolor{red}{\frac{1}{2}} F_\alpha{}_{\mu\nu} \dd{x^\mu} \wedge \dd{x^\nu}$ を求めてみる：
+\begin{align}
+    2F_\alpha
+    &= F_\alpha{}_{\mu\nu} \dd{x^\mu} \wedge \dd{x^\nu} \\
+    &= 2\partial_\mu A_\alpha{}_\nu \dd{x^\mu} \wedge \dd{x^\nu}  \\
+    &\quad + A_\alpha{}_a{}_{\mu} A_\alpha{}_b{}_\nu \dd{x^\mu} \wedge \dd{x^\nu} \comm{T^a}{T^b} \\
+    &= (\partial_\mu A_\alpha{}_\nu - \partial_\nu A_\alpha{}_\mu) \dd{x^\mu} \wedge \dd{x^\nu} \\
+    &\quad + \comm{A_\alpha{}_\mu}{A_\alpha{}_\nu} \dd{x^\mu} \wedge \dd{x^\nu}
+\end{align}
+より，
+\begin{align}
+    F_\alpha{}_{\mu\nu} = (\partial_\mu A_\alpha{}_\nu - \partial_\nu A_\alpha{}_\mu) + \comm{A_\alpha{}_\mu}{A_\alpha{}_\nu} 
+\end{align}
+と書くことができる．これは物理側で\textbf{場の強さ} (field strength) としてよく知られたものである．
+この意味で以降，$F_\alpha \in \Omega^2(U_\alpha;\, \mathfrak{g})$ のことを場の強さと呼ぶ．
+
+\begin{mytheo}[label=thm:curvature-local]{場の強さの変換則}
+    \hyperref[def.PFD]{主束} $G \hookrightarrow P \xrightarrow{\pi} M$ と，その開被覆 $\Familyset[\big]{U_\alpha}{\alpha \in \Lambda}$，局所自明化 $\Familyset[\big]{\varphi_\alpha \colon \pi^{-1}(U_\alpha) \lto U_\alpha \times G}{\alpha \in \Lambda}$，変換関数 $\Familyset[\big]{t_{\alpha\beta} \colon U_\alpha \cap U_\beta \lto G}{\alpha,\, \beta \in \Lambda}$ を与える．
+    \hyperref[def.section]{局所切断}の族 $\Familyset[\big]{s_\alpha \colon U_\alpha \lto \pi^{-1}(U_\alpha)}{\alpha \in \Lambda}$ を\eqref{eq:assoc-sec}で定義する． 
+    
+    このとき，$\forall \alpha,\, \beta \in \Lambda$ について
+    \begin{align}
+        F_{\beta}|_x = \Adj \bigl( t_{\alpha\beta}(x)^{-1} \bigr)(F_\alpha|_x),\quad \forall x \in U_\alpha \cap U_\beta
+    \end{align}
+    が成り立つ．
+\end{mytheo}
+
+\begin{proof}
+    % 定理\ref{thm:local-connection}より，
+    % \begin{align}
+    %     F_\beta|_x (v_1,\, v_2)
+    %     &= \eval{\dd{\Bigl(\Adj \bigl( t_{\alpha\beta}(x)^{-1} \bigr)(A_\alpha) \Bigr)}}_x (v_1,\, v_2) + \dd{t_{\alpha\beta}^* \theta}|_x (v_1,\, v_2) \\
+    %     &\quad + \comm{\Adj \bigl( t_{\alpha\beta}(x)^{-1} \bigr)\bigl(A_\alpha|_x(v_1)\bigr)}{\Adj \bigl( t_{\alpha\beta}(x)^{-1} \bigr)\bigl(A_\alpha(v_2)\bigr)} \\
+    %     &\quad + \comm{\Adj \bigl( t_{\alpha\beta}(x)^{-1} \bigr)\bigl(A_\alpha|_x(v_1)\bigr)}{t_{\alpha\beta}^* \theta|_x (v_2)} \\
+    %     &\quad + \comm{t_{\alpha\beta}^* \theta|_x (v_1)}{\Adj \bigl( t_{\alpha\beta}(x)^{-1} \bigr)\bigl(A_\alpha(v_2)\bigr)} \\
+    %     &\quad + \comm{t_{\alpha\beta}^* \theta|_x (v_1)}{t_{\alpha\beta}^* \theta|_x (v_2)} 
+    % \end{align}
+    % である．
+    $\forall x \in M,\; \forall v_1,\, v_2 \in T_x M$ を1つ固定する．
+    定理\ref{thm:curvature}-(1) より，
+    \begin{align}
+        F_\beta|_x (v_1,\, v_2)
+        &= s_\beta^* \Omega|_x(v_1,\, v_2) \\
+        &= \Omega|_{s_\beta(x)} \bigl( T_x s_\beta(v_1),\, T_x s_\beta(v_2) \bigr) \\
+        &= \dd{\omega}|_{s_\beta(x)} \bigl( \uirm{T_x s_\beta(v_1)}{H},\, \uirm{T_x s_\beta(v_2)}{H} \bigr)
+    \end{align}
+    ここで補題\ref{lem:differential-of-local-section}および\hyperref[def:connection]{水平部分空間の右不変性}から
+    \begin{align}
+        \uirm{T_x s_\beta(v_i)}{H} = T_{s_\alpha(x)}(R_{t_{\alpha\beta}(x)}) \bigl( \uirm{T_x s_\alpha(v_i)}{H}\bigr)
+    \end{align}
+    なので，
+    \begin{align}
+        &\dd{\omega}|_{s_\beta(x)} \bigl( \uirm{T_x s_\beta(v_1)}{H},\, \uirm{T_x s_\beta(v_2)}{H} \bigr) \\
+        &= \eval{(R_{t_{\alpha\beta}(x)}^*\dd{\omega})}_{s_\alpha(x)} \bigl( \uirm{T_x s_\alpha(v_1)}{H},\, \uirm{T_x s_\alpha(v_2)}{H} \bigr) \\
+        &= \eval{\dd{\bigl(R_{t_{\alpha\beta}(x)}^*\omega\bigr)}}_{s_\alpha(x)} \bigl( \uirm{T_x s_\alpha(v_1)}{H},\, \uirm{T_x s_\alpha(v_2)}{H} \bigr) \\
+        &= \eval{\dd{\Bigl(\Adj \bigl( t_{\alpha\beta}(x)^{-1} \bigr)(\omega) \Bigr)}}_{s_\alpha(x)} \bigl( \uirm{T_x s_\alpha(v_1)}{H},\, \uirm{T_x s_\alpha(v_2)}{H} \bigr) \\
+        &= \Adj \bigl( t_{\alpha\beta}(x)^{-1} \bigr) \Bigl(\dd{\omega}|_{s_\alpha(x)} \bigl( \uirm{T_x s_\alpha(v_1)}{H},\, \uirm{T_x s_\alpha(v_2)}{H} \bigr)\Bigr) \\
+        &= \Adj \bigl( t_{\alpha\beta}(x)^{-1} \bigr) \Bigl(\Omega|_{s_\alpha(x)} \bigl( T_x s_\alpha(v_1),\, T_x s_\alpha(v_2) \bigr)\Bigr) \\
+        &= \Adj \bigl( t_{\alpha\beta}(x)^{-1} \bigr) \bigl(s_\alpha^*\Omega|_x(v_1,\, v_2)\bigr) \\
+        &= \Adj \bigl( t_{\alpha\beta}(x)^{-1} \bigr) \bigl(F_\alpha|_x(v_1,\, v_2)\bigr)
+    \end{align}
+    が言える．
+\end{proof}
+
+\section{同伴ベクトル束上の接続とその局所表示}
+
+この節では\hyperref[thm:connection-assoc]{同伴ベクトル束上の共変微分}をゲージ場の言葉を使って局所表示し，物理において馴染み深い共変微分と同一視できることを顕に確認する．
+この節では常に
+\begin{itemize}
+    \item \hyperref[def.PFD]{主束} $G \hookrightarrow P \xrightarrow{\pi} M$
+    \item \hyperref[def:connection]{接続形式} $\omega \in \Omega^1(P;\, \mathfrak{g})$
+    \item 有限次元 $\mathbb{K}$-ベクトル空間 $V$ とLie群 $G$ の $\dim V$ 次元表現 $\rho \colon G \lto \LGL (V)$ 
+    \item \hyperref[def:associated-vect]{同伴ベクトル束} $V \hookrightarrow P \times_\rho V \xrightarrow{q} M$
+\end{itemize}
+が与えられているものとする．$E \coloneqq P \times_\rho V$ とおく．定理\ref{thm:connection-assoc}-(2) より，
+\begin{align}
+    \nabla^E \coloneqq \sharp^{-1} \circ \codd{} \circ \sharp \colon \Gamma(E) \lto \Omega^1(M;\, E)
+\end{align}
+は\hyperref[def:connection-vect]{ベクトル束 $E$ 上の接続}であった．これを\hyperref[def:horizontal-lift-curve]{水平持ち上げ}によって表示してみよう．
+
+\begin{mytheo}[label=thm:codv-assoc-HL]{同伴ベクトル束上の共変微分の表示}
+    $\forall s \in \Gamma(E),\; \forall X \in \mathfrak{X}(M)$ および $\forall p \in M$ を1つ固定する．このとき，\underline{任意の}
+    \begin{itemize}
+        \item $C^\infty$ 曲線 $\gamma \colon [0,\, 1] \lto M$ であって $\gamma(0) = p,\; \dot{\gamma}(0) = X_p$ を充たすもの
+        \item $u \in \pi^{-1}(\{x\})$
+        \item $\gamma$ の\hyperref[def:horizontal-lift-curve]{水平持ち上げ} $\tilde{\gamma} \colon [0,\, 1] \lto P$ であって $\tilde{\gamma}(0) = u$ を充たすもの\footnote{$\gamma,\, u$ が与えられると $\tilde{\gamma}$ は一意に決まるのだった．}
+    \end{itemize}
+    に対して
+    \begin{align}
+        (\nabla^E_X s)|_p = \tilde{\gamma}(0) \times_\rho \dot{\eta}(0)
+    \end{align}
+    が成り立つ．特に右辺は $\gamma,\, u$ の取り方によらない．
+    ただし，$C^\infty$ 曲線 $\eta \colon [0,\, 1] \lto V$ を
+    \begin{align}
+        s \bigl( \gamma(t) \bigr) \eqqcolon \tilde{\gamma}(t) \times_\rho \eta(t)
+    \end{align}
+    で定義した．
+\end{mytheo}
+
+\begin{proof}
+    $\gamma,\, u$ を1つ固定する．命題\ref{prop:assoc-basic}-(2) より
+    \begin{align}
+        (\nabla^E_X s)|_p
+        &= (\nabla^E s)(X)|_p \\
+        &= (\sharp^{-1} \circ \codd{} \circ \sharp s)_p (X_p) \\
+        &= \Bigl( \flat\bigl(\codd{(\sharp s)} \bigr)\Bigr)_{\gamma(0)} \bigl( \dot{\gamma}(0) \bigr) \\
+        &= \tilde{\gamma}(0) \times_\rho \bigl(\codd{(\sharp s)}\bigr)_{\tilde{\gamma}(0)} \bigl( \dot{\tilde{\gamma}} (0) \bigr) \qquad \because\quad \tilde{\gamma}(0) \in \pi^{-1} (\{\gamma(0)\}),\; \dot{\tilde{\gamma}}(0) \in (T_{\tilde{\gamma}(0)} \pi)^{-1} (\{\dot{\gamma} (0)\})\\
+        &= \tilde{\gamma}(0) \times_\rho \left[ \dd (\sharp s)|_{\tilde{\gamma}(0)} \bigl( \dot{\tilde{\gamma}}(0) \bigr)  + \rho_* \Bigl( \cancel{\omega_{\tilde{\gamma}(0)}\bigl(\dot{\tilde{\gamma}}(0)\bigr)} \Bigr)\Bigl( \sharp s|_{\gamma(0)} \Bigr)    \right] \\
+        &= \tilde{\gamma}(0) \times_\rho T_0(\sharp s \circ \tilde{\gamma}) \left( \eval{\dv{}{t}}_{t=0} \right)
+    \end{align}
+    が成り立つ．ここで\hyperref[prop:assoc-basic]{$\sharp$ の定義}を思い出すと，$\forall t \in [0,\, 1]$ に対して
+    \begin{align}
+        \sharp s \circ \tilde{\gamma}(t) 
+        &= f^{-1}_{\tilde{\gamma}(t)} \Bigl( s \circ \pi \bigl( \tilde{\gamma}(t) \bigr)  \Bigr) \\
+        &= f^{-1}_{\tilde{\gamma}(t)} \Bigl( s \bigl( \gamma(t) \bigr) \Bigr)
+    \end{align}
+    が成り立つことが分かる．\hyperref[lem:assoc-basic]{$f^{-1}_{\tilde{\gamma}(t)}$ の定義}から
+    \begin{align}
+        \sharp s \circ \tilde{\gamma} = \eta
+    \end{align}
+    であり，
+    \begin{align}
+        (\nabla^E_X s)|_p = \tilde{\gamma}(0) \times_\rho \dot{\eta}(0)
+    \end{align}
+    が示された．
+\end{proof}
+
+定理\ref{thm:codv-assoc-HL}を使って，同伴ベクトル束上の共変微分の局所表示を定理\ref{thm:connection-assoc}-(3) よりもあからさまな形で求めよう．
+
+\begin{mytheo}[label=thm:codv-assoc-local,breakable]{同伴ベクトル束上の共変微分の局所表示}
+    主束 $G \hookrightarrow P \xrightarrow{\pi} M$ について
+    \begin{itemize}
+        \item $M$ の開被覆 $\Familyset[\big]{U_\alpha}{\alpha \in \Lambda}$
+        \item $P$ の局所自明化 $\Familyset[\big]{\varphi_\alpha \colon \pi^{-1}(U_\alpha) \lto U_\alpha \times G}{\alpha \in \Lambda}$
+        % \item $P$ の変換関数 $\Familyset[\big]{t_{\alpha\beta} \colon U_\alpha \cap U_\beta \lto G}{\alpha \in \Lambda}$
+        \item $P$ の\hyperref[def.section]{局所切断}の族 $\Familyset[\big]{s_\alpha \colon U_\alpha \lto \pi^{-1}(U_\alpha),\; p \lmto \varphi_\alpha^{-1}(p,\, 1_G)}{\alpha \in \Lambda}$
+        \item Lie代数 $\mathfrak{g}$ の基底 $T^a \WHERE a = 1,\, \dots,\, \dim G$
+    \end{itemize}
+    を与え，同伴ベクトル束 $V \hookrightarrow E \coloneqq P \times_\rho V \xrightarrow{q} M$ について
+    \begin{itemize}
+        \item \underline{$E$ の}局所自明化 $\Familyset[\big]{\psi_\alpha \colon q^{-1}(U_\alpha) \lto U_\alpha \times V,\; s_\alpha(p) \times_\rho v \lmto (p,\, v)}{\alpha \in \Lambda}$
+        \item $V$ の基底 $e_i \WHERE i = 1,\, \dots,\, \dim V$
+        \item $E$ の局所切断の族 $\Familyset[\big]{e_\alpha{}_i \colon U_\alpha \lto q^{-1}(U_\alpha),\; x \lmto s_\alpha (x) \times_\rho e_i}{\alpha \in \Lambda}$
+    \end{itemize}
+    を与える．このとき $M$ のチャート $\bigl(U_\alpha,\, (x^\mu)\bigr)$ において\hyperref[thm:local-connection]{ゲージ場} $A_\alpha \coloneqq s_\alpha^* \omega \in \Omega^{1}(U_\alpha;\, \mathfrak{g})$ を
+    \begin{align}
+        A_\alpha \eqqcolon A_{\alpha}{}_a T^a = A_{\alpha}{}_a{}_\mu \dd{x^\mu}\, T^a
+    \end{align}
+    と展開すると以下が成り立つ：
+    \begin{enumerate}
+        \item $\forall X = X^\mu \pdv{}{x^\mu} \in \mathfrak{X}(M)$\footnote{厳密には $X \in \mathfrak{X}(U_\alpha)$ であるが，これを1の分割を使って拡張したと思えば良い．} に対して\footnote{$ \bigl[\, \rho_*(T^a) \,\bigr]^j{}_i$ というのは，線形変換 $\rho_*(T^a) \in \mathfrak{gl}(V)$ の，$V$ の基底 $e_i$ による表現行列の $(j,\, i)$ 成分という意味である．}，
+        \begin{align}
+            \nabla^E_X e_{\alpha}{}_i = X^\mu A_\alpha{}_a{}_\mu\, \bigl[\, \rho_*(T^a) \,\bigr]^j{}_i\, e_{\alpha}{}_j
+        \end{align}
+        \item $\forall X = X^\mu \pdv{}{x^\mu} \in \mathfrak{X}(M)$ および $\forall s \in \Gamma(E)$ に対して
+        \begin{align}
+            \nabla^E_X s = X^\mu \left( \pdv{\xi_\alpha{}^i}{x^\mu} + A_\alpha{}_a{}_\mu \bigl[ \,\rho_*(T^a) \,\bigr]^i{}_j\, \xi_\alpha{}^j  \right) \, e_{\alpha}{}_i
+        \end{align}
+        ただし，$\forall x \in U_\alpha$ に対して $s(x) \eqqcolon s_\alpha(x) \times_\rho \xi_\alpha (x) = s_\alpha(x) \times_\rho \xi_\alpha(x)^i e_i = \xi_\alpha(x)^i e_{\alpha}{}_i(x)$ と展開した．
+    \end{enumerate}
+\end{mytheo}
+
+% \begin{itemize}
+%     \item $M$ の開被覆 $\Familyset[\big]{U_\alpha}{\alpha \in \Lambda}$
+%     \item $P$ の局所自明化 $\Familyset[\big]{\varphi_\alpha \colon \pi^{-1}(U_\alpha) \lto U_\alpha \times G}{\alpha \in \Lambda}$
+%     \item $P$ の変換関数 $\Familyset[\big]{t_{\alpha\beta} \colon U_\alpha \cap U_\beta \lto G}{\alpha \in \Lambda}$
+% \end{itemize}
+% を与える．その上で，いつも通りに
+% \begin{itemize}
+%     \item $P$ の\hyperref[def.section]{局所切断}の族 $\Familyset[\big]{s_\alpha \colon U_\alpha \lto \pi^{-1}(U_\alpha),\; p \lmto \varphi_\alpha^{-1}(p,\, 1_G)}{\alpha \in \Lambda}$
+%     \item \underline{$E$ の}局所自明化 $\Familyset[\big]{\psi_\alpha \colon q^{-1}(U_\alpha) \lto U_\alpha \times V,\; s_\alpha(p) \times_\rho v \lmto (p,\, v)}{\alpha \in \Lambda}$
+% \end{itemize}
+% をとる．さらに $V$ の基底を $e_i \WHERE i = 1,\, \dots,\, \dim V$ とおき，$E = P \times_\rho V$ 上の局所切断の族を
+% \begin{align}
+%     \Familyset[\big]{e_\alpha{}_i \colon U_\alpha \lto q^{-1}(U_\alpha),\; x \lmto s_\alpha (x) \times_\rho e_i}{\alpha \in \Lambda}
+% \end{align}
+% で定義する．また，
+\begin{proof}
+    $\forall p \in U_\alpha$ を1つ固定する．
+    \begin{enumerate}
+        \item 
+        $C^\infty$ 曲線 $\gamma \colon [0,\, 1] \lto M$ であって，$\gamma(0) = p,\; \dot{\gamma}(0) = X_p$ を充たすものをとる．
+        $\gamma$ の像は $U_\alpha$ に含まれているとし\footnote{$\gamma([0,\, 1]) \subset M$ はコンパクト集合なので，有限個の点で区切ればこの要請を充たすことができる．}，$\gamma$ の\hyperref[def:horizontal-lift-curve]{水平持ち上げ}を
+        \begin{align}
+            \tilde{\gamma}(t) \eqqcolon s_\alpha \bigl( \gamma(t) \bigr) \btl g_\alpha(t)
+        \end{align}
+        と書く．ただし補題\ref{lem:horizontal-lift-curve}と同様に新しい $C^\infty$ 曲線 $g_\alpha \colon U_\alpha \lto G$ を $g_\alpha \coloneqq \mathrm{proj}_2 \circ \varphi_\alpha \circ \tilde{\gamma}$ により定義した．
+    
+        局所切断 $e_\alpha{}_i$ の共変微分を求める．
+        \begin{align}
+            e_\alpha{}_i \bigl( \gamma(t) \bigr) 
+            &= s_\alpha \bigl( \gamma(t) \bigr) \times_\rho e_i \\
+            &= \Bigl(s_\alpha \bigl( \gamma(t) \bigr) \btl g_\alpha(t)\Bigr) \times_\rho \rho \bigl( g_\alpha(t)^{-1} \bigr) \bigl( e_i \bigr) \\
+            &= \tilde{\gamma}(t) \times_\rho \rho \bigl( g_\alpha(t)^{-1} \bigr) \bigl( e_i \bigr)
+        \end{align}
+        であるから，
+        定理\ref{thm:codv-assoc-HL}より
+        \begin{align}
+            (\nabla_X^E e_\alpha{}_i)|_p 
+            &= \tilde{\gamma}(0) \times_\rho \eval{\dv{}{t}}_{t=0} \rho \bigl( g_\alpha(t)^{-1} \bigr) \bigl( e_i \bigr)
+        \end{align}
+        ここで $L^{(v)} \colon G \lto V,\; g \lto \rho(g)(v)$ を使って $\rho \bigl( g_\alpha(t)^{-1} \bigr) \bigl( e_i \bigr) = L^{(e_i)} \circ {}^{-1} \circ g_\alpha(t)$ と書けるので，
+        \begin{align}
+            &\eval{\dv{}{t}}_{t=0} \rho \bigl( g_\alpha(t)^{-1} \bigr) \bigl( e_i \bigr)\\
+            &=  T_0(L^{(e_i)} \circ {}^{-1} \circ g_\alpha) \left( \eval{\dv{}{t}}_{t=0} \right) \\
+            &=  T_{g_\alpha(0)^{-1}} (L^{(e_i)}) \circ T_{g_\alpha(0)} ({}^{-1}) \bigl( \dot{g_\alpha}(0) \bigr) \\
+            &=  -T_{g_\alpha(0)} (L^{(e_i)} \circ \mathcal{L}_{g_\alpha(0)^{-1}} \circ \mathcal{R}_{g_\alpha(0)^{-1}}) \bigl( \dot{g_\alpha}(0) \bigr) \\
+            &=  -\eval{\dv{}{t}}_{t=0} \rho \bigl( g_\alpha(0)^{-1} g_\alpha(t) g_\alpha(0)^{-1} \bigr) \bigl( e_i \bigr) \\
+            &=  -\rho \bigl( g_\alpha(0)^{-1} \bigr) \circ \left(\eval{\dv{}{t}}_{t=0} \rho\bigl(g_\alpha(t)\bigr) \right) \circ \rho\bigl( g_\alpha(0)^{-1} \bigr) \bigl( e_i \bigr)  \\
+            &=  -\rho \bigl( g_\alpha(0)^{-1} \bigr) \circ \Bigl(T_{g_\alpha(0)} \rho \bigl(\dot{g_\alpha}(0)\bigr) \Bigr) \circ \rho\bigl( g_\alpha(0)^{-1} \bigr) \bigl( e_i \bigr)  \\
+            &=  \rho \bigl( g_\alpha(0)^{-1} \bigr) \circ \Bigl(T_{g_\alpha(0)} \rho \circ T_{1_G} \mathcal{R}_{g(0)} \bigl( A_\alpha|_{\gamma(0)}(X) \bigr) \Bigr) \circ \rho\bigl( g_\alpha(0)^{-1} \bigr) \bigl( e_i \bigr)  &&\because \quad \text{補題\ref{lem:horizontal-lift-curve}}\\
+            &=  \rho \bigl( g_\alpha(0)^{-1} \bigr) \circ \rho_* \bigl( A_\alpha|_{\gamma(0)}(X_p) \bigr) \bigl( e_i \bigr)  &&\because \quad \text{補題\ref{lem:horizontal-lift-curve}}
+        \end{align}
+        である\footnote{
+            \begin{align}
+                0 
+                &= T_g (\mu \circ (\mathrm{id}_G \times {}^{-1}) \circ \Delta)(X) \\
+                &= T_g (\mu \circ \mathrm{inj}_1^{g^{-1}})(X) + T_g (\mu \circ \mathrm{inj}_2^{g} \circ {}^{-1})(X) \\
+                &= T_g (\mathcal{R}_{g^{-1}})(X) + T_{g^{-1}} (\mathcal{L}_g) \circ T_g ({}^{-1}) (X)
+            \end{align}
+            より
+            \begin{align}
+                T_g ({}^{-1}) = -T_g (\mathcal{L}_{g^{-1}} \circ \mathcal{R}_{g^{-1}})
+            \end{align}
+        }から，
+        \begin{align}
+            (\nabla_X^E e_\alpha{}_i)|_p  
+            &= \bigl( \tilde{\gamma}(0) \btl g_\alpha(0)^{-1} \bigr) \times_\rho \rho_* \bigl( A_\alpha|_{\gamma(0)}(X) \bigr) \bigl( e_i \bigr) \\
+            &= s_\alpha \bigl( \gamma(0) \bigr) \times_\rho \rho_* \bigl( A_\alpha|_{p}(X) \bigr) \bigl( e_i \bigr)
+        \end{align}
+        が分かった．特にチャート $(U_\alpha (x^\mu))$ において $A_\alpha = A_\alpha{}_a{}_\mu \dd{x^\mu} T^a,\; X = X^\mu (p)\, \eval{\pdv{}{x^\mu}}_p$ と展開すると
+        \begin{align}
+            (\nabla_X^E e_\alpha{}_i)|_p  
+            &= s_\alpha \bigl( \gamma(0) \bigr) \times_\rho X^\nu(p) A_\alpha{}_a{}_\mu (p) \dd{x^\mu}|_p \left( \eval{\pdv{}{x^\mu}}_p \right)   \rho_* (T^a)(e_i) \\
+            &= s_\alpha \bigl( \gamma(0) \bigr) \times_\rho X^\nu(p) A_\alpha{}_a{}_\mu (p) \delta^\mu_\nu  \rho_* (T^a)(e_i) \\
+            &= s_\alpha \bigl( \gamma(0) \bigr) \times_\rho X^\mu(p) A_\alpha{}_a{}_\mu (p) \bigl[\, \rho_* (T^a) \,\bigr]^j{}_i\, e_j \\
+            &=  X^\mu(p) A_\alpha{}_a{}_\mu (p) \bigl[\, \rho_* (T^a) \,\bigr]^j{}_i\,  e_\alpha{}_j|_p
+        \end{align}
+        と成分表示が求まった．
+        
+        \item 
+        一般の切断 $s \in \Gamma(E)$ の共変微分を求める．
+        $U_\alpha$ 上で $s(x) = s_\alpha(x) \times_\rho \xi_\alpha(x) = s_\alpha(x) \times_\rho \xi_\alpha(x)^i e_i = \xi_\alpha(x)^i e_\alpha{}_i(x)$ と展開できるので，
+        \hyperref[def:connection-vect]{ベクトル束上の共変微分の定義}より
+        \begin{align}
+            \nabla^E_X s
+            &= \nabla^E s(X) \\
+            &= \dd{\xi_\alpha{}^i}(X) \otimes e_\alpha{}_i + \xi_\alpha{}^i \nabla^E e_\alpha{}_i(X) \\
+            &= X^\nu \pdv{\xi_\alpha{}^{i}}{x^\mu} \dd{x^\mu} \left( \pdv{}{x^\nu} \right)\, e_\alpha{}_i  + \xi_\alpha{}^i X^\mu A_\alpha{}_a{}_\mu \bigl[\, \rho_* (T^a) \,\bigr]^j{}_i\,  e_\alpha{}_j \\
+            &= X^\mu \left( \pdv{\xi_\alpha{}^{i}}{x^\mu} + A_\alpha{}_a{}_\mu \bigl[\, \rho_* (T^a) \,\bigr]^i{}_j \xi_\alpha{}^j \right) e_\alpha{}_i
+        \end{align}
+        と計算できる．
+    \end{enumerate}
+
+\end{proof}
+                
+定理\ref{thm:codv-assoc-local}-(2) において，特に $X$ として座標ベクトル場 $\pdv{}{x^\mu}$ をとると
+\begin{align}
+    \nabla^E_{\pdv{}{x^\mu}} e_\alpha{}_i = A_\alpha{}_a{}_\mu \bigl[\, \rho_* (T^a) \,\bigr]^j{}_i\,  e_\alpha{}_j
+\end{align}
+となり，ゲージ場の成分 $A_\alpha{}_a{}_{\textcolor{blue}{\mu}} \bigl[\, \rho_* (T^a) \,\bigr]^{\textcolor{red}{j}}{}_{\textcolor{red}{i}}$ がRiemann幾何学におけるChristoffel記号と同等の働きをすることが分かる．
+
+\section{同伴ベクトル束上の曲率とその局所表示}
+
+この節ではまず一般のベクトル束上の曲率を大域的な形で定義し，\hyperref[thm:connection-assoc]{同伴ベクトル束上の接続}との関係を議論する．
+そして同伴ベクトル束上の曲率の局所表示が，主束上の曲率の局所表示と同一のものであることを確認する．
+
+\begin{mydef}[label=def:curvature-vect]{ベクトル束上の曲率}
+    \begin{itemize}
+        \item ベクトル束 $V \hookrightarrow E \xrightarrow{\pi} M$
+        \item \hyperref[def:connection-vect]{ベクトル束 $E$ 上の接続} $\nabla^E \colon \Gamma(E) \lto \Omega^1(M;\, E)$
+    \end{itemize}
+    を与える．ベクトル束 $E$ 上の\textbf{曲率} (curvature) とは，
+    \begin{align}
+        R^\nabla \coloneqq \dd^{\nabla^E} \circ \nabla^E \colon \Gamma(E) \lto \Omega^2(M;\, E)
+    \end{align}
+    のこと．
+\end{mydef}
+
+\begin{myprop}[label=prop:curvature-linear]{曲率の $C^\infty(M)$線形性}
+    $\forall f \in C^\infty(M),\; \forall s \in \Gamma(E)$ に対して
+    \begin{align}
+        R^{\nabla^E} (fs) = f\, R^{\nabla^E}(s)
+    \end{align}
+    が成り立つ．
+\end{myprop}
+
+\begin{proof}
+    \hyperref[def:connection-vect]{ベクトル束上の接続}の定義から
+    \begin{align}
+        R^{\nabla^E} (fs)
+        &= \dd^{\nabla^E} \bigl( \dd{f} \otimes s + f\, \nabla^E s \bigr) \\
+        &= \cancel{\dd[2]{f}} \otimes s - \dd{f} \wedge \nabla^E s + \dd^{\nabla^E} \bigl( f\, \nabla^E s \bigr) \\
+        &= \cancel{-\dd{f} \wedge \nabla^E s + \dd{f} \wedge \nabla^E s} + f\, \dd^{\nabla^E} (\nabla^E s) \\
+        &= f\, R^{\nabla^E} (s)
+    \end{align}
+    が分かる
+    \footnote{
+        $E$ の局所フレーム $e_i \in \Gamma(E)$ を使うと $\nabla^E s = (\nabla^E s)^i \otimes e_i \WHERE  (\nabla^E s)^i \in \Omega^1(M)$ と書けるので，ベクトル束上の接続の定義から
+        \begin{align}
+            \dd^{\nabla^E} \bigl( f\, \nabla^E s \bigr)
+            &= \dd{\bigl(f\, (\nabla^E s)^i\bigr)} \otimes e_i - f\, (\nabla^E s)^i \wedge \nabla^E e_i \\
+            &= \dd{f} \wedge \nabla^E s + f\, \dd{(\nabla^E s)^i} \otimes e_i  - f\, (\nabla^E s)^i \wedge \nabla^E e_i \\
+            &= \dd{f} \wedge \nabla^E s + f\, \dd^{\nabla^E} (\nabla^E s)
+        \end{align}
+        だとわかる．
+    }．
+\end{proof}
+
+この結果から，
+\begin{align}
+    R^{\nabla^E} \colon \Gamma(E) \lto \Gamma(E),\; s \lmto \bigl(p \lmto R^{\nabla^E}(s)(p)\bigr)
+\end{align}
+と見做すとこれが $C^\infty(M)$-線形写像になっている．このようなとき，End束 $\End(E) \coloneqq \coprod_{p \in M} \End (E_p)$ の $C^\infty$ 切断
+$\underline{R^{\nabla^E}} \in \Gamma \bigl( \extp^2 T^* M \otimes  \End(E) \bigr)$ 
+であって，
+\begin{align}
+    R^{\nabla^E} (s) (p) = \underline{R^{\nabla^E}}(p) \bigl( s(p) \bigr) 
+\end{align}
+を充たすものが存在することが分かる
+\footnote{
+    $\forall p \in M$ を1つ固定し，$s \in \Gamma(E)$ であって $s(p) = 0$ を充たすものをとる．$p$ の開近傍（特に，局所自明性を充たすもの） $p \in U \subset M$ とその上の局所フレーム $(e_i)$ をとる．このとき $U$ 上では $s = s^i e_i$ と展開できる．
+    ところで，多様体のパラコンパクト性から $p \in \overline{V} \subset U$ を充たす $p$ の開近傍 $V \subset M$ が存在するので，
+    $M$ の開被覆 $\{U,\, M \setminus \overline{V}\}$ に従属する1の分割 $\{\psi_U,\, \psi_{M \setminus \overline{V}}\}$ をとることができる．特に$C^\infty$ 関数 $\psi_U \colon M \lto [0,\, 1]$ は 
+    \begin{align}
+        \psi_U(x) = 
+        \begin{cases}
+            1, &x \in \overline{V} \\ 
+            0, &x \in M \setminus U
+        \end{cases}
+    \end{align}
+    を充たす．よって $\tilde{e}_i \coloneqq \psi_U\, e_i \in \Gamma(E),\; \tilde{s}^i \coloneqq \psi_U\, s^i \in C^\infty(M)$ である．したがって
+    \begin{align}
+        s = s + \psi_U^2 (s-s) = (1-\psi_U^2) s + \tilde{s}^i \tilde{e}_i
+    \end{align}
+    が分かった．したがって $R^{\nabla^E}$ の $C^\infty$-線形性から
+    \begin{align}
+        R^{\nabla^E} (s)(p) = \bigl(1-\psi_U^2(p)\bigr)\, R^{\nabla^E}(s)(p) + \tilde{s}^i(p)\, R^{\nabla^E}(\tilde{e}_i)(p) = 0
+    \end{align}
+    が言えた．このことから，$\underline{R^{\nabla^E}} \in \Gamma \bigl( \End (E) \bigr)$ を，$\forall p \in M,\; \forall v \in E_p$ について
+    \begin{align}
+        \underline{R^{\nabla^E}}(p)(v) \coloneqq R^{\nabla^E} (s)(p) \WHERE s \in \Gamma(E) \ST s(p) = v
+    \end{align}
+    と定義するとwell-defiendである．
+}．
+そのため，この $\underline{R^{\nabla^E}}$ と同一視して $R^{\nabla^E} \in \Omega^2 \bigl( \End(E) \bigr)$ であると言う．
+
+\begin{mytheo}[label=thm:curvature-assoc]{同伴ベクトル束上の曲率の表示}
+    % \begin{enumerate}
+    %     \item 
+    %     \begin{align}
+    %         R^{\nabla^E} = \sharp^{-1} \circ \rho_*(\Omega) \circ \sharp
+    %     \end{align}
+    %     \item 
+    % \end{enumerate}
+    \begin{align}
+        R^{\nabla^E} = \sharp^{-1} \circ \rho_*(\Omega) \circ \sharp
+    \end{align}
+\end{mytheo}
+
+\begin{proof}
+    \begin{enumerate}
+        \item 
+        \begin{align}
+            R^{\nabla^E}
+            &= \sharp^{-1} \circ D^2 \circ \sharp \\
+            &= \sharp^{-1} \circ \bigl( \dd + \rho_*(\omega) \wedge \bigr)\circ \bigl( \dd + \rho_*(\omega)\bigr) \circ \sharp \\
+            &= \sharp^{-1} \circ \bigl( \cancel{\dd^2} + \rho_*(\omega) \wedge \dd + \dd{\bigl( \rho_*(\omega) \bigr)} + \rho_*(\omega) \wedge \rho_*(\omega) \bigr) \circ \sharp
+        \end{align}
+        ここで
+        \begin{align}
+            \dd{\bigl( \rho_*(\omega)(\sharp s) \bigr) }
+            &= \dd{\bigl( \rho_*(\omega_a T^a)(\sharp s) \bigr) } \\
+            &= \dd{\bigl(\omega_a \,\rho_*(T^a)(\sharp s) \bigr) } \\
+            &= \dd{\omega_a}\, \rho_*(T^a)(\sharp s) - \omega_a\wedge \rho_*(T^a)\dd{(\sharp s)} \\
+            &= \rho_*(\dd{\omega})(\sharp s) - \rho_*(\omega) \wedge \dd{(\sharp s)}
+        \end{align}
+        なので，
+        \begin{align}
+            R^{\nabla^E} = \sharp \circ \bigl( \rho_*(\dd{\omega}) + \rho_*(\omega) \wedge \rho_*(\omega)\bigr) \circ \sharp
+        \end{align}
+        さらに
+        \begin{align}
+            \rho_*(\omega) \wedge \rho_*(\omega)(\sharp s)
+            &= \omega_a \wedge \omega_b \rho_*(T^a) \bigl( \rho_*(T^b)(\sharp s) \bigr)  \\
+            &= \frac{1}{2} \omega_a \wedge \omega_b \Bigl(\rho_*(T^a) \circ \rho_*(T^b) - \rho_*(T^b) \circ \rho_*(T^a) \Bigr)(\sharp s) \\
+            &= \frac{1}{2} \omega_a \wedge \omega_b \comm{\rho_*(T^a)}{\rho_*(T^b)}(\sharp s) \\
+            &= \frac{1}{2} \omega_a \wedge \omega_b \rho_*(\comm{T^a}{T^b})(\sharp s) \\
+            &= \frac{1}{2} \rho_*(\comm{\omega}{\omega})(\sharp s)
+        \end{align}
+        であるから
+        \begin{align}
+            R^{\nabla^E} = \sharp^{-1} \circ \rho_*(\Omega)  \circ \sharp
+        \end{align}
+        が分かった．
+
+        % \item 
+        % \begin{align}
+        %     R^{\nabla^E} (X,\, Y) (s)|_p
+        %     &= u \times_\rho \rho_*\bigl(\Omega_u(\tilde{X}_u,\,\tilde{Y}_u)\bigr)\bigl(\sharp s\bigr) \\
+        %     &= u \times_\rho \rho_*\bigl(\dd{\omega}(\tilde{X},\,\tilde{Y})|_u\bigr)\bigl(\sharp s(u)\bigr) \\
+        %     &= u \times_\rho \rho_*\bigl(\tilde{X}\omega(\tilde{Y})|_u + \tilde{Y} \omega(\tilde{X})|_u - \omega (\comm{\tilde{X}}{\tilde{Y}})|_u\bigr)\bigl((\sharp s)(u)\bigr) \\
+        %     &= - u\times_\rho \rho_* \bigl( \omega (\comm{\tilde{X}}{\tilde{Y}})|_u \bigr)\bigl( (\sharp s)(u) \bigr) 
+        % \end{align}
+        % 一方で，
+    \end{enumerate}
+\end{proof}
+
+\begin{mytheo}[label=thm:curvature-assoc-local]{同伴ベクトル束上の曲率の局所表示}
+    定理\ref{thm:codv-assoc-local}と同様の記号を使って以下が成り立つ：
+    \begin{enumerate}
+        \item \begin{align}
+            R^{\nabla^E} e_{\alpha}{}_i = F_\alpha{}_a \bigl[\, \rho_*(T^a) \,\bigr]^j{}_i \otimes  e_\alpha{}_j
+        \end{align}
+        \item $\forall s = \xi_\alpha{}^i e_{\alpha}{}_i$ に対して
+        \begin{align}
+            R^{\nabla^E} s = F_\alpha{}_a \bigl[\, \rho_*(T^a) \,\bigr]^j{}_i \xi_\alpha{}^i\, \otimes  e_\alpha{}_j
+        \end{align}
+        
+    \end{enumerate}
+    
+\end{mytheo}
+
+\begin{proof}
+    \begin{enumerate}
+        \item 定理\ref{thm:codv-assoc-local}および\hyperref[def:connection-vect]{ベクトル束上の共変外微分の定義}より,
+        \begin{align}
+            R^{\nabla^E} e_{\alpha}{}_i 
+            &= \dd^{\nabla^E} \bigl( \bigl[\, \rho_*(A_\alpha) \,\bigr]^j{}_i \otimes  e_\alpha{}_j \bigr) \\
+            &= \bigl[\, \dd{\bigl( \rho_*(A_\alpha) \bigr) } \,\bigr]^j{}_i - \bigl[\, \rho_*(A_\alpha) \,\bigr]^j{}_i \wedge \nabla^E e_\alpha{}_j \\
+            &= \bigl[\, \rho_*(\dd{A_\alpha}) \,\bigr]^j{}_i \otimes e_\alpha{}_j - \bigl[\, \rho_*(A_\alpha) \,\bigr]^j{}_i \wedge \bigl[\, \rho_*(A_\alpha) \,\bigr]^k{}_j e_{\alpha}{}_k \\
+            &= \bigl[\, \rho_*(\dd{A_\alpha}) \,\bigr]^j{}_i \otimes e_\alpha{}_j - A_\alpha{}_a \wedge A_\alpha{}_b \bigl[\, \rho_*(T^b) \,\bigr]^k{}_j \bigl[\, \rho_*(T^a) \,\bigr]^j{}_i e_{\alpha}{}_k \\
+            &= \bigl[\, \rho_*(\dd{A_\alpha}) \,\bigr]^j{}_i \otimes e_\alpha{}_j + A_\alpha{}_a \wedge A_\alpha{}_b \bigl[\, \rho_*(T^a) \circ \rho_*(T^b) \,\bigr]^k{}_i e_{\alpha}{}_k \\
+            &= F_\alpha{}_a\bigl[\, \rho_*(T^a) \bigr]^j{}_i \otimes e_{\alpha}{}_j
+        \end{align}
+        \item 命題\ref{prop:curvature-linear}より $R^{\nabla^E}$ は $C^\infty(M)$-線形なので明らか．
+    \end{enumerate}
+    
+\end{proof}
+
+\section{ホロノミー}
+
+主束 $G \hookrightarrow P \xrightarrow{\pi} M$ を与える．任意の $x \in M$ に対して
+\begin{align}
+    \Omega_x \coloneqq \bigl\{\, \gamma \colon [0,\, 1] \lto M \bigm| \text{区分的} C^\infty \text{曲線},\; \gamma(0) = \gamma(1) \,\bigr\}
+\end{align}
+とおく．
+
+\begin{myprop}[label=prop:holonomy]{ホロノミー}
+    \begin{itemize}
+        \item $\omega \in \Omega^1(P;\, \mathfrak{g})$ を\hyperref[def:connection]{接続形式}とする．
+        \item $x \in M$
+        \item $u \in \pi^{-1}(\{x\})$
+    \end{itemize}
+    を与え，写像 $\Phi_u \colon \Omega_x \lto G$ を
+    \begin{align}
+        \tilde{\gamma}(1) \eqqcolon \tilde{\gamma}(0) \btl \Phi_u (\gamma) \WHERE \tilde{\gamma}(0) = u
+    \end{align}
+    で定義する．このとき以下が成り立つ：
+    \begin{enumerate}
+        \item $\forall h \in G$ に対して
+        \begin{align}
+            \Phi_{u \btl h} (\gamma) = h^{-1} \Phi_u (\gamma) h
+        \end{align}
+        \item $\gamma_1,\, \gamma_2 \in \Omega_x$ に対して
+        \begin{align}
+            \Phi_u (\gamma_1 * \gamma_2) = \Phi_u (\gamma_2) \Phi_u (\gamma_1)
+        \end{align}
+        ただし $*$ は道の積である．
+    \end{enumerate}
+\end{myprop}
+
+\begin{proof}
+    \begin{enumerate}
+        \item 命題\ref{prop:horizontal-lift-init}より $\tilde{\gamma} \btl h$ は $u \btl h$ を始点とする $\gamma$ の\hyperref[def:horizontal-lift-curve]{水平持ち上げ}であるから，
+        \begin{align}
+            (u \btl h) \btl \Phi_{u \btl h}(\gamma) = \tilde{\gamma} (1) \btl h = \bigl(u \btl \Phi_u(\gamma)\bigr) \btl h = u \btl h \btl \bigl( h^{-1} \Phi_u (\gamma) h \bigr) 
+        \end{align}
+        \item 命題\ref{prop:horizontal-lift-init}より $\tilde{\gamma_2} \btl \Phi_u(\gamma_1)$ は $\tilde{\gamma_1}(1) = u \btl \Phi_u(\gamma_1)$ を始点，$u \btl \Phi_u(\gamma_2) \Phi_u(\gamma_1)$ とする $\gamma_2$ の\hyperref[def:horizontal-lift-curve]{水平持ち上げ}であるから，水平持ち上げの一意性から
+        \begin{align}
+            u \btl \Phi_u (\gamma_1 * \gamma_2) = u \btl \Phi_u(\gamma_2) \Phi_u(\gamma_1)
+        \end{align}
+        が成り立つ．
+    \end{enumerate}
+\end{proof}
+
+\begin{mydef}[label=def:holonomy]{ホロノミー群}
+    主束 $G \hookrightarrow P \xrightarrow{\pi} M$ とその\hyperref[def:connection]{接続形式} $\omega \in \Omega^1(P;\, \mathfrak{g})$ を与える．
+    $\forall u \in P$ に対して，命題\ref{prop:holonomy}より $G$ の部分集合
+    \begin{align}
+        \mathrm{Hol}_u(P,\, \omega) \coloneqq \Phi_u (\Omega_{\pi(u)})
+    \end{align}
+    は部分群をなす．この部分群のことを\textbf{ホロノミー群} (holonomy group) と呼ぶ．
+\end{mydef}
+
+% 物理で登場するベクトルポテンシャル $\mathcal{A}_\mu$ は，\hyperref[thm:local-connection]{ゲージ場}の成分と $A_\mu = \iunit \mathcal{A}_\mu$ の関係にある~\cite[p.37]{Nakahara2018topo2}．
+
+% \begin{myexample}[label=ex:U1-gauge-monopole]{$S^2$ 上の $\mathrm{U}(1)$ ゲージ理論}
+    
+% \end{myexample}
+
+\end{document}

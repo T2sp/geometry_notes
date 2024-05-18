@@ -5,6 +5,7 @@
 \setcounter{chapter}{3}
 
 \chapter{微分形式}
+\label{chap4}
 
 \section{外積代数}
 
@@ -287,7 +288,7 @@ $V$ 上の $r$ 次の交代形式全体の集合を $A^r(V)$ と書く．\underl
 		\dd{\omega} (X_1,\, \dots ,\, X_{k+1}) = &\sum_{i=1}^{k+1} (-1)^{i+1} X_i \bigl( \omega(X_1,\, \dots ,\, \hat{X_i},\, \dots,\, X_{k+1}) \bigr) \\
 		&+ \sum_{i < j} (-1)^{i+j} \omega \bigl( [X_i,\, X_j],\, X_1,\, \dots ,\, \hat{X_i},\, \dots ,\, \hat{X_j},\, \dots ,\, X_{k+1} \bigr) 
 	\end{align}
-	ただし $\hat{X_i}$ は $X_i$ を省くことを意味する．また，$\comm{X}{Y}$ は\textbf{Lie括弧積}と呼ばれる $\vecfield{M}$ 上の二項演算で，以下のように定義される：
+	ただし $\hat{X_i}$ は $X_i$ を省くことを意味する．また，$\comm{X}{Y}$ は\textbf{Lieブラケット}と呼ばれる $\vecfield{M}$ 上の二項演算で，以下のように定義される：
 	\begin{align} 
 		\comm{X}{Y}f \coloneqq X(Yf) - Y(Xf)
 	\end{align}
@@ -374,7 +375,7 @@ $\extp^1 \bigl( T^*_{f(p)} N\bigr) \cong T^*_{f(p)} N$ を思い出すと，$f^*
 		\begin{align} 
 			(f_* X) h = X(h \circ f) \circ f^{-1} \in \cinftyf{N},\quad \forall h \in \cinftyf{N}
 		\end{align}
-		である．故にLie括弧積との順序は
+		である．故にLieブラケットとの順序は
 		\begin{align} 
 			\comm{f_*X}{f_*Y} h &= f_* X \bigl((f_* Y) h\bigr) - f_*Y \bigl( (f_* X) h\bigr) \\
 			&= X \Bigl( \bigl((f_* Y) h\bigr) \circ f \Bigr) \circ f^{-1} - Y \Bigl( \bigl((f_* X) h\bigr) \circ f \Bigr) \circ f^{-1} \\
@@ -1517,7 +1518,7 @@ $k$-形式 $\omega \in \Omega^k(M)$ は $\forall p \in M$ において多重線�
 \begin{align}
 	\omega_p \coloneqq T_pM \times \cdots  \times T_pM \to \mathbb{K}
 \end{align}
-を対応させ，それが $p$ に関して\cinfty 級につながっているものであった．ここで，値域 $\mathbb{K}$ を一般の $\mathbb{K}$-ベクトル空間 $V$ に置き換えてみる：
+を対応させ，それが $p$ に関して\cinfty 級につながっているものであった．ここで，値域 $\mathbb{K}$ を一般の $\mathbb{K}$-ベクトル空間 $V$ に置き換えてみる\footnote{この構成をうまく一般化することで，\textbf{ベクトル束に値を持つ微分形式}が定義できる．詳細は\hyperref[chap10]{第10章}の\eqref{def:vecf-valued}を参照．}：
 \begin{align}
 	\omega_p \coloneqq T_pM \times \cdots  \times T_pM \to V
 \end{align}
@@ -1551,7 +1552,7 @@ $k$-形式 $\omega \in \Omega^k(M)$ は $\forall p \in M$ において多重線�
 	\dd{(\omega \wedge \eta)} = \dd{\omega} \wedge \eta + (-1)^k \omega \wedge \dd{\eta}
 \end{align}
 
-\subsection{括弧積}
+\subsection{ブラケット}
 
 双線型写像 $\comm{\;}{\;} \colon V \times V \to V$ がLie代数の公理を充してしているとする．このとき
 \begin{align}

@@ -6,6 +6,7 @@
 
 
 \chapter{接空間・余接空間}
+\label{chap3}
 
 多様体の接空間は，多様体上の\cinfty 関数に作用する写像として定義される．
 接空間はその定義から自然にベクトル空間になり，その双対ベクトル空間は余接空間と呼ばれる．
@@ -703,24 +704,93 @@ $f \colon S \lto \mathbb{K}$ のことである
 
 これでもまだ直接の計算には向かない．より具体的な構成を探そう．
 
-与えられたベクトル空間 $V,\, W,\, Z \in \Obj{\VEC{\mathbb{K}}}$ に対して，集合
+任意の $\mathbb{K}$-ベクトル空間\footnote{有限次元でなくても良い．} $V_1,\, \dots,V_n,\, W \in \Obj{\VEC{\mathbb{K}}}$ に対して，集合
 \begin{align}
-	\bm{L(V,\, W;\, Z)} \coloneqq \bigl\{\, F \colon V \times W \lto Z \bigm| F\;\text{は双線型写像} \,\bigr\} 
+	\bm{L(V_1},\,\dots,\, \bm{V_n;\, W)} \coloneqq \bigl\{\, F \colon V_1 \times \cdots \times V_n \lto W \bigm| F\;\text{は多重線型写像} \,\bigr\} 
 \end{align}
-を考える．$L(V,\, W;\, Z)$ の上の加法とスカラー乗法を $\forall v \in V,\, \forall w \in W,\, \forall \lambda \in \mathbb{K}$ に対して
+を考える．$L(V_1,\, \dots,\, V_n;\, W)$ の上の加法とスカラー乗法を $\forall v_i \in V_i,\, \forall \lambda \in \mathbb{K}$ に対して
 \begin{align}
-	(F + G)(v,\, w) &\coloneqq F(v,\, w) + G(v,\, w), \\
-	(\lambda F)(v,\, w) &\coloneqq \lambda \bigl(F(v,\, w)\bigr)
+	(F + G)(v_1,\, \dots,\, v_n) &\coloneqq F(v_1,\, \dots,\, v_n) + G(v_1,\, \dots,\, v_n), \\
+	(\lambda F)(v_1,\, \dots,\, v_n) &\coloneqq \lambda \bigl(F(v_1,\, \dots,\, v_n)\bigr)
 \end{align}
-によって定義すると $L(V,\, W)$ は $\mathbb{K}$ ベクトル空間になる．
-そして $\forall \omega \in V^*,\; \forall \eta \in W^*$ に対して，$\bm{\omega \otimes \eta}$ と書かれる $L(V,\, W;\, \mathbb{K})$ の元を
+と定義すると $L(V_1,\, \dots,\, V_n;\, W)$ は $\mathbb{K}$ ベクトル空間になる．
+特に，\hyperref[def:hom-vec]{Hom の定義}から $\mathbb{K}$-ベクトル空間の等式として
 \begin{align}
-	\bm{\omega \otimes \eta} \colon V \times W \lto \mathbb{K},\; (v,\, w) \lmto \omega(v)\eta(w)
+    L(V;\, W) = \Hom{\mathbb{K}} (V,\, W)
 \end{align}
-によって定義する（つまり，$\omega \otimes \eta$ は双線型写像である）．
+が成り立つ．\hyperref[def:univ-vec-tensor]{テンソル積の普遍性}はこの等式を多重線型写像について次の意味で一般化する：
+
+\begin{myprop}[label=prop:tensor-multillinear]{多重線型写像とテンソル積}
+    任意の $\mathbb{K}$-ベクトル空間 $V_1,\, \dots,\, V_n,\, W \in \Obj{\VEC{\mathbb{K}}}$ に対して，$\mathbb{K}$-ベクトル空間として
+    \begin{align}
+        L(V_1,\, \dots,\, V_n;\, W) \cong \Hom{\mathbb{K}}(V_1 \otimes \cdots \otimes V_n,\, W)
+    \end{align}
+    が成り立つ．
+\end{myprop}
+
+\begin{proof}
+    \hyperref[def:univ-vec-tensor]{テンソル積の普遍性}から，$\mathbb{K}$-線型写像
+    \begin{align}
+        \alpha \colon \Hom{\mathbb{K}}(V_1 \otimes \cdots \otimes V_n,\, W) \lto L(V_1,\, \dots,\, V_n;\, W),\; f \lmto f \circ \Phi
+    \end{align}
+    は全単射，i.e. $\mathbb{K}$-ベクトル空間の同型写像である．
+\end{proof}
+
+% \begin{myprop}[label=prop:basis-tensor]{有限次元テンソル積の基底}
+% 	\underline{有限次元} $\mathbb{K}$-ベクトル空間 $V,\, W$（$\dim V \eqqcolon n,\; \dim W \eqqcolon m$）を与える．
+%     $V,\, W$ の基底をそれぞれ $\{e_1,\, \dots,\, e_n\},\; \{f_1,\, \dots,\, f_m\}$ と書く．
+% 	このとき，集合
+% 	\begin{align}
+% 		\mathcal{E} \coloneqq \bigl\{\, e_\mu \otimes f_\nu \bigm| 1 \le \mu \le n,\, 1 \le \nu \le m \,\bigr\} 
+% 	\end{align}
+% 	は $V \otimes W$ の基底である．従って $\dim V \otimes W = nm$ である．
+% \end{myprop}
+
+% \begin{proof}
+% 	\hyperref[prop:tensor-vec]{テンソル積の構成}から，$\forall t \in V \otimes W$ は有限個の $(v_i,\, w_i) \in V \times W\; (i=1,\, \dots l)$ を使って
+% 	\begin{align}
+% 		t = \left(\sum_{i=1}^l t_{i} \iota(v_i,\, w_i)\right) = \sum_{i=1}^l t_i v_i \otimes w_i
+% 	\end{align}
+% 	と書ける．$v_i = v_i{}^\mu e_\mu,\; w_i = w_i{}^{\mu} f_\mu$ のように展開することで，
+% 	\begin{align}
+% 		t &= \sum_{i=1}^l t_i (v_i{}^\mu e_\mu) \otimes (w_i{}^\nu f_\nu) \\
+% 		&= \sum_{i=1}^l t_i v_i{}^\mu w_i{}^\nu e_{\mu} \otimes f_\nu
+% 	\end{align}
+% 	と書ける．ただし添字 $\mu,\, \nu$ に関してはEinsteinの規約を適用した．従って $\mathcal{E}$ は $V \otimes W$ を生成する．
+
+% 	$\mathcal{E}$ の元が線型独立であることを示す．
+% 	\begin{align}
+% 		t^{\mu\nu} e_\mu \otimes e_{\nu} = 0
+% 	\end{align}
+% 	を仮定する．$\{e_\mu\},\, \{f_\mu\}$ の\hyperref[def.basisforDVS]{双対基底}をそれぞれ $\{\varepsilon^\mu\},\, \{\eta^\nu\}$ と書き，
+% 	全ての添字の組み合わせ $(\mu,\, \nu) \in \{	1,\, \dots,\, n\} \times \{1,\, \dots,\, m\}$ に対して双線型写像
+% 	\begin{align}
+% 		\tau^{\mu\nu} \colon V \times W \lto \mathbb{R},\; (v,\, w) \lmto \varepsilon^\mu (v) \eta^\nu (w)
+% 	\end{align}
+% 	を定める．$\tau^{\mu\nu}$ は双線型なので\hyperref[cmtd:tensor-vec]{テンソル積の普遍性}から $\VEC{\mathbb{K}}$ の可換図式
+% 	\begin{center}
+% 		\begin{tikzcd}[row sep=large, column sep=large]
+% 			&V \times W \ar[d, "\pi \circ \iota"'] \ar[r,"\tau^{\mu\nu}"] &\mathbb{R} \\
+% 			&\bm{V \otimes W} \ar[ur, red, dashed, "\exists! \overline{\tau}^{\mu\nu}"'] &
+% 		\end{tikzcd}
+% 	\end{center}
+% 	が存在する．このことは，
+% 	\begin{align}
+% 		0 &= \textcolor{red}{\overline{\tau}^{\mu\nu}} (t^{\rho\sigma} e_{\rho} \otimes f_{\sigma}) \\
+% 		&= t^{\rho\sigma} (\textcolor{red}{\overline{\tau}^{\mu\nu}} \circ \pi \circ \iota) (e_\rho ,\,  f_\sigma) \\
+% 		&= t^{\rho\sigma} \tau^{\mu\nu}(e_\rho ,\,  f_\sigma) = t^{\mu\nu}
+% 	\end{align}
+% 	を意味する．従って$\mathcal{E}$ の元は線型独立である．
+% \end{proof}
+
+$\forall \omega_i \in V_i^*$ に対して，$\bm{\omega_1 \otimes \cdots \otimes \omega_n}$ と書かれる $L(V_1,\, \dots,\, V_n;\, \mathbb{K})$ の元を
+\begin{align}
+	\bm{\omega_1 \otimes \cdots \otimes \omega_n} \colon V_1 \times \cdots \times V_n \lto \mathbb{K},\; (v_1,\, \dots,\, v_n) \lmto \prod_{i=1}^n \omega_i(v_i)
+\end{align}
+によって定義する．ただし右辺の総積記号は $\mathbb{K}$ の積についてとる．
 
 \begin{myprop}[label=prop:basis-L]{}
-	$V,\, W$（$\dim V = n,\, \dim W = m$）の基底をそれぞれ $\{e_\mu\},\, \{f_\nu\}$ と書き，その\hyperref[def.basisforDVS]{双対基底}をそれぞれ $\{\varepsilon^\mu\},\, \{\eta^\mu\}$ と書く．このとき，集合
+	有限次元 $\mathbb{K}$-ベクトル空間 $V,\, W$（$\dim V \eqqcolon n,\, \dim W \eqqcolon m$）の基底をそれぞれ $\{e_\mu\},\, \{f_\nu\}$ と書き，その\hyperref[def.basisforDVS]{双対基底}をそれぞれ $\{\varepsilon^\mu\},\, \{\eta^\mu\}$ と書く．このとき，集合
 	\begin{align}
 		\mathcal{B} \coloneqq \bigl\{\, \varepsilon^\mu \otimes \eta^\nu \bigm| 1 \le \mu \le n,\, 1 \le \nu \le m \,\bigr\} 
 	\end{align}
@@ -730,18 +800,18 @@ $f \colon S \lto \mathbb{K}$ のことである
 \begin{proof}
 	$\forall F  \in L(V,\, W;\, \mathbb{K})$ を1つとり，全ての添字の組み合わせ $(\mu,\, \nu)$ に対して
 	\begin{align}
-		F_{\mu\nu} \coloneqq F(e_\mu,\, e_\nu)
+		F_{\mu\nu} \coloneqq F(e_\mu,\, f_\nu)
 	\end{align}
-	とおく．$\forall (v,\, w) \in V,\, W$ を $v = v^\mu e_\mu,\; w = w^\nu f_\nu$ と展開すると，
+	とおく．$\forall (v,\, w) \in V \times W$ を $v = v^\mu e_\mu,\; w = w^\nu f_\nu$ と展開すると，
 	\begin{align}
 		F_{\mu\nu} \varepsilon^\mu \otimes \eta^\nu (v,\, w) &= F_{\mu\nu} \varepsilon^{\mu}(v) \eta^\nu(w) \\
 		&= F_{\mu\nu} v^\mu w^\nu
 	\end{align}
 	が成り立つ．一方，双線型性から
 	\begin{align}
-		F(v,\, w) = v^\mu w^\nu F(e_\mu,\, e_\nu) = F_{\mu\nu} v^\mu w^\nu
+		F(v,\, w) = v^\mu w^\nu F(e_\mu,\, f_\nu) = F_{\mu\nu} v^\mu w^\nu
 	\end{align}
-	も成り立つので $F = F_{\mu\nu} \varepsilon^\mu \otimes \eta^\nu$ が言えた．i.e. 集合 $\mathcal{B}$ は $L(V,\, W;\, \mathbb{R})$ を生成する．
+	も成り立つので $F = F_{\mu\nu} \varepsilon^\mu \otimes \eta^\nu$ が言えた．i.e. 集合 $\mathcal{B}$ は $L(V,\, W;\, \mathbb{K})$ を生成する．
 
 	次に，$\mathcal{B}$ の元が線型独立であることを示す．
 	\begin{align}
@@ -751,11 +821,20 @@ $f \colon S \lto \mathbb{K}$ のことである
 \end{proof}
 
 
-\begin{myprop}[label=prop:tensor-multillinear]{テンソル積の構成その2}
-	\begin{align}
+\begin{myprop}[label=prop:fin-tensor-dual]{テンソル積の構成その2}
+	任意の\underline{有限次元} $\mathbb{K}$-ベクトル空間 $V,\, W$ に対して
+    \begin{align}
 		L(V,\, W;\, \mathbb{K}) \cong V^* \otimes W^*
 	\end{align}
 \end{myprop}
+
+\begin{marker}
+    命題\ref{prop:tensor-multillinear}より，これは 
+    \begin{align}
+        L(V,\, W;\, \mathbb{K}) \cong \Hom{\mathbb{K}}(V \otimes W,\, \mathbb{K}) = (V \otimes W)^* \cong V^* \otimes W^*
+    \end{align}
+    を意味する．
+\end{marker}
 
 \begin{proof}
 	写像
@@ -775,7 +854,7 @@ $f \colon S \lto \mathbb{K}$ のことである
 	$V,\, W$（$\dim V = n,\, \dim W = m$）の基底をそれぞれ $\{e_\mu\},\, \{f_\nu\}$ と書き，その\hyperref[def.basisforDVS]{双対基底}をそれぞれ $\{\varepsilon^\mu\},\, \{\eta^\mu\}$ と書く．
 	命題\ref{prop:basis-tensor}より $V^* \otimes W^*$ の基底として
 	\begin{align}
-		\mathcal{E} \coloneqq \bigl\{\, \varepsilon^\mu \otimes \eta^\nu \bigm| 1 \le i \le n,\, 1 \le j \le m \,\bigr\} 
+		\mathcal{E} \coloneqq \bigl\{\, \varepsilon^\mu \otimes \eta^\nu \bigm| 1 \le \mu \le n,\, 1 \le \nu \le m \,\bigr\} 
 	\end{align}
 	がとれ，命題\ref{prop:basis-L}より $L(V,\, W;\, \mathbb{K})$ の基底として
 	\begin{align}
@@ -784,11 +863,114 @@ $f \colon S \lto \mathbb{K}$ のことである
 	がとれる（記号が同じだが，違う定義である）．
 	このとき，$\forall (v,\, w) \in V \times W$ に対して
 	\begin{align}
-		\textcolor{red}{\overline{\Phi}}(\varepsilon_\mu \otimes \eta_\nu )(v,\, w) = \varepsilon_\mu (v) \eta_\nu (w) = \varepsilon^\mu \otimes \eta^\nu(v,\, w)
+		\textcolor{red}{\overline{\Phi}}(\varepsilon^\mu \otimes \eta^\nu )(v,\, w) = \textcolor{red}{\overline{\Phi}}\circ \pi \circ \iota(\varepsilon^\mu,\,\eta^\nu )(v,\, w) = \Phi(\varepsilon^\mu,\, \eta^\nu)(v,\, w) = \varepsilon^\mu (v) \eta^\nu (w) = \varepsilon^\mu \otimes \eta^\nu(v,\, w)
 	\end{align}
-	が成り立つ（ただし，左辺の $\otimes$ は命題\ref{prop:tensor-vec}，右辺は命題\ref{prop:tensor-multillinear}で定義したものである），ので
-	$\textcolor{red}{\overline{\Phi}}$ は $\mathcal{E}$ の元と $\mathcal{B}$ の元の1対1対応を与えるので同型写像である．
+	が成り立つ（ただし，左辺の $\otimes$ は命題\ref{prop:tensor-vec}，右辺は命題\ref{prop:basis-L}で定義したものである）ので，
+	$\textcolor{red}{\overline{\Phi}}$ は $\mathcal{E}$ の元と $\mathcal{B}$ の元の1対1対応を与える．i.e. 同型写像である．
 \end{proof}
+
+\begin{myprop}[label=prop:tensor-hom]{テンソル積と Hom の同型}
+    任意の\underline{有限次元} $\mathbb{K}$-ベクトル空間 $V,\, W$ に対して
+    \begin{align}
+        \Hom{\mathbb{K}} (V,\, W) \cong V^* \otimes W
+    \end{align}
+\end{myprop}
+
+\begin{proof}
+    % 定義から $L(V;\, W) = \Hom{\mathbb{K}}(V,\, W)$ である．
+    写像
+    \begin{align}
+        \Phi \colon V^* \times W &\lto \Hom{\mathbb{K}}(V,\, W), \\
+        (\omega,\, w) &\lmto \bigl( v \lmto \omega(v) w \bigr) 
+    \end{align}
+    は双線型なので，\hyperref[def:univ-vec-tensor]{テンソル積の普遍性}から $\VEC{\mathbb{K}}$ の可換図式
+    \begin{center}
+		\begin{tikzcd}[row sep=large, column sep=large]
+			&V^* \times W \ar[d, "\pi \circ \iota"'] \ar[r,"\Phi"] &\Hom{\mathbb{K}}(V,\, W) \\
+			&\bm{V^* \otimes W} \ar[ur, red, dashed, "\exists! \overline{\Phi}"'] &
+		\end{tikzcd}
+	\end{center}
+	が存在する．
+	$V,\, W$（$\dim V = n,\, \dim W = m$）の基底をそれぞれ $\{e_\mu\},\, \{f_\nu\}$ と書き，その\hyperref[def.basisforDVS]{双対基底}をそれぞれ $\{\varepsilon^\mu\},\, \{\eta^\mu\}$ と書く．
+	命題\ref{prop:basis-tensor}より $V^* \otimes W$ の基底として
+	\begin{align}
+		\mathcal{E} \coloneqq \bigl\{\, \varepsilon^\mu \otimes f_\nu \bigm| 1 \le \mu \le n,\, 1 \le \nu \le m \,\bigr\} 
+	\end{align}
+	がとれる．一方，$\forall \omega \in V^*,\; \forall w \in W$ に対して
+    \begin{align}
+        \label{eq:tensorbasis}
+        \omega \otimes w \coloneqq \Phi(\omega,\, w) \colon V \lto W,\; v \lmto \omega(v) w
+    \end{align}
+    とおくと $\Hom{\mathbb{K}}(V,\, W)$ の基底として
+	\begin{align}
+		\mathcal{B} \coloneqq \bigl\{\, \varepsilon^\mu \otimes f_\nu \bigm| 1 \le \mu \le n,\, 1 \le \nu \le m \,\bigr\} 
+	\end{align}
+	がとれる
+    \footnote{
+        $\forall F \in \Hom{\mathbb{K}}(V,\, W)$ をとる．$F_{\mu}{}^\nu \coloneqq \eta^\nu \bigl( F(e_\mu) \bigr)$ とおく．このとき $\forall v = v^\mu e_\mu \in V$ に対して
+        \begin{align}
+            F_{\mu}{}^{\nu} \varepsilon^\mu \otimes f_\nu (v) = F_\mu{}^\nu \varepsilon^\mu(v) f_\nu = F_\mu{}^\nu v^\mu f_\nu
+        \end{align}
+        一方で，線形性および双対基底の定義から
+        \begin{align}
+            F(v) = v^\mu F(e_\mu) = v^\mu \eta^\nu \bigl( F(e_\mu) \bigr) f_\nu = v^\mu F_\mu{}^\nu f_\nu
+        \end{align}
+        が成り立つので $F = F_\mu{}^\nu \varepsilon^\mu \otimes f_\nu$ が言えた．i.e. $\mathcal{B}$ は $\Hom{\mathbb{K}}(V,\, W)$ を生成する．
+
+        次に，$\mathcal{B}$ の元が線型独立であることを示す．
+        \begin{align}
+            F_{\mu}{}^\nu \varepsilon^\mu \otimes f_\nu = 0
+        \end{align}
+        を仮定する．$1 \le \forall \mu \le \dim V$ について右辺を $e_\mu$ に作用させることで $F_\mu{}^\nu f_\nu = 0$ が従うが，$f_\nu$ の線型独立性から $F_{\mu}{}^\nu = 0$ である．
+    }
+    （記号が同じだが，$\mathcal{E}$ とは違う定義である）．
+	このとき，$\forall v \in V$ に対して
+	\begin{align}
+		\textcolor{red}{\overline{\Phi}}(\varepsilon^\mu \otimes f_\nu )(v) = \textcolor{red}{\overline{\Phi}} \circ \pi \circ \iota(\varepsilon^\mu,\, f_\nu )(v) = \Phi(\varepsilon^\mu,\, f_\nu)(v) = \varepsilon^\mu (v) f_\nu = \varepsilon^\mu \otimes f_\nu(v)
+	\end{align}
+	が成り立つ（ただし，左辺の $\otimes$ は命題\ref{prop:tensor-vec}，右辺は\eqref{eq:tensorbasis}で定義したものである）ので，
+	$\textcolor{red}{\overline{\Phi}}$ は $\mathcal{E}$ の元と $\mathcal{B}$ の元の1対1対応を与える．i.e. 同型写像である．
+\end{proof}
+
+
+\begin{mycol}[label=col:tensor-multillinear]{}
+    任意の\underline{有限次元} $\mathbb{K}$-ベクトル空間 $V_1,\, \dots,\, V_n,\, W$ に対して
+    \begin{align}
+        L(V_1,\, \dots,\, V_n;\, W) \cong V_1^* \otimes \cdots \otimes V_n^* \otimes W
+    \end{align}
+\end{mycol}
+
+\begin{proof}
+    命題\ref{prop:tensor-multillinear}および命題\ref{prop:fin-tensor-dual}, \ref{prop:tensor-hom}から
+    % , \ref{prop:tensor-hom}の証明と同様の議論をすることで
+    \begin{align}
+        L(V_1,\, \dots,\, V_n;\, W) 
+        &\cong \Hom{\mathbb{K}}(V_1 \otimes \cdots \otimes V_n,\, W) \\
+        &\cong (V_1 \otimes \cdots \otimes V_n)^* \otimes W \\
+        &\cong V_1^* \otimes \cdots \otimes V_n^* \otimes W
+    \end{align}
+    を得る．
+\end{proof}
+
+\begin{mycol}[label=col:tensor-hom-adj]{Tensor-Hom adjunction}
+    任意の\underline{有限次元} $\mathbb{K}$-ベクトル空間 $V,\, W,\, Z$ に対して，
+    \begin{align}
+        \Hom{\mathbb{K}} (V \otimes W,\, Z) \cong \Hom{\mathbb{K}} \bigl( V,\, \Hom{\mathbb{K}} (W,\, Z) \bigr) 
+    \end{align}
+\end{mycol}
+
+\begin{proof}
+    命題\ref{prop:fin-tensor-dual}, \ref{prop:tensor-hom}およびテンソル積の結合則より
+    \begin{align}
+        \Hom{\mathbb{K}} (V \otimes W,\, Z) 
+        &\cong (V \otimes W)^* \otimes Z \\
+        &\cong V^* \otimes W^* \otimes Z \\
+        &\cong V^* \otimes (W^* \otimes Z) \\
+        &\cong V^* \otimes \Hom{\mathbb{K}} (W,\, Z) \\
+        &\cong \Hom{\mathbb{K}} \bigl( V,\, \Hom{\mathbb{K}} (W,\, Z) \bigr) 
+    \end{align}
+\end{proof}
+
 
 \subsection{多元環}
 
@@ -796,16 +978,16 @@ $f \colon S \lto \mathbb{K}$ のことである
 	$\mathbb{K}$ を体とする．$\mathbb{K}$ 上の\hyperref[ax.vector]{ベクトル空間} $V \in \VEC{\mathbb{K}}$ の上に，加法とスカラー乗法の他にもう1つの
 	2項演算
 	\begin{align}
-		[\;,\,]\; \colon V \times V \to V,\; (v,\, w) \mapsto \comm{v}{w}
+		*\; \colon V \times V \to V,\; (v,\, w) \mapsto v*w
 	\end{align}
 	を与える．
 	
 	このとき，$V$ が $\mathbb{K}$ 上の\textbf{多元環} (algebra) \footnote{\textbf{代数}と訳されることもある．}であるとは，以下の2条件が充たされていることを言う：
 	\begin{itemize}
-		\item 組 $\bigl(V,\, +,\, [\;,\,]\bigr)$ が\hyperref[ax:ring]{\textbf{環}}
+		\item 組 $\bigl(V,\, +,\, \cdot \;\bigr)$ が\hyperref[ax:ring]{\textbf{環}}
 		\item $\forall \lambda \in \mathbb{K},\; \forall v,\, w \in V$ に対して
 		\begin{align}
-			\lambda \comm{v}{w} = \comm{\lambda v}{w} = \comm{v}{\lambda w}
+			\lambda v\cdot w = (\lambda v)\cdot w = v\cdot (\lambda w)
 		\end{align}
 	\end{itemize}
 \end{myaxiom}
@@ -817,7 +999,7 @@ $f \colon S \lto \mathbb{K}$ のことである
 	$\forall f,\, g \in C^\infty (M),\; \forall \lambda \in \mathbb{R}$ および $\forall p \in M$ に対して
 	\begin{align}
 		(f + g)(p) &\coloneqq f(p) + g(p) \\
-		(\comm{f}{g})(p) &\coloneqq f(p) g(p) \\
+		(f\cdot g)(p) &\coloneqq f(p) g(p) \\
 		(\lambda f)(p) &\coloneqq \lambda f(p)
 	\end{align}
 \end{mydef}
@@ -825,10 +1007,10 @@ $f \colon S \lto \mathbb{K}$ のことである
 \begin{proof}
 	\hyperref[ax.alg]{多元環}の公理\ref{ax.alg}を充していることを確認する．$C^\infty (M)$ が和とスカラー乗法に関して $\mathbb{R}$ 上のベクトル空間であること，および和と積に関して環であることは明らかである．積に関しては，$\mathbb{R}$ が可換体であることから $\forall f,\, g \in C^\infty(M),\; \forall \lambda \in \mathbb{R}$ に対して
 	\begin{align}
-		\bigl(\lambda \comm{f}{g} \bigr)(p) &= \lambda \bigl(\comm{f}{g}(p)\bigr) \\
+		\bigl(\lambda (f\cdot g) \bigr)(p) &= \lambda \bigl((f\cdot g)(p)\bigr) \\
 		&= \lambda f(p) g(p)   \\
-		&= \bigl( \lambda f(p)  \bigr) g(p) = \comm{\lambda f}{g}(p) \\
-		&= f(p) \bigl( \lambda g(p) \bigr)  = \comm{f}{\lambda g}(p) \\
+		&= \bigl( \lambda f(p)  \bigr) g(p) = \bigl((\lambda f)\cdot g\bigr)(p) \\
+		&= f(p) \bigl( \lambda g(p) \bigr)  = \bigl(f\cdot (\lambda g)\bigr)(p) \\
 	\end{align}
 	であるから示された．
 \end{proof}
@@ -1604,7 +1786,7 @@ $n$ 次元\cinfty 多様体 $M$ の各点の上に $n$ 次元ベクトル空間�
 	の組のことを $M$ の\textbf{接束} (tangent bandle) と呼ぶ．
 \end{mydef}
 
-$\dim M = n$ とする．接束はそれ自身が自然に\underline{ $2n$ 次元\cinfty 多様体}になり，射影 $\pi$ は \cinfty 写像になる．このことを確認するには，$M$ の位相と\cinfty アトラスのみを使って $TM$ に位相と\cinfty アトラスを入れることができることを見ればよい：
+$\dim M = n$ とする．接束はそれ自身が自然に\underline{ $2n$ 次元\cinfty 多様体}になり，射影 $\pi$ は \cinfty 写像になる．このことを大雑把に確認する\footnote{接束の $C^\infty$ 構造のちゃんとした構成は\hyperref[appendixB]{付録B}および\exref{ex:tangentbundle}で扱う．}には，$M$ の位相と\cinfty アトラスのみを使って $TM$ に位相と\cinfty アトラスを入れることができることを見ればよい：
 
 $\mathcal{S}$ を $M$ のアトラスとする．一点 $p \in M$ を任意にとり，$p$ の周りのチャート $(U,\, \varphi) \in \mathcal{S}$ を一つとる．
 命題\ref{prop:functor-Tp}-(3) より，微分同相写像 $\varphi \colon U \lto \mathbb{R}^n$ は同型写像 $T_p \varphi \colon T_p M \to T_{\varphi(p)} \mathbb{R}^n$ を誘導する．
@@ -1630,7 +1812,6 @@ $TM$ のアトラスは，
 \end{align}
 とおけば良い．接ベクトルの変換則から $\tilde{\mathcal{S}}$ の座標変換は全て\cinfty 級である．
 
-
 \section{ベクトル場}
 
 \begin{myaxiom}[label=ax.module]{環上の加群}
@@ -1643,7 +1824,7 @@ $TM$ のアトラスは，
 	\end{description}
 \end{myaxiom}
 
-定義\ref{def.tangentv}は\cinfty 多様体の一点 $p \in M$ における接ベクトルを定義したものであった．次に定義するベクトル場は $p$ を $M$ 全域で動かして得られる構造である．
+定義\ref{def.tangentv}は\cinfty 多様体の一点 $p \in M$ における接ベクトルを定義したものであった．次で定義するベクトル場は $p$ を $M$ 全域で動かして得られる構造である\footnote{なお，ここでのベクトル場の扱いはかなり大雑把である．ちゃんとした扱いは定義\ref{def:vecf}以下を参照．}．
 
 \begin{mydef}[label=vectorfield]{ベクトル場}
 	\cinfty 多様体 $M$ を与える．$M$ 上の\cinfty \textbf{ベクトル場} $X$ は，各点 $p$ における接ベクトル $X_p \in T_pM$ を対応させ，$X_p$ が $p$ に関して\cinfty 級に動くもののことである．i.e. 点 $p$ を含むチャート $\chart{U}{x^i}$ を与えると，点 $p$ において $X$ は

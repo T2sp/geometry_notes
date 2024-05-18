@@ -251,6 +251,11 @@ title=系~\thetcbcounter: #2,#1}
         \end{tikzcd}
     }
 }
+\newcommand{\btl}{\blacktriangleleft}
+\newcommand{\btr}{\blacktriangleright}
+\newcommand{\Lie}[1]{#1^{\mathrm{L}}}
+\newcommand{\evalunit}{\mathrm{ev}_{1_G}}
+\newcommand{\codd}[1]{\mathrm{D}#1}
 \mathchardef\mhyphen="2D
 
 %% file division
@@ -274,17 +279,20 @@ title=系~\thetcbcounter: #2,#1}
 これらの問題点については後日更新したいと考えている．
 また，できるだけ正確な記述を試みたが，微分幾何学の専門家の検閲を介しておらず重大な誤りが含まれている可能性があるのでご了承いただきたい．
 
-\begin{table}[H]
-    \centering
-    \caption[]{更新履歴}
-    \label{tab:update}
-    \begin{tabular}{l|r}
-        \multicolumn{1}{c}{更新日時} &
-        \multicolumn{1}{|c}{更新内容} \\
-        \hhline{-|-}
-        2023/5/18 & 定義\ref{def:natural}と，命題\ref{prop:tensor-vec}の直前の式の誤植を訂正 \\
-    \end{tabular}
-\end{table}%
+（2024/5/19 追記）この資料を管理しているgithubを公開しました．
+最新版のpdfは\url{https://github.com/T2sp/geometry_notes.git}の \texttt{smooth/out/} のフォルダから入手できます．
+以後，筆者の余力があるときに順次更新していこうと思います．
+% \begin{table}[H]
+%     \centering
+%     \caption[]{更新履歴}
+%     \label{tab:update}
+%     \begin{tabular}{l|r}
+%         \multicolumn{1}{c}{更新日時} &
+%         \multicolumn{1}{|c}{更新内容} \\
+%         \hhline{-|-}
+%         2023/5/18 & 定義\ref{def:natural}と，命題\ref{prop:tensor-vec}の直前の式の誤植を訂正 \\
+%     \end{tabular}
+% \end{table}%
 \setcounter{tocdepth}{2}
 \tableofcontents
 
@@ -305,6 +313,8 @@ title=系~\thetcbcounter: #2,#1}
 \subfile{chap8}
 
 \subfile{chap9}
+
+\subfile{chap10}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Appendix %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \appendix
