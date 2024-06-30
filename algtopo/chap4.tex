@@ -161,14 +161,14 @@
 
 \begin{mydef}[label=def:proj-mod]{射影的加群}
     左 $R$ 加群 $P$ が\textbf{射影的加群} (projective module) であるとは，
-    任意の左 $R$ 加群の\textbf{全射準同型} $f\colon M \lto N$ および任意の準同型写像 $g \colon P \lto N$ に対し，左 $R$ 加群の準同型写像 $ h \colon P \lto M$ であって $f \circ h = g$ を充たすものが存在することを言う（図式\ref{fig:proj-mod}）．
+    任意の左 $R$ 加群の\textbf{全射準同型} $\textcolor{blue}{f\colon M \lto N}$ および任意の準同型写像 $\textcolor{blue}{g \colon P \lto N}$ に対し，左 $R$ 加群の準同型写像 $ \textcolor{red}{h} \colon P \lto \textcolor{blue}{M}$ であって $\textcolor{blue}{f} \circ \textcolor{red}{h} = \textcolor{blue}{g}$ を充たすものが存在することを言う（図式\ref{fig:proj-mod}）．
 \end{mydef}
 
 \begin{figure}[H]
     \centering
     \begin{tikzcd}[row sep=large, column sep=large]
-        &P \ar[d, "g"]\ar[dl, red, dashed, "\exists h"] \\
-        M \ar[r, two heads, "f"] &N
+        &P \ar[d, blue, "g"]\ar[dl, red, dashed, "\exists h"'] \\
+        \textcolor{blue}{M} \ar[r, two heads,blue, "f"'] &\textcolor{blue}{N}
     \end{tikzcd}
     \caption{射影的加群}
     \label{fig:proj-mod}
@@ -183,7 +183,14 @@
 \end{myprop}
 
 \begin{proof}
-    射影的加群の定義において $P = N$ とすることで，左 $R$ 加群の準同型写像 $s \colon N \lto M$ であって $g \circ s = 1_N$ を充たすものが存在する．
+    図式の完全性から $g \colon M \lto N$ は全射準同型である．
+    よって\hyperref[def:proj-mod]{射影的加群の定義}から以下の図式を可換にする $h \colon N \lto M$ が存在する：
+    \begin{center}
+        \begin{tikzcd}[row sep=large, column sep=large]
+            & &N \ar[d, equal, "1_N"]\ar[dl, red, dashed, "h"'] \\
+            &M \ar[r, "g"'] &N
+        \end{tikzcd}
+    \end{center}
 \end{proof}
 
 \begin{myprop}[label=prop:proj-mod-dp]{射影的加群の直和}
@@ -235,7 +242,7 @@
 \end{mycol}
 
 \begin{proof}
-    $R$ が射影的加群であることを示せば命題\ref{prop:proj-mod:dp}より従う．
+    $R$ が射影的加群であることを示せば命題\ref{prop:proj-mod-dp}より従う．
 
     左 $R$ 加群の全射準同型写像と準同型写像 $f \colon M \lto N,\; g\colon R \lto N$ を任意に与える．このとき
     ある $x \in M$ が存在して $f(x) = g(1)$ となる．この $x$ に対して準同型写像 $h \colon R \lto M,\; a \lmto ax$ を定めると，$\forall a \in R$ に対して
@@ -303,13 +310,13 @@ $R$ が\hyperref[def:PID]{PID}のときは嬉しいことが起こる：
 次に，\textbf{単射的加群}の定義をする：
 \begin{mydef}[label=def:inj-mod]{単射的加群}
     左 $R$ 加群 $I$ が\textbf{単射的加群} (injective module) であるとは，
-    任意の左 $R$ 加群の\textbf{単射準同型} $f\colon M \lto N$ および任意の準同型写像 $g \colon M \lto I$ に対し，左 $R$ 加群の準同型写像 $ h \colon N \lto I$ であって $ h \circ f = g$ を充たすものが存在することを言う（図式\ref{fig:inj-mod}）．
+    任意の左 $R$ 加群の\textbf{単射準同型} $\textcolor{blue}{f\colon M \lto N}$ および任意の準同型写像 $\textcolor{blue}{g \colon M \lto I}$ に対し，左 $R$ 加群の準同型写像 $\textcolor{red}{h \colon N \lto I}$ であって $\textcolor{red}{h} \circ \textcolor{blue}{f} = \textcolor{blue}{g}$ を充たすものが存在することを言う（図式\ref{fig:inj-mod}）．
 \end{mydef}
 
 \begin{figure}[H]
     \centering
     \begin{tikzcd}[row sep=large, column sep=large]
-        M \ar[d, "g"']\ar[r, hook, "f"] &N \ar[dl, red, dashed, "\exists h"] \\
+        M \ar[d, blue, "g"']\ar[r, hook, blue, "f"] &N \ar[dl, red, dashed, "\exists h"] \\
         I &
     \end{tikzcd}
     \caption{単射的加群}
@@ -325,7 +332,13 @@ $R$ が\hyperref[def:PID]{PID}のときは嬉しいことが起こる：
 \end{myprop}
 
 \begin{proof}
-    \hyperref[def:inj-mod]{単射的加群}の定義において $I = L$ とすれば良い．
+    図式の完全性から $f \colon L \lto M$ は単射である．よって\hyperref[def:inj-mod]{単射的加群}の定義から，以下の図式を可換にする $h \colon M \lto L$ が存在する：
+    \begin{center}
+        \begin{tikzcd}[row sep=large, column sep=large]
+            &L \ar[r, "f"]\ar[d, equal, "1_L"'] &M \ar[dl, dashed, red, "h"] \\
+            &L &
+        \end{tikzcd}
+    \end{center}
 \end{proof}
 
 
@@ -445,7 +458,8 @@ $R$ が\hyperref[def:PID]{PID}のときは同値になる：
         より $a\Phi(m) = \Phi (am)$ となる．i.e. $\Phi$ は左 $R$ 加群の準同型写像である．
 
         次に $\Ker\Phi = \{0\}$ を示す．  
-        $\forall m \in M \setminus \{0\}$ に対して $\mathbb{Z}$ 加群の準同型写像
+        $\forall m \in M \setminus \{0\}$ を1つとって固定する．
+        $\mathbb{Z}$ 加群の準同型写像
         \begin{align}
             f \colon \mathbb{Z} \lto M,\; a \lmto am
         \end{align}
@@ -942,9 +956,9 @@ $\MOD{R}$ の対象 $M$ は $M^0 = M,\, M^{n \neq 0} = 0$ とおくことで自�
 \begin{mydef}[label=def:double-complex]{二重複体}
     $\MOD{R}$ における図式\ref{fig:double-complex}が\textbf{二重複体} (double complex) であるとは，$\forall p,\, q \in \mathbb{Z}$ に対して
     \begin{align}
-        d_1^{p+1,\, q} \circ d_1^{p,\, q} &= 0, \\
-        d_2^{p,\, q+1} \circ d_2^{p,\, q} &= 0, \\
-        d_2^{p+1,\, q} \circ d_1^{p,\, q} + d_1^{p,\, q+1} \circ d_2^{p,\, q} &= 0
+        d_1^{p+1,\, q} \circ d_1^{p,\, q} &= 0, \label{eq:dcplx-1}\\
+        d_2^{p,\, q+1} \circ d_2^{p,\, q} &= 0, \label{eq:dcplx-2}\\
+        d_2^{p+1,\, q} \circ d_1^{p,\, q} + d_1^{p,\, q+1} \circ d_2^{p,\, q} &= 0 \label{eq:dcplx-3}
     \end{align}
     が成り立つことを言う．これを $(M^{\bullet,\, *},\, d_1^{\bullet,\, *},\, d_2^{\bullet,\, *})$ または $M^{\bullet,\, *}$ と書く．
 \end{mydef}
@@ -962,7 +976,22 @@ $\MOD{R}$ の対象 $M$ は $M^0 = M,\, M^{n \neq 0} = 0$ とおくことで自�
     \label{fig:double-complex}
 \end{figure}%
 
-二重複体の射は図式の射として定義する．この射によって $\MOD{R}$ 上の二重複体全体は圏を成すので，これを $\mathrm{C}_2 (\MOD{R})$ と書く．$\mathrm{C}_2 (\MOD{R})$ はアーベル圏をなす．
+二重複体の射は図式の射として定義する．つまり，二重複体の射 $f^{\bullet,\, *} \colon M^{\bullet,\, *} \lto N^{\bullet,\,*}$ を顕に書くと以下のような可換図式になっている：
+\begin{center}
+    \begin{tikzcd}[row sep=large, column sep=large]
+        & &\vdots\ar[d]&\vdots\ar[d] &\vdots\ar[d] & & \\
+        & \cdots \ar[r] &M^{p-1,\, q-1} \ar[dddddr, red, "f^{p-1,\, q-1}"]\ar[r]\ar[d] &M^{p,\, q-1}\ar[dddddr, red, "f^{p,\, q-1}"]\ar[r]\ar[d] &M^{p+1,\, q-1}\ar[dddddr, red, "f^{p+1,\, q-1}"]\ar[r]\ar[d] &\cdots & \\
+        & \cdots \ar[r] &M^{p-1,\, q}\ar[dddddr, red, "f^{p-1,\, q}"]\ar[r]\ar[d] &M^{p,\, q}\ar[dddddr, red, "f^{p,\, q}"]\ar[r]\ar[d] &M^{p+1,\, q}\ar[dddddr, red, "f^{p+1,\, q}"]\ar[r]\ar[d] &\cdots &\\
+        & \cdots \ar[r] &M^{p-1,\, q+1}\ar[dddddr, red, "f^{p-1,\, q+1}"]\ar[r]\ar[d] &M^{p,\, q+1}\ar[dddddr, red, "f^{p,\, q+1}"]\ar[r]\ar[d] &M^{p+1,\, q+1}\ar[dddddr, red, "f^{p+1,\, q+1}"]\ar[r]\ar[d] &\cdots &\\
+        & &\vdots &\vdots &\vdots & \\
+        & & &\vdots\ar[d]&\vdots\ar[d] &\vdots\ar[d] & \\
+        & & \cdots \ar[r] &N^{p-1,\, q-1}\ar[r]\ar[d] &N^{p,\, q-1}\ar[r]\ar[d] &N^{p+1,\, q-1}\ar[r]\ar[d] &\cdots \\
+        & & \cdots \ar[r] &N^{p-1,\, q-1}\ar[r]\ar[d] &N^{p,\, q-1}\ar[r]\ar[d] &N^{p+1,\, q-1}\ar[r]\ar[d] &\cdots \\
+        & & \cdots \ar[r] &N^{p-1,\, q-1}\ar[r]\ar[d] &N^{p,\, q-1}\ar[r]\ar[d] &N^{p+1,\, q-1}\ar[r]\ar[d] &\cdots \\
+        & & &\vdots &\vdots &\vdots &
+    \end{tikzcd}
+\end{center}
+この射によって $\MOD{R}$ 上の二重複体全体は圏を成すので，これを $\mathrm{C}_2 (\MOD{R})$ と書く．$\mathrm{C}_2 (\MOD{R})$ はアーベル圏をなす．
 
 \begin{marker}
     \hyperref[def:double-complex]{二重複体の定義}を少し変形して，図式\ref{fig:double-complex}が
@@ -972,11 +1001,10 @@ $\MOD{R}$ の対象 $M$ は $M^0 = M,\, M^{n \neq 0} = 0$ とおくことで自�
         d_2^{p+1,\, q} \circ d_1^{p,\, q} &= d_1^{p,\, q+1} \circ d_2^{p,\, q}
     \end{align}
     を充たすものを考えることができる．これは複体 $(M^{\bullet,\, q},\, d_1^{\bullet,\, q})$ の複体をなす，i.e. $\Chain{\Chain{\MOD{R}}}$ の対象である．
-
     さらに $\bigl( M^{\bullet,\, *},\, d_1^{\bullet,\, *},\, (-1)^\bullet d_2^{\bullet,\, *} \bigr)$ を考えると二重複体になる．この対応により $\mathrm{C}_2(\MOD{R}) \cong \Chain{\Chain{\MOD{R}}}$ である．
 \end{marker}
 
-複体 $(M^\bullet,\, d^\bullet)$ は縦に見るか横に見るかの2通りの方法で\hyperref[def:double-complex]{二重複体}になる
+複体 $(M^\bullet,\, d^\bullet)$ は横に見るか縦に見るかの2通りの方法で\hyperref[def:double-complex]{二重複体}になる．
 
 \begin{enumerate}
     \item 横に見る：
@@ -993,8 +1021,18 @@ $\MOD{R}$ の対象 $M$ は $M^0 = M,\, M^{n \neq 0} = 0$ とおくことで自�
         \end{cases}, &
         d_2^{p,\, q} &= 0
     \end{align}
+    図式として顕に書くと以下の通り：
+    \begin{center}
+        \begin{tikzcd}[row sep=large, column sep=large]
+             & &\vdots\ar[d] &\vdots\ar[d] &\vdots\ar[d] & \\
+             &\cdots \ar[r] &0\ar[d]\ar[r] &0\ar[d]\ar[r] &0\ar[d]\ar[r] &\cdots \\
+             &\cdots \ar[r, "d^{p-2}"] &M^{p-1}\ar[d, "d^{p-1}"]\ar[r] &M^p\ar[d]\ar[r, "d^p"] &M^{p+1}\ar[d]\ar[r, "d^{p+1}"] &\cdots \\
+             &\cdots \ar[r] &0\ar[d]\ar[r] &0\ar[d]\ar[r] &0\ar[d]\ar[r] &\cdots \\
+             & &\vdots &\vdots &\vdots &
+        \end{tikzcd}
+    \end{center}
     この二重複体 $(M^{\bullet,\, *},\, d_1^{\bullet,\, *},\, d_2^{\bullet,\, *})$ を $M^\bullet$ と書く．
-    \item 横に見る：
+    \item 縦に見る：
     \begin{align}
         M^{p,\, q} &= 
         \begin{cases}
@@ -1008,6 +1046,16 @@ $\MOD{R}$ の対象 $M$ は $M^0 = M,\, M^{n \neq 0} = 0$ とおくことで自�
             0, &p \neq 0
         \end{cases}
     \end{align}
+    図式として顕に書くと以下の通り：
+    \begin{center}
+        \begin{tikzcd}[row sep=large, column sep=large]
+             & &\vdots\ar[d] &\vdots\ar[d, "d^{q-2}"] &\vdots\ar[d] & \\
+             &\cdots \ar[r] &0\ar[d]\ar[r] &M^{q-1}\ar[d, "d^{q-1}"]\ar[r] &0\ar[d]\ar[r] &\cdots \\
+             &\cdots \ar[r] &0\ar[d]\ar[r] &M^{q}\ar[d, "d^q"]\ar[r] &0\ar[d]\ar[r] &\cdots \\
+             &\cdots \ar[r] &0\ar[d]\ar[r] &M^{q+1}\ar[d, "d^{q+1}"]\ar[r] &0\ar[d]\ar[r] &\cdots \\
+             & &\vdots &\vdots &\vdots &
+        \end{tikzcd}
+    \end{center}
     この二重複体 $(M^{\bullet,\, *},\, d_1^{\bullet,\, *},\, d_2^{\bullet,\, *})$ を $M^*$ と書く．
 \end{enumerate}
 すなわち，射
@@ -1036,9 +1084,6 @@ $\MOD{R}$ の対象 $M$ は $M^0 = M,\, M^{n \neq 0} = 0$ とおくことで自�
     \footnote{実のところ $\MOD{R}$ の直和は添字集合が有限でなくとも定義されるので，$\MOD{R}$ のみを考えるならこの仮定は無くても良い．
         しかし，一般のアーベル圏においては可算個の和が定義されているとは限らないので，この仮定が必要になる場合がある．
     }．
-
-    \tcblower
-
     \begin{align}
         \Tot(M)^n \coloneqq \bigoplus_{p+q = n} M^{p,\, q}
     \end{align}
@@ -1052,6 +1097,15 @@ $\MOD{R}$ の対象 $M$ は $M^0 = M,\, M^{n \neq 0} = 0$ とおくことで自�
     \end{align}
     を充たす唯一の射とする．このとき組 $\Tot(M) \coloneqq (\Tot(M)^\bullet,\, d^\bullet)$ がなす複体を二重複体 $M$ の\textbf{全複体} (total complex) と呼ぶ．
 \end{mydef}
+念の為，全複体の定義において $d^{n+1} \circ d^n = 0$ が成り立つことを確認しておこう：
+\begin{align}
+    d^{p+q+1} \circ d^{p+q} \circ \iota_{p,\, q}
+    &= d^{p+q+1} \circ \iota_{p+1,\, q} \circ d_1^{p,\, q} + d^{p+q+1} \circ \iota_{p,\, q+1} \circ d_2^{p,\, q} \\
+    &= \iota_{p+2,\, q} \circ \cancel{(d_1^{p+1,\, q} \circ d_1^{p,\, q})} + \iota_{p+1,\, q+1} \circ \cancel{(d_2^{p+1,\, q} \circ d_1^{p,\, q} + d_1^{p,\, q+1} \circ d_2^{p,\, q})} + \iota_{p,\, q+2} \circ (d_2^{q+1} \circ d_2^{q}) \\
+    &=0
+\end{align}
+\eqref{eq:dcplx-3}の左辺の符号はこれが成り立つために必要なのである．
+
 
 \subsection{$\Tor$ と $\Ext$ の定義}
 
@@ -1478,8 +1532,8 @@ $\Ext_R^n(L,\, M)$ は\hyperref[def:Ab-func]{左完全関手}（命題\ref{prop:
     \end{enumerate}
 \end{myprop}
 
-命題\ref{prop:def:LDF-basic}を示すために，いくつかの補題を用意する．
-
+命題\ref{def:LDF-basic}を示すために，2つの補題を用意する．
+\hrulefill
 \begin{mylem}[label=lem:LDF-1]{}
     \begin{itemize}
         \item  射 $f \in \Hom{\Cat{A}}(M,\, N)$
@@ -1715,9 +1769,9 @@ $\Ext_R^n(L,\, M)$ は\hyperref[def:Ab-func]{左完全関手}（命題\ref{prop:
 \begin{proof}
     ~\cite[命題3.21]{Shiho}を参照
 \end{proof}
+\hrulefill
 
-
-ここまでの準備の下，命題\ref{def:LDF-basic}を示す．
+ここまでの準備の下，命題\ref{def:LDF-basic}を示そう：
 
 \begin{proof}
     \begin{enumerate}
@@ -1930,6 +1984,205 @@ $\mathcal{A}$ を十分単射的対象を持つアーベル圏，$\mathcal{B}$ �
     \end{enumerate}
 \end{myprop}
 
+これの証明には以下の2つの補題が必要になる：
+
+\begin{mylem}[label=lem:RDF-1]{}
+    \begin{itemize}
+        \item 射 $f \in \Hom{\Cat{A}}(M,\, N)$
+        \item \hyperref[def:inj-mod]{単射的対象}の族 $\Dpmember[\big]{J^n}{n \in \mathbb{Z}}$ によって構成された複体
+        \begin{align}
+            0 \lto N \xrightarrow{\mathrm{e}} J^0 \xrightarrow{e^0} \cdots \xrightarrow{e^{n-1}} J^n \xrightarrow{e^n} J^{n+1} \xrightarrow{e^{n+1}} \cdots
+        \end{align}
+        \item $\Cat{A}$ における完全列
+        \begin{align}
+            0 \lto M \xrightarrow{\mathrm{d}} I^0 \xrightarrow{d^0} \cdots \xrightarrow{d^{n-1}} I^n \xrightarrow{d^n} I^{n+1} \xrightarrow{d^{n+1}} \cdots \quad (\text{exact})
+        \end{align}
+    \end{itemize}
+    を与える．このとき，以下の図式を可換にする\hyperref[def:chain-morphism]{複体の射} $f^\bullet \colon I^\bullet \lto J^\bullet$ が\hyperref[def:chain-homotopy]{ホモトピー}を除いて一意に存在する：
+    \begin{center}
+        \begin{tikzcd}[row sep=large, column sep=large]
+             &M \ar[r, "\mathrm{d}"] \ar[d, "f"'] &I^\bullet \ar[d, "f^\bullet"] \\
+             &N \ar["\mathrm{e}"'] &J^\bullet
+        \end{tikzcd}
+    \end{center}
+\end{mylem}
+
+
+\begin{mylem}[label=lem:RDF-2]{Horseshoe lemma}
+    \begin{itemize}
+        \item $\Cat{A}$ における完全列 $0 \lto L \lto M \lto N \lto 0$
+        \item 与えられた完全列の両端の加群の\hyperref[def:injective-resolution]{単射的分解} $L \xrightarrow{\dd_I} (I^\bullet,\, d_I^\bullet),\; N \xrightarrow{\dd_K} (K^\bullet,\, d_K^\bullet)$
+    \end{itemize}
+    を与える．また， $J^n \coloneqq I^n \oplus K^n$ とおく．このとき可換図式
+    \begin{center}
+        \begin{tikzcd}[row sep=large, column sep=large]
+            &0 \ar[r] &L \ar[r, "f"]\ar[d, "\dd_I"] &M \ar[r, "g"]\ar[d, "\dd_J"] &N \ar[r]\ar[d, "\dd_K"] &0 &(\text{exact}) \\
+            &0 \ar[r] &(I^\bullet,\, d_I^\bullet) \ar[r, "f^\bullet"] &(J^\bullet,\, d_J^\bullet) \ar[r, "g^\bullet"] &(K^\bullet,\, d_K^\bullet) \ar[r] &0 &(\text{exact})
+        \end{tikzcd}
+    \end{center}
+    であって以下の条件を満たすものがある：
+    \begin{enumerate}
+        \item 真ん中の列 $M \xrightarrow{\dd_J} (J^\bullet,\, d_J^\bullet)$ は $M$ の\hyperref[def:injective-resolution]{単射的分解}である．
+        \item 2行目は複体の完全列である．
+    \end{enumerate}
+    
+\end{mylem}
+
+\begin{proof}
+    $\forall n \ge 0$ に対して
+    \begin{align}
+        f^n \colon I^n &\lto J^n \coloneqq I^n \oplus K^n,\; x \lmto (x,\, 0) \\
+        g^n \colon J^n &\lto K^n ,\; (x,\, y) \lmto y \\
+        \mathrm{inj}^n_2 \colon K^n &\lto J^n,\; y \lmto (0,\, y)
+    \end{align}
+    とおく．このとき
+    \begin{align}
+        0 \lto I^n \xrightarrow{f^n} J^n \xrightarrow{g^n} K^n \lto 0
+    \end{align}
+    は完全列であり，かつ $\mathrm{inj}_2^n$ によって分裂する．
+
+    \hyperref[def:injective-resolution]{単射的分解}の定義より $I^0$ は\hyperref[def:inj-mod]{単射的対象}なので，以下の図式を可換にする $h^0 \colon M \lto I^0$ が存在する：
+    \begin{center}
+        \begin{tikzcd}[row sep=large, column sep=large]
+            &0 \ar[r] &L \ar[r, "f"]\ar[d, "\dd_I"] &M \ar[dl, dashed, red, "h^0"]\ar[r, "g"] &N \ar[r]\ar[d, "\dd_K"] &0 & (\text{exact}) \\
+            &0 \ar[r] &I^0 \ar[r, "f^0"] &J^0 \ar[r, "g^0"] &K^0 \ar[r] &0 &(\text{exact})
+        \end{tikzcd}
+    \end{center}
+    このとき
+    \begin{align}
+        \dd_J \coloneqq \mathrm{inj}_2^0 \circ \dd_K \circ g + f^0 \circ h^0 \colon M \lto J^0
+    \end{align}
+    と定義すると
+    \begin{align}
+        \dd_J \circ f &= \mathrm{inj}_2^0 \circ \dd_K \circ \cancel{g \circ f} + f^0 \circ h^0 \circ f = f^0 \circ \dd_I, \\
+        g^0 \circ \dd_J &= \underbrace{g^0 \circ \mathrm{inj}_2^0}_{=\mathrm{id}_{K^0}} \circ \dd_K \circ g + \cancel{g^0 \circ f^0} \circ h^0 = \dd_K \circ g
+    \end{align}
+    であり，図式
+    \begin{center}
+        \begin{tikzcd}[row sep=large, column sep=large]
+            & &0\ar[d] &0 \ar[d] &0\ar[d] \\
+            &0 \ar[r] &L \ar[r, "f"]\ar[d, "\dd_I"] &M \ar[d, "\dd_J"]\ar[dl, dashed, red, "h^0"]\ar[r, "g"] &N \ar[d, "\dd_J"]\ar[r] &0 & (\text{exact}) \\
+            &0 \ar[r] &I^0 \ar[r, "f^0"] &J^0 \ar[r, "g^0"] &K^0 \ar[r] &0 &(\text{exact}) \\
+            & &(\text{exact}) & &(\text{exact}) 
+        \end{tikzcd}
+    \end{center}
+    は可換．よって蛇の補題が使えて完全列
+    \begin{align}
+        \Ker \dd_I &\lto \Ker \dd_J \lto \Ker \dd_K \\
+        &\xrightarrow{\delta} \Coker \dd_I \lto \Coker \dd_J \lto \Coker \dd_K
+    \end{align}
+    を得るが，図式の縦の完全性から $\dd_I,\, \dd_K$ は単射なので $\Ker \dd_J = 0$，i.e. 図式の真ん中の列の完全性も言える．
+
+    $M$ の単射的分解の，$n=1$ の部分の構成をする．$I^1$ は\hyperref[def:inj-mod]{単射的対象}なので以下の図式を可換にする $h^1 \colon J^0/\Im \dd_J \lto J^1$ が存在する\footnote{単射的分解の完全性により $I^0 / \Im \dd_I = I^0 / \Ker d_I^0 \cong \Im d_I^0$ なので，縦の $\im d_I^0 \colon I^0 / \Im \dd_I \lto I^1$ と言うのは包含写像 $\Im d_I^0 \hookrightarrow I^1$ のことである．これは明らかに単射．}：
+    \begin{center}
+        \begin{tikzcd}[row sep=large, column sep=large]
+            &0 \ar[r] &I^0 / \Im \dd_I \ar[r, "\overline{f^0}"]\ar[d, "\im d_I^0"] &J^0 / \Im \dd_J \ar[dl, dashed, red, "h^1"]\ar[r, "\overline{g}"] &K^0/\Im \dd_K \ar[d, "\im d_K^0"]\ar[r] &0 & (\text{exact}) \\
+            &0 \ar[r] &I^1 \ar[r, "f^1"] &J^1 \ar[r, "g^0"] &K^1 \ar[r] &0 &(\text{exact})
+        \end{tikzcd}
+    \end{center}
+    ここで
+    \begin{align}
+        \delta^0_J \coloneqq \mathrm{inj}_2^1 \circ \im d_K^0 \circ \overline{g} + f^1 \circ h^1 \colon J^0 / \Im \dd_J \lto J^1
+    \end{align}
+    と定義すると
+    \begin{align}
+        \delta^0_J \circ \overline{f} &= \mathrm{inj}_2^1 \circ \im d_K^0 \circ \cancel{\overline{g} \circ \overline{f}} + f^1 \circ h^1 \circ f = f^1 \circ \delta_I^0, \\
+        g^0 \circ \delta^0_J &= \underbrace{g^0 \circ \mathrm{inj}_2^1}_{= \mathrm{id}_{K^1}} \circ \im d_K^0 \circ \overline{g} + \cancel{g^0 \circ f^1} \circ h^1 = \delta_K^0 \circ \overline{g}
+    \end{align}
+    なので，図式
+    \begin{center}
+        \begin{tikzcd}[row sep=large, column sep=large]
+            & &0\ar[d] &0 \ar[d] &0\ar[d] \\
+            &0 \ar[r] &I^0 / \Im \dd_I \ar[r, "f"]\ar[d, "\im d_I^0"] &I^0/\Im \dd_J \ar[d, "\delta_J^0"]\ar[dl, dashed, red, "h^0"]\ar[r, "\overline{g}"] &N/\Im \dd_K \ar[d, "\im d_J^0"]\ar[r] &0 & (\text{exact}) \\
+            &0 \ar[r] &I^1 \ar[r, "f^1"] &J^1 \ar[r, "g^1"] &K^1 \ar[r] &0 &(\text{exact}) \\
+            & &(\text{exact}) & &(\text{exact}) 
+        \end{tikzcd}
+    \end{center}
+    は可換．よって蛇の補題から $\delta_J^0$ が単射であるとわかり，$d_J^0 \coloneqq \delta^0_J \circ \coker \dd_J \colon J^0 \lto J^1$ とおくと
+    \begin{align}
+        0 \lto M \xrightarrow{\dd_J} J^0 \xrightarrow{d_J^0} J^1
+    \end{align}
+    は完全列になっている．以上の議論を繰り返せば $M$ の単射的分解が得られる．
+\end{proof}
+
+\subsection{右Cartan-Eilenberg分解}
+
+\begin{myprop}[label=prop:Cartan-Eilenberg-R, breakable]{右Cartan-Eilenberg分解}
+    $\Cat{A}$ における複体 $(C^\bullet,\, d^\bullet)$ を任意に与える．このとき，ある\hyperref[def:double-complex]{二重複体}への射
+    \begin{align}
+        (C^\bullet,\, d^\bullet) \lto (I^{\bullet,\, *},\, d_1^{\bullet,\, *},\, d_2^{\bullet,\, *}) \label{eq:morphism-doublecplx}
+    \end{align} 
+    が存在して，
+    \begin{align}
+        Z^{n,\, m} &\coloneqq \Ker d_1^{n,\, m}, \\
+        B^{n,\, m} &\coloneqq \Im d_1^{n-1,\, m}, \\
+        H^{n,\, m} &\coloneqq  Z^{n,\, m} /  B^{n,\, m}
+    \end{align}
+    とおいたとき以下の条件を充たす：
+    \begin{enumerate}
+        \item $\forall n \in \mathbb{Z}$ に対して $C^n \lto (I^{n,\,\bullet},\, d_2^{n,\, \bullet})$ は\hyperref[def:injective-resolution]{単射的分解}．
+        \item $\forall n \in \mathbb{Z}$ に対して，$d_2^{n,\, m}$ が引き起こす射による複体
+        \begin{align}
+            &(Z^{n,\, \bullet},\; d_{2,\,Z}^{n,\, \bullet}),\\
+            &(B^{n,\, \bullet},\; d_{2,\,B}^{n,\, \bullet}),\\ 
+            &(H^{n,\, \bullet},\; d_{2,\,H}^{n,\, \bullet})
+        \end{align}
+        から定まる図式
+        \begin{align}
+            \Ker d^n &\lto (Z^{n,\, \bullet},\; d_{2,\,Z}^{n,\, \bullet}) \\
+            \Im d^{n-1} &\lto (B^{n,\, \bullet},\; d_{2,\,B}^{n,\, \bullet}) \\
+            H^n(C^\bullet) &\lto (H^{n,\, \bullet},\; d_{2,\,H}^{n,\, \bullet}) \\
+        \end{align}
+        が全て\hyperref[def:projective-resolution]{単射的分解}．
+        \item $\forall n \in \mathbb{Z}$ に対して
+        \begin{align}
+            C^{n} = 0 &\IMP I^{n,\, \bullet} = 0, \\
+            H^{n}(C^\bullet) = 0 &\IMP H^{n,\, \bullet} = 0.
+        \end{align}
+    \end{enumerate}
+\end{myprop}
+
+\begin{proof}
+    命題\ref{prop:inj-resol-basic}より，$\forall n \in \mathbb{Z}$ に対して\hyperref[def:injective-resolution]{単射的分解}
+    \begin{align}
+        \Im d^{n-1} &\lto (B^{n,\, \bullet},\, d_{2,\, B}^{n,\,\bullet}),\label{eq:CE-resol-1R}\\
+        H^n(C^\bullet) &\lto (H^{n,\, \bullet},\, d_{2,\, H}^{n,\,\bullet})\label{eq:CE-resol-2R}
+    \end{align}
+    をとることができる\footnote{この時点ではこのような記号でおいただけである．}．
+    これらと完全列\footnote{$\coker i^{n} \colon \Ker d^n \lto \Coker i^n$ は標準的射影}
+    \begin{align}
+        0 \lto \Im d^{n-1} \xrightarrow{i^{n}} \Ker d^{n} \xrightarrow{\coker i^{n}} H^{n}(C^\bullet) \lto 0
+    \end{align}
+    に対して補題\ref{lem:RDF-2}を適用すると，$Z^{n,\, \bullet} \coloneqq B^{n,\, \bullet} \oplus H^{n,\, \bullet}$ とした可換図式
+    \begin{center}
+        \begin{tikzcd}[row sep=large, column sep=large]
+            0 \ar[r] &\Im d^{n-1} \ar[r, "i^{n}"]\ar[d] &\Ker d^n \ar[r, "\coker i^{n}"]\ar[d] &H^{n}(C^\bullet) \ar[d]\ar[r] &0 &(\text{exact}) \\
+            0 \ar[r] &(B^{n,\, \bullet},\, d_{2,\, B}^{n,\, \bullet}) \ar[r, "i^{n,\, \bullet}"] &(Z^{n,\, \bullet},\, d_{2,\, Z}^{n,\, \bullet}) \ar[r, "p^{n,\, \bullet}"] &(H^{n,\, \bullet},\, d_{2,\, H}^{n,\, \bullet})\ar[r] &0 &(\text{exact})
+        \end{tikzcd}
+    \end{center}
+    で，真ん中の列が\hyperref[def:injective-resolution]{単射的分解}となるようなものが存在する．
+
+    一方，完全列
+    \begin{align}
+        0 \lto \Ker d^{n} \xrightarrow{\ker d^{n}} C^{n} \xrightarrow{\coim d^{n}} \Im d^{n} \lto 0
+    \end{align}
+    がある\footnote{$\coim d^n \colon C^n \lto C^n / \Ker d^n \cong \Im d^n$ は標準的射影．}ので，これと単射的分解\eqref{eq:CE-resol-1R}, \eqref{eq:CE-resol-2R}に補題\ref{lem:RDF-2}を適用すると，$Q^{n,\, \bullet} \coloneqq Z^{n,\, \bullet} \oplus B^{n \textcolor{red}{+1},\, \bullet}$ とした可換図式
+    \begin{center}
+        \begin{tikzcd}[row sep=large, column sep=large]
+            0 \ar[r] &\Ker d^n \ar[r, "\ker d^n"]\ar[d] &C^n \ar[r, "\coim d^n"]\ar[d] &\Im d^n \ar[r]\ar[d] &0 &(\text{exact})\\
+            0 \ar[r] &(Z^{n,\, \bullet},\, d_{2,\, Z}^{n,\, \bullet}) \ar[r, "\iota^{n,\, \bullet}"] &(Q^{n,\, \bullet},\, d_{2,\, Q}^{n,\, \bullet}) \ar[r, "\pi^{-n,\, \bullet}"] &(B^{n\textcolor{red}{+1},\, \bullet},\, d_{2,\, B}^{n\textcolor{red}{+1},\, \bullet})\ar[r] &0 &(\text{exact})
+        \end{tikzcd}
+    \end{center}
+    で真ん中の列が\hyperref[def:injective-resolution]{単射的分解}となるようなものが存在する．ここで
+    \begin{align}
+        d_{1,\, Q}^{n,\, m} \coloneqq \iota^{n+1,\, m} \circ i^{n+1,\, m} \circ \pi^{n,\, m}
+    \end{align}
+    とおいて
+    \begin{align}
+        (I^{\bullet,\, *},\, d_1^{\bullet,\, *},\, d_2^{\bullet,\, *}) \coloneqq (Q^{\bullet,\, *},\, d_{1,\, Q}^{\bullet,\, *},\, (-1)^\bullet d_{2,\, Q}^{\bullet,\, *})
+    \end{align}
+    と定義すればこれは\hyperref[def:double-complex]{二重複体}になっていることが確認でき，$m=0$ の部分から所望の二重複体の射\eqref{eq:morphism-doublecplx}が得られる．構成よりこの射は条件 (1), (2), (3) を充たす．
+\end{proof}
 
 
 \section{スペクトル系列}
